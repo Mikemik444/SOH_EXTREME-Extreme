@@ -1171,15 +1171,6 @@
     <ClCompile Include="E:\test\bb\soh\SohGui\UIWidgets.cpp">
       <Filter>soh\SohGui</Filter>
     </ClCompile>
-    <ClCompile Include="E:\test\bb\soh\assets\tools\soh-o2r-packer\PngTexture.cpp">
-      <Filter>soh\assets\tools\soh-o2r-packer</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\test\bb\soh\assets\tools\soh-o2r-packer\main.cpp">
-      <Filter>soh\assets\tools\soh-o2r-packer</Filter>
-    </ClCompile>
-    <ClCompile Include="E:\test\bb\soh\assets\tools\torch-cli\main.cpp">
-      <Filter>soh\assets\tools\torch-cli</Filter>
-    </ClCompile>
     <ClCompile Include="E:\test\bb\soh\config\ConfigUpdaters.cpp">
       <Filter>soh\config</Filter>
     </ClCompile>
@@ -7431,9 +7422,6 @@
     <ClInclude Include="E:\test\bb\soh\assets\textures\title_static\title_static.h">
       <Filter>soh\assets\textures\title_static</Filter>
     </ClInclude>
-    <ClInclude Include="E:\test\bb\soh\assets\tools\soh-o2r-packer\PngTexture.h">
-      <Filter>soh\assets\tools\soh-o2r-packer</Filter>
-    </ClInclude>
     <ClInclude Include="E:\test\bb\soh\config\ConfigUpdaters.h">
       <Filter>soh\config</Filter>
     </ClInclude>
@@ -11000,15 +10988,6 @@
     </Filter>
     <Filter Include="soh\assets\textures\title_static">
       <UniqueIdentifier>{9A88AD45-7857-3242-8B67-A9096C398BAB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="soh\assets\tools">
-      <UniqueIdentifier>{E663B6A8-5542-3FC4-8F23-16B568FE24D8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="soh\assets\tools\soh-o2r-packer">
-      <UniqueIdentifier>{915BA936-5FBE-356E-9760-B6764171DC7D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="soh\assets\tools\torch-cli">
-      <UniqueIdentifier>{BBAA59F3-7A66-36DC-BF19-F7F1A86B60A8}</UniqueIdentifier>
     </Filter>
     <Filter Include="soh\config">
       <UniqueIdentifier>{3C96C04D-4DB5-3EB3-B217-DEBACEE745A4}</UniqueIdentifier>

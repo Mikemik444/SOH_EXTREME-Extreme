@@ -1,7 +1,3 @@
 # CMake generation dependency list for this directory.
 E:/test/bb/build-vs/CMakeFiles/cmake.verify_globs
 E:/test/bb/build-vs/_deps/apcpp-build/mbedtls-3.6.4/library/CMakeLists.txt
-E:/test/bb/build-vs/_deps/apcpp-build/mbedtls-3.6.4/library/error.c
-E:/test/bb/build-vs/_deps/apcpp-build/mbedtls-3.6.4/library/psa_crypto_driver_wrappers_no_static.c
-E:/test/bb/build-vs/_deps/apcpp-build/mbedtls-3.6.4/library/ssl_debug_helpers_generated.c
-E:/test/bb/build-vs/_deps/apcpp-build/mbedtls-3.6.4/library/version_features.c
