@@ -234,9 +234,6 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /INCREMENTAL
 //Path to a program.
 CMAKE_MT:FILEPATH=CMAKE_MT-NOTFOUND
 
-//No help, variable specified on the command line.
-CMAKE_PREFIX_PATH:UNINITIALIZED=D:\SOH-EXTREME\lib\Release
-
 //Value Computed by CMake
 CMAKE_PROJECT_COMPAT_VERSION:STATIC=
 
@@ -678,18 +675,6 @@ SITE:STRING=Michael-Latptop
 
 //Skip zlib install targets
 SKIP_INSTALL_ALL:BOOL=ON
-
-//No help, variable specified on the command line.
-SOH_USE_MBEDTLS:UNINITIALIZED=OFF
-
-//No help, variable specified on the command line.
-SOH_USE_OPUS:UNINITIALIZED=OFF
-
-//No help, variable specified on the command line.
-SOH_USE_RMLUI:UNINITIALIZED=OFF
-
-//No help, variable specified on the command line.
-SOH_USE_ZSTD:UNINITIALIZED=OFF
 
 //cutoff at trace
 SPDLOG_MIN_CUTOFF:STRING=SPDLOG_LEVEL_TRACE
