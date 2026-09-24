@@ -1,0 +1,9 @@
+0.11.16: Fishing NPC prerequisites and walk-through bush parity.
+The fishing rod action requires NPC Soul, the configured Hylian/shared Speak,
+a wallet and the configured Fish/Animal Soul, in addition to the existing rod,
+region and age requirements. Bottled overworld fish do not require an NPC.
+En_Wood02 bush checks require their soul and actual region/age access, not a
+cutting weapon, Grab or Roll. En_Kusa grass retains real interaction methods.
+Native patch separates Fishing owner rendering/dialog from pond environment,
+and fish visibility from NPC Soul. Fish can appear on in-room soul receipt.
+No IDs, locations, received-item indexes or offspring exclusions were changed.

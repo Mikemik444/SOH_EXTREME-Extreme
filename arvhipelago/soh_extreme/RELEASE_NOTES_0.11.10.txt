@@ -1,0 +1,31 @@
+SOH-EXTREME 0.11.10 - APWorld companion package
+
+Use with the previously delivered SOH-EXTREME-soh-src-corrections.zip.
+
+Included:
+- Prepared 0.11.9 standalone state, native route, helper-order, and tracker support.
+- Private SoH 1.4.2 helper modules, bundled directly in this APWorld.
+- Manifest version 0.11.10, also reported through apworld_version slot data.
+- Physical enemy identities synchronized with the delivered native placement table.
+- 560 active enemy checks; structural Armos statue slots are not checks.
+  Existing location IDs are preserved, not renumbered.
+- Dedicated Skulltula Soul handling, usable fire-weapon requirements, and
+  Shovel gating only when Shovel is shuffled.
+- Missing enemy region/combat mappings stop generation instead of permitting
+  an unchecked location.
+- Post-fill single-player traversal counts each location at most once.
+
+Installation:
+Close Archipelago and Universal Tracker. Replace the existing
+C:\ProgramData\Archipelago\custom_worlds\soh_extreme.apworld with this file.
+Keep only one installed SOH-EXTREME world. Restart the applications.
+Generate a NEW seed to use the changed location set and access rules.
+Your uploaded YAML options do not need to be changed.
+
+Scope and status:
+No tests, imports, seed generation, or seed simulations were run while assembling
+this release. In-game enemy behavior must be tested with the native source patch.
+Existing AP rules and Universal Tracker regeneration are retained; this package
+is not a claim of complete native/AP rule parity or guaranteed beatability.
+The post-fill replay guard applies to single-player generation; multiworld
+placement/accessibility validation remains Archipelago core's responsibility.

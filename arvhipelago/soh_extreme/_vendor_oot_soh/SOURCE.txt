@@ -1,0 +1,5 @@
+Bundled helper source: HarbourMasters/Archipelago-SoH
+Retained archive: Archipelago-SoH-oot-soh.zip
+Helper manifest version: 1.4.2
+Changes: private namespace imports; package root exports SohItem only.
+The stock AutoWorld initializer is not executed.

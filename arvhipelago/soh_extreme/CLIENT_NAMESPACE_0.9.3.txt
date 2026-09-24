@@ -1,0 +1,7 @@
+SOH-EXTREME 0.9.3 standalone namespace/client compatibility
+
+- Publishes extreme_location_name_to_id in slot data for every active location.
+- Native SoH resolves RandomizerCheck -> AP location from the seed-provided map first.
+- Compiled ArchipelagoLocationMap.inc remains only as a legacy fallback for old slots.
+- Unique normalized/suffix matching supports standalone EXTREME prefixes/renames.
+- Prevents a valid in-game check from being sent with a stale stock-SoH location id.

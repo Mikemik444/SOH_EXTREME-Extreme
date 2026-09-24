@@ -1,0 +1,14 @@
+SOH-EXTREME 0.11.17 - existing-location source audit
+
+No new checks added. Applies with the matching native patch over 0.11.16.
+
+Corrected unconditional age rules on existing fork locations, grass lift/cut
+alternatives, underwater pickups and silver rupee actions, NPC/animal/contents
+prerequisites, exact stock/native identities, and Triforce/LACS behavior.
+Removed nonexistent native Side Room pots at old AP IDs 943 and 944; surviving
+IDs and enemy save receipt slots are unchanged. A new seed is required.
+
+See the companion patch's LOCATION_AUDIT.md and VALIDATION.md for exact evidence,
+scope and outstanding room/quest-state coverage. Source matches and successful
+AP simulations are NOT physical playthrough certification. Existing broad enemy
+room assignments have not been declared verified; no new expansion was enabled.

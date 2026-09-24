@@ -1,0 +1,17 @@
+SOH-EXTREME 0.11.15 — Lake Hylia, song completion and reachability caches
+
+Requires the existing 0.11.14 native patch plus the accompanying native changes.
+- Hyrule Field lake fence requires Climb or actually usable adult Epona.
+- River/underwater shore connections require Swim, not Iron Boots, hearts or a Fairy void.
+- Warp hubs and SFM warp alternatives require playable songs, not song ownership.
+- Playing a song requires its complete individual-note group in note mode, an Ocarina,
+  and its distinct required buttons. Duplicate notes/buttons cannot substitute.
+- Whole-song prefill modes do not place full songs while individual notes are enabled;
+  74 distinct notes use ordinary locations. Starting songs grant their complete note groups.
+- AP common starting inventory and from-pool requests are expanded before Main uses them.
+- Successful removal invalidates both child/adult region caches, not only a stale flag.
+- Scarecrow always needs an instrument and two distinct buttons, including taught-song mode.
+
+No enemy location IDs, receipt slots or offspring exclusions changed.
+See the companion archive VALIDATION.md for executed tests and limits. This is not
+certification of all game geometry, Master Quest, all option combinations or all seeds.

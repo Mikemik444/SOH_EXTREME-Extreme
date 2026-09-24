@@ -1,0 +1,214 @@
+SOH-EXTREME APWorld 0.6.1 - full-settings interaction audit
+
+Rule composition policy
+-----------------------
+EXTREME settings stack. A shuffled Soul/ability never replaces the normal
+physical requirements, and one physical method never replaces the other valid
+methods. In logical terms:
+
+    enabled category gate(s) AND (valid method A OR valid method B OR ...)
+
+The APWorld uses Archipelago-SoH's age-aware LogicHelpers for stock items so
+owning an adult-only/child-only item does not automatically mean Link can use it.
+
+Audited physical families
+-------------------------
+Pots:
+  Pot Soul, when shuffled, AND one valid close-pot method:
+  innate/custom Grab, usable swords/sticks, Megaton Hammer, Bombs/Bombchus,
+  Boomerang, Hookshot/Longshot, Slingshot/Bow. Giant's Knife is adult-only.
+
+Small crates:
+  Crate Soul, when shuffled, AND (jumpslash OR explosives OR Grab).
+Large crates:
+  Crate Soul only; their stock/native break behavior remains unchanged.
+
+Rocks:
+  Rock/Boulder Soul, when shuffled, AND (BlastOrSmash OR Grab).
+  Underwater rocks use their stricter Bombchu/adult-Grab plus water-access rule.
+
+Boulders:
+  Rock/Boulder Soul, when shuffled, AND class-specific interaction:
+  generic = explosives OR Hammer; bronze = Hammer; silver = Silver Gauntlets.
+
+Bush/grass:
+  Grass/Bush Soul, when shuffled, AND stock CanCutShrubs methods.
+  Native Giant's Knife adult route is also retained for fork-native bushes.
+
+Trees:
+  Tree Soul, when shuffled, AND Roll when Roll is shuffled.
+
+Beehives:
+  Beehive Soul stacks on stock upper/lower hive rules. Stock rules preserve
+  Hookshot/Boomerang, Bombchu Beehive trick, Sling/Bow option and lower-hive
+  Bomb Bag behavior.
+
+Red ice:
+  Blue Fire logic, including Ice Arrows only when Blue Fire Arrows is enabled.
+
+Icicles/stalagmites:
+  Falling trigger icicles remain region-triggered. Stalagmites require
+  jumpslash/explosives/Giant's Knife according to native logic.
+
+Signs / Skulltulas / animals / NPCs / scrubs:
+  Their selected category Souls stack independently with stock reachability,
+  Speak, Enemy Soul, NPC Soul and other enabled interaction settings.
+
+Wonder Items:
+  119 fork-native Wonder checks were audited against the native C++ LOCATION
+  expressions. Common child/adult, Bow/Slingshot, water, Hookshot, Hover Boots,
+  Epona-song and Market day/night requirements are now represented instead of
+  treating the broad parent region as the full rule. A native trick-only check
+  that has no AP-exposed equivalent is not allowed to become AP progression.
+
+Multiworld placement
+--------------------
+No EXTREME progression item is forced local or forced into starting/early
+inventory. Normal Archipelago fill may place Roll, Grab, Climb, Crawl, Speak,
+Open Chest, Souls, Shovel, Flow of Time, etc. in other players' worlds, subject
+to the corrected reachability rules.
+
+Existing 0.5.x/0.6.0 safety work retained
+-----------------------------------------
+Per-save AP received-item index + ARCHIPELAGO save marker, title-screen gameplay
+queue safety, in-game AP chat, DeathLink, TrapLink, working trap application,
+freestanding AP reporting, lazy location resolution/chunked scouting, persistent
+bush/rock sanity, hidden-grotto Shovel gating, Flow-of-Time save recalculation,
+and Kakariko child/adult collision correction.
+
+0.6.5 corrections
+-----------------
+- Souls remain existential gates: their actor category is absent until the Soul is received.
+- Grass/Bush Soul now removes bush actors too.
+- ZR Near Domain Freestanding PoH no longer accepts Bunny Hood alone as a no-Cucco route.
+- AP-received ordinary SoH items with a valid vanilla ItemID fall back to Item_Give instead of being discarded/asserted.
+
+0.6.6 Animal Soul generation audit
+----------------------------------
+Animal Soul remains an existence gate.  AP generation now explicitly blocks:
+- every stock cow reward in the native fork,
+- Zora River frog checks,
+- Talon's Chickens and child Anju,
+- direct pond/grotto/puddle fish checks and fishing,
+- Epona-dependent race/time-trial/Big-Poe/Horseback-Archery checks,
+until Animal Soul exists.
+
+This closes the 0.6.5 failure where AP placed Animal Soul in Forest Temple but
+still used cow rewards in the playthrough before Animal Soul was collected.
+
+0.6.8 traversal-route correction
+--------------------------------
+- GV Waterfall Freestanding PoH: child direct route now requires Animal Soul + Grab (Cucco), while swim/adult alternatives remain possible through their normal region rules.
+- ZR Near Open Grotto Freestanding PoH: child Grab routes to the pillar/upper area now require Animal Soul; Bronze Scale, Hovers, Boomerang/adult alternatives remain intact where native logic allows them.
+- Kak Impas House Freestanding PoH: child daytime Grab route to Impa's ledge now requires Animal Soul because it is a Cucco route. Hookshot/adult/trick routes remain governed by the stock/native rules.
+
+0.6.9 AP receive-path fix
+-------------------------
+- Vanilla-backed AP rewards no longer pass through Randomizer_Item_Give, which rejects MOD_NONE entries.
+- Gold Skulltula Token, Piece of Heart (including WINNER), and Heart Container are applied explicitly with Item_Give.
+- All other non-major vanilla-backed AP rewards also use Item_Give; true MOD_RANDOMIZER rewards still use Randomizer_Item_Give.
+
+0.7.1 stock event Soul audit
+----------------------------
+- GC Woods Warp / GC Woods Warp From Woods require Rock/Boulder Soul when
+  rocks/boulders are shuffled. Bombchus alone cannot set the shortcut event
+  while the obstruction actor is absent.
+- Stock fish and bug availability helper events require Animal Soul.
+- Bug Rock helpers also require Rock/Boulder Soul; Bug Grass/Shrub helpers
+  require Grass/Bush Soul.
+- Deku-Baba Can Farm Sticks/Nuts helpers require Enemy Soul.
+- Pot-based Can Farm Sticks/Nuts helpers require Pot Soul.
+
+These rules affect Archipelago generation/playthrough logic, so make a new seed.
+
+0.7.2 Lost Woods / SFM traversal audit
+--------------------------------------
+- Fork-native Lost Woods and Sacred Forest Meadow locations now require a real
+  route into Lost Woods when Climb is shuffled.
+- Supported alternate routes: Climb, Hookshot, opened GC woods warp, or the
+  Zora's River shortcut via Silver Scale / Iron Boots.
+- SFM additionally requires Child access through the corridor or Saria's Song
+  for the adult route.
+- Do NOT blanket-gate every location whose display name contains "Grass".
+  Native source confirms checks such as KF North Grass East Rupee are separate
+  freestanding actors, and some Wonder checks merely use grass as a landmark.
+
+0.7.3 region-level traversal logic pass
+---------------------------------------
+- Lost Woods shuffled-Climb access is now applied to every location/event whose
+  parent region is Lost Woods, including inherited stock AP events.
+- GC Woods Warp From Woods cannot bootstrap itself through the already-open GC
+  shortcut; it must be reached from KF/Hookshot/ZR alternatives first.
+- Sacred Forest Meadow now uses a physical route expression: Minuet direct warp,
+  or Lost Woods access plus the appropriate Mido corridor condition.
+- Child corridor requires the Showed Mido the Sword and Shield event; adult
+  corridor requires Saria's Song.
+
+This changes generation logic; generate a new seed.
+
+
+0.7.4 structural entrance-graph logic
+-------------------------------------
+The important change is architectural:
+- movement shuffles are attached to actual Region entrances;
+- downstream stock checks, EXTREME checks and event locations inherit them;
+- GC Woods Warp From Woods can no longer become reachable merely because its
+  own local item rule is satisfied while the player cannot enter Lost Woods;
+- KF -> Lost Woods uses the native fork route:
+    Climb OR Hookshot OR the inherited Adult bean/trick route;
+- native mandatory Crawl entrances are gated at the graph level;
+- several mandatory Climb and Speak transitions are also graph-gated;
+- removed the incorrect 0.7.3 assumption that child SFM access needs the
+  Kokiri-forest "Showed Mido the Sword and Shield" event.
+
+Location-level Soul gates remain in addition to these entrance rules because
+Soul disappearance affects the actor/check itself rather than only traversal.
+
+
+0.7.5 generated native-logic audit
+----------------------------------
+- Replaced hand-maintained custom entrance tables with an auto-generated table
+  extracted from every native C++ ENTRANCE macro.
+- The generated table contains 308 unique custom-action entrance edges.
+- Native graph contraction resolves fork-only intermediate regions (including
+  KF Outside Lost Woods) onto the actual stock AP region graph.
+- Kokiri Forest -> Lost Woods has a hard fail-safe Climb invariant: if the AP
+  entrance cannot be found, generation aborts instead of producing a bad seed.
+- Generated exact stock-location rules are keyed by the same AP numeric IDs used
+  by the native Archipelago client.
+- Central native helper semantics are included: Enemy Soul, Pot/Crate/Grass/Rock/
+  Tree/Beehive/Sign/Skulltula Souls, Shovel, NPC/Speak, Business Scrub Soul, etc.
+- EVENT_ACCESS dependencies are conservatively applied to stock event locations
+  in their source region so helper events cannot bypass the custom physical rules.
+- Existing fork-native family rules and Soul disappearance logic are retained.
+- The overlay is intentionally conservative: it can delay a check that has a
+  legitimate alternate route, but it must not certify a route the game cannot do.
+
+
+0.7.6 boolean-preserving native logic
+---------------------------------------
+- Fixes 0.7.5 FillError caused by flattening native OR alternatives into AND requirements.
+- Generated NativeLogicAlternatives.py preserves custom requirements as DNF: AND within a branch, OR across branches.
+- AP entrance overlays are now derived from native paths through contracted regions instead of fallback-smearing requirements over all target/source edges.
+- Removed the 0.7.5 region-wide union of EVENT_ACCESS requirements; exact stock progression-event gates remain below.
+- Kokiri Forest -> Lost Woods is explicitly modeled as Climb OR Hookshot OR Adult+KF Bean Planted, preventing early LW/SFM while keeping real alternate routes.
+- Exact native locations now receive an OR-preserving rule rather than every discovered helper/action as an AND.
+- Manifest format lowered to 7 for Archipelago 0.6.7 compatibility.
+
+
+0.7.7 Archipelago 0.6.7 unresolved Rule compatibility
+------------------------------------------------------
+- Fixed native entrance audit checking `.always_true` on raw True_ Rule nodes.
+- Fixed the same bug in exact native location overlays.
+- Raw generated Rule ASTs are now checked with isinstance(rule, True_); resolved
+  rules still use always_true/always_false inside _instantiate where valid.
+- No reachability requirements were changed from 0.7.6.
+
+
+0.7.8 runtime/logic consistency pass
+------------------------------------
+- Shovel now gates every grotto, including normally-open holes.
+- LW Boulder Rupee and DMT under-boulder freestanding rupees explicitly require Rock / Boulder Soul.
+- Runtime boulders/rocks remain present without the Soul and cannot be broken/lifted.
+- Randomized rocks/boulders are dark-tinted while Soul-locked.
+- AP scout placements now resolve missing native RC mappings by conservative name matching so freestanding/shop models use the AP placement instead of stale native models.
