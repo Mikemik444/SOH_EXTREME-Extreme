@@ -1,0 +1,1390 @@
+{
+  "passed": true,
+  "checks": 346,
+  "tests": [
+    {
+      "test": "RG_ENEMY_SOUL_STALFOS PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALFOS unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALFOS resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALFOS GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALFOS item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_OCTOROK PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_OCTOROK unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_OCTOROK resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_OCTOROK GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_OCTOROK item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WALLMASTER PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WALLMASTER unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WALLMASTER resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WALLMASTER GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WALLMASTER item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DODONGO PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DODONGO unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DODONGO resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DODONGO GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DODONGO item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_KEESE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_KEESE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_KEESE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_KEESE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_KEESE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TEKTITE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TEKTITE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TEKTITE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TEKTITE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TEKTITE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_PEAHAT PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_PEAHAT unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_PEAHAT resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_PEAHAT GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_PEAHAT item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GOHMA_LARVA PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GOHMA_LARVA unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GOHMA_LARVA resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GOHMA_LARVA GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GOHMA_LARVA item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHABOM PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHABOM unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHABOM resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHABOM GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHABOM item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BABY_DODONGO PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BABY_DODONGO unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BABY_DODONGO resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BABY_DODONGO GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BABY_DODONGO item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIRI_BARI PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIRI_BARI unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIRI_BARI resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIRI_BARI GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIRI_BARI item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TAILPASARAN PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TAILPASARAN unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TAILPASARAN resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TAILPASARAN GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TAILPASARAN item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TORCH_SLUG PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TORCH_SLUG unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TORCH_SLUG resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TORCH_SLUG GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_TORCH_SLUG item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_MOBLIN PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_MOBLIN unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_MOBLIN resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_MOBLIN GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_MOBLIN item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ARMOS PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ARMOS unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ARMOS resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ARMOS GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ARMOS item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_BABA PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_BABA unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_BABA resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_BABA GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_BABA item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_SCRUB PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_SCRUB unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_SCRUB resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_SCRUB GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEKU_SCRUB item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BUBBLE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BUBBLE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BUBBLE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BUBBLE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BUBBLE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BEAMOS PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BEAMOS unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BEAMOS resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BEAMOS GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BEAMOS item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLOORMASTER PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLOORMASTER unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLOORMASTER resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLOORMASTER GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLOORMASTER item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_REDEAD_GIBDO PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_REDEAD_GIBDO unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_REDEAD_GIBDO resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_REDEAD_GIBDO GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_REDEAD_GIBDO item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLARE_DANCER PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLARE_DANCER unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLARE_DANCER resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLARE_DANCER GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLARE_DANCER item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEAD_HAND PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEAD_HAND unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEAD_HAND resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEAD_HAND GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DEAD_HAND item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHELL_BLADE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHELL_BLADE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHELL_BLADE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHELL_BLADE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SHELL_BLADE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIKE_LIKE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIKE_LIKE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIKE_LIKE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIKE_LIKE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LIKE_LIKE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SPIKE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SPIKE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SPIKE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SPIKE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SPIKE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ANUBIS PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ANUBIS unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ANUBIS resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ANUBIS GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_ANUBIS item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_IRON_KNUCKLE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_IRON_KNUCKLE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_IRON_KNUCKLE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_IRON_KNUCKLE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_IRON_KNUCKLE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SKULL_KID PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SKULL_KID unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SKULL_KID resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SKULL_KID GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_SKULL_KID item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_POT PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_POT unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_POT resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_POT GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_POT item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FREEZARD PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FREEZARD unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FREEZARD resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FREEZARD GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FREEZARD item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STINGER PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STINGER unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STINGER resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STINGER GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STINGER item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WOLFOS PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WOLFOS unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WOLFOS resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WOLFOS GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_WOLFOS item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GUAY PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GUAY unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GUAY resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GUAY GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GUAY item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_JABU_TENTACLE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_JABU_TENTACLE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_JABU_TENTACLE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_JABU_TENTACLE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_JABU_TENTACLE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DARK_LINK PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DARK_LINK unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DARK_LINK resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DARK_LINK GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DARK_LINK item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DOOR_TRAP PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DOOR_TRAP unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DOOR_TRAP resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DOOR_TRAP GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_DOOR_TRAP item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GERUDO_THIEF PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GERUDO_THIEF unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GERUDO_THIEF resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GERUDO_THIEF GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_GERUDO_THIEF item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE_SISTER PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE_SISTER unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE_SISTER resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE_SISTER GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE_SISTER item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_POE item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LEEVER PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LEEVER unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LEEVER resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LEEVER GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_LEEVER item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALCHILD PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALCHILD unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALCHILD resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALCHILD GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_STALCHILD item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIG_OCTO PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIG_OCTO unique",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIG_OCTO resource",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIG_OCTO GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_ENEMY_SOUL_BIG_OCTO item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_SKULLTULA_SOUL PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_SKULLTULA_SOUL unique",
+      "passed": true
+    },
+    {
+      "test": "RG_SKULLTULA_SOUL resource",
+      "passed": true
+    },
+    {
+      "test": "RG_SKULLTULA_SOUL GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_SKULLTULA_SOUL item entry exists",
+      "passed": true
+    },
+    {
+      "test": "RG_BUSINESS_SCRUB_SOUL PNG",
+      "passed": true
+    },
+    {
+      "test": "RG_BUSINESS_SCRUB_SOUL unique",
+      "passed": true
+    },
+    {
+      "test": "RG_BUSINESS_SCRUB_SOUL resource",
+      "passed": true
+    },
+    {
+      "test": "RG_BUSINESS_SCRUB_SOUL GUI",
+      "passed": true
+    },
+    {
+      "test": "RG_BUSINESS_SCRUB_SOUL item entry exists",
+      "passed": true
+    },
+    {
+      "test": "shared runtime item icon/draw override",
+      "passed": true
+    },
+    {
+      "test": "C++ mirror version",
+      "passed": true
+    },
+    {
+      "test": "root manifest",
+      "passed": true
+    },
+    {
+      "test": "package manifest",
+      "passed": true
+    },
+    {
+      "test": "Python mirror version",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches archipelago.json",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/CLIENT_NAMESPACE_0.9.3.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/EnemyDropLocations.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/EnemyDropRules.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/EnemyRoomGraph.json",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/EnemyRoomLogic.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/EnemyRoomMap.json",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/ForkLocations.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/FrontierFill.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/LOGIC_FIX_0.9.4.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/LOGIC_FIX_0.9.5.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/LOGIC_NOTES.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/LOGIC_OVERHAUL_0.9.2.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/LogicAudit.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/NativeAbilityAudit.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/NativeLocationRequirements.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/NativeLogic.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/NativeLogicAlternatives.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/NativeRegionMap.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/Options.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/RELEASE_NOTES_0.11.10.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/RELEASE_NOTES_0.11.14.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/RELEASE_NOTES_0.11.15.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/RELEASE_NOTES_0.11.16.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/RELEASE_NOTES_0.11.17.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/STANDALONE_WORLD_NOTES.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/SettingsParityAudit.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/SilverRoomLogic.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/SilverRoomRoutes.json",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/SpeechLocations.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/TEMPLATE_README.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/TrackerClient.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/TrackerMirror.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/TrackerWorker.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/UT_PATCH_NOTES.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/__init__.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/.apignore",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/Client.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/DungeonRewardShuffle.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/Enums.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/Hints.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/ItemPool.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/Items.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/KeyShuffle.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/LICENSE",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/Locations.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/LogicHelpers.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/Options.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/Presets.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/RegionAgeAccess.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/Regions.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/SOURCE.txt",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/ShopItems.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/SongShuffle.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/UniversalTracker.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/__init__.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/archipelago.json",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/docs/en_Ship of Harkinian.md",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/docs/guide_en.md",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/__init__.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/__init__.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/bottom_of_the_well.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/deku_tree.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/fire_temple.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/forest_temple.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/ganons_castle.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/gerudo_training_ground.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/ice_cavern.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/jabujabus_belly.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/shadow_temple.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/dungeons/water_temple.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/__init__.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_crater.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_trail.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/desert_colossus.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_valley.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/goron_city.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/graveyard.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/lake_hylia.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/lon_lon_ranch.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/market.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/sacred_forest_meadow.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/temple_of_time.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/thieves_hideout.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_fountain.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_river.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/_vendor_oot_soh/location_access/root.py",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/archipelago.json",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/docs/guide_en.md",
+      "passed": true
+    },
+    {
+      "test": "source ZIP matches soh_extreme/shared_logic.py",
+      "passed": true
+    },
+    {
+      "test": "only intended AP changes",
+      "passed": true
+    },
+    {
+      "test": "AP IDs and enemy/route catalogues untouched",
+      "passed": true
+    },
+    {
+      "test": "no test adapters/bytecode in world",
+      "passed": true
+    },
+    {
+      "test": "AP source bundle identical",
+      "passed": true
+    },
+    {
+      "test": "no font files",
+      "passed": true
+    },
+    {
+      "test": "no compiled programs",
+      "passed": true
+    }
+  ]
+}

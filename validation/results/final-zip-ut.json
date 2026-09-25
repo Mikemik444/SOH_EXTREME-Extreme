@@ -1,0 +1,187 @@
+{
+  "scope": "Targeted production AP rules, positive alternatives, and whole-graph UT replay.\n\nNo physics, live UI, or game-process verification. Full-inventory tests retain\nhistorical events except when explicitly removing a contents/event dependency.\n",
+  "group": "ut",
+  "checks": [
+    {
+      "test": "version",
+      "passed": true,
+      "actual": "0.11.17",
+      "expected": "0.11.17"
+    },
+    {
+      "test": "all inventory locations in AP model",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "UT graph location set",
+      "passed": true,
+      "actual": 3502,
+      "expected": 3502
+    },
+    {
+      "test": "UT authoritative option shuffle_npc_soul",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "test": "UT authoritative option shuffle_speak",
+      "passed": true,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "test": "UT authoritative option shuffle_animal_soul",
+      "passed": true,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "test": "UT authoritative option shuffle_grass_bush_soul",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "test": "UT authoritative option shuffle_grab",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "test": "UT authoritative option shuffle_climb",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "test": "UT authoritative option shuffle_roll",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "test": "whole-graph UT availability missing []",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Grab / Power Bracelet']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Climb']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Crawl']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['NPC Soul']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Speak Hylian']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Speak Deku']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Grass / Bush Soul']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Pot Soul']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Crate Soul']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Rock / Boulder Soul']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Cucco Soul']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Fish Soul']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Progressive Scale']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Progressive Hookshot']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Progressive Ocarina']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Song Note 25']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Flow of Time']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "whole-graph UT availability missing ['Roll']",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    }
+  ],
+  "total": 29,
+  "failures": 0,
+  "coverage": {
+    "graph_locations": 3502,
+    "inventory_scenarios": 19,
+    "location_comparisons": 66538
+  }
+}

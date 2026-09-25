@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "native_predicate_assertions": 202,
+  "source_silver_checks": 80,
+  "native_sheik_definitions": 7,
+  "compiler": "g++",
+  "scope": "compiled production expressions and CanBreakRocks with real enums and OptionValue; controlled engine services"
+}

@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "compile_command": [
+    "/usr/local/swift/usr/bin/clang++",
+    "-std=c++20",
+    "-fms-extensions",
+    "-O1",
+    "-I",
+    "/mnt/data/gv_fix/results/native-castle-after-clangpp/services",
+    "-I",
+    "/mnt/data/gv_fix/baseline",
+    "-I",
+    "/mnt/data/gv_fix/baseline/include",
+    "-I",
+    "/mnt/data/gv_fix/baseline/src",
+    "-I",
+    "/mnt/data/gv_fix/baseline/soh",
+    "-I",
+    "/mnt/data/gv_fix/baseline/assets",
+    "-I",
+    "/mnt/data/gv_fix/baseline/libultraship/include",
+    "/mnt/data/gv_fix/results/native-castle-after-clangpp/gv.cpp",
+    "-o",
+    "/mnt/data/gv_fix/results/native-castle-after-clangpp/gv"
+  ],
+  "compile_exit": 0,
+  "compile_stdout": "",
+  "compile_stderr": "",
+  "run_exit": 0,
+  "stdout": "cases=320 failures=0\n",
+  "stderr": "",
+  "scope": "Whole Castle Grounds initializer and production HasAnimalSoul/OptionValue with actual enum and save headers; controlled item/engine services and local graph traversal; not game physics."
+}

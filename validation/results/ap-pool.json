@@ -1,0 +1,53 @@
+[
+  {
+    "bag_mode": "none",
+    "pool_size": 3253,
+    "bombchu_packs": {
+      "Bombchus (5)": 155,
+      "Bombchus (10)": 142,
+      "Bombchus (20)": 132
+    },
+    "bag_items": 0,
+    "filler_4096_draws": {
+      "Bombchus (5)": 262,
+      "Bombchus (10)": 251,
+      "Bombchus (20)": 246
+    },
+    "version": "Version(major=0, minor=11, build=21)",
+    "passed": true
+  },
+  {
+    "bag_mode": "single_bag",
+    "pool_size": 3253,
+    "bombchu_packs": {
+      "Bombchus (5)": 158,
+      "Bombchus (10)": 140,
+      "Bombchus (20)": 149
+    },
+    "bag_items": 6,
+    "filler_4096_draws": {
+      "Bombchus (5)": 254,
+      "Bombchus (10)": 227,
+      "Bombchus (20)": 281
+    },
+    "version": "Version(major=0, minor=11, build=21)",
+    "passed": true
+  },
+  {
+    "bag_mode": "progressive_bags",
+    "pool_size": 3253,
+    "bombchu_packs": {
+      "Bombchus (5)": 164,
+      "Bombchus (10)": 159,
+      "Bombchus (20)": 146
+    },
+    "bag_items": 4,
+    "filler_4096_draws": {
+      "Bombchus (5)": 248,
+      "Bombchus (10)": 250,
+      "Bombchus (20)": 233
+    },
+    "version": "Version(major=0, minor=11, build=21)",
+    "passed": true
+  }
+]

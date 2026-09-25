@@ -1,0 +1,6008 @@
+{
+  "scope": "Necessary direct prerequisites only. A full inventory is used minus one required item; historical event flags are retained. No physical certification.",
+  "tested": 1999,
+  "counts": {
+    "Beehive Soul": 32,
+    "Butterfly Soul": 4,
+    "Climb": 29,
+    "Cow Soul": 9,
+    "Crate Soul": 84,
+    "Crawl": 1,
+    "Cucco Soul": 2,
+    "Fish Soul": 32,
+    "Grab / Power Bracelet": 6,
+    "Grass / Bush Soul": 331,
+    "NPC Soul": 143,
+    "Pot Soul": 339,
+    "Rock / Boulder Soul": 240,
+    "Roll": 66,
+    "Scrub Soul": 36,
+    "Shovel": 179,
+    "Sign Soul": 79,
+    "Skulltula Soul": 100,
+    "Speak Deku": 37,
+    "Speak Gerudo": 2,
+    "Speak Goron": 10,
+    "Speak Hylian": 92,
+    "Speak Kokiri": 8,
+    "Speak Zora": 10,
+    "Swim": 62,
+    "Tree Soul": 66
+  },
+  "failure_count": 0,
+  "failures": [],
+  "expectations": {
+    "Link's Pocket": [],
+    "Queen Gohma": [],
+    "King Dodongo": [],
+    "Barinade": [],
+    "Phantom Ganon": [],
+    "Volvagia": [],
+    "Morpha": [],
+    "Bongo Bongo": [],
+    "Twinrova": [],
+    "Gift from Rauru": [],
+    "Song from Impa": [],
+    "Song from Malon": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Song from Saria": [],
+    "Song from Royal Family's Tomb": [],
+    "Song from Ocarina of Time": [
+      "RG_BRONZE_SCALE"
+    ],
+    "Song from Windmill": [],
+    "Sheik in Forest": [],
+    "Sheik in Crater": [],
+    "Sheik in Ice Cavern": [],
+    "Sheik at Colossus": [],
+    "Sheik in Kakariko": [],
+    "Sheik at Temple": [],
+    "KF Mido Top Left Chest": [],
+    "KF Mido Top Right Chest": [],
+    "KF Mido Bottom Left Chest": [],
+    "KF Mido Bottom Right Chest": [],
+    "KF Kokiri Sword Chest": [],
+    "KF Storms Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "LW Gift From Saria": [],
+    "LW Ocarina Memory Game": [],
+    "LW Target in Woods": [],
+    "LW Near Shortcuts Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "LW Deku Theater Skull Mask": [
+      "RG_SHOVEL"
+    ],
+    "LW Deku Theater Mask of Truth": [
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LW Skull Kid": [],
+    "SFM Wolfos Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "HF Ocarina of Time Item": [
+      "RG_BRONZE_SCALE"
+    ],
+    "HF Near Market Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "HF Tektite Grotto Freestanding PoH": [
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "Market Shooting Gallery": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Bowling First Prize": [],
+    "Market Bombchu Bowling Second Prize": [],
+    "Market Lost Dog": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Treasure Chest Game Reward": [],
+    "Market 10 Big Poes": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market ToT Light Arrow Cutscene": [],
+    "Market ToT Master Sword": [],
+    "HC Great Fairy Reward": [],
+    "LLR Talons Chickens": [
+      "RG_ANIMAL_SOUL_CUCCO",
+      "RG_POWER_BRACELET",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LLR Freestanding PoH": [
+      "RG_CRAWL",
+      "RG_POWER_BRACELET"
+    ],
+    "Kak Anju as Child": [
+      "RG_ANIMAL_SOUL_CUCCO",
+      "RG_CLIMB",
+      "RG_CRATE_SOUL",
+      "RG_POWER_BRACELET",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Anju as Adult": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Impas House Freestanding PoH": [],
+    "Kak Windmill Freestanding PoH": [],
+    "Kak Man on Roof": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Open Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "Kak Redead Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "Kak Shooting Gallery Reward": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak 10 Gold Skulltula Reward": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak 20 Gold Skulltula Reward": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak 30 Gold Skulltula Reward": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak 40 Gold Skulltula Reward": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak 50 Gold Skulltula Reward": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak 100 Gold Skulltula Reward": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Graveyard Shield Grave Chest": [],
+    "Graveyard Heart Piece Grave Chest": [],
+    "Graveyard Royal Family's Tomb Chest": [],
+    "Graveyard Freestanding PoH": [],
+    "Graveyard Dampe Gravedigging Tour": [],
+    "Graveyard Hookshot Chest": [],
+    "Graveyard Dampe Race Freestanding PoH": [],
+    "DMT Freestanding PoH": [],
+    "DMT Chest": [],
+    "DMT Storms Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "DMT Trade Claim Check": [],
+    "DMT Great Fairy Reward": [],
+    "GC Darunias Joy": [],
+    "GC Pot Freestanding PoH": [],
+    "GC Rolling Goron as Child": [
+      "RG_SPEAK_GORON"
+    ],
+    "GC Rolling Goron as Adult": [],
+    "GC Maze Left Chest": [],
+    "GC Maze Right Chest": [],
+    "GC Maze Center Chest": [],
+    "DMC Volcano Freestanding PoH": [],
+    "DMC Wall Freestanding PoH": [],
+    "DMC Upper Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "DMC Great Fairy Reward": [],
+    "ZR Open Grotto Chest": [
+      "RG_SHOVEL"
+    ],
+    "ZR Frogs in the Rain": [],
+    "ZR Frogs Ocarina Game": [],
+    "ZR Near Open Grotto Freestanding PoH": [],
+    "ZR Near Domain Freestanding PoH": [],
+    "ZD Diving Minigame": [
+      "RG_BRONZE_SCALE",
+      "RG_SPEAK_ZORA"
+    ],
+    "ZD Chest": [],
+    "ZD King Zora Thawed": [
+      "RG_SPEAK_ZORA"
+    ],
+    "ZF Great Fairy Reward": [],
+    "ZF Iceberg Freestanding PoH": [],
+    "ZF Bottom Freestanding PoH": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LH Underwater Item": [],
+    "LH Child Fishing": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Fishing": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Lab Dive": [
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Freestanding PoH": [
+      "RG_CLIMB"
+    ],
+    "LH Sun": [],
+    "GV Crate Freestanding PoH": [
+      "RG_CRATE_SOUL"
+    ],
+    "GV Waterfall Freestanding PoH": [],
+    "GV Chest": [],
+    "GF Chest": [],
+    "GF HBA 1000 Points": [
+      "RG_SPEAK_GERUDO"
+    ],
+    "GF HBA 1500 Points": [
+      "RG_SPEAK_GERUDO"
+    ],
+    "GF Freed All Carpenters": [],
+    "GF 1 Torch Carpenter": [],
+    "GF Dead End Carpenter": [],
+    "GF Double Cell Carpenter": [],
+    "GF Steep Slope Carpenter": [],
+    "Wasteland Chest": [],
+    "Colossus Great Fairy Reward": [],
+    "Colossus Freestanding PoH": [],
+    "OGC Great Fairy Reward": [],
+    "Deku Tree Map Chest": [],
+    "Deku Tree Slingshot Room Side Chest": [],
+    "Deku Tree Slingshot Chest": [],
+    "Deku Tree Compass Chest": [],
+    "Deku Tree Compass Room Side Chest": [],
+    "Deku Tree Basement Chest": [],
+    "Deku Tree Queen Gohma Heart Container": [],
+    "Dodongos Cavern Map Chest": [],
+    "Dodongos Cavern Compass Chest": [],
+    "Dodongos Cavern Bomb Flower Platform Chest": [],
+    "Dodongos Cavern Bomb Bag Chest": [],
+    "Dodongos Cavern End Of Bridge Chest": [],
+    "Dodongos Cavern Boss Room Chest": [],
+    "Dodongos Cavern King Dodongo Heart Container": [],
+    "Jabu Jabus Belly Boomerang Chest": [],
+    "Jabu Jabus Belly Map Chest": [],
+    "Jabu Jabus Belly Compass Chest": [],
+    "Jabu Jabus Belly Barinade Heart Container": [],
+    "Bottom of the Well Front Left Fake Wall Chest": [],
+    "Bottom of the Well Front Center Bombable Chest": [],
+    "Bottom of the Well Back Left Bombable Chest": [],
+    "Bottom of the Well Underwater Left Chest": [],
+    "Bottom of the Well Freestanding Key": [],
+    "Bottom of the Well Compass Chest": [],
+    "Bottom of the Well Center Skulltula Chest": [],
+    "Bottom of the Well Right Bottom Fake Wall Chest": [],
+    "Bottom of the Well Fire Keese Chest": [],
+    "Bottom of the Well Like Like Chest": [],
+    "Bottom of the Well Map Chest": [],
+    "Bottom of the Well Underwater Front Chest": [],
+    "Bottom of the Well Invisible Chest": [],
+    "Bottom of the Well Lens of Truth Chest": [],
+    "Forest Temple First Room Chest": [],
+    "Forest Temple First Stalfos Chest": [],
+    "Forest Temple Raised Island Courtyard Chest": [],
+    "Forest Temple Map Chest": [],
+    "Forest Temple Well Chest": [],
+    "Forest Temple Eye Switch Chest": [],
+    "Forest Temple Boss Key Chest": [],
+    "Forest Temple Floormaster Chest": [],
+    "Forest Temple Red Poe Chest": [],
+    "Forest Temple Bow Chest": [],
+    "Forest Temple Blue Poe Chest": [],
+    "Forest Temple Falling Ceiling Room Chest": [],
+    "Forest Temple Basement Chest": [
+      "RG_POWER_BRACELET"
+    ],
+    "Forest Temple Phantom Ganon Heart Container": [],
+    "Fire Temple Near Boss Chest": [],
+    "Fire Temple Flare Dancer Chest": [],
+    "Fire Temple Boss Key Chest": [],
+    "Fire Temple Big Lava Room Lower Open Door Chest": [],
+    "Fire Temple Big Lava Room Blocked Door Chest": [],
+    "Fire Temple Boulder Maze Lower Chest": [],
+    "Fire Temple Boulder Maze Side Room Chest": [],
+    "Fire Temple Map Chest": [],
+    "Fire Temple Boulder Maze Shortcut Chest": [],
+    "Fire Temple Boulder Maze Upper Chest": [],
+    "Fire Temple Scarecrow Chest": [],
+    "Fire Temple Compass Chest": [],
+    "Fire Temple Megaton Hammer Chest": [],
+    "Fire Temple Highest Goron Chest": [],
+    "Fire Temple Volvagia Heart Container": [],
+    "Water Temple Compass Chest": [],
+    "Water Temple Map Chest": [],
+    "Water Temple Cracked Wall Chest": [],
+    "Water Temple Torches Chest": [],
+    "Water Temple Boss Key Chest": [],
+    "Water Temple Central Pillar Chest": [
+      "RG_BRONZE_SCALE"
+    ],
+    "Water Temple Central Bow Target Chest": [],
+    "Water Temple Longshot Chest": [],
+    "Water Temple River Chest": [],
+    "Water Temple Dragon Chest": [
+      "RG_BRONZE_SCALE"
+    ],
+    "Water Temple Morpha Heart Container": [],
+    "Shadow Temple Map Chest": [],
+    "Shadow Temple Hover Boots Chest": [],
+    "Shadow Temple Compass Chest": [],
+    "Shadow Temple Early Silver Rupee Chest": [],
+    "Shadow Temple Invisible Blades Visible Chest": [],
+    "Shadow Temple Invisible Blades Invisible Chest": [],
+    "Shadow Temple Falling Spikes Lower Chest": [],
+    "Shadow Temple Falling Spikes Upper Chest": [],
+    "Shadow Temple Falling Spikes Switch Chest": [],
+    "Shadow Temple Invisible Spikes Chest": [],
+    "Shadow Temple Freestanding Key": [],
+    "Shadow Temple Wind Hint Chest": [],
+    "Shadow Temple After Wind Enemy Chest": [],
+    "Shadow Temple After Wind Hidden Chest": [],
+    "Shadow Temple Spike Walls Left Chest": [],
+    "Shadow Temple Boss Key Chest": [],
+    "Shadow Temple Invisible Floormaster Chest": [],
+    "Shadow Temple Bongo Bongo Heart Container": [],
+    "Spirit Temple Child Bridge Chest": [],
+    "Spirit Temple Child Early Torches Chest": [],
+    "Spirit Temple Child Climb North Chest": [],
+    "Spirit Temple Child Climb East Chest": [],
+    "Spirit Temple Map Chest": [],
+    "Spirit Temple Sun Block Room Chest": [],
+    "Spirit Temple Silver Gauntlets Chest": [],
+    "Spirit Temple Compass Chest": [],
+    "Spirit Temple Early Adult Right Chest": [],
+    "Spirit Temple First Mirror Left Chest": [],
+    "Spirit Temple First Mirror Right Chest": [],
+    "Spirit Temple Statue Room Northeast Chest": [],
+    "Spirit Temple Statue Room Hand Chest": [],
+    "Spirit Temple Near Four Armos Chest": [],
+    "Spirit Temple Hallway Right Invisible Chest": [],
+    "Spirit Temple Hallway Left Invisible Chest": [],
+    "Spirit Temple Mirror Shield Chest": [],
+    "Spirit Temple Boss Key Chest": [],
+    "Spirit Temple Topmost Chest": [],
+    "Spirit Temple Twinrova Heart Container": [],
+    "Ice Cavern Map Chest": [],
+    "Ice Cavern Compass Chest": [],
+    "Ice Cavern Freestanding PoH": [],
+    "Ice Cavern Iron Boots Chest": [],
+    "Gerudo Training Ground Lobby Left Chest": [],
+    "Gerudo Training Ground Lobby Right Chest": [],
+    "Gerudo Training Ground Stalfos Chest": [],
+    "Gerudo Training Ground Before Heavy Block Chest": [],
+    "Gerudo Training Ground Heavy Block First Chest": [],
+    "Gerudo Training Ground Heavy Block Second Chest": [],
+    "Gerudo Training Ground Heavy Block Third Chest": [],
+    "Gerudo Training Ground Heavy Block Fourth Chest": [],
+    "Gerudo Training Ground Eye Statue Chest": [],
+    "Gerudo Training Ground Near Scarecrow Chest": [],
+    "Gerudo Training Ground Hammer Room Clear Chest": [],
+    "Gerudo Training Ground Hammer Room Switch Chest": [],
+    "Gerudo Training Ground Freestanding Key": [],
+    "Gerudo Training Ground Maze Right Central Chest": [],
+    "Gerudo Training Ground Maze Right Side Chest": [],
+    "Gerudo Training Ground Underwater Silver Rupee Chest": [],
+    "Gerudo Training Ground Beamos Chest": [],
+    "Gerudo Training Ground Hidden Ceiling Chest": [],
+    "Gerudo Training Ground Maze Path First Chest": [],
+    "Gerudo Training Ground Maze Path Second Chest": [],
+    "Gerudo Training Ground Maze Path Third Chest": [],
+    "Gerudo Training Ground Maze Path Final Chest": [],
+    "Ganon's Castle Forest Trial Chest": [],
+    "Ganon's Castle Water Trial Left Chest": [],
+    "Ganon's Castle Water Trial Right Chest": [],
+    "Ganon's Castle Shadow Trial Front Chest": [],
+    "Ganon's Castle Shadow Trial Golden Gauntlets Chest": [],
+    "Ganon's Castle Light Trial First Left Chest": [],
+    "Ganon's Castle Light Trial Second Left Chest": [],
+    "Ganon's Castle Light Trial Third Left Chest": [],
+    "Ganon's Castle Light Trial First Right Chest": [],
+    "Ganon's Castle Light Trial Second Right Chest": [],
+    "Ganon's Castle Light Trial Third Right Chest": [],
+    "Ganon's Castle Light Trial Invisible Enemies Chest": [],
+    "Ganon's Castle Light Trial Lullaby Chest": [],
+    "Ganon's Castle Spirit Trial Crystal Switch Chest": [],
+    "Ganon's Castle Spirit Trial Invisible Chest": [],
+    "Ganon's Castle Tower Boss Key Chest": [],
+    "KF GS Know It All House": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "KF GS Bean Patch": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "KF GS House of Twins": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LW GS Bean Patch Near Bridge": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LW GS Bean Patch Near Theater": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LW GS Above Theater": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "SFM GS": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "HF GS Cow Grotto": [
+      "RG_SHOVEL",
+      "RG_SKULLTULA_SOUL"
+    ],
+    "HF GS Stone Bridge Tree Grotto": [
+      "RG_SHOVEL",
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Market GS Guard House": [
+      "RG_CRATE_SOUL",
+      "RG_SKULLTULA_SOUL"
+    ],
+    "HC GS in Tree": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_SKULLTULA_SOUL",
+      "RG_TREE_SOUL"
+    ],
+    "HC GS Storms Grotto": [
+      "RG_SHOVEL",
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LLR GS House Window": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LLR GS Tree": [
+      "RG_ROLL",
+      "RG_SKULLTULA_SOUL",
+      "RG_TREE_SOUL"
+    ],
+    "LLR GS Rain Shed": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LLR GS Back Wall": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Kak GS Tree": [
+      "RG_ROLL",
+      "RG_SKULLTULA_SOUL",
+      "RG_TREE_SOUL"
+    ],
+    "Kak GS Guards House": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Kak GS Watchtower": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Kak GS Skulltula House": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Kak GS House Under Construction": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Kak GS Above Impas House": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Graveyard GS Bean Patch": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Graveyard GS Wall": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "DMT GS Near Kak": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "DMT GS Bean Patch": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "DMT GS Above Dodongos Cavern": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "DMT GS Falling Rocks Path": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "GC GS Center Platform": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "GC GS Boulder Maze": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "DMC GS Crate": [
+      "RG_CRATE_SOUL",
+      "RG_SKULLTULA_SOUL"
+    ],
+    "DMC GS Bean Patch": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "ZR GS Tree": [
+      "RG_ROLL",
+      "RG_SKULLTULA_SOUL",
+      "RG_TREE_SOUL"
+    ],
+    "ZR GS Ladder": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "ZR GS Near Raised Grottos": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "ZR GS Above Bridge": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "ZD GS Frozen Waterfall": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "ZF GS Above The Log": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "ZF GS Tree": [
+      "RG_ROLL",
+      "RG_SKULLTULA_SOUL",
+      "RG_TREE_SOUL"
+    ],
+    "ZF GS Hidden Cave": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LH GS Bean Patch": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LH GS Lab Wall": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LH GS Small Island": [
+      "RG_BRONZE_SCALE",
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LH GS Lab Crate": [
+      "RG_CRATE_SOUL",
+      "RG_SKULLTULA_SOUL"
+    ],
+    "LH GS Tree": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "GV GS Small Bridge": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "GV GS Bean Patch": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "GV GS Behind Tent": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "GV GS Pillar": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "GF GS Top Floor": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "GF GS Archery Range": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Wasteland GS": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Colossus GS Bean Patch": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Colossus GS Tree": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Colossus GS Hill": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "HC OGC GS": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Deku Tree GS Compass Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Deku Tree GS Basement Vines": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Deku Tree GS Basement Gate": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Deku Tree GS Basement Back Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Dodongos Cavern GS Side Room Near Lower Lizalfos": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Dodongos Cavern GS Scarecrow": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Dodongos Cavern GS Alcove Above Stairs": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Dodongos Cavern GS Vines Above Stairs": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Dodongos Cavern GS Back Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Jabu Jabus Belly GS Water Switch Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Jabu Jabus Belly GS Lobby Basement Lower": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Jabu Jabus Belly GS Lobby Basement Upper": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Jabu Jabus Belly GS Near Boss": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Bottom of the Well GS West Inner Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Bottom of the Well GS East Inner Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Bottom of the Well GS Like Like Cage": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Forest Temple GS First Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Forest Temple GS Lobby": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Forest Temple GS Raised Island Courtyard": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Forest Temple GS Level Island Courtyard": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Forest Temple GS Basement": [
+      "RG_POWER_BRACELET",
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Fire Temple GS Boss Key Loop": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Fire Temple GS Song of Time Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Fire Temple GS Boulder Maze": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Fire Temple GS Scarecrow Climb": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Fire Temple GS Scarecrow Top": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Water Temple GS Behind Gate": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Water Temple GS Near Boss Key Chest": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Water Temple GS Central Pillar": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Water Temple GS Falling Platform Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Water Temple GS River": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Shadow Temple GS Like Like Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Shadow Temple GS Falling Spikes Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Shadow Temple GS Single Giant Pot": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Shadow Temple GS Near Ship": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Shadow Temple GS Triple Giant Pot": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Spirit Temple GS Metal Fence": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Spirit Temple GS Sun on Floor Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Spirit Temple GS Hall After Sun Block Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Spirit Temple GS Lobby": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Spirit Temple GS Boulder Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Ice Cavern GS Spinning Scythe Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Ice Cavern GS Heart Piece Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "Ice Cavern GS Push Block Room": [
+      "RG_SKULLTULA_SOUL"
+    ],
+    "KF Shop Item 1": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_KOKIRI"
+    ],
+    "KF Shop Item 2": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_KOKIRI"
+    ],
+    "KF Shop Item 3": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_KOKIRI"
+    ],
+    "KF Shop Item 4": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_KOKIRI"
+    ],
+    "KF Shop Item 5": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_KOKIRI"
+    ],
+    "KF Shop Item 6": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_KOKIRI"
+    ],
+    "KF Shop Item 7": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_KOKIRI"
+    ],
+    "KF Shop Item 8": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_KOKIRI"
+    ],
+    "Market Bazaar Item 1": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bazaar Item 2": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bazaar Item 3": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bazaar Item 4": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bazaar Item 5": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bazaar Item 6": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bazaar Item 7": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bazaar Item 8": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Potion Shop Item 1": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Potion Shop Item 2": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Potion Shop Item 3": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Potion Shop Item 4": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Potion Shop Item 5": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Potion Shop Item 6": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Potion Shop Item 7": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Potion Shop Item 8": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Shop Item 1": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Shop Item 2": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Shop Item 3": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Shop Item 4": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Shop Item 5": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Shop Item 6": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Shop Item 7": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Market Bombchu Shop Item 8": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Bazaar Item 1": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Bazaar Item 2": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Bazaar Item 3": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Bazaar Item 4": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Bazaar Item 5": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Bazaar Item 6": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Bazaar Item 7": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Bazaar Item 8": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Potion Shop Item 1": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Potion Shop Item 2": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Potion Shop Item 3": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Potion Shop Item 4": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Potion Shop Item 5": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Potion Shop Item 6": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Potion Shop Item 7": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Kak Potion Shop Item 8": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "GC Shop Item 1": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "GC Shop Item 2": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "GC Shop Item 3": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "GC Shop Item 4": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "GC Shop Item 5": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "GC Shop Item 6": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "GC Shop Item 7": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "GC Shop Item 8": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "ZD Shop Item 1": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_ZORA"
+    ],
+    "ZD Shop Item 2": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_ZORA"
+    ],
+    "ZD Shop Item 3": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_ZORA"
+    ],
+    "ZD Shop Item 4": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_ZORA"
+    ],
+    "ZD Shop Item 5": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_ZORA"
+    ],
+    "ZD Shop Item 6": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_ZORA"
+    ],
+    "ZD Shop Item 7": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_ZORA"
+    ],
+    "ZD Shop Item 8": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_ZORA"
+    ],
+    "LW Deku Scrub Near Bridge": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LW Deku Scrub Near Deku Theater Left": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LW Deku Scrub Near Deku Theater Right": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LW Deku Scrub Grotto Front": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LW Deku Scrub Grotto Rear": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "SFM Deku Scrub Grotto Front": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "SFM Deku Scrub Grotto Rear": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "HF Deku Scrub Grotto": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LLR Deku Scrub Grotto Left": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LLR Deku Scrub Grotto Center": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LLR Deku Scrub Grotto Right": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "GC Deku Scrub Grotto Left": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "GC Deku Scrub Grotto Center": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "GC Deku Scrub Grotto Right": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "DMC Deku Scrub": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "DMC Deku Scrub Grotto Left": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "DMC Deku Scrub Grotto Center": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "DMC Deku Scrub Grotto Right": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "ZR Deku Scrub Grotto Front": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "ZR Deku Scrub Grotto Rear": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LH Deku Scrub Grotto Left": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LH Deku Scrub Grotto Center": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LH Deku Scrub Grotto Right": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "GV Deku Scrub Grotto Front": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "GV Deku Scrub Grotto Rear": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Colossus Deku Scrub Grotto Front": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Colossus Deku Scrub Grotto Rear": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SHOVEL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Dodongos Cavern Deku Scrub Side Room Near Dodongos": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Dodongos Cavern Deku Scrub Lobby": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Dodongos Cavern Deku Scrub Near Bomb Bag Left": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Dodongos Cavern Deku Scrub Near Bomb Bag Right": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Jabu Jabus Belly Deku Scrub": [
+      "RG_BRONZE_SCALE",
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Ganon's Castle Deku Scrub Left": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Ganon's Castle Deku Scrub Center-Left": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Ganon's Castle Deku Scrub Center-Right": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "Ganon's Castle Deku Scrub Right": [
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_DEKU"
+    ],
+    "LW Trade Cojiro": [],
+    "LW Trade Odd Potion": [],
+    "Kak Trade Odd Mushroom": [],
+    "Kak Trade Pocket Cucco": [],
+    "DMT Trade Broken Sword": [],
+    "DMT Trade Eyedrops": [],
+    "ZD Trade Prescription": [],
+    "LH Lab Trade Eyeball Frog": [],
+    "GV Trade Saw": [],
+    "Kak Granny's Shop": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "GC Medigoron": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_GORON"
+    ],
+    "ZR Magic Bean Salesman": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "Wasteland Carpet Salesman": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "KF Links House Cow": [
+      "RG_ANIMAL_SOUL_COW"
+    ],
+    "HF Cow Grotto Cow": [
+      "RG_ANIMAL_SOUL_COW",
+      "RG_SHOVEL"
+    ],
+    "LLR Stables Left Cow": [
+      "RG_ANIMAL_SOUL_COW"
+    ],
+    "LLR Stables Right Cow": [
+      "RG_ANIMAL_SOUL_COW"
+    ],
+    "LLR Tower Left Cow": [
+      "RG_ANIMAL_SOUL_COW"
+    ],
+    "LLR Tower Right Cow": [
+      "RG_ANIMAL_SOUL_COW"
+    ],
+    "Kak Impas House Cow": [
+      "RG_ANIMAL_SOUL_COW"
+    ],
+    "DMT Cow Grotto Cow": [
+      "RG_ANIMAL_SOUL_COW",
+      "RG_SHOVEL"
+    ],
+    "GV Cow": [
+      "RG_ANIMAL_SOUL_COW"
+    ],
+    "ZR Frogs Zelda's Lullaby": [],
+    "ZR Frogs Epona's Song": [],
+    "ZR Frogs Saria's Song": [],
+    "ZR Frogs Sun's Song": [],
+    "ZR Frogs Song of Time": [],
+    "KF Storms Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "KF Storms Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LW Tunnel Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LW Tunnel Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LW Deku Scrub Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "SFM Deku Scrub Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Near Market Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Near Market Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Deku Scrub Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LLR Deku Scrub Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Kak Open Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Kak Open Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Storms Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Storms Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "GC Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMC Upper Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMC Upper Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMC Hammer Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "ZR Open Grotto Beehive Left": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "ZR Open Grotto Beehive Right": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "ZR Storms Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "ZD In Front of King Zora Beehive Left": [
+      "RG_BEEHIVE_SOUL"
+    ],
+    "ZD In Front of King Zora Beehive Right": [
+      "RG_BEEHIVE_SOUL"
+    ],
+    "ZD Behind King Zora Beehive": [
+      "RG_BEEHIVE_SOUL"
+    ],
+    "LH Deku Scrub Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "GV Deku Scrub Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Colossus Deku Scrub Grotto Beehive": [
+      "RG_BEEHIVE_SOUL",
+      "RG_SHOVEL"
+    ],
+    "KF Links House Pot": [
+      "RG_POT_SOUL"
+    ],
+    "KF Twins House Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "KF Twins House Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "KF Brothers House Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "KF Brothers House Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "GF Break Room Front Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Break Room Back Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Kitchen Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "GF Kitchen Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "GF 1 Torch Cell Right Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF 1 Torch Cell Middle Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF 1 Torch Cell Left Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Steep Slope Right Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Steep Slope Left Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Double Cell Right Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Double Cell Middle Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Double Cell Left Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Rightmost Jailed Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Right Middle Jailed Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Left Middle Jailed Pot": [
+      "RG_POT_SOUL"
+    ],
+    "GF Leftmost Jailed Pot": [
+      "RG_POT_SOUL"
+    ],
+    "Wasteland Near GS Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Wasteland Near GS Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Wasteland Near GS Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Wasteland Near GS Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "HF Cow Grotto Pot 1": [
+      "RG_POT_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Cow Grotto Pot 2": [
+      "RG_POT_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Market Guard House Child Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 6": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 7": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 8": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 9": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 10": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 11": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 12": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 13": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 14": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 15": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 16": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 17": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 18": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 19": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 20": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 21": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 22": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 23": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 24": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 25": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 26": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 27": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 28": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 29": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 30": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 31": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 32": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 33": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 34": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 35": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 36": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 37": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 38": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 39": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 40": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 41": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 42": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 43": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Child Pot 44": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 6": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 7": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 8": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 9": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 10": [
+      "RG_POT_SOUL"
+    ],
+    "Market Guard House Adult Pot 11": [
+      "RG_POT_SOUL"
+    ],
+    "Market Back Alley House Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Market Back Alley House Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Market Back Alley House Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "HC Storms Grotto Pot 1": [
+      "RG_POT_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HC Storms Grotto Pot 2": [
+      "RG_POT_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HC Storms Grotto Pot 3": [
+      "RG_POT_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HC Storms Grotto Pot 4": [
+      "RG_POT_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LLR Front Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Front Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Front Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Front Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Rain Shed Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Rain Shed Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Rain Shed Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Talons House Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Talons House Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "LLR Talons House Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Potion Shop Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Potion Shop Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Potion Shop Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Impas House Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Impas House Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Impas House Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Guards House Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Guards House Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Guards House Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Medicine Shop Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Kak Near Medicine Shop Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Graveyard Dampes Grave Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Graveyard Dampes Grave Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Graveyard Dampes Grave Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Graveyard Dampes Grave Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Graveyard Dampes Grave Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Graveyard Dampes Grave Pot 6": [
+      "RG_POT_SOUL"
+    ],
+    "GC Lower Staircase Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "GC Lower Staircase Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "GC Upper Staircase Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "GC Upper Staircase Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "GC Upper Staircase Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "GC Medigoron Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "GC Darunia Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "GC Darunia Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "GC Darunia Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "DMC Near GC Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "DMC Near GC Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "DMC Near GC Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "DMC Near GC Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "ZD Near Shop Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "ZD Near Shop Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "ZD Near Shop Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "ZD Near Shop Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "ZD Near Shop Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "ZF Hidden Cave Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "ZF Hidden Cave Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "ZF Hidden Cave Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "ZF Near Jabu Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "ZF Near Jabu Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "ZF Near Jabu Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "ZF Near Jabu Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Lizalfos Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Lizalfos Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Lizalfos Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Lizalfos Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Side Room Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Side Room Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Side Room Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Side Room Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Torch Room Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Torch Room Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Torch Room Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Torch Room Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Staircase Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Staircase Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Staircase Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Staircase Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Single Eye Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Single Eye Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Blade Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Blade Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Double Eye Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Double Eye Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Back Room Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Back Room Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Back Room Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Dodongos Cavern Back Room Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Above Big Octo Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Above Big Octo Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Above Big Octo Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Barinade Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Barinade Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Barinade Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Barinade Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Barinade Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Barinade Pot 6": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Basement Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Basement Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Basement Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Two Octorok Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Two Octorok Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Two Octorok Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Two Octorok Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Jabu Jabus Belly Two Octorok Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 6": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 7": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 8": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 9": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 10": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 11": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Basement Pot 12": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Left Side Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Left Side Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Left Side Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Near Entrance Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Near Entrance Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Fire Keese Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Bottom of the Well Underwater Pot": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Lobby Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Lobby Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Lobby Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Lobby Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Lobby Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Lobby Pot 6": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Lower Stalfos Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Lower Stalfos Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Green Poe Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Green Poe Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Upper Stalfos Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Upper Stalfos Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Upper Stalfos Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Upper Stalfos Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Blue Poe Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Blue Poe Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Blue Poe Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Frozen Eye Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Forest Temple Frozen Eye Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Near Boss Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Near Boss Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Near Boss Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Near Boss Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Big Lava Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Big Lava Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Big Lava Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Flame Maze Left Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Flame Maze Left Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Flame Maze Left Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Flame Maze Left Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Flame Maze Right Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Flame Maze Right Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Flame Maze Right Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Fire Temple Flame Maze Right Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Main Level 2 Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Main Level 2 Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Main Level 1 Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Main Level 1 Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Torch Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Torch Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Near Compass Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Near Compass Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Near Compass Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Central Bow Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Central Bow Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Behind Gate Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Behind Gate Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Behind Gate Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Behind Gate Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Basement Block Puzzle Pot 1": [
+      "RG_BRONZE_SCALE",
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Basement Block Puzzle Pot 2": [
+      "RG_BRONZE_SCALE",
+      "RG_POT_SOUL"
+    ],
+    "Water Temple River Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple River Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Like Like Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Like Like Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Boss Key Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Water Temple Boss Key Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Near Dead Hand Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Whispering Walls Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Whispering Walls Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Whispering Walls Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Whispering Walls Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Whispering Walls Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Map Chest Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Map Chest Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Falling Spikes Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Falling Spikes Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Falling Spikes Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Falling Spikes Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple After Wind Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple After Wind Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Spike Walls Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Floormaster Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple Floormaster Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple After Boat Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple After Boat Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple After Boat Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Shadow Temple After Boat Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Lobby Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Lobby Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Anubis Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Anubis Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Anubis Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Anubis Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Child Climb Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple After Sun Block Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple After Sun Block Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Central Chamber Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Central Chamber Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Central Chamber Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Central Chamber Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Central Chamber Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Central Chamber Pot 6": [
+      "RG_POT_SOUL"
+    ],
+    "Spirit Temple Beamos Hall Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ice Cavern Hall Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ice Cavern Hall Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ice Cavern Spinning Blade Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ice Cavern Spinning Blade Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ice Cavern Spinning Blade Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Ice Cavern Near End Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ice Cavern Near End Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ice Cavern Frozen Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Forest Trial Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Forest Trial Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Fire Trial Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Fire Trial Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Water Trial Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Water Trial Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Water Trial Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Shadow Trial Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Shadow Trial Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Shadow Trial Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Shadow Trial Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Spirit Trial Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Spirit Trial Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Light Trial Boulder Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Light Trial Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Light Trial Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 1": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 2": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 3": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 4": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 5": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 6": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 7": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 8": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 9": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 10": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 11": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 12": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 13": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 14": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 15": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 16": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 17": [
+      "RG_POT_SOUL"
+    ],
+    "Ganon's Castle Ganons Tower Pot 18": [
+      "RG_POT_SOUL"
+    ],
+    "GV Freestanding PoH Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GV Near Cow Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Above Jail Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Southmost Center Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Middle South Center Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Middle North Center Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Northmost Center Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Outskirts Northeast Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Outskirts Northwest Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Range Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Range Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Range Crate 3": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Range Crate 4": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Range Crate 5": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Range Crate 6": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Range Crate 7": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Canopy East Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Horseback Archery Canopy West Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF North Target East Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF North Target West Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF South Target East Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF South Target West Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Near Kitchen Leftmost Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Near Kitchen Middle Left Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Near Kitchen Middle Right Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Near Kitchen Rightmost Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Kitchen Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Break Hallway Outer Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Break Room Left Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Break Hallway Inner Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Break Room Right Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF 1 Torch Cell Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Dead End Cell Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Double Cell Left Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GF Double Cell Right Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Wasteland Before Quicksand Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Wasteland After Quicksand Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Wasteland After Quicksand Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Wasteland After Quicksand Crate 3": [
+      "RG_CRATE_SOUL"
+    ],
+    "Wasteland Near Colossus Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Near Bazaar Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Near Bazaar Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Shooting Gallery Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Shooting Gallery Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Lost Dog House Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Guard House Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Guard House Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Guard House Crate 3": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Guard House Crate 4": [
+      "RG_CRATE_SOUL"
+    ],
+    "Market Guard House Crate 5": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Open Grotto Adult Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Open Grotto Adult Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Open Grotto Adult Crate 3": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Open Grotto Adult Crate 4": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Potion Shop Adult Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Shooting Gallery Adult Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Boarding House Adult Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Boarding House Adult Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Impas House Adult Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Impas House Adult Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Bazaar Adult Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Bazaar Adult Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Behind GS House Adult Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Graveyard Child Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Windmill Child Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Fence Child Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Boarding House Child Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Kak Near Bazaar Child Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Graveyard Freestanding PoH Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "GC Maze Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "DMC Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "LLR Near Tree Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "LH Lab Crate": [
+      "RG_CRATE_SOUL"
+    ],
+    "Jabu Jabus Belly Platform Room Small Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Jabu Jabus Belly Platform Room Small Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Fire Temple After Hammer Small Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Fire Temple After Hammer Small Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "Spirit Temple Before Child Climb Small Crate 1": [
+      "RG_CRATE_SOUL"
+    ],
+    "Spirit Temple Before Child Climb Small Crate 2": [
+      "RG_CRATE_SOUL"
+    ],
+    "KF Boulder Maze First Rupee": [],
+    "KF Boulder Maze Second Rupee": [],
+    "KF Bridge Rupee": [],
+    "KF Behind Mido's House Rupee": [],
+    "KF Saria's Roof West Heart": [],
+    "KF Saria's Roof East Heart": [],
+    "KF Saria's Roof North Heart": [],
+    "KF South Grass West Rupee": [],
+    "KF North Grass West Rupee": [],
+    "KF North Grass East Rupee": [],
+    "KF South Grass East Rupee": [],
+    "KF Saria's House Top Left Heart": [],
+    "KF Saria's House Top Right Heart": [],
+    "KF Saria's House Bottom Left Heart": [],
+    "KF Saria's House Bottom Right Heart": [],
+    "KF Bean Platform Rupee 1": [],
+    "KF Bean Platform Rupee 2": [],
+    "KF Bean Platform Rupee 3": [],
+    "KF Bean Platform Rupee 4": [],
+    "KF Bean Platform Rupee 5": [],
+    "KF Bean Platform Rupee 6": [],
+    "KF Bean Platform Red Rupee": [],
+    "LW Boulder Rupee": [],
+    "LW Underwater Shortcut Rupee 1": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LW Underwater Shortcut Rupee 2": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LW Underwater Shortcut Rupee 3": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LW Underwater Shortcut Rupee 4": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LW Underwater Shortcut Rupee 5": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LW Underwater Shortcut Rupee 6": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LW Underwater Shortcut Rupee 7": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LW Underwater Shortcut Rupee 8": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LH Underwater Front Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "LH Underwater Middle Rupee": [],
+    "LH Underwater Back Rupee": [],
+    "LH Lab Front Rupee": [],
+    "LH Lab Left Rupee": [],
+    "LH Lab Right Rupee": [],
+    "Graveyard Dampe's Grave Rupee 1": [],
+    "Graveyard Dampe's Grave Rupee 2": [],
+    "Graveyard Dampe's Grave Rupee 3": [],
+    "Graveyard Dampe's Grave Rupee 4": [],
+    "Graveyard Dampe's Grave Rupee 5": [],
+    "Graveyard Dampe's Grave Rupee 6": [],
+    "Graveyard Dampe's Grave Rupee 7": [],
+    "Graveyard Dampe's Grave Rupee 8": [],
+    "GV Octorok Grotto Front Left Blue Rupee": [
+      "RG_SHOVEL"
+    ],
+    "GV Octorok Grotto Front Right Blue Rupee": [
+      "RG_SHOVEL"
+    ],
+    "GV Octorok Grotto Back Blue Rupee": [
+      "RG_SHOVEL"
+    ],
+    "GV Octorok Grotto Front Left Green Rupee": [
+      "RG_SHOVEL"
+    ],
+    "GV Octorok Grotto Front Right Green Rupee": [
+      "RG_SHOVEL"
+    ],
+    "GV Octorok Grotto Back Left Green Rupee": [
+      "RG_SHOVEL"
+    ],
+    "GV Octorok Grotto Back Right Green Rupee": [
+      "RG_SHOVEL"
+    ],
+    "GV Octorok Grotto Red Rupee": [
+      "RG_SHOVEL"
+    ],
+    "DMT Blue Rupee Under Boulder": [],
+    "DMT Red Rupee Under Boulder": [],
+    "DMT Cow Grotto Left Heart": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Middle Left Heart": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Middle Right Heart": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Right Heart": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Rupee 1": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Rupee 2": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Rupee 3": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Rupee 4": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Rupee 5": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Rupee 6": [
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Red Rupee": [
+      "RG_SHOVEL"
+    ],
+    "DMC Near Warp Platform Red Rupee": [],
+    "DMC Middle Platform Red Rupee": [],
+    "DMC Middle Platform Blue Rupee 1": [],
+    "DMC Middle Platform Blue Rupee 2": [],
+    "DMC Middle Platform Blue Rupee 3": [],
+    "DMC Middle Platform Blue Rupee 4": [],
+    "DMC Middle Platform Blue Rupee 5": [],
+    "DMC Middle Platform Blue Rupee 6": [],
+    "DMC Distant Platform Red Rupee": [],
+    "DMC Distant Platform Rupee 1": [],
+    "DMC Distant Platform Rupee 2": [],
+    "DMC Distant Platform Rupee 3": [],
+    "DMC Distant Platform Rupee 4": [],
+    "DMC Distant Platform Rupee 5": [],
+    "DMC Distant Platform Rupee 6": [],
+    "ZR Beneath Domain Red Left Rupee": [],
+    "ZR Beneath Domain Red Middle Left Rupee": [],
+    "ZR Beneath Domain Red Middle Right Rupee": [],
+    "ZR Beneath Domain Red Right Rupee": [],
+    "ZF Bottom North Inner Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Northeast Inner Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Southeast Inner Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom South Inner Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Southwest Inner Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Northwest Inner Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom North Middle Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Northeast Middle Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Southeast Middle Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom South Middle Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Southwest Middle Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Northwest Middle Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom North Outer Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Northeast Outer Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Southeast Outer Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom South Outer Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Southwest Outer Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "ZF Bottom Northwest Outer Rupee": [
+      "RG_BRONZE_SCALE"
+    ],
+    "Deku Tree Lobby Lower Heart": [],
+    "Deku Tree Lobby Upper Heart": [],
+    "Deku Tree Final Room Left Front Heart": [],
+    "Deku Tree Final Room Left Back Heart": [],
+    "Deku Tree Final Room Right Heart": [],
+    "Dodongos Cavern Lower Lizalfos Room Lavafall Heart": [],
+    "Dodongos Cavern Blade Room Heart": [
+      "RG_POWER_BRACELET"
+    ],
+    "Dodongos Cavern Upper Lizalfos Room Left Heart": [],
+    "Dodongos Cavern Upper Lizalfos Room Right Heart": [],
+    "Forest Temple West Courtyard Right Heart": [],
+    "Forest Temple West Courtyard Left Heart": [],
+    "Forest Temple Well East Heart": [],
+    "Forest Temple Well West Heart": [],
+    "Fire Temple Fire Pillar Room Left Heart": [],
+    "Fire Temple Fire Pillar Room Right Heart": [],
+    "Fire Temple Fire Pillar Room Back Heart": [],
+    "Fire Temple East Central Room Left Heart": [],
+    "Fire Temple East Central Room Right Heart": [],
+    "Fire Temple East Central Room Middle Heart": [],
+    "Fire Temple Fire Wall Chase East Pillar Heart": [],
+    "Fire Temple Fire Wall Chase West Pillar Heart": [],
+    "Fire Temple Fire Wall Chase Exit Platform Heart": [],
+    "Water Temple River Heart 1": [
+      "RG_BRONZE_SCALE"
+    ],
+    "Water Temple River Heart 2": [
+      "RG_BRONZE_SCALE"
+    ],
+    "Water Temple River Heart 3": [
+      "RG_BRONZE_SCALE"
+    ],
+    "Water Temple River Heart 4": [
+      "RG_BRONZE_SCALE"
+    ],
+    "Shadow Temple Invisible Blades Left Heart": [],
+    "Shadow Temple Invisible Blades Right Heart": [],
+    "Shadow Temple Scarecrow Near Ship North Heart": [],
+    "Shadow Temple Scarecrow Near Ship South Heart": [],
+    "Shadow Temple After Ship Upper Left Heart": [],
+    "Shadow Temple After Ship Upper Right Heart": [],
+    "Shadow Temple After Ship Lower Heart": [],
+    "Spirit Temple Adult Climb Left Heart": [],
+    "Spirit Temple Adult Climb Right Heart": [],
+    "Bottom of the Well Basement Platform Left Rupee": [],
+    "Bottom of the Well Basement Platform Back Left Rupee": [],
+    "Bottom of the Well Basement Platform Middle Rupee": [],
+    "Bottom of the Well Basement Platform Back Right Rupee": [],
+    "Bottom of the Well Basement Platform Right Rupee": [],
+    "Bottom of the Well Coffin Room Front Left Heart": [],
+    "Bottom of the Well Coffin Room Middle Right Heart": [],
+    "Ice Cavern Lobby Rupee": [],
+    "Ice Cavern Map Room Left Heart": [],
+    "Ice Cavern Map Room Middle Heart": [],
+    "Ice Cavern Map Room Right Heart": [],
+    "Ice Cavern Sliding Block Room Rupee 1": [],
+    "Ice Cavern Sliding Block Room Rupee 2": [],
+    "Ice Cavern Sliding Block Room Rupee 3": [],
+    "Gerudo Training Ground Beamos South Heart": [],
+    "Gerudo Training Ground Beamos East Heart": [],
+    "Ganon's Castle Shadow Trial Heart 1": [],
+    "Ganon's Castle Shadow Trial Heart 2": [],
+    "Ganon's Castle Shadow Trial Heart 3": [],
+    "Ganon's Castle Fire Trial Heart": [],
+    "Ganon's Castle Spirit Trial Heart": [],
+    "SFM Fairy Grotto Fairy 1": [],
+    "SFM Fairy Grotto Fairy 2": [],
+    "SFM Fairy Grotto Fairy 3": [],
+    "SFM Fairy Grotto Fairy 4": [],
+    "SFM Fairy Grotto Fairy 5": [],
+    "SFM Fairy Grotto Fairy 6": [],
+    "SFM Fairy Grotto Fairy 7": [],
+    "SFM Fairy Grotto Fairy 8": [],
+    "ZR Fairy Grotto Fairy 1": [],
+    "ZR Fairy Grotto Fairy 2": [],
+    "ZR Fairy Grotto Fairy 3": [],
+    "ZR Fairy Grotto Fairy 4": [],
+    "ZR Fairy Grotto Fairy 5": [],
+    "ZR Fairy Grotto Fairy 6": [],
+    "ZR Fairy Grotto Fairy 7": [],
+    "ZR Fairy Grotto Fairy 8": [],
+    "HF Fairy Grotto Fairy 1": [],
+    "HF Fairy Grotto Fairy 2": [],
+    "HF Fairy Grotto Fairy 3": [],
+    "HF Fairy Grotto Fairy 4": [],
+    "HF Fairy Grotto Fairy 5": [],
+    "HF Fairy Grotto Fairy 6": [],
+    "HF Fairy Grotto Fairy 7": [],
+    "HF Fairy Grotto Fairy 8": [],
+    "ZD Fairy Grotto Fairy 1": [],
+    "ZD Fairy Grotto Fairy 2": [],
+    "ZD Fairy Grotto Fairy 3": [],
+    "ZD Fairy Grotto Fairy 4": [],
+    "ZD Fairy Grotto Fairy 5": [],
+    "ZD Fairy Grotto Fairy 6": [],
+    "ZD Fairy Grotto Fairy 7": [],
+    "ZD Fairy Grotto Fairy 8": [],
+    "GF Fairy Grotto Fairy 1": [],
+    "GF Fairy Grotto Fairy 2": [],
+    "GF Fairy Grotto Fairy 3": [],
+    "GF Fairy Grotto Fairy 4": [],
+    "GF Fairy Grotto Fairy 5": [],
+    "GF Fairy Grotto Fairy 6": [],
+    "GF Fairy Grotto Fairy 7": [],
+    "GF Fairy Grotto Fairy 8": [],
+    "Graveyard Shield Grave Fairy 1": [],
+    "Graveyard Shield Grave Fairy 2": [],
+    "Graveyard Shield Grave Fairy 3": [],
+    "Graveyard Shield Grave Fairy 4": [],
+    "Graveyard Shield Grave Fairy 5": [],
+    "Graveyard Shield Grave Fairy 6": [],
+    "Graveyard Shield Grave Fairy 7": [],
+    "Graveyard Shield Grave Fairy 8": [],
+    "Ganon's Castle Scrubs Fairy 1": [],
+    "Ganon's Castle Scrubs Fairy 2": [],
+    "Ganon's Castle Scrubs Fairy 3": [],
+    "Ganon's Castle Scrubs Fairy 4": [],
+    "Ganon's Castle Scrubs Fairy 5": [],
+    "Ganon's Castle Scrubs Fairy 6": [],
+    "Ganon's Castle Scrubs Fairy 7": [],
+    "Ganon's Castle Scrubs Fairy 8": [],
+    "Colossus Oasis Fairy 1": [],
+    "Colossus Oasis Fairy 2": [],
+    "Colossus Oasis Fairy 3": [],
+    "Colossus Oasis Fairy 4": [],
+    "Colossus Oasis Fairy 5": [],
+    "Colossus Oasis Fairy 6": [],
+    "Colossus Oasis Fairy 7": [],
+    "Colossus Oasis Fairy 8": [],
+    "ZR Bean Sprout Fairy 1": [],
+    "ZR Bean Sprout Fairy 2": [],
+    "ZR Bean Sprout Fairy 3": [],
+    "KF Bean Sprout Fairy 1": [],
+    "KF Bean Sprout Fairy 2": [],
+    "KF Bean Sprout Fairy 3": [],
+    "LW Bean Sprout Near Bridge Fairy 1": [],
+    "LW Bean Sprout Near Bridge Fairy 2": [],
+    "LW Bean Sprout Near Bridge Fairy 3": [],
+    "LW Bean Sprout Near Theatre Fairy 1": [],
+    "LW Bean Sprout Near Theatre Fairy 2": [],
+    "LW Bean Sprout Near Theatre Fairy 3": [],
+    "LH Bean Sprout Fairy 1": [],
+    "LH Bean Sprout Fairy 2": [],
+    "LH Bean Sprout Fairy 3": [],
+    "GV Bean Sprout Fairy 1": [],
+    "GV Bean Sprout Fairy 2": [],
+    "GV Bean Sprout Fairy 3": [],
+    "Colossus Bean Sprout Fairy 1": [],
+    "Colossus Bean Sprout Fairy 2": [],
+    "Colossus Bean Sprout Fairy 3": [],
+    "Graveyard Bean Sprout Fairy 1": [],
+    "Graveyard Bean Sprout Fairy 2": [],
+    "Graveyard Bean Sprout Fairy 3": [],
+    "DMC Bean Sprout Fairy 1": [],
+    "DMC Bean Sprout Fairy 2": [],
+    "DMC Bean Sprout Fairy 3": [],
+    "DMT Bean Sprout Fairy 1": [],
+    "DMT Bean Sprout Fairy 2": [],
+    "DMT Bean Sprout Fairy 3": [],
+    "Market ToT Left Gossip Stone Fairy": [],
+    "Market ToT Left Gossip Stone Big Fairy": [],
+    "Market ToT Left Center Gossip Stone Fairy": [],
+    "Market ToT Left Center Gossip Stone Big Fairy": [],
+    "Market ToT Right Center Gossip Stone Fairy": [],
+    "Market ToT Right Center Gossip Stone Big Fairy": [],
+    "Market ToT Right Gossip Stone Fairy": [],
+    "Market ToT Right Gossip Stone Big Fairy": [],
+    "DMC Gossip Stone Fairy": [],
+    "DMC Gossip Stone Big Fairy": [],
+    "DMT Gossip Stone Fairy": [],
+    "DMT Gossip Stone Big Fairy": [],
+    "Colossus Gossip Stone Fairy": [],
+    "Colossus Gossip Stone Big Fairy": [],
+    "Dodongos Cavern Gossip Stone Fairy": [],
+    "Dodongos Cavern Gossip Stone Big Fairy": [],
+    "GV Gossip Stone Fairy": [],
+    "GV Gossip Stone Big Fairy": [],
+    "GC Maze Gossip Stone Fairy": [],
+    "GC Maze Gossip Stone Big Fairy": [],
+    "GC Medigoron Gossip Stone Fairy": [],
+    "GC Medigoron Gossip Stone Big Fairy": [],
+    "Graveyard Gossip Stone Fairy": [],
+    "Graveyard Gossip Stone Big Fairy": [],
+    "HC Malon Gossip Stone Fairy": [],
+    "HC Malon Gossip Stone Big Fairy": [],
+    "HC Rock Wall Gossip Stone Fairy": [],
+    "HC Rock Wall Gossip Stone Big Fairy": [],
+    "HC Storms Grotto Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "HC Storms Grotto Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "KF Deku Tree Left Gossip Stone Fairy": [],
+    "KF Deku Tree Left Gossip Stone Big Fairy": [],
+    "KF Deku Tree Right Gossip Stone Fairy": [],
+    "KF Deku Tree Right Gossip Stone Big Fairy": [],
+    "KF Gossip Stone Fairy": [],
+    "KF Gossip Stone Big Fairy": [],
+    "KF Storms Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "KF Storms Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "LH Lab Gossip Stone Fairy": [],
+    "LH Lab Gossip Stone Big Fairy": [],
+    "LH Southeast Gossip Stone Fairy": [],
+    "LH Southeast Gossip Stone Big Fairy": [],
+    "LH Southwest Gossip Stone Fairy": [],
+    "LH Southwest Gossip Stone Big Fairy": [],
+    "LW Gossip Stone Fairy": [],
+    "LW Gossip Stone Big Fairy": [],
+    "SFM Maze Lower Gossip Stone Fairy": [],
+    "SFM Maze Lower Gossip Stone Big Fairy": [],
+    "SFM Maze Upper Gossip Stone Fairy": [],
+    "SFM Maze Upper Gossip Stone Big Fairy": [],
+    "SFM Saria Gossip Stone Fairy": [],
+    "SFM Saria Gossip Stone Big Fairy": [],
+    "ZD Gossip Stone Fairy": [],
+    "ZD Gossip Stone Big Fairy": [],
+    "ZF Fairy Gossip Stone Fairy": [],
+    "ZF Fairy Gossip Stone Big Fairy": [],
+    "ZF Jabu Gossip Stone Fairy": [],
+    "ZF Jabu Gossip Stone Big Fairy": [],
+    "ZR Near Grottos Gossip Stone Fairy": [],
+    "ZR Near Grottos Gossip Stone Big Fairy": [],
+    "ZR Near Domain Gossip Stone Fairy": [],
+    "ZR Near Domain Gossip Stone Big Fairy": [],
+    "HF Cow Grotto Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "HF Cow Grotto Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "HF Near Market Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "HF Near Market Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "Kak Open Grotto Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "Kak Open Grotto Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "ZR Open Grotto Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "ZR Open Grotto Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "LW Tunnel Grotto Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "LW Tunnel Grotto Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "DMT Storms Grotto Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "DMT Storms Grotto Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "DMC Upper Grotto Gossip Stone Fairy": [
+      "RG_SHOVEL"
+    ],
+    "DMC Upper Grotto Gossip Stone Big Fairy": [
+      "RG_SHOVEL"
+    ],
+    "LH Island Sun's Song Fairy": [],
+    "HF Pond Song of Storms Fairy": [],
+    "HF Deku Scrub Grotto Storms Fairy": [
+      "RG_SHOVEL"
+    ],
+    "DMT Flag Sun's Song Fairy": [],
+    "DMT Cow Grotto Song of Storms Fairy": [
+      "RG_SHOVEL"
+    ],
+    "LW Shortcuts Song of Storms Fairy": [],
+    "GF Kitchen Sun's Song Fairy": [],
+    "LW Deku Scrub Grotto Sun's Song Fairy": [
+      "RG_SHOVEL"
+    ],
+    "Graveyard Royal Family's Tomb Sun's Song Fairy": [],
+    "Spirit Temple After Boulder Room Sun's Song Fairy": [],
+    "Spirit Temple Four Armos Room Sun's Song Fairy": [],
+    "Shadow Temple Beamos Song of Storms Fairy": [],
+    "Shadow Temple Pit Room Song of Storms Fairy": [],
+    "Shadow Temple Wind Hint Sun's Song Fairy": [],
+    "Bottom of the Well Basement Sun's Song Fairy": [],
+    "Ice Cavern Entrance Song of Storms Fairy": [],
+    "Gerudo Training Ground Entrance Song of Storms Fairy": [],
+    "Ganon's Castle Spirit Trial Beamos Sun's Song Fairy": [],
+    "KF Child Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass Maze 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass Maze 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Child Grass Maze 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 13": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 14": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 15": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 16": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 17": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 18": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 19": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Adult Grass 20": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW Near Shortcuts Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW Near Shortcuts Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW Near Shortcuts Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW After Mido Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW After Mido Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW After Mido Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW Near SFM Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW Near SFM Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "LW Near SFM Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Market Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Market Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Market Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Market Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "Market Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "Market Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "Market Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "Market Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "HC Near Storms Grotto Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "HC Near Storms Grotto Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Kak Near Graveyard Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Kak Near Graveyard Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Kak Near Graveyard Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Kak Tree Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Kak Tree Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Kak Tree Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Kak Tree Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "Kak Tree Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "Graveyard Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 13": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 14": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 15": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 16": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 17": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 18": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 19": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 20": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 21": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 22": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 23": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 24": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 25": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 26": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 27": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 28": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 29": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 30": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 31": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 32": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 33": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 34": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 35": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Grass 36": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Child Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Child Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Child Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Child Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Warp Pad Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Warp Pad Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near KF Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Near Market Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF South Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "HF Central Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Tree Grass 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "ZR Near Freestanding PoH Grass": [
+      "RG_GRASS_SOUL"
+    ],
+    "KF Storms Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "KF Storms Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "KF Storms Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "KF Storms Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LW Near Shortcuts Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LW Near Shortcuts Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LW Near Shortcuts Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "LW Near Shortcuts Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Near Market Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Near Market Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Near Market Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Near Market Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Open Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Southeast Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Cow Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "HF Cow Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Kak Open Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Kak Open Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Kak Open Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Kak Open Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Storms Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Storms Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Storms Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Storms Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMT Cow Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMC Upper Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMC Upper Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMC Upper Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "DMC Upper Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "ZR Open Grotto Grass 1": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "ZR Open Grotto Grass 2": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "ZR Open Grotto Grass 3": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "ZR Open Grotto Grass 4": [
+      "RG_GRASS_SOUL",
+      "RG_SHOVEL"
+    ],
+    "Deku Tree Lobby Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Lobby Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Lobby Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree 2F Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree 2F Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Slingshot Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Slingshot Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Slingshot Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Slingshot Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Compass Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Compass Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Basement Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Basement Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Eye Switch Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Eye Switch Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Eye Switch Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Eye Switch Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Spike Roller Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Spike Roller Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Torches Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Torches Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Larvae Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Larvae Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Before Boss Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Before Boss Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Before Boss Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Dodongos Cavern First Bridge Grass": [
+      "RG_GRASS_SOUL"
+    ],
+    "Dodongos Cavern Blade Room Grass": [
+      "RG_GRASS_SOUL"
+    ],
+    "Dodongos Cavern Single Eye Grass": [
+      "RG_GRASS_SOUL"
+    ],
+    "Dodongos Cavern Before Boss Grass": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Behind Rocks Grass 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Bottom of the Well Basement Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Queen Gohma Grass 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Queen Gohma Grass 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Queen Gohma Grass 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Queen Gohma Grass 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Queen Gohma Grass 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Queen Gohma Grass 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Queen Gohma Grass 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "Deku Tree Queen Gohma Grass 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "LH Child Pond Fish 1": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 2": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 3": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 4": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 5": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 6": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 7": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 8": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 9": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 10": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 11": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 12": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 13": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 14": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Child Pond Fish 15": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 1": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 2": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 3": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 4": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 5": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 6": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 7": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 8": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 9": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 10": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 11": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 12": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 13": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 14": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "LH Adult Pond Fish 15": [
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "DMC Upper Grotto Fish": [],
+    "DMT Storms Grotto Fish": [],
+    "HF Southeast Grotto Fish": [],
+    "HF Near Market Grotto Fish": [],
+    "HF Open Grotto Fish": [],
+    "Kak Open Grotto Fish": [],
+    "KF Storms Grotto Fish": [],
+    "LW Near Shortcuts Grotto Fish": [],
+    "ZR Open Grotto Fish": [],
+    "ZD Fish 1": [],
+    "ZD Fish 2": [],
+    "ZD Fish 3": [],
+    "ZD Fish 4": [],
+    "ZD Fish 5": [],
+    "Market Tree in Hyrule Market": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HC Tree Near Guards 1": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HC Tree Near Guards 2": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HC Tree Near Guards 3": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HC Tree Near Guards 4": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HC Tree Near Guards 5": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HC Tree Near Guards 6": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HC Tree with GS": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HC Tree Near Storms Grotto": [
+      "RG_CLIMB",
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree Outside Lon Lon Ranch": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree Outside Lake Hylia": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Child Near Gerudo Valley Tree": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Adult Near Gerudo Valley Tree": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree Outside Zora's River": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree Outside Kakariko": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Small Tree Outside Kakariko": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree Near HC Entrance Grotto 1": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree Near HC Entrance Grotto 2": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree Near HC Entrance Grotto 3": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Northwest 1": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Northwest 2": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Northwest 3": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Northwest 4": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Northwest 5": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Northwest 6": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in East 1": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in East 2": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in East 3": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in East 4": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in East 5": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in East 6": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 1": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 2": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 3": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 4": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 5": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 6": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 7": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 8": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 9": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 10": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 11": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 12": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 13": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 14": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 15": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 16": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 17": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 18": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tree in Southeast 19": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Child Tree in Southeast Corner 1": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Child Tree in Southeast Corner 2": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Child Tree in Southeast Corner 3": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Child Tree in Southeast Corner 4": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Child Tree in Southeast Corner 5": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Child Tree in Southeast Corner 6": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "HF Tektite Grotto Tree": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "ZF Tree in Zora's Fountain": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "ZR Tree in Zoras River": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "Kak Kakariko GS Tree": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "LLR Lon Lon Ranch GS Tree": [
+      "RG_ROLL",
+      "RG_TREE_SOUL"
+    ],
+    "EXTREME Botw B1 Ladder Silver": [],
+    "EXTREME Botw B2 Ladder Silver": [],
+    "EXTREME Botw B3 Ladder Silver": [],
+    "EXTREME Botw Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Botw Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Botw Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Botw Boulder 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Botw Boulder 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Botw Boulder 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Botw Nw Ooze Silver": [],
+    "EXTREME Botw Se Ooze Silver": [],
+    "EXTREME Colossus Circle 1 Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 1 Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 1 Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 1 Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 1 Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 1 Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 1 Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 1 Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 2 Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 2 Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 2 Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 2 Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 2 Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 2 Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 2 Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Circle 2 Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Rock": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Silver Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Colossus Wonder Gf Tree 1": [],
+    "EXTREME Colossus Wonder Gf Tree 2": [],
+    "EXTREME Colossus Wonder Oasis Child Tree": [],
+    "EXTREME Colossus Wonder Oasis Tree 1": [],
+    "EXTREME Colossus Wonder Oasis Tree 2": [],
+    "EXTREME Dmc Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Bridge Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmc Bronze Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Bronze Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Bronze Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Bronze Boulder Shortcut": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Circle Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Circle Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Circle Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Circle Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Circle Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Circle Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Circle Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Circle Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Gossip Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Gossip Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Rock By Fire Temple 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Rock By Fire Temple 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Rock By Fire Temple 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Rock By Fire Temple 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Rock By Fire Temple 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmc Upper Boulder Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Dmc Wonder Beneath Bridge Platform": [],
+    "EXTREME Dmt Above Dodongo Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmt Adult Center Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmt Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 10": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 11": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Bronze Boulder 9": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Center Trail Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmt Child Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Child Center Exit Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmt Circle Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Circle Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Circle Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Circle Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Circle Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Circle Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Circle Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Circle Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Cow Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Dodongos Cavern Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmt Lower Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmt Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt Storms Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Dmt Summit Rock": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Dmt To Center Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmt To Upper Trail Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dmt Upper Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Dodongos Cavern Top Floor Pedestal": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Ganons Castle Airborne Spirit Silver": [],
+    "EXTREME Ganons Castle Close Platform Fire Silver": [],
+    "EXTREME Ganons Castle Corner Spirit Silver": [],
+    "EXTREME Ganons Castle Distant Platform Fire Silver": [],
+    "EXTREME Ganons Castle Flame Jets Fire Silver": [],
+    "EXTREME Ganons Castle Inner Left Light Silver": [],
+    "EXTREME Ganons Castle Inner Right Light Silver": [],
+    "EXTREME Ganons Castle Large Platform Forest Silver": [],
+    "EXTREME Ganons Castle Lower Middle Spirit Silver": [],
+    "EXTREME Ganons Castle Near Barred Door Spirit Silver": [],
+    "EXTREME Ganons Castle Near Doormat Spirit Silver": [],
+    "EXTREME Ganons Castle On Target Forest Silver": [],
+    "EXTREME Ganons Castle Outer Left Light Silver": [],
+    "EXTREME Ganons Castle Outer Right Light Silver": [],
+    "EXTREME Ganons Castle Small Platform Forest Silver": [],
+    "EXTREME Ganons Castle Sot Block Forest Silver": [],
+    "EXTREME Ganons Castle Torch Slug Fire Silver": [],
+    "EXTREME Ganons Castle Under Ledge Forest Silver": [],
+    "EXTREME Ganons Castle Upper Light Silver": [],
+    "EXTREME Ganons Castle Water Trial Door Red Ice": [],
+    "EXTREME Ganons Castle Water Trial Left Stalagmite 1": [],
+    "EXTREME Ganons Castle Water Trial Left Stalagmite 2": [],
+    "EXTREME Ganons Castle Water Trial Right Stalagmite 1": [],
+    "EXTREME Ganons Castle Water Trial Right Stalagmite 2": [],
+    "EXTREME Ganons Castle Water Trial Rusted Switch Red Ice": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 1": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 10": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 11": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 2": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 3": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 4": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 5": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 6": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 7": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 8": [],
+    "EXTREME Ganons Castle Water Trial Stalactite 9": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 1": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 10": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 2": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 3": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 4": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 5": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 6": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 7": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 8": [],
+    "EXTREME Ganons Castle Water Trial Stalagmite 9": [],
+    "EXTREME Ganons Ganons Castle Under Pillar Fire Silver": [],
+    "EXTREME Gc Child Rolling Goron Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gc Entrance Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Entrance Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Entrance Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Lw Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Lw Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Lw Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 10": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Boulder 9": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Bronze Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Bronze Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Bronze Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Bronze Boulder 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Bronze Boulder 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Rock": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 10": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 11": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 12": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 13": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 14": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 15": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 16": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 17": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 18": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 19": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 20": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 21": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 22": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 23": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 24": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 25": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 26": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 27": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 28": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 29": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gc Maze Silver Boulder 9": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gerudo Training Ground Wonder Beamos Room": [],
+    "EXTREME Gerudo Training Ground Wonder Eye Statue Room": [],
+    "EXTREME Gerudo Training Ground Wonder Torch Slugs Room": [],
+    "EXTREME Gf East Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gf Gate Exit Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gf Gtg Entrance Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gf Hba Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gf Wonder Archery Sign": [],
+    "EXTREME Gf Wonder Entrance Sign": [],
+    "EXTREME Gtg Above Target Water Silver": [],
+    "EXTREME Gtg Fire Ring Lava Silver": [],
+    "EXTREME Gtg Fire Wall Slope Silver": [],
+    "EXTREME Gtg Jumpdown Slope Silver": [],
+    "EXTREME Gtg Left Water Silver": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Gtg Lower Boulder Slope Silver": [],
+    "EXTREME Gtg Middle Water Silver": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Gtg Near Barred Door Lava Silver": [],
+    "EXTREME Gtg Near Switch Lava Silver": [],
+    "EXTREME Gtg Right Water Silver": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Gtg Target Slope Silver": [],
+    "EXTREME Gtg Under Ledge Lava Silver": [],
+    "EXTREME Gtg Under Target Water Silver": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Gtg Upper Boulder Slope Silver": [],
+    "EXTREME Gtg Upper Lava Silver": [],
+    "EXTREME Gv Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Boulder Across Bridge": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Bridge Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gv Bronze Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Bronze Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Bronze Boulder Across Bridge 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Bronze Boulder Across Bridge 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Bronze Boulder Across Bridge 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Bronze Boulder Across Bridge 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Bronze Boulder Across Bridge 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Bronze Boulder Across Bridge 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv East Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gv Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Rock Across Bridge 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Rock Across Bridge 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Rock Across Bridge 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Rock Across Bridge 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Silver Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Underwater Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Underwater Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Underwater Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gv Wonder Lower Waterfall": [],
+    "EXTREME Gv Wonder Upper Waterfall": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Gy Entrance Plinth": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gy Entrance Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gy Left Of Royal Tomb Grave": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gy Near Hut Grave Butterfly Fairy": [],
+    "EXTREME Gy Right Of Royal Tomb Grave": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gy Rock": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Gy Royal Tomb Grave": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Gy Wonder Dampe Race 1": [],
+    "EXTREME Gy Wonder Dampe Race 10": [],
+    "EXTREME Gy Wonder Dampe Race 11": [],
+    "EXTREME Gy Wonder Dampe Race 12": [],
+    "EXTREME Gy Wonder Dampe Race 13": [],
+    "EXTREME Gy Wonder Dampe Race 14": [],
+    "EXTREME Gy Wonder Dampe Race 15": [],
+    "EXTREME Gy Wonder Dampe Race 2": [],
+    "EXTREME Gy Wonder Dampe Race 3": [],
+    "EXTREME Gy Wonder Dampe Race 4": [],
+    "EXTREME Gy Wonder Dampe Race 5": [],
+    "EXTREME Gy Wonder Dampe Race 6": [],
+    "EXTREME Gy Wonder Dampe Race 7": [],
+    "EXTREME Gy Wonder Dampe Race 8": [],
+    "EXTREME Gy Wonder Dampe Race 9": [],
+    "EXTREME Hc Boulder": [
+      "RG_CLIMB",
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hc Dead End Rectangle Sign": [
+      "RG_CLIMB",
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hc Near Archway Butterfly Fairy": [
+      "RG_ANIMAL_SOUL_BUTTERFLY",
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Near Boulder Path Butterfly Fairy": [
+      "RG_ANIMAL_SOUL_BUTTERFLY",
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Near Stairs Butterfly Fairy": [
+      "RG_ANIMAL_SOUL_BUTTERFLY",
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Near Wall Butterfly Fairy": [
+      "RG_ANIMAL_SOUL_BUTTERFLY",
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hc Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hc Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hc Storms Grotto Rock 1": [
+      "RG_ROCK_BOULDER_SOUL",
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hc Storms Grotto Rock 2": [
+      "RG_ROCK_BOULDER_SOUL",
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hc Storms Grotto Rock 3": [
+      "RG_ROCK_BOULDER_SOUL",
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hc Storms Grotto Rock 4": [
+      "RG_ROCK_BOULDER_SOUL",
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hc Storms Grotto Rock 5": [
+      "RG_ROCK_BOULDER_SOUL",
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hc Storms Grotto Rock 6": [
+      "RG_ROCK_BOULDER_SOUL",
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hc Storms Grotto Rock 7": [
+      "RG_ROCK_BOULDER_SOUL",
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hc Storms Grotto Rock 8": [
+      "RG_ROCK_BOULDER_SOUL",
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hc Wonder Courtyard Left Window": [],
+    "EXTREME Hc Wonder Courtyard Right Window": [],
+    "EXTREME Hc Wonder Left Torch": [],
+    "EXTREME Hc Wonder Moat 1": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 10": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 2": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 3": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 4": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 5": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 6": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 7": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 8": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Moat 9": [
+      "RG_CLIMB"
+    ],
+    "EXTREME Hc Wonder Right Torch": [],
+    "EXTREME Hf Boulder By Market": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Boulder North": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Boulder South": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Bronze Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Bronze Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Bronze Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Bronze Boulder 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Bush By Rocky Path 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush By Rocky Path 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush By Rocky Path 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush By Rocky Path 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush By Rocky Path 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush By Rocky Path 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Bush Near Lake 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Castle Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hf Center Exit Arrow Sign": [
+      "RG_CLIMB",
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Northern Bush 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Child Southern Bush 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Fenced Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hf Near Market Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hf Northern Bush 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Northern Bush 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Northern Bush 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Northern Bush 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Northern Bush 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Northern Bush 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Open Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hf River Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hf Rocky Path Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hf Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Silver Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Hf Southeast Boulder Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Hf Southern Bush 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 10": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 11": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 12": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 7": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 8": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Southern Bush 9": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Hf Stairs Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hf Wonder Bridge 1": [],
+    "EXTREME Hf Wonder Bridge 2": [],
+    "EXTREME Hf Wonder Bridge 3": [],
+    "EXTREME Hf Wooded Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hw Carpet Salesman Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Hw Poe Altar": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Ice Cavern After Lobby Center Left Stalagmite": [],
+    "EXTREME Ice Cavern After Lobby Center Right Stalagmite": [],
+    "EXTREME Ice Cavern After Lobby Left Stalagmite": [],
+    "EXTREME Ice Cavern After Lobby Right Stalagmite": [],
+    "EXTREME Ice Cavern After Lobby Stalactite": [],
+    "EXTREME Ice Cavern Airborne Blade Silver": [],
+    "EXTREME Ice Cavern Entrance Left Stalagmite": [],
+    "EXTREME Ice Cavern Entrance Middle Stalagmite": [],
+    "EXTREME Ice Cavern Entrance Red Ice": [],
+    "EXTREME Ice Cavern Entrance Right Stalagmite": [],
+    "EXTREME Ice Cavern Entrance Stalactite 1": [],
+    "EXTREME Ice Cavern Entrance Stalactite 2": [],
+    "EXTREME Ice Cavern E Inner Blade Silver": [],
+    "EXTREME Ice Cavern Frozen Block Silver": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalactite 1": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalactite 2": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalactite 3": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalactite 4": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalactite 5": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalagmite 1": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalagmite 2": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalagmite 3": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalagmite 4": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalagmite 5": [],
+    "EXTREME Ice Cavern Heart Piece Room Center Stalagmite 6": [],
+    "EXTREME Ice Cavern Heart Piece Room Chest Red Ice": [],
+    "EXTREME Ice Cavern Heart Piece Room Freestanding Red Ice": [],
+    "EXTREME Ice Cavern Heart Piece Room Left Stalactite 1": [],
+    "EXTREME Ice Cavern Heart Piece Room Left Stalactite 2": [],
+    "EXTREME Ice Cavern Heart Piece Room Left Stalagmite 1": [],
+    "EXTREME Ice Cavern Heart Piece Room Left Stalagmite 2": [],
+    "EXTREME Ice Cavern Heart Piece Room Left Stalagmite 3": [],
+    "EXTREME Ice Cavern Heart Piece Room Right Stalagmite 1": [],
+    "EXTREME Ice Cavern Heart Piece Room Right Stalagmite 2": [],
+    "EXTREME Ice Cavern Heart Piece Room Right Stalagmite 3": [],
+    "EXTREME Ice Cavern Heart Piece Room Right Stalagmite 4": [],
+    "EXTREME Ice Cavern Icicles Blade Silver": [],
+    "EXTREME Ice Cavern Lobby Left Red Ice": [],
+    "EXTREME Ice Cavern Lobby Left Stalagmite": [],
+    "EXTREME Ice Cavern Lobby Middle Stalagmite": [],
+    "EXTREME Ice Cavern Lobby Right Red Ice": [],
+    "EXTREME Ice Cavern Lobby Right Stalagmite": [],
+    "EXTREME Ice Cavern Lobby Stalactite": [],
+    "EXTREME Ice Cavern Lower Block Silver": [],
+    "EXTREME Ice Cavern Map Hallway Left Stalagmite": [],
+    "EXTREME Ice Cavern Map Hallway Middle Stalagmite": [],
+    "EXTREME Ice Cavern Map Hallway Right Stalagmite": [],
+    "EXTREME Ice Cavern Map Hallway Stalactite 1": [],
+    "EXTREME Ice Cavern Map Hallway Stalactite 2": [],
+    "EXTREME Ice Cavern Map Hallway Stalactite 3": [],
+    "EXTREME Ice Cavern Map Hallway Stalactite 4": [],
+    "EXTREME Ice Cavern Map Hallway Stalactite 5": [],
+    "EXTREME Ice Cavern Map Room Chest Red Ice": [],
+    "EXTREME Ice Cavern Map Room Pot Red Ice": [],
+    "EXTREME Ice Cavern Near Block Silver": [],
+    "EXTREME Ice Cavern Near End Left Red Ice": [],
+    "EXTREME Ice Cavern Near End Middle Red Ice": [],
+    "EXTREME Ice Cavern Near End Right Red Ice": [],
+    "EXTREME Ice Cavern Near End Stalactite 1": [],
+    "EXTREME Ice Cavern Near End Stalactite 2": [],
+    "EXTREME Ice Cavern Near End Stalactite 3": [],
+    "EXTREME Ice Cavern Near End Stalactite 4": [],
+    "EXTREME Ice Cavern Near End Stalagmite 1": [],
+    "EXTREME Ice Cavern Near End Stalagmite 2": [],
+    "EXTREME Ice Cavern Near End Stalagmite 3": [],
+    "EXTREME Ice Cavern Near End Stalagmite 4": [],
+    "EXTREME Ice Cavern Near End Stalagmite 5": [],
+    "EXTREME Ice Cavern Near End Stalagmite 6": [],
+    "EXTREME Ice Cavern Near End Stalagmite 7": [],
+    "EXTREME Ice Cavern Near End Stalagmite 8": [],
+    "EXTREME Ice Cavern Near Fire Block Silver": [],
+    "EXTREME Ice Cavern Near Gs Block Silver": [],
+    "EXTREME Ice Cavern Outer Blade Silver": [],
+    "EXTREME Ice Cavern Push Block Hall Center Left Stalagmite": [],
+    "EXTREME Ice Cavern Push Block Hall Center Right Stalagmite": [],
+    "EXTREME Ice Cavern Push Block Hall Center Stalagmite": [],
+    "EXTREME Ice Cavern Push Block Hall Left Stalagmite": [],
+    "EXTREME Ice Cavern Push Block Hall Right Stalagmite": [],
+    "EXTREME Ice Cavern Push Block Hall Stalactite 1": [],
+    "EXTREME Ice Cavern Push Block Hall Stalactite 2": [],
+    "EXTREME Ice Cavern Push Block Hall Stalactite 3": [],
+    "EXTREME Ice Cavern Silver Rupee Red Ice": [],
+    "EXTREME Ice Cavern Spinning Blade East Red Ice": [],
+    "EXTREME Ice Cavern Spinning Blade Left Stalagmite": [],
+    "EXTREME Ice Cavern Spinning Blade Middle Stalagmite": [],
+    "EXTREME Ice Cavern Spinning Blade Right Stalagmite": [],
+    "EXTREME Ice Cavern Spinning Blade West Red Ice": [],
+    "EXTREME Ice Cavern W Inner Blade Silver": [],
+    "EXTREME Kak Beggar Blue Fire": [
+      "RG_NPC_SOUL"
+    ],
+    "EXTREME Kak Beggar Bugs": [
+      "RG_NPC_SOUL"
+    ],
+    "EXTREME Kak Beggar Fish": [
+      "RG_NPC_SOUL"
+    ],
+    "EXTREME Kak Front Gate Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kak Guard Gate Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kak Open Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Kak Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kak Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kak Shooting Gallery Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kak Silver Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kak Southeast Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kak Watchtower Butterfly Fairy": [],
+    "EXTREME Kak Well Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kak Wonder Above Cow": [],
+    "EXTREME Kak Wonder Under Construction": [],
+    "EXTREME Kf After Crawlspace Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Boulder Maze Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Circle Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Circle Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Circle Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Circle Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Circle Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Circle Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Circle Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Circle Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Crawl Rectangle Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Deku Tree Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf First Training Center Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf House Of Twins Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Inner Training Center Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Know It All Brothers House Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Links House Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Links House Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Lost Woods Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Lost Woods Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Midos House Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Rock Behind Sarias House": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Rock By Know It Alls House": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Rock By Midos House": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Rock By Sarias House": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Kf Sarias House Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Second Training Center Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Shop Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Stepping Stones Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Storms Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Kf Training Center Entrance Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Kf Wonder Crawl Grass 1": [],
+    "EXTREME Kf Wonder Crawl Grass 2": [],
+    "EXTREME Kf Wonder Platforms 1": [],
+    "EXTREME Kf Wonder Platforms 2": [],
+    "EXTREME Kf Wonder Shop": [],
+    "EXTREME Kf Wonder Sign": [],
+    "EXTREME Kf Wonder Training 1": [],
+    "EXTREME Kf Wonder Training 2": [],
+    "EXTREME Kf Wonder Training 3": [],
+    "EXTREME Lh Fishing Island Water Switch Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Lh Fishing Pond Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Lh Fishing Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Lh Island Pedestal": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Lh Lab Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Lh North Exit Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Lh Rock": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Lh Scarecrow Butterfly Fairy": [],
+    "EXTREME Lh Water Switch Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Llr Wonder Big Fence": [],
+    "EXTREME Llr Wonder Small Fence": [],
+    "EXTREME Lw Boulder By Goron City": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Lw Boulder By Sacred Forest Meadow": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Lw Meadow Butterfly Fairy": [],
+    "EXTREME Lw Rupee Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Lw Theater Rectangle Sign": [
+      "RG_SHOVEL",
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Lw Tunnel Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Lw Wonder Back Skull Kids Grass 1": [],
+    "EXTREME Lw Wonder Back Skull Kids Grass 2": [],
+    "EXTREME Lw Wonder Front Skull Kids Grass": [],
+    "EXTREME Market Treasure Chest Game Item 1": [],
+    "EXTREME Market Treasure Chest Game Item 2": [],
+    "EXTREME Market Treasure Chest Game Item 3": [],
+    "EXTREME Market Treasure Chest Game Item 4": [],
+    "EXTREME Market Treasure Chest Game Item 5": [],
+    "EXTREME Market Treasure Chest Game Key 1": [],
+    "EXTREME Market Treasure Chest Game Key 2": [],
+    "EXTREME Market Treasure Chest Game Key 3": [],
+    "EXTREME Market Treasure Chest Game Key 4": [],
+    "EXTREME Market Treasure Chest Game Key 5": [],
+    "EXTREME Market Treasure Chest Game Shopkeeper": [
+      "RG_NPC_SOUL",
+      "RG_SPEAK_HYLIAN"
+    ],
+    "EXTREME Mkt Wonder Day 1": [],
+    "EXTREME Mkt Wonder Day 2": [],
+    "EXTREME Mkt Wonder Day 3": [],
+    "EXTREME Mkt Wonder Day 4": [],
+    "EXTREME Mkt Wonder Day 5": [],
+    "EXTREME Mkt Wonder Night 1": [],
+    "EXTREME Mkt Wonder Night 2": [],
+    "EXTREME Mk Beggar Blue Fire": [
+      "RG_NPC_SOUL"
+    ],
+    "EXTREME Mk Beggar Bugs": [
+      "RG_NPC_SOUL"
+    ],
+    "EXTREME Mk Beggar Fish": [
+      "RG_NPC_SOUL"
+    ],
+    "EXTREME Mk Mask Shop Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Mk Shooting Gallery Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Ogc Bronze Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Ogc Bronze Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Ogc Bronze Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Ogc Silver Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Ogc Silver Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Ogc Silver Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Ogc Silver Boulder 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Sfm Wonder Entrance": [],
+    "EXTREME Sfm Wonder Maze 1": [],
+    "EXTREME Sfm Wonder Maze 2": [],
+    "EXTREME Sfm Wonder Maze 3": [],
+    "EXTREME Sfm Wonder Maze 4": [],
+    "EXTREME Sfm Wonder Maze 5": [],
+    "EXTREME Shadow Airborne Spikes Silver": [],
+    "EXTREME Shadow Beamos Pit Silver": [],
+    "EXTREME Shadow E Pit Silver": [],
+    "EXTREME Shadow E Target Spikes Silver": [],
+    "EXTREME Shadow Floor Spikes Silver": [],
+    "EXTREME Shadow N Nook Blade Silver": [],
+    "EXTREME Shadow N Pit Silver": [],
+    "EXTREME Shadow N Under Blade Silver": [],
+    "EXTREME Shadow Platform Spikes Silver": [],
+    "EXTREME Shadow S Pit Silver": [],
+    "EXTREME Shadow S Under Blade Silver": [],
+    "EXTREME Shadow Tall Block Blade Silver": [],
+    "EXTREME Shadow Temple Falling Spikes Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Shadow Temple Truthspinner Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Shadow Temple Wonder Three Pots": [],
+    "EXTREME Shadow W Nook Blade Silver": [],
+    "EXTREME Shadow W Pit Silver": [],
+    "EXTREME Shadow W Target Spikes Silver": [],
+    "EXTREME Spirit Airborne Boulder Silver": [],
+    "EXTREME Spirit Airborne Sun Silver": [],
+    "EXTREME Spirit E High Child Silver": [],
+    "EXTREME Spirit E Low Child Silver": [],
+    "EXTREME Spirit Mid Platform Sun Silver": [],
+    "EXTREME Spirit Near Chest Sun Silver": [],
+    "EXTREME Spirit Near Door Sun Silver": [],
+    "EXTREME Spirit Near Light Sun Silver": [],
+    "EXTREME Spirit Ne Boulder Silver": [],
+    "EXTREME Spirit Nw Boulder Silver": [],
+    "EXTREME Spirit Se Boulder Silver": [],
+    "EXTREME Spirit Sw Boulder Silver": [],
+    "EXTREME Spirit Temple Left Snake Statue": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Spirit Temple Right Snake Statue": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Spirit Torch Child Silver": [],
+    "EXTREME Spirit W High Child Silver": [],
+    "EXTREME Spirit W Low Child Silver": [],
+    "EXTREME Th Wonder 1 Torch 1": [],
+    "EXTREME Th Wonder 1 Torch 2": [],
+    "EXTREME Th Wonder Break Room Bottom Skull": [],
+    "EXTREME Th Wonder Break Room Top Skull": [],
+    "EXTREME Th Wonder Dead End Skull Entrance": [],
+    "EXTREME Th Wonder Dead End Skull Near Jail": [],
+    "EXTREME Th Wonder Double Jail Lower Exit": [],
+    "EXTREME Th Wonder Double Jail Upper Exit": [],
+    "EXTREME Th Wonder Kitchen Skull": [],
+    "EXTREME Th Wonder Kitchen Soup": [],
+    "EXTREME Th Wonder Steep Slope Lower Exit": [],
+    "EXTREME Th Wonder Steep Slope Upper Exit": [],
+    "EXTREME Tot Altar": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zd Circle Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zd Circle Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zd Circle Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zd Circle Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zd Circle Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zd Circle Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zd Circle Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zd Circle Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zd Entrance Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zd King Zora Path Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zd King Zora Red Ice": [],
+    "EXTREME Zd Near King Zora Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zd Near King Zora Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zd Shop Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zd Zora Shop Red Ice": [],
+    "EXTREME Zf Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zf Bush 1": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Zf Bush 2": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Zf Bush 3": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Zf Bush 4": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Zf Bush 5": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Zf Bush 6": [
+      "RG_GRASS_SOUL"
+    ],
+    "EXTREME Zf Entrance Arrow Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zf Jabu Jabu Platform Rectangle Sign": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zf Log Butterfly Fairy": [],
+    "EXTREME Zf Silver Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zf Underground Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zf Wonder Rock": [],
+    "EXTREME Zr Boulder 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Boulder 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Boulder 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Boulder 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Circle Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Circle Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Circle Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Circle Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Circle Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Circle Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Circle Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Circle Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Near Rock Circle Butterfly Fairy": [],
+    "EXTREME Zr Open Grotto Butterfly Fairy": [
+      "RG_SHOVEL"
+    ],
+    "EXTREME Zr Rock": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Sleepless Waterfall Plaque": [
+      "RG_SIGN_SOUL"
+    ],
+    "EXTREME Zr Underwater Rock 1": [
+      "RG_BRONZE_SCALE",
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Underwater Rock 2": [
+      "RG_BRONZE_SCALE",
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Underwater Rock 3": [
+      "RG_BRONZE_SCALE",
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Underwater Rock 4": [
+      "RG_BRONZE_SCALE",
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Boulder": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Rock 1": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Rock 2": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Rock 3": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Rock 4": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Rock 5": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Rock 6": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Rock 7": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Upper Circle Rock 8": [
+      "RG_ROCK_BOULDER_SOUL"
+    ],
+    "EXTREME Zr Waterfall Butterfly Fairy": [],
+    "EXTREME Zr Wonder After Ladder 1": [],
+    "EXTREME Zr Wonder After Ladder 2": [],
+    "EXTREME Zr Wonder After Ladder 3": [],
+    "EXTREME Zr Wonder Before Ladder 1": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Before Ladder 2": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Before Ladder 3": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Before Ladder 4": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Before Ladder 5": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Before Ladder 6": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Frog Bridge 1": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Frog Bridge 2": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Frog Bridge 3": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Lower Land Bridge 1": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Lower Land Bridge 2": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Lower Land Bridge 3": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Lower Land Bridge 4": [
+      "RG_BRONZE_SCALE"
+    ],
+    "EXTREME Zr Wonder Lower River 1": [],
+    "EXTREME Zr Wonder Lower River 2": [],
+    "EXTREME Zr Wonder Lower River 3": [],
+    "EXTREME Zr Wonder Lower River 4": [],
+    "EXTREME Zr Wonder Near Cucco 1": [],
+    "EXTREME Zr Wonder Near Cucco 2": [],
+    "EXTREME Zr Wonder Near Cucco 3": [],
+    "EXTREME Zr Wonder Near Domain 1": [],
+    "EXTREME Zr Wonder Near Domain 2": [],
+    "EXTREME Zr Wonder Near Domain 3": [],
+    "EXTREME Zr Wonder Near Domain 4": [],
+    "EXTREME Zr Wonder Pillars 1": [],
+    "EXTREME Zr Wonder Pillars 2": [],
+    "EXTREME Zr Wonder Pillars 3": [],
+    "EXTREME Zr Wonder Pillars 4": []
+  }
+}

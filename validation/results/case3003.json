@@ -1,0 +1,50 @@
+{
+  "seed": 3003,
+  "players": 1,
+  "overrides": {
+    "triforce_hunt": false
+  },
+  "passed": true,
+  "harness": "AP 0.6.7 core, restricted offline dependency adapters; no nonempty item links or binary patch export",
+  "locations": 3311,
+  "network_locations": 3067,
+  "pool": 3061,
+  "all_state_blocked": [],
+  "resolved_world_options": {
+    "1": {
+      "frozen_starting_time": 2,
+      "boss_key_shuffle": "overworld",
+      "triforce_hunt": 0
+    }
+  },
+  "sphere_sizes": [
+    37,
+    110,
+    89,
+    266,
+    172,
+    246,
+    123,
+    130,
+    122,
+    106,
+    80,
+    125,
+    201,
+    109,
+    79,
+    345,
+    218,
+    156,
+    110,
+    209,
+    158,
+    30,
+    40,
+    45,
+    5
+  ],
+  "replay_blocked": [],
+  "beatable": true,
+  "seconds": 22.296
+}

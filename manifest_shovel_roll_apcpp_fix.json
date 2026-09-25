@@ -1,0 +1,77 @@
+{
+  "patch": "SOH-EXTREME Shovel/Roll graphics and APCpp request safety",
+  "revision": 1,
+  "reviewed_soh_commit": "5851e0c273ae53632d03688898d0e85a1933fed0",
+  "reviewed_apcpp_main_blob": "f515de56c3246af750a1aefbe69fa834682ef206",
+  "installation": "Extract into E:\\test\\bb; run APPLY_SHOVEL_ROLL_CRASH_FIX.cmd",
+  "existing_files_patched": [
+    "CMakeLists.txt",
+    "soh/Enhancements/randomizer/item_list.cpp",
+    "soh/Enhancements/randomizer/randomizer_item_tracker.cpp",
+    "soh/SohGui/ImGuiUtils.cpp"
+  ],
+  "unchanged": [
+    "soh/Enhancements/randomizer/EnemySoulDraw.cpp",
+    "soh/Enhancements/randomizer/EnemySoulIcons.h",
+    "build.cmd",
+    "AP world package",
+    "save schema",
+    "gameplay access rules"
+  ],
+  "full_windows_game_build_tested": false,
+  "in_game_visuals_tested": false,
+  "files": {
+    "APPLY_SHOVEL_ROLL_CRASH_FIX.cmd": {
+      "bytes": 1095,
+      "sha256": "9cd853c04fc0a53a6e6efe9f3c209157247809fce5525ac79ec52477ca3d36a8"
+    },
+    "CMake/SoHExtremeAPCpp/Safety.inc": {
+      "bytes": 1576,
+      "sha256": "6911751485f2694ce11d46a7945c141870b9ca03b9f9ef0b5b00dcfbb4731e6f"
+    },
+    "CMake/SoHExtremeAPCppSafety.cmake": {
+      "bytes": 9304,
+      "sha256": "c3367928017bb97b34b54de23d6b04c213854d189cf3444431c5d4d494b9756a"
+    },
+    "README_Shovel_Roll_APCpp_Fix.txt": {
+      "bytes": 6725,
+      "sha256": "98374b7fc57e7e52b89eaadf8c1af51b8993cd9206c588d5d55cd5b7a529d329"
+    },
+    "VALIDATION_Shovel_Roll_APCpp_Fix.txt": {
+      "bytes": 3100,
+      "sha256": "4153b6db3eabd3097d6e42621d6cf98b01bd0e5499e35d066f7c21c30d265485"
+    },
+    "assets/custom/textures/parameter_static/gExtremeAbilityMetal.rgba32.png": {
+      "bytes": 1278,
+      "sha256": "2da2df109bcfc1ba32d9a33e7cb0c66c0d81ab171ec0a924baa92db615a49f32"
+    },
+    "assets/custom/textures/parameter_static/gExtremeRollIcon.rgba32.png": {
+      "bytes": 1710,
+      "sha256": "601fe57401137a3db42729c1442a4b4f866fe44ce7b5b1278ef4fd67a3dab5b2"
+    },
+    "assets/custom/textures/parameter_static/gExtremeShovelIcon.rgba32.png": {
+      "bytes": 1181,
+      "sha256": "24520e7cbb2b80c7fa645893f548399feff85d2d5ec8c73c6d09d20edc273749"
+    },
+    "assets/custom/textures/parameter_static/gExtremeShovelWood.rgba32.png": {
+      "bytes": 1874,
+      "sha256": "d58a53096a48cbefd0367bf88f5a8e53058d020c1303a7905f339a936d1e8e7f"
+    },
+    "soh/Enhancements/randomizer/ProgressionItemMeshes.inc": {
+      "bytes": 90596,
+      "sha256": "371f164be9f17622091d75facc6088d6aed49bec0c1e8981d4262c675a6e3889"
+    },
+    "soh/Enhancements/randomizer/ProgressionItemVisuals.cpp": {
+      "bytes": 4864,
+      "sha256": "fb39f0ee1776c0391346ca579e8d1c9ac814caa335565188e0747fdaa57acef5"
+    },
+    "soh/Enhancements/randomizer/ProgressionItemVisuals.h": {
+      "bytes": 562,
+      "sha256": "ddb9db34f9ef7b5e08c092887598cd68781c601ffab29876cdd3b04ea00602d4"
+    },
+    "tools/install_shovel_roll_crash_fix.ps1": {
+      "bytes": 8055,
+      "sha256": "3cc5a10bfb24ce70d4f3d49fa93393f5441364fbe40933be1e30bc589040e8c0"
+    }
+  }
+}

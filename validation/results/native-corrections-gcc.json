@@ -1,0 +1,73 @@
+{
+  "scope": "Compile production correction bodies against production enums and OptionValue.\n\nEngine/save inventory services are controlled; no game executable, MSVC or live\nphysics validation. The shared LACS policy is compared between both real callers.\n",
+  "compiler": "g++",
+  "tests": [
+    {
+      "name": "grass_alternatives_and_boulder_gate",
+      "passed": true,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "command": [
+        "/usr/bin/g++",
+        "-std=c++20",
+        "-fms-extensions",
+        "-Wall",
+        "-Wextra",
+        "-I",
+        "/mnt/data/audit17/native",
+        "/mnt/data/audit17/reports/native-locations-gpp/grass_alternatives_and_boulder_gate.cpp",
+        "-o",
+        "/mnt/data/audit17/reports/native-locations-gpp/grass_alternatives_and_boulder_gate"
+      ],
+      "compile_stdout": "",
+      "compile_stderr": "/mnt/data/audit17/reports/native-locations-gpp/grass_alternatives_and_boulder_gate.cpp: In function \u2018int main()\u2019:\n/mnt/data/audit17/reports/native-locations-gpp/grass_alternatives_and_boulder_gate.cpp:143:3: warning: this \u2018if\u2019 clause does not guard... [-Wmisleading-indentation]\n  143 |   if(soul)logic->items.insert(RG_GRASS_SOUL);if(grab)logic->items.insert(RG_POWER_BRACELET);\n      |   ^~\n/mnt/data/audit17/reports/native-locations-gpp/grass_alternatives_and_boulder_gate.cpp:143:46: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the \u2018if\u2019\n  143 |   if(soul)logic->items.insert(RG_GRASS_SOUL);if(grab)logic->items.insert(RG_POWER_BRACELET);\n      |                                              ^~\n",
+      "stdout": "assertions=16388 failures=0\n",
+      "stderr": ""
+    },
+    {
+      "name": "lacs_runtime_and_logic_callers",
+      "passed": true,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "command": [
+        "/usr/bin/g++",
+        "-std=c++20",
+        "-fms-extensions",
+        "-Wall",
+        "-Wextra",
+        "-I",
+        "/mnt/data/audit17/native",
+        "/mnt/data/audit17/reports/native-locations-gpp/lacs_runtime_and_logic_callers.cpp",
+        "-o",
+        "/mnt/data/audit17/reports/native-locations-gpp/lacs_runtime_and_logic_callers"
+      ],
+      "compile_stdout": "",
+      "compile_stderr": "",
+      "stdout": "assertions=1794 failures=0\n",
+      "stderr": ""
+    },
+    {
+      "name": "native_explicit_location_bindings",
+      "passed": true,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "command": [
+        "/usr/bin/g++",
+        "-std=c++20",
+        "-fms-extensions",
+        "-Wall",
+        "-Wextra",
+        "-I",
+        "/mnt/data/audit17/native",
+        "/mnt/data/audit17/reports/native-locations-gpp/native_explicit_location_bindings.cpp",
+        "-o",
+        "/mnt/data/audit17/reports/native-locations-gpp/native_explicit_location_bindings"
+      ],
+      "compile_stdout": "",
+      "compile_stderr": "",
+      "stdout": "assertions=7212 failures=0\n",
+      "stderr": ""
+    }
+  ],
+  "all_passed": true
+}

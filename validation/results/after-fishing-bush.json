@@ -1,0 +1,34 @@
+{
+  "world_version": "0.11.16",
+  "pond_checks": 32,
+  "cases": {
+    "NPC Soul": {
+      "fishing_hole_reachable": true,
+      "incorrectly_available_pond_checks": []
+    },
+    "Speak Hylian": {
+      "fishing_hole_reachable": true,
+      "incorrectly_available_pond_checks": []
+    },
+    "Fish Soul": {
+      "fishing_hole_reachable": true,
+      "incorrectly_available_pond_checks": []
+    }
+  },
+  "bushes": {
+    "field_reachable": true,
+    "checks": {
+      "EXTREME Hf Bush Near Lake 1": true,
+      "EXTREME Hf Bush Near Lake 10": true,
+      "EXTREME Hf Bush Near Lake 11": true,
+      "EXTREME Hf Bush Near Lake 2": true,
+      "EXTREME Hf Bush Near Lake 3": true,
+      "EXTREME Hf Bush Near Lake 4": true,
+      "EXTREME Hf Bush Near Lake 5": true,
+      "EXTREME Hf Bush Near Lake 6": true,
+      "EXTREME Hf Bush Near Lake 7": true,
+      "EXTREME Hf Bush Near Lake 8": true,
+      "EXTREME Hf Bush Near Lake 9": true
+    }
+  }
+}

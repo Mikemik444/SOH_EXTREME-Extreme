@@ -1,0 +1,1514 @@
+{
+  "group": "combined",
+  "checks": [
+    {
+      "test": "package version",
+      "actual": "0.11.16",
+      "expected": "0.11.16",
+      "passed": true
+    },
+    {
+      "test": "child + adult standard fish and prizes present",
+      "actual": 32,
+      "expected": 32,
+      "passed": true
+    },
+    {
+      "test": "full inventory accessible in AP model",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing: physical Fishing Hole still reachable",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Child Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul missing blocks LH Adult Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "NPC Soul restore reopens all pond checks",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "NPC Soul independent full snapshot remains reachable",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Speak missing: physical Fishing Hole still reachable",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Child Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak missing blocks LH Adult Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Speak restore reopens all pond checks",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Speak independent full snapshot remains reachable",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing: physical Fishing Hole still reachable",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Child Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul missing blocks LH Adult Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fish Soul restore reopens all pond checks",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Fish Soul independent full snapshot remains reachable",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing: physical Fishing Hole still reachable",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Child Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole missing blocks LH Adult Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole restore reopens all pond checks",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Fishing Pole independent full snapshot remains reachable",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Wallet missing: physical Fishing Hole still reachable",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Child Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Fishing",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 1",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 2",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 3",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 4",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 5",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 6",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 7",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 8",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 9",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 10",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 11",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 12",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 13",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 14",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet missing blocks LH Adult Pond Fish 15",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "Wallet restore reopens all pond checks",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "Wallet independent full snapshot remains reachable",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=False fish=False rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=False fish=False rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=False fish=False rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=False fish=False rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=False fish=True rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=False fish=True rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=False fish=True rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=False fish=True rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=True fish=False rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=True fish=False rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=True fish=False rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=True fish=False rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=True fish=True rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=True fish=True rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=True fish=True rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=False talk=True fish=True rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=False fish=False rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=False fish=False rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=False fish=False rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=False fish=False rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=False fish=True rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=False fish=True rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=False fish=True rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=False fish=True rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=True fish=False rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=True fish=False rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=True fish=False rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=True fish=False rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=True fish=True rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=True fish=True rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=True fish=True rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action child NPC=True talk=True fish=True rod=True wallet=True",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=False fish=False rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=False fish=False rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=False fish=False rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=False fish=False rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=False fish=True rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=False fish=True rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=False fish=True rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=False fish=True rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=True fish=False rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=True fish=False rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=True fish=False rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=True fish=False rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=True fish=True rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=True fish=True rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=True fish=True rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=False talk=True fish=True rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=False fish=False rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=False fish=False rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=False fish=False rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=False fish=False rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=False fish=True rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=False fish=True rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=False fish=True rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=False fish=True rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=True fish=False rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=True fish=False rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=True fish=False rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=True fish=False rod=True wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=True fish=True rod=False wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=True fish=True rod=False wallet=True",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=True fish=True rod=True wallet=False",
+      "actual": false,
+      "expected": false,
+      "passed": true
+    },
+    {
+      "test": "rod action adult NPC=True talk=True fish=True rod=True wallet=True",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "individual Fish Soul cannot replace combined Animal Soul",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "ordinary bottled fish not given NPC/rod prerequisites",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "all reachable bushes do not require a cutting tool",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "every bush still requires its soul",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "field reachable with only grass/bush soul",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "walk through all eleven lake-side Field bushes",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    },
+    {
+      "test": "grass controls exist",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "test": "running does not collect cuttable grass",
+      "actual": [],
+      "expected": [],
+      "passed": true
+    }
+  ],
+  "total": 250,
+  "failures": 0,
+  "coverage": {
+    "active_pond_checks": 32,
+    "active_bushes": 64,
+    "bottle_fish_controls": 14,
+    "bushes_with_reachable_parent_no_weapons": 64
+  },
+  "scope": "Production AP graph/rules and UT slot-data reconstruction, not game physics.\nThe separate native test checks the corresponding C++ interaction predicates.\n"
+}

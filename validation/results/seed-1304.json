@@ -1,0 +1,24 @@
+{
+  "seed": 1304,
+  "players": 2,
+  "overrides": {},
+  "passed": true,
+  "harness": "AP 0.6.7 core, restricted offline dependency adapters; no nonempty item links or binary patch export",
+  "locations": 7008,
+  "network_locations": 6520,
+  "pool": 6510,
+  "all_state_blocked": [],
+  "resolved_world_options": {
+    "1": {
+      "frozen_starting_time": 2,
+      "boss_key_shuffle": "own_dungeon",
+      "triforce_hunt": 1
+    },
+    "2": {
+      "frozen_starting_time": 2,
+      "boss_key_shuffle": "overworld",
+      "triforce_hunt": 1
+    }
+  },
+  "seconds": 13.064
+}

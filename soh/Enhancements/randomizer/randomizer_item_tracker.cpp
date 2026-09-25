@@ -179,7 +179,7 @@ std::vector<ItemTrackerItem> openChestItems = {
 // SOH-EXTREME progression items that were added after the original tracker.
 // Reuse existing registered inventory textures so these never depend on a new asset path.
 std::vector<ItemTrackerItem> rollItems = {
-    ITEM_TRACKER_RG_CUSTOM(RG_ROLL, "ROLL", ITEM_BOOTS_KOKIRI, 0, DrawItem),
+    ITEM_TRACKER_RG(RG_ROLL, "ROLL", 0, DrawItem),
 };
 
 std::vector<ItemTrackerItem> flowOfTimeItems = {
@@ -224,7 +224,7 @@ std::vector<ItemTrackerItem> megaSoulItems = {
     ITEM_TRACKER_RG(RG_SIGN_SOUL, "SIGN", 0, DrawItem),
     ITEM_TRACKER_RG(RG_SKULLTULA_SOUL, "SKULL", 0, DrawItem),
     ITEM_TRACKER_RG(RG_BUSINESS_SCRUB_SOUL, "SCRUB", 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_SHOVEL, "SHOVEL", ITEM_HAMMER, 0, DrawItem),
+    ITEM_TRACKER_RG(RG_SHOVEL, "SHOVEL", 0, DrawItem),
 };
 
 std::vector<ItemTrackerItem> animalSoulItems = {

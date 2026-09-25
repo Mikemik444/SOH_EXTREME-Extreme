@@ -1,0 +1,2552 @@
+[
+  {
+    "name": "ACTOR_EN_YABUSAME_MARK",
+    "id": 303,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Yabusame_Mark/z_en_yabusame_mark.c"
+  },
+  {
+    "name": "ACTOR_BOSS_GANON",
+    "id": 232,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Ganon/z_boss_ganon.c"
+  },
+  {
+    "name": "ACTOR_DEMO_SHD",
+    "id": 281,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Demo_Shd/z_demo_shd.c"
+  },
+  {
+    "name": "ACTOR_EN_SW",
+    "id": 149,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Sw/z_en_sw.c"
+  },
+  {
+    "name": "ACTOR_BG_MIZU_MOVEBG",
+    "id": 100,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mizu_Movebg/z_bg_mizu_movebg.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_WATER",
+    "id": 215,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Water/z_bg_haka_water.c"
+  },
+  {
+    "name": "ACTOR_EN_WOOD02",
+    "id": 119,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Wood02/z_en_wood02.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_AMISHUTTER",
+    "id": 346,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Amishutter/z_bg_jya_amishutter.c"
+  },
+  {
+    "name": "ACTOR_BG_GJYO_BRIDGE",
+    "id": 328,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Gjyo_Bridge/z_bg_gjyo_bridge.c"
+  },
+  {
+    "name": "ACTOR_EN_OSSAN",
+    "id": 61,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ossan/z_en_ossan.c"
+  },
+  {
+    "name": "ACTOR_EN_NWC",
+    "id": 309,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Nwc/z_en_nwc.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_KOWARERUKABE",
+    "id": 207,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Kowarerukabe/z_bg_hidan_kowarerukabe.c"
+  },
+  {
+    "name": "ACTOR_OBJ_KIBAKO2",
+    "id": 416,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Obj_Kibako2/z_obj_kibako2.c"
+  },
+  {
+    "name": "ACTOR_EN_TITE",
+    "id": 27,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Tite/z_en_tite.c"
+  },
+  {
+    "name": "ACTOR_ARROW_LIGHT",
+    "id": 268,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Arrow_Light/z_arrow_light.c"
+  },
+  {
+    "name": "ACTOR_EN_NUTSBALL",
+    "id": 403,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Nutsball/z_en_nutsball.c"
+  },
+  {
+    "name": "ACTOR_ARROW_FIRE",
+    "id": 266,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Arrow_Fire/z_arrow_fire.c"
+  },
+  {
+    "name": "ACTOR_EN_BOX",
+    "id": 10,
+    "category": "ACTORCAT_CHEST",
+    "source": "src/overlays/actors/ovl_En_Box/z_en_box.c"
+  },
+  {
+    "name": "ACTOR_BOSS_VA",
+    "id": 186,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Va/z_boss_va.c"
+  },
+  {
+    "name": "ACTOR_EN_HS2",
+    "id": 422,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Hs2/z_en_hs2.c"
+  },
+  {
+    "name": "ACTOR_EN_TG",
+    "id": 428,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Tg/z_en_tg.c"
+  },
+  {
+    "name": "ACTOR_EN_TK",
+    "id": 133,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Tk/z_en_tk.c"
+  },
+  {
+    "name": "ACTOR_EN_TORCH",
+    "id": 385,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Torch/z_en_torch.c"
+  },
+  {
+    "name": "ACTOR_EN_GUEST",
+    "id": 420,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Guest/z_en_guest.c"
+  },
+  {
+    "name": "ACTOR_BG_DDAN_JD",
+    "id": 88,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Ddan_Jd/z_bg_ddan_jd.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA",
+    "id": 157,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Haka/z_bg_haka.c"
+  },
+  {
+    "name": "ACTOR_EN_GELDB",
+    "id": 407,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_GeldB/z_en_geldb.c"
+  },
+  {
+    "name": "ACTOR_EN_BOM",
+    "id": 16,
+    "category": "ACTORCAT_EXPLOSIVE",
+    "source": "src/overlays/actors/ovl_En_Bom/z_en_bom.c"
+  },
+  {
+    "name": "ACTOR_EN_DIVING_GAME",
+    "id": 292,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Diving_Game/z_en_diving_game.c"
+  },
+  {
+    "name": "ACTOR_EN_M_THUNDER",
+    "id": 87,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_M_Thunder/z_en_m_thunder.c"
+  },
+  {
+    "name": "ACTOR_BG_MIZU_SHUTTER",
+    "id": 443,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Mizu_Shutter/z_bg_mizu_shutter.c"
+  },
+  {
+    "name": "ACTOR_BG_ICE_SHELTER",
+    "id": 239,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Ice_Shelter/z_bg_ice_shelter.c"
+  },
+  {
+    "name": "ACTOR_EN_WEATHER_TAG",
+    "id": 357,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Weather_Tag/z_en_weather_tag.c"
+  },
+  {
+    "name": "ACTOR_EN_RIVER_SOUND",
+    "id": 59,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_River_Sound/z_en_river_sound.c"
+  },
+  {
+    "name": "ACTOR_BG_GND_FIREMEIRO",
+    "id": 435,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Gnd_Firemeiro/z_bg_gnd_firemeiro.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT15_SAKU",
+    "id": 248,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Bg_Spot15_Saku/z_bg_spot15_saku.c"
+  },
+  {
+    "name": "ACTOR_BG_ICE_OBJECTS",
+    "id": 214,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Ice_Objects/z_bg_ice_objects.c"
+  },
+  {
+    "name": "ACTOR_MIR_RAY",
+    "id": 183,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Mir_Ray/z_mir_ray.c"
+  },
+  {
+    "name": "ACTOR_EN_ST",
+    "id": 55,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_St/z_en_st.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_KANAAMI",
+    "id": 253,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Kanaami/z_bg_jya_kanaami.c"
+  },
+  {
+    "name": "ACTOR_DEMO_TRE_LGT",
+    "id": 170,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Demo_Tre_Lgt/z_demo_tre_lgt.c"
+  },
+  {
+    "name": "ACTOR_EN_TANA",
+    "id": 194,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Tana/z_en_tana.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_GATE",
+    "id": 247,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Gate/z_bg_haka_gate.c"
+  },
+  {
+    "name": "ACTOR_EN_EX_RUPPY",
+    "id": 305,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Ex_Ruppy/z_en_ex_ruppy.c"
+  },
+  {
+    "name": "ACTOR_EN_HEISHI1",
+    "id": 143,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Heishi1/z_en_heishi1.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT00_BREAK",
+    "id": 404,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot00_Break/z_bg_spot00_break.c"
+  },
+  {
+    "name": "ACTOR_BG_ICE_SHUTTER",
+    "id": 456,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Ice_Shutter/z_bg_ice_shutter.c"
+  },
+  {
+    "name": "ACTOR_EN_ELF",
+    "id": 24,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Elf/z_en_elf.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT16_BOMBSTONE",
+    "id": 205,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot16_Bombstone/z_bg_spot16_bombstone.c"
+  },
+  {
+    "name": "ACTOR_EN_BDFIRE",
+    "id": 48,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Bdfire/z_en_bdfire.c"
+  },
+  {
+    "name": "ACTOR_BG_ZG",
+    "id": 375,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Bg_Zg/z_bg_zg.c"
+  },
+  {
+    "name": "ACTOR_EN_POH",
+    "id": 13,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Poh/z_en_poh.c"
+  },
+  {
+    "name": "ACTOR_EN_ANUBICE_TAG",
+    "id": 246,
+    "category": "ACTORCAT_SWITCH",
+    "source": "src/overlays/actors/ovl_En_Anubice_Tag/z_en_anubice_tag.c"
+  },
+  {
+    "name": "ACTOR_ITEM_INBOX",
+    "id": 311,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Item_Inbox/z_item_inbox.c"
+  },
+  {
+    "name": "ACTOR_EN_BUTTE",
+    "id": 30,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Butte/z_en_butte.c"
+  },
+  {
+    "name": "ACTOR_EN_WONDER_TALK2",
+    "id": 389,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Wonder_Talk2/z_en_wonder_talk2.c"
+  },
+  {
+    "name": "ACTOR_EN_TUBO_TRAP",
+    "id": 285,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Tubo_Trap/z_en_tubo_trap.c"
+  },
+  {
+    "name": "ACTOR_EN_ZL4",
+    "id": 467,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Zl4/z_en_zl4.c"
+  },
+  {
+    "name": "ACTOR_BG_RELAY_OBJECTS",
+    "id": 291,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Relay_Objects/z_bg_relay_objects.c"
+  },
+  {
+    "name": "ACTOR_EN_KAREBABA",
+    "id": 199,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Karebaba/z_en_karebaba.c"
+  },
+  {
+    "name": "ACTOR_OCEFF_STORM",
+    "id": 395,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Oceff_Storm/z_oceff_storm.c"
+  },
+  {
+    "name": "ACTOR_EN_BUBBLE",
+    "id": 45,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Bubble/z_en_bubble.c"
+  },
+  {
+    "name": "ACTOR_EN_ZF",
+    "id": 37,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Zf/z_en_zf.c"
+  },
+  {
+    "name": "ACTOR_BOSS_TW",
+    "id": 220,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Tw/z_boss_tw.c"
+  },
+  {
+    "name": "ACTOR_END_TITLE",
+    "id": 383,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_End_Title/z_end_title.c"
+  },
+  {
+    "name": "ACTOR_BOSS_GOMA",
+    "id": 40,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Goma/z_boss_goma.c"
+  },
+  {
+    "name": "ACTOR_EN_ICE_HONO",
+    "id": 240,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Ice_Hono/z_en_ice_hono.c"
+  },
+  {
+    "name": "ACTOR_EN_YUKABYUN",
+    "id": 107,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Yukabyun/z_en_yukabyun.c"
+  },
+  {
+    "name": "ACTOR_BG_PUSHBOX",
+    "id": 44,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Pushbox/z_bg_pushbox.c"
+  },
+  {
+    "name": "ACTOR_BG_HEAVY_BLOCK",
+    "id": 146,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Heavy_Block/z_bg_heavy_block.c"
+  },
+  {
+    "name": "ACTOR_EN_ENCOUNT1",
+    "id": 167,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Encount1/z_en_encount1.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_SIMA",
+    "id": 70,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Sima/z_bg_hidan_sima.c"
+  },
+  {
+    "name": "ACTOR_EN_CS",
+    "id": 364,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Cs/z_en_cs.c"
+  },
+  {
+    "name": "ACTOR_EN_OKARINA_TAG",
+    "id": 302,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Okarina_Tag/z_en_okarina_tag.c"
+  },
+  {
+    "name": "ACTOR_BG_BOMBWALL",
+    "id": 208,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Bombwall/z_bg_bombwall.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_TUBO",
+    "id": 187,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Tubo/z_bg_haka_tubo.c"
+  },
+  {
+    "name": "ACTOR_DOOR_ANA",
+    "id": 155,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Door_Ana/z_door_ana.c"
+  },
+  {
+    "name": "ACTOR_EN_PART",
+    "id": 7,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Part/z_en_part.c"
+  },
+  {
+    "name": "ACTOR_DEMO_KEKKAI",
+    "id": 423,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Demo_Kekkai/z_demo_kekkai.c"
+  },
+  {
+    "name": "ACTOR_OBJ_MURE",
+    "id": 148,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Obj_Mure/z_obj_mure.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_MEGANEBG",
+    "id": 175,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Haka_MeganeBG/z_bg_haka_meganebg.c"
+  },
+  {
+    "name": "ACTOR_EN_BOMBF",
+    "id": 76,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Bombf/z_en_bombf.c"
+  },
+  {
+    "name": "ACTOR_DEMO_KANKYO",
+    "id": 140,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Demo_Kankyo/z_demo_kankyo.c"
+  },
+  {
+    "name": "ACTOR_OBJ_TIMEBLOCK",
+    "id": 465,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Obj_Timeblock/z_obj_timeblock.c"
+  },
+  {
+    "name": "ACTOR_BG_MORI_HINERI",
+    "id": 104,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mori_Hineri/z_bg_mori_hineri.c"
+  },
+  {
+    "name": "ACTOR_OBJ_LIGHTSWITCH",
+    "id": 336,
+    "category": "ACTORCAT_SWITCH",
+    "source": "src/overlays/actors/ovl_Obj_Lightswitch/z_obj_lightswitch.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_MEGANE",
+    "id": 174,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Megane/z_bg_haka_megane.c"
+  },
+  {
+    "name": "ACTOR_BG_YDAN_SP",
+    "id": 15,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Ydan_Sp/z_bg_ydan_sp.c"
+  },
+  {
+    "name": "ACTOR_EN_MS",
+    "id": 318,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ms/z_en_ms.c"
+  },
+  {
+    "name": "ACTOR_EN_DY_EXTRA",
+    "id": 388,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Dy_Extra/z_en_dy_extra.c"
+  },
+  {
+    "name": "ACTOR_EN_G_SWITCH",
+    "id": 279,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_G_Switch/z_en_g_switch.c"
+  },
+  {
+    "name": "ACTOR_EN_ZL1",
+    "id": 41,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Zl1/z_en_zl1.c"
+  },
+  {
+    "name": "ACTOR_BOSS_FD2",
+    "id": 162,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Fd2/z_boss_fd2.c"
+  },
+  {
+    "name": "ACTOR_ITEM_ETCETERA",
+    "id": 271,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Item_Etcetera/z_item_etcetera.c"
+  },
+  {
+    "name": "ACTOR_BG_GND_DARKMEIRO",
+    "id": 436,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Gnd_Darkmeiro/z_bg_gnd_darkmeiro.c"
+  },
+  {
+    "name": "ACTOR_BG_MENKURI_EYE",
+    "id": 98,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Menkuri_Eye/z_bg_menkuri_eye.c"
+  },
+  {
+    "name": "ACTOR_EN_DODOJR",
+    "id": 47,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Dodojr/z_en_dodojr.c"
+  },
+  {
+    "name": "ACTOR_EN_DAIKU_KAKARIKO",
+    "id": 444,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Daiku_Kakariko/z_en_daiku_kakariko.c"
+  },
+  {
+    "name": "ACTOR_BG_DODOAGO",
+    "id": 63,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Dodoago/z_bg_dodoago.c"
+  },
+  {
+    "name": "ACTOR_DOOR_KILLER",
+    "id": 449,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Door_Killer/z_door_killer.c"
+  },
+  {
+    "name": "ACTOR_EN_KAKASI",
+    "id": 379,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Kakasi/z_en_kakasi.c"
+  },
+  {
+    "name": "ACTOR_OBJECT_KANKYO",
+    "id": 151,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Object_Kankyo/z_object_kankyo.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_LIFT",
+    "id": 343,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Lift/z_bg_jya_lift.c"
+  },
+  {
+    "name": "ACTOR_EN_BIGOKUTA",
+    "id": 198,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Bigokuta/z_en_bigokuta.c"
+  },
+  {
+    "name": "ACTOR_EN_FIREFLY",
+    "id": 19,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Firefly/z_en_firefly.c"
+  },
+  {
+    "name": "ACTOR_EN_DH",
+    "id": 164,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Dh/z_en_dh.c"
+  },
+  {
+    "name": "ACTOR_EN_NIW",
+    "id": 25,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Niw/z_en_niw.c"
+  },
+  {
+    "name": "ACTOR_EN_FW",
+    "id": 171,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Fw/z_en_fw.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT01_FUSYA",
+    "id": 258,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot01_Fusya/z_bg_spot01_fusya.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT18_FUTA",
+    "id": 451,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot18_Futa/z_bg_spot18_futa.c"
+  },
+  {
+    "name": "ACTOR_EN_LIGHTBOX",
+    "id": 124,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Lightbox/z_en_lightbox.c"
+  },
+  {
+    "name": "ACTOR_EN_DU",
+    "id": 152,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Du/z_en_du.c"
+  },
+  {
+    "name": "ACTOR_EN_VASE",
+    "id": 130,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Vase/z_en_vase.c"
+  },
+  {
+    "name": "ACTOR_EN_OE2",
+    "id": 79,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_OE2/z_en_oe2.c"
+  },
+  {
+    "name": "ACTOR_EN_SB",
+    "id": 197,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Sb/z_en_sb.c"
+  },
+  {
+    "name": "ACTOR_OBJ_ELEVATOR",
+    "id": 299,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Obj_Elevator/z_obj_elevator.c"
+  },
+  {
+    "name": "ACTOR_EN_KAKASI2",
+    "id": 457,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Kakasi2/z_en_kakasi2.c"
+  },
+  {
+    "name": "ACTOR_DEMO_SA",
+    "id": 201,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Demo_Sa/z_demo_sa.c"
+  },
+  {
+    "name": "ACTOR_EN_RL",
+    "id": 166,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Rl/z_en_rl.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_SYOKU",
+    "id": 71,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Syoku/z_bg_hidan_syoku.c"
+  },
+  {
+    "name": "ACTOR_DOOR_GERUDO",
+    "id": 370,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Door_Gerudo/z_door_gerudo.c"
+  },
+  {
+    "name": "ACTOR_EN_VM",
+    "id": 138,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Vm/z_en_vm.c"
+  },
+  {
+    "name": "ACTOR_OBJ_MURE3",
+    "id": 427,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Obj_Mure3/z_obj_mure3.c"
+  },
+  {
+    "name": "ACTOR_EN_SIOFUKI",
+    "id": 351,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Siofuki/z_en_siofuki.c"
+  },
+  {
+    "name": "ACTOR_OCEFF_WIPE3",
+    "id": 409,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Oceff_Wipe3/z_oceff_wipe3.c"
+  },
+  {
+    "name": "ACTOR_EN_EIYER",
+    "id": 58,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Eiyer/z_en_eiyer.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_IRONOBJ",
+    "id": 361,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Ironobj/z_bg_jya_ironobj.c"
+  },
+  {
+    "name": "ACTOR_BG_YDAN_HASI",
+    "id": 80,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Ydan_Hasi/z_bg_ydan_hasi.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_HROCK",
+    "id": 65,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Hrock/z_bg_hidan_hrock.c"
+  },
+  {
+    "name": "ACTOR_BG_MORI_KAITENKABE",
+    "id": 136,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mori_Kaitenkabe/z_bg_mori_kaitenkabe.c"
+  },
+  {
+    "name": "ACTOR_EN_SDA",
+    "id": 314,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_En_Sda/z_en_sda.c"
+  },
+  {
+    "name": "ACTOR_EN_PO_RELAY",
+    "id": 290,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Po_Relay/z_en_po_relay.c"
+  },
+  {
+    "name": "ACTOR_EN_FHG",
+    "id": 103,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_fHG/z_en_fhg.c"
+  },
+  {
+    "name": "ACTOR_OCEFF_WIPE4",
+    "id": 459,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Oceff_Wipe4/z_oceff_wipe4.c"
+  },
+  {
+    "name": "ACTOR_EN_MM",
+    "id": 354,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Mm/z_en_mm.c"
+  },
+  {
+    "name": "ACTOR_EN_ANUBICE_FIRE",
+    "id": 225,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Anubice_Fire/z_en_anubice_fire.c"
+  },
+  {
+    "name": "ACTOR_EN_GE2",
+    "id": 390,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ge2/z_en_ge2.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT17_BAKUDANKABE",
+    "id": 425,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot17_Bakudankabe/z_bg_spot17_bakudankabe.c"
+  },
+  {
+    "name": "ACTOR_BG_GND_NISEKABE",
+    "id": 438,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Gnd_Nisekabe/z_bg_gnd_nisekabe.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_SEKIZOU",
+    "id": 69,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Sekizou/z_bg_hidan_sekizou.c"
+  },
+  {
+    "name": "ACTOR_EN_DOOR",
+    "id": 9,
+    "category": "ACTORCAT_DOOR",
+    "source": "src/overlays/actors/ovl_En_Door/z_en_door.c"
+  },
+  {
+    "name": "ACTOR_BG_GANON_OTYUKA",
+    "id": 262,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Ganon_Otyuka/z_bg_ganon_otyuka.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT01_IDOSOKO",
+    "id": 325,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot01_Idosoko/z_bg_spot01_idosoko.c"
+  },
+  {
+    "name": "ACTOR_BG_PO_EVENT",
+    "id": 147,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Po_Event/z_bg_po_event.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT12_GATE",
+    "id": 400,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot12_Gate/z_bg_spot12_gate.c"
+  },
+  {
+    "name": "ACTOR_EN_BA",
+    "id": 222,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Ba/z_en_ba.c"
+  },
+  {
+    "name": "ACTOR_BOSS_SST",
+    "id": 233,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Sst/z_boss_sst.c"
+  },
+  {
+    "name": "ACTOR_EN_OKUTA",
+    "id": 14,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Okuta/z_en_okuta.c"
+  },
+  {
+    "name": "ACTOR_BG_GND_SOULMEIRO",
+    "id": 437,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Gnd_Soulmeiro/z_bg_gnd_soulmeiro.c"
+  },
+  {
+    "name": "ACTOR_DEMO_IK",
+    "id": 276,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Demo_Ik/z_demo_ik.c"
+  },
+  {
+    "name": "ACTOR_EN_MD",
+    "id": 365,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Md/z_en_md.c"
+  },
+  {
+    "name": "ACTOR_EN_BLKOBJ",
+    "id": 310,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Blkobj/z_en_blkobj.c"
+  },
+  {
+    "name": "ACTOR_ITEM_OCARINA",
+    "id": 241,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Item_Ocarina/z_item_ocarina.c"
+  },
+  {
+    "name": "ACTOR_EN_BILI",
+    "id": 52,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Bili/z_en_bili.c"
+  },
+  {
+    "name": "ACTOR_EN_NB",
+    "id": 195,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Nb/z_en_nb.c"
+  },
+  {
+    "name": "ACTOR_EN_HONOTRAP",
+    "id": 284,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Honotrap/z_en_honotrap.c"
+  },
+  {
+    "name": "ACTOR_EN_TRAP",
+    "id": 128,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Trap/z_en_trap.c"
+  },
+  {
+    "name": "ACTOR_BG_TREEMOUTH",
+    "id": 62,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Treemouth/z_bg_treemouth.c"
+  },
+  {
+    "name": "ACTOR_EN_GIRLA",
+    "id": 4,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_GirlA/z_en_girla.c"
+  },
+  {
+    "name": "ACTOR_EN_LIGHT",
+    "id": 8,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Light/z_en_light.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT03_TAKI",
+    "id": 287,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot03_Taki/z_bg_spot03_taki.c"
+  },
+  {
+    "name": "ACTOR_MAGIC_FIRE",
+    "id": 159,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Magic_Fire/z_magic_fire.c"
+  },
+  {
+    "name": "ACTOR_BOSS_MO",
+    "id": 196,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Mo/z_boss_mo.c"
+  },
+  {
+    "name": "ACTOR_EN_GANON_MANT",
+    "id": 367,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_En_Ganon_Mant/z_en_ganon_mant.c"
+  },
+  {
+    "name": "ACTOR_EN_RU2",
+    "id": 210,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ru2/z_en_ru2.c"
+  },
+  {
+    "name": "ACTOR_EN_TR",
+    "id": 204,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Tr/z_en_tr.c"
+  },
+  {
+    "name": "ACTOR_EN_PEEHAT",
+    "id": 29,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Peehat/z_en_peehat.c"
+  },
+  {
+    "name": "ACTOR_EN_ZO",
+    "id": 462,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Zo/z_en_zo.c"
+  },
+  {
+    "name": "ACTOR_BG_INGATE",
+    "id": 320,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Ingate/z_bg_ingate.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_1FLIFT",
+    "id": 398,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_1flift/z_bg_jya_1flift.c"
+  },
+  {
+    "name": "ACTOR_DEMO_GT",
+    "id": 372,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Demo_Gt/z_demo_gt.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_ROCK",
+    "id": 67,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Rock/z_bg_hidan_rock.c"
+  },
+  {
+    "name": "ACTOR_EN_EG",
+    "id": 460,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Eg/z_en_eg.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_COBRA",
+    "id": 252,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Cobra/z_bg_jya_cobra.c"
+  },
+  {
+    "name": "ACTOR_EN_WALL_TUBO",
+    "id": 446,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Wall_Tubo/z_en_wall_tubo.c"
+  },
+  {
+    "name": "ACTOR_FISHING",
+    "id": 254,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Fishing/z_fishing.c"
+  },
+  {
+    "name": "ACTOR_EN_BOM_BOWL_MAN",
+    "id": 331,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Bom_Bowl_Man/z_en_bom_bowl_man.c"
+  },
+  {
+    "name": "ACTOR_BG_VB_SIMA",
+    "id": 172,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Vb_Sima/z_bg_vb_sima.c"
+  },
+  {
+    "name": "ACTOR_BOSS_GANONDROF",
+    "id": 82,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Ganondrof/z_boss_ganondrof.c"
+  },
+  {
+    "name": "ACTOR_EN_ZL3",
+    "id": 377,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Zl3/z_en_zl3.c"
+  },
+  {
+    "name": "ACTOR_DEMO_EXT",
+    "id": 280,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Demo_Ext/z_demo_ext.c"
+  },
+  {
+    "name": "ACTOR_EN_FHG_FIRE",
+    "id": 109,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_En_Fhg_Fire/z_en_fhg_fire.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_HUTA",
+    "id": 189,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Huta/z_bg_haka_huta.c"
+  },
+  {
+    "name": "ACTOR_EN_KUSA",
+    "id": 293,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Kusa/z_en_kusa.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT18_OBJ",
+    "id": 185,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot18_Obj/z_bg_spot18_obj.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_ZURERUKABE",
+    "id": 250,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Zurerukabe/z_bg_jya_zurerukabe.c"
+  },
+  {
+    "name": "ACTOR_EN_DNT_DEMO",
+    "id": 417,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Dnt_Demo/z_en_dnt_demo.c"
+  },
+  {
+    "name": "ACTOR_EN_KZ",
+    "id": 356,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Kz/z_en_kz.c"
+  },
+  {
+    "name": "ACTOR_BG_MORI_HASHIGO",
+    "id": 226,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mori_Hashigo/z_bg_mori_hashigo.c"
+  },
+  {
+    "name": "ACTOR_BG_ICE_TURARA",
+    "id": 455,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Ice_Turara/z_bg_ice_turara.c"
+  },
+  {
+    "name": "ACTOR_EN_FD_FIRE",
+    "id": 163,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Fd_Fire/z_en_fd_fire.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_BOMBCHUIWA",
+    "id": 345,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Bombchuiwa/z_bg_jya_bombchuiwa.c"
+  },
+  {
+    "name": "ACTOR_EN_FD",
+    "id": 153,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Fd/z_en_fd.c"
+  },
+  {
+    "name": "ACTOR_EN_TORCH2",
+    "id": 51,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_En_Torch2/z_en_torch2.c"
+  },
+  {
+    "name": "ACTOR_BG_TOKI_SWD",
+    "id": 108,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Toki_Swd/z_bg_toki_swd.c"
+  },
+  {
+    "name": "ACTOR_EN_DS",
+    "id": 329,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ds/z_en_ds.c"
+  },
+  {
+    "name": "ACTOR_EN_FLOORMAS",
+    "id": 142,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Floormas/z_en_floormas.c"
+  },
+  {
+    "name": "ACTOR_EN_FZ",
+    "id": 289,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Fz/z_en_fz.c"
+  },
+  {
+    "name": "ACTOR_EN_HORSE_LINK_CHILD",
+    "id": 154,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Horse_Link_Child/z_en_horse_link_child.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT08_ICEBLOCK",
+    "id": 209,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot08_Iceblock/z_bg_spot08_iceblock.c"
+  },
+  {
+    "name": "ACTOR_EN_MAG",
+    "id": 369,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Mag/z_en_mag.c"
+  },
+  {
+    "name": "ACTOR_BG_MORI_BIGST",
+    "id": 134,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mori_Bigst/z_bg_mori_bigst.c"
+  },
+  {
+    "name": "ACTOR_EN_HATA",
+    "id": 38,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Hata/z_en_hata.c"
+  },
+  {
+    "name": "ACTOR_EN_GO2",
+    "id": 430,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Go2/z_en_go2.c"
+  },
+  {
+    "name": "ACTOR_BOSS_GANON2",
+    "id": 378,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Ganon2/z_boss_ganon2.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_BIGMIRROR",
+    "id": 344,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Bigmirror/z_bg_jya_bigmirror.c"
+  },
+  {
+    "name": "ACTOR_EN_SYATEKI_NIW",
+    "id": 323,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Syateki_Niw/z_en_syateki_niw.c"
+  },
+  {
+    "name": "ACTOR_EN_HORSE_ZELDA",
+    "id": 91,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Horse_Zelda/z_en_horse_zelda.c"
+  },
+  {
+    "name": "ACTOR_EN_BROB",
+    "id": 182,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Brob/z_en_brob.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_HAHENIRON",
+    "id": 399,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Haheniron/z_bg_jya_haheniron.c"
+  },
+  {
+    "name": "ACTOR_EN_JS",
+    "id": 362,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Js/z_en_js.c"
+  },
+  {
+    "name": "ACTOR_ARROW_ICE",
+    "id": 267,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Arrow_Ice/z_arrow_ice.c"
+  },
+  {
+    "name": "ACTOR_EN_ANI",
+    "id": 359,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ani/z_en_ani.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT00_HANEBASI",
+    "id": 74,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot00_Hanebasi/z_bg_spot00_hanebasi.c"
+  },
+  {
+    "name": "ACTOR_EN_SKJNEEDLE",
+    "id": 278,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Skjneedle/z_en_skjneedle.c"
+  },
+  {
+    "name": "ACTOR_EN_DNT_JIJI",
+    "id": 418,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Dnt_Jiji/z_en_dnt_jiji.c"
+  },
+  {
+    "name": "ACTOR_BG_MORI_RAKKATENJO",
+    "id": 137,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mori_Rakkatenjo/z_bg_mori_rakkatenjo.c"
+  },
+  {
+    "name": "ACTOR_EN_GOROIWA",
+    "id": 304,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Goroiwa/z_en_goroiwa.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT11_OASIS",
+    "id": 450,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot11_Oasis/z_bg_spot11_oasis.c"
+  },
+  {
+    "name": "ACTOR_DEMO_DU",
+    "id": 168,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Demo_Du/z_demo_du.c"
+  },
+  {
+    "name": "ACTOR_DEMO_GO",
+    "id": 202,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Demo_Go/z_demo_go.c"
+  },
+  {
+    "name": "ACTOR_OBJ_BOMBIWA",
+    "id": 295,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Bombiwa/z_obj_bombiwa.c"
+  },
+  {
+    "name": "ACTOR_EN_BX",
+    "id": 223,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Bx/z_en_bx.c"
+  },
+  {
+    "name": "ACTOR_OBJ_LIFT",
+    "id": 300,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Obj_Lift/z_obj_lift.c"
+  },
+  {
+    "name": "ACTOR_OBJ_SYOKUDAI",
+    "id": 94,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Syokudai/z_obj_syokudai.c"
+  },
+  {
+    "name": "ACTOR_EN_GO",
+    "id": 338,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Go/z_en_go.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT18_BASKET",
+    "id": 348,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot18_Basket/z_bg_spot18_basket.c"
+  },
+  {
+    "name": "ACTOR_EN_PO_SISTERS",
+    "id": 145,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Po_Sisters/z_en_po_sisters.c"
+  },
+  {
+    "name": "ACTOR_OBJ_MAKEOSHIHIKI",
+    "id": 381,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Makeoshihiki/z_obj_makeoshihiki.c"
+  },
+  {
+    "name": "ACTOR_EN_MK",
+    "id": 330,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Mk/z_en_mk.c"
+  },
+  {
+    "name": "ACTOR_EN_FR",
+    "id": 237,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Fr/z_en_fr.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_BLOCK",
+    "id": 469,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Block/z_bg_jya_block.c"
+  },
+  {
+    "name": "ACTOR_EN_WEIYER",
+    "id": 396,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Weiyer/z_en_weiyer.c"
+  },
+  {
+    "name": "ACTOR_EN_DAIKU",
+    "id": 307,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Daiku/z_en_daiku.c"
+  },
+  {
+    "name": "ACTOR_EN_OKARINA_EFFECT",
+    "id": 368,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Okarina_Effect/z_en_okarina_effect.c"
+  },
+  {
+    "name": "ACTOR_EN_DODONGO",
+    "id": 18,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Dodongo/z_en_dodongo.c"
+  },
+  {
+    "name": "ACTOR_EN_KAKASI3",
+    "id": 458,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Kakasi3/z_en_kakasi3.c"
+  },
+  {
+    "name": "ACTOR_EN_ARROW",
+    "id": 22,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Arrow/z_en_arrow.c"
+  },
+  {
+    "name": "ACTOR_DEMO_EFFECT",
+    "id": 139,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Demo_Effect/z_demo_effect.c"
+  },
+  {
+    "name": "ACTOR_BG_MIZU_UZU",
+    "id": 212,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Mizu_Uzu/z_bg_mizu_uzu.c"
+  },
+  {
+    "name": "ACTOR_EN_GOMA",
+    "id": 43,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Goma/z_en_goma.c"
+  },
+  {
+    "name": "ACTOR_MAGIC_DARK",
+    "id": 244,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Magic_Dark/z_magic_dark.c"
+  },
+  {
+    "name": "ACTOR_EN_TORYO",
+    "id": 306,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Toryo/z_en_toryo.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_TRAP",
+    "id": 188,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Trap/z_bg_haka_trap.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_SHIP",
+    "id": 176,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Ship/z_bg_haka_ship.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT02_OBJECTS",
+    "id": 156,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot02_Objects/z_bg_spot02_objects.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT16_DOUGHNUT",
+    "id": 229,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot16_Doughnut/z_bg_spot16_doughnut.c"
+  },
+  {
+    "name": "ACTOR_BG_MORI_HASHIRA4",
+    "id": 227,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mori_Hashira4/z_bg_mori_hashira4.c"
+  },
+  {
+    "name": "ACTOR_EN_MA1",
+    "id": 231,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ma1/z_en_ma1.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT05_SOKO",
+    "id": 397,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot05_Soko/z_bg_spot05_soko.c"
+  },
+  {
+    "name": "ACTOR_OBJ_COMB",
+    "id": 414,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Comb/z_obj_comb.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT01_IDOHASHIRA",
+    "id": 259,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot01_Idohashira/z_bg_spot01_idohashira.c"
+  },
+  {
+    "name": "ACTOR_DOOR_WARP1",
+    "id": 93,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Door_Warp1/z_door_warp1.c"
+  },
+  {
+    "name": "ACTOR_EN_HORSE_GAME_CHECK",
+    "id": 219,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Horse_Game_Check/z_en_horse_game_check.c"
+  },
+  {
+    "name": "ACTOR_EN_RD",
+    "id": 144,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Rd/z_en_rd.c"
+  },
+  {
+    "name": "ACTOR_OBJ_OSHIHIKI",
+    "id": 255,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Oshihiki/z_obj_oshihiki.c"
+  },
+  {
+    "name": "ACTOR_EN_STREAM",
+    "id": 352,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Stream/z_en_stream.c"
+  },
+  {
+    "name": "ACTOR_EN_AROW_TRAP",
+    "id": 129,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Arow_Trap/z_en_arow_trap.c"
+  },
+  {
+    "name": "ACTOR_OBJ_KIBAKO",
+    "id": 272,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Kibako/z_obj_kibako.c"
+  },
+  {
+    "name": "ACTOR_EN_AM",
+    "id": 84,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Am/z_en_am.c"
+  },
+  {
+    "name": "ACTOR_EN_BOM_BOWL_PIT",
+    "id": 332,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Bom_Bowl_Pit/z_en_bom_bowl_pit.c"
+  },
+  {
+    "name": "ACTOR_OBJ_TSUBO",
+    "id": 273,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Tsubo/z_obj_tsubo.c"
+  },
+  {
+    "name": "ACTOR_BG_MORI_IDOMIZU",
+    "id": 228,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mori_Idomizu/z_bg_mori_idomizu.c"
+  },
+  {
+    "name": "ACTOR_EN_RU1",
+    "id": 161,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ru1/z_en_ru1.c"
+  },
+  {
+    "name": "ACTOR_BG_YDAN_MARUTA",
+    "id": 81,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Ydan_Maruta/z_bg_ydan_maruta.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_DALM",
+    "id": 64,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Dalm/z_bg_hidan_dalm.c"
+  },
+  {
+    "name": "ACTOR_DOOR_TOKI",
+    "id": 112,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Door_Toki/z_door_toki.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_CURTAIN",
+    "id": 73,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Curtain/z_bg_hidan_curtain.c"
+  },
+  {
+    "name": "ACTOR_EN_MA2",
+    "id": 217,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ma2/z_en_ma2.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT17_FUNEN",
+    "id": 191,
+    "category": "ACTORCAT_SWITCH",
+    "source": "src/overlays/actors/ovl_Bg_Spot17_Funen/z_bg_spot17_funen.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_FIREWALL",
+    "id": 12,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Firewall/z_bg_hidan_firewall.c"
+  },
+  {
+    "name": "ACTOR_ITEM_B_HEART",
+    "id": 95,
+    "category": "ACTORCAT_MISC",
+    "source": "src/overlays/actors/ovl_Item_B_Heart/z_item_b_heart.c"
+  },
+  {
+    "name": "ACTOR_BG_MIZU_BWALL",
+    "id": 442,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mizu_Bwall/z_bg_mizu_bwall.c"
+  },
+  {
+    "name": "ACTOR_EN_GANON_ORGAN",
+    "id": 350,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_En_Ganon_Organ/z_en_ganon_organ.c"
+  },
+  {
+    "name": "ACTOR_EN_CLEAR_TAG",
+    "id": 315,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_En_Clear_Tag/z_en_clear_tag.c"
+  },
+  {
+    "name": "ACTOR_EN_EX_ITEM",
+    "id": 360,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Ex_Item/z_en_ex_item.c"
+  },
+  {
+    "name": "ACTOR_BG_BOM_GUARD",
+    "id": 421,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Bom_Guard/z_bg_bom_guard.c"
+  },
+  {
+    "name": "ACTOR_EN_GB",
+    "id": 440,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Gb/z_en_gb.c"
+  },
+  {
+    "name": "ACTOR_EN_INSECT",
+    "id": 32,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Insect/z_en_insect.c"
+  },
+  {
+    "name": "ACTOR_EN_DEKUNUTS",
+    "id": 96,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Dekunuts/z_en_dekunuts.c"
+  },
+  {
+    "name": "ACTOR_EN_NIW_GIRL",
+    "id": 410,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Niw_Girl/z_en_niw_girl.c"
+  },
+  {
+    "name": "ACTOR_EN_SHOPNUTS",
+    "id": 405,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Shopnuts/z_en_shopnuts.c"
+  },
+  {
+    "name": "ACTOR_EN_IK",
+    "id": 275,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_En_Ik/z_en_ik.c"
+  },
+  {
+    "name": "ACTOR_OBJ_ROOMTIMER",
+    "id": 391,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_Obj_Roomtimer/z_obj_roomtimer.c"
+  },
+  {
+    "name": "ACTOR_OBJ_MURE2",
+    "id": 337,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Mure2/z_obj_mure2.c"
+  },
+  {
+    "name": "ACTOR_BG_PO_SYOKUDAI",
+    "id": 261,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Po_Syokudai/z_bg_po_syokudai.c"
+  },
+  {
+    "name": "ACTOR_EN_VB_BALL",
+    "id": 173,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_En_Vb_Ball/z_en_vb_ball.c"
+  },
+  {
+    "name": "ACTOR_EN_PO_DESERT",
+    "id": 447,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Po_Desert/z_en_po_desert.c"
+  },
+  {
+    "name": "ACTOR_ARMS_HOOK",
+    "id": 102,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Arms_Hook/z_arms_hook.c"
+  },
+  {
+    "name": "ACTOR_EN_VIEWER",
+    "id": 42,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Viewer/z_en_viewer.c"
+  },
+  {
+    "name": "ACTOR_EN_ENCOUNT2",
+    "id": 180,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Encount2/z_en_encount2.c"
+  },
+  {
+    "name": "ACTOR_EN_HEISHI4",
+    "id": 376,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Heishi4/z_en_heishi4.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_KOUSI",
+    "id": 111,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Kousi/z_bg_hidan_kousi.c"
+  },
+  {
+    "name": "ACTOR_DOOR_SHUTTER",
+    "id": 46,
+    "category": "ACTORCAT_DOOR",
+    "source": "src/overlays/actors/ovl_Door_Shutter/z_door_shutter.c"
+  },
+  {
+    "name": "ACTOR_EN_BB",
+    "id": 105,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Bb/z_en_bb.c"
+  },
+  {
+    "name": "ACTOR_EN_JJ",
+    "id": 90,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Jj/z_en_jj.c"
+  },
+  {
+    "name": "ACTOR_BG_MIZU_WATER",
+    "id": 101,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mizu_Water/z_bg_mizu_water.c"
+  },
+  {
+    "name": "ACTOR_EN_CHANGER",
+    "id": 341,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Changer/z_en_changer.c"
+  },
+  {
+    "name": "ACTOR_EN_HS",
+    "id": 319,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Hs/z_en_hs.c"
+  },
+  {
+    "name": "ACTOR_EN_BOOM",
+    "id": 50,
+    "category": "ACTORCAT_MISC",
+    "source": "src/overlays/actors/ovl_En_Boom/z_en_boom.c"
+  },
+  {
+    "name": "ACTOR_BG_UMAJUMP",
+    "id": 264,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Umajump/z_bg_umajump.c"
+  },
+  {
+    "name": "ACTOR_EN_KANBAN",
+    "id": 321,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Kanban/z_en_kanban.c"
+  },
+  {
+    "name": "ACTOR_EN_GE1",
+    "id": 312,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ge1/z_en_ge1.c"
+  },
+  {
+    "name": "ACTOR_EFF_DUST",
+    "id": 257,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Eff_Dust/z_eff_dust.c"
+  },
+  {
+    "name": "ACTOR_EN_MA3",
+    "id": 453,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ma3/z_en_ma3.c"
+  },
+  {
+    "name": "ACTOR_OCEFF_WIPE",
+    "id": 394,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Oceff_Wipe/z_oceff_wipe.c"
+  },
+  {
+    "name": "ACTOR_EN_IN",
+    "id": 203,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_In/z_en_in.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT15_RRBOX",
+    "id": 263,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot15_Rrbox/z_bg_spot15_rrbox.c"
+  },
+  {
+    "name": "ACTOR_DEMO_GJ",
+    "id": 433,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Demo_Gj/z_demo_gj.c"
+  },
+  {
+    "name": "ACTOR_EN_REEBA",
+    "id": 28,
+    "category": "ACTORCAT_MISC",
+    "source": "src/overlays/actors/ovl_En_Reeba/z_en_reeba.c"
+  },
+  {
+    "name": "ACTOR_DEMO_IM",
+    "id": 169,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Demo_Im/z_demo_im.c"
+  },
+  {
+    "name": "ACTOR_EN_NY",
+    "id": 236,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Ny/z_en_ny.c"
+  },
+  {
+    "name": "ACTOR_BG_MORI_ELEVATOR",
+    "id": 135,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mori_Elevator/z_bg_mori_elevator.c"
+  },
+  {
+    "name": "ACTOR_EN_DNT_NOMAL",
+    "id": 419,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Dnt_Nomal/z_en_dnt_nomal.c"
+  },
+  {
+    "name": "ACTOR_BG_GATE_SHUTTER",
+    "id": 256,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Bg_Gate_Shutter/z_bg_gate_shutter.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_MEGAMI",
+    "id": 342,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Megami/z_bg_jya_megami.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT18_SHUTTER",
+    "id": 452,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot18_Shutter/z_bg_spot18_shutter.c"
+  },
+  {
+    "name": "ACTOR_BG_BDAN_SWITCH",
+    "id": 230,
+    "category": "ACTORCAT_SWITCH",
+    "source": "src/overlays/actors/ovl_Bg_Bdan_Switch/z_bg_bdan_switch.c"
+  },
+  {
+    "name": "ACTOR_EN_VALI",
+    "id": 99,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Vali/z_en_vali.c"
+  },
+  {
+    "name": "ACTOR_SHOT_SUN",
+    "id": 387,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Shot_Sun/z_shot_sun.c"
+  },
+  {
+    "name": "ACTOR_EN_SI",
+    "id": 412,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Si/z_en_si.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_BOMBIWA",
+    "id": 347,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Bombiwa/z_bg_jya_bombiwa.c"
+  },
+  {
+    "name": "ACTOR_EN_DOG",
+    "id": 411,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Dog/z_en_dog.c"
+  },
+  {
+    "name": "ACTOR_EN_JSJUTAN",
+    "id": 363,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Jsjutan/z_en_jsjutan.c"
+  },
+  {
+    "name": "ACTOR_EN_IT",
+    "id": 406,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_It/z_en_it.c"
+  },
+  {
+    "name": "ACTOR_EN_COW",
+    "id": 454,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Cow/z_en_cow.c"
+  },
+  {
+    "name": "ACTOR_EN_MU",
+    "id": 429,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Mu/z_en_mu.c"
+  },
+  {
+    "name": "ACTOR_EN_TP",
+    "id": 53,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Tp/z_en_tp.c"
+  },
+  {
+    "name": "ACTOR_BG_MJIN",
+    "id": 110,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Mjin/z_bg_mjin.c"
+  },
+  {
+    "name": "ACTOR_EN_GS",
+    "id": 441,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Gs/z_en_gs.c"
+  },
+  {
+    "name": "ACTOR_EN_WONDER_ITEM",
+    "id": 274,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Wonder_Item/z_en_wonder_item.c"
+  },
+  {
+    "name": "ACTOR_EN_HEISHI2",
+    "id": 179,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Heishi2/z_en_heishi2.c"
+  },
+  {
+    "name": "ACTOR_DEMO_GEFF",
+    "id": 434,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Demo_Geff/z_demo_geff.c"
+  },
+  {
+    "name": "ACTOR_OBJ_HAMISHI",
+    "id": 466,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Hamishi/z_obj_hamishi.c"
+  },
+  {
+    "name": "ACTOR_EN_XC",
+    "id": 72,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Xc/z_en_xc.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_RSEKIZOU",
+    "id": 68,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Rsekizou/z_bg_hidan_rsekizou.c"
+  },
+  {
+    "name": "ACTOR_EN_ISHI",
+    "id": 334,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Ishi/z_en_ishi.c"
+  },
+  {
+    "name": "ACTOR_EN_RR",
+    "id": 221,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Rr/z_en_rr.c"
+  },
+  {
+    "name": "ACTOR_ELF_MSG2",
+    "id": 371,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Elf_Msg2/z_elf_msg2.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT12_SAKU",
+    "id": 401,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot12_Saku/z_bg_spot12_saku.c"
+  },
+  {
+    "name": "ACTOR_BG_DDAN_KD",
+    "id": 92,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Ddan_Kd/z_bg_ddan_kd.c"
+  },
+  {
+    "name": "ACTOR_EN_DEKUBABA",
+    "id": 85,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Dekubaba/z_en_dekubaba.c"
+  },
+  {
+    "name": "ACTOR_OBJ_DEKUJR",
+    "id": 211,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Obj_Dekujr/z_obj_dekujr.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_HAMSTEP",
+    "id": 113,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Hamstep/z_bg_hidan_hamstep.c"
+  },
+  {
+    "name": "ACTOR_EN_TAKARA_MAN",
+    "id": 380,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Takara_Man/z_en_takara_man.c"
+  },
+  {
+    "name": "ACTOR_BG_BDAN_OBJECTS",
+    "id": 200,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Bdan_Objects/z_bg_bdan_objects.c"
+  },
+  {
+    "name": "ACTOR_OBJ_HANA",
+    "id": 335,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Hana/z_obj_hana.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT11_BAKUDANKABE",
+    "id": 415,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot11_Bakudankabe/z_bg_spot11_bakudankabe.c"
+  },
+  {
+    "name": "ACTOR_BG_BREAKWALL",
+    "id": 89,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Breakwall/z_bg_breakwall.c"
+  },
+  {
+    "name": "ACTOR_EN_KO",
+    "id": 355,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ko/z_en_ko.c"
+  },
+  {
+    "name": "ACTOR_EN_HEISHI3",
+    "id": 322,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Heishi3/z_en_heishi3.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT07_TAKI",
+    "id": 288,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot07_Taki/z_bg_spot07_taki.c"
+  },
+  {
+    "name": "ACTOR_BOSS_DODONGO",
+    "id": 39,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Dodongo/z_boss_dodongo.c"
+  },
+  {
+    "name": "ACTOR_EN_SYATEKI_MAN",
+    "id": 193,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Syateki_Man/z_en_syateki_man.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_ZOU",
+    "id": 190,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Zou/z_bg_haka_zou.c"
+  },
+  {
+    "name": "ACTOR_OBJ_ICE_POLY",
+    "id": 286,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Ice_Poly/z_obj_ice_poly.c"
+  },
+  {
+    "name": "ACTOR_EN_GE3",
+    "id": 464,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ge3/z_en_ge3.c"
+  },
+  {
+    "name": "ACTOR_OBJ_BLOCKSTOP",
+    "id": 313,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Obj_Blockstop/z_obj_blockstop.c"
+  },
+  {
+    "name": "ACTOR_EN_NIW_LADY",
+    "id": 316,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Niw_Lady/z_en_niw_lady.c"
+  },
+  {
+    "name": "ACTOR_EN_HORSE",
+    "id": 20,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Horse/z_en_horse.c"
+  },
+  {
+    "name": "ACTOR_BG_DY_YOSEIZO",
+    "id": 11,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Dy_Yoseizo/z_bg_dy_yoseizo.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT01_IDOMIZU",
+    "id": 260,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot01_Idomizu/z_bg_spot01_idomizu.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_FWBIG",
+    "id": 141,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Fwbig/z_bg_hidan_fwbig.c"
+  },
+  {
+    "name": "ACTOR_BG_TOKI_HIKARI",
+    "id": 106,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Toki_Hikari/z_bg_toki_hikari.c"
+  },
+  {
+    "name": "ACTOR_EN_BIRD",
+    "id": 114,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Bird/z_en_bird.c"
+  },
+  {
+    "name": "ACTOR_BG_SST_FLOOR",
+    "id": 358,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Sst_Floor/z_bg_sst_floor.c"
+  },
+  {
+    "name": "ACTOR_EN_SKJ",
+    "id": 277,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Skj/z_en_skj.c"
+  },
+  {
+    "name": "ACTOR_BG_HIDAN_FSLIFT",
+    "id": 78,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Hidan_Fslift/z_bg_hidan_fslift.c"
+  },
+  {
+    "name": "ACTOR_EN_PU_BOX",
+    "id": 125,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Pu_box/z_en_pu_box.c"
+  },
+  {
+    "name": "ACTOR_ITEM_SHIELD",
+    "id": 238,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Item_Shield/z_item_shield.c"
+  },
+  {
+    "name": "ACTOR_EN_WALLMAS",
+    "id": 17,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Wallmas/z_en_wallmas.c"
+  },
+  {
+    "name": "ACTOR_EN_GM",
+    "id": 317,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Gm/z_en_gm.c"
+  },
+  {
+    "name": "ACTOR_EN_ANUBICE",
+    "id": 224,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Anubice/z_en_anubice.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT08_BAKUDANKABE",
+    "id": 424,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot08_Bakudankabe/z_bg_spot08_bakudankabe.c"
+  },
+  {
+    "name": "ACTOR_EN_DNS",
+    "id": 282,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Dns/z_en_dns.c"
+  },
+  {
+    "name": "ACTOR_EN_HORSE_NORMAL",
+    "id": 60,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Horse_Normal/z_en_horse_normal.c"
+  },
+  {
+    "name": "ACTOR_EN_OWL",
+    "id": 333,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Owl/z_en_owl.c"
+  },
+  {
+    "name": "ACTOR_EN_ZL2",
+    "id": 77,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Zl2/z_en_zl2.c"
+  },
+  {
+    "name": "ACTOR_OCEFF_WIPE2",
+    "id": 408,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Oceff_Wipe2/z_oceff_wipe2.c"
+  },
+  {
+    "name": "ACTOR_EN_M_FIRE1",
+    "id": 86,
+    "category": "ACTORCAT_MISC",
+    "source": "src/overlays/actors/ovl_En_M_Fire1/z_en_m_fire1.c"
+  },
+  {
+    "name": "ACTOR_EN_WF",
+    "id": 431,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Wf/z_en_wf.c"
+  },
+  {
+    "name": "ACTOR_OBJ_BEAN",
+    "id": 294,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Obj_Bean/z_obj_bean.c"
+  },
+  {
+    "name": "ACTOR_EN_DHA",
+    "id": 165,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Dha/z_en_dha.c"
+  },
+  {
+    "name": "ACTOR_EN_SYATEKI_ITM",
+    "id": 192,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Syateki_Itm/z_en_syateki_itm.c"
+  },
+  {
+    "name": "ACTOR_EN_MB",
+    "id": 75,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Mb/z_en_mb.c"
+  },
+  {
+    "name": "ACTOR_EN_STH",
+    "id": 393,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Sth/z_en_sth.c"
+  },
+  {
+    "name": "ACTOR_OCEFF_SPOT",
+    "id": 382,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Oceff_Spot/z_oceff_spot.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT01_OBJECTS2",
+    "id": 413,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot01_Objects2/z_bg_spot01_objects2.c"
+  },
+  {
+    "name": "ACTOR_ELF_MSG",
+    "id": 283,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Elf_Msg/z_elf_msg.c"
+  },
+  {
+    "name": "ACTOR_EN_HINTNUTS",
+    "id": 402,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Hintnuts/z_en_hintnuts.c"
+  },
+  {
+    "name": "ACTOR_EN_MM2",
+    "id": 468,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Mm2/z_en_mm2.c"
+  },
+  {
+    "name": "ACTOR_EN_CROW",
+    "id": 448,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Crow/z_en_crow.c"
+  },
+  {
+    "name": "ACTOR_EN_SSH",
+    "id": 392,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ssh/z_en_ssh.c"
+  },
+  {
+    "name": "ACTOR_BG_JYA_GOROIWA",
+    "id": 249,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Jya_Goroiwa/z_bg_jya_goroiwa.c"
+  },
+  {
+    "name": "ACTOR_EN_FU",
+    "id": 339,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Fu/z_en_fu.c"
+  },
+  {
+    "name": "ACTOR_MAGIC_WIND",
+    "id": 158,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Magic_Wind/z_magic_wind.c"
+  },
+  {
+    "name": "ACTOR_EN_FIRE_ROCK",
+    "id": 181,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Fire_Rock/z_en_fire_rock.c"
+  },
+  {
+    "name": "ACTOR_EN_PO_FIELD",
+    "id": 373,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Po_Field/z_en_po_field.c"
+  },
+  {
+    "name": "ACTOR_BG_MENKURI_KAITEN",
+    "id": 97,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Menkuri_Kaiten/z_bg_menkuri_kaiten.c"
+  },
+  {
+    "name": "ACTOR_BG_GND_ICEBLOCK",
+    "id": 439,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Gnd_Iceblock/z_bg_gnd_iceblock.c"
+  },
+  {
+    "name": "ACTOR_DEMO_6K",
+    "id": 245,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Demo_6K/z_demo_6k.c"
+  },
+  {
+    "name": "ACTOR_EFC_ERUPC",
+    "id": 374,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Efc_Erupc/z_efc_erupc.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT06_OBJECTS",
+    "id": 213,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Spot06_Objects/z_bg_spot06_objects.c"
+  },
+  {
+    "name": "ACTOR_OBJ_SWITCH",
+    "id": 298,
+    "category": "ACTORCAT_SWITCH",
+    "source": "src/overlays/actors/ovl_Obj_Switch/z_obj_switch.c"
+  },
+  {
+    "name": "ACTOR_DEMO_EC",
+    "id": 386,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_Demo_Ec/z_demo_ec.c"
+  },
+  {
+    "name": "ACTOR_EN_BOM_CHU",
+    "id": 218,
+    "category": "ACTORCAT_EXPLOSIVE",
+    "source": "src/overlays/actors/ovl_En_Bom_Chu/z_en_bom_chu.c"
+  },
+  {
+    "name": "ACTOR_BG_HAKA_SGAMI",
+    "id": 177,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Haka_Sgami/z_bg_haka_sgami.c"
+  },
+  {
+    "name": "ACTOR_EN_TA",
+    "id": 132,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Ta/z_en_ta.c"
+  },
+  {
+    "name": "ACTOR_BG_MENKURI_NISEKABE",
+    "id": 461,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Menkuri_Nisekabe/z_bg_menkuri_nisekabe.c"
+  },
+  {
+    "name": "ACTOR_EN_HORSE_GANON",
+    "id": 66,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_En_Horse_Ganon/z_en_horse_ganon.c"
+  },
+  {
+    "name": "ACTOR_EN_TEST",
+    "id": 2,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Test/z_en_test.c"
+  },
+  {
+    "name": "ACTOR_BOSS_FD",
+    "id": 150,
+    "category": "ACTORCAT_BOSS",
+    "source": "src/overlays/actors/ovl_Boss_Fd/z_boss_fd.c"
+  },
+  {
+    "name": "ACTOR_EN_ATTACK_NIW",
+    "id": 324,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Attack_Niw/z_en_attack_niw.c"
+  },
+  {
+    "name": "ACTOR_EN_WONDER_TALK",
+    "id": 327,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Wonder_Talk/z_en_wonder_talk.c"
+  },
+  {
+    "name": "ACTOR_BG_SPOT09_OBJ",
+    "id": 184,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Bg_Spot09_Obj/z_bg_spot09_obj.c"
+  },
+  {
+    "name": "ACTOR_EN_SCENE_CHANGE",
+    "id": 36,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_En_Scene_Change/z_en_scene_change.c"
+  },
+  {
+    "name": "ACTOR_EN_HY",
+    "id": 366,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Hy/z_en_hy.c"
+  },
+  {
+    "name": "ACTOR_BG_BOWL_WALL",
+    "id": 445,
+    "category": "ACTORCAT_PROP",
+    "source": "src/overlays/actors/ovl_Bg_Bowl_Wall/z_bg_bowl_wall.c"
+  },
+  {
+    "name": "ACTOR_OBJ_WARP2BLOCK",
+    "id": 470,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Obj_Warp2block/z_obj_warp2block.c"
+  },
+  {
+    "name": "ACTOR_EN_FISH",
+    "id": 33,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_En_Fish/z_en_fish.c"
+  },
+  {
+    "name": "ACTOR_EN_SA",
+    "id": 326,
+    "category": "ACTORCAT_NPC",
+    "source": "src/overlays/actors/ovl_En_Sa/z_en_sa.c"
+  },
+  {
+    "name": "ACTOR_OBJ_HSBLOCK",
+    "id": 301,
+    "category": "ACTORCAT_BG",
+    "source": "src/overlays/actors/ovl_Obj_Hsblock/z_obj_hsblock.c"
+  },
+  {
+    "name": "ACTOR_EN_SKB",
+    "id": 432,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Skb/z_en_skb.c"
+  },
+  {
+    "name": "ACTOR_OBJ_MAKEKINSUTA",
+    "id": 463,
+    "category": "ACTORCAT_ITEMACTION",
+    "source": "src/overlays/actors/ovl_Obj_Makekinsuta/z_obj_makekinsuta.c"
+  },
+  {
+    "name": "ACTOR_EN_BW",
+    "id": 56,
+    "category": "ACTORCAT_ENEMY",
+    "source": "src/overlays/actors/ovl_En_Bw/z_en_bw.c"
+  }
+]

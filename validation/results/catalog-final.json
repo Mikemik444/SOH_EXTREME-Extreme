@@ -1,0 +1,3341 @@
+{
+  "scope": "Verify source snapshot, room crosswalk and unchanged identity catalogues.\nThis establishes source/packaging consistency, not physical map playtesting.\n",
+  "checks": [
+    {
+      "test": "export exactly matches current native source regions",
+      "passed": true,
+      "actual": 429,
+      "expected": 429
+    },
+    {
+      "test": "429 exported vanilla regions",
+      "passed": true,
+      "actual": 429,
+      "expected": 429
+    },
+    {
+      "test": "no new or retired active enemy IDs",
+      "passed": true,
+      "actual": 753,
+      "expected": 753
+    },
+    {
+      "test": "all native region assignments exist",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "all and only mapped native regions have manifest rows",
+      "passed": true,
+      "actual": 535,
+      "expected": 535
+    },
+    {
+      "test": "manifest/native-table match 9800000",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY_3F",
+      "expected": "RR_DEKU_TREE_LOBBY_3F"
+    },
+    {
+      "test": "manifest/native-table match 9800001",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY_3F",
+      "expected": "RR_DEKU_TREE_LOBBY_3F"
+    },
+    {
+      "test": "manifest/native-table match 9800002",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY_3F",
+      "expected": "RR_DEKU_TREE_LOBBY_3F"
+    },
+    {
+      "test": "manifest/native-table match 9800003",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY",
+      "expected": "RR_DEKU_TREE_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800004",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY",
+      "expected": "RR_DEKU_TREE_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800005",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY",
+      "expected": "RR_DEKU_TREE_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800006",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_2F_MIDDLE_ROOM",
+      "expected": "RR_DEKU_TREE_2F_MIDDLE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800007",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_UPPER",
+      "expected": "RR_DEKU_TREE_BASEMENT_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800008",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_UPPER",
+      "expected": "RR_DEKU_TREE_BASEMENT_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800009",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_LOWER",
+      "expected": "RR_DEKU_TREE_BASEMENT_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800010",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_UPPER",
+      "expected": "RR_DEKU_TREE_BASEMENT_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800011",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_SCRUB_ROOM",
+      "expected": "RR_DEKU_TREE_BASEMENT_SCRUB_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800012",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_WATER_ROOM_BACK",
+      "expected": "RR_DEKU_TREE_BASEMENT_WATER_ROOM_BACK"
+    },
+    {
+      "test": "manifest/native-table match 9800013",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_TORCH_ROOM",
+      "expected": "RR_DEKU_TREE_BASEMENT_TORCH_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800014",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_TORCH_ROOM",
+      "expected": "RR_DEKU_TREE_BASEMENT_TORCH_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800015",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_TORCH_ROOM",
+      "expected": "RR_DEKU_TREE_BASEMENT_TORCH_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800016",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY",
+      "expected": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800017",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY",
+      "expected": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800018",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY",
+      "expected": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800019",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY",
+      "expected": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800020",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY",
+      "expected": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800021",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY",
+      "expected": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800022",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_BASEMENT_BACK_ROOM",
+      "expected": "RR_DEKU_TREE_BASEMENT_BACK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800023",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "expected": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800024",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "expected": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800025",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "expected": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800026",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_COMPASS_ROOM",
+      "expected": "RR_DEKU_TREE_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800027",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_COMPASS_ROOM",
+      "expected": "RR_DEKU_TREE_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800028",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_COMPASS_ROOM",
+      "expected": "RR_DEKU_TREE_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800029",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
+      "expected": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE"
+    },
+    {
+      "test": "manifest/native-table match 9800030",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
+      "expected": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE"
+    },
+    {
+      "test": "manifest/native-table match 9800031",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_LOBBY",
+      "expected": "RR_DODONGOS_CAVERN_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800032",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_LOBBY",
+      "expected": "RR_DODONGOS_CAVERN_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800033",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_LOBBY",
+      "expected": "RR_DODONGOS_CAVERN_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800034",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
+      "expected": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800035",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
+      "expected": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800036",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "expected": "RR_DODONGOS_CAVERN_SE_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800037",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "expected": "RR_DODONGOS_CAVERN_SE_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800038",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "expected": "RR_DODONGOS_CAVERN_SE_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800039",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "expected": "RR_DODONGOS_CAVERN_SE_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800040",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "expected": "RR_DODONGOS_CAVERN_SE_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800041",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "expected": "RR_DODONGOS_CAVERN_SE_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800044",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
+      "expected": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800045",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
+      "expected": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800046",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "expected": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800047",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "expected": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800048",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_DODONGO_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800049",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_DODONGO_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800050",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_DODONGO_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800051",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_ARMOS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800052",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_ARMOS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800053",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_ARMOS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800054",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_ARMOS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800055",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_ARMOS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800057",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_BOSS_AREA",
+      "expected": "RR_DODONGOS_CAVERN_BOSS_AREA"
+    },
+    {
+      "test": "manifest/native-table match 9800058",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_BOSS_AREA",
+      "expected": "RR_DODONGOS_CAVERN_BOSS_AREA"
+    },
+    {
+      "test": "manifest/native-table match 9800059",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_BOSS_AREA",
+      "expected": "RR_DODONGOS_CAVERN_BOSS_AREA"
+    },
+    {
+      "test": "manifest/native-table match 9800060",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_BOSS_AREA",
+      "expected": "RR_DODONGOS_CAVERN_BOSS_AREA"
+    },
+    {
+      "test": "manifest/native-table match 9800061",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800062",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800063",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800064",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_SE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800065",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_SE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800066",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_SE_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_SE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800067",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_BACK_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_BACK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800068",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_COMPASS_ROOM",
+      "expected": "RR_DODONGOS_CAVERN_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800071",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_BEGINNING",
+      "expected": "RR_JABU_JABUS_BELLY_BEGINNING"
+    },
+    {
+      "test": "manifest/native-table match 9800072",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_BEGINNING",
+      "expected": "RR_JABU_JABUS_BELLY_BEGINNING"
+    },
+    {
+      "test": "manifest/native-table match 9800073",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_BEGINNING",
+      "expected": "RR_JABU_JABUS_BELLY_BEGINNING"
+    },
+    {
+      "test": "manifest/native-table match 9800074",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_BEGINNING",
+      "expected": "RR_JABU_JABUS_BELLY_BEGINNING"
+    },
+    {
+      "test": "manifest/native-table match 9800075",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_LIFT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800076",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_LIFT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800077",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800078",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800079",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT"
+    },
+    {
+      "test": "manifest/native-table match 9800080",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT"
+    },
+    {
+      "test": "manifest/native-table match 9800081",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT"
+    },
+    {
+      "test": "manifest/native-table match 9800082",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT"
+    },
+    {
+      "test": "manifest/native-table match 9800083",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT"
+    },
+    {
+      "test": "manifest/native-table match 9800084",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT"
+    },
+    {
+      "test": "manifest/native-table match 9800085",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "expected": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT"
+    },
+    {
+      "test": "manifest/native-table match 9800086",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_JIGGLIES_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_JIGGLIES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800087",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800088",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800089",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800090",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800091",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
+      "expected": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800092",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
+      "expected": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO"
+    },
+    {
+      "test": "manifest/native-table match 9800093",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
+      "expected": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO"
+    },
+    {
+      "test": "manifest/native-table match 9800094",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "expected": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800095",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "expected": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800096",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "expected": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800097",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "expected": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800098",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "expected": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800099",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800100",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800101",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800102",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800103",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800104",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_EAST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_EAST"
+    },
+    {
+      "test": "manifest/native-table match 9800105",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_EAST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_EAST"
+    },
+    {
+      "test": "manifest/native-table match 9800106",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_EAST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_EAST"
+    },
+    {
+      "test": "manifest/native-table match 9800107",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_EAST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_EAST"
+    },
+    {
+      "test": "manifest/native-table match 9800108",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800109",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_EAST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_EAST"
+    },
+    {
+      "test": "manifest/native-table match 9800110",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800111",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800112",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800113",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800114",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800115",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800116",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800117",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800118",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "expected": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST"
+    },
+    {
+      "test": "manifest/native-table match 9800119",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_B1_JIGGLY",
+      "expected": "RR_JABU_JABUS_BELLY_B1_JIGGLY"
+    },
+    {
+      "test": "manifest/native-table match 9800120",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_B1_JIGGLY",
+      "expected": "RR_JABU_JABUS_BELLY_B1_JIGGLY"
+    },
+    {
+      "test": "manifest/native-table match 9800121",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800122",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800123",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800124",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800125",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800126",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800127",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800128",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800129",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800130",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
+      "expected": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800131",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_TREES",
+      "expected": "RR_FOREST_TEMPLE_TREES"
+    },
+    {
+      "test": "manifest/native-table match 9800132",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_TREES",
+      "expected": "RR_FOREST_TEMPLE_TREES"
+    },
+    {
+      "test": "manifest/native-table match 9800133",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_OVERGROWN_HALLWAY_LOWER",
+      "expected": "RR_FOREST_TEMPLE_OVERGROWN_HALLWAY_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800134",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_BLUE_DOORMAT_HALLWAY",
+      "expected": "RR_FOREST_TEMPLE_BLUE_DOORMAT_HALLWAY"
+    },
+    {
+      "test": "manifest/native-table match 9800135",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NORTH_HALLWAY",
+      "expected": "RR_FOREST_TEMPLE_NORTH_HALLWAY"
+    },
+    {
+      "test": "manifest/native-table match 9800136",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_RED_DOORMAT_HALLWAY",
+      "expected": "RR_FOREST_TEMPLE_RED_DOORMAT_HALLWAY"
+    },
+    {
+      "test": "manifest/native-table match 9800137",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_LOWER_STALFOS",
+      "expected": "RR_FOREST_TEMPLE_LOWER_STALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800138",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_LOWER_STALFOS",
+      "expected": "RR_FOREST_TEMPLE_LOWER_STALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800139",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NE_COURTYARD_LOWER",
+      "expected": "RR_FOREST_TEMPLE_NE_COURTYARD_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800140",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NE_COURTYARD_UPPER",
+      "expected": "RR_FOREST_TEMPLE_NE_COURTYARD_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800141",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NE_COURTYARD_LOWER",
+      "expected": "RR_FOREST_TEMPLE_NE_COURTYARD_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800142",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER",
+      "expected": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800143",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER",
+      "expected": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800144",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NW_COURTYARD_UPPER",
+      "expected": "RR_FOREST_TEMPLE_NW_COURTYARD_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800145",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_MAP_ROOM",
+      "expected": "RR_FOREST_TEMPLE_MAP_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800146",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_BLOCK_PUSH_ROOM_TOP",
+      "expected": "RR_FOREST_TEMPLE_BLOCK_PUSH_ROOM_TOP"
+    },
+    {
+      "test": "manifest/native-table match 9800147",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_BLOCK_PUSH_FLOOR",
+      "expected": "RR_FOREST_TEMPLE_BLOCK_PUSH_FLOOR"
+    },
+    {
+      "test": "manifest/native-table match 9800148",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_BLOCK_PUSH_ROOM_TOP",
+      "expected": "RR_FOREST_TEMPLE_BLOCK_PUSH_ROOM_TOP"
+    },
+    {
+      "test": "manifest/native-table match 9800149",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_FALLING_ROOM",
+      "expected": "RR_FOREST_TEMPLE_FALLING_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800150",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_FALLING_ROOM",
+      "expected": "RR_FOREST_TEMPLE_FALLING_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800151",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_FALLING_ROOM",
+      "expected": "RR_FOREST_TEMPLE_FALLING_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800152",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_BASEMENT",
+      "expected": "RR_FOREST_TEMPLE_BASEMENT"
+    },
+    {
+      "test": "manifest/native-table match 9800153",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_FLOORMASTER_ROOM",
+      "expected": "RR_FOREST_TEMPLE_FLOORMASTER_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800154",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NW_HALLWAY_TWISTED",
+      "expected": "RR_FOREST_TEMPLE_NW_HALLWAY_TWISTED"
+    },
+    {
+      "test": "manifest/native-table match 9800155",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NE_HALLWAY_STRAIGHTENED",
+      "expected": "RR_FOREST_TEMPLE_NE_HALLWAY_STRAIGHTENED"
+    },
+    {
+      "test": "manifest/native-table match 9800156",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NE_HALLWAY_STRAIGHTENED",
+      "expected": "RR_FOREST_TEMPLE_NE_HALLWAY_STRAIGHTENED"
+    },
+    {
+      "test": "manifest/native-table match 9800157",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NE_HALLWAY_STRAIGHTENED",
+      "expected": "RR_FOREST_TEMPLE_NE_HALLWAY_STRAIGHTENED"
+    },
+    {
+      "test": "manifest/native-table match 9800158",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_BELOW_BOSS_KEY_CHEST",
+      "expected": "RR_FOREST_TEMPLE_BELOW_BOSS_KEY_CHEST"
+    },
+    {
+      "test": "manifest/native-table match 9800159",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_BELOW_BOSS_KEY_CHEST",
+      "expected": "RR_FOREST_TEMPLE_BELOW_BOSS_KEY_CHEST"
+    },
+    {
+      "test": "manifest/native-table match 9800160",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FOYER",
+      "expected": "RR_FIRE_TEMPLE_FOYER"
+    },
+    {
+      "test": "manifest/native-table match 9800161",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FOYER",
+      "expected": "RR_FIRE_TEMPLE_FOYER"
+    },
+    {
+      "test": "manifest/native-table match 9800162",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800163",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800164",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800165",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800166",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800167",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800168",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800169",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800170",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800171",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800172",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800173",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800174",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "expected": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800175",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_FLARE_DANCER",
+      "expected": "RR_FIRE_TEMPLE_LOOP_FLARE_DANCER"
+    },
+    {
+      "test": "manifest/native-table match 9800176",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_SHORTCUT_ROOM",
+      "expected": "RR_FIRE_TEMPLE_SHORTCUT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800177",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_SHORTCUT_ROOM",
+      "expected": "RR_FIRE_TEMPLE_SHORTCUT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800178",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BOULDER_MAZE_UPPER",
+      "expected": "RR_FIRE_TEMPLE_BOULDER_MAZE_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800179",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BOULDER_MAZE_UPPER",
+      "expected": "RR_FIRE_TEMPLE_BOULDER_MAZE_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800180",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_BOULDER_MAZE_UPPER",
+      "expected": "RR_FIRE_TEMPLE_BOULDER_MAZE_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800181",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "expected": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN"
+    },
+    {
+      "test": "manifest/native-table match 9800182",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "expected": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN"
+    },
+    {
+      "test": "manifest/native-table match 9800183",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "expected": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN"
+    },
+    {
+      "test": "manifest/native-table match 9800184",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "expected": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN"
+    },
+    {
+      "test": "manifest/native-table match 9800185",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "expected": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN"
+    },
+    {
+      "test": "manifest/native-table match 9800186",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_MAZE_PAST_WALL",
+      "expected": "RR_FIRE_TEMPLE_FIRE_MAZE_PAST_WALL"
+    },
+    {
+      "test": "manifest/native-table match 9800187",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_NARROW_STAIRS",
+      "expected": "RR_FIRE_TEMPLE_NARROW_STAIRS"
+    },
+    {
+      "test": "manifest/native-table match 9800188",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_NARROW_STAIRS",
+      "expected": "RR_FIRE_TEMPLE_NARROW_STAIRS"
+    },
+    {
+      "test": "manifest/native-table match 9800189",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_NARROW_STAIRS",
+      "expected": "RR_FIRE_TEMPLE_NARROW_STAIRS"
+    },
+    {
+      "test": "manifest/native-table match 9800190",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS",
+      "expected": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS"
+    },
+    {
+      "test": "manifest/native-table match 9800191",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS",
+      "expected": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS"
+    },
+    {
+      "test": "manifest/native-table match 9800192",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS",
+      "expected": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS"
+    },
+    {
+      "test": "manifest/native-table match 9800193",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS",
+      "expected": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS"
+    },
+    {
+      "test": "manifest/native-table match 9800194",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800195",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800196",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800197",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800198",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800199",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800200",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_HEXAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800201",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE",
+      "expected": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE"
+    },
+    {
+      "test": "manifest/native-table match 9800202",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE",
+      "expected": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE"
+    },
+    {
+      "test": "manifest/native-table match 9800203",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE",
+      "expected": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE"
+    },
+    {
+      "test": "manifest/native-table match 9800204",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE",
+      "expected": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE"
+    },
+    {
+      "test": "manifest/native-table match 9800205",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE",
+      "expected": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE"
+    },
+    {
+      "test": "manifest/native-table match 9800206",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800207",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800208",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800209",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800210",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800211",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800212",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800213",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800214",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800215",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800216",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800217",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800218",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800219",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800220",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "expected": "RR_FIRE_TEMPLE_8_TILE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800221",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE",
+      "expected": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE"
+    },
+    {
+      "test": "manifest/native-table match 9800222",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE",
+      "expected": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE"
+    },
+    {
+      "test": "manifest/native-table match 9800223",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE",
+      "expected": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE"
+    },
+    {
+      "test": "manifest/native-table match 9800224",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE",
+      "expected": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE"
+    },
+    {
+      "test": "manifest/native-table match 9800225",
+      "passed": true,
+      "actual": "RR_FIRE_TEMPLE_3F_FLARE_DANCER",
+      "expected": "RR_FIRE_TEMPLE_3F_FLARE_DANCER"
+    },
+    {
+      "test": "manifest/native-table match 9800226",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BLOCK_U_BEND",
+      "expected": "RR_WATER_TEMPLE_BLOCK_U_BEND"
+    },
+    {
+      "test": "manifest/native-table match 9800227",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BLOCK_U_BEND",
+      "expected": "RR_WATER_TEMPLE_BLOCK_U_BEND"
+    },
+    {
+      "test": "manifest/native-table match 9800228",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_MAIN",
+      "expected": "RR_WATER_TEMPLE_MAIN"
+    },
+    {
+      "test": "manifest/native-table match 9800229",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_MAIN",
+      "expected": "RR_WATER_TEMPLE_MAIN"
+    },
+    {
+      "test": "manifest/native-table match 9800230",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_3F_CENTRAL_A",
+      "expected": "RR_WATER_TEMPLE_3F_CENTRAL_A"
+    },
+    {
+      "test": "manifest/native-table match 9800231",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_3F_CENTRAL_A",
+      "expected": "RR_WATER_TEMPLE_3F_CENTRAL_A"
+    },
+    {
+      "test": "manifest/native-table match 9800232",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_PILLAR_B1",
+      "expected": "RR_WATER_TEMPLE_PILLAR_B1"
+    },
+    {
+      "test": "manifest/native-table match 9800233",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_PILLAR_B1",
+      "expected": "RR_WATER_TEMPLE_PILLAR_B1"
+    },
+    {
+      "test": "manifest/native-table match 9800234",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_PILLAR_B1",
+      "expected": "RR_WATER_TEMPLE_PILLAR_B1"
+    },
+    {
+      "test": "manifest/native-table match 9800235",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_PILLAR_B1",
+      "expected": "RR_WATER_TEMPLE_PILLAR_B1"
+    },
+    {
+      "test": "manifest/native-table match 9800236",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_PILLAR_B1",
+      "expected": "RR_WATER_TEMPLE_PILLAR_B1"
+    },
+    {
+      "test": "manifest/native-table match 9800237",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_PILLAR_B1",
+      "expected": "RR_WATER_TEMPLE_PILLAR_B1"
+    },
+    {
+      "test": "manifest/native-table match 9800238",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_PILLAR_B1",
+      "expected": "RR_WATER_TEMPLE_PILLAR_B1"
+    },
+    {
+      "test": "manifest/native-table match 9800239",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_NEAR_CAGE_STEPS",
+      "expected": "RR_WATER_TEMPLE_NEAR_CAGE_STEPS"
+    },
+    {
+      "test": "manifest/native-table match 9800240",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_NEAR_CAGE",
+      "expected": "RR_WATER_TEMPLE_NEAR_CAGE"
+    },
+    {
+      "test": "manifest/native-table match 9800241",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_NEAR_CAGE",
+      "expected": "RR_WATER_TEMPLE_NEAR_CAGE"
+    },
+    {
+      "test": "manifest/native-table match 9800242",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_JET_CHEST_ROOM",
+      "expected": "RR_WATER_TEMPLE_JET_CHEST_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800243",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_JET_CHEST_ROOM",
+      "expected": "RR_WATER_TEMPLE_JET_CHEST_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800244",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_JET_CHEST_ROOM",
+      "expected": "RR_WATER_TEMPLE_JET_CHEST_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800245",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_JET_CHEST_ROOM",
+      "expected": "RR_WATER_TEMPLE_JET_CHEST_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800246",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_WATERFALL",
+      "expected": "RR_WATER_TEMPLE_WATERFALL"
+    },
+    {
+      "test": "manifest/native-table match 9800247",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_WATERFALL",
+      "expected": "RR_WATER_TEMPLE_WATERFALL"
+    },
+    {
+      "test": "manifest/native-table match 9800248",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_LIKE_LIKE_SPIKES",
+      "expected": "RR_WATER_TEMPLE_LIKE_LIKE_SPIKES"
+    },
+    {
+      "test": "manifest/native-table match 9800249",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_TOGGLE_SWITCH",
+      "expected": "RR_WATER_TEMPLE_TOGGLE_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800250",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_TOGGLE_SWITCH",
+      "expected": "RR_WATER_TEMPLE_TOGGLE_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800251",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_LIKE_LIKE_SPIKES",
+      "expected": "RR_WATER_TEMPLE_LIKE_LIKE_SPIKES"
+    },
+    {
+      "test": "manifest/native-table match 9800252",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_LIKE_LIKE_SPIKES",
+      "expected": "RR_WATER_TEMPLE_LIKE_LIKE_SPIKES"
+    },
+    {
+      "test": "manifest/native-table match 9800253",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_TOGGLE_SWITCH",
+      "expected": "RR_WATER_TEMPLE_TOGGLE_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800254",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_DRAGON_ROOM",
+      "expected": "RR_WATER_TEMPLE_DRAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800255",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_DRAGON_ROOM",
+      "expected": "RR_WATER_TEMPLE_DRAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800256",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_OUTSIDE_DRAGON_ROOM",
+      "expected": "RR_WATER_TEMPLE_OUTSIDE_DRAGON_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800257",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_JET_LIFT_3F",
+      "expected": "RR_WATER_TEMPLE_JET_LIFT_3F"
+    },
+    {
+      "test": "manifest/native-table match 9800258",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BOULDER_CANAL",
+      "expected": "RR_WATER_TEMPLE_BOULDER_CANAL"
+    },
+    {
+      "test": "manifest/native-table match 9800259",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BOULDERS_NORTH",
+      "expected": "RR_WATER_TEMPLE_BOULDERS_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800260",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BOULDERS_NORTH",
+      "expected": "RR_WATER_TEMPLE_BOULDERS_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800261",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BOULDERS_SOUTH",
+      "expected": "RR_WATER_TEMPLE_BOULDERS_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800262",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BOULDERS_NORTH",
+      "expected": "RR_WATER_TEMPLE_BOULDERS_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800263",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BOULDERS_NORTH",
+      "expected": "RR_WATER_TEMPLE_BOULDERS_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800264",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BOULDERS_SOUTH",
+      "expected": "RR_WATER_TEMPLE_BOULDERS_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800265",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BLOCK_ROOM",
+      "expected": "RR_WATER_TEMPLE_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800266",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BLOCK_ROOM",
+      "expected": "RR_WATER_TEMPLE_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800267",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BLOCK_ROOM",
+      "expected": "RR_WATER_TEMPLE_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800268",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BLOCK_ROOM",
+      "expected": "RR_WATER_TEMPLE_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800269",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_BLOCK_ROOM",
+      "expected": "RR_WATER_TEMPLE_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800270",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_3_JETS_NO_SWITCH",
+      "expected": "RR_WATER_TEMPLE_3_JETS_NO_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800271",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_3_JETS_NO_SWITCH",
+      "expected": "RR_WATER_TEMPLE_3_JETS_NO_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800272",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_TORCH_ROOM",
+      "expected": "RR_WATER_TEMPLE_TORCH_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800273",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_TORCH_ROOM",
+      "expected": "RR_WATER_TEMPLE_TORCH_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800274",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_TORCH_ROOM",
+      "expected": "RR_WATER_TEMPLE_TORCH_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800275",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_4_SPIKES_ROOM",
+      "expected": "RR_WATER_TEMPLE_4_SPIKES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800276",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_4_SPIKES_ROOM",
+      "expected": "RR_WATER_TEMPLE_4_SPIKES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800277",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_4_SPIKES_ROOM",
+      "expected": "RR_WATER_TEMPLE_4_SPIKES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800278",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_4_SPIKES_ROOM",
+      "expected": "RR_WATER_TEMPLE_4_SPIKES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800279",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FOYER",
+      "expected": "RR_SPIRIT_TEMPLE_FOYER"
+    },
+    {
+      "test": "manifest/native-table match 9800280",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FOYER",
+      "expected": "RR_SPIRIT_TEMPLE_FOYER"
+    },
+    {
+      "test": "manifest/native-table match 9800281",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_ADULT_SIDE_HUB",
+      "expected": "RR_SPIRIT_TEMPLE_ADULT_SIDE_HUB"
+    },
+    {
+      "test": "manifest/native-table match 9800282",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB",
+      "expected": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB"
+    },
+    {
+      "test": "manifest/native-table match 9800283",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB",
+      "expected": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB"
+    },
+    {
+      "test": "manifest/native-table match 9800284",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB",
+      "expected": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB"
+    },
+    {
+      "test": "manifest/native-table match 9800285",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB",
+      "expected": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB"
+    },
+    {
+      "test": "manifest/native-table match 9800286",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB",
+      "expected": "RR_SPIRIT_TEMPLE_CHILD_SIDE_HUB"
+    },
+    {
+      "test": "manifest/native-table match 9800287",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH",
+      "expected": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800288",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH",
+      "expected": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800289",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH",
+      "expected": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800290",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH",
+      "expected": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800291",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "expected": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800292",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "expected": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800293",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_SOUTH",
+      "expected": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800294",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_SOUTH",
+      "expected": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_SOUTH"
+    },
+    {
+      "test": "manifest/native-table match 9800295",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F"
+    },
+    {
+      "test": "manifest/native-table match 9800296",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F"
+    },
+    {
+      "test": "manifest/native-table match 9800298",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_STATUE_ROOM_ADULT",
+      "expected": "RR_SPIRIT_TEMPLE_STATUE_ROOM_ADULT"
+    },
+    {
+      "test": "manifest/native-table match 9800299",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800300",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800301",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800302",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_CHILD_THRONE",
+      "expected": "RR_SPIRIT_TEMPLE_CHILD_THRONE"
+    },
+    {
+      "test": "manifest/native-table match 9800303",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_PAST_BOULDERS",
+      "expected": "RR_SPIRIT_TEMPLE_PAST_BOULDERS"
+    },
+    {
+      "test": "manifest/native-table match 9800304",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SAND_PIT",
+      "expected": "RR_SPIRIT_TEMPLE_SAND_PIT"
+    },
+    {
+      "test": "manifest/native-table match 9800305",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800306",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800307",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800308",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_POT_STAIRS",
+      "expected": "RR_SPIRIT_TEMPLE_POT_STAIRS"
+    },
+    {
+      "test": "manifest/native-table match 9800309",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BEAMOS_PITS",
+      "expected": "RR_SPIRIT_TEMPLE_BEAMOS_PITS"
+    },
+    {
+      "test": "manifest/native-table match 9800310",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_4_ARMOS",
+      "expected": "RR_SPIRIT_TEMPLE_4_ARMOS"
+    },
+    {
+      "test": "manifest/native-table match 9800311",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_4_ARMOS",
+      "expected": "RR_SPIRIT_TEMPLE_4_ARMOS"
+    },
+    {
+      "test": "manifest/native-table match 9800312",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_4_ARMOS",
+      "expected": "RR_SPIRIT_TEMPLE_4_ARMOS"
+    },
+    {
+      "test": "manifest/native-table match 9800313",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_4_ARMOS",
+      "expected": "RR_SPIRIT_TEMPLE_4_ARMOS"
+    },
+    {
+      "test": "manifest/native-table match 9800314",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_ADULT_THRONE",
+      "expected": "RR_SPIRIT_TEMPLE_ADULT_THRONE"
+    },
+    {
+      "test": "manifest/native-table match 9800315",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800316",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800317",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800318",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800319",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800320",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800321",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800322",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800323",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800324",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800325",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_WALL_BASE",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_WALL_BASE"
+    },
+    {
+      "test": "manifest/native-table match 9800326",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_WALL_UPPER",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_WALL_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800327",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_WALL_BASE",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_WALL_BASE"
+    },
+    {
+      "test": "manifest/native-table match 9800328",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_WALL_UPPER",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_WALL_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800329",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE"
+    },
+    {
+      "test": "manifest/native-table match 9800330",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE"
+    },
+    {
+      "test": "manifest/native-table match 9800331",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE"
+    },
+    {
+      "test": "manifest/native-table match 9800332",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE"
+    },
+    {
+      "test": "manifest/native-table match 9800333",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE"
+    },
+    {
+      "test": "manifest/native-table match 9800334",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800335",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800336",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800337",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_FIRST_BEAMOS",
+      "expected": "RR_SHADOW_TEMPLE_FIRST_BEAMOS"
+    },
+    {
+      "test": "manifest/native-table match 9800338",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DEAD_HAND",
+      "expected": "RR_SHADOW_TEMPLE_DEAD_HAND"
+    },
+    {
+      "test": "manifest/native-table match 9800339",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_FIRST_BEAMOS",
+      "expected": "RR_SHADOW_TEMPLE_FIRST_BEAMOS"
+    },
+    {
+      "test": "manifest/native-table match 9800340",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_COMPASS_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800341",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_COMPASS_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800342",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_B2_TO_B3_CORRIDOR_B2",
+      "expected": "RR_SHADOW_TEMPLE_B2_TO_B3_CORRIDOR_B2"
+    },
+    {
+      "test": "manifest/native-table match 9800343",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_B2_TO_B3_CORRIDOR_B2",
+      "expected": "RR_SHADOW_TEMPLE_B2_TO_B3_CORRIDOR_B2"
+    },
+    {
+      "test": "manifest/native-table match 9800344",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_B2_TO_B3_CORRIDOR_B3",
+      "expected": "RR_SHADOW_TEMPLE_B2_TO_B3_CORRIDOR_B3"
+    },
+    {
+      "test": "manifest/native-table match 9800345",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_B2_TO_B3_CORRIDOR_B3",
+      "expected": "RR_SHADOW_TEMPLE_B2_TO_B3_CORRIDOR_B3"
+    },
+    {
+      "test": "manifest/native-table match 9800346",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_UPPER_HUGE_PIT",
+      "expected": "RR_SHADOW_TEMPLE_UPPER_HUGE_PIT"
+    },
+    {
+      "test": "manifest/native-table match 9800347",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_UPPER_HUGE_PIT",
+      "expected": "RR_SHADOW_TEMPLE_UPPER_HUGE_PIT"
+    },
+    {
+      "test": "manifest/native-table match 9800348",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "expected": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT"
+    },
+    {
+      "test": "manifest/native-table match 9800349",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_UPPER_HUGE_PIT",
+      "expected": "RR_SHADOW_TEMPLE_UPPER_HUGE_PIT"
+    },
+    {
+      "test": "manifest/native-table match 9800350",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800351",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800352",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_WOODEN_SPIKES",
+      "expected": "RR_SHADOW_TEMPLE_WOODEN_SPIKES"
+    },
+    {
+      "test": "manifest/native-table match 9800353",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_WOODEN_SPIKES",
+      "expected": "RR_SHADOW_TEMPLE_WOODEN_SPIKES"
+    },
+    {
+      "test": "manifest/native-table match 9800354",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_SKULL_JAR",
+      "expected": "RR_SHADOW_TEMPLE_SKULL_JAR"
+    },
+    {
+      "test": "manifest/native-table match 9800355",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_SKULL_JAR",
+      "expected": "RR_SHADOW_TEMPLE_SKULL_JAR"
+    },
+    {
+      "test": "manifest/native-table match 9800356",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_SKULL_JAR",
+      "expected": "RR_SHADOW_TEMPLE_SKULL_JAR"
+    },
+    {
+      "test": "manifest/native-table match 9800357",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_SKULL_JAR",
+      "expected": "RR_SHADOW_TEMPLE_SKULL_JAR"
+    },
+    {
+      "test": "manifest/native-table match 9800358",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_MAZE",
+      "expected": "RR_SHADOW_TEMPLE_MAZE"
+    },
+    {
+      "test": "manifest/native-table match 9800359",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_MAZE",
+      "expected": "RR_SHADOW_TEMPLE_MAZE"
+    },
+    {
+      "test": "manifest/native-table match 9800360",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "expected": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES"
+    },
+    {
+      "test": "manifest/native-table match 9800361",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "expected": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES"
+    },
+    {
+      "test": "manifest/native-table match 9800362",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "expected": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES"
+    },
+    {
+      "test": "manifest/native-table match 9800363",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "expected": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES"
+    },
+    {
+      "test": "manifest/native-table match 9800364",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_X_CROSS",
+      "expected": "RR_SHADOW_TEMPLE_X_CROSS"
+    },
+    {
+      "test": "manifest/native-table match 9800365",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_UPPER_WIND_TUNNEL",
+      "expected": "RR_SHADOW_TEMPLE_UPPER_WIND_TUNNEL"
+    },
+    {
+      "test": "manifest/native-table match 9800366",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_WIND_TUNNEL_HINT_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_WIND_TUNNEL_HINT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800367",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_WIND_TUNNEL_HINT_ROOM",
+      "expected": "RR_SHADOW_TEMPLE_WIND_TUNNEL_HINT_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800368",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT",
+      "expected": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT"
+    },
+    {
+      "test": "manifest/native-table match 9800369",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT",
+      "expected": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT"
+    },
+    {
+      "test": "manifest/native-table match 9800370",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DOCK",
+      "expected": "RR_SHADOW_TEMPLE_DOCK"
+    },
+    {
+      "test": "manifest/native-table match 9800371",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DOCK",
+      "expected": "RR_SHADOW_TEMPLE_DOCK"
+    },
+    {
+      "test": "manifest/native-table match 9800372",
+      "passed": true,
+      "actual": "RR_BOTW_PERIMETER",
+      "expected": "RR_BOTW_PERIMETER"
+    },
+    {
+      "test": "manifest/native-table match 9800373",
+      "passed": true,
+      "actual": "RR_BOTW_CORRIDOR",
+      "expected": "RR_BOTW_CORRIDOR"
+    },
+    {
+      "test": "manifest/native-table match 9800374",
+      "passed": true,
+      "actual": "RR_BOTW_MIDDLE",
+      "expected": "RR_BOTW_MIDDLE"
+    },
+    {
+      "test": "manifest/native-table match 9800375",
+      "passed": true,
+      "actual": "RR_BOTW_NEAR_BOSS_UPPER",
+      "expected": "RR_BOTW_NEAR_BOSS_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800376",
+      "passed": true,
+      "actual": "RR_BOTW_MIDDLE",
+      "expected": "RR_BOTW_MIDDLE"
+    },
+    {
+      "test": "manifest/native-table match 9800377",
+      "passed": true,
+      "actual": "RR_BOTW_LOCKED_CAGE",
+      "expected": "RR_BOTW_LOCKED_CAGE"
+    },
+    {
+      "test": "manifest/native-table match 9800378",
+      "passed": true,
+      "actual": "RR_BOTW_PERIMETER",
+      "expected": "RR_BOTW_PERIMETER"
+    },
+    {
+      "test": "manifest/native-table match 9800379",
+      "passed": true,
+      "actual": "RR_BOTW_B3_OOZE",
+      "expected": "RR_BOTW_B3_OOZE"
+    },
+    {
+      "test": "manifest/native-table match 9800380",
+      "passed": true,
+      "actual": "RR_BOTW_B3_CHEST_AREA",
+      "expected": "RR_BOTW_B3_CHEST_AREA"
+    },
+    {
+      "test": "manifest/native-table match 9800381",
+      "passed": true,
+      "actual": "RR_BOTW_CRYPT",
+      "expected": "RR_BOTW_CRYPT"
+    },
+    {
+      "test": "manifest/native-table match 9800382",
+      "passed": true,
+      "actual": "RR_BOTW_HIDDEN_PITS_ROOM",
+      "expected": "RR_BOTW_HIDDEN_PITS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800383",
+      "passed": true,
+      "actual": "RR_BOTW_HIDDEN_PITS_ROOM",
+      "expected": "RR_BOTW_HIDDEN_PITS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800384",
+      "passed": true,
+      "actual": "RR_BOTW_HIDDEN_PITS_ROOM",
+      "expected": "RR_BOTW_HIDDEN_PITS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800385",
+      "passed": true,
+      "actual": "RR_BOTW_HIDDEN_PITS_ROOM",
+      "expected": "RR_BOTW_HIDDEN_PITS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800386",
+      "passed": true,
+      "actual": "RR_BOTW_DEAD_HAND_ROOM",
+      "expected": "RR_BOTW_DEAD_HAND_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800387",
+      "passed": true,
+      "actual": "RR_BOTW_INVISIBLE_PATH",
+      "expected": "RR_BOTW_INVISIBLE_PATH"
+    },
+    {
+      "test": "manifest/native-table match 9800388",
+      "passed": true,
+      "actual": "RR_BOTW_INVISIBLE_PATH",
+      "expected": "RR_BOTW_INVISIBLE_PATH"
+    },
+    {
+      "test": "manifest/native-table match 9800389",
+      "passed": true,
+      "actual": "RR_BOTW_INVISIBLE_PATH",
+      "expected": "RR_BOTW_INVISIBLE_PATH"
+    },
+    {
+      "test": "manifest/native-table match 9800390",
+      "passed": true,
+      "actual": "RR_BOTW_INVISIBLE_PATH",
+      "expected": "RR_BOTW_INVISIBLE_PATH"
+    },
+    {
+      "test": "manifest/native-table match 9800391",
+      "passed": true,
+      "actual": "RR_BOTW_SKULL_WALL_ROOM",
+      "expected": "RR_BOTW_SKULL_WALL_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800392",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BEGINNING",
+      "expected": "RR_ICE_CAVERN_BEGINNING"
+    },
+    {
+      "test": "manifest/native-table match 9800393",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BEGINNING",
+      "expected": "RR_ICE_CAVERN_BEGINNING"
+    },
+    {
+      "test": "manifest/native-table match 9800394",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BEGINNING",
+      "expected": "RR_ICE_CAVERN_BEGINNING"
+    },
+    {
+      "test": "manifest/native-table match 9800395",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BEGINNING",
+      "expected": "RR_ICE_CAVERN_BEGINNING"
+    },
+    {
+      "test": "manifest/native-table match 9800396",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "expected": "RR_ICE_CAVERN_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800397",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "expected": "RR_ICE_CAVERN_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800398",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "expected": "RR_ICE_CAVERN_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800399",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM",
+      "expected": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800400",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM",
+      "expected": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800401",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_FINAL_ROOM",
+      "expected": "RR_ICE_CAVERN_FINAL_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800402",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_MAP_ROOM",
+      "expected": "RR_ICE_CAVERN_MAP_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800403",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_MAP_ROOM",
+      "expected": "RR_ICE_CAVERN_MAP_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800404",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_MAP_ROOM",
+      "expected": "RR_ICE_CAVERN_MAP_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800405",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_MAP_ROOM",
+      "expected": "RR_ICE_CAVERN_MAP_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800406",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_MAP_ROOM",
+      "expected": "RR_ICE_CAVERN_MAP_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800407",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_MAP_ROOM",
+      "expected": "RR_ICE_CAVERN_MAP_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800408",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_MAP_ROOM",
+      "expected": "RR_ICE_CAVERN_MAP_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800409",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "expected": "RR_ICE_CAVERN_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800410",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "expected": "RR_ICE_CAVERN_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800411",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "expected": "RR_ICE_CAVERN_COMPASS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800412",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_FLOOR_1",
+      "expected": "RR_GANONS_TOWER_FLOOR_1"
+    },
+    {
+      "test": "manifest/native-table match 9800413",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_FLOOR_1",
+      "expected": "RR_GANONS_TOWER_FLOOR_1"
+    },
+    {
+      "test": "manifest/native-table match 9800414",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_FLOOR_2",
+      "expected": "RR_GANONS_TOWER_FLOOR_2"
+    },
+    {
+      "test": "manifest/native-table match 9800415",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_FLOOR_2",
+      "expected": "RR_GANONS_TOWER_FLOOR_2"
+    },
+    {
+      "test": "manifest/native-table match 9800416",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_FLOOR_3",
+      "expected": "RR_GANONS_TOWER_FLOOR_3"
+    },
+    {
+      "test": "manifest/native-table match 9800417",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_FLOOR_3",
+      "expected": "RR_GANONS_TOWER_FLOOR_3"
+    },
+    {
+      "test": "manifest/native-table match 9800418",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_STAIRS_1",
+      "expected": "RR_GANONS_TOWER_STAIRS_1"
+    },
+    {
+      "test": "manifest/native-table match 9800419",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_STAIRS_1",
+      "expected": "RR_GANONS_TOWER_STAIRS_1"
+    },
+    {
+      "test": "manifest/native-table match 9800420",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_STAIRS_1",
+      "expected": "RR_GANONS_TOWER_STAIRS_1"
+    },
+    {
+      "test": "manifest/native-table match 9800421",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_STAIRS_1",
+      "expected": "RR_GANONS_TOWER_STAIRS_1"
+    },
+    {
+      "test": "manifest/native-table match 9800422",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_STAIRS_1",
+      "expected": "RR_GANONS_TOWER_STAIRS_1"
+    },
+    {
+      "test": "manifest/native-table match 9800423",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_STAIRS_1",
+      "expected": "RR_GANONS_TOWER_STAIRS_1"
+    },
+    {
+      "test": "manifest/native-table match 9800424",
+      "passed": true,
+      "actual": "RR_GANONS_TOWER_STAIRS_1",
+      "expected": "RR_GANONS_TOWER_STAIRS_1"
+    },
+    {
+      "test": "manifest/native-table match 9800425",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_SAND_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_SAND_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800426",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_SAND_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_SAND_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800427",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800428",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800429",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800430",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800431",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800432",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800433",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800434",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800435",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800436",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800437",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800438",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800439",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800440",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_DINALFOS",
+      "expected": "RR_GERUDO_TRAINING_GROUND_DINALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800441",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_DINALFOS",
+      "expected": "RR_GERUDO_TRAINING_GROUND_DINALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800442",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_DINALFOS",
+      "expected": "RR_GERUDO_TRAINING_GROUND_DINALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800443",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "expected": "RR_GERUDO_TRAINING_GROUND_UNDERWATER"
+    },
+    {
+      "test": "manifest/native-table match 9800444",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "expected": "RR_GERUDO_TRAINING_GROUND_UNDERWATER"
+    },
+    {
+      "test": "manifest/native-table match 9800445",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "expected": "RR_GERUDO_TRAINING_GROUND_UNDERWATER"
+    },
+    {
+      "test": "manifest/native-table match 9800446",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "expected": "RR_GERUDO_TRAINING_GROUND_UNDERWATER"
+    },
+    {
+      "test": "manifest/native-table match 9800447",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800448",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800449",
+      "passed": true,
+      "actual": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM",
+      "expected": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800454",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_LOBBY",
+      "expected": "RR_GANONS_CASTLE_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800455",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_LOBBY",
+      "expected": "RR_GANONS_CASTLE_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800456",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "expected": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800457",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "expected": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800458",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_WATER_TRIAL_BLOCK_ROOM",
+      "expected": "RR_GANONS_CASTLE_WATER_TRIAL_BLOCK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800459",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_FOREST_TRIAL_WOLFOS_ROOM",
+      "expected": "RR_GANONS_CASTLE_FOREST_TRIAL_WOLFOS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800460",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM",
+      "expected": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800461",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "expected": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800462",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "expected": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800463",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "expected": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800464",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "expected": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800465",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "expected": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800466",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_LIGHT_TRIAL_FINAL_ROOM",
+      "expected": "RR_GANONS_CASTLE_LIGHT_TRIAL_FINAL_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800467",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_SHADOW_TRIAL_START",
+      "expected": "RR_GANONS_CASTLE_SHADOW_TRIAL_START"
+    },
+    {
+      "test": "manifest/native-table match 9800468",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_SHADOW_TRIAL_POTS_PLATFORM",
+      "expected": "RR_GANONS_CASTLE_SHADOW_TRIAL_POTS_PLATFORM"
+    },
+    {
+      "test": "manifest/native-table match 9800469",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "expected": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN"
+    },
+    {
+      "test": "manifest/native-table match 9800470",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "expected": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN"
+    },
+    {
+      "test": "manifest/native-table match 9800471",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "expected": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN"
+    },
+    {
+      "test": "manifest/native-table match 9800472",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "expected": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN"
+    },
+    {
+      "test": "manifest/native-table match 9800473",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "expected": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN"
+    },
+    {
+      "test": "manifest/native-table match 9800474",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "expected": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800479",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEFORE_SWITCH",
+      "expected": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEFORE_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800480",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEFORE_SWITCH",
+      "expected": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEFORE_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800481",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_SPIRIT_TRIAL_AFTER_SWITCH",
+      "expected": "RR_GANONS_CASTLE_SPIRIT_TRIAL_AFTER_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800482",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_SPIRIT_TRIAL_AFTER_SWITCH",
+      "expected": "RR_GANONS_CASTLE_SPIRIT_TRIAL_AFTER_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800483",
+      "passed": true,
+      "actual": "RR_GANONS_CASTLE_SPIRIT_TRIAL_AFTER_SWITCH",
+      "expected": "RR_GANONS_CASTLE_SPIRIT_TRIAL_AFTER_SWITCH"
+    },
+    {
+      "test": "manifest/native-table match 9800485",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BOSS_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_BOSS_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800563",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER",
+      "expected": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800564",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER",
+      "expected": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800565",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER",
+      "expected": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800566",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_LOBBY",
+      "expected": "RR_FOREST_TEMPLE_LOBBY"
+    },
+    {
+      "test": "manifest/native-table match 9800567",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_RED_POE_ROOM",
+      "expected": "RR_FOREST_TEMPLE_RED_POE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800568",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_BLUE_POE_ROOM",
+      "expected": "RR_FOREST_TEMPLE_BLUE_POE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800569",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_GREEN_POE_ROOM",
+      "expected": "RR_FOREST_TEMPLE_GREEN_POE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800570",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY_2F",
+      "expected": "RR_DEKU_TREE_LOBBY_2F"
+    },
+    {
+      "test": "manifest/native-table match 9800571",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY_2F",
+      "expected": "RR_DEKU_TREE_LOBBY_2F"
+    },
+    {
+      "test": "manifest/native-table match 9800572",
+      "passed": true,
+      "actual": "RR_DEKU_TREE_LOBBY_2F",
+      "expected": "RR_DEKU_TREE_LOBBY_2F"
+    },
+    {
+      "test": "manifest/native-table match 9800573",
+      "passed": true,
+      "actual": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+      "expected": "RR_DODONGOS_CAVERN_STAIRS_UPPER"
+    },
+    {
+      "test": "manifest/native-table match 9800574",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_NE_COURTYARD_LOWER",
+      "expected": "RR_FOREST_TEMPLE_NE_COURTYARD_LOWER"
+    },
+    {
+      "test": "manifest/native-table match 9800575",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FOYER",
+      "expected": "RR_SPIRIT_TEMPLE_FOYER"
+    },
+    {
+      "test": "manifest/native-table match 9800576",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_FOYER",
+      "expected": "RR_SPIRIT_TEMPLE_FOYER"
+    },
+    {
+      "test": "manifest/native-table match 9800577",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_NORTH",
+      "expected": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800578",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_NORTH",
+      "expected": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_NORTH"
+    },
+    {
+      "test": "manifest/native-table match 9800579",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F"
+    },
+    {
+      "test": "manifest/native-table match 9800580",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F"
+    },
+    {
+      "test": "manifest/native-table match 9800581",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F"
+    },
+    {
+      "test": "manifest/native-table match 9800582",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F",
+      "expected": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F"
+    },
+    {
+      "test": "manifest/native-table match 9800583",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_STATUE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800584",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_STATUE_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800585",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_1F_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_1F_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800586",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_1F_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_1F_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800587",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_WALL_BASE",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_WALL_BASE"
+    },
+    {
+      "test": "manifest/native-table match 9800588",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800589",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800590",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800591",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800592",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800593",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM",
+      "expected": "RR_SPIRIT_TEMPLE_BIG_MIRROR_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800594",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_END",
+      "expected": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_END"
+    },
+    {
+      "test": "manifest/native-table match 9800595",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DEAD_HAND",
+      "expected": "RR_SHADOW_TEMPLE_DEAD_HAND"
+    },
+    {
+      "test": "manifest/native-table match 9800596",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DEAD_HAND",
+      "expected": "RR_SHADOW_TEMPLE_DEAD_HAND"
+    },
+    {
+      "test": "manifest/native-table match 9800597",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DEAD_HAND",
+      "expected": "RR_SHADOW_TEMPLE_DEAD_HAND"
+    },
+    {
+      "test": "manifest/native-table match 9800598",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DEAD_HAND",
+      "expected": "RR_SHADOW_TEMPLE_DEAD_HAND"
+    },
+    {
+      "test": "manifest/native-table match 9800599",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DEAD_HAND",
+      "expected": "RR_SHADOW_TEMPLE_DEAD_HAND"
+    },
+    {
+      "test": "manifest/native-table match 9800600",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_DEAD_HAND",
+      "expected": "RR_SHADOW_TEMPLE_DEAD_HAND"
+    },
+    {
+      "test": "manifest/native-table match 9800601",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT",
+      "expected": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT"
+    },
+    {
+      "test": "manifest/native-table match 9800602",
+      "passed": true,
+      "actual": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT",
+      "expected": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT"
+    },
+    {
+      "test": "manifest/native-table match 9800603",
+      "passed": true,
+      "actual": "RR_BOTW_DEAD_HAND_ROOM",
+      "expected": "RR_BOTW_DEAD_HAND_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800604",
+      "passed": true,
+      "actual": "RR_BOTW_DEAD_HAND_ROOM",
+      "expected": "RR_BOTW_DEAD_HAND_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800605",
+      "passed": true,
+      "actual": "RR_BOTW_DEAD_HAND_ROOM",
+      "expected": "RR_BOTW_DEAD_HAND_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800606",
+      "passed": true,
+      "actual": "RR_BOTW_DEAD_HAND_ROOM",
+      "expected": "RR_BOTW_DEAD_HAND_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800607",
+      "passed": true,
+      "actual": "RR_BOTW_SKULL_WALL_ROOM",
+      "expected": "RR_BOTW_SKULL_WALL_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800608",
+      "passed": true,
+      "actual": "RR_BOTW_SKULL_WALL_ROOM",
+      "expected": "RR_BOTW_SKULL_WALL_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800609",
+      "passed": true,
+      "actual": "RR_BOTW_SKULL_WALL_ROOM",
+      "expected": "RR_BOTW_SKULL_WALL_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800610",
+      "passed": true,
+      "actual": "RR_ICE_CAVERN_HUB",
+      "expected": "RR_ICE_CAVERN_HUB"
+    },
+    {
+      "test": "manifest/native-table match 9800720",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_UPPER_STALFOS",
+      "expected": "RR_FOREST_TEMPLE_UPPER_STALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800721",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_UPPER_STALFOS",
+      "expected": "RR_FOREST_TEMPLE_UPPER_STALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800722",
+      "passed": true,
+      "actual": "RR_FOREST_TEMPLE_UPPER_STALFOS",
+      "expected": "RR_FOREST_TEMPLE_UPPER_STALFOS"
+    },
+    {
+      "test": "manifest/native-table match 9800723",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BEAMOS_PITS",
+      "expected": "RR_SPIRIT_TEMPLE_BEAMOS_PITS"
+    },
+    {
+      "test": "manifest/native-table match 9800724",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BEAMOS_PITS",
+      "expected": "RR_SPIRIT_TEMPLE_BEAMOS_PITS"
+    },
+    {
+      "test": "manifest/native-table match 9800725",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_BEAMOS_PITS",
+      "expected": "RR_SPIRIT_TEMPLE_BEAMOS_PITS"
+    },
+    {
+      "test": "manifest/native-table match 9800726",
+      "passed": true,
+      "actual": "RR_SPIRIT_TEMPLE_1F_ANUBIS",
+      "expected": "RR_SPIRIT_TEMPLE_1F_ANUBIS"
+    },
+    {
+      "test": "manifest/native-table match 9800727",
+      "passed": true,
+      "actual": "RR_WATER_TEMPLE_DARK_LINK_ROOM",
+      "expected": "RR_WATER_TEMPLE_DARK_LINK_ROOM"
+    },
+    {
+      "test": "manifest/native-table match 9800728",
+      "passed": true,
+      "actual": "RR_JABU_JABUS_BELLY_BIGOCTO",
+      "expected": "RR_JABU_JABUS_BELLY_BIGOCTO"
+    },
+    {
+      "test": "manifest/native-table match 9800729",
+      "passed": true,
+      "actual": "RR_BOTW_CRYPT",
+      "expected": "RR_BOTW_CRYPT"
+    },
+    {
+      "test": "manifest/native-table match 9800730",
+      "passed": true,
+      "actual": "RR_BOTW_CRYPT",
+      "expected": "RR_BOTW_CRYPT"
+    },
+    {
+      "test": "manifest/native-table match 9800731",
+      "passed": true,
+      "actual": "RR_BOTW_CRYPT",
+      "expected": "RR_BOTW_CRYPT"
+    },
+    {
+      "test": "manifest/native-table match 9800732",
+      "passed": true,
+      "actual": "RR_BOTW_CRYPT",
+      "expected": "RR_BOTW_CRYPT"
+    },
+    {
+      "test": "manifest/native-table match 9800733",
+      "passed": true,
+      "actual": "RR_BOTW_CRYPT",
+      "expected": "RR_BOTW_CRYPT"
+    },
+    {
+      "test": "manifest/native-table match 9800734",
+      "passed": true,
+      "actual": "RR_BOTW_CRYPT",
+      "expected": "RR_BOTW_CRYPT"
+    },
+    {
+      "test": "manifest/native-table match 9800735",
+      "passed": true,
+      "actual": "RR_BOTW_CRYPT",
+      "expected": "RR_BOTW_CRYPT"
+    },
+    {
+      "test": "native event preserved LOGIC_SHADOW_SILVER_BLADES",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "native event preserved LOGIC_GANONS_CASTLE_SILVER_SPIRIT",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "native event preserved LOGIC_FOREST_JOELLE",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "native event preserved LOGIC_FOREST_BETH",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "native event preserved LOGIC_FOREST_AMY",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "unchanged append-only/origin runtime EnemyDefeatPlacements.inc",
+      "passed": true,
+      "actual": "959450c3cd263f1e76280794c487b588daa5c08c8d670910906c6647c5f4705f",
+      "expected": "959450c3cd263f1e76280794c487b588daa5c08c8d670910906c6647c5f4705f"
+    },
+    {
+      "test": "unchanged append-only/origin runtime EnemySpawnAliases.inc",
+      "passed": true,
+      "actual": "571cc4bc786abf446ccf6545b54b0fff4a585f42fff4543fca09b7c24b5ce75a",
+      "expected": "571cc4bc786abf446ccf6545b54b0fff4a585f42fff4543fca09b7c24b5ce75a"
+    },
+    {
+      "test": "unchanged append-only/origin runtime EnemyChildAliases.inc",
+      "passed": true,
+      "actual": "f79c47c7f8e8adc54c42f63793703859e7907b99175bc8a313113a0a692adfc5",
+      "expected": "f79c47c7f8e8adc54c42f63793703859e7907b99175bc8a313113a0a692adfc5"
+    },
+    {
+      "test": "unchanged append-only/origin runtime EnemySpawnCatalog.h",
+      "passed": true,
+      "actual": "4651114e91674bca87a3a0ac34631f42d2455fb37d17cdfdd843ccf3b5948d73",
+      "expected": "4651114e91674bca87a3a0ac34631f42d2455fb37d17cdfdd843ccf3b5948d73"
+    },
+    {
+      "test": "unchanged append-only/origin runtime MegaSouls.cpp",
+      "passed": true,
+      "actual": "12adc938986e59395d99593757128c929031382646aeac519ec8cd7d270e26cf",
+      "expected": "12adc938986e59395d99593757128c929031382646aeac519ec8cd7d270e26cf"
+    },
+    {
+      "test": "all Python sources parse",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    }
+  ],
+  "total": 551,
+  "failures": 0,
+  "coverage": {
+    "active_enemies": 753,
+    "mapped_enemies": 535,
+    "entryway_assignments_replaced": 413,
+    "native_regions": 429,
+    "native_edge_event_conditions": 1130,
+    "source_files": [
+      "soh/Enhancements/randomizer/location_access/dungeons/bottom_of_the_well.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/deku_tree.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/fire_temple.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/forest_temple.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "soh/Enhancements/randomizer/location_access/dungeons/water_temple.cpp"
+    ],
+    "identity_hashes": {
+      "EnemyDefeatPlacements.inc": "959450c3cd263f1e76280794c487b588daa5c08c8d670910906c6647c5f4705f",
+      "EnemySpawnAliases.inc": "571cc4bc786abf446ccf6545b54b0fff4a585f42fff4543fca09b7c24b5ce75a",
+      "EnemyChildAliases.inc": "f79c47c7f8e8adc54c42f63793703859e7907b99175bc8a313113a0a692adfc5",
+      "EnemySpawnCatalog.h": "4651114e91674bca87a3a0ac34631f42d2455fb37d17cdfdd843ccf3b5948d73",
+      "MegaSouls.cpp": "12adc938986e59395d99593757128c929031382646aeac519ec8cd7d270e26cf"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+--- /mnt/data/current_patch/soh/SohGui/SohMenuEnhancements.cpp	2026-09-24 17:15:00.000000000 +0000
++++ /mnt/data/patch1121c/soh/SohGui/SohMenuEnhancements.cpp	2026-09-24 18:38:03.016982490 +0000
+@@ -1897,16 +1897,17 @@
+         .Options(CheckboxOptions().Tooltip("Changes Heart Piece and Heart Container functionality.\n\n"
+                                            " - Each Heart Container or full Heart Piece reduces Link's Hearts by 1.\n"
+                                            " - Can be enabled retroactively after a File has already started."));
+-    AddWidget(path, "AP trap effects follow this seed's YAML.", WIDGET_TEXT)
++    AddWidget(path, "AP Off uses your Additional Traps profile; Ice Only/Expanded use the seed policy.", WIDGET_TEXT)
+         .PreFunc([](WidgetInfo& info) { info.isHidden = !(IS_RANDO && Archipelago_IsCurrentSaveFile()); });
+     AddWidget(path, "Local trap preferences below stay saved.", WIDGET_TEXT)
+         .PreFunc([](WidgetInfo& info) { info.isHidden = !(IS_RANDO && Archipelago_IsCurrentSaveFile()); });
+     AddWidget(path, "Additional Traps", WIDGET_CVAR_CHECKBOX)
+         .CVar(CVAR_ENHANCEMENT("ExtraTraps.Enabled"))
+         .Options(CheckboxOptions().Tooltip(
+-            "Enables additional Trap variants in non-Archipelago saves.\n\n"
+-            "Archipelago saves use the trap policy from their seed's YAML. Your local master toggle, trap types "
+-            "and Teleport mode stay saved, and are not overwritten when an AP save is created, loaded or reconnected."));
++            "Enables additional Trap variants.\n\n"
++            "For Archipelago saves, Extreme Trap Pool = Off uses these local trap-effect choices for received "
++            "Ice Traps. Ice Only and Expanded use the seed's YAML policy instead. These preferences stay saved "
++            "and are never overwritten by loading or reconnecting an AP save."));
+     AddWidget(path, "Trap Options", WIDGET_SEPARATOR_TEXT).PreFunc([](WidgetInfo& info) {
+         info.isHidden = CVarGetInteger(CVAR_ENHANCEMENT("ExtraTraps.Enabled"), 0) == 0;
+     });

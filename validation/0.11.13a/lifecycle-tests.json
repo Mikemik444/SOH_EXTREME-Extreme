@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "suites": [
+    {
+      "name": "floormaster_group_terminal",
+      "passed": true,
+      "command": [
+        "gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "/mnt/data/build_fix/results/lifecycle-test-build/floormaster_group_terminal.c",
+        "-o",
+        "/mnt/data/build_fix/results/lifecycle-test-build/floormaster_group_terminal"
+      ],
+      "compile_stderr": "",
+      "stdout": "18 Floormaster root-position/kill-order cases plus merge/re-split: one final event for the original placement, never for an early fragment death.\n",
+      "stderr": ""
+    },
+    {
+      "name": "guay_actual_respawn",
+      "passed": true,
+      "command": [
+        "gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "/mnt/data/build_fix/results/lifecycle-test-build/guay_actual_respawn.c",
+        "-o",
+        "/mnt/data/build_fix/results/lifecycle-test-build/guay_actual_respawn"
+      ],
+      "compile_stderr": "",
+      "stdout": "Ordinary and enlarged Guay: no drop-state reset while absent/growing; one reset when its next life becomes active.\n",
+      "stderr": ""
+    },
+    {
+      "name": "dead_hand_arm_regrowth",
+      "passed": true,
+      "command": [
+        "gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "/mnt/data/build_fix/results/lifecycle-test-build/dead_hand_arm_regrowth.c",
+        "-o",
+        "/mnt/data/build_fix/results/lifecycle-test-build/dead_hand_arm_regrowth"
+      ],
+      "compile_stderr": "",
+      "stdout": "Dead Hand arm: sinking and underground delay do not reset receipts; confirmed regrowth resets only life flags; parent-death cleanup is not regrowth.\n",
+      "stderr": ""
+    }
+  ]
+}

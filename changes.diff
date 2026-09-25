@@ -1,0 +1,1097 @@
+--- a/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
++++ b/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
+@@ -1,4 +1,6 @@
+ #include <array>
++#include <cstdio>
++#include <map>
+ #include <string>
+ #include <sstream>
+ #include <vector>
+@@ -10,6 +12,7 @@
+ #include "randomizer_check_tracker.h"
+ #include "CheckFinderState.h"
+ #include "soh/Network/Archipelago/ArchipelagoClient.h"
++#include "soh/Network/Archipelago/TrackerRegions.h"
+ 
+ extern "C" bool Archipelago_ShouldHandleCheck(int32_t randomizerCheck);
+ extern "C" bool Archipelago_IsCheckMappedActive(int32_t randomizerCheck);
+@@ -1656,16 +1659,56 @@
+ 
+ void InternalRecalculateAvailableChecks(RandomizerRegion startingRegion, RandoAgeTime startingAgeTime);
+ 
++static RandomizerCheckArea FinderRowArea(int64_t id, const ArchipelagoClient& client) {
++    const auto rc = client.GetFinderNativeCheck(id);
++    if (rc > static_cast<int32_t>(RC_UNKNOWN_CHECK)) {
++        const auto* location = Rando::StaticData::GetLocation(static_cast<RandomizerCheck>(rc));
++        if (location != nullptr) return location->GetArea();
++    }
++    for (const auto& entry : kNpcSpeechFinderEntries) {
++        if (entry.locationId == id) return GetNpcSpeechArea(entry);
++    }
++    for (const auto& entry : kEnemyDefeatFinderEntries) {
++        if (entry.locationId == id) return entry.area;
++    }
++    return RCAREA_INVALID;
++}
++
+ static void DrawUniversalFinderMirror() {
+     auto& client = ArchipelagoClient::GetInstance();
+     std::string status;
+     const auto* snapshot = client.GetFinderSnapshot(status);
+     ImGui::TextWrapped("%s", status.c_str());
+-    if (ImGui::Button("Refresh Universal Tracker")) client.RefreshFinderMirror();
++    if (ImGui::Button("Refresh AP checks")) client.RefreshFinderMirror();
++    ImGui::SameLine();
++    if (ImGui::Button("Restart AP tracker")) {
++        client.RestartFinderWorker();
++        return; // restarting invalidates the snapshot pointer
++    }
+     if (snapshot == nullptr) {
+         ImGui::Separator();
+-        ImGui::TextWrapped("Open SOH-EXTREME Universal Tracker from Archipelago Launcher and connect it to this game's slot. "
+-                           "This view never falls back to approximate native availability.");
++        ImGui::TextWrapped("The game starts Universal Tracker's evaluator automatically. "
++            "No tracker window or special launcher is required. Keep tracker.apworld and "
++            "the matching soh_extreme.apworld in your Archipelago installation.");
++        if (ImGui::CollapsingHeader("Archipelago runtime location")) {
++            static char path[2048] = {};
++            static bool initialized = false;
++            if (!initialized) {
++                const char* configured = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("TrackerRuntimePath"), "");
++                std::snprintf(path, sizeof(path), "%s", configured ? configured : "");
++                initialized = true;
++            }
++            ImGui::TextWrapped("Normally detected automatically. For a portable/custom installation, "
++                "enter its full folder or ArchipelagoLauncherDebug.exe path. Leave blank for automatic detection.");
++            ImGui::InputText("Runtime path", path, sizeof(path));
++            if (ImGui::Button("Use path and retry")) {
++                CVarSetString(CVAR_REMOTE_ARCHIPELAGO("TrackerRuntimePath"), path);
++                Ship::Context::GetRawInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
++                client.RestartFinderWorker();
++            }
++            if (!client.GetFinderRuntimePath().empty())
++                ImGui::TextWrapped("Detected: %s", client.GetFinderRuntimePath().c_str());
++        }
+         return;
+     }
+     size_t normal = 0, glitched = 0;
+@@ -1673,27 +1716,60 @@
+     ImGui::Text("In logic: %u   Glitched: %u   Checked: %u / %u",
+         static_cast<unsigned>(normal), static_cast<unsigned>(glitched),
+         static_cast<unsigned>(snapshot->checked.size()), static_cast<unsigned>(snapshot->active.size()));
+-    if (snapshot->manualCount || snapshot->ignoredCount) {
+-        ImGui::TextWrapped("UT overrides active: %u manually added items; %u ignored locations. These are mirrored too.",
+-            snapshot->manualCount, snapshot->ignoredCount);
+-    }
+     if (snapshot->received > client.GetAppliedItemCount()) {
+-        ImGui::TextWrapped("AP has delivered %llu items; %llu are applied to this save. This list matches UT's received inventory.",
++        ImGui::TextWrapped("AP has delivered %llu items; %llu are applied to this save. "
++            "This list uses the AP received inventory, as Universal Tracker does.",
+             static_cast<unsigned long long>(snapshot->received),
+             static_cast<unsigned long long>(client.GetAppliedItemCount()));
+     }
++    // ID-to-area mapping is used ONLY to sort/highlight the player's scene area.
++    // Missing mapping does not hide a check or change its logical availability.
++    const bool areaMappingsReady = client.PrepareCheckFinderMappings();
++    const auto here = GetCheckArea();
++    const int current = here >= RCAREA_KOKIRI_FOREST && here < RCAREA_INVALID ? static_cast<int>(here) : -1;
++    if (current >= 0)
++        ImGui::Text("Current area: %s", RandomizerCheckObjects::GetRCAreaName(here).c_str());
++    static bool currentFirst = true;
++    static bool onlyCurrent = false;
++    static ImGuiTextFilter filter;
++    ImGui::Checkbox("Current area first", &currentFirst);
++    ImGui::SameLine();
++    ImGui::Checkbox("Only current area", &onlyCurrent);
++    filter.Draw("Search region/check");
++    if (onlyCurrent && !areaMappingsReady)
++        ImGui::TextWrapped("Area labels are synchronizing; showing all regions until the mapping is ready.");
++    const auto groups = SohExtreme::GroupTrackerRows(*snapshot, current, currentFirst, onlyCurrent && areaMappingsReady,
++        [&](int64_t id) {
++            const auto area = FinderRowArea(id, client);
++            return area == RCAREA_INVALID ? -1 : static_cast<int>(area);
++        }, [&](const SohExtreme::TrackerRow& row) {
++            const std::string text = row.region + " | " + row.name;
++            return filter.PassFilter(text.c_str());
++        });
+     ImGui::Separator();
+-    if (ImGui::BeginChild("SOHExtremeUTRows", ImVec2(0, 0), false)) {
+-        if (snapshot->rows.empty()) ImGui::TextUnformatted("Universal Tracker has no remaining in-logic checks.");
+-        for (const auto& row : snapshot->rows) {
+-            // Never interpret network labels as printf formats or ImGui IDs.
+-            const std::string line = (row.state == 2 ? "[Glitched] " : "") + row.region + " | " + row.name;
+-            ImGui::TextUnformatted(line.c_str());
+-            if (ImGui::IsItemHovered()) {
+-                ImGui::BeginTooltip();
+-                ImGui::Text("AP location ID: %lld", static_cast<long long>(row.id));
+-                ImGui::EndTooltip();
+-            }
++    if (ImGui::BeginChild("SOHExtremeUTRegions", ImVec2(0, 0), false)) {
++        if (groups.empty()) ImGui::TextUnformatted("No remaining in-logic checks match this view.");
++        for (const auto& group : groups) {
++            // Stable region identity preserves expand/collapse state as item
++            // counts change or the current-area groups move to the top.
++            ImGui::PushID(group.region.c_str());
++            const std::string label = (group.currentArea ? "[Current area] " : "") + group.region +
++                " (" + std::to_string(group.normal) + " in logic, " + std::to_string(group.glitched) + " glitched)###APRegion";
++            if (ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
++                ImGui::Indent();
++                for (const auto* row : group.rows) {
++                    const std::string line = (row->state == 2 ? "[Glitched] " : "") + row->name;
++                    ImGui::TextUnformatted(line.c_str());
++                    if (ImGui::IsItemHovered()) {
++                        ImGui::BeginTooltip();
++                        ImGui::Text("AP location ID: %lld", static_cast<long long>(row->id));
++                        ImGui::TextUnformatted(row->region.c_str());
++                        ImGui::EndTooltip();
++                    }
++                }
++                ImGui::Unindent();
++            }
++            ImGui::PopID();
+         }
+     }
+     ImGui::EndChild();
+--- a/soh/Network/Archipelago/ArchipelagoClient.cpp
++++ b/soh/Network/Archipelago/ArchipelagoClient.cpp
+@@ -1,4 +1,5 @@
+ #include "ArchipelagoClient.h"
++#include "TrackerWorkerConfig.h"
+ 
+ static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<std::string, int64_t>& out);
+ 
+@@ -622,8 +623,9 @@
+             ExtractJsonString(bounce.data, "kind") == "snapshot") {
+             const auto payload = ExtractJsonString(bounce.data, "payload");
+             if (!payload.empty() && payload.size() <= 1000000) {
++                const auto nonce = ExtractJsonString(bounce.data, "nonce");
+                 std::scoped_lock lock(client.queueMutex);
+-                client.pendingFinderPayload = payload;
++                if (nonce == client.finderMirror.Nonce()) client.pendingFinderPayload = payload;
+             }
+         }
+         if (BounceHasTag(bounce, "DeathLink") && client.deathLinkEnabled) {
+@@ -676,6 +678,12 @@
+ }
+ 
+ void ArchipelagoClient::ResetFinderMirror() {
++    finderWorker.Stop();
++    finderWorkerStarted = false;
++    finderWorkerAttempts = 0;
++    finderWorkerNextPoll = 0.0;
++    finderWorkerRetryAt = 0.0;
++    finderWorkerError.clear();
+     // Not an authentication secret: a collision-resistant per-save/connection
+     // token preventing accidental use of another slot's or an old save's data.
+     static constexpr char hex[] = "0123456789abcdef";
+@@ -693,9 +701,82 @@
+     finderNextRequest = 0.0;
+ }
+ 
++void ArchipelagoClient::RestartFinderWorker() {
++    std::scoped_lock lock(queueMutex);
++    ResetFinderMirror();
++}
++
++const std::string& ArchipelagoClient::GetFinderRuntimePath() const {
++    return finderWorker.RuntimePath();
++}
++
++int32_t ArchipelagoClient::GetFinderNativeCheck(int64_t locationId) const {
++    const auto found = apLocationToRc.find(locationId);
++    return found == apLocationToRc.end() ? -1 : found->second;
++}
++
++void ArchipelagoClient::ServiceFinderWorker() {
++    // Starts only for a loaded, authenticated AP gameplay save. Returning to
++    // file select, loading a local save, or losing auth stops our own worker.
++    // The native/local randomizer never starts or consults this service.
++    const bool wanted = enabled.load() && currentSaveIsArchipelago && !saveIdentityMismatch &&
++                        IsGameplaySessionActive() && IsAuthenticated();
++    if (!wanted) {
++        if (finderWorkerStarted) {
++            std::scoped_lock lock(queueMutex);
++            ResetFinderMirror();
++        }
++        return;
++    }
++    if (!activeLocationsLoaded) return;
++    const double now = FinderMirrorClock();
++    if (now < finderWorkerNextPoll) return;
++    finderWorkerNextPoll = now + 0.5;
++    if (finderWorkerStarted && !finderWorker.IsRunning(finderWorkerError)) {
++        const auto attempts = finderWorkerAttempts;
++        const auto error = finderWorkerError;
++        {
++            std::scoped_lock lock(queueMutex);
++            ResetFinderMirror();
++        }
++        finderWorkerAttempts = attempts;
++        finderWorkerError = error;
++        finderWorkerRetryAt = now + 5.0;
++        finderWorkerNextPoll = now + 0.5;
++        SPDLOG_WARN("[Archipelago] {}", finderWorkerError);
++    }
++    if (!finderWorkerStarted && finderWorkerAttempts < 3 && now >= finderWorkerRetryAt) {
++        ++finderWorkerAttempts;
++        const char* server = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("ServerAddress"), "");
++        const char* name = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), "");
++        const char* password = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("Password"), "");
++        const char* runtime = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("TrackerRuntimePath"), "");
++        try {
++            const auto config = SohExtreme::MakeTrackerWorkerBootstrap(server ? server : "", name ? name : "",
++                password ? password : "", static_cast<uint32_t>(AP_GetPlayerID()), finderMirror.Nonce());
++            finderWorkerStarted = finderWorker.Start(runtime ? runtime : "", config, finderWorkerError);
++        } catch (const std::exception&) {
++            finderWorkerError = "The AP tracker could not read valid game connection settings.";
++        }
++        finderWorkerRetryAt = now + 15.0 * finderWorkerAttempts;
++        if (finderWorkerStarted) {
++            finderNextRequest = 0.0;
++            SPDLOG_INFO("[Archipelago] Automatic Universal Tracker host started using {}", finderWorker.RuntimePath());
++        } else {
++            SPDLOG_WARN("[Archipelago] {}", finderWorkerError);
++        }
++    }
++    if (finderWorkerStarted) {
++        // Requests and replies continue even with the tracker UI closed. No
++        // Python generation, rule evaluation, or network waiting occurs here.
++        std::string status;
++        if (GetFinderSnapshot(status) != nullptr) finderWorkerAttempts = 0;
++    }
++}
++
+ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::string& status) {
+     if (!currentSaveIsArchipelago || !IsAuthenticated()) {
+-        status = "Connect the game and SOH-EXTREME Universal Tracker to the same slot.";
++        status = "Connect this Archipelago save to its server to start automatic tracking.";
+         return nullptr;
+     }
+     if (!activeLocationsLoaded) {
+@@ -720,7 +801,7 @@
+             finderMirrorError = std::string("Invalid tracker snapshot: ") + error.what();
+         }
+     }
+-    if (now >= finderNextRequest) {
++    if (finderWorkerStarted && now >= finderNextRequest) {
+         const uint64_t request = finderMirror.NextRequest();
+         AP_Bounce bounce{};
+         std::vector<std::string> tags{ "SOHExtremeUT" };
+@@ -734,7 +815,8 @@
+     std::set<int64_t> checked;
+     for (const auto id : reportedLocations) if (active.count(id)) checked.insert(id);
+     const auto* result = finderMirror.Current(slot, received, active, checked, now, status);
+-    if (!result && !finderMirrorError.empty()) status += " " + finderMirrorError;
++    if (!result && !finderWorkerError.empty()) status = finderWorkerError;
++    else if (!result && !finderMirrorError.empty()) status += " " + finderMirrorError;
+     return result;
+ }
+ 
+@@ -3084,6 +3166,7 @@
+ }
+ 
+ void ArchipelagoClient::Update() {
++    ServiceFinderWorker();
+     if (!enabled.load()) return;
+ 
+     // Title/file-select safety boundary. APCpp may stay connected so authentication
+--- a/soh/Network/Archipelago/ArchipelagoClient.h
++++ b/soh/Network/Archipelago/ArchipelagoClient.h
+@@ -10,6 +10,7 @@
+ #include <unordered_set>
+ #include <vector>
+ #include "TrackerMirror.h"
++#include "TrackerWorker.h"
+ 
+ 
+ class ArchipelagoClient {
+@@ -22,6 +23,9 @@
+     // Main-thread only. A null result is unknown/stale, not an empty reachable set.
+     const SohExtreme::TrackerSnapshot* GetFinderSnapshot(std::string& status);
+     void RefreshFinderMirror();
++    void RestartFinderWorker();
++    const std::string& GetFinderRuntimePath() const;
++    int32_t GetFinderNativeCheck(int64_t locationId) const;
+     void Update();
+ 
+     bool IsEnabled() const { return enabled.load(); }
+@@ -82,6 +86,13 @@
+ 
+     void BeginItemReplay();
+     void ResetFinderMirror();
++    void ServiceFinderWorker();
++    SohExtreme::TrackerWorker finderWorker;
++    bool finderWorkerStarted = false;
++    uint32_t finderWorkerAttempts = 0;
++    double finderWorkerNextPoll = 0.0;
++    double finderWorkerRetryAt = 0.0;
++    std::string finderWorkerError;
+     SohExtreme::TrackerMirrorState finderMirror;
+     std::string pendingFinderPayload;
+     std::string finderMirrorError;
+--- a/soh/Network/Archipelago/TrackerMirror.h
++++ b/soh/Network/Archipelago/TrackerMirror.h
+@@ -16,7 +16,7 @@
+ constexpr size_t kTrackerMaxEntries = 20000;
+ constexpr size_t kTrackerMaxBytes = 750000;
+ constexpr const char* kTrackerProtocol = "SOHExtremeFinder1";
+-constexpr const char* kTrackerVersion = "0.11.19";
++constexpr const char* kTrackerVersion = "0.11.20";
+ struct TrackerRow {
+     int64_t id = 0;
+     uint8_t state = 0; // 1 normal; 2 UT's separate glitched state
+@@ -127,11 +127,11 @@
+     uint64_t NextRequest() { return ++request_; }
+     const std::string& Nonce() const { return nonce_; }
+     bool Accept(TrackerSnapshot candidate, uint32_t slot, double now, std::string& error) {
+-        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.19 on both sides."; return false; }
++        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.20 on both sides."; return false; }
+         if (nonce_.empty() || candidate.nonce != nonce_ || candidate.slot != slot ||
+             candidate.request == 0 || candidate.request > request_) { error = "Wrong tracker session."; return false; }
+         if (!producer_.empty() && producer_ != candidate.producer && now - lastReceive_ <= 10.0) {
+-            error = "Multiple tracker instances; close the extra tracker."; return false;
++            error = "AP tracker session changed; restarting synchronization."; return false;
+         }
+         if (producer_ == candidate.producer && hasSnapshot_ &&
+             (candidate.request < snapshot_.request || candidate.revision <= snapshot_.revision)) {
+@@ -142,13 +142,13 @@
+     }
+     const TrackerSnapshot* Current(uint32_t slot, uint64_t received, const std::set<int64_t>& active,
+                                    const std::set<int64_t>& checked, double now, std::string& status) const {
+-        if (!hasSnapshot_) { status = "Waiting for SOH-EXTREME Universal Tracker."; return nullptr; }
++        if (!hasSnapshot_) { status = "Starting the automatic AP tracker..."; return nullptr; }
+         if (now - lastReceive_ > 10.0) { status = "Tracker snapshot expired; waiting for a live update."; return nullptr; }
+         if (snapshot_.slot != slot || snapshot_.active != active) { status = "Tracker location manifest differs from this slot."; return nullptr; }
+         if (snapshot_.received != received || snapshot_.checked != checked) {
+             status = "Synchronizing AP items and checked locations with Universal Tracker..."; return nullptr;
+         }
+-        status = "Live Universal Tracker result (same evaluated IDs).";
++        status = "Automatic AP tracker - Universal Tracker rules.";
+         return &snapshot_;
+     }
+   private:
+--- a/soh/Network/Archipelago/TrackerRegions.h
++++ b/soh/Network/Archipelago/TrackerRegions.h
+@@ -0,0 +1,50 @@
++#pragma once
++#include "TrackerMirror.h"
++#include <algorithm>
++#include <map>
++#include <string>
++#include <vector>
++
++namespace SohExtreme {
++struct TrackerRegionGroup {
++    std::string region;
++    std::vector<const TrackerRow*> rows;
++    size_t normal = 0;
++    size_t glitched = 0;
++    bool currentArea = false;
++};
++// Display-only transformation: every input ID/status is retained exactly once.
++// Area resolver uses the native AP-ID map for highlighting, not reachability.
++template <typename AreaResolver, typename Filter>
++std::vector<TrackerRegionGroup> GroupTrackerRows(const TrackerSnapshot& snapshot, int currentArea,
++                                                bool currentFirst, bool onlyCurrent,
++                                                AreaResolver areaForId, Filter filter) {
++    std::map<std::string, TrackerRegionGroup> grouped;
++    for (const auto& row : snapshot.rows) {
++        if (!filter(row)) continue;
++        const bool here = currentArea >= 0 && areaForId(row.id) == currentArea;
++        if (onlyCurrent && !here) continue;
++        auto& group = grouped[row.region];
++        group.region = row.region.empty() ? "Unassigned region" : row.region;
++        group.currentArea = group.currentArea || here;
++        group.rows.push_back(&row);
++        if (row.state == 1) ++group.normal;
++        else ++group.glitched;
++    }
++    std::vector<TrackerRegionGroup> result;
++    for (auto& entry : grouped) {
++        auto& group = entry.second;
++        std::sort(group.rows.begin(), group.rows.end(), [](const TrackerRow* a, const TrackerRow* b) {
++            if (a->state != b->state) return a->state < b->state;
++            if (a->name != b->name) return a->name < b->name;
++            return a->id < b->id;
++        });
++        result.push_back(std::move(group));
++    }
++    std::stable_sort(result.begin(), result.end(), [currentFirst](const TrackerRegionGroup& a, const TrackerRegionGroup& b) {
++        if (currentFirst && a.currentArea != b.currentArea) return a.currentArea;
++        return a.region < b.region;
++    });
++    return result;
++}
++} // namespace SohExtreme
+--- a/soh/Network/Archipelago/TrackerWorker.cpp
++++ b/soh/Network/Archipelago/TrackerWorker.cpp
+@@ -0,0 +1,315 @@
++#include "TrackerWorker.h"
++#include <algorithm>
++#include <cwchar>
++#include <cwctype>
++#include <filesystem>
++#include <fstream>
++#include <string>
++#include <vector>
++
++#if defined(_WIN32)
++#ifndef NOMINMAX
++#define NOMINMAX
++#endif
++#ifndef WIN32_LEAN_AND_MEAN
++#define WIN32_LEAN_AND_MEAN
++#endif
++#include <windows.h>
++#if defined(_MSC_VER)
++#pragma comment(lib, "Advapi32.lib")
++#endif
++#endif
++
++namespace SohExtreme {
++struct TrackerWorker::Impl {
++    std::string runtime;
++#if defined(_WIN32)
++    HANDLE process = nullptr;
++    HANDLE job = nullptr;
++#endif
++};
++TrackerWorker::TrackerWorker() : impl(std::make_unique<Impl>()) {}
++TrackerWorker::~TrackerWorker() { Stop(); }
++const std::string& TrackerWorker::RuntimePath() const { return impl->runtime; }
++
++#if defined(_WIN32)
++namespace {
++struct Handle {
++    HANDLE value = nullptr;
++    explicit Handle(HANDLE h = nullptr) : value(h) {}
++    ~Handle() { if (value && value != INVALID_HANDLE_VALUE) CloseHandle(value); }
++    Handle(const Handle&) = delete;
++    Handle& operator=(const Handle&) = delete;
++    HANDLE Release() { HANDLE h = value; value = nullptr; return h; }
++    bool Valid() const { return value && value != INVALID_HANDLE_VALUE; }
++};
++std::wstring Wide(const std::string& s) {
++    if (s.empty()) return {};
++    const int n = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, s.data(), static_cast<int>(s.size()), nullptr, 0);
++    if (!n) return {};
++    std::wstring out(n, L'\0');
++    MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, s.data(), static_cast<int>(s.size()), out.data(), n);
++    return out;
++}
++std::string Utf8(const std::wstring& s) {
++    if (s.empty()) return {};
++    const int n = WideCharToMultiByte(CP_UTF8, 0, s.data(), static_cast<int>(s.size()), nullptr, 0, nullptr, nullptr);
++    std::string out(n, '\0');
++    WideCharToMultiByte(CP_UTF8, 0, s.data(), static_cast<int>(s.size()), out.data(), n, nullptr, nullptr);
++    return out;
++}
++std::wstring Env(const wchar_t* name) {
++    const DWORD n = GetEnvironmentVariableW(name, nullptr, 0);
++    if (!n || n > 32768) return {};
++    std::wstring out(n, L'\0');
++    const DWORD read = GetEnvironmentVariableW(name, out.data(), n);
++    if (!read || read >= n) return {};
++    out.resize(read);
++    return out;
++}
++std::wstring RegistryString(HKEY root, const std::wstring& key, const wchar_t* value, REGSAM view) {
++    HKEY handle = nullptr;
++    if (RegOpenKeyExW(root, key.c_str(), 0, KEY_READ | view, &handle) != ERROR_SUCCESS) return {};
++    DWORD bytes = 0, type = 0;
++    LSTATUS status = RegQueryValueExW(handle, value, nullptr, &type, nullptr, &bytes);
++    std::wstring out;
++    if (status == ERROR_SUCCESS && (type == REG_SZ || type == REG_EXPAND_SZ) && bytes <= 65536) {
++        out.resize(bytes / sizeof(wchar_t) + 1, L'\0');
++        if (RegQueryValueExW(handle, value, nullptr, &type, reinterpret_cast<BYTE*>(out.data()), &bytes) != ERROR_SUCCESS)
++            out.clear();
++        if (!out.empty()) out.resize(wcsnlen(out.c_str(), out.size()));
++    }
++    RegCloseKey(handle);
++    if (!out.empty() && type == REG_EXPAND_SZ) {
++        const DWORD n = ExpandEnvironmentStringsW(out.c_str(), nullptr, 0);
++        if (n && n <= 32768) {
++            std::wstring expanded(n, L'\0');
++            if (ExpandEnvironmentStringsW(out.c_str(), expanded.data(), n) == n) {
++                expanded.resize(n - 1); out = std::move(expanded);
++            }
++        }
++    }
++    return out;
++}
++std::wstring ExeInCommand(std::wstring command) {
++    const auto first = command.find_first_not_of(L" \t");
++    if (first == std::wstring::npos) return {};
++    command.erase(0, first);
++    if (command.front() == L'"') {
++        const auto end = command.find(L'"', 1);
++        return end == std::wstring::npos ? L"" : command.substr(1, end - 1);
++    }
++    std::wstring lower = command;
++    std::transform(lower.begin(), lower.end(), lower.begin(), ::towlower);
++    const auto end = lower.find(L".exe");
++    return end == std::wstring::npos ? L"" : command.substr(0, end + 4);
++}
++void AddCandidate(std::vector<std::filesystem::path>& out, const std::wstring& path) {
++    if (path.empty()) return;
++    std::filesystem::path p(path);
++    // Only known AP launchers are executable candidates. An installer DisplayIcon
++    // or URL association may name another AP component; use its directory only.
++    std::wstring name = p.filename().wstring();
++    std::transform(name.begin(), name.end(), name.begin(), ::towlower);
++    if (name == L"archipelagolauncherdebug.exe" || name == L"archipelagolauncher.exe") out.push_back(p);
++    if (name.size() >= 4 && name.substr(name.size() - 4) == L".exe") p = p.parent_path();
++    out.push_back(p / L"ArchipelagoLauncherDebug.exe");
++    out.push_back(p / L"ArchipelagoLauncher.exe");
++}
++bool HasManagedWorld(const std::filesystem::path& directory) {
++    // A missing/old world must not fall through the AP Launcher to its GUI.
++    // ZIP central-directory filenames are uncompressed, so presence of the
++    // worker module can be checked without another ZIP/runtime dependency.
++    for (const auto* folder : {L"custom_worlds", L"worlds"}) {
++        const auto base = directory / folder;
++        std::error_code error;
++        if (std::filesystem::is_regular_file(base / L"soh_extreme" / L"TrackerWorker.py", error)) return true;
++        std::filesystem::directory_iterator it(base, error), end;
++        for (; !error && it != end; it.increment(error)) {
++            const auto path = it->path();
++            if (path.extension() != L".apworld" || path.filename().wstring().find(L"soh_extreme") == std::wstring::npos) continue;
++            std::ifstream file(path, std::ios::binary);
++            if (!file) continue;
++            file.seekg(0, std::ios::end);
++            const auto length = file.tellg();
++            if (length <= 0 || length > 33554432) continue;
++            const auto tailSize = static_cast<std::streamoff>(std::min<std::streamoff>(length, 1048576));
++            file.seekg(-tailSize, std::ios::end);
++            std::string tail(static_cast<size_t>(tailSize), '\0');
++            if (file.read(tail.data(), static_cast<std::streamsize>(tail.size())) &&
++                tail.find("soh_extreme/TrackerWorker.py") != std::string::npos) return true;
++        }
++    }
++    return false;
++}
++std::filesystem::path FindRuntime(const std::string& hint) {
++    std::vector<std::filesystem::path> candidates;
++    AddCandidate(candidates, Wide(hint));
++    // An explicitly selected path takes priority and never silently selects a
++    // different installation when invalid (a version mix-up is worse than an error).
++    if (hint.empty()) {
++        AddCandidate(candidates, Env(L"SOH_EXTREME_AP_PATH"));
++        for (const HKEY root : {HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE}) {
++            for (const REGSAM view : {KEY_WOW64_64KEY, KEY_WOW64_32KEY}) {
++                AddCandidate(candidates, RegistryString(root,
++                    L"Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\ArchipelagoLauncher.exe", nullptr, view));
++                AddCandidate(candidates, ExeInCommand(RegistryString(root,
++                    L"Software\\Classes\\archipelago\\shell\\open\\command", nullptr, view)));
++                const std::wstring uninstall = L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
++                HKEY parent = nullptr;
++                if (RegOpenKeyExW(root, uninstall.c_str(), 0, KEY_READ | view, &parent) == ERROR_SUCCESS) {
++                    for (DWORD i = 0; i < 4096; ++i) {
++                        wchar_t name[256]; DWORD count = 256;
++                        const LSTATUS status = RegEnumKeyExW(parent, i, name, &count, nullptr, nullptr, nullptr, nullptr);
++                        if (status == ERROR_NO_MORE_ITEMS) break;
++                        if (status != ERROR_SUCCESS) continue;
++                        const std::wstring key = uninstall + L"\\" + std::wstring(name, count);
++                        const auto display = RegistryString(root, key, L"DisplayName", view);
++                        if (display.rfind(L"Archipelago", 0) != 0) continue;
++                        AddCandidate(candidates, RegistryString(root, key, L"InstallLocation", view));
++                        AddCandidate(candidates, ExeInCommand(RegistryString(root, key, L"DisplayIcon", view)));
++                    }
++                    RegCloseKey(parent);
++                }
++            }
++        }
++        for (const wchar_t* variable : {L"ProgramData", L"ProgramFiles", L"ProgramFiles(x86)"}) {
++            const auto path = Env(variable);
++            if (!path.empty()) AddCandidate(candidates, (std::filesystem::path(path) / L"Archipelago").wstring());
++        }
++        const auto local = Env(L"LOCALAPPDATA");
++        if (!local.empty()) {
++            AddCandidate(candidates, (std::filesystem::path(local) / L"Programs" / L"Archipelago").wstring());
++            AddCandidate(candidates, (std::filesystem::path(local) / L"Archipelago").wstring());
++        }
++        std::wstring exe(32768, L'\0');
++        const DWORD len = GetModuleFileNameW(nullptr, exe.data(), static_cast<DWORD>(exe.size()));
++        if (len && len < exe.size()) {
++            exe.resize(len); AddCandidate(candidates, std::filesystem::path(exe).parent_path().wstring());
++        }
++    }
++    std::filesystem::path firstInstalled;
++    for (const auto& candidate : candidates) {
++        std::error_code error;
++        if (!candidate.is_absolute() || !std::filesystem::is_regular_file(candidate, error)) continue;
++        if (firstInstalled.empty()) firstInstalled = candidate;
++        if (HasManagedWorld(candidate.parent_path())) return candidate;
++    }
++    return firstInstalled;
++}
++std::string WinError(const char* step) {
++    return std::string(step) + " (Windows error " + std::to_string(GetLastError()) + ").";
++}
++} // namespace
++#endif
++
++bool TrackerWorker::Start(const std::string& runtimeHint, const std::string& bootstrapJson, std::string& error) {
++    Stop();
++    if (bootstrapJson.empty() || bootstrapJson.size() > 16000 || bootstrapJson.find('\n') != std::string::npos) {
++        error = "Invalid AP tracker startup configuration."; return false;
++    }
++#if defined(_WIN32)
++    try {
++        const auto runtime = FindRuntime(runtimeHint);
++        if (runtime.empty()) {
++            error = "Archipelago runtime not found. Set its installation folder below, then restart the AP tracker.";
++            return false;
++        }
++        if (!HasManagedWorld(runtime.parent_path())) {
++            error = "Install soh_extreme.apworld 0.11.20 in this Archipelago installation before starting the AP tracker.";
++            return false;
++        }
++        SECURITY_ATTRIBUTES sa{sizeof(SECURITY_ATTRIBUTES), nullptr, TRUE};
++        HANDLE readRaw = nullptr, writeRaw = nullptr;
++        if (!CreatePipe(&readRaw, &writeRaw, &sa, 65536)) { error = WinError("Create tracker input pipe"); return false; }
++        Handle read(readRaw), write(writeRaw);
++        if (!SetHandleInformation(write.value, HANDLE_FLAG_INHERIT, 0)) { error = WinError("Protect tracker input"); return false; }
++        Handle nullOut(CreateFileW(L"NUL", GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, &sa, OPEN_EXISTING, 0, nullptr));
++        if (!nullOut.Valid()) { error = WinError("Open tracker output sink"); return false; }
++        Handle job(CreateJobObjectW(nullptr, nullptr));
++        if (!job.Valid()) { error = WinError("Create tracker job"); return false; }
++        JOBOBJECT_EXTENDED_LIMIT_INFORMATION limit{};
++        limit.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
++        if (!SetInformationJobObject(job.value, JobObjectExtendedLimitInformation, &limit, sizeof(limit))) {
++            error = WinError("Set tracker lifetime"); return false;
++        }
++        SIZE_T bytes = 0;
++        InitializeProcThreadAttributeList(nullptr, 1, 0, &bytes);
++        if (!bytes) { error = WinError("Measure tracker handle list"); return false; }
++        std::vector<unsigned char> storage(bytes);
++        auto attrs = reinterpret_cast<LPPROC_THREAD_ATTRIBUTE_LIST>(storage.data());
++        if (!InitializeProcThreadAttributeList(attrs, 1, 0, &bytes)) { error = WinError("Initialize tracker handle list"); return false; }
++        struct AttributeCleanup { LPPROC_THREAD_ATTRIBUTE_LIST p; ~AttributeCleanup() { DeleteProcThreadAttributeList(p); } } cleanup{attrs};
++        HANDLE inherited[] = {read.value, nullOut.value};
++        if (!UpdateProcThreadAttribute(attrs, 0, PROC_THREAD_ATTRIBUTE_HANDLE_LIST, inherited, sizeof(inherited), nullptr, nullptr)) {
++            error = WinError("Restrict tracker inherited handles"); return false;
++        }
++        STARTUPINFOEXW startup{};
++        startup.StartupInfo.cb = sizeof(startup);
++        startup.StartupInfo.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
++        startup.StartupInfo.wShowWindow = SW_HIDE;
++        startup.StartupInfo.hStdInput = read.value;
++        startup.StartupInfo.hStdOutput = startup.StartupInfo.hStdError = nullOut.value;
++        startup.lpAttributeList = attrs;
++        const auto executable = runtime.wstring();
++        std::wstring command = L"\"" + executable + L"\" \"SOH-EXTREME Universal Tracker\" -- --game-owned --nogui";
++        PROCESS_INFORMATION process{};
++        // Never invoke cmd.exe/ShellExecute or expose password/server/slot in the
++        // command line. Only the private inherited pipe carries credentials.
++        if (!CreateProcessW(executable.c_str(), command.data(), nullptr, nullptr, TRUE,
++                            CREATE_NO_WINDOW | CREATE_SUSPENDED | EXTENDED_STARTUPINFO_PRESENT,
++                            nullptr, runtime.parent_path().wstring().c_str(), &startup.StartupInfo, &process)) {
++            error = WinError("Start Archipelago tracker runtime"); return false;
++        }
++        Handle child(process.hProcess), thread(process.hThread);
++        if (!AssignProcessToJobObject(job.value, child.value)) {
++            error = WinError("Attach tracker to game lifetime"); TerminateProcess(child.value, 1); return false;
++        }
++        // Configuration is smaller than the dedicated pipe buffer: no game-thread
++        // wait for the Python interpreter to start or evaluate any rules.
++        const std::string message = bootstrapJson + "\n";
++        DWORD written = 0;
++        if (!WriteFile(write.value, message.data(), static_cast<DWORD>(message.size()), &written, nullptr) || written != message.size()) {
++            error = WinError("Send tracker startup configuration"); return false;
++        }
++        if (ResumeThread(thread.value) == static_cast<DWORD>(-1)) { error = WinError("Resume tracker runtime"); return false; }
++        impl->process = child.Release(); impl->job = job.Release(); impl->runtime = Utf8(executable);
++        error.clear(); return true;
++    } catch (const std::exception&) {
++        error = "Unable to resolve the Archipelago runtime path."; return false;
++    }
++#else
++    (void)runtimeHint;
++    error = "Automatic Universal Tracker hosting is currently available in Windows builds.";
++    return false;
++#endif
++}
++
++bool TrackerWorker::IsRunning(std::string& error) {
++#if defined(_WIN32)
++    if (!impl->process) return false;
++    DWORD code = 0;
++    if (!GetExitCodeProcess(impl->process, &code)) { error = WinError("Read tracker process state"); Stop(); return false; }
++    if (code == STILL_ACTIVE) return true;
++    switch (code) {
++        case 20: error = "AP tracker startup data was invalid."; break;
++        case 21: error = "Install tracker.apworld alongside the updated soh_extreme.apworld in the detected Archipelago installation."; break;
++        case 22: error = "The AP tracker could not authenticate. Check the game's server, slot and password."; break;
++        case 23: error = "Universal Tracker could not reconstruct this slot. See Archipelago's SOH-EXTREME-InGameTracker log."; break;
++        default: error = "The AP tracker stopped (exit " + std::to_string(code) + "). Check the installed AP world and tracker versions."; break;
++    }
++    Stop();
++#else
++    (void)error;
++#endif
++    return false;
++}
++void TrackerWorker::Stop() {
++#if defined(_WIN32)
++    // The job contains only our child process tree. Closing it cannot close the
++    // user's Launcher/UT windows or another game instance's worker.
++    if (impl->job) { CloseHandle(impl->job); impl->job = nullptr; }
++    if (impl->process) { CloseHandle(impl->process); impl->process = nullptr; }
++#endif
++}
++} // namespace SohExtreme
+--- a/soh/Network/Archipelago/TrackerWorker.h
++++ b/soh/Network/Archipelago/TrackerWorker.h
+@@ -0,0 +1,22 @@
++#pragma once
++// The game owns a windowless UT host. It is a read-only Tracker client, never
++// a second game/item consumer. No Windows types leak into game headers.
++#include <memory>
++#include <string>
++
++namespace SohExtreme {
++class TrackerWorker {
++  public:
++    TrackerWorker();
++    ~TrackerWorker();
++    TrackerWorker(const TrackerWorker&) = delete;
++    TrackerWorker& operator=(const TrackerWorker&) = delete;
++    bool Start(const std::string& runtimeHint, const std::string& bootstrapJson, std::string& error);
++    bool IsRunning(std::string& error);
++    void Stop();
++    const std::string& RuntimePath() const;
++  private:
++    struct Impl;
++    std::unique_ptr<Impl> impl;
++};
++} // namespace SohExtreme
+--- a/soh/Network/Archipelago/TrackerWorkerConfig.h
++++ b/soh/Network/Archipelago/TrackerWorkerConfig.h
+@@ -0,0 +1,29 @@
++#pragma once
++#include <cstdint>
++#include <stdexcept>
++#include <string>
++
++namespace SohExtreme {
++inline std::string TrackerJsonString(const std::string& value) {
++    std::string out = "\"";
++    const char* hex = "0123456789abcdef";
++    for (const unsigned char c : value) {
++        if (c == '"' || c == '\\') { out += '\\'; out += static_cast<char>(c); }
++        else if (c < 32) { out += "\\u00"; out += hex[c >> 4]; out += hex[c & 15]; }
++        else out += static_cast<char>(c);
++    }
++    return out + "\"";
++}
++inline std::string MakeTrackerWorkerBootstrap(const std::string& server, const std::string& name,
++                                               const std::string& password, uint32_t slot,
++                                               const std::string& nonce) {
++    if (server.empty() || server.size() > 4096 || name.empty() || name.size() > 512 ||
++        password.size() > 8192 || nonce.size() != 32 || slot == 0 || slot > 65535)
++        throw std::invalid_argument("Invalid AP tracker startup fields");
++    std::string result = "{\"server\":" + TrackerJsonString(server) + ",\"slot_name\":" + TrackerJsonString(name) +
++        ",\"password\":" + TrackerJsonString(password) + ",\"slot\":" + std::to_string(slot) +
++        ",\"nonce\":" + TrackerJsonString(nonce) + "}";
++    if (result.size() > 16000) throw std::invalid_argument("AP tracker startup configuration is too large");
++    return result;
++}
++} // namespace SohExtreme
+--- a/AP/archipelago.json
++++ b/AP/archipelago.json
+@@ -1,7 +1,7 @@
+ {
+     "game": "SOH-EXTREME",
+     "minimum_ap_version": "0.6.7",
+-    "world_version": "0.11.19",
++    "world_version": "0.11.20",
+     "authors": [
+         "mikemik44",
+         "OpenAI"
+--- a/AP/soh_extreme/TrackerClient.py
++++ b/AP/soh_extreme/TrackerClient.py
+@@ -1,8 +1,7 @@
+-"""Universal Tracker with a read-only in-game Check Finder mirror.
++"""Read-only UT result publisher used by the game-owned, windowless host.
+ 
+-Launched by the SOH-EXTREME Universal Tracker Launcher component. The upstream
+-TrackerGameContext remains the rule evaluator and provides the normal UT UI.
+-No global monkey-patching, extra server, Python embedding, or game-side scripts.
++TrackerGameContext supplies the actual upstream evaluation. This module only
++encodes its result, pins requests to the owning game and coalesces replies.
+ """
+ from __future__ import annotations
+ import asyncio
+@@ -22,6 +21,7 @@
+ 
+         def __init__(self, *args, **kwargs):
+             self._mirror_subscription = None
++            self._managed_nonce = None
+             self._mirror_producer = uuid.uuid4().hex
+             self._mirror_revision = 0
+             self._mirror_last_state = None
+@@ -49,6 +49,7 @@
+             if data.get('kind') != 'request' or data.get('slot') != self.slot:return
+             nonce=data.get('nonce');request=data.get('request')
+             if not isinstance(nonce,str) or not re.fullmatch(r'[a-f0-9]{32}',nonce):return
++            if self._managed_nonce is not None and nonce != self._managed_nonce:return
+             if type(request) is not int or not 0 < request <= 0xffffffffffffffff:return
+             now=time.monotonic()
+             if now-self._mirror_last_request_time < 0.1:return
+@@ -89,7 +90,7 @@
+             # A single sender coalesces bursts from receipts/hints and prevents
+             # old queued snapshots from overtaking new ones.
+             self._mirror_packet={'cmd':'Bounce','slots':[self.slot],
+-                'data':{'soh_extreme_tracker':PROTOCOL,'kind':'snapshot','payload':payload}}
++                'data':{'soh_extreme_tracker':PROTOCOL,'kind':'snapshot','nonce':nonce,'payload':payload}}
+             if self._mirror_sender is None or self._mirror_sender.done():
+                 self._mirror_sender=asyncio.create_task(self._send_mirror(),name='SOH tracker mirror')
+ 
+@@ -147,11 +148,7 @@
+ 
+ 
+ def register_launcher():
+-    from worlds.LauncherComponents import Component,Type,components
+-    title='SOH-EXTREME Universal Tracker'
+-    if not any(c.display_name==title for c in components):
+-        components.append(Component(title,func=launch,component_type=Type.CLIENT,
+-            game_name='SOH-EXTREME',supports_uri=True,
+-            description='Universal Tracker with matching in-game Check Finder availability'))
++    from .TrackerWorker import register_worker
++    register_worker()
+ 
+ if __name__=='__main__':run(*sys.argv[1:])
+--- a/AP/soh_extreme/TrackerMirror.py
++++ b/AP/soh_extreme/TrackerMirror.py
+@@ -9,7 +9,7 @@
+ from typing import Any
+ 
+ PROTOCOL = "SOHExtremeFinder1"
+-VERSION = "0.11.19"
++VERSION = "0.11.20"
+ TAG = "SOHExtremeUT"
+ MAX_ENTRIES = 20000
+ MAX_BYTES = 750000
+--- a/AP/soh_extreme/archipelago.json
++++ b/AP/soh_extreme/archipelago.json
+@@ -1,7 +1,7 @@
+ {
+     "game": "SOH-EXTREME",
+     "minimum_ap_version": "0.6.7",
+-    "world_version": "0.11.19",
++    "world_version": "0.11.20",
+     "authors": [
+         "mikemik44",
+         "OpenAI"
+--- a/AP/soh_extreme/TrackerWorker.py
++++ b/AP/soh_extreme/TrackerWorker.py
+@@ -0,0 +1,208 @@
++"""Private, windowless Universal Tracker host owned by a running SoH game.
++
++The game starts this through the installed AP runtime. Credentials arrive only
++through an inherited anonymous pipe; no user launcher action or console is used.
++UT still obtains the authoritative slot data and received-item stream from AP
++and performs its own evaluation. This module does not duplicate world rules.
++"""
++from __future__ import annotations
++
++import asyncio
++import json
++import logging
++import os
++import re
++import sys
++import time
++from urllib.parse import urlsplit
++
++MAX_CONFIG = 16001
++WORKER_COMPONENT = "SOH-EXTREME Universal Tracker"
++
++
++def parse_config(raw: bytes) -> dict:
++    if not isinstance(raw, bytes) or not 0 < len(raw) <= MAX_CONFIG:
++        raise ValueError("Invalid startup payload size")
++    config = json.loads(raw.decode("utf-8"))
++    if not isinstance(config, dict) or set(config) != {"server", "slot_name", "password", "slot", "nonce"}:
++        raise ValueError("Invalid startup payload fields")
++    for key, maximum in (("server", 4096), ("slot_name", 128), ("password", 4096), ("nonce", 32)):
++        value = config[key]
++        if not isinstance(value, str) or len(value) > maximum or any(ord(c) < 32 or ord(c) == 127 for c in value):
++            raise ValueError("Invalid startup string")
++    if not config["slot_name"] or not re.fullmatch(r"[0-9a-f]{32}", config["nonce"]):
++        raise ValueError("Invalid startup identity")
++    if type(config["slot"]) is not int or not 1 <= config["slot"] <= 65535:
++        raise ValueError("Invalid startup slot")
++    server = config["server"]
++    address = urlsplit(server if "://" in server else "ws://" + server)
++    if (address.scheme not in {"ws", "wss"} or not address.hostname or address.username is not None
++            or address.password is not None or address.fragment):
++        raise ValueError("Invalid startup server")
++    # Validate port syntax/range as well as the hostname. Never echo credentials.
++    _ = address.port
++    return config
++
++
++def read_config(stream=None) -> dict:
++    if stream is not None:
++        return parse_config(stream.readline(MAX_CONFIG + 1))
++    if os.name == "nt":
++        # Frozen GUI launchers may set sys.stdin to None even though the OS
++        # inherited a valid pipe. Read that OS handle directly in both builds.
++        import ctypes
++        from ctypes import wintypes
++        kernel = ctypes.WinDLL("kernel32", use_last_error=True)
++        kernel.GetStdHandle.argtypes = [wintypes.DWORD]
++        kernel.GetStdHandle.restype = wintypes.HANDLE
++        kernel.ReadFile.argtypes = [wintypes.HANDLE, wintypes.LPVOID, wintypes.DWORD,
++                                    ctypes.POINTER(wintypes.DWORD), wintypes.LPVOID]
++        kernel.ReadFile.restype = wintypes.BOOL
++        handle = kernel.GetStdHandle(-10 & 0xffffffff)
++        chunks = bytearray()
++        while len(chunks) <= MAX_CONFIG:
++            buffer = ctypes.create_string_buffer(4096)
++            count = wintypes.DWORD()
++            ok = kernel.ReadFile(handle, buffer, len(buffer), ctypes.byref(count), None)
++            if not ok:
++                if ctypes.get_last_error() == 109:  # EOF on anonymous pipe
++                    break
++                raise ValueError("Startup pipe unavailable")
++            if not count.value:
++                break
++            chunks.extend(buffer.raw[:count.value])
++            if b"\n" in chunks:
++                break
++        return parse_config(bytes(chunks))
++    return parse_config(sys.stdin.buffer.readline(MAX_CONFIG + 1))
++
++
++def make_managed_context(base, config):
++    """The subclass owns lifecycle/auth only; base supplies all UT evaluation."""
++    class ManagedTracker(base):
++        def __init__(self, *args, **kwargs):
++            self.worker_exit_code = 0
++            super().__init__(*args, **kwargs)
++            self._managed_nonce = config["nonce"]
++
++        @property
++        def _persistence_enabled(self):
++            # A private game tracker must not inherit an old UT /manually_collect
++            # or /ignore override and silently alter the game's availability.
++            return False
++
++        def load_seed_data(self):
++            self.tracker_core.manual_items = []
++            self.tracker_core.ignored_locations = set()
++
++        async def console_input(self):
++            self.worker_exit_code = 22
++            self.exit_event.set()
++            raise RuntimeError("The managed tracker cannot prompt for credentials")
++
++        async def server_auth(self, password_requested=False):
++            if password_requested and not self.password:
++                self.worker_exit_code = 22
++                self.exit_event.set()
++                return
++            await self.send_connect(game="SOH-EXTREME")
++
++        def on_package(self, cmd, args):
++            if cmd == "Connected":
++                slot = args.get("slot")
++                info = args.get("slot_info", {}).get(str(slot))
++                if slot != config["slot"] or not info or info[1] != "SOH-EXTREME":
++                    self.worker_exit_code = 22
++                    self.exit_event.set()
++                    return
++            super().on_package(cmd, args)
++            if cmd == "Connected" and (not self.tracker_core.multiworld or self.tracker_core.tracker_disabled):
++                self.worker_exit_code = 23
++                self.exit_event.set()
++
++        def make_gui(self):
++            raise RuntimeError("No GUI belongs to the managed tracker")
++
++        def run_cli(self):
++            raise RuntimeError("No interactive console belongs to the managed tracker")
++
++    return ManagedTracker
++
++
++async def run_managed(config, ut):
++    from .TrackerClient import make_context_class
++    context_type = make_managed_context(make_context_class(ut.TrackerGameContext), config)
++    ctx = context_type(config["server"], config["password"] or None, print_count=False, print_list=False)
++    ctx.auth = config["slot_name"]
++    tasks = []
++    try:
++        ctx.run_generator()
++        ctx.server_task = asyncio.create_task(ut.server_loop(ctx), name="managed UT connection")
++        tasks.append(ctx.server_task)
++
++        async def lifetime():
++            # The Windows Job is the primary lifetime boundary. This watchdog is
++            # a backup if a host is started outside the game's process manager.
++            started = time.monotonic()
++            while not ctx.exit_event.is_set():
++                await asyncio.sleep(5)
++                last_request = max(started, ctx._mirror_last_request_time)
++                if time.monotonic() - last_request > 180:
++                    ctx.exit_event.set()
++                if getattr(ctx, "disconnected_intentionally", False):
++                    ctx.worker_exit_code = ctx.worker_exit_code or 22
++                    ctx.exit_event.set()
++        tasks.append(asyncio.create_task(lifetime(), name="managed UT lifetime"))
++        await ctx.exit_event.wait()
++        return ctx.worker_exit_code
++    except Exception:
++        logging.getLogger("Client").exception("Managed Universal Tracker failed")
++        return 23
++    finally:
++        watcher = getattr(ctx, "watcher_task", None)
++        if watcher is not None:
++            tasks.append(watcher)
++        for task in tasks:
++            if not task.done():
++                task.cancel()
++        sender = getattr(ctx, "_mirror_sender", None)
++        if sender is not None and not sender.done():
++            sender.cancel()
++            tasks.append(sender)
++        await asyncio.gather(*tasks, return_exceptions=True)
++        # CommonContext.shutdown awaits server_task; do not await a cancelled
++        # task a second time and replace our intended exit code with CancelledError.
++        ctx.server_task = None
++        await ctx.shutdown()
++
++
++def run_worker(*args):
++    # No commands, credentials, arbitrary scripts, or eval come from argv.
++    if list(args) != ["--game-owned", "--nogui"]:
++        raise SystemExit(20)
++    try:
++        config = read_config()
++    except (ValueError, OSError, UnicodeError):
++        raise SystemExit(20) from None
++    if sys.stdout is None:
++        sys.stdout = open(os.devnull, "w", encoding="utf-8")
++    if sys.stderr is None:
++        sys.stderr = open(os.devnull, "w", encoding="utf-8")
++    import Utils
++    # Utils was imported by the Launcher before dispatch. A GUI-frozen launcher
++    # with no sys.stdout would otherwise consider its own GUI enabled.
++    Utils.gui_enabled = False
++    try:
++        from worlds.tracker import TrackerClient as ut
++    except ImportError:
++        raise SystemExit(21) from None
++    ut.gui_enabled = False
++    Utils.init_logging("SOH-EXTREME-InGameTracker", exception_logger="Client")
++    raise SystemExit(asyncio.run(run_managed(config, ut)))
++
++
++def register_worker():
++    from worlds.LauncherComponents import Component, Type, components
++    if not any(component.display_name == WORKER_COMPONENT for component in components):
++        components.append(Component(WORKER_COMPONENT, func=run_worker, component_type=Type.HIDDEN,
++                                    description="Private Universal Tracker host managed by the SoH game"))

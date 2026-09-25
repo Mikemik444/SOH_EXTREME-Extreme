@@ -1,0 +1,62 @@
+{
+  "seed": 17172,
+  "players": 1,
+  "overrides": {
+    "triforce_hunt": false,
+    "frozen_starting_time": "night",
+    "boss_key_shuffle": "anywhere",
+    "ganons_castle_boss_key": "lacs_dungeon_rewards",
+    "shuffle_roll": true,
+    "shuffle_open_chest": "progressive"
+  },
+  "passed": true,
+  "harness": "AP 0.6.7 core, restricted offline dependency adapters; no nonempty item links or binary patch export",
+  "locations": 3502,
+  "network_locations": 3258,
+  "pool": 3257,
+  "all_state_blocked": [],
+  "resolved_world_options": {
+    "1": {
+      "frozen_starting_time": 4,
+      "boss_key_shuffle": "anywhere",
+      "triforce_hunt": 0
+    }
+  },
+  "sphere_sizes": [
+    27,
+    6,
+    10,
+    153,
+    25,
+    84,
+    189,
+    92,
+    72,
+    27,
+    30,
+    37,
+    206,
+    254,
+    156,
+    133,
+    78,
+    156,
+    239,
+    167,
+    233,
+    46,
+    160,
+    281,
+    196,
+    63,
+    56,
+    57,
+    125,
+    92,
+    28,
+    24
+  ],
+  "replay_blocked": [],
+  "beatable": true,
+  "seconds": 34.729
+}

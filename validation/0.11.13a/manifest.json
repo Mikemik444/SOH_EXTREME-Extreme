@@ -1,0 +1,16 @@
+{
+  "patch": "0.11.13a",
+  "type": "native build hotfix",
+  "apply_over": "0.11.13",
+  "apworld_changed": false,
+  "new_seed_required": false,
+  "production_files": [
+    {
+      "path": "src/overlays/actors/ovl_En_Dha/z_en_dha.c",
+      "before_sha256": "8140720a04c52d8b898466181964d5a788c0a01b6f64a441f7e842a4a7a2bb1c",
+      "sha256": "98d6a064ceb280ab5828cc46f533000d6f87314afddf9434cfbed9b5e74a524f",
+      "bytes": 15981
+    }
+  ],
+  "scope": "Only include ordering and inclusion of the existing reset-function prototype; no gameplay-code changes."
+}

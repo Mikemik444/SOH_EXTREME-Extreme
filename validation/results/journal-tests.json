@@ -1,0 +1,20 @@
+{
+  "name": "journal_and_pooled_identity",
+  "passed": true,
+  "compile_command": [
+    "g++",
+    "-std=c++17",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I",
+    "/mnt/data/enemy13/src",
+    "/mnt/data/enemy13/src/validation/results/journal-test-build/journal.cpp",
+    "-o",
+    "/mnt/data/enemy13/src/validation/results/journal-test-build/journal"
+  ],
+  "compile_stderr": "",
+  "stdout": "Real journal/recovery functions: earned vs collected, offline replay, duplicate prevention, grounded recovery, grotto isolation and all Field Poe source rebindings passed.\n",
+  "stderr": ""
+}

@@ -1,0 +1,352 @@
+{
+  "scope": "Direct source AtDay/AtNight requirements with the opposite frozen start.\n\nAll other real items/events are retained. Flow of Time is removed through the\nworld's actual receipt-removal path, so a historical cycle cannot bypass the\ncurrent frozen-phase requirement. This is not a clock/collision playtest.\n",
+  "assertions": 23,
+  "failures": 0,
+  "tests": [
+    {
+      "id": 46,
+      "name": "Market Lost Dog",
+      "frozen": "day",
+      "required": "night",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_MARKET_DOG_LADY_HOUSE",
+          "condition": "logic->IsChild && logic->AtNight && logic->HasItem(RG_SPEAK_HYLIAN)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 234
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "name": "Graveyard Dampe Gravedigging Tour",
+      "frozen": "day",
+      "required": "night",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_GRAVEYARD",
+          "condition": "logic->HasItem(RG_CHILD_WALLET) && logic->IsChild && logic->AtNight && CanTalkToDampe() && CanUseShovel()",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/graveyard.cpp",
+          "line": 33
+        }
+      ]
+    },
+    {
+      "id": 503,
+      "name": "Graveyard GS Wall",
+      "frozen": "day",
+      "required": "night",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_GRAVEYARD",
+          "condition": "logic->IsChild && logic->HookshotOrBoomerang() && logic->AtNight && logic->CanGetNightTimeGS()",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/graveyard.cpp",
+          "line": 34
+        }
+      ]
+    },
+    {
+      "id": 9700569,
+      "name": "EXTREME Mkt Wonder Night 1",
+      "frozen": "day",
+      "required": "night",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtNight",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 35
+        }
+      ]
+    },
+    {
+      "id": 9700570,
+      "name": "EXTREME Mkt Wonder Night 2",
+      "frozen": "day",
+      "required": "night",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtNight",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 36
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Song from Malon",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_LON_LON_RANCH",
+          "condition": "logic->IsChild && logic->Get(LOGIC_MALON_RETURNED_FROM_CASTLE) && logic->HasItem(RG_SPEAK_HYLIAN) && logic->HasItem(RG_FAIRY_OCARINA) && logic->AtDay",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/lon_lon_ranch.cpp",
+          "line": 14
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "name": "LLR Talons Chickens",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_LLR_TALONS_HOUSE",
+          "condition": "logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_HYLIAN) && logic->IsChild && logic->AtDay && logic->Get(LOGIC_TALON_RETURNED_FROM_CASTLE) && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/lon_lon_ranch.cpp",
+          "line": 41
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "name": "Kak Anju as Child",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_KAKARIKO_VILLAGE",
+          "condition": "logic->IsChild && logic->AtDay && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_CLIMB) && logic->HasItem(RG_POWER_BRACELET) && logic->CanBreakCrates() && logic->HasItem(RG_SPEAK_HYLIAN)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp",
+          "line": 18
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "name": "Kak Anju as Adult",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_KAKARIKO_VILLAGE",
+          "condition": "logic->IsAdult && logic->AtDay && logic->HasItem(RG_SPEAK_HYLIAN)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp",
+          "line": 19
+        }
+      ]
+    },
+    {
+      "id": 124,
+      "name": "GF HBA 1000 Points",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_GF_HBA_RANGE",
+          "condition": "logic->IsAdult && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_GERUDO) && logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->SummonEpona() && logic->CanUse(RG_FAIRY_BOW) && logic->AtDay",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/gerudo_fortress.cpp",
+          "line": 229
+        }
+      ]
+    },
+    {
+      "id": 125,
+      "name": "GF HBA 1500 Points",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_GF_HBA_RANGE",
+          "condition": "logic->IsAdult && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_GERUDO) && logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->SummonEpona() && logic->CanUse(RG_FAIRY_BOW) && logic->AtDay",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/gerudo_fortress.cpp",
+          "line": 230
+        }
+      ]
+    },
+    {
+      "id": 737,
+      "name": "Kak Trade Pocket Cucco",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_KAKARIKO_VILLAGE",
+          "condition": "logic->IsAdult && logic->AtDay && (logic->CanUse(RG_POCKET_EGG) && logic->Get(LOGIC_WAKE_UP_ADULT_TALON))",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp",
+          "line": 20
+        }
+      ]
+    },
+    {
+      "id": 9700251,
+      "name": "EXTREME Gy Near Hut Grave Butterfly Fairy",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_GRAVEYARD",
+          "condition": "logic->IsChild && logic->AtDay && logic->CanUse(RG_STICKS)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/graveyard.cpp",
+          "line": 53
+        }
+      ]
+    },
+    {
+      "id": 9700489,
+      "name": "EXTREME Kak Watchtower Butterfly Fairy",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_KAK_WATCHTOWER",
+          "condition": "logic->IsChild && logic->AtDay && logic->CanUse(RG_STICKS)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp",
+          "line": 125
+        }
+      ]
+    },
+    {
+      "id": 9700564,
+      "name": "EXTREME Mkt Wonder Day 1",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtDay",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 30
+        }
+      ]
+    },
+    {
+      "id": 9700565,
+      "name": "EXTREME Mkt Wonder Day 2",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtDay",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 31
+        }
+      ]
+    },
+    {
+      "id": 9700566,
+      "name": "EXTREME Mkt Wonder Day 3",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtDay",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 32
+        }
+      ]
+    },
+    {
+      "id": 9700567,
+      "name": "EXTREME Mkt Wonder Day 4",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtDay",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 33
+        }
+      ]
+    },
+    {
+      "id": 9700568,
+      "name": "EXTREME Mkt Wonder Day 5",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtDay",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 34
+        }
+      ]
+    },
+    {
+      "id": 9700571,
+      "name": "EXTREME Mk Beggar Blue Fire",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtDay && logic->CanUse(RG_BOTTLE_WITH_BLUE_FIRE)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 39
+        }
+      ]
+    },
+    {
+      "id": 9700572,
+      "name": "EXTREME Mk Beggar Bugs",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtDay && logic->CanUse(RG_BOTTLE_WITH_BUGS)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 37
+        }
+      ]
+    },
+    {
+      "id": 9700573,
+      "name": "EXTREME Mk Beggar Fish",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_THE_MARKET",
+          "condition": "logic->IsChild && logic->AtDay && logic->CanUse(RG_BOTTLE_WITH_FISH)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+          "line": 38
+        }
+      ]
+    },
+    {
+      "id": 9700661,
+      "name": "EXTREME Zf Log Butterfly Fairy",
+      "frozen": "night",
+      "required": "day",
+      "passed": true,
+      "source": [
+        {
+          "region": "RR_ZORAS_FOUNTAIN",
+          "condition": "logic->IsChild && logic->AtDay && logic->CanUse(RG_STICKS)",
+          "file": "soh/Enhancements/randomizer/location_access/overworld/zoras_fountain.cpp",
+          "line": 35
+        }
+      ]
+    }
+  ]
+}

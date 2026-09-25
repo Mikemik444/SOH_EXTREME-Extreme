@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "ap_files_modified": [
+    "archipelago.json",
+    "soh_extreme/TrackerClient.py",
+    "soh_extreme/TrackerMirror.py",
+    "soh_extreme/archipelago.json"
+  ],
+  "ap_files_added": [
+    "soh_extreme/TrackerWorker.py"
+  ],
+  "removed": [],
+  "gameplay_rules_byte_identical": true,
+  "native_file_count": 8,
+  "version": "0.11.20"
+}

@@ -1,0 +1,57 @@
+{
+  "tests": [
+    {
+      "compiler": "clang++",
+      "command": [
+        "/usr/local/swift/usr/bin/clang++",
+        "-std=c++20",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "-I/mnt/data/patch1121c/validation/support",
+        "/mnt/data/patch1121c/validation/build/production_trap_test.cpp",
+        "-o",
+        "/mnt/data/patch1121c/validation/build/trap-settings-clangpp"
+      ],
+      "status": "passed",
+      "returncode": 0
+    },
+    {
+      "compiler": "g++",
+      "command": [
+        "/usr/bin/g++",
+        "-std=c++20",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "-I/mnt/data/patch1121c/validation/support",
+        "/mnt/data/patch1121c/validation/build/production_trap_test.cpp",
+        "-o",
+        "/mnt/data/patch1121c/validation/build/trap-settings-gpp"
+      ],
+      "status": "passed",
+      "returncode": 0
+    }
+  ],
+  "scope": "isolated production code with controlled engine/settings/UI/persistence services",
+  "seed_simulations": 0,
+  "full_windows_build": false,
+  "live_game_test": false,
+  "static_guards": "passed",
+  "source_hashes": {
+    "soh/Enhancements/ExtraTraps.cpp": "16e720219d465f6097c49b64bf13533ef3bae0a100b28aadd74ca6d819219646",
+    "soh/SohGui/SohMenuEnhancements.cpp": "fc2810b40f687b059bd261f314ed97c08738ae1832873f608d47a790fa7bf284",
+    "soh/SohGui/ImGuiUtils.cpp": "889358f3b6129c8729107f415aa6541d262441b71b896b0f85b70c301201111b",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "b9b79fbbd5385c9785ec1c0a05d651af30b7f241608ddcf33d78b2cb5b5b67e9",
+    "soh/Network/Archipelago/TrackerWorker.cpp": "5bd547b8bb7aabadae87bb54f34a2258475498474cab84b811cbe601ff6c995b",
+    "soh/Network/Archipelago/TrackerMirror.h": "6ba08e6e0ff56289e6e4912613e8938ff9e9934cf18f8622a4de6d7f98efcdeb",
+    "soh/Enhancements/randomizer/EnemySoulDraw.cpp": "2d27e6f312ad66a2a976eed8d08a430ada38512f24a102d4ef694b5d3f043ef5",
+    "soh/Enhancements/randomizer/BombchuRefillPolicy.h": "0688f79fb1071a8fe3ecb3d37b6e6f7332bf1eae7c27945736dc5aa63bb69fe8",
+    "soh/Enhancements/randomizer/draw.h": "b096e24b0082b374b99e7a7c4b95c91cb926e7d775363fdb5127282bd4683472",
+    "soh/Enhancements/randomizer/item_list.cpp": "2779d40dd6fc16bf1f10cda6a7b2c5ce74dfe16d5fe7268ee3138fabec05915c",
+    "soh/Enhancements/randomizer/EnemySoulIcons.h": "7aa03812de36e91ecf1c9fd3e4480dffc6b6d12b0ce46fb0c7c7cd99583fc868",
+    "soh/Enhancements/randomizer/item.cpp": "3b1783448c2a9eef9b5151d078aeb592e4ffd5182386873f1761d40d2e0d7e18"
+  }
+}

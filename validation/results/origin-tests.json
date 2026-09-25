@@ -1,0 +1,56 @@
+{
+  "name": "mixed_C_CPP_production_spawn_origin",
+  "passed": true,
+  "runs": [
+    {
+      "command": [
+        "gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/enemy13/src",
+        "-I",
+        "/mnt/data/enemy13/src/validation/fixtures",
+        "-c",
+        "/mnt/data/enemy13/src/validation/results/origin-test-build/production_spawn.c",
+        "-o",
+        "/mnt/data/enemy13/src/validation/results/origin-test-build/spawn.o"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/enemy13/src",
+        "-I",
+        "/mnt/data/enemy13/src/validation/fixtures",
+        "/mnt/data/enemy13/src/validation/results/origin-test-build/production_identity.cpp",
+        "/mnt/data/enemy13/src/validation/results/origin-test-build/spawn.o",
+        "-o",
+        "/mnt/data/enemy13/src/validation/results/origin-test-build/origin"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/mnt/data/enemy13/src/validation/results/origin-test-build/origin"
+      ],
+      "returncode": 0,
+      "stdout": "818 positive authored/controller/grotto/sister identities; 53 creator families x 786 receipt slots (41658 offspring rejections); raw init/hook births, boss larvae, decoys, forged IDs, descendant helpers, cycles, reset and allocation failures passed.\n",
+      "stderr": ""
+    }
+  ]
+}

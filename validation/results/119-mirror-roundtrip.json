@@ -1,0 +1,267 @@
+{
+  "passed": true,
+  "checks": 57,
+  "fixtures": [
+    {
+      "scenario": 0,
+      "rows": 3245,
+      "native_assertions": 3272,
+      "bytes": 255054
+    },
+    {
+      "scenario": 1,
+      "rows": 2850,
+      "native_assertions": 2877,
+      "bytes": 230692
+    },
+    {
+      "scenario": 2,
+      "rows": 3033,
+      "native_assertions": 3060,
+      "bytes": 242412
+    },
+    {
+      "scenario": 3,
+      "rows": 3103,
+      "native_assertions": 3130,
+      "bytes": 242155
+    },
+    {
+      "scenario": 4,
+      "rows": 1340,
+      "native_assertions": 1367,
+      "bytes": 116598
+    }
+  ],
+  "tests": [
+    {
+      "test": "normal exact IDs 0",
+      "passed": true
+    },
+    {
+      "test": "glitched not promoted 0",
+      "passed": true
+    },
+    {
+      "test": "actual C++ client/view consumes snapshot 0",
+      "passed": true
+    },
+    {
+      "test": "every rendered ID/status/name equals producer 0",
+      "passed": true
+    },
+    {
+      "test": "wrapper calls upstream evaluator 0",
+      "passed": true
+    },
+    {
+      "test": "wrapper sends snapshot to this slot 0",
+      "passed": true
+    },
+    {
+      "test": "actual callback payload consumed by C++ 0",
+      "passed": true
+    },
+    {
+      "test": "another slot does not publish 0",
+      "passed": true
+    },
+    {
+      "test": "disconnect clears subscription 0",
+      "passed": true
+    },
+    {
+      "test": "UT glitched display preference preserved 0",
+      "passed": true
+    },
+    {
+      "test": "normal exact IDs 1",
+      "passed": true
+    },
+    {
+      "test": "glitched not promoted 1",
+      "passed": true
+    },
+    {
+      "test": "actual C++ client/view consumes snapshot 1",
+      "passed": true
+    },
+    {
+      "test": "every rendered ID/status/name equals producer 1",
+      "passed": true
+    },
+    {
+      "test": "wrapper calls upstream evaluator 1",
+      "passed": true
+    },
+    {
+      "test": "wrapper sends snapshot to this slot 1",
+      "passed": true
+    },
+    {
+      "test": "actual callback payload consumed by C++ 1",
+      "passed": true
+    },
+    {
+      "test": "another slot does not publish 1",
+      "passed": true
+    },
+    {
+      "test": "disconnect clears subscription 1",
+      "passed": true
+    },
+    {
+      "test": "UT glitched display preference preserved 1",
+      "passed": true
+    },
+    {
+      "test": "normal exact IDs 2",
+      "passed": true
+    },
+    {
+      "test": "glitched not promoted 2",
+      "passed": true
+    },
+    {
+      "test": "actual C++ client/view consumes snapshot 2",
+      "passed": true
+    },
+    {
+      "test": "every rendered ID/status/name equals producer 2",
+      "passed": true
+    },
+    {
+      "test": "wrapper calls upstream evaluator 2",
+      "passed": true
+    },
+    {
+      "test": "wrapper sends snapshot to this slot 2",
+      "passed": true
+    },
+    {
+      "test": "actual callback payload consumed by C++ 2",
+      "passed": true
+    },
+    {
+      "test": "another slot does not publish 2",
+      "passed": true
+    },
+    {
+      "test": "disconnect clears subscription 2",
+      "passed": true
+    },
+    {
+      "test": "UT glitched display preference preserved 2",
+      "passed": true
+    },
+    {
+      "test": "normal exact IDs 3",
+      "passed": true
+    },
+    {
+      "test": "glitched not promoted 3",
+      "passed": true
+    },
+    {
+      "test": "actual C++ client/view consumes snapshot 3",
+      "passed": true
+    },
+    {
+      "test": "every rendered ID/status/name equals producer 3",
+      "passed": true
+    },
+    {
+      "test": "wrapper calls upstream evaluator 3",
+      "passed": true
+    },
+    {
+      "test": "wrapper sends snapshot to this slot 3",
+      "passed": true
+    },
+    {
+      "test": "actual callback payload consumed by C++ 3",
+      "passed": true
+    },
+    {
+      "test": "another slot does not publish 3",
+      "passed": true
+    },
+    {
+      "test": "disconnect clears subscription 3",
+      "passed": true
+    },
+    {
+      "test": "UT glitched display preference preserved 3",
+      "passed": true
+    },
+    {
+      "test": "normal exact IDs 4",
+      "passed": true
+    },
+    {
+      "test": "glitched not promoted 4",
+      "passed": true
+    },
+    {
+      "test": "actual C++ client/view consumes snapshot 4",
+      "passed": true
+    },
+    {
+      "test": "every rendered ID/status/name equals producer 4",
+      "passed": true
+    },
+    {
+      "test": "wrapper calls upstream evaluator 4",
+      "passed": true
+    },
+    {
+      "test": "wrapper sends snapshot to this slot 4",
+      "passed": true
+    },
+    {
+      "test": "actual callback payload consumed by C++ 4",
+      "passed": true
+    },
+    {
+      "test": "another slot does not publish 4",
+      "passed": true
+    },
+    {
+      "test": "disconnect clears subscription 4",
+      "passed": true
+    },
+    {
+      "test": "UT glitched display preference preserved 4",
+      "passed": true
+    },
+    {
+      "test": "encoder rejects inactive",
+      "passed": true
+    },
+    {
+      "test": "encoder rejects checked",
+      "passed": true
+    },
+    {
+      "test": "encoder rejects duplicate",
+      "passed": true
+    },
+    {
+      "test": "encoder rejects invalid-state",
+      "passed": true
+    },
+    {
+      "test": "encoder rejects control",
+      "passed": true
+    },
+    {
+      "test": "encoder rejects negative-id",
+      "passed": true
+    },
+    {
+      "test": "one launcher component",
+      "passed": true
+    }
+  ],
+  "scope": "production transport, client methods and view with controlled AP/UT-host/ImGui services; no live network or UI"
+}

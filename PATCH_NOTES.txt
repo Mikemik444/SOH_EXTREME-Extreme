@@ -1,0 +1,20 @@
+SOH-EXTREME 0.11.9 - set_rules ability-helper order fix
+
+Fixes the generation crash:
+  UnboundLocalError: cannot access local variable 'climb_rule'
+
+Cause:
+  The 0.11.8 DMT/DMC route-hardening code calls climb_rule() and grab_rule()
+  before those local helper functions were defined later inside set_rules().
+
+Fix:
+  - Move grab_rule(), swim_rule(), and climb_rule() to the top of set_rules().
+  - Keep the DMT -> Summit Climb gate from 0.11.8.
+  - Keep the Darunia -> DMC Grab/NPC/Speak Goron gate from 0.11.8.
+  - Keep the standalone packaging and CollectionState fixes from 0.11.7.
+  - No YAML changes are required.
+
+Validation performed:
+  - Python source compilation succeeds.
+  - Static scan verifies no nested set_rules helper is called before definition.
+  - Outer and embedded ZIP integrity checks pass.

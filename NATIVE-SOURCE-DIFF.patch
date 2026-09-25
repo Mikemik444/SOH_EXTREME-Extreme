@@ -1,0 +1,15 @@
+--- a/soh/Network/Archipelago/ArchipelagoClient.cpp
++++ b/soh/Network/Archipelago/ArchipelagoClient.cpp
+@@ -728,7 +728,11 @@
+         }
+         return;
+     }
+-    if (!activeLocationsLoaded) return;
++    // 0.11.21a: Update() services this method BEFORE its authentication
++    // reconciliation. Starting here on the first frame launched a host which
++    // that reconciliation immediately stopped, then launched a second host on
++    // the next frame. Wait for BOTH boundaries; never flap a new connection.
++    if (!wasAuthenticated || !saveRuntimeSynchronized || !activeLocationsLoaded) return;
+     const double now = FinderMirrorClock();
+     if (now < finderWorkerNextPoll) return;
+     finderWorkerNextPoll = now + 0.5;

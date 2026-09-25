@@ -1,0 +1,52 @@
+VALIDATION RECORD -- PATCH REVISION 1
+
+Completed:
+
+1. CMake transformation fixture.
+   Exercised each required replacement against the reviewed upstream source
+   fragments, verified the APCpp target uses generated copies of all three
+   source files, verified the original checkout fragments remain unchanged,
+   and verified repeated configuration leaves unchanged generated files alone.
+   An intentionally incompatible source fragment was rejected with a configure
+   error. This was a transformation test, not a complete APCpp compilation.
+
+2. Renderer compilation and isolated execution.
+   Compiled the complete shipping ProgressionItemVisuals.cpp and mesh include
+   under GCC and Clang, with both Debug and Release display macros.
+   Each configuration exercised 64 combinations across the two draw callbacks,
+   base/alternate material availability, and alternate-assets enablement.
+   Checked null inputs, static vertex batches <=30 vertices, triangle indices,
+   nondegenerate triangle areas, bounded geometry, opaque material setup,
+   texture resource tokens, material fallback, and balanced matrix/child state.
+   Frame-interpolation definitions were compiled separately as C; successful
+   linking verifies that the tested arrangement requests C-linkage symbols.
+   Graphics and engine functions were mocked. No actual GPU output was tested.
+
+3. APCpp helper and emitted-function tests.
+   Compiled the shipping Safety.inc plus the emitted message-queue and commit
+   functions under GCC and Clang with AddressSanitizer and UBSan.
+   Tested cancellation with 0, 1, 2, 3, 31, 256 and 4096 requests, null entries,
+   repeated cancellation, 16000 requests across 8 threads, 16000 producer/
+   consumer messages, empty commits, and offline callback re-entry.
+   All completed without reported sanitizer failures.
+   A small reproduction of the ORIGINAL erase-in-range-for pattern failed
+   with an invalid iterator under libstdc++ debug iterators, as expected.
+   This does not reproduce the user's entire running game or network session.
+
+4. Installer edit-pattern fixtures and asset validation.
+   Exercised the exact edit patterns on reviewed source fragments and local
+   sentinel modifications. Verified LF/CRLF handling, Unicode preservation,
+   repeated application without duplication, preservation of the existing
+   soul loop and build switches, both tracker IDs, and both normal/faded GUI
+   registrations. Verified all four packaged images are 32x32 RGBA PNGs;
+   the two icons have transparent backgrounds and both materials are opaque.
+   These were Python fixtures for the edit patterns, not execution of the
+   installer by Windows PowerShell.
+
+Not performed:
+    A complete Windows/MSVC build of SOH-EXTREME and all dependencies.
+    An actual game run, Direct3D/OpenGL visual test, or mod-compatibility test.
+    An end-to-end Archipelago reconnect/Universal Tracker session.
+
+The package addresses inspected defects; successful isolated tests are not a
+substitute for checking the rebuilt game on the user's machine.

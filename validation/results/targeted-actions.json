@@ -1,0 +1,1716 @@
+{
+  "scope": "Targeted production AP rules, positive alternatives, and whole-graph UT replay.\n\nNo physics, live UI, or game-process verification. Full-inventory tests retain\nhistorical events except when explicitly removing a contents/event dependency.\n",
+  "group": "actions",
+  "checks": [
+    {
+      "test": "version",
+      "passed": true,
+      "actual": "0.11.17",
+      "expected": "0.11.17"
+    },
+    {
+      "test": "all inventory locations in AP model",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "grass soul=False Grab=False sword=False age=child",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=False Grab=False sword=True age=child",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=False Grab=True sword=False age=child",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=False Grab=True sword=True age=child",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=True Grab=False sword=False age=child",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=True Grab=False sword=True age=child",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass soul=True Grab=True sword=False age=child",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass soul=True Grab=True sword=True age=child",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass soul=False Grab=False sword=False age=adult",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=False Grab=False sword=True age=adult",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=False Grab=True sword=False age=adult",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=False Grab=True sword=True age=adult",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=True Grab=False sword=False age=adult",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "grass soul=True Grab=False sword=True age=adult",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass soul=True Grab=True sword=False age=adult",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass soul=True Grab=True sword=True age=adult",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass valid alternative ['Grab / Power Bracelet'] KF Child Grass Maze 1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass valid alternative ['Grab / Power Bracelet'] KF Child Grass Maze 2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass valid alternative ['Kokiri Sword', 'Master Sword', \"Biggoron's Sword\", \"Giant's Knife\", 'Boomerang', 'Megaton Hammer', 'Progressive Bomb Bag', 'Bombchu Bag'] KF Child Grass Maze 1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "grass valid alternative ['Kokiri Sword', 'Master Sword', \"Biggoron's Sword\", \"Giant's Knife\", 'Boomerang', 'Megaton Hammer', 'Progressive Bomb Bag', 'Bombchu Bag'] KF Child Grass Maze 2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "no native Grass LOCATION still requires cutting only",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "nonexistent native pot IDs retired",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "renamed beehive remains existing ID 787",
+      "passed": true,
+      "actual": "ZR Storms Grotto Beehive",
+      "expected": "ZR Storms Grotto Beehive"
+    },
+    {
+      "test": "corrected check positive LLR Talons Chickens",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LLR Talons Chickens missing Cucco Soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable LLR Talons Chickens",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LLR Talons Chickens missing Grab / Power Bracelet",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable LLR Talons Chickens",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LLR Talons Chickens missing NPC Soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable LLR Talons Chickens",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LLR Talons Chickens missing Speak Hylian",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable LLR Talons Chickens",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "corrected check positive LW Deku Theater Mask of Truth",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW Deku Theater Mask of Truth missing Speak Deku",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable LW Deku Theater Mask of Truth",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW Deku Theater Mask of Truth missing NPC Soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable LW Deku Theater Mask of Truth",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "corrected check positive EXTREME Ganons Ganons Castle Under Pillar Fire Silver",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "EXTREME Ganons Ganons Castle Under Pillar Fire Silver missing Grab / Power Bracelet",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable EXTREME Ganons Ganons Castle Under Pillar Fire Silver",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "EXTREME Ganons Ganons Castle Under Pillar Fire Silver missing Strength Upgrade",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable EXTREME Ganons Ganons Castle Under Pillar Fire Silver",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "corrected check positive EXTREME Gtg Upper Lava Silver",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "EXTREME Gtg Upper Lava Silver missing Progressive Hookshot",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable EXTREME Gtg Upper Lava Silver",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "corrected check positive EXTREME Zf Underground Boulder",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "EXTREME Zf Underground Boulder missing Grab / Power Bracelet",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable EXTREME Zf Underground Boulder",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "EXTREME Zf Underground Boulder missing Strength Upgrade",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable EXTREME Zf Underground Boulder",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "corrected check positive EXTREME Market Treasure Chest Game Shopkeeper",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "EXTREME Market Treasure Chest Game Shopkeeper missing Progressive Wallet",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "independent original remains reachable EXTREME Market Treasure Chest Game Shopkeeper",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "EXTREME Kak Beggar Blue Fire requires contents",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mk Beggar Blue Fire requires contents",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Beggar Bugs requires contents",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mk Beggar Bugs requires contents",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Beggar Fish requires contents",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mk Beggar Fish requires contents",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1610 scale tier 0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1611 scale tier 0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1612 scale tier 0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1613 scale tier 0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1614 scale tier 0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1615 scale tier 0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1616 scale tier 0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1617 scale tier 0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1610 scale tier 1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1611 scale tier 1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1612 scale tier 1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1613 scale tier 1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1614 scale tier 1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1615 scale tier 1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1616 scale tier 1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1617 scale tier 1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1610 scale tier 2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1611 scale tier 2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1612 scale tier 2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1613 scale tier 2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1614 scale tier 2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1615 scale tier 2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1616 scale tier 2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1617 scale tier 2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LW underwater pickup 1610 scale tier 3",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW underwater pickup 1611 scale tier 3",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW underwater pickup 1612 scale tier 3",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW underwater pickup 1613 scale tier 3",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW underwater pickup 1614 scale tier 3",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW underwater pickup 1615 scale tier 3",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW underwater pickup 1616 scale tier 3",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LW underwater pickup 1617 scale tier 3",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "five GTG water checks exist",
+      "passed": true,
+      "actual": 5,
+      "expected": 5
+    },
+    {
+      "test": "EXTREME Gtg Above Target Water Silver missing Progressive Scale",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Left Water Silver missing Progressive Scale",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Middle Water Silver missing Progressive Scale",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Right Water Silver missing Progressive Scale",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Under Target Water Silver missing Progressive Scale",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Above Target Water Silver missing Progressive Ocarina",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Left Water Silver missing Progressive Ocarina",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Middle Water Silver missing Progressive Ocarina",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Right Water Silver missing Progressive Ocarina",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Under Target Water Silver missing Progressive Ocarina",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Above Target Water Silver missing Song Note 25",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Left Water Silver missing Song Note 25",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Middle Water Silver missing Song Note 25",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Right Water Silver missing Song Note 25",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gtg Under Target Water Silver missing Song Note 25",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Colossus Wonder Oasis Child Tree wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmc Gossip Rock 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmc Gossip Rock 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmc Rock By Fire Temple 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmc Rock By Fire Temple 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmc Rock By Fire Temple 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmc Rock By Fire Temple 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmc Rock By Fire Temple 5 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmc Wonder Beneath Bridge Platform wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Above Dodongo Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Adult Center Exit Arrow Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 10 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 11 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 5 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 6 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 7 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 8 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Bronze Boulder 9 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Child Boulder wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Child Center Exit Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Dmt Summit Rock wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gc Child Rolling Goron Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gf Gate Exit Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gf Gtg Entrance Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gf Hba Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Boulder 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Boulder 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Boulder Across Bridge wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Bronze Boulder 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Bronze Boulder 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Bronze Boulder Across Bridge 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Bronze Boulder Across Bridge 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Bronze Boulder Across Bridge 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Bronze Boulder Across Bridge 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Bronze Boulder Across Bridge 5 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Bronze Boulder Across Bridge 6 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Rock Across Bridge 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Rock Across Bridge 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Rock Across Bridge 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Rock Across Bridge 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Wonder Lower Waterfall wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gv Wonder Upper Waterfall wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Gy Near Hut Grave Butterfly Fairy wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Bronze Boulder 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Bronze Boulder 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Bronze Boulder 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Bronze Boulder 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 10 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 11 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 5 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 6 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 7 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 8 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Northern Bush 9 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 10 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 11 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 12 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 5 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 6 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 7 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 8 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Child Southern Bush 9 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Wonder Bridge 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Wonder Bridge 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Hf Wonder Bridge 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Ice Cavern Airborne Blade Silver wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Beggar Blue Fire wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Beggar Bugs wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Beggar Fish wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Guard Gate Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Shooting Gallery Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Silver Boulder wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Watchtower Butterfly Fairy wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Well Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kak Wonder Under Construction wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf After Crawlspace Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Boulder Maze Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Crawl Rectangle Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf First Training Center Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Inner Training Center Arrow Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Lost Woods Arrow Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Rock Behind Sarias House wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Rock By Know It Alls House wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Rock By Midos House wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Rock By Sarias House wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Second Training Center Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Training Center Entrance Arrow Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Wonder Crawl Grass 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Wonder Crawl Grass 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Wonder Platforms 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Wonder Platforms 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Wonder Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Wonder Training 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Wonder Training 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Kf Wonder Training 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Lh Fishing Island Water Switch Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Lh Scarecrow Butterfly Fairy wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Lh Water Switch Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Llr Wonder Big Fence wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Llr Wonder Small Fence wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Lw Meadow Butterfly Fairy wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Lw Wonder Back Skull Kids Grass 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Lw Wonder Back Skull Kids Grass 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Lw Wonder Front Skull Kids Grass wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mkt Wonder Day 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mkt Wonder Day 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mkt Wonder Day 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mkt Wonder Day 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mkt Wonder Day 5 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mkt Wonder Night 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mkt Wonder Night 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mk Beggar Blue Fire wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mk Beggar Bugs wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mk Beggar Fish wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Mk Shooting Gallery Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zd King Zora Red Ice wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zd Zora Shop Red Ice wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Bush 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Bush 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Bush 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Bush 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Bush 5 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Bush 6 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Jabu Jabu Platform Rectangle Sign wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Log Butterfly Fairy wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zf Wonder Rock wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Boulder 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Boulder 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Boulder 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Boulder 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Near Rock Circle Butterfly Fairy wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Waterfall Butterfly Fairy wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder After Ladder 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder After Ladder 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder After Ladder 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Before Ladder 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Before Ladder 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Before Ladder 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Before Ladder 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Before Ladder 5 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Before Ladder 6 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Frog Bridge 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Frog Bridge 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Frog Bridge 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Lower Land Bridge 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Lower Land Bridge 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Lower Land Bridge 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Lower Land Bridge 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Lower River 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Lower River 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Lower River 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Lower River 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Near Cucco 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Near Cucco 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Near Cucco 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Near Domain 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Near Domain 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Near Domain 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Near Domain 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Pillars 1 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Pillars 2 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Pillars 3 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "EXTREME Zr Wonder Pillars 4 wrong age cannot collect",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    }
+  ],
+  "total": 284,
+  "failures": 0,
+  "coverage": {
+    "native_grass_location_definitions": 345,
+    "fork_age_gates": 175
+  }
+}

@@ -1,0 +1,17 @@
+SOH-EXTREME 0.7.90 compile correction
+
+Fixes the MSVC errors reported after 0.7.89:
+- Market Ruins enemy tracker entries now use the real RR_THE_MARKET enum instead of nonexistent RR_MARKET.
+- Enemy tracker helpers receive GetLogic().get() where a Rando::Logic* is required.
+- Removed the capturing lambda passed to Region::AnyAgeTime (ConditionFn is bool (*)()).
+  The tracker now mirrors Region::AnyAgeTime's age-state handling directly for per-entry combat checks.
+- Enemy finder iteration remains indexed with the fixed 563-entry bound, so C3316 cannot recur.
+
+Validation performed before packaging:
+- 563 generated enemy rows.
+- Every generated RR_* token exists in RandomizerRegion.h.
+- Every generated RCAREA_* token exists in RandomizerMiscEnums.h.
+- Generated enemy table passes a C++20 syntax compile harness.
+- Corrected shared_ptr/raw-pointer reachability code passes a C++20 syntax compile harness.
+- APWorld Python compileall passes.
+- LogicAudit.py passes: unique IDs/names and required Souls for all finite enemy placements.

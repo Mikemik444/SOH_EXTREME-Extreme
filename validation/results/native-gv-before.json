@@ -1,0 +1,33 @@
+{
+  "passed": false,
+  "compile_command": [
+    "/usr/local/swift/usr/bin/clang++",
+    "-std=c++20",
+    "-fms-extensions",
+    "-O1",
+    "-I",
+    "/mnt/data/gv_fix/results/native-gv-before-clangpp/services",
+    "-I",
+    "/mnt/data/gv_fix/baseline",
+    "-I",
+    "/mnt/data/gv_fix/baseline/include",
+    "-I",
+    "/mnt/data/gv_fix/baseline/src",
+    "-I",
+    "/mnt/data/gv_fix/baseline/soh",
+    "-I",
+    "/mnt/data/gv_fix/baseline/assets",
+    "-I",
+    "/mnt/data/gv_fix/baseline/libultraship/include",
+    "/mnt/data/gv_fix/results/native-gv-before-clangpp/gv.cpp",
+    "-o",
+    "/mnt/data/gv_fix/results/native-gv-before-clangpp/gv"
+  ],
+  "compile_exit": 0,
+  "compile_stdout": "",
+  "compile_stderr": "",
+  "run_exit": 1,
+  "stdout": "FAIL soulmode=0 shuffled=2 adult=1 items=0 hearts=1 otherRoutes=1 actual=1 expected=0\nFAIL soulmode=0 shuffled=2 adult=1 items=0 hearts=2 otherRoutes=1 actual=1 expected=0\nFAIL soulmode=0 shuffled=2 adult=1 items=1 hearts=1 otherRoutes=1 actual=1 expected=0\nFAIL soulmode=0 shuffled=2 adult=1 items=1 hearts=2 otherRoutes=1 actual=1 expected=0\nFAIL soulmode=0 shuffled=2 adult=1 items=2 hearts=1 otherRoutes=1 actual=1 expected=0\nFAIL soulmode=0 shuffled=2 adult=1 items=2 hearts=2 otherRoutes=1 actual=1 expected=0\nFAIL soulmode=0 shuffled=2 adult=1 items=3 hearts=1 otherRoutes=1 actual=1 expected=0\nFAIL soulmode=0 shuffled=2 adult=1 items=3 hearts=2 otherRoutes=1 actual=1 expected=0\ncases=3076 failures=464\n",
+  "stderr": "",
+  "scope": "Whole GV initializer and production HasAnimalSoul/OptionValue with actual enum and save headers; controlled item/engine services and local graph traversal; not game physics."
+}

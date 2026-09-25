@@ -1,0 +1,96 @@
+{
+  "world_version": "0.11.15",
+  "pond_checks": 32,
+  "cases": {
+    "NPC Soul": {
+      "fishing_hole_reachable": true,
+      "incorrectly_available_pond_checks": [
+        "LH Child Pond Fish 1",
+        "LH Child Pond Fish 2",
+        "LH Child Pond Fish 3",
+        "LH Child Pond Fish 4",
+        "LH Child Pond Fish 5",
+        "LH Child Pond Fish 6",
+        "LH Child Pond Fish 7",
+        "LH Child Pond Fish 8",
+        "LH Child Pond Fish 9",
+        "LH Child Pond Fish 10",
+        "LH Child Pond Fish 11",
+        "LH Child Pond Fish 12",
+        "LH Child Pond Fish 13",
+        "LH Child Pond Fish 14",
+        "LH Child Pond Fish 15",
+        "LH Adult Pond Fish 1",
+        "LH Adult Pond Fish 2",
+        "LH Adult Pond Fish 3",
+        "LH Adult Pond Fish 4",
+        "LH Adult Pond Fish 5",
+        "LH Adult Pond Fish 6",
+        "LH Adult Pond Fish 7",
+        "LH Adult Pond Fish 8",
+        "LH Adult Pond Fish 9",
+        "LH Adult Pond Fish 10",
+        "LH Adult Pond Fish 11",
+        "LH Adult Pond Fish 12",
+        "LH Adult Pond Fish 13",
+        "LH Adult Pond Fish 14",
+        "LH Adult Pond Fish 15"
+      ]
+    },
+    "Speak Hylian": {
+      "fishing_hole_reachable": true,
+      "incorrectly_available_pond_checks": [
+        "LH Child Pond Fish 1",
+        "LH Child Pond Fish 2",
+        "LH Child Pond Fish 3",
+        "LH Child Pond Fish 4",
+        "LH Child Pond Fish 5",
+        "LH Child Pond Fish 6",
+        "LH Child Pond Fish 7",
+        "LH Child Pond Fish 8",
+        "LH Child Pond Fish 9",
+        "LH Child Pond Fish 10",
+        "LH Child Pond Fish 11",
+        "LH Child Pond Fish 12",
+        "LH Child Pond Fish 13",
+        "LH Child Pond Fish 14",
+        "LH Child Pond Fish 15",
+        "LH Adult Pond Fish 1",
+        "LH Adult Pond Fish 2",
+        "LH Adult Pond Fish 3",
+        "LH Adult Pond Fish 4",
+        "LH Adult Pond Fish 5",
+        "LH Adult Pond Fish 6",
+        "LH Adult Pond Fish 7",
+        "LH Adult Pond Fish 8",
+        "LH Adult Pond Fish 9",
+        "LH Adult Pond Fish 10",
+        "LH Adult Pond Fish 11",
+        "LH Adult Pond Fish 12",
+        "LH Adult Pond Fish 13",
+        "LH Adult Pond Fish 14",
+        "LH Adult Pond Fish 15"
+      ]
+    },
+    "Fish Soul": {
+      "fishing_hole_reachable": true,
+      "incorrectly_available_pond_checks": []
+    }
+  },
+  "bushes": {
+    "field_reachable": true,
+    "checks": {
+      "EXTREME Hf Bush Near Lake 1": false,
+      "EXTREME Hf Bush Near Lake 10": false,
+      "EXTREME Hf Bush Near Lake 11": false,
+      "EXTREME Hf Bush Near Lake 2": false,
+      "EXTREME Hf Bush Near Lake 3": false,
+      "EXTREME Hf Bush Near Lake 4": false,
+      "EXTREME Hf Bush Near Lake 5": false,
+      "EXTREME Hf Bush Near Lake 6": false,
+      "EXTREME Hf Bush Near Lake 7": false,
+      "EXTREME Hf Bush Near Lake 8": false,
+      "EXTREME Hf Bush Near Lake 9": false
+    }
+  }
+}

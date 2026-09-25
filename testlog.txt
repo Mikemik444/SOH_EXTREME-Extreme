@@ -1,0 +1,1211 @@
+============================================================
+SOH-EXTREME 0.7.55 - ENEMY DROPS + PROGRESSION LOGIC FIX
+============================================================
+
+[0/6] Installing/verifying official Archipelago item model assets...
+SOH-EXTREME 0.7.37 - installing official Archipelago model
+Correct packer root: E:\test\bb\assets\custom\objects\object_archipelago_item
+
+All 19 official model resources are valid.
+GenerateSohOtr must now show objects/object_archipelago_item/gArchipelagoItemDL being added.
+
+[1/6] Rebuilding soh.o2r from top-level assets\custom...
+MSBuild version 17.14.18+a338add32 for .NET Framework
+
+  Checking File Globs
+  BinaryTools.vcxproj -> E:\test\bb\build-vs\Torch\lib\binarytools\Release\BinaryTools.lib
+  N64Graphics.vcxproj -> E:\test\bb\build-vs\Torch\lib\n64graphics\Release\N64Graphics.lib
+  tinyxml2.vcxproj -> E:\test\bb\build-vs\_deps\tinyxml2-build\Release\tinyxml2.lib
+  zlibstatic.vcxproj -> E:\test\bb\build-vs\_deps\zlib-build\Release\zlibstatic.lib
+  yaml-cpp.vcxproj -> E:\test\bb\build-vs\_deps\yaml-cpp-build\Release\yaml-cpp.lib
+  torch.vcxproj -> E:\test\bb\build-vs\Torch\Release\torch.lib
+  soh-o2r-packer.vcxproj -> E:\test\bb\build-vs\Release\soh-o2r-packer.exe
+  Generating soh.o2r...
+  [2026-09-17 05:31:01.274] [critical] ------------------------------------------------
+  [2026-09-17 05:31:01.275] [critical] Starting Torch...
+  [2026-09-17 05:31:01.276] [critical] Scanning E:/test/bb/build-vs/soh/soh.o2r.stage
+  [2026-09-17 05:31:05.168] [info] Loaded ZIP (O2R) archive: E:/test/bb/build-vs/soh/soh.o2r
+  [2026-09-17 05:31:05.169] [critical] > Added objects/object_bosskey/gBossKeyCustomDL_vtx_0
+  [2026-09-17 05:31:05.169] [critical] > Added textures/buttons/ZBtn.png
+  [2026-09-17 05:31:05.170] [critical] > Added accessibility/texts/kaleidoscope_ger.json
+  [2026-09-17 05:31:05.170] [critical] > Added objects/gameplay_field_keep/flower_heart_tex.rgba16
+  [2026-09-17 05:31:05.170] [critical] > Added objects/gameplay_dangeon_keep/PotBaseNoise_8
+  [2026-09-17 05:31:05.170] [critical] > Added objects/object_box/gChestBodySmallKeyDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.170] [critical] > Added objects/object_kibako2/gLargeRandoCrateDL_vtx_cull
+  [2026-09-17 05:31:05.170] [critical] > Added accessibility/texts/filechoose_eng.json
+  [2026-09-17 05:31:05.170] [critical] > Added accessibility/texts/filechoose_fra.json
+  [2026-09-17 05:31:05.170] [critical] > Added objects/object_stickbag/mat_gGiStickBagDL_UpgradeColor_layerOpaque
+  [2026-09-17 05:31:05.170] [critical] > Added objects/object_box/gChestBodyTokenDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.171] [critical] > Added objects/gameplay_field_keep/gFieldBushHeartDL_vtx_2
+  [2026-09-17 05:31:05.171] [critical] > Added objects/object_tsubo/mat_gPotSmallKeyDL_f3dlite_potbase_Smallkey
+  [2026-09-17 05:31:05.171] [critical] > Added objects/object_box/mat_gChestBodySmallKeyDL_SmallkeySides_layerOpaque
+  [2026-09-17 05:31:05.171] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushBossKeyDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.171] [critical] > Added accessibility/texts/filechoose_ger.json
+  [2026-09-17 05:31:05.171] [critical] > Added objects/object_box/gChestBodyMinorDL
+  [2026-09-17 05:31:05.171] [critical] > Added objects/gameplay_field_keep/gFieldBushHeartDL_vtx_cull
+  [2026-09-17 05:31:05.171] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMaskDL_f3dlite_flower_mask
+  [2026-09-17 05:31:05.171] [critical] > Added accessibility/texts/kaleidoscope_eng.json
+  [2026-09-17 05:31:05.171] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_vtx_cull
+  [2026-09-17 05:31:05.172] [critical] > Added accessibility/texts/kaleidoscope_fra.json
+  [2026-09-17 05:31:05.172] [critical] > Added objects/object_tsubo/gPotBossKeyDL_vtx_2
+  [2026-09-17 05:31:05.172] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassHeartDL_f3dlite_Grass
+  [2026-09-17 05:31:05.172] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_vtx_2
+  [2026-09-17 05:31:05.172] [critical] > Added accessibility/texts/misc_eng.json
+  [2026-09-17 05:31:05.172] [critical] > Added objects/object_box/gChestLidMinorDL
+  [2026-09-17 05:31:05.172] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_vtx_cull
+  [2026-09-17 05:31:05.172] [critical] > Added objects/gameplay_field_keep/flower_bosskey_tex.rgba16
+  [2026-09-17 05:31:05.172] [critical] > Added objects/object_tsubo/PotLip_heart
+  [2026-09-17 05:31:05.172] [critical] > Added accessibility/texts/misc_fra.json
+  [2026-09-17 05:31:05.172] [critical] > Added accessibility/texts/misc_ger.json
+  [2026-09-17 05:31:05.172] [critical] > Added accessibility/texts/scenes_eng.json
+  [2026-09-17 05:31:05.172] [critical] > Added objects/object_tsubo/mat_gPotTokenDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.172] [critical] > Added objects/object_kibako/gSmallSmallKeyCrateDL
+  [2026-09-17 05:31:05.172] [critical] > Added objects/gameplay_field_keep/gFieldBushJunkDL_tri_0
+  [2026-09-17 05:31:05.173] [critical] > Added textures/parameter_static/gTriforcePiece
+  [2026-09-17 05:31:05.173] [critical] > Added objects/object_tsubo/PotBase_fairy
+  [2026-09-17 05:31:05.173] [critical] > Added objects/gameplay_field_keep/gFieldBushHeartDL_vtx_1
+  [2026-09-17 05:31:05.174] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.174] [critical] > Added accessibility/texts/scenes_fra.json
+  [2026-09-17 05:31:05.174] [critical] > Added objects/object_key/gSmallKeyIconSpiritTempleDL_vtx_0
+  [2026-09-17 05:31:05.174] [critical] > Added accessibility/texts/scenes_ger.json
+  [2026-09-17 05:31:05.174] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL
+  [2026-09-17 05:31:05.174] [critical] > Added objects/object_kibako2/gLargeJunkCrateDL_tri_0
+  [2026-09-17 05:31:05.174] [critical] > Added objects/object_tsubo/gPotStandardDL_tri_0
+  [2026-09-17 05:31:05.175] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL_mesh_layer_Transparent_tri_0
+  [2026-09-17 05:31:05.175] [critical] > Added objects/object_tsubo/gPotBossKeyDL
+  [2026-09-17 05:31:05.175] [critical] > Added objects/gameplay_dangeon_keep/PotFaceYellow_16
+  [2026-09-17 05:31:05.178] [critical] > Added fonts/Fipps-Regular.otf
+  [2026-09-17 05:31:05.178] [critical] > Added objects/object_tsubo/gPotMaskDL
+  [2026-09-17 05:31:05.178] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL
+  [2026-09-17 05:31:05.179] [critical] > Added objects/gameplay_field_keep/gFieldBushBossKeyDL_vtx_1
+  [2026-09-17 05:31:05.179] [critical] > Added objects/gameplay_field_keep/BushTex.rgba16
+  [2026-09-17 05:31:05.184] [critical] > Added fonts/Inconsolata-Regular.ttf
+  [2026-09-17 05:31:05.202] [critical] > Added fonts/Montserrat-Regular.ttf
+  [2026-09-17 05:31:05.203] [critical] > Added objects/object_tsubo/mat_gPotHeartDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.203] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_vtx_3
+  [2026-09-17 05:31:05.203] [critical] > Added objects/gameplay_field_keep/gFieldBushFairyDL
+  [2026-09-17 05:31:05.203] [critical] > Added objects/object_box/mat_gChestLidHeartDL_HeartSides_layerOpaque
+  [2026-09-17 05:31:05.538] [critical] > Added fonts/NotoSansJP-Regular.ttf
+  [2026-09-17 05:31:05.539] [critical] > Added objects/object_jabbernut/gSoHShadowTex
+  [2026-09-17 05:31:05.539] [critical] > Added objects/object_tsubo/mat_gPotSmallKeyDL_f3dlite_potrim_Smallkey
+  [2026-09-17 05:31:05.540] [critical] > Added objects/object_keyring/gKeyringIconBottomoftheWellDL_vtx_0
+  [2026-09-17 05:31:05.540] [critical] > Added objects/object_box/gChestLidMajorDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.540] [critical] > Added objects/gameplay_field_keep/gFieldBushHeartDL_tri_0
+  [2026-09-17 05:31:05.540] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassTokenDL_f3dlite_material
+  [2026-09-17 05:31:05.540] [critical] > Added objects/object_tsubo/gPotMaskDL_tri_3
+  [2026-09-17 05:31:05.540] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_tri_3
+  [2026-09-17 05:31:05.547] [critical] > Added fonts/PressStart2P-Regular.ttf
+  [2026-09-17 05:31:05.547] [critical] > Added objects/object_tsubo/gPotHeartDL_vtx_2
+  [2026-09-17 05:31:05.547] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_vtx_2
+  [2026-09-17 05:31:05.547] [critical] > Added objects/gameplay_field_keep/gFieldBushBossKeyDL_vtx_0
+  [2026-09-17 05:31:05.547] [critical] > Added helpers/cosmetics/gEndGrayscaleAndEndDlistDL
+  [2026-09-17 05:31:05.547] [critical] > Added objects/object_keyring/gKeyringKeyDL
+  [2026-09-17 05:31:05.547] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassSmallKeyDL_f3dlite_flower_silver
+  [2026-09-17 05:31:05.554] [critical] > Added lang/en_US.json
+  [2026-09-17 05:31:05.554] [critical] > Added objects/gameplay_dangeon_keep/PotFaceNoise_16
+  [2026-09-17 05:31:05.554] [critical] > Added objects/object_kibako2/smallkey_crate_top
+  [2026-09-17 05:31:05.555] [critical] > Added objects/gameplay_dangeon_keep/PotFace_32
+  [2026-09-17 05:31:05.555] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_tri_4
+  [2026-09-17 05:31:05.555] [critical] > Added objects/gameplay_field_keep/LeafTex.rgba16
+  [2026-09-17 05:31:05.555] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_vtx_2
+  [2026-09-17 05:31:05.555] [critical] > Added objects/object_box/gChestLidMajorDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.555] [critical] > Added objects/gameplay_field_keep/flower_bronze_tex.rgba16
+  [2026-09-17 05:31:05.555] [critical] > Added objects/gameplay_field_keep/flower_fairy_tex.rgba16
+  [2026-09-17 05:31:05.555] [critical] > Added objects/object_tsubo/mat_gPotTokenDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.555] [critical] > Added objects/gameplay_keep/gChestLockTex
+  [2026-09-17 05:31:05.555] [critical] > Added objects/gameplay_field_keep/gFieldBushJunkDL
+  [2026-09-17 05:31:05.556] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL_vtx_0
+  [2026-09-17 05:31:05.556] [critical] > Added objects/object_box/mat_gChestBodyJunkDL_JunkSides_layerOpaque
+  [2026-09-17 05:31:05.556] [critical] > Added objects/gameplay_field_keep/flower_gold_tex.rgba16
+  [2026-09-17 05:31:05.556] [critical] > Added objects/object_box/gChestBodyJunkDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.557] [critical] > Added objects/gameplay_field_keep/gFieldBushFairyDL_tri_2
+  [2026-09-17 05:31:05.557] [critical] > Added objects/gameplay_field_keep/flower_mask_tex.rgba16
+  [2026-09-17 05:31:05.557] [critical] > Added objects/object_bombchubag/gBombchuBagBodyDL
+  [2026-09-17 05:31:05.557] [critical] > Added objects/gameplay_field_keep/flower_random_tex.rgba16
+  [2026-09-17 05:31:05.557] [critical] > Added objects/gameplay_field_keep/flower_silver_tex.rgba16
+  [2026-09-17 05:31:05.557] [critical] > Added objects/gameplay_field_keep/flower_token_tex.rgba16
+  [2026-09-17 05:31:05.557] [critical] > Added objects/object_gi_crawl/mat_gGiCrawlDL_kneepad_gem_layerOpaque
+  [2026-09-17 05:31:05.557] [critical] > Added objects/object_archipelago_item/mat_gArchipelagoItemDL_red
+  [2026-09-17 05:31:05.560] [critical] > Added objects/object_bosskey/gBossKeyIconGanonsCastleDL_vtx_0
+  [2026-09-17 05:31:05.560] [critical] > Added objects/gameplay_field_keep/gFieldBushBossKeyDL
+  [2026-09-17 05:31:05.560] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassRandomDL_f3dlite_flower_random
+  [2026-09-17 05:31:05.560] [critical] > Added objects/gameplay_field_keep/gFieldBushMajorDL
+  [2026-09-17 05:31:05.561] [critical] > Added objects/gameplay_field_keep/gFieldBushMinorDL_vtx_2
+  [2026-09-17 05:31:05.561] [critical] > Added objects/gameplay_field_keep/gFieldBushBossKeyDL_tri_0
+  [2026-09-17 05:31:05.561] [critical] > Added textures/buttons/DPadRightOutline.png
+  [2026-09-17 05:31:05.561] [critical] > Added objects/gameplay_field_keep/gFieldBushBossKeyDL_tri_1
+  [2026-09-17 05:31:05.562] [critical] > Added objects/gameplay_field_keep/gFieldBushBossKeyDL_tri_2
+  [2026-09-17 05:31:05.562] [critical] > Added objects/gameplay_field_keep/gFieldBushBossKeyDL_vtx_2
+  [2026-09-17 05:31:05.562] [critical] > Added objects/object_triforce_completed/gTriforcePieceCompletedDL_vtx_0
+  [2026-09-17 05:31:05.563] [critical] > Added objects/object_boss_soul/BarkOrHorns
+  [2026-09-17 05:31:05.563] [critical] > Added objects/gameplay_field_keep/gFieldBushBossKeyDL_vtx_cull
+  [2026-09-17 05:31:05.563] [critical] > Added objects/object_kibako2/gLargeHeartCrateDL_tri_1
+  [2026-09-17 05:31:05.563] [critical] > Added objects/gameplay_field_keep/gFieldBushHeartDL
+  [2026-09-17 05:31:05.563] [critical] > Added objects/gameplay_field_keep/gFieldBushFairyDL_tri_0
+  [2026-09-17 05:31:05.563] [critical] > Added objects/object_bombchubag/gBombchuBagMaskDL
+  [2026-09-17 05:31:05.563] [critical] > Added objects/gameplay_field_keep/gFieldBushFairyDL_tri_1
+  [2026-09-17 05:31:05.564] [critical] > Added objects/object_key/gSmallKeyIconTreasureChestGameDL
+  [2026-09-17 05:31:05.564] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_tri_4
+  [2026-09-17 05:31:05.564] [critical] > Added objects/gameplay_field_keep/gFieldBushFairyDL_vtx_0
+  [2026-09-17 05:31:05.564] [critical] > Added scenes/shared/syotes_scene/syotes_room_0
+  [2026-09-17 05:31:05.564] [critical] > Added objects/gameplay_keep/gPlayerAnim_link_rocs_feather_jump
+  [2026-09-17 05:31:05.564] [critical] > Added textures/buttons/AnalogStick.png
+  [2026-09-17 05:31:05.564] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_tri_5
+  [2026-09-17 05:31:05.565] [critical] > Added objects/gameplay_field_keep/gFieldBushFairyDL_vtx_1
+  [2026-09-17 05:31:05.565] [critical] > Added presets/Rando Seed Settings - Hell Mode.json
+  [2026-09-17 05:31:05.566] [critical] > Added objects/gameplay_field_keep/gFieldBushFairyDL_vtx_2
+  [2026-09-17 05:31:05.566] [critical] > Added objects/gameplay_field_keep/gFieldBushFairyDL_vtx_cull
+  [2026-09-17 05:31:05.566] [critical] > Added objects/object_gi_crawl/mat_gGiCrawlDL_kneepad_leather_layerOpaque
+  [2026-09-17 05:31:05.566] [critical] > Added objects/gameplay_field_keep/gFieldBushJunkDL_vtx_0
+  [2026-09-17 05:31:05.566] [critical] > Added objects/gameplay_field_keep/gFieldBushHeartDL_tri_1
+  [2026-09-17 05:31:05.566] [critical] > Added objects/object_tsubo/gPotRandomDL
+  [2026-09-17 05:31:05.566] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL
+  [2026-09-17 05:31:05.566] [critical] > Added objects/object_kibako/mat_gSmallHeartCrateDL_f3dlite_smallcrate_heart
+  [2026-09-17 05:31:05.566] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassSmallKeyDL_f3dlite_leaf
+  [2026-09-17 05:31:05.567] [critical] > Added objects/gameplay_field_keep/gFieldBushHeartDL_tri_2
+  [2026-09-17 05:31:05.567] [critical] > Added objects/gameplay_field_keep/gFieldBushHeartDL_vtx_0
+  [2026-09-17 05:31:05.567] [critical] > Added objects/object_kibako2/mat_gLargeSmallKeyCrateDL_f3dlite_crate_side_smallkey
+  [2026-09-17 05:31:05.567] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushBossKeyDL_f3dlite_flower_bosskey
+  [2026-09-17 05:31:05.567] [critical] > Added objects/object_tsubo/mat_gPotMaskDL_f3dlite_potface_mask
+  [2026-09-17 05:31:05.567] [critical] > Added objects/gameplay_keep/flower_random_tex.rgba16
+  [2026-09-17 05:31:05.567] [critical] > Added objects/gameplay_field_keep/gFieldBushJunkDL_vtx_cull
+  [2026-09-17 05:31:05.567] [critical] > Added objects/gameplay_field_keep/gFieldBushMajorDL_tri_0
+  [2026-09-17 05:31:05.567] [critical] > Added objects/gameplay_field_keep/gFieldBushMajorDL_tri_1
+  [2026-09-17 05:31:05.568] [critical] > Added objects/gameplay_field_keep/gFieldBushMajorDL_tri_2
+  [2026-09-17 05:31:05.568] [critical] > Added objects/object_kibako/gSmallBossKeyCrateDL
+  [2026-09-17 05:31:05.568] [critical] > Added objects/object_kibako/gSmallMajorCrateDL_vtx_0
+  [2026-09-17 05:31:05.568] [critical] > Added objects/object_box/mat_gChestBodySmallKeyDL_SmallkeyFront_layerOpaque
+  [2026-09-17 05:31:05.568] [critical] > Added objects/gameplay_field_keep/gFieldBushMajorDL_vtx_0
+  [2026-09-17 05:31:05.568] [critical] > Added objects/object_tsubo/mat_gPotSmallKeyDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.568] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassRandomDL_f3dlite_leaf
+  [2026-09-17 05:31:05.568] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_vtx_cull
+  [2026-09-17 05:31:05.568] [critical] > Added objects/object_kibako2/mat_gLargeHeartCrateDL_f3dlite_crate_top_heart
+  [2026-09-17 05:31:05.569] [critical] > Added objects/gameplay_field_keep/gFieldBushMajorDL_vtx_1
+  [2026-09-17 05:31:05.569] [critical] > Added objects/object_kibako/gSmallMinorCrateDL
+  [2026-09-17 05:31:05.569] [critical] > Added textures/title_static/gFileSelBossRushSettingsGERTex
+  [2026-09-17 05:31:05.570] [critical] > Added objects/gameplay_field_keep/gFieldBushMajorDL_vtx_2
+  [2026-09-17 05:31:05.570] [critical] > Added objects/gameplay_field_keep/gFieldBushMajorDL_vtx_cull
+  [2026-09-17 05:31:05.570] [critical] > Added objects/object_stickbag/gGiStickBagDL_vtx_1
+  [2026-09-17 05:31:05.570] [critical] > Added objects/gameplay_field_keep/gFieldBushMaskDL
+  [2026-09-17 05:31:05.570] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_vtx_cull
+  [2026-09-17 05:31:05.570] [critical] > Added objects/gameplay_field_keep/gFieldBushMaskDL_tri_0
+  [2026-09-17 05:31:05.570] [critical] > Added objects/gameplay_field_keep/gFieldBushMaskDL_tri_1
+  [2026-09-17 05:31:05.571] [critical] > Added objects/gameplay_field_keep/gFieldBushMaskDL_tri_2
+  [2026-09-17 05:31:05.571] [critical] > Added textures/buttons/DPadUp.png
+  [2026-09-17 05:31:05.571] [critical] > Added objects/gameplay_field_keep/gFieldBushMaskDL_vtx_0
+  [2026-09-17 05:31:05.571] [critical] > Added textures/item_name_static/gRocsFeatherItemNameFRATex
+  [2026-09-17 05:31:05.572] [critical] > Added objects/gameplay_field_keep/gFieldBushMaskDL_vtx_1
+  [2026-09-17 05:31:05.572] [critical] > Added objects/gameplay_field_keep/gFieldBushMaskDL_vtx_2
+  [2026-09-17 05:31:05.574] [critical] > Added objects/object_bosskey/gBossKeyIconGanonsCastleDL
+  [2026-09-17 05:31:05.574] [critical] > Added objects/object_jabbernut/gSoHShinySpotTex
+  [2026-09-17 05:31:05.574] [critical] > Added objects/object_box/mat_gChestBodyMaskDL_Front
+  [2026-09-17 05:31:05.574] [critical] > Added objects/gameplay_field_keep/gFieldBushMaskDL_vtx_cull
+  [2026-09-17 05:31:05.574] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_vtx_1
+  [2026-09-17 05:31:05.574] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_vtx_1
+  [2026-09-17 05:31:05.574] [critical] > Added objects/gameplay_field_keep/gFieldBushMinorDL
+  [2026-09-17 05:31:05.574] [critical] > Added objects/object_tsubo/gPotMajorDL_vtx_1
+  [2026-09-17 05:31:05.574] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_vtx_4
+  [2026-09-17 05:31:05.575] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_vtx_1
+  [2026-09-17 05:31:05.575] [critical] > Added objects/object_tsubo/gPotBossKeyDL_vtx_1
+  [2026-09-17 05:31:05.575] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_vtx_1
+  [2026-09-17 05:31:05.575] [critical] > Added objects/gameplay_field_keep/gFieldBushMinorDL_tri_0
+  [2026-09-17 05:31:05.575] [critical] > Added objects/object_kibako2/mat_gLargeSmallKeyCrateDL_f3dlite_crate_top_smallkey
+  [2026-09-17 05:31:05.575] [critical] > Added objects/object_tsubo/gPotBossKeyDL_vtx_0
+  [2026-09-17 05:31:05.575] [critical] > Added textures/title_static/gFileSelBossRushSettingsENGTex
+  [2026-09-17 05:31:05.575] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_vtx_0
+  [2026-09-17 05:31:05.576] [critical] > Added objects/gameplay_field_keep/gFieldBushMinorDL_tri_1
+  [2026-09-17 05:31:05.576] [critical] > Added objects/object_box/gBoxChestCornerJunkTex
+  [2026-09-17 05:31:05.576] [critical] > Added textures/item_name_static/gRocsFeatherItemNameENGTex
+  [2026-09-17 05:31:05.576] [critical] > Added objects/object_tsubo/gPotBossKeyDL_vtx_3
+  [2026-09-17 05:31:05.576] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_vtx_3
+  [2026-09-17 05:31:05.576] [critical] > Added objects/gameplay_field_keep/gFieldBushMinorDL_tri_2
+  [2026-09-17 05:31:05.576] [critical] > Added objects/gameplay_field_keep/gFieldBushMinorDL_vtx_0
+  [2026-09-17 05:31:05.576] [critical] > Added objects/object_kibako2/gLargeBossKeyCrateDL_tri_0
+  [2026-09-17 05:31:05.576] [critical] > Added objects/object_tsubo/mat_gPotRandomDL_f3dlite_potrim
+  [2026-09-17 05:31:05.577] [critical] > Added objects/gameplay_field_keep/gFieldBushMinorDL_vtx_1
+  [2026-09-17 05:31:05.577] [critical] > Added objects/object_kibako2/gLargeBossKeyCrateDL_tri_1
+  [2026-09-17 05:31:05.577] [critical] > Added objects/gameplay_field_keep/gFieldBushMinorDL_vtx_cull
+  [2026-09-17 05:31:05.577] [critical] > Added objects/object_housekey/gHouseKeyDL_vtx_0
+  [2026-09-17 05:31:05.577] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassJunkDL_f3dlite_Grass
+  [2026-09-17 05:31:05.577] [critical] > Added objects/object_tsubo/gPotFairyDL_tri_0
+  [2026-09-17 05:31:05.578] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_tri_0
+  [2026-09-17 05:31:05.578] [critical] > Added objects/gameplay_field_keep/gFieldBushRandomDL
+  [2026-09-17 05:31:05.578] [critical] > Added objects/gameplay_field_keep/gFieldBushRandomDL_tri_0
+  [2026-09-17 05:31:05.578] [critical] > Added objects/object_tsubo/gPotMajorDL
+  [2026-09-17 05:31:05.578] [critical] > Added objects/object_tsubo/mat_gPotBossKeyDL_f3dlite_potbase_Bosskey
+  [2026-09-17 05:31:05.578] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_vtx_cull
+  [2026-09-17 05:31:05.578] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL
+  [2026-09-17 05:31:05.578] [critical] > Added objects/object_tsubo/gPotMinorDL_vtx_2
+  [2026-09-17 05:31:05.578] [critical] > Added objects/object_tsubo/mat_gPotMinorDL_f3dlite_potbase_minor
+  [2026-09-17 05:31:05.578] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_vtx_2
+  [2026-09-17 05:31:05.578] [critical] > Added objects/object_bosskey/gBossKeyIconFireTempleDL
+  [2026-09-17 05:31:05.579] [critical] > Added objects/gameplay_field_keep/gFieldBushRandomDL_tri_1
+  [2026-09-17 05:31:05.579] [critical] > Added objects/object_tsubo/gPotMinorDL_vtx_3
+  [2026-09-17 05:31:05.579] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_vtx_3
+  [2026-09-17 05:31:05.579] [critical] > Added objects/gameplay_field_keep/gFieldBushRandomDL_tri_2
+  [2026-09-17 05:31:05.579] [critical] > Added objects/object_archipelago_item/mat_gArchipelagoItemDL_orange
+  [2026-09-17 05:31:05.579] [critical] > Added objects/object_tsubo/gPotMinorDL_vtx_0
+  [2026-09-17 05:31:05.579] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_vtx_0
+  [2026-09-17 05:31:05.579] [critical] > Added objects/gameplay_field_keep/gFieldBushRandomDL_vtx_0
+  [2026-09-17 05:31:05.579] [critical] > Added objects/object_box/gChestBodyMajorDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.580] [critical] > Added objects/gameplay_field_keep/gFieldBushRandomDL_vtx_1
+  [2026-09-17 05:31:05.580] [critical] > Added objects/object_box/gChestBodyMajorDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.581] [critical] > Added objects/gameplay_field_keep/gFieldBushRandomDL_vtx_2
+  [2026-09-17 05:31:05.581] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMaskDL_f3dlite_Grass
+  [2026-09-17 05:31:05.581] [critical] > Added objects/gameplay_field_keep/gFieldBushRandomDL_vtx_cull
+  [2026-09-17 05:31:05.581] [critical] > Added objects/gameplay_field_keep/gFieldBushSmallKeyDL
+  [2026-09-17 05:31:05.581] [critical] > Added objects/gameplay_field_keep/gFieldBushSmallKeyDL_tri_0
+  [2026-09-17 05:31:05.581] [critical] > Added objects/gameplay_field_keep/gFieldBushSmallKeyDL_tri_1
+  [2026-09-17 05:31:05.581] [critical] > Added objects/object_box/gChestLidJunkDL
+  [2026-09-17 05:31:05.582] [critical] > Added objects/object_box/gChestBodyHeartDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.582] [critical] > Added objects/gameplay_field_keep/gFieldBushSmallKeyDL_tri_2
+  [2026-09-17 05:31:05.582] [critical] > Added objects/object_tsubo/mat_gPotStandardDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.582] [critical] > Added objects/object_box/gChestBodyJunkDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.582] [critical] > Added objects/gameplay_field_keep/gFieldBushSmallKeyDL_vtx_0
+  [2026-09-17 05:31:05.582] [critical] > Added objects/object_box/gChestBodyJunkDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.583] [critical] > Added objects/gameplay_field_keep/gFieldBushSmallKeyDL_vtx_1
+  [2026-09-17 05:31:05.583] [critical] > Added objects/gameplay_field_keep/gFieldBushSmallKeyDL_vtx_2
+  [2026-09-17 05:31:05.583] [critical] > Added objects/object_box/gChestBodyTokenDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.584] [critical] > Added objects/object_tsubo/gPotTokenDL_vtx_2
+  [2026-09-17 05:31:05.584] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_vtx_2
+  [2026-09-17 05:31:05.584] [critical] > Added objects/gameplay_field_keep/gFieldBushSmallKeyDL_vtx_cull
+  [2026-09-17 05:31:05.584] [critical] > Added objects/object_tsubo/PotLip_standard
+  [2026-09-17 05:31:05.584] [critical] > Added objects/gameplay_field_keep/gFieldBushTokenDL
+  [2026-09-17 05:31:05.584] [critical] > Added objects/gameplay_field_keep/gFieldBushTokenDL_tri_0
+  [2026-09-17 05:31:05.584] [critical] > Added objects/gameplay_field_keep/gFieldBushTokenDL_tri_1
+  [2026-09-17 05:31:05.584] [critical] > Added objects/object_keyring/gKeyringIconFireTempleDL_vtx_0
+  [2026-09-17 05:31:05.584] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL
+  [2026-09-17 05:31:05.585] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassBossKeyDL_f3dlite_material
+  [2026-09-17 05:31:05.585] [critical] > Added objects/gameplay_field_keep/gFieldBushTokenDL_tri_2
+  [2026-09-17 05:31:05.585] [critical] > Added objects/gameplay_field_keep/gFieldBushTokenDL_vtx_0
+  [2026-09-17 05:31:05.586] [critical] > Added objects/gameplay_field_keep/gFieldBushTokenDL_vtx_1
+  [2026-09-17 05:31:05.586] [critical] > Added objects/object_gi_grab/mat_gGiGrabDL_power_bracelet_layerOpaque
+  [2026-09-17 05:31:05.586] [critical] > Added objects/gameplay_field_keep/gFieldBushTokenDL_vtx_2
+  [2026-09-17 05:31:05.587] [critical] > Added shaders/opengl/default.shader.glsl
+  [2026-09-17 05:31:05.587] [critical] > Added objects/gameplay_field_keep/gFieldBushTokenDL_vtx_cull
+  [2026-09-17 05:31:05.587] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushBossKeyDL_f3dlite_leaf
+  [2026-09-17 05:31:05.587] [critical] > Added objects/object_gi_crawl/mat_gGiCrawlDL_kneepad_decal_2_layerOpaque
+  [2026-09-17 05:31:05.587] [critical] > Added textures/nintendo_rogo_static/mat_gShipLogoDL_f3d_material_002
+  [2026-09-17 05:31:05.587] [critical] > Added objects/object_tsubo/PotFace_smallkey
+  [2026-09-17 05:31:05.587] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushFairyDL_f3dlite_flower_fairy
+  [2026-09-17 05:31:05.587] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushFairyDL_f3dlite_leaf
+  [2026-09-17 05:31:05.587] [critical] > Added objects/object_tsubo/gPotTokenDL_tri_0
+  [2026-09-17 05:31:05.587] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_tri_0
+  [2026-09-17 05:31:05.587] [critical] > Added objects/object_tsubo/gPotHeartDL_tri_3
+  [2026-09-17 05:31:05.587] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_tri_3
+  [2026-09-17 05:31:05.587] [critical] > Added objects/object_tsubo/PotBase_token
+  [2026-09-17 05:31:05.587] [critical] > Added objects/object_kibako2/gLargeSmallKeyCrateDL_tri_0
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushFairyDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushJunkDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushHeartDL_f3dlite_flower_heart
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushHeartDL_f3dlite_leaf
+  [2026-09-17 05:31:05.588] [critical] > Added objects/object_bosskey/gSoHHiliteCausticsTex
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushHeartDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMajorDL_f3dlite_flower_gold
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMajorDL_f3dlite_leaf
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassJunkDL_vtx_cull
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMajorDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.588] [critical] > Added objects/object_kibako/gSmallJunkCrateDL_vtx_0
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMaskDL_f3dlite_leaf
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassTokenDL_f3dlite_Grass
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMaskDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.588] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMinorDL_f3dlite_flower_bronze
+  [2026-09-17 05:31:05.588] [critical] > Added objects/object_ocarina_c_down_button/gOcarinaCDownButtonDL_vtx_1
+  [2026-09-17 05:31:05.588] [critical] > Added objects/object_gi_crawl/mat_gGiCrawlDL_kneepad_layerOpaque
+  [2026-09-17 05:31:05.589] [critical] > Added objects/object_tsubo/mat_gPotSmallKeyDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.589] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMinorDL_f3dlite_leaf
+  [2026-09-17 05:31:05.589] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushMinorDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.589] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushRandomDL_f3dlite_flower_random
+  [2026-09-17 05:31:05.589] [critical] > Added objects/object_box/gChestLidTokenDL
+  [2026-09-17 05:31:05.589] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushRandomDL_f3dlite_leaf
+  [2026-09-17 05:31:05.589] [critical] > Added objects/object_kibako/gSmallTokenCrateDL_vtx_0
+  [2026-09-17 05:31:05.589] [critical] > Added objects/object_tsubo/mat_gPotStandardDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.589] [critical] > Added objects/object_key/gSmallKeyIconForestTempleDL
+  [2026-09-17 05:31:05.589] [critical] > Added objects/object_key/gSmallKeyIconGerudoFortressDL_vtx_0
+  [2026-09-17 05:31:05.589] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushRandomDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.590] [critical] > Added objects/object_bosskey/gBossKeyIconShadowTempleDL
+  [2026-09-17 05:31:05.590] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushSmallKeyDL_f3dlite_flower_silver
+  [2026-09-17 05:31:05.590] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushSmallKeyDL_f3dlite_leaf
+  [2026-09-17 05:31:05.590] [critical] > Added objects/object_tsubo/PotBase_heart
+  [2026-09-17 05:31:05.590] [critical] > Added textures/parameter_static/gMoon
+  [2026-09-17 05:31:05.590] [critical] > Added objects/object_box/gChestLidHeartDL
+  [2026-09-17 05:31:05.591] [critical] > Added objects/object_key/gSmallKeyIconGerudoTrainingGroundDL
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushSmallKeyDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushTokenDL_f3dlite_flower_token
+  [2026-09-17 05:31:05.591] [critical] > Added objects/object_tsubo/gPotRandomDL_tri_1
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_tri_1
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushTokenDL_f3dlite_leaf
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassSmallKeyDL_f3dlite_Grass
+  [2026-09-17 05:31:05.591] [critical] > Added textures/buttons/CDown.png
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_field_keep/mat_gFieldBushTokenDL_f3dlite_shrubbery
+  [2026-09-17 05:31:05.591] [critical] > Added objects/object_tsubo/gPotTokenDL_tri_4
+  [2026-09-17 05:31:05.591] [critical] > Added objects/object_box/gChestBodyFairyDL_tri_0
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_field_keep/model.xml
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_keep/LeafTex.rgba16
+  [2026-09-17 05:31:05.591] [critical] > Added objects/object_box/gBoxChestLockMajorTex
+  [2026-09-17 05:31:05.591] [critical] > Added objects/gameplay_keep/StemTex.rgba16
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/flower_bosskey_tex.rgba16
+  [2026-09-17 05:31:05.592] [critical] > Added objects/object_kibako2/gLargeMinorCrateDL_tri_1
+  [2026-09-17 05:31:05.592] [critical] > Added objects/object_stickbag/gGiStickBagDL_tri_3
+  [2026-09-17 05:31:05.592] [critical] > Added textures/title_static/gFileSelMQButtonTex
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/flower_bronze_tex.rgba16
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassFairyDL_f3dlite_Grass
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/flower_fairy_tex.rgba16
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/flower_gold_tex.rgba16
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/flower_heart_tex.rgba16
+  [2026-09-17 05:31:05.592] [critical] > Added objects/object_gi_grab/gGiGrabDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/flower_mask_tex.rgba16
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassRandomDL_f3dlite_material
+  [2026-09-17 05:31:05.592] [critical] > Added objects/gameplay_keep/flower_silver_tex.rgba16
+  [2026-09-17 05:31:05.592] [critical] > Added presets/Enhancements - Curated Randomizer.json
+  [2026-09-17 05:31:05.592] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_tri_2
+  [2026-09-17 05:31:05.593] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_tri_2
+  [2026-09-17 05:31:05.593] [critical] > Added objects/gameplay_keep/flower_token_tex.rgba16
+  [2026-09-17 05:31:05.593] [critical] > Added objects/object_box/mat_gChestLidMaskDL_Sides
+  [2026-09-17 05:31:05.593] [critical] > Added objects/object_keyring/gKeyringIconForestTempleDL_vtx_0
+  [2026-09-17 05:31:05.593] [critical] > Added objects/gameplay_keep/gGiScaleMtx
+  [2026-09-17 05:31:05.593] [critical] > Added objects/gameplay_keep/gGrassBunchTex.rgba16
+  [2026-09-17 05:31:05.593] [critical] > Added objects/object_jabbernut/gGiZoraJabbernutDL
+  [2026-09-17 05:31:05.593] [critical] > Added objects/object_tsubo/PotFace_standard
+  [2026-09-17 05:31:05.593] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassJunkDL
+  [2026-09-17 05:31:05.594] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL_vtx_2
+  [2026-09-17 05:31:05.594] [critical] > Added objects/gameplay_keep/gPlayerAnim_link_rocs_feather_jump_Data
+  [2026-09-17 05:31:05.595] [critical] > Added objects/object_keyring/gKeyringIconSpiritTempleDL
+  [2026-09-17 05:31:05.595] [critical] > Added objects/object_tsubo/gPotBossKeyDL_tri_0
+  [2026-09-17 05:31:05.595] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_tri_0
+  [2026-09-17 05:31:05.595] [critical] > Added objects/object_tsubo/gPotBossKeyDL_tri_1
+  [2026-09-17 05:31:05.595] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_tri_1
+  [2026-09-17 05:31:05.595] [critical] > Added objects/object_gi_fishing_pole/gGiFishingPoleDL_layer_Opaque_vtx_5
+  [2026-09-17 05:31:05.595] [critical] > Added objects/object_tsubo/gPotBossKeyDL_tri_2
+  [2026-09-17 05:31:05.595] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_tri_2
+  [2026-09-17 05:31:05.595] [critical] > Added objects/object_gi_fishing_pole/gGiFishingPoleDL_layer_Opaque_vtx_4
+  [2026-09-17 05:31:05.595] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassFairyDL_f3dlite_material
+  [2026-09-17 05:31:05.595] [critical] > Added objects/object_tsubo/gPotBossKeyDL_tri_3
+  [2026-09-17 05:31:05.596] [critical] > Added objects/object_box/gChestLidFairyDL_vtx_0
+  [2026-09-17 05:31:05.596] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassBossKeyDL_tri_3
+  [2026-09-17 05:31:05.596] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMaskDL_f3dlite_material
+  [2026-09-17 05:31:05.596] [critical] > Added objects/object_tsubo/gPotFairyDL
+  [2026-09-17 05:31:05.596] [critical] > Added objects/object_tsubo/mat_gPotTokenDL_f3dlite_potface_token
+  [2026-09-17 05:31:05.596] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL
+  [2026-09-17 05:31:05.596] [critical] > Added objects/object_kibako2/minor_crate_side
+  [2026-09-17 05:31:05.596] [critical] > Added objects/object_housekey/gHouseKeyDL_vtx_1
+  [2026-09-17 05:31:05.596] [critical] > Added objects/object_tsubo/gPotFairyDL_tri_1
+  [2026-09-17 05:31:05.597] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_tri_1
+  [2026-09-17 05:31:05.597] [critical] > Added objects/object_housekey/gHouseKeyDL_vtx_2
+  [2026-09-17 05:31:05.597] [critical] > Added objects/object_kibako2/heart_crate_side
+  [2026-09-17 05:31:05.597] [critical] > Added objects/object_box/mat_gChestBodyJunkDL_JunkFront_layerOpaque
+  [2026-09-17 05:31:05.597] [critical] > Added objects/object_tsubo/gPotFairyDL_tri_2
+  [2026-09-17 05:31:05.597] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_tri_2
+  [2026-09-17 05:31:05.597] [critical] > Added objects/object_stickbag/mat_gGiStickBagDL_Leaf_layerOpaque
+  [2026-09-17 05:31:05.597] [critical] > Added objects/object_housekey/gHouseKeyDL_vtx_3
+  [2026-09-17 05:31:05.598] [critical] > Added objects/object_tsubo/gPotFairyDL_tri_3
+  [2026-09-17 05:31:05.598] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_tri_3
+  [2026-09-17 05:31:05.598] [critical] > Added objects/object_tsubo/gPotFairyDL_vtx_0
+  [2026-09-17 05:31:05.598] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_vtx_0
+  [2026-09-17 05:31:05.598] [critical] > Added objects/object_tsubo/gPotFairyDL_vtx_1
+  [2026-09-17 05:31:05.598] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_vtx_1
+  [2026-09-17 05:31:05.598] [critical] > Added objects/object_jabbernut/gGiKokiriJabbernutDL
+  [2026-09-17 05:31:05.598] [critical] > Added objects/object_tsubo/gPotFairyDL_vtx_2
+  [2026-09-17 05:31:05.598] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_vtx_2
+  [2026-09-17 05:31:05.598] [critical] > Added objects/object_tsubo/gPotFairyDL_vtx_3
+  [2026-09-17 05:31:05.598] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_vtx_3
+  [2026-09-17 05:31:05.598] [critical] > Added objects/object_tsubo/gPotMajorDL_vtx_2
+  [2026-09-17 05:31:05.599] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_vtx_2
+  [2026-09-17 05:31:05.599] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassFairyDL_vtx_cull
+  [2026-09-17 05:31:05.599] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_stickbag/DekuStick
+  [2026-09-17 05:31:05.599] [critical] > Added textures/buttons/CRight.png
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_tsubo/gPotHeartDL
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_bosskey/gBossKeyIconForestTempleDL_vtx_0
+  [2026-09-17 05:31:05.599] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_tri_0
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_tsubo/gPotMinorDL
+  [2026-09-17 05:31:05.599] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_tsubo/gPotHeartDL_tri_0
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_tsubo/gPotTokenDL_tri_3
+  [2026-09-17 05:31:05.599] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_tri_3
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_kibako2/mat_gLargeBossKeyCrateDL_f3dlite_crate_top_bosskey
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_tsubo/gPotTokenDL_tri_2
+  [2026-09-17 05:31:05.599] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_tri_2
+  [2026-09-17 05:31:05.599] [critical] > Added objects/object_tsubo/gPotHeartDL_tri_1
+  [2026-09-17 05:31:05.600] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_tri_1
+  [2026-09-17 05:31:05.600] [critical] > Added objects/object_tsubo/gPotTokenDL_tri_1
+  [2026-09-17 05:31:05.600] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_tri_1
+  [2026-09-17 05:31:05.600] [critical] > Added objects/object_tsubo/gPotHeartDL_tri_2
+  [2026-09-17 05:31:05.600] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_tri_2
+  [2026-09-17 05:31:05.600] [critical] > Added objects/object_tsubo/gPotMaskDL_tri_1
+  [2026-09-17 05:31:05.600] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_tri_1
+  [2026-09-17 05:31:05.600] [critical] > Added objects/object_tsubo/gPotHeartDL_vtx_0
+  [2026-09-17 05:31:05.600] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_vtx_0
+  [2026-09-17 05:31:05.600] [critical] > Added objects/object_tsubo/gPotHeartDL_vtx_1
+  [2026-09-17 05:31:05.600] [critical] > Added objects/object_box/gChestBodyTokenDL
+  [2026-09-17 05:31:05.601] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_vtx_1
+  [2026-09-17 05:31:05.601] [critical] > Added objects/object_tsubo/gPotMaskDL_tri_0
+  [2026-09-17 05:31:05.601] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_tri_0
+  [2026-09-17 05:31:05.601] [critical] > Added objects/object_tsubo/gPotMaskDL_tri_2
+  [2026-09-17 05:31:05.601] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_tri_2
+  [2026-09-17 05:31:05.601] [critical] > Added objects/object_tsubo/gPotHeartDL_vtx_3
+  [2026-09-17 05:31:05.601] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_vtx_3
+  [2026-09-17 05:31:05.601] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassHeartDL_vtx_cull
+  [2026-09-17 05:31:05.601] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassJunkDL_tri_0
+  [2026-09-17 05:31:05.601] [critical] > Added objects/object_gi_grab/gGiGrabDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.601] [critical] > Added objects/object_gi_chest/mat_gGiOpenChestsDL_chest_inside_layerOpaque
+  [2026-09-17 05:31:05.601] [critical] > Added objects/object_box/mat_gChestBodyMajorDL_MajorSides_layerOpaque
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_triforce_completed/gTriforcePieceCompletedDL
+  [2026-09-17 05:31:05.602] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassJunkDL_vtx_0
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_jabbernut/gGiJabbernutDL_vtx_2
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_box/mat_gChestBodyMaskDL_Sides
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_tsubo/gPotMajorDL_tri_0
+  [2026-09-17 05:31:05.602] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_tri_0
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_tsubo/gPotMajorDL_tri_1
+  [2026-09-17 05:31:05.602] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_tri_1
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_tsubo/gPotMajorDL_tri_2
+  [2026-09-17 05:31:05.602] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_tri_2
+  [2026-09-17 05:31:05.602] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_tri_3
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_tsubo/mat_gPotFairyDL_f3dlite_potface_fairy
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_tsubo/gPotMajorDL_tri_3
+  [2026-09-17 05:31:05.602] [critical] > Added objects/object_tsubo/gPotMajorDL_vtx_0
+  [2026-09-17 05:31:05.603] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_vtx_0
+  [2026-09-17 05:31:05.603] [critical] > Added objects/object_ocarina_c_left_button/gOcarinaCLeftButtonDL
+  [2026-09-17 05:31:05.603] [critical] > Added objects/object_tsubo/gPotMajorDL_vtx_3
+  [2026-09-17 05:31:05.603] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_vtx_3
+  [2026-09-17 05:31:05.603] [critical] > Added textures/buttons/CUp.png
+  [2026-09-17 05:31:05.603] [critical] > Added textures/title_static/gFileSelPleaseChooseAQuestFRATex
+  [2026-09-17 05:31:05.603] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMajorDL_vtx_cull
+  [2026-09-17 05:31:05.603] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_vtx_1
+  [2026-09-17 05:31:05.603] [critical] > Added objects/object_box/mat_gChestLidJunkDL_JunkSides_layerOpaque
+  [2026-09-17 05:31:05.604] [critical] > Added objects/object_tsubo/gPotMaskDL_vtx_0
+  [2026-09-17 05:31:05.604] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_vtx_0
+  [2026-09-17 05:31:05.604] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_vtx_0
+  [2026-09-17 05:31:05.604] [critical] > Added objects/object_tsubo/gPotMaskDL_vtx_1
+  [2026-09-17 05:31:05.604] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_vtx_1
+  [2026-09-17 05:31:05.604] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_vtx_3
+  [2026-09-17 05:31:05.604] [critical] > Added objects/object_key/gSmallKeyIconWaterTempleDL
+  [2026-09-17 05:31:05.604] [critical] > Added objects/object_tsubo/gPotMaskDL_vtx_2
+  [2026-09-17 05:31:05.605] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_vtx_2
+  [2026-09-17 05:31:05.605] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_vtx_2
+  [2026-09-17 05:31:05.605] [critical] > Added objects/object_tsubo/gPotMaskDL_vtx_3
+  [2026-09-17 05:31:05.605] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMaskDL_vtx_3
+  [2026-09-17 05:31:05.605] [critical] > Added objects/object_box/mat_gChestLidMajorDL_MajorSides_layerOpaque
+  [2026-09-17 05:31:05.605] [critical] > Added objects/object_box/gChestLidTokenDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.605] [critical] > Added objects/object_tsubo/gPotMinorDL_tri_0
+  [2026-09-17 05:31:05.605] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_tri_0
+  [2026-09-17 05:31:05.605] [critical] > Added objects/object_box/mat_gChestBodyMajorDL_MajorFront_layerOpaque
+  [2026-09-17 05:31:05.605] [critical] > Added objects/object_tsubo/gPotMinorDL_tri_1
+  [2026-09-17 05:31:05.605] [critical] > Added textures/buttons/AnalogStickOutline.png
+  [2026-09-17 05:31:05.606] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_tri_1
+  [2026-09-17 05:31:05.606] [critical] > Added objects/object_kibako2/gLargeHeartCrateDL
+  [2026-09-17 05:31:05.606] [critical] > Added objects/object_tsubo/gPotMinorDL_tri_2
+  [2026-09-17 05:31:05.606] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_tri_2
+  [2026-09-17 05:31:05.606] [critical] > Added objects/object_kibako2/major_crate_top
+  [2026-09-17 05:31:05.606] [critical] > Added objects/object_tsubo/gPotMinorDL_tri_3
+  [2026-09-17 05:31:05.606] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_tri_3
+  [2026-09-17 05:31:05.606] [critical] > Added objects/object_box/mat_gChestBodyMinorDL_MinorFront_layerOpaque
+  [2026-09-17 05:31:05.606] [critical] > Added objects/object_tsubo/gPotMinorDL_vtx_1
+  [2026-09-17 05:31:05.607] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassMinorDL_vtx_1
+  [2026-09-17 05:31:05.607] [critical] > Added objects/object_tsubo/gPotRandomDL_tri_0
+  [2026-09-17 05:31:05.607] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_tri_0
+  [2026-09-17 05:31:05.607] [critical] > Added objects/object_kibako/mat_gSmallTokenCrateDL_f3dlite_smallcrate_token
+  [2026-09-17 05:31:05.607] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassBossKeyDL_f3dlite_Grass
+  [2026-09-17 05:31:05.607] [critical] > Added objects/object_tsubo/gPotRandomDL_tri_2
+  [2026-09-17 05:31:05.607] [critical] > Added objects/object_tsubo/mat_gPotStandardDL_f3dlite_potrim
+  [2026-09-17 05:31:05.607] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_tri_2
+  [2026-09-17 05:31:05.607] [critical] > Added objects/object_kibako2/smallkey_crate_side
+  [2026-09-17 05:31:05.607] [critical] > Added objects/object_tsubo/gPotRandomDL_tri_3
+  [2026-09-17 05:31:05.607] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_tri_3
+  [2026-09-17 05:31:05.608] [critical] > Added objects/object_tsubo/gPotRandomDL_vtx_0
+  [2026-09-17 05:31:05.608] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_vtx_0
+  [2026-09-17 05:31:05.608] [critical] > Added objects/object_triforce_piece_0/gTriforcePiece0DL
+  [2026-09-17 05:31:05.608] [critical] > Added objects/object_tsubo/gPotRandomDL_vtx_1
+  [2026-09-17 05:31:05.608] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_vtx_1
+  [2026-09-17 05:31:05.608] [critical] > Added textures/parameter_static/gArrowDown
+  [2026-09-17 05:31:05.608] [critical] > Added objects/object_tsubo/gPotRandomDL_vtx_2
+  [2026-09-17 05:31:05.608] [critical] > Added textures/parameter_static/gArchipelagoRemoteNormal32
+  [2026-09-17 05:31:05.609] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_vtx_2
+  [2026-09-17 05:31:05.609] [critical] > Added objects/object_tsubo/gPotRandomDL_vtx_3
+  [2026-09-17 05:31:05.609] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_vtx_3
+  [2026-09-17 05:31:05.609] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassRandomDL_vtx_cull
+  [2026-09-17 05:31:05.609] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.609] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_tri_3
+  [2026-09-17 05:31:05.609] [critical] > Added objects/object_tsubo/gPotSmallKeyDL
+  [2026-09-17 05:31:05.609] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL
+  [2026-09-17 05:31:05.609] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_tri_0
+  [2026-09-17 05:31:05.610] [critical] > Added textures/virtual/gEmptyTexture
+  [2026-09-17 05:31:05.610] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_tri_0
+  [2026-09-17 05:31:05.610] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_tri_1
+  [2026-09-17 05:31:05.610] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_tri_1
+  [2026-09-17 05:31:05.610] [critical] > Added objects/object_gi_chest/mat_gGiOpenChestsDL_chest_frame_layerOpaque
+  [2026-09-17 05:31:05.610] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_tri_3
+  [2026-09-17 05:31:05.610] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_tri_3
+  [2026-09-17 05:31:05.610] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_vtx_0
+  [2026-09-17 05:31:05.610] [critical] > Added textures/buttons/CDownOutline.png
+  [2026-09-17 05:31:05.610] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_vtx_0
+  [2026-09-17 05:31:05.610] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_vtx_2
+  [2026-09-17 05:31:05.611] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_vtx_2
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_vtx_3
+  [2026-09-17 05:31:05.611] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_vtx_3
+  [2026-09-17 05:31:05.611] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassSmallKeyDL_vtx_cull
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_tsubo/mat_gPotMinorDL_f3dlite_potrim_minor
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_tsubo/gPotTokenDL
+  [2026-09-17 05:31:05.611] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_stickbag/gGiStickBagDL_tri_4
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_tsubo/gPotTokenDL_vtx_0
+  [2026-09-17 05:31:05.611] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_vtx_0
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_stickbag/gGiStickBagDL_tri_5
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_tsubo/gPotTokenDL_vtx_1
+  [2026-09-17 05:31:05.611] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_vtx_1
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_box/gChestBodyTokenDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.611] [critical] > Added objects/object_tsubo/gPotTokenDL_vtx_3
+  [2026-09-17 05:31:05.612] [critical] > Added objects/gameplay_keep/gRandoCuttableGrassTokenDL_vtx_3
+  [2026-09-17 05:31:05.612] [critical] > Added objects/object_box/gChestBodyJunkDL
+  [2026-09-17 05:31:05.612] [critical] > Added objects/object_bosskey/gBossKeyCustomDL
+  [2026-09-17 05:31:05.612] [critical] > Added objects/gameplay_keep/gSoHLeafTex
+  [2026-09-17 05:31:05.612] [critical] > Added objects/object_box/gChestBodyMinorDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.612] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassBossKeyDL_f3dlite_flower_bosskey
+  [2026-09-17 05:31:05.612] [critical] > Added objects/object_gi_fishing_pole/gGiFishingPoleDL
+  [2026-09-17 05:31:05.612] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassBossKeyDL_f3dlite_leaf
+  [2026-09-17 05:31:05.612] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassFairyDL_f3dlite_flower_fairy
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_tsubo/mat_gPotMaskDL_f3dlite_potbase_mask
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_box/gChestBodyHeartDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.613] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassFairyDL_f3dlite_leaf
+  [2026-09-17 05:31:05.613] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassHeartDL_f3dlite_flower_heart
+  [2026-09-17 05:31:05.613] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassHeartDL_f3dlite_leaf
+  [2026-09-17 05:31:05.613] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassHeartDL_f3dlite_material
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_key/gSmallKeyIconShadowTempleDL
+  [2026-09-17 05:31:05.613] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMajorDL_f3dlite_Grass
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_vtx_4
+  [2026-09-17 05:31:05.613] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMajorDL_f3dlite_flower_gold
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_vtx_4
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_boss_soul/heart1
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_tsubo/PotBase_smallkey
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_jabbernut/gGiDekuJabbernutDL
+  [2026-09-17 05:31:05.613] [critical] > Added objects/object_box/gBoxChestLockSkullTokenTex
+  [2026-09-17 05:31:05.614] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMajorDL_f3dlite_leaf
+  [2026-09-17 05:31:05.614] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMajorDL_f3dlite_material
+  [2026-09-17 05:31:05.614] [critical] > Added objects/object_box/gChestLidJunkDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.614] [critical] > Added objects/object_box/gChestBodyHeartDL
+  [2026-09-17 05:31:05.614] [critical] > Added objects/object_keyring/gKeyringRingDL_vtx_0
+  [2026-09-17 05:31:05.614] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMaskDL_f3dlite_flower_mask
+  [2026-09-17 05:31:05.614] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMaskDL_f3dlite_leaf
+  [2026-09-17 05:31:05.615] [critical] > Added objects/object_kibako2/bosskey_crate_top
+  [2026-09-17 05:31:05.615] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.615] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMinorDL_f3dlite_Grass
+  [2026-09-17 05:31:05.615] [critical] > Added objects/object_tsubo/PotFace_bosskey
+  [2026-09-17 05:31:05.615] [critical] > Added objects/object_stickbag/mat_gGiStickBagDL_Stick_layerOpaque
+  [2026-09-17 05:31:05.615] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMinorDL_f3dlite_flower_bronze
+  [2026-09-17 05:31:05.615] [critical] > Added presets/Rando Seed Settings - Advanced.json
+  [2026-09-17 05:31:05.615] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMinorDL_f3dlite_leaf
+  [2026-09-17 05:31:05.615] [critical] > Added objects/object_kibako/gSmallBossKeyCrateDL_vtx_0
+  [2026-09-17 05:31:05.615] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassMinorDL_f3dlite_material
+  [2026-09-17 05:31:05.615] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassRandomDL_f3dlite_Grass
+  [2026-09-17 05:31:05.616] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassSmallKeyDL_f3dlite_material
+  [2026-09-17 05:31:05.616] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassTokenDL_f3dlite_flower_token
+  [2026-09-17 05:31:05.616] [critical] > Added objects/gameplay_keep/mat_gRandoCuttableGrassTokenDL_f3dlite_leaf
+  [2026-09-17 05:31:05.616] [critical] > Added objects/gameplay_keep/model.xml
+  [2026-09-17 05:31:05.616] [critical] > Added objects/object_ocarina_c_right_button/gOcarinaCRightButtonDL_vtx_1
+  [2026-09-17 05:31:05.616] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_tri_0
+  [2026-09-17 05:31:05.616] [critical] > Added objects/object_ocarina_c_right_button/gOcarinaCRightButtonDL_vtx_0
+  [2026-09-17 05:31:05.617] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_tri_1
+  [2026-09-17 05:31:05.617] [critical] > Added objects/object_kibako/mat_gSmallSmallKeyCrateDL_f3dlite_smallcrate_smallkey
+  [2026-09-17 05:31:05.617] [critical] > Added objects/object_bosskey/gBossKeyIconShadowTempleDL_vtx_0
+  [2026-09-17 05:31:05.617] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_tri_2
+  [2026-09-17 05:31:05.617] [critical] > Added objects/object_box/gChestLidJunkDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.617] [critical] > Added objects/object_box/gChestLidTokenDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.617] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_tri_3
+  [2026-09-17 05:31:05.617] [critical] > Added objects/object_archipelago_item/gArchipelagoItemDL_vtx_5
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_box/gBoxChestLockJunkTex
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_archipelago_item/mat_gArchipelagoItemDL_blue
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_ocarina_a_button/gOcarinaAButtonDL
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_box/mat_gChestBodyHeartDL_HeartFront_layerOpaque
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_archipelago_item/mat_gArchipelagoItemDL_green
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_kibako/gSmallJunkCrateDL_tri_0
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_gi_grab/gGiGrabDL
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_bombchubag/gBombchuBagMaskDL_vtx_1
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_archipelago_item/mat_gArchipelagoItemDL_purple
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_tsubo/mat_gPotMinorDL_f3dlite_potface_minor
+  [2026-09-17 05:31:05.618] [critical] > Added objects/object_archipelago_item/mat_gArchipelagoItemDL_yellow
+  [2026-09-17 05:31:05.619] [critical] > Added objects/object_bombchubag/gBombchuBagBodyDL_vtx_0
+  [2026-09-17 05:31:05.619] [critical] > Added objects/object_key/gSmallKeyCustomDL
+  [2026-09-17 05:31:05.619] [critical] > Added textures/buttons/DPadRight.png
+  [2026-09-17 05:31:05.619] [critical] > Added textures/title_static/gFileSelRANDButtonTex
+  [2026-09-17 05:31:05.619] [critical] > Added objects/object_bombchubag/gBombchuBagBodyDL_vtx_1
+  [2026-09-17 05:31:05.619] [critical] > Added objects/object_bombchubag/gBombchuBagBodyDL_vtx_2
+  [2026-09-17 05:31:05.619] [critical] > Added objects/object_ocarina_c_up_button/gOcarinaCUpButtonDL_vtx_1
+  [2026-09-17 05:31:05.619] [critical] > Added objects/object_bombchubag/gBombchuBagMaskDL_vtx_0
+  [2026-09-17 05:31:05.620] [critical] > Added objects/object_key/gSmallKeyIconTreasureChestGameDL_vtx_0
+  [2026-09-17 05:31:05.621] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL_vtx_3
+  [2026-09-17 05:31:05.621] [critical] > Added objects/object_boss_soul/LightNoise
+  [2026-09-17 05:31:05.621] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL
+  [2026-09-17 05:31:05.621] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_tri_3
+  [2026-09-17 05:31:05.621] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_tri_0
+  [2026-09-17 05:31:05.621] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_tri_2
+  [2026-09-17 05:31:05.621] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_tri_1
+  [2026-09-17 05:31:05.621] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.621] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_tri_2
+  [2026-09-17 05:31:05.622] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_tri_4
+  [2026-09-17 05:31:05.622] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_vtx_0
+  [2026-09-17 05:31:05.622] [critical] > Added objects/object_kibako/rando_crate_top
+  [2026-09-17 05:31:05.622] [critical] > Added objects/object_kibako2/gLargeJunkCrateDL_vtx_0
+  [2026-09-17 05:31:05.622] [critical] > Added objects/object_tsubo/gPotStandardDL_vtx_0
+  [2026-09-17 05:31:05.622] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL_mesh_layer_Transparent_vtx_0
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_bosskey/gBossKeyIconWaterTempleDL
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_tsubo/gPotMajorDL_vtx_4
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_vtx_1
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_gi_climb/mat_gGiClimbDL_ladder_layerOpaque
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_tsubo/gPotStandardDL_vtx_3
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_box/gChestBodyMinorDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_tsubo/mat_gPotMaskDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_vtx_2
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_kibako/gSmallTokenCrateDL_tri_0
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_tsubo/gPotStandardDL_vtx_2
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_gi_crawl/gGiCrawlDL
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_box/gChestBodyMinorDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_boss_soul/gGIBossSoulSkullDL_vtx_3
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_box/gChestLidMaskDL
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_boss_soul/mat_gGIBossSoulSkullDL_Black
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_boss_soul/mat_gGIBossSoulSkullDL_Horns
+  [2026-09-17 05:31:05.623] [critical] > Added objects/object_boss_soul/mat_gGIBossSoulSkullDL_Jewel
+  [2026-09-17 05:31:05.624] [critical] > Added objects/object_housekey/gSoHHouseKeyTagBackTex
+  [2026-09-17 05:31:05.624] [critical] > Added objects/object_boss_soul/mat_gGIBossSoulSkullDL_Skull1
+  [2026-09-17 05:31:05.624] [critical] > Added objects/object_boss_soul/mat_gGIBossSoulSkullDL_f3dlite_material
+  [2026-09-17 05:31:05.624] [critical] > Added objects/object_bosskey/gBossKeyIconFireTempleDL_vtx_0
+  [2026-09-17 05:31:05.624] [critical] > Added objects/object_tsubo/mat_gPotFairyDL_f3dlite_potrim_fairy
+  [2026-09-17 05:31:05.625] [critical] > Added objects/object_mag/gTitleBossRushSubtitleTex
+  [2026-09-17 05:31:05.625] [critical] > Added objects/object_nutbag/gGiNutBagDL_vtx_1
+  [2026-09-17 05:31:05.625] [critical] > Added objects/object_bosskey/gBossKeyIconForestTempleDL
+  [2026-09-17 05:31:05.625] [critical] > Added objects/object_bosskey/gBossKeyIconSpiritTempleDL
+  [2026-09-17 05:31:05.625] [critical] > Added objects/object_box/gBoxChestCornerSkullTokenTex
+  [2026-09-17 05:31:05.626] [critical] > Added objects/object_bosskey/gBossKeyIconSpiritTempleDL_vtx_0
+  [2026-09-17 05:31:05.626] [critical] > Added textures/buttons/CLeft.png
+  [2026-09-17 05:31:05.626] [critical] > Added objects/object_bosskey/gBossKeyIconWaterTempleDL_vtx_0
+  [2026-09-17 05:31:05.626] [critical] > Added objects/object_box/gBoxChestCornerHealthTex
+  [2026-09-17 05:31:05.626] [critical] > Added objects/object_box/gBoxChestCornerLesserTex
+  [2026-09-17 05:31:05.626] [critical] > Added objects/object_box/gBoxChestCornerMajorTex
+  [2026-09-17 05:31:05.626] [critical] > Added objects/object_kibako2/junk_crate_top
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_box/gBoxChestCornerMaskTex
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_box/gBoxChestCornerSmallKeyTex
+  [2026-09-17 05:31:05.627] [critical] > Added textures/title_static/gFileSelBossRushSettingsFRATex
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_kibako2/gLargeSmallKeyCrateDL_vtx_0
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_box/gBoxChestCornerStrayFairyTex
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_box/gChestBodyMaskDL_tri_0
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_tsubo/PotLip_mask
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_box/gBoxChestLockHealthTex
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_box/gBoxChestLockLesserTex
+  [2026-09-17 05:31:05.627] [critical] > Added objects/object_box/mat_gChestBodyHeartDL_HeartSides_layerOpaque
+  [2026-09-17 05:31:05.628] [critical] > Added objects/object_box/gBoxChestLockMaskTex
+  [2026-09-17 05:31:05.628] [critical] > Added textures/icon_item_static/gRocsFeatherTex
+  [2026-09-17 05:31:05.628] [critical] > Added objects/object_box/gBoxChestLockSmallKeyTex
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_ocarina_a_button/gOcarinaAButtonDL_vtx_1
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_box/gBoxChestLockStrayFairyTex
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_tsubo/gPotMaskDL_tri_4
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_box/gChestBodyFairyDL
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_box/gChestLidHeartDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_box/gChestBodyFairyDL_tri_1
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_box/gChestBodyFairyDL_vtx_0
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_box/gChestLidHeartDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_box/gChestBodyFairyDL_vtx_1
+  [2026-09-17 05:31:05.629] [critical] > Added objects/object_box/gChestBodyHeartDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_kibako/minor_crate_top
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_tsubo/mat_gPotHeartDL_f3dlite_potface_heart
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_box/gChestBodyHeartDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_box/gChestBodyJunkDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_tsubo/PotBase_bosskey
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_box/gChestBodyMajorDL
+  [2026-09-17 05:31:05.630] [critical] > Added textures/parameter_static/gArchipelagoItemImportant
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_nutbag/gGiNutBagDL
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_box/gChestBodyMajorDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.630] [critical] > Added objects/object_box/gChestBodyMajorDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodyMaskDL
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodyMaskDL_tri_1
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodyMaskDL_vtx_0
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_kibako/gSmallMinorCrateDL_vtx_cull
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodyMaskDL_vtx_1
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodyMinorDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_gi_grab/mat_gGiGrabDL_power_bracelet_accent_layerOpaque
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_tsubo/PotLip_token
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodySmallKeyDL
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_mystery_item/gMysteryItemDL
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodySmallKeyDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_tsubo/PotBase_major
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_tsubo/mat_gPotMajorDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodySmallKeyDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/gChestBodySmallKeyDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.631] [critical] > Added objects/object_box/mat_gChestBodyFairyDL_Front
+  [2026-09-17 05:31:05.633] [critical] > Added objects/object_keyring/gKeyringIconGanonsCastleDL
+  [2026-09-17 05:31:05.633] [critical] > Added objects/object_box/gChestBodyTokenDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.633] [critical] > Added objects/object_box/gChestLidFairyDL
+  [2026-09-17 05:31:05.633] [critical] > Added objects/object_box/gChestLidSmallKeyDL
+  [2026-09-17 05:31:05.633] [critical] > Added objects/object_box/gChestLidFairyDL_tri_0
+  [2026-09-17 05:31:05.633] [critical] > Added objects/object_gi_climb/gGiClimbDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.633] [critical] > Added objects/object_box/gChestLidMajorDL
+  [2026-09-17 05:31:05.634] [critical] > Added objects/object_nutbag/DekuNut
+  [2026-09-17 05:31:05.634] [critical] > Added objects/object_gi_grab/mat_gGiGrabDL_power_bracelet_gem_layerOpaque
+  [2026-09-17 05:31:05.634] [critical] > Added objects/object_box/gChestLidMaskDL_tri_0
+  [2026-09-17 05:31:05.634] [critical] > Added objects/object_box/gChestLidMaskDL_vtx_0
+  [2026-09-17 05:31:05.634] [critical] > Added objects/object_keyring/gKeyringIconWaterTempleDL_vtx_0
+  [2026-09-17 05:31:05.634] [critical] > Added objects/object_box/gChestLidMinorDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.635] [critical] > Added objects/object_box/gChestLidMinorDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.635] [critical] > Added objects/object_tsubo/gPotMajorDL_tri_4
+  [2026-09-17 05:31:05.635] [critical] > Added objects/object_box/gChestLidSmallKeyDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.635] [critical] > Added objects/object_keyring/gKeyringIconShadowTempleDL
+  [2026-09-17 05:31:05.635] [critical] > Added objects/object_box/gChestLidSmallKeyDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.635] [critical] > Added objects/object_box/mat_gChestBodyFairyDL_Sides
+  [2026-09-17 05:31:05.635] [critical] > Added objects/object_box/mat_gChestBodyMinorDL_MinorSides_layerOpaque
+  [2026-09-17 05:31:05.635] [critical] > Added objects/object_box/mat_gChestBodyTokenDL_TokenFront_layerOpaque
+  [2026-09-17 05:31:05.636] [critical] > Added objects/object_box/mat_gChestBodyTokenDL_TokenSides_layerOpaque
+  [2026-09-17 05:31:05.636] [critical] > Added objects/object_gi_grab/gGiGrabDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.636] [critical] > Added objects/object_box/mat_gChestLidFairyDL_Sides
+  [2026-09-17 05:31:05.636] [critical] > Added objects/object_box/mat_gChestLidMinorDL_MinorSides_layerOpaque
+  [2026-09-17 05:31:05.636] [critical] > Added objects/object_box/mat_gChestLidTokenDL_TokenSides_layerOpaque
+  [2026-09-17 05:31:05.636] [critical] > Added objects/object_box/mat_gChestLidSmallKeyDL_SmallkeySides_layerOpaque
+  [2026-09-17 05:31:05.636] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL_tri_0
+  [2026-09-17 05:31:05.637] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL
+  [2026-09-17 05:31:05.637] [critical] > Added textures/nintendo_rogo_static/mat_revert_gShipLogoDL_f3d_material_001
+  [2026-09-17 05:31:05.637] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.637] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL_layer_Opaque_tri_1
+  [2026-09-17 05:31:05.637] [critical] > Added objects/object_kibako2/gLargeJunkCrateDL_vtx_cull
+  [2026-09-17 05:31:05.637] [critical] > Added textures/nintendo_rogo_static/mat_revert_gShipLogoDL_f3d_material_003
+  [2026-09-17 05:31:05.637] [critical] > Added objects/object_gi_climb/gGiClimbDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.637] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL_layer_Opaque_tri_2
+  [2026-09-17 05:31:05.637] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.638] [critical] > Added objects/object_gi_chest/gGiOpenChestsDL_layer_Opaque_vtx_2
+  [2026-09-17 05:31:05.638] [critical] > Added presets/Enhancements - Curated First Time Vanilla.json
+  [2026-09-17 05:31:05.638] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL_tri_2
+  [2026-09-17 05:31:05.638] [critical] > Added objects/object_gi_chest/mat_gGiOpenChestsDL_chest_layerOpaque
+  [2026-09-17 05:31:05.638] [critical] > Added objects/object_nutbag/Gradient
+  [2026-09-17 05:31:05.638] [critical] > Added objects/object_key/gSkeletonKeyDL_vtx_1
+  [2026-09-17 05:31:05.638] [critical] > Added objects/object_gi_chest/mat_gGiOpenChestsDL_chest_lock_layerTransparent
+  [2026-09-17 05:31:05.638] [critical] > Added objects/object_kibako2/gLargeMajorCrateDL_vtx_1
+  [2026-09-17 05:31:05.638] [critical] > Added objects/object_gi_climb/gGiClimbDL
+  [2026-09-17 05:31:05.638] [critical] > Added objects/object_gi_crawl/gGiCrawlDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.640] [critical] > Added objects/object_keyring/gKeyringIconGerudoTrainingGroundDL_vtx_0
+  [2026-09-17 05:31:05.640] [critical] > Added objects/object_gi_crawl/mat_gGiCrawlDL_kneepad_decal_layerOpaque
+  [2026-09-17 05:31:05.640] [critical] > Added objects/object_tsubo/PotLip_fairy
+  [2026-09-17 05:31:05.640] [critical] > Added objects/object_rocs_feather/gGiRocsFeatherDL_vtx_1
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_gi_fishing_pole/gGiFishingPoleDL_layer_Opaque_vtx_0
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_rocs_feather/gGiRocsFeatherDL_vtx_0
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_gi_fishing_pole/gGiFishingPoleDL_layer_Opaque_vtx_1
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_kibako2/gLargeMinorCrateDL_vtx_0
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_gi_fishing_pole/gGiFishingPoleDL_layer_Opaque_vtx_2
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_kibako2/gLargeMinorCrateDL_vtx_1
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_gi_fishing_pole/gGiFishingPoleDL_layer_Opaque_vtx_3
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_gi_grab/gGiGrabDL_layer_Opaque_tri_0
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_housekey/gSoHHouseKeyTagFrontTex
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_nutbag/gGiNutBagDL_tri_3
+  [2026-09-17 05:31:05.641] [critical] > Added objects/object_gi_grab/gGiGrabDL_layer_Opaque_tri_2
+  [2026-09-17 05:31:05.642] [critical] > Added objects/object_kibako2/gLargeHeartCrateDL_tri_0
+  [2026-09-17 05:31:05.642] [critical] > Added objects/object_gi_grab/gGiGrabDL_layer_Opaque_vtx_2
+  [2026-09-17 05:31:05.642] [critical] > Added textures/buttons/DPadLeft.png
+  [2026-09-17 05:31:05.642] [critical] > Added objects/object_key/gSmallKeyIconFireTempleDL_vtx_0
+  [2026-09-17 05:31:05.642] [critical] > Added objects/object_housekey/gHouseKeyDL
+  [2026-09-17 05:31:05.642] [critical] > Added objects/object_jabbernut/gGiGerudoJabbernutDL
+  [2026-09-17 05:31:05.642] [critical] > Added objects/object_stickbag/gGiStickBagDL_vtx_0
+  [2026-09-17 05:31:05.642] [critical] > Added objects/object_jabbernut/gGiGoronJabbernutDL
+  [2026-09-17 05:31:05.643] [critical] > Added objects/object_jabbernut/gGiHylianJabbernutDL
+  [2026-09-17 05:31:05.643] [critical] > Added objects/object_tsubo/mat_gPotFairyDL_f3dlite_potbase_fairy
+  [2026-09-17 05:31:05.643] [critical] > Added objects/object_nutbag/gGiNutBagDL_tri_6
+  [2026-09-17 05:31:05.643] [critical] > Added objects/object_jabbernut/gGiJabbernutDL
+  [2026-09-17 05:31:05.643] [critical] > Added objects/object_jabbernut/gGiJabbernutDL_vtx_0
+  [2026-09-17 05:31:05.643] [critical] > Added objects/object_kibako/gSmallJunkCrateDL
+  [2026-09-17 05:31:05.643] [critical] > Added textures/buttons/LBtn.png
+  [2026-09-17 05:31:05.643] [critical] > Added objects/object_jabbernut/gGiJabbernutDL_vtx_1
+  [2026-09-17 05:31:05.643] [critical] > Added objects/object_jabbernut/gGiJabbernutDL_vtx_3
+  [2026-09-17 05:31:05.643] [critical] > Added textures/buttons/InputViewerBackground.png
+  [2026-09-17 05:31:05.644] [critical] > Added objects/object_key/gSkeletonKeyDL
+  [2026-09-17 05:31:05.644] [critical] > Added textures/buttons/BBtnOutline.png
+  [2026-09-17 05:31:05.645] [critical] > Added objects/object_key/gSkeletonKeyDL_vtx_0
+  [2026-09-17 05:31:05.645] [critical] > Added objects/object_key/gSmallKeyCustomDL_vtx_0
+  [2026-09-17 05:31:05.646] [critical] > Added objects/object_mystery_item/gMysteryItemDL_vtx_1
+  [2026-09-17 05:31:05.646] [critical] > Added objects/object_kibako2/gLargeHeartCrateDL_vtx_cull
+  [2026-09-17 05:31:05.647] [critical] > Added objects/object_key/gSmallKeyIconBottomoftheWellDL
+  [2026-09-17 05:31:05.647] [critical] > Added objects/object_key/gSmallKeyIconBottomoftheWellDL_vtx_0
+  [2026-09-17 05:31:05.647] [critical] > Added objects/object_key/gSmallKeyIconFireTempleDL
+  [2026-09-17 05:31:05.648] [critical] > Added objects/object_kibako2/rando_crate_top
+  [2026-09-17 05:31:05.648] [critical] > Added objects/object_key/gSmallKeyIconForestTempleDL_vtx_0
+  [2026-09-17 05:31:05.648] [critical] > Added objects/object_triforce_piece_2/gTriforcePiece2DL
+  [2026-09-17 05:31:05.650] [critical] > Added objects/object_key/gSmallKeyIconGanonsCastleDL
+  [2026-09-17 05:31:05.650] [critical] > Added objects/object_triforce_piece_2/gTriforcePiece2DL_vtx_0
+  [2026-09-17 05:31:05.653] [critical] > Added objects/object_key/gSmallKeyIconGanonsCastleDL_vtx_0
+  [2026-09-17 05:31:05.653] [critical] > Added objects/object_key/gSmallKeyIconGerudoFortressDL
+  [2026-09-17 05:31:05.654] [critical] > Added objects/object_key/gSmallKeyIconGerudoTrainingGroundDL_vtx_0
+  [2026-09-17 05:31:05.654] [critical] > Added objects/object_ocarina_c_down_button/gOcarinaCDownButtonDL
+  [2026-09-17 05:31:05.655] [critical] > Added objects/object_key/gSmallKeyIconShadowTempleDL_vtx_0
+  [2026-09-17 05:31:05.655] [critical] > Added objects/object_key/gSmallKeyIconSpiritTempleDL
+  [2026-09-17 05:31:05.655] [critical] > Added objects/object_kibako2/rando_crate_side
+  [2026-09-17 05:31:05.655] [critical] > Added objects/object_nutbag/mat_gGiNutBagDL_Pouch_layerOpaque
+  [2026-09-17 05:31:05.655] [critical] > Added objects/object_key/gSmallKeyIconWaterTempleDL_vtx_0
+  [2026-09-17 05:31:05.656] [critical] > Added objects/object_keyring/gKeyringIconBottomoftheWellDL
+  [2026-09-17 05:31:05.656] [critical] > Added objects/object_triforce_completed/gTriforcePieceCompletedDL_vtx_1
+  [2026-09-17 05:31:05.656] [critical] > Added objects/object_keyring/gKeyringIconFireTempleDL
+  [2026-09-17 05:31:05.656] [critical] > Added objects/object_keyring/gKeyringIconForestTempleDL
+  [2026-09-17 05:31:05.660] [critical] > Added objects/object_keyring/gKeyringIconGanonsCastleDL_vtx_0
+  [2026-09-17 05:31:05.661] [critical] > Added objects/object_tsubo/mat_gPotRandomDL_f3dlite_potface
+  [2026-09-17 05:31:05.661] [critical] > Added objects/object_keyring/gKeyringIconGerudoFortressDL
+  [2026-09-17 05:31:05.661] [critical] > Added objects/object_kibako2/mat_gLargeHeartCrateDL_f3dlite_crate_side_heart
+  [2026-09-17 05:31:05.661] [critical] > Added objects/object_kibako2/gLargeBossKeyCrateDL_vtx_cull
+  [2026-09-17 05:31:05.662] [critical] > Added objects/object_keyring/gKeyringIconGerudoFortressDL_vtx_0
+  [2026-09-17 05:31:05.662] [critical] > Added objects/object_keyring/gKeyringIconGerudoTrainingGroundDL
+  [2026-09-17 05:31:05.663] [critical] > Added objects/object_keyring/gKeyringIconShadowTempleDL_vtx_0
+  [2026-09-17 05:31:05.663] [critical] > Added objects/object_keyring/gKeyringIconSpiritTempleDL_vtx_0
+  [2026-09-17 05:31:05.663] [critical] > Added objects/object_kibako2/mat_gLargeMajorCrateDL_f3dlite_crate_top_major
+  [2026-09-17 05:31:05.664] [critical] > Added objects/object_keyring/gKeyringIconTreasureChestGameDL
+  [2026-09-17 05:31:05.664] [critical] > Added objects/object_nutbag/gGiNutBagDL_tri_2
+  [2026-09-17 05:31:05.666] [critical] > Added objects/object_keyring/gKeyringIconTreasureChestGameDL_vtx_0
+  [2026-09-17 05:31:05.666] [critical] > Added objects/object_keyring/gKeyringIconWaterTempleDL
+  [2026-09-17 05:31:05.666] [critical] > Added objects/object_tsubo/mat_gPotStandardDL_f3dlite_potbase
+  [2026-09-17 05:31:05.666] [critical] > Added objects/object_keyring/gKeyringKeyDL_vtx_0
+  [2026-09-17 05:31:05.666] [critical] > Added objects/object_keyring/gKeyringRingDL
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_kibako/bosskey_crate_top
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_kibako/gSmallBossKeyCrateDL_tri_0
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_kibako/gSmallBossKeyCrateDL_vtx_cull
+  [2026-09-17 05:31:05.667] [critical] > Added textures/icon_item_static/gGrabTex
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_kibako/gSmallHeartCrateDL
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_kibako/gSmallHeartCrateDL_tri_0
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_tsubo/gPotMaskDL_vtx_4
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_kibako/gSmallHeartCrateDL_vtx_0
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_kibako2/gLargeJunkCrateDL_tri_1
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_tsubo/gPotStandardDL_tri_1
+  [2026-09-17 05:31:05.667] [critical] > Added textures/buttons/DPadUpOutline.png
+  [2026-09-17 05:31:05.667] [critical] > Added objects/object_kibako/gSmallHeartCrateDL_vtx_cull
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallJunkCrateDL_vtx_cull
+  [2026-09-17 05:31:05.668] [critical] > Added presets/Enhancements - Curated Returning Vanilla.json
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallMajorCrateDL
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallMajorCrateDL_tri_0
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako2/gLargeRandoCrateDL_tri_0
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallMajorCrateDL_vtx_cull
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallMinorCrateDL_tri_0
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallMinorCrateDL_vtx_0
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallRandoCrateDL
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallRandoCrateDL_tri_0
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallRandoCrateDL_vtx_0
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallRandoCrateDL_vtx_cull
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallSmallKeyCrateDL_tri_0
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallSmallKeyCrateDL_vtx_0
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_stickbag/mat_gGiStickBagDL_StickTX_layerOpaque
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallSmallKeyCrateDL_vtx_cull
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallTokenCrateDL
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/smallkey_crate_top
+  [2026-09-17 05:31:05.668] [critical] > Added objects/object_kibako/gSmallTokenCrateDL_vtx_cull
+  [2026-09-17 05:31:05.669] [critical] > Added objects/object_kibako/heart_crate_top
+  [2026-09-17 05:31:05.669] [critical] > Added objects/object_kibako/junk_crate_top
+  [2026-09-17 05:31:05.670] [critical] > Added objects/object_kibako/major_crate_top
+  [2026-09-17 05:31:05.670] [critical] > Added objects/object_kibako/mat_gSmallBossKeyCrateDL_f3dlite_smallcrate_bosskey
+  [2026-09-17 05:31:05.670] [critical] > Added objects/object_kibako/mat_gSmallJunkCrateDL_f3dlite_smallcrate_junk
+  [2026-09-17 05:31:05.670] [critical] > Added objects/object_kibako/mat_gSmallMajorCrateDL_f3dlite_smallcrate_major
+  [2026-09-17 05:31:05.670] [critical] > Added objects/object_kibako/mat_gSmallMinorCrateDL_f3dlite_smallcrate_minor
+  [2026-09-17 05:31:05.670] [critical] > Added objects/object_kibako/mat_gSmallRandoCrateDL_f3dlite_smallcrate_rando
+  [2026-09-17 05:31:05.670] [critical] > Added objects/object_kibako/token_crate_top
+  [2026-09-17 05:31:05.670] [critical] > Added objects/object_tsubo/gPotHeartDL_tri_4
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/bosskey_crate_side
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeBossKeyCrateDL
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeBossKeyCrateDL_vtx_0
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeBossKeyCrateDL_vtx_1
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeHeartCrateDL_vtx_0
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeHeartCrateDL_vtx_1
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeJunkCrateDL
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_tsubo/gPotStandardDL
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeJunkCrateDL_vtx_1
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_tsubo/gPotStandardDL_vtx_1
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_tsubo/mat_gPotMajorDL_f3dlite_potrim_major
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeMajorCrateDL
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeMajorCrateDL_tri_0
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_tsubo/mat_gPotMinorDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.671] [critical] > Added objects/object_kibako2/gLargeMajorCrateDL_tri_1
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeMajorCrateDL_vtx_0
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeMajorCrateDL_vtx_cull
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_tsubo/gPotHeartDL_vtx_4
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeMinorCrateDL
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_tsubo/mat_gPotMaskDL_f3dlite_potrim_mask
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeMinorCrateDL_tri_0
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_stickbag/gGiStickBagDL_tri_2
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeMinorCrateDL_vtx_cull
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeRandoCrateDL
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeRandoCrateDL_tri_1
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeRandoCrateDL_vtx_0
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeRandoCrateDL_vtx_1
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeSmallKeyCrateDL
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_tsubo/mat_gPotSmallKeyDL_f3dlite_potface_Smallkey
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeSmallKeyCrateDL_tri_1
+  [2026-09-17 05:31:05.672] [critical] > Added textures/buttons/LBtnOutline.png
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeSmallKeyCrateDL_vtx_1
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_tsubo/PotFace_heart
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeSmallKeyCrateDL_vtx_cull
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeTokenCrateDL
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeTokenCrateDL_tri_0
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeTokenCrateDL_tri_1
+  [2026-09-17 05:31:05.672] [critical] > Added objects/object_kibako2/gLargeTokenCrateDL_vtx_0
+  [2026-09-17 05:31:05.673] [critical] > Added objects/object_rocs_feather/gGiRocsFeatherDL
+  [2026-09-17 05:31:05.673] [critical] > Added objects/object_kibako2/gLargeTokenCrateDL_vtx_1
+  [2026-09-17 05:31:05.673] [critical] > Added objects/object_kibako2/gLargeTokenCrateDL_vtx_cull
+  [2026-09-17 05:31:05.673] [critical] > Added textures/parameter_static/gSun
+  [2026-09-17 05:31:05.673] [critical] > Added textures/nintendo_rogo_static/mat_gShipLogoDL_f3d_material
+  [2026-09-17 05:31:05.673] [critical] > Added objects/object_kibako2/heart_crate_top
+  [2026-09-17 05:31:05.674] [critical] > Added objects/object_kibako2/junk_crate_side
+  [2026-09-17 05:31:05.674] [critical] > Added objects/object_kibako2/major_crate_side
+  [2026-09-17 05:31:05.674] [critical] > Added objects/object_kibako2/mask_crate_side
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mask_crate_top
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeBossKeyCrateDL_f3dlite_crate_side_bosskey
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeJunkCrateDL_f3dlite_crate_side_junk
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeJunkCrateDL_f3dlite_crate_top_junk
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeMajorCrateDL_f3dlite_crate_side_major
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_triforce_piece_1/gTriforcePiece1DL_vtx_1
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeMinorCrateDL_f3dlite_crate_side_minor
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeMinorCrateDL_f3dlite_crate_top_minor
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeRandoCrateDL_f3dlite_crate_side_rando
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeRandoCrateDL_f3dlite_crate_top_rando
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeTokenCrateDL_f3dlite_crate_side_token
+  [2026-09-17 05:31:05.675] [critical] > Added objects/object_kibako2/mat_gLargeTokenCrateDL_f3dlite_crate_top_token
+  [2026-09-17 05:31:05.676] [critical] > Added objects/object_kibako2/minor_crate_top
+  [2026-09-17 05:31:05.676] [critical] > Added objects/object_kibako2/token_crate_side
+  [2026-09-17 05:31:05.676] [critical] > Added objects/object_kibako2/token_crate_top
+  [2026-09-17 05:31:05.677] [critical] > Added objects/object_mag/gTitleRandomizerSubtitleTex
+  [2026-09-17 05:31:05.677] [critical] > Added objects/object_mystery_item/gMysteryItemDL_vtx_0
+  [2026-09-17 05:31:05.677] [critical] > Added objects/object_nutbag/BagString
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_tsubo/mat_gPotStandardDL_f3dlite_potface_standard
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_tri_0
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_tri_1
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_tri_4
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_tri_5
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_vtx_0
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_vtx_2
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_vtx_3
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_vtx_4
+  [2026-09-17 05:31:05.678] [critical] > Added objects/object_nutbag/gGiNutBagDL_vtx_5
+  [2026-09-17 05:31:05.679] [critical] > Added shaders/directx/default.shader.hlsl
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_nutbag/gGiNutBagDL_vtx_6
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_nutbag/mat_gGiNutBagDL_Inside_layerOpaque
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_nutbag/mat_gGiNutBagDL_NutTx_layerOpaque
+  [2026-09-17 05:31:05.679] [critical] > Added presets/Rando Seed Settings - Standard.json
+  [2026-09-17 05:31:05.679] [critical] > Added textures/buttons/Mod1Outline.png
+  [2026-09-17 05:31:05.679] [critical] > Added textures/buttons/Mod1.png
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_nutbag/mat_gGiNutBagDL_Nuts_layerOpaque
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_nutbag/mat_gGiNutBagDL_String_layerOpaque
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_tsubo/PotFace_mystery
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_tsubo/mat_gPotRandomDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_nutbag/mat_gGiNutBagDL_UpgradeColor_layerOpaque
+  [2026-09-17 05:31:05.679] [critical] > Added objects/object_nutbag/mat_gGiNutBagDL_nutgold_layerOpaque
+  [2026-09-17 05:31:05.680] [critical] > Added objects/object_ocarina_a_button/gOcarinaAButtonDL_vtx_0
+  [2026-09-17 05:31:05.680] [critical] > Added objects/object_ocarina_c_down_button/gOcarinaCDownButtonDL_vtx_0
+  [2026-09-17 05:31:05.681] [critical] > Added objects/object_ocarina_c_left_button/gOcarinaCLeftButtonDL_vtx_0
+  [2026-09-17 05:31:05.681] [critical] > Added objects/object_ocarina_c_left_button/gOcarinaCLeftButtonDL_vtx_1
+  [2026-09-17 05:31:05.681] [critical] > Added objects/object_ocarina_c_right_button/gOcarinaCRightButtonDL
+  [2026-09-17 05:31:05.682] [critical] > Added objects/object_ocarina_c_up_button/gOcarinaCUpButtonDL
+  [2026-09-17 05:31:05.682] [critical] > Added objects/object_tsubo/PotBase_mask
+  [2026-09-17 05:31:05.682] [critical] > Added objects/object_triforce_piece_0/gTriforcePiece0DL_vtx_1
+  [2026-09-17 05:31:05.682] [critical] > Added objects/object_ocarina_c_up_button/gOcarinaCUpButtonDL_vtx_0
+  [2026-09-17 05:31:05.682] [critical] > Added objects/object_stickbag/Gradient
+  [2026-09-17 05:31:05.682] [critical] > Added objects/object_stickbag/gGiStickBagDL
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_stickbag/gGiStickBagDL_tri_0
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_tsubo/gPotTokenDL_vtx_4
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_stickbag/gGiStickBagDL_tri_1
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_stickbag/gGiStickBagDL_vtx_2
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_stickbag/gGiStickBagDL_vtx_3
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_tsubo/PotBase_minor
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_stickbag/gGiStickBagDL_vtx_4
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_stickbag/gGiStickBagDL_vtx_5
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_stickbag/mat_gGiStickBagDL_Inside_layerOpaque
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_stickbag/mat_gGiStickBagDL_Wrap_layerOpaque
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_triforce_piece_0/gTriforcePiece0DL_vtx_0
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_triforce_piece_0/gTriforcePiece0DL_vtx_2
+  [2026-09-17 05:31:05.683] [critical] > Added objects/object_triforce_piece_1/gTriforcePiece1DL
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_triforce_piece_1/gTriforcePiece1DL_vtx_0
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_triforce_piece_2/gTriforcePiece2DL_vtx_1
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_triforce_piece_2/gTriforcePiece2DL_vtx_2
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotBase_standard
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotFace_fairy
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotFace_major
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotFace_mask
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotFace_minor
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotFace_token
+  [2026-09-17 05:31:05.684] [critical] > Added textures/buttons/CRightOutline.png
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotLip_bosskey
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotLip_major
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotLip_minor
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/PotLip_smallkey
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/gPotBossKeyDL_tri_4
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/gPotBossKeyDL_vtx_4
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/gPotFairyDL_tri_4
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/gPotFairyDL_vtx_4
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/gPotMinorDL_tri_4
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/gPotMinorDL_vtx_4
+  [2026-09-17 05:31:05.684] [critical] > Added objects/object_tsubo/gPotRandomDL_tri_4
+  [2026-09-17 05:31:05.684] [critical] > Added presets/Rando Seed Settings - Reset to Default.json
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/gPotRandomDL_vtx_4
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_tri_4
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/gPotSmallKeyDL_vtx_4
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/gPotStandardDL_tri_2
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/gPotStandardDL_tri_3
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/gPotStandardDL_tri_4
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/gPotStandardDL_vtx_4
+  [2026-09-17 05:31:05.685] [critical] > Added textures/buttons/DPadLeftOutline.png
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotBossKeyDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotBossKeyDL_f3dlite_potface_Bosskey
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotBossKeyDL_f3dlite_potrim_Bosskey
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotBossKeyDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotFairyDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotFairyDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotHeartDL_f3dlite_potbase_heart
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotHeartDL_f3dlite_potrim_heart
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotHeartDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotMajorDL_f3dlite_potbase_major
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotRandomDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotMajorDL_f3dlite_potbottom
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotMajorDL_f3dlite_potface_major
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotMaskDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotMinorDL_f3dlite_potvoid
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotRandomDL_f3dlite_potbase
+  [2026-09-17 05:31:05.685] [critical] > Added objects/object_tsubo/mat_gPotTokenDL_f3dlite_potbase_token
+  [2026-09-17 05:31:05.686] [critical] > Added objects/object_tsubo/mat_gPotTokenDL_f3dlite_potrim_token
+  [2026-09-17 05:31:05.686] [critical] > Added presets/Rando Seed Settings - Beginner.json
+  [2026-09-17 05:31:05.686] [critical] > Added presets/Enhancements - Reset to Default.json
+  [2026-09-17 05:31:05.686] [critical] > Added shaders/metal/default.shader.metal
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/ABtn.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/ABtnOutline.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/DPadDown.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/BBtn.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/CLeftOutline.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/CUpOutline.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/DPadDownOutline.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/Mod2.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/Mod2Outline.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/RBtn.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/RBtnOutline.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/RightStick.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/RightStickOutline.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/StartBtn.png
+  [2026-09-17 05:31:05.686] [critical] > Added textures/buttons/StartBtnOutline.png
+  [2026-09-17 05:31:05.687] [critical] > Added textures/buttons/ZBtnOutline.png
+  [2026-09-17 05:31:05.687] [critical] > Added textures/icon_item_static/gClimbTex
+  [2026-09-17 05:31:05.687] [critical] > Added textures/icon_item_static/gCrawlTex
+  [2026-09-17 05:31:05.688] [critical] > Added textures/icon_item_static/gOpenChestsTex
+  [2026-09-17 05:31:05.688] [critical] > Added textures/icons/gIcon.png
+  [2026-09-17 05:31:05.688] [critical] > Added textures/item_name_static/gRocsFeatherItemNameGERTex
+  [2026-09-17 05:31:05.691] [critical] > Added textures/mapping-xbox.png
+  [2026-09-17 05:31:05.691] [critical] > Added textures/nintendo_rogo_static/SoHShiny
+  [2026-09-17 05:31:05.691] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL
+  [2026-09-17 05:31:05.691] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL_tri_1
+  [2026-09-17 05:31:05.691] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL_tri_3
+  [2026-09-17 05:31:05.692] [critical] > Added textures/nintendo_rogo_static/gShipLogoDL_vtx_1
+  [2026-09-17 05:31:05.692] [critical] > Added textures/nintendo_rogo_static/mat_gShipLogoDL_f3d_material_001
+  [2026-09-17 05:31:05.692] [critical] > Added textures/nintendo_rogo_static/mat_gShipLogoDL_f3d_material_003
+  [2026-09-17 05:31:05.692] [critical] > Added textures/nintendo_rogo_static/mat_revert_gShipLogoDL_f3d_material
+  [2026-09-17 05:31:05.692] [critical] > Added textures/nintendo_rogo_static/mat_revert_gShipLogoDL_f3d_material_002
+  [2026-09-17 05:31:05.818] [critical] > Added textures/nintendo_rogo_static/nintendo_rogo_static_Tex_LUS_000000
+  [2026-09-17 05:31:05.818] [critical] > Added textures/parameter_static/gArchipelagoItemImportant.rgba16.png
+  [2026-09-17 05:31:05.819] [critical] > Added textures/parameter_static/gArchipelagoItemNormal
+  [2026-09-17 05:31:05.819] [critical] > Added textures/parameter_static/gArchipelagoItemNormal.rgba16.png
+  [2026-09-17 05:31:05.819] [critical] > Added textures/parameter_static/gArchipelagoRemoteImportant32
+  [2026-09-17 05:31:05.819] [critical] > Added textures/parameter_static/gArrowUp
+  [2026-09-17 05:31:05.819] [critical] > Added textures/parameter_static/gBossSoul
+  [2026-09-17 05:31:05.819] [critical] > Added textures/parameter_static/gDPad
+  [2026-09-17 05:31:05.819] [critical] > Added textures/parameter_static/gNavi
+  [2026-09-17 05:31:05.819] [critical] > Added textures/parameter_static/gSplitEntrance
+  [2026-09-17 05:31:05.820] [critical] > Added textures/parameter_static/gWTriforcePiece
+  [2026-09-17 05:31:05.820] [critical] > Added textures/title_static/gFileSelBossRushSettingsJPNTex
+  [2026-09-17 05:31:05.820] [critical] > Added textures/title_static/gFileSelPleaseChooseAQuestENGTex
+  [2026-09-17 05:31:05.820] [critical] > Added textures/title_static/gFileSelPleaseChooseAQuestGERTex
+  [2026-09-17 05:31:05.820] [critical] > Added textures/title_static/gFileSelPleaseChooseAQuestJPNTex
+  [2026-09-17 05:31:05.820] [critical] Adding version file
+  [2026-09-17 05:31:05.820] [critical] Done! Took 4544ms
+  [2026-09-17 05:31:05.820] [critical] Exported to E:/test/bb/build-vs/soh/soh.o2r
+  [2026-09-17 05:31:05.820] [critical] ------------------------------------------------
+
+[2/6] Building the Release executable...
+MSBuild version 17.14.18+a338add32 for .NET Framework
+
+  Checking File Globs
+  N64Graphics.vcxproj -> E:\test\bb\build-vs\Torch\lib\n64graphics\Release\N64Graphics.lib
+  BinaryTools.vcxproj -> E:\test\bb\build-vs\Torch\lib\binarytools\Release\BinaryTools.lib
+  everest.vcxproj -> E:\test\bb\build-vs\_deps\apcpp-build\mbedtls_bin\3rdparty\everest\Release\everest.lib
+  p256m.vcxproj -> E:\test\bb\build-vs\_deps\apcpp-build\mbedtls_bin\3rdparty\p256-m\Release\p256m.lib
+  jsoncpp_static.vcxproj -> E:\test\bb\build-vs\_deps\apcpp-build\jsoncpp\src\lib_json\Release\jsoncpp.lib
+  monocypher.vcxproj -> E:\test\bb\build-vs\libultraship\Release\monocypher.lib
+  ImGui.vcxproj -> E:\test\bb\build-vs\libultraship\Release\ImGui.lib
+  zlibstatic.vcxproj -> E:\test\bb\build-vs\_deps\zlib-build\Release\zlibstatic.lib
+  tinyxml2.vcxproj -> E:\test\bb\build-vs\_deps\tinyxml2-build\Release\tinyxml2.lib
+  stb.vcxproj -> E:\test\bb\build-vs\libultraship\Release\stb.lib
+  yaml-cpp.vcxproj -> E:\test\bb\build-vs\_deps\yaml-cpp-build\Release\yaml-cpp.lib
+  prism.vcxproj -> E:\test\bb\build-vs\_deps\prism-build\Release\prism.lib
+  mbedcrypto.vcxproj -> E:\test\bb\build-vs\_deps\apcpp-build\mbedtls_bin\library\Release\mbedcrypto.lib
+  libultraship.vcxproj -> E:\test\bb\x64\Release\libultraship.lib
+  torch.vcxproj -> E:\test\bb\build-vs\Torch\Release\torch.lib
+  mbedx509.vcxproj -> E:\test\bb\build-vs\_deps\apcpp-build\mbedtls_bin\library\Release\mbedx509.lib
+  mbedtls.vcxproj -> E:\test\bb\build-vs\_deps\apcpp-build\mbedtls_bin\library\Release\mbedtls.lib
+  ixwebsocket.vcxproj -> E:\test\bb\build-vs\_deps\apcpp-build\IXWebSocket\Release\ixwebsocket.lib
+  Auto build dll exports
+  APCpp.vcxproj -> E:\test\bb\build-vs\_deps\apcpp-build\Release\APCpp.dll
+  MegaSouls.cpp
+  fishsanity.cpp
+  settings.cpp
+  ArchipelagoClient.cpp
+  SohMenuNetwork.cpp
+     Creating library E:/test/bb/x64/Release/soh.lib and object E:/test/bb/x64/Release/soh.exp
+  Generating code
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+E:\test\bb\src\overlays\actors\ovl_En_St\z_en_st.c(566): warning C4715: 'EnSt_DecrStunTimer': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Po_Field\z_en_po_field.c(410): warning C4716: 'EnPoField_SetFleeSpeed': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_player_actor\z_player.c(2484): warning C4715: 'Player_GetItemOnButton': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_view.c(208): warning C4716: 'View_SetDistortionSpeed': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_lights.c(207): warning C4716: 'Lights_FreeNode': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_camera.c(6327): warning C4716: 'Camera_Demo7': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_camera.c(2328): warning C4716: 'Camera_Parallel3': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\boot\z_std_dma.c(435): warning C4716: 'DmaMgr_SendRequest2': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_Demo_Gj\z_demo_gj.c(237): warning C4715: 'DemoGj_FindGanon': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Ko\z_en_ko.c(927): warning C4715: 'EnKo_AdultEnemy': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\audio_load.c(797): warning C4700: uninitialized local variable 'table' used [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_lifemeter.c(363): warning C4715: 'getHealthMeterXOffset': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\audio_load.c(448): warning C4715: 'AudioLoad_SyncLoadSample': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\audio_load.c(473): warning C4715: 'AudioLoad_SyncLoadInstrument': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\db_camera.c(269): warning C4700: uninitialized local variable 'sph' used [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Dekubaba\z_en_dekubaba.c(534): warning C4700: uninitialized local variable 'headShiftZ' used [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_camera.c(8057): warning C4715: 'Camera_ChangeDataIdx': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_camera.c(3125): warning C4715: 'Camera_Battle1': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_camera.c(3942): warning C4715: 'Camera_KeepOn4': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_camera.c(2309): warning C4716: 'Camera_Parallel1': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_camera.c(7388): warning C4715: 'Camera_UpdateWater': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\audio_load.c(634): warning C4715: 'AudioLoad_SyncInitSeqPlayerInternal': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Sw\z_en_sw.c(117): warning C4715: 'func_80B0BE20': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\audio_load.c(510): warning C4172: returning address of local variable or temporary : sDat [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_skelanime.c(1538): warning C4716: 'SkelAnime_InitSkin': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_skelanime.c(1511): warning C4716: 'SkelAnime_InitFlex': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\code\z_skelanime.c(1475): warning C4716: 'SkelAnime_Init': must return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Ko\z_en_ko.c(958): warning C4715: 'EnKo_AdultSaved': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Ko\z_en_ko.c(896): warning C4715: 'EnKo_ChildSaria': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Ko\z_en_ko.c(865): warning C4715: 'EnKo_ChildStone': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Ko\z_en_ko.c(834): warning C4715: 'EnKo_ChildStart': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Ko\z_en_ko.c(1135): warning C4715: 'func_80A98ECC': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Go2\z_en_go2.c(787): warning C4715: 'EnGo2_GetTextId': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_Bg_Hidan_Hamstep\z_bg_hidan_hamstep.c(106): warning C4700: uninitialized local variable 'pos' used [E:\test\bb\build-vs\soh.vcxproj]
+E:\test\bb\src\overlays\actors\ovl_En_Go2\z_en_go2.c(821): warning C4715: 'EnGo2_UpdateTalkState': not all control paths return a value [E:\test\bb\build-vs\soh.vcxproj]
+  All 112405 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+libultraship.lib(ControlDeck.cpp.obj) : warning LNK4204: 'E:\test\bb\x64\Release\libultraship.pdb' is missing debugging information for referencing module; linking object as if no debug info [E:\test\bb\build-vs\soh.vcxproj]
+libultraship.lib(ControlDeck.cpp.obj) : warning LNK4204: 'E:\test\bb\x64\Release\libultraship.pdb' is missing debugging information for referencing module; linking object as if no debug info [E:\test\bb\build-vs\soh.vcxproj]
+libultraship.lib(Controller.cpp.obj) : warning LNK4204: 'E:\test\bb\x64\Release\libultraship.pdb' is missing debugging information for referencing module; linking object as if no debug info [E:\test\bb\build-vs\soh.vcxproj]
+libultraship.lib(glob.obj) : warning LNK4204: 'E:\test\bb\x64\Release\libultraship.pdb' is missing debugging information for referencing module; linking object as if no debug info [E:\test\bb\build-vs\soh.vcxproj]
+libultraship.lib(Controller.cpp.obj) : warning LNK4204: 'E:\test\bb\x64\Release\libultraship.pdb' is missing debugging information for referencing module; linking object as if no debug info [E:\test\bb\build-vs\soh.vcxproj]
+libultraship.lib(ControllerDefaultMappings.cpp.obj) : warning LNK4204: 'E:\test\bb\x64\Release\libultraship.pdb' is missing debugging information for referencing module; linking object as if no debug info [E:\test\bb\build-vs\soh.vcxproj]
+libultraship.lib(ControllerDefaultMappings.cpp.obj) : warning LNK4204: 'E:\test\bb\x64\Release\libultraship.pdb' is missing debugging information for referencing module; linking object as if no debug info [E:\test\bb\build-vs\soh.vcxproj]
+LINK : warning LNK4286: symbol '??1Node@YAML@@QEAA@XZ (public: __cdecl YAML::Node::~Node(void))' defined in 'torch.lib(Companion.obj)' is imported by 'TorchExtract.obj' [E:\test\bb\build-vs\soh.vcxproj]
+LINK : warning LNK4286: symbol '??0Node@YAML@@QEAA@XZ (public: __cdecl YAML::Node::Node(void))' defined in 'torch.lib(Companion.obj)' is imported by 'TorchExtract.obj' [E:\test\bb\build-vs\soh.vcxproj]
+  soh.vcxproj -> E:\test\bb\x64\Release\soh.exe
+  		Copying asset ymls...	
+Terminate batch job (Y/N)? 
+Terminate batch job (Y/N)? 
+
+[3/6] Copying the fresh soh.o2r to runtime locations...
+
+
+[5/6] Runtime verification...
+Fresh EXE:    bytes
+Root  EXE: E:\test\bb\soh.exe   bytes
+Root O2R: E:\test\bb\soh.o2r  4468810 bytes
+
+[6/6] Done.
+============================================================
+BUILD COMPLETE
+IMPORTANT: launch E:\test\bb\soh.exe after this script finishes.
+APWorld: soh_extreme_0.7.55.apworld
+0.7.55 adds enemy drops, correct Grab/Strength progression, grass logic, and keeps the death-safe AP queue.
+applying AP settings, exactly like normal SoH randomizer loading.
+============================================================
+        1 file(s) copied.

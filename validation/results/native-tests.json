@@ -1,0 +1,36 @@
+[
+  {
+    "compiler": "clang",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/mnt/data/patch1121/native",
+      "/mnt/data/patch1121/native-tests/drop_test.c",
+      "-o",
+      "/mnt/data/patch1121/native-tests/drop_clang"
+    ],
+    "passed": true,
+    "result": "ordinary-drop and capacity cases: 12840 passed",
+    "scope": "verbatim ordinary-drop production functions with controlled engine services; pure capacity policy"
+  },
+  {
+    "compiler": "gcc",
+    "command": [
+      "gcc",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/mnt/data/patch1121/native",
+      "/mnt/data/patch1121/native-tests/drop_test.c",
+      "-o",
+      "/mnt/data/patch1121/native-tests/drop_gcc"
+    ],
+    "passed": true,
+    "result": "ordinary-drop and capacity cases: 12840 passed",
+    "scope": "verbatim ordinary-drop production functions with controlled engine services; pure capacity policy"
+  }
+]

@@ -1,0 +1,1943 @@
+{
+  "checks": [
+    {
+      "name": "individual AP package version",
+      "passed": true,
+      "actual": "0.11.14",
+      "expected": "0.11.14"
+    },
+    {
+      "name": "individual location ID stable",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "individual grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "individual grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "individual grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "individual grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "individual grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "individual grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "individual grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "individual grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "individual grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "individual grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "individual grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "individual grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "individual grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "individual grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "individual grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "individual grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "individual mode generic Animal Soul is not Cucco Soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "scale plus climb before removal",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "remove scale invalidates waterfall reachability",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "restore scale restores waterfall reachability",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "individual full-inventory waterfall",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "combined AP package version",
+      "passed": true,
+      "actual": "0.11.14",
+      "expected": "0.11.14"
+    },
+    {
+      "name": "combined location ID stable",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "combined grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "combined grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "combined grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "combined grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "combined grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Animal Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "combined grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Animal Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "combined grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Animal Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "combined grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Animal Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "combined grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "combined grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "combined grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "combined grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "combined grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Animal Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "combined grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Animal Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "combined grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Animal Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "combined grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Animal Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "combined full-inventory waterfall",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no-souls AP package version",
+      "passed": true,
+      "actual": "0.11.14",
+      "expected": "0.11.14"
+    },
+    {
+      "name": "no-souls location ID stable",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "no-souls grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "no-souls grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "no-souls grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "no-souls grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "no-souls grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "no-souls grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "no-souls grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "no-souls grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "no-souls grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "no-souls grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "no-souls grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "no-souls grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "no-souls grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "no-souls grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "no-souls grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "no-souls grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "no-souls full-inventory waterfall",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "grab-innate AP package version",
+      "passed": true,
+      "actual": "0.11.14",
+      "expected": "0.11.14"
+    },
+    {
+      "name": "grab-innate location ID stable",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "grab-innate grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "grab-innate grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "grab-innate grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "grab-innate grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "grab-innate grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "grab-innate grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "grab-innate grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "grab-innate grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "grab-innate grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "grab-innate grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "grab-innate grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "grab-innate grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "grab-innate grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "grab-innate grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "grab-innate grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "grab-innate grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "grab-innate full-inventory waterfall",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "climb-innate AP package version",
+      "passed": true,
+      "actual": "0.11.14",
+      "expected": "0.11.14"
+    },
+    {
+      "name": "climb-innate location ID stable",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "climb-innate grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "climb-innate grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "climb-innate grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "climb-innate grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "climb-innate grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "climb-innate grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "climb-innate grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "climb-innate grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "climb-innate grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "climb-innate grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "climb-innate grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "climb-innate grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "climb-innate grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "climb-innate grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "climb-innate grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "climb-innate grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "climb-innate full-inventory waterfall",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "swim-innate AP package version",
+      "passed": true,
+      "actual": "0.11.14",
+      "expected": "0.11.14"
+    },
+    {
+      "name": "swim-innate location ID stable",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "swim-innate grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "swim-innate full-inventory waterfall",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "all-innate AP package version",
+      "passed": true,
+      "actual": "0.11.14",
+      "expected": "0.11.14"
+    },
+    {
+      "name": "all-innate location ID stable",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "all-innate grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "all-innate full-inventory waterfall",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "adult-only AP package version",
+      "passed": true,
+      "actual": "0.11.14",
+      "expected": "0.11.14"
+    },
+    {
+      "name": "adult-only location ID stable",
+      "passed": true,
+      "actual": 121,
+      "expected": 121
+    },
+    {
+      "name": "adult-only grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "adult-only grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "adult-only grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "adult-only grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "adult-only grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "adult-only grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "adult-only grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": false
+    },
+    {
+      "name": "adult-only grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": false,
+      "virtual_swim": true
+    },
+    {
+      "name": "adult-only grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "adult-only grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "adult-only grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "adult-only grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "adult-only grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "adult-only grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "adult-only grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": false
+    },
+    {
+      "name": "adult-only grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true,
+      "inventory": [
+        "Strength Upgrade",
+        "Cucco Soul",
+        "Climb",
+        "Progressive Scale"
+      ],
+      "upper_stream": true,
+      "virtual_grab": true,
+      "virtual_swim": true
+    },
+    {
+      "name": "adult-only full-inventory waterfall",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "UT uses slot options not conflicting local options",
+      "passed": true,
+      "actual": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "expected": [
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "UT grab=False cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=False cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=False cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=False cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "UT grab=False cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=False cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=False cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=False cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "UT grab=True cucco=False climb=False swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=True cucco=False climb=False swim=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=True cucco=False climb=True swim=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "UT grab=True cucco=False climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "UT grab=True cucco=True climb=False swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "UT grab=True cucco=True climb=False swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "UT grab=True cucco=True climb=True swim=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "UT grab=True cucco=True climb=True swim=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    }
+  ],
+  "total": 173,
+  "failures": 0,
+  "scope": "Actual AP core/world graph, collection, virtual abilities and slot-data regeneration. No placement fill or game engine simulation. Restricted schema/bsdiff adapters only."
+}

@@ -1,0 +1,32 @@
+{
+  "compile_command": [
+    "/usr/local/swift/usr/bin/clang++",
+    "-std=c++20",
+    "-fms-extensions",
+    "-O1",
+    "-I",
+    "/mnt/data/gv_fix/patch",
+    "-I",
+    "/mnt/data/gv_fix/baseline",
+    "-I",
+    "/mnt/data/gv_fix/baseline/include",
+    "-I",
+    "/mnt/data/gv_fix/baseline/src",
+    "-I",
+    "/mnt/data/gv_fix/baseline/soh",
+    "-I",
+    "/mnt/data/gv_fix/baseline/assets",
+    "-I",
+    "/mnt/data/gv_fix/baseline/libultraship/include",
+    "/mnt/data/gv_fix/results/native-capabilities/capabilities.cpp",
+    "-o",
+    "/mnt/data/gv_fix/results/native-capabilities/capabilities"
+  ],
+  "compile_exit": 0,
+  "compile_stderr": "",
+  "passed": true,
+  "run_exit": 0,
+  "stdout": "checks=1401 failures=0\n",
+  "stderr": "",
+  "scope": "Compile production capability helpers/conditions with actual native enums.\nControlled inventory/context services, NOT a complete game build/physics test.\n"
+}

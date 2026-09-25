@@ -1,3 +1,4 @@
+#include "soh/Enhancements/randomizer/ProgressionItemVisuals.h"
 #include <ship/Context.h>
 #include <fast/Fast3dGui.h>
 
@@ -142,6 +143,8 @@ std::map<uint32_t, ItemMapEntry> gregMapping = {
 };
 
 std::map<uint32_t, ItemMapEntry> customItemsMapping = {
+    { RG_ROLL, { RG_ROLL, "RG_ROLL", "RG_ROLL_Faded", gExtremeRollIconTex } },
+    { RG_SHOVEL, { RG_SHOVEL, "RG_SHOVEL", "RG_SHOVEL_Faded", gExtremeShovelIconTex } },
     { RG_TRIFORCE_PIECE, { RG_TRIFORCE_PIECE, "RG_TRIFORCE_PIECE", "RG_TRIFORCE_PIECE_Faded", gTriforcePieceTex } },
     { RG_ROCS_FEATHER, { RG_ROCS_FEATHER, "RG_ROCS_FEATHER", "RG_ROCS_FEATHER_Faded", gRocsFeatherTex } },
     { RG_GOHMA_SOUL, { RG_GOHMA_SOUL, "RG_GOHMA_SOUL", "RG_GOHMA_SOUL_Faded", gBossSoulTex } },

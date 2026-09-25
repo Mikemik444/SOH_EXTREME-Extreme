@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "name": "poe_intro_lifecycle_gate",
+  "compile_command": [
+    "g++",
+    "-std=c++17",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I",
+    "/mnt/data/fix_01112/patched",
+    "/mnt/data/fix_01112/validation/results/poe-intro-build/intro.cpp",
+    "-o",
+    "/mnt/data/fix_01112/validation/results/poe-intro-build/intro"
+  ],
+  "compile_stderr": "",
+  "stdout": "Four real intro variants stay hidden but update; combat sisters/decoys remain frozen without their soul; post-init erased params and soul unlock covered.\n",
+  "stderr": ""
+}

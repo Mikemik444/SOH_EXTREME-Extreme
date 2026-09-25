@@ -1,0 +1,2625 @@
+{
+  "scope": "Targeted production AP rules, positive alternatives, and whole-graph UT replay.\n\nNo physics, live UI, or game-process verification. Full-inventory tests retain\nhistorical events except when explicitly removing a contents/event dependency.\n",
+  "group": "lacs",
+  "checks": [
+    {
+      "test": "version",
+      "passed": true,
+      "actual": "0.11.17",
+      "expected": "0.11.17"
+    },
+    {
+      "test": "all inventory locations in AP model",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=0 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=0 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=0 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=0 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=1 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=1 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=1 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=1 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=2 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=2 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=2 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=2 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=3 gregmode=0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=3 gregmode=1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=3 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=3 gregmode=2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=4 gregmode=0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=4 gregmode=1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=4 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=4 gregmode=2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=5 gregmode=0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=5 gregmode=1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=5 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=5 gregmode=2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=6 gregmode=0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=6 gregmode=1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=6 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=6 gregmode=2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=7 gregmode=0",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=7 gregmode=1",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=0 mode=7 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=0 mode=7 gregmode=2",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=0 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=0 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=0 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=0 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=1 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=1 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=1 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=1 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=2 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=2 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=2 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=2 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=3 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=3 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=3 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=3 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=4 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=4 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=4 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=4 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=5 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=5 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=5 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=5 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=6 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=6 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=6 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=6 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=0 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=0 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=0 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=0 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=0 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=0 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=0 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=0 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=7 gregmode=0",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=1 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=1 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=1 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=1 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=1 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=1 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=1 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=1 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=7 gregmode=1",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=2 n=0 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=2 n=0 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=2 n=1 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=2 n=1 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=2 n=2 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=2 n=2 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=2 n=3 greg=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS hunt=1 mode=7 gregmode=2 n=3 greg=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "LACS pair follows selected mode hunt=1 mode=7 gregmode=2",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "test": "Triforce actual cutscene missing Shadow Medallion",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "test": "Triforce actual cutscene missing Spirit Medallion",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    }
+  ],
+  "total": 436,
+  "failures": 0,
+  "coverage": {}
+}

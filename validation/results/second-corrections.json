@@ -1,0 +1,11 @@
+{
+  "additional_ap_grass_locations": 52,
+  "fixes": [
+    "Talon spelling and Cucco/Grab/NPC/language",
+    "ZR branch requirements and native alternatives",
+    "Deku Theater language",
+    "GTG water silver local actions",
+    "small rocks no Hammer",
+    "native scrub NPC soul with speech disabled"
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "version": "0.11.17",
+  "all_selected_reports_passed": true,
+  "reports": [
+    {
+      "report": "final-zip-prerequisites.json",
+      "passed": true,
+      "assertions": 1999
+    },
+    {
+      "report": "final-zip-item-prerequisites.json",
+      "passed": true,
+      "assertions": 1879
+    },
+    {
+      "report": "final-zip-age.json",
+      "passed": true,
+      "assertions": 579
+    },
+    {
+      "report": "final-zip-time.json",
+      "passed": true,
+      "assertions": 23
+    },
+    {
+      "report": "final-zip-object-actions.json",
+      "passed": true,
+      "assertions": 795
+    },
+    {
+      "report": "targeted-actions.json",
+      "passed": true,
+      "assertions": 284
+    },
+    {
+      "report": "targeted-lacs.json",
+      "passed": true,
+      "assertions": 436
+    },
+    {
+      "report": "final-zip-ut.json",
+      "passed": true,
+      "assertions": 29
+    },
+    {
+      "report": "fishing-bush-regression-combined.json",
+      "passed": true,
+      "assertions": 250
+    },
+    {
+      "report": "fishing-bush-regression-unshuffled.json",
+      "passed": true,
+      "assertions": 73
+    },
+    {
+      "report": "native-corrections-clang.json",
+      "passed": true,
+      "assertions": null
+    },
+    {
+      "report": "native-corrections-gcc.json",
+      "passed": true,
+      "assertions": null
+    },
+    {
+      "report": "native-finder-clang.json",
+      "passed": true,
+      "assertions": null
+    },
+    {
+      "report": "native-fishing-regression.json",
+      "passed": true,
+      "assertions": null
+    },
+    {
+      "report": "final-zip-day-triforce.json",
+      "passed": true,
+      "assertions": null
+    },
+    {
+      "report": "final-zip-night-ganon.json",
+      "passed": true,
+      "assertions": null
+    },
+    {
+      "report": "zip-load-final.json",
+      "passed": true,
+      "assertions": null
+    },
+    {
+      "report": "catalogue-final.json",
+      "passed": true,
+      "assertions": null
+    }
+  ],
+  "physical_playtest": false,
+  "full_game_build": false
+}

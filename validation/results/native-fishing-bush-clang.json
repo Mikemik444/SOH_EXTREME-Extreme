@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "command": [
+    "/usr/local/swift/usr/bin/clang++",
+    "-std=c++20",
+    "-fms-extensions",
+    "-O1",
+    "-I",
+    "/mnt/data/fishing_fix/native",
+    "-I",
+    "/mnt/data/fishing_fix/native/include",
+    "-I",
+    "/mnt/data/fishing_fix/native/src",
+    "-I",
+    "/mnt/data/fishing_fix/native/soh",
+    "-I",
+    "/mnt/data/fishing_fix/native/assets",
+    "-I",
+    "/mnt/data/fishing_fix/native/libultraship/include",
+    "-I",
+    "/mnt/data/fishing_fix/native/libultraship/include/ship/utils/binarytools",
+    "/mnt/data/fishing_fix/results/native-fishing-clangpp/test.cpp",
+    "-o",
+    "/mnt/data/fishing_fix/results/native-fishing-clangpp/test"
+  ],
+  "compile_exit": 0,
+  "compile_stderr": "",
+  "stdout": "cases=11004 failures=0\n",
+  "stderr": "",
+  "scope": "Compile production CanUse, animal-soul helpers, NPC classifier and bush/grass\ninteraction branches against the supplied native enums and OptionValue type.\nInventory/context and engine flag reads are controlled test services.\nThis is NOT an engine playthrough or complete MSVC executable build.\n"
+}

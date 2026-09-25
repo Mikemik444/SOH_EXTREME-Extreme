@@ -1,0 +1,38 @@
+[
+  {
+    "compiler": "clang",
+    "passed": true,
+    "result": "Item_Give Bombchu/assigned-bomb branch cases: 10990 passed",
+    "scope": "verbatim Item_Give Bombchu prerequisite and Bombchu/assigned-bomb branches, actual ItemID enums, controlled inventory and hooks; NOT the full game translation unit",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/mnt/data/patch1121/native",
+      "-I/mnt/data/patch1121/headers/soh/include",
+      "/mnt/data/patch1121/native-tests/grants.c",
+      "-o",
+      "/mnt/data/patch1121/native-tests/grants-clang"
+    ]
+  },
+  {
+    "compiler": "gcc",
+    "passed": true,
+    "result": "Item_Give Bombchu/assigned-bomb branch cases: 10990 passed",
+    "scope": "verbatim Item_Give Bombchu prerequisite and Bombchu/assigned-bomb branches, actual ItemID enums, controlled inventory and hooks; NOT the full game translation unit",
+    "command": [
+      "gcc",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/mnt/data/patch1121/native",
+      "-I/mnt/data/patch1121/headers/soh/include",
+      "/mnt/data/patch1121/native-tests/grants.c",
+      "-o",
+      "/mnt/data/patch1121/native-tests/grants-gcc"
+    ]
+  }
+]

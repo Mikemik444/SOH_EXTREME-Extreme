@@ -1,0 +1,21 @@
+{
+  "seed": 2201,
+  "players": 2,
+  "status": "TIME_LIMIT",
+  "completed": false,
+  "passed": null,
+  "time_limit_seconds": 120,
+  "stages_completed": [
+    "generate_early",
+    "create_regions",
+    "create_items",
+    "set_rules",
+    "connect_entrances",
+    "generate_basic",
+    "pre_fill",
+    "all_state_reachability"
+  ],
+  "all_state_blocked": [],
+  "stopped_at": "distribute_items_restrictive",
+  "note": "Tool execution limit terminated this attempt during fill. No beatability or completed multiworld claim."
+}

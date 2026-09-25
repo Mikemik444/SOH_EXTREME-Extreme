@@ -1,0 +1,93 @@
+{
+  "group": "clock",
+  "total": 14,
+  "failures": 0,
+  "checks": [
+    {
+      "name": "day frozen day helper",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "day frozen night helper",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "day unlock permits day",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "day unlock permits night",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "day drawbridge child",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "day drawbridge adult",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "day no universal Flow requirement on Deku lobby GS",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "night frozen day helper",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "night frozen night helper",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "night unlock permits day",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "night unlock permits night",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "night drawbridge child",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "night drawbridge adult",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "night no universal Flow requirement on Deku lobby GS",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    }
+  ],
+  "coverage": {},
+  "scope": "Real AP 0.6.7 graph, collection/cache and rules; no game physics or UI. Restricted offline dependency adapters only."
+}

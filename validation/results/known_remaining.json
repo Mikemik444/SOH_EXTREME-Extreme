@@ -1,0 +1,3161 @@
+{
+  "entryway_anchor_count": 448,
+  "by_region": {
+    "DODONGOS_CAVERN_ENTRYWAY": 37,
+    "JABU_JABUS_BELLY_ENTRYWAY": 60,
+    "FOREST_TEMPLE_ENTRYWAY": 36,
+    "FIRE_TEMPLE_ENTRYWAY": 66,
+    "WATER_TEMPLE_ENTRYWAY": 53,
+    "SPIRIT_TEMPLE_ENTRYWAY": 54,
+    "SHADOW_TEMPLE_ENTRYWAY": 38,
+    "BOTTOM_OF_THE_WELL_ENTRYWAY": 20,
+    "ICE_CAVERN_ENTRYWAY": 20,
+    "GANONS_TOWER_ENTRYWAY": 13,
+    "GERUDO_TRAINING_GROUND_ENTRYWAY": 25,
+    "GANONS_CASTLE_ENTRYWAY": 26
+  },
+  "note": "These are not new failures introduced by this patch. Their room routes remain unaudited; AP entryway anchors and native legacy dungeon gates are not proof of physical reachability.",
+  "checks": [
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 0 Keese 1",
+      "address": 9800029,
+      "scene": 1,
+      "room": 0,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 0 Keese 2",
+      "address": 9800030,
+      "scene": 1,
+      "room": 0,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 0 Beamos 1",
+      "address": 9800031,
+      "scene": 1,
+      "room": 0,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 0 Beamos 2",
+      "address": 9800032,
+      "scene": 1,
+      "room": 0,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 0 Beamos 3",
+      "address": 9800033,
+      "scene": 1,
+      "room": 0,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 1 Keese 1",
+      "address": 9800034,
+      "scene": 1,
+      "room": 1,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 1 Keese 2",
+      "address": 9800035,
+      "scene": 1,
+      "room": 1,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 1 Baby Dodongo 1",
+      "address": 9800036,
+      "scene": 1,
+      "room": 1,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 1 Baby Dodongo 2",
+      "address": 9800037,
+      "scene": 1,
+      "room": 1,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 1 Baby Dodongo 3",
+      "address": 9800038,
+      "scene": 1,
+      "room": 1,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 1 Baby Dodongo 4",
+      "address": 9800039,
+      "scene": 1,
+      "room": 1,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 1 Baby Dodongo 5",
+      "address": 9800040,
+      "scene": 1,
+      "room": 1,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 1 Baby Dodongo 6",
+      "address": 9800041,
+      "scene": 1,
+      "room": 1,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 3 Lizalfos/Dinolfos 1",
+      "address": 9800044,
+      "scene": 1,
+      "room": 3,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 3 Lizalfos/Dinolfos 2",
+      "address": 9800045,
+      "scene": 1,
+      "room": 3,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 3 Lizalfos/Dinolfos 3",
+      "address": 9800046,
+      "scene": 1,
+      "room": 3,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 3 Lizalfos/Dinolfos 4",
+      "address": 9800047,
+      "scene": 1,
+      "room": 3,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 4 Dodongo 1",
+      "address": 9800048,
+      "scene": 1,
+      "room": 4,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 4 Dodongo 2",
+      "address": 9800049,
+      "scene": 1,
+      "room": 4,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 4 Dodongo 3",
+      "address": 9800050,
+      "scene": 1,
+      "room": 4,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 5 Armos 1",
+      "address": 9800051,
+      "scene": 1,
+      "room": 5,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 5 Armos 2",
+      "address": 9800052,
+      "scene": 1,
+      "room": 5,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 5 Armos 3",
+      "address": 9800053,
+      "scene": 1,
+      "room": 5,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 5 Keese 1",
+      "address": 9800054,
+      "scene": 1,
+      "room": 5,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 5 Keese 2",
+      "address": 9800055,
+      "scene": 1,
+      "room": 5,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 7 Keese 1",
+      "address": 9800057,
+      "scene": 1,
+      "room": 7,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 7 Keese 2",
+      "address": 9800058,
+      "scene": 1,
+      "room": 7,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 8 Keese 1",
+      "address": 9800059,
+      "scene": 1,
+      "room": 8,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 8 Keese 2",
+      "address": 9800060,
+      "scene": 1,
+      "room": 8,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 10 Baby Dodongo 1",
+      "address": 9800061,
+      "scene": 1,
+      "room": 10,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 10 Baby Dodongo 2",
+      "address": 9800062,
+      "scene": 1,
+      "room": 10,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 10 Baby Dodongo 3",
+      "address": 9800063,
+      "scene": 1,
+      "room": 10,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 11 Keese 1",
+      "address": 9800064,
+      "scene": 1,
+      "room": 11,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 11 Keese 2",
+      "address": 9800065,
+      "scene": 1,
+      "room": 11,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 11 Keese 3",
+      "address": 9800066,
+      "scene": 1,
+      "room": 11,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 14 Armos 1",
+      "address": 9800067,
+      "scene": 1,
+      "room": 14,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Dodongo's Cavern Room 15 Armos 1",
+      "address": 9800068,
+      "scene": 1,
+      "room": 15,
+      "region": "DODONGOS_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 0 Octorok 1",
+      "address": 9800071,
+      "scene": 2,
+      "room": 0,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 0 Octorok 2",
+      "address": 9800072,
+      "scene": 2,
+      "room": 0,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 0 Shabom 1",
+      "address": 9800073,
+      "scene": 2,
+      "room": 0,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 0 Shabom 2",
+      "address": 9800074,
+      "scene": 2,
+      "room": 0,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 1 Octorok 1",
+      "address": 9800075,
+      "scene": 2,
+      "room": 1,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 1 Biri 1",
+      "address": 9800076,
+      "scene": 2,
+      "room": 1,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 2 Bari 1",
+      "address": 9800077,
+      "scene": 2,
+      "room": 2,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 2 Bari 2",
+      "address": 9800078,
+      "scene": 2,
+      "room": 2,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 2 Biri 1",
+      "address": 9800079,
+      "scene": 2,
+      "room": 2,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 2 Biri 2",
+      "address": 9800080,
+      "scene": 2,
+      "room": 2,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 2 Biri 3",
+      "address": 9800081,
+      "scene": 2,
+      "room": 2,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 3 Biri 1",
+      "address": 9800082,
+      "scene": 2,
+      "room": 3,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 3 Biri 2",
+      "address": 9800083,
+      "scene": 2,
+      "room": 3,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 3 Biri 3",
+      "address": 9800084,
+      "scene": 2,
+      "room": 3,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 3 Biri 4",
+      "address": 9800085,
+      "scene": 2,
+      "room": 3,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 4 Octorok 1",
+      "address": 9800086,
+      "scene": 2,
+      "room": 4,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 5 Biri 1",
+      "address": 9800087,
+      "scene": 2,
+      "room": 5,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 5 Biri 2",
+      "address": 9800088,
+      "scene": 2,
+      "room": 5,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 5 Biri 3",
+      "address": 9800089,
+      "scene": 2,
+      "room": 5,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 5 Biri 4",
+      "address": 9800090,
+      "scene": 2,
+      "room": 5,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 5 Biri 5",
+      "address": 9800091,
+      "scene": 2,
+      "room": 5,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 6 Biri 1",
+      "address": 9800092,
+      "scene": 2,
+      "room": 6,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 6 Biri 2",
+      "address": 9800093,
+      "scene": 2,
+      "room": 6,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 7 Tailpasaran 1",
+      "address": 9800094,
+      "scene": 2,
+      "room": 7,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 7 Tailpasaran 2",
+      "address": 9800095,
+      "scene": 2,
+      "room": 7,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 7 Tailpasaran 3",
+      "address": 9800096,
+      "scene": 2,
+      "room": 7,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 7 Tailpasaran 4",
+      "address": 9800097,
+      "scene": 2,
+      "room": 7,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 7 Tailpasaran 5",
+      "address": 9800098,
+      "scene": 2,
+      "room": 7,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 8 Jabu Tentacle 1",
+      "address": 9800099,
+      "scene": 2,
+      "room": 8,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 8 Biri 1",
+      "address": 9800100,
+      "scene": 2,
+      "room": 8,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 8 Biri 2",
+      "address": 9800101,
+      "scene": 2,
+      "room": 8,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 8 Biri 3",
+      "address": 9800102,
+      "scene": 2,
+      "room": 8,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 8 Biri 4",
+      "address": 9800103,
+      "scene": 2,
+      "room": 8,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 9 Stinger 1",
+      "address": 9800104,
+      "scene": 2,
+      "room": 9,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 9 Stinger 2",
+      "address": 9800105,
+      "scene": 2,
+      "room": 9,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 9 Stinger 3",
+      "address": 9800106,
+      "scene": 2,
+      "room": 9,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 9 Stinger 4",
+      "address": 9800107,
+      "scene": 2,
+      "room": 9,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 10 Jabu Tentacle 1",
+      "address": 9800108,
+      "scene": 2,
+      "room": 10,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 11 Jabu Tentacle 1",
+      "address": 9800109,
+      "scene": 2,
+      "room": 11,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 1",
+      "address": 9800110,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 2",
+      "address": 9800111,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 3",
+      "address": 9800112,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 4",
+      "address": 9800113,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 5",
+      "address": 9800114,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 6",
+      "address": 9800115,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 7",
+      "address": 9800116,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 8",
+      "address": 9800117,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 12 Shabom 9",
+      "address": 9800118,
+      "scene": 2,
+      "room": 12,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 13 Octorok 1",
+      "address": 9800119,
+      "scene": 2,
+      "room": 13,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 13 Octorok 2",
+      "address": 9800120,
+      "scene": 2,
+      "room": 13,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Stinger 1",
+      "address": 9800121,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Stinger 2",
+      "address": 9800122,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Stinger 3",
+      "address": 9800123,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Shabom 1",
+      "address": 9800124,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Shabom 2",
+      "address": 9800125,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Shabom 3",
+      "address": 9800126,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Shabom 4",
+      "address": 9800127,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Shabom 5",
+      "address": 9800128,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Shabom 6",
+      "address": 9800129,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Jabu Jabu's Belly Room 14 Shabom 7",
+      "address": 9800130,
+      "scene": 2,
+      "room": 14,
+      "region": "JABU_JABUS_BELLY_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 0 Wolfos 1",
+      "address": 9800131,
+      "scene": 3,
+      "room": 0,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 0 Wolfos 2",
+      "address": 9800132,
+      "scene": 3,
+      "room": 0,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 1 Skulltula 1",
+      "address": 9800133,
+      "scene": 3,
+      "room": 1,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 3 Skulltula 1",
+      "address": 9800134,
+      "scene": 3,
+      "room": 3,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 4 Bubble 1",
+      "address": 9800135,
+      "scene": 3,
+      "room": 4,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 5 Skulltula 1",
+      "address": 9800136,
+      "scene": 3,
+      "room": 5,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 6 Stalfos 1",
+      "address": 9800137,
+      "scene": 3,
+      "room": 6,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 6 Stalfos 2",
+      "address": 9800138,
+      "scene": 3,
+      "room": 6,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 7 Octorok 1",
+      "address": 9800139,
+      "scene": 3,
+      "room": 7,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 7 Deku Baba 1",
+      "address": 9800140,
+      "scene": 3,
+      "room": 7,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 7 Deku Baba 2",
+      "address": 9800141,
+      "scene": 3,
+      "room": 7,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 8 Octorok 1",
+      "address": 9800142,
+      "scene": 3,
+      "room": 8,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 8 Deku Baba 1",
+      "address": 9800143,
+      "scene": 3,
+      "room": 8,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 8 Deku Baba 2",
+      "address": 9800144,
+      "scene": 3,
+      "room": 8,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 10 Bubble 1",
+      "address": 9800145,
+      "scene": 3,
+      "room": 10,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 11 Bubble 1",
+      "address": 9800146,
+      "scene": 3,
+      "room": 11,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 11 Bubble 2",
+      "address": 9800147,
+      "scene": 3,
+      "room": 11,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 11 Bubble 3",
+      "address": 9800148,
+      "scene": 3,
+      "room": 11,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 15 Skulltula 1",
+      "address": 9800149,
+      "scene": 3,
+      "room": 15,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 15 Skulltula 2",
+      "address": 9800150,
+      "scene": 3,
+      "room": 15,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 15 Skulltula 3",
+      "address": 9800151,
+      "scene": 3,
+      "room": 15,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 17 Skulltula 1",
+      "address": 9800152,
+      "scene": 3,
+      "room": 17,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 18 Floormaster 1",
+      "address": 9800153,
+      "scene": 3,
+      "room": 18,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 19 Wallmaster 1",
+      "address": 9800154,
+      "scene": 3,
+      "room": 19,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 20 Bubble 1",
+      "address": 9800155,
+      "scene": 3,
+      "room": 20,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 20 Bubble 2",
+      "address": 9800156,
+      "scene": 3,
+      "room": 20,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 20 Wallmaster 1",
+      "address": 9800157,
+      "scene": 3,
+      "room": 20,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 21 Bubble 1",
+      "address": 9800158,
+      "scene": 3,
+      "room": 21,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Room 21 Bubble 2",
+      "address": 9800159,
+      "scene": 3,
+      "room": 21,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 0 Keese 1",
+      "address": 9800160,
+      "scene": 4,
+      "room": 0,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 0 Keese 2",
+      "address": 9800161,
+      "scene": 4,
+      "room": 0,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 1",
+      "address": 9800162,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Keese 1",
+      "address": 9800163,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 2",
+      "address": 9800164,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Keese 2",
+      "address": 9800165,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Keese 3",
+      "address": 9800166,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 3",
+      "address": 9800167,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 4",
+      "address": 9800168,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 5",
+      "address": 9800169,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 6",
+      "address": 9800170,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 7",
+      "address": 9800171,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 8",
+      "address": 9800172,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Keese 4",
+      "address": 9800173,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 1 Bubble 9",
+      "address": 9800174,
+      "scene": 4,
+      "room": 1,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 3 Flare Dancer 1",
+      "address": 9800175,
+      "scene": 4,
+      "room": 3,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 4 Torch Slug 1",
+      "address": 9800176,
+      "scene": 4,
+      "room": 4,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 4 Torch Slug 2",
+      "address": 9800177,
+      "scene": 4,
+      "room": 4,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 5 Torch Slug 1",
+      "address": 9800178,
+      "scene": 4,
+      "room": 5,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 5 Torch Slug 2",
+      "address": 9800179,
+      "scene": 4,
+      "room": 5,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 5 Torch Slug 3",
+      "address": 9800180,
+      "scene": 4,
+      "room": 5,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 10 Keese 1",
+      "address": 9800181,
+      "scene": 4,
+      "room": 10,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 10 Keese 2",
+      "address": 9800182,
+      "scene": 4,
+      "room": 10,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 10 Door Trap 1",
+      "address": 9800183,
+      "scene": 4,
+      "room": 10,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 10 Door Trap 2",
+      "address": 9800184,
+      "scene": 4,
+      "room": 10,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 10 Keese 3",
+      "address": 9800185,
+      "scene": 4,
+      "room": 10,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 10 Door Trap 3",
+      "address": 9800186,
+      "scene": 4,
+      "room": 10,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 13 Keese 1",
+      "address": 9800187,
+      "scene": 4,
+      "room": 13,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 13 Keese 2",
+      "address": 9800188,
+      "scene": 4,
+      "room": 13,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 13 Keese 3",
+      "address": 9800189,
+      "scene": 4,
+      "room": 13,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 14 Keese 1",
+      "address": 9800190,
+      "scene": 4,
+      "room": 14,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 14 Keese 2",
+      "address": 9800191,
+      "scene": 4,
+      "room": 14,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 14 Keese 3",
+      "address": 9800192,
+      "scene": 4,
+      "room": 14,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 14 Keese 4",
+      "address": 9800193,
+      "scene": 4,
+      "room": 14,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 15 Keese 1",
+      "address": 9800194,
+      "scene": 4,
+      "room": 15,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 15 Torch Slug 1",
+      "address": 9800195,
+      "scene": 4,
+      "room": 15,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 15 Keese 2",
+      "address": 9800196,
+      "scene": 4,
+      "room": 15,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 15 Torch Slug 2",
+      "address": 9800197,
+      "scene": 4,
+      "room": 15,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 15 Torch Slug 3",
+      "address": 9800198,
+      "scene": 4,
+      "room": 15,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 15 Keese 3",
+      "address": 9800199,
+      "scene": 4,
+      "room": 15,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 15 Torch Slug 4",
+      "address": 9800200,
+      "scene": 4,
+      "room": 15,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 16 Bubble 1",
+      "address": 9800201,
+      "scene": 4,
+      "room": 16,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 16 Bubble 2",
+      "address": 9800202,
+      "scene": 4,
+      "room": 16,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 16 Bubble 3",
+      "address": 9800203,
+      "scene": 4,
+      "room": 16,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 16 Bubble 4",
+      "address": 9800204,
+      "scene": 4,
+      "room": 16,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 16 Bubble 5",
+      "address": 9800205,
+      "scene": 4,
+      "room": 16,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 18 Like Like 1",
+      "address": 9800206,
+      "scene": 4,
+      "room": 18,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 18 Flying Floor Tile 1",
+      "address": 9800207,
+      "scene": 4,
+      "room": 18,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 18 Flying Floor Tile 2",
+      "address": 9800208,
+      "scene": 4,
+      "room": 18,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 18 Flying Floor Tile 3",
+      "address": 9800209,
+      "scene": 4,
+      "room": 18,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 18 Flying Floor Tile 4",
+      "address": 9800210,
+      "scene": 4,
+      "room": 18,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 18 Flying Floor Tile 5",
+      "address": 9800211,
+      "scene": 4,
+      "room": 18,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Like Like 1",
+      "address": 9800212,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Flying Floor Tile 1",
+      "address": 9800213,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Flying Floor Tile 2",
+      "address": 9800214,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Flying Floor Tile 3",
+      "address": 9800215,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Flying Floor Tile 4",
+      "address": 9800216,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Flying Floor Tile 5",
+      "address": 9800217,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Flying Floor Tile 6",
+      "address": 9800218,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Flying Floor Tile 7",
+      "address": 9800219,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 19 Flying Floor Tile 8",
+      "address": 9800220,
+      "scene": 4,
+      "room": 19,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 21 Keese 1",
+      "address": 9800221,
+      "scene": 4,
+      "room": 21,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 21 Keese 2",
+      "address": 9800222,
+      "scene": 4,
+      "room": 21,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 21 Keese 3",
+      "address": 9800223,
+      "scene": 4,
+      "room": 21,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 21 Keese 4",
+      "address": 9800224,
+      "scene": 4,
+      "room": 21,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Fire Temple Room 24 Flare Dancer 1",
+      "address": 9800225,
+      "scene": 4,
+      "room": 24,
+      "region": "FIRE_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 0 Keese 1",
+      "address": 9800226,
+      "scene": 5,
+      "room": 0,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 0 Keese 2",
+      "address": 9800227,
+      "scene": 5,
+      "room": 0,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 0 Spike 1",
+      "address": 9800228,
+      "scene": 5,
+      "room": 0,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 0 Spike 2",
+      "address": 9800229,
+      "scene": 5,
+      "room": 0,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 0 Tektite 1",
+      "address": 9800230,
+      "scene": 5,
+      "room": 0,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 0 Tektite 2",
+      "address": 9800231,
+      "scene": 5,
+      "room": 0,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 2 Shell Blade 1",
+      "address": 9800232,
+      "scene": 5,
+      "room": 2,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 2 Shell Blade 2",
+      "address": 9800233,
+      "scene": 5,
+      "room": 2,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 2 Spike 1",
+      "address": 9800234,
+      "scene": 5,
+      "room": 2,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 2 Spike 2",
+      "address": 9800235,
+      "scene": 5,
+      "room": 2,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 2 Spike 3",
+      "address": 9800236,
+      "scene": 5,
+      "room": 2,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 2 Spike 4",
+      "address": 9800237,
+      "scene": 5,
+      "room": 2,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 2 Spike 5",
+      "address": 9800238,
+      "scene": 5,
+      "room": 2,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 3 Shell Blade 1",
+      "address": 9800239,
+      "scene": 5,
+      "room": 3,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 3 Tektite 1",
+      "address": 9800240,
+      "scene": 5,
+      "room": 3,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 3 Tektite 2",
+      "address": 9800241,
+      "scene": 5,
+      "room": 3,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 4 Stinger 1",
+      "address": 9800242,
+      "scene": 5,
+      "room": 4,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 4 Stinger 2",
+      "address": 9800243,
+      "scene": 5,
+      "room": 4,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 4 Stinger 3",
+      "address": 9800244,
+      "scene": 5,
+      "room": 4,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 4 Stinger 4",
+      "address": 9800245,
+      "scene": 5,
+      "room": 4,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 5 Keese 1",
+      "address": 9800246,
+      "scene": 5,
+      "room": 5,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 5 Keese 2",
+      "address": 9800247,
+      "scene": 5,
+      "room": 5,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 6 Like Like 1",
+      "address": 9800248,
+      "scene": 5,
+      "room": 6,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 6 Tektite 1",
+      "address": 9800249,
+      "scene": 5,
+      "room": 6,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 6 Tektite 2",
+      "address": 9800250,
+      "scene": 5,
+      "room": 6,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 6 Tektite 3",
+      "address": 9800251,
+      "scene": 5,
+      "room": 6,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 6 Tektite 4",
+      "address": 9800252,
+      "scene": 5,
+      "room": 6,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 6 Tektite 5",
+      "address": 9800253,
+      "scene": 5,
+      "room": 6,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 8 Shell Blade 1",
+      "address": 9800254,
+      "scene": 5,
+      "room": 8,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 8 Shell Blade 2",
+      "address": 9800255,
+      "scene": 5,
+      "room": 8,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 9 Tektite 1",
+      "address": 9800256,
+      "scene": 5,
+      "room": 9,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 10 Tektite 1",
+      "address": 9800257,
+      "scene": 5,
+      "room": 10,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 12 Shell Blade 1",
+      "address": 9800258,
+      "scene": 5,
+      "room": 12,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 12 Tektite 1",
+      "address": 9800259,
+      "scene": 5,
+      "room": 12,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 12 Tektite 2",
+      "address": 9800260,
+      "scene": 5,
+      "room": 12,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 12 Tektite 3",
+      "address": 9800261,
+      "scene": 5,
+      "room": 12,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 12 Tektite 4",
+      "address": 9800262,
+      "scene": 5,
+      "room": 12,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 12 Tektite 5",
+      "address": 9800263,
+      "scene": 5,
+      "room": 12,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 12 Tektite 6",
+      "address": 9800264,
+      "scene": 5,
+      "room": 12,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 14 Stinger 1",
+      "address": 9800265,
+      "scene": 5,
+      "room": 14,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 14 Stinger 2",
+      "address": 9800266,
+      "scene": 5,
+      "room": 14,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 14 Stinger 3",
+      "address": 9800267,
+      "scene": 5,
+      "room": 14,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 14 Stinger 4",
+      "address": 9800268,
+      "scene": 5,
+      "room": 14,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 14 Stinger 5",
+      "address": 9800269,
+      "scene": 5,
+      "room": 14,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 15 Tektite 1",
+      "address": 9800270,
+      "scene": 5,
+      "room": 15,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 15 Tektite 2",
+      "address": 9800271,
+      "scene": 5,
+      "room": 15,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 18 Shell Blade 1",
+      "address": 9800272,
+      "scene": 5,
+      "room": 18,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 18 Shell Blade 2",
+      "address": 9800273,
+      "scene": 5,
+      "room": 18,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 18 Shell Blade 3",
+      "address": 9800274,
+      "scene": 5,
+      "room": 18,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 19 Spike 1",
+      "address": 9800275,
+      "scene": 5,
+      "room": 19,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 19 Spike 2",
+      "address": 9800276,
+      "scene": 5,
+      "room": 19,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 19 Spike 3",
+      "address": 9800277,
+      "scene": 5,
+      "room": 19,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Water Temple Room 19 Spike 4",
+      "address": 9800278,
+      "scene": 5,
+      "room": 19,
+      "region": "WATER_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 0 Armos 1",
+      "address": 9800279,
+      "scene": 6,
+      "room": 0,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 0 Armos 2",
+      "address": 9800280,
+      "scene": 6,
+      "room": 0,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 0 Beamos 1",
+      "address": 9800281,
+      "scene": 6,
+      "room": 0,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 1 Armos 1",
+      "address": 9800282,
+      "scene": 6,
+      "room": 1,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 1 Keese 1",
+      "address": 9800283,
+      "scene": 6,
+      "room": 1,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 1 Keese 2",
+      "address": 9800284,
+      "scene": 6,
+      "room": 1,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 1 Keese 3",
+      "address": 9800285,
+      "scene": 6,
+      "room": 1,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 1 Keese 4",
+      "address": 9800286,
+      "scene": 6,
+      "room": 1,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 2 Keese 1",
+      "address": 9800287,
+      "scene": 6,
+      "room": 2,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 2 Keese 2",
+      "address": 9800288,
+      "scene": 6,
+      "room": 2,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 2 Keese 3",
+      "address": 9800289,
+      "scene": 6,
+      "room": 2,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 2 Keese 4",
+      "address": 9800290,
+      "scene": 6,
+      "room": 2,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 2 Keese 5",
+      "address": 9800291,
+      "scene": 6,
+      "room": 2,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 2 Wallmaster 1",
+      "address": 9800292,
+      "scene": 6,
+      "room": 2,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 3 Bubble 1",
+      "address": 9800293,
+      "scene": 6,
+      "room": 3,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 3 Stalfos 1",
+      "address": 9800294,
+      "scene": 6,
+      "room": 3,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 4 Lizalfos/Dinolfos 1",
+      "address": 9800295,
+      "scene": 6,
+      "room": 4,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 4 Lizalfos/Dinolfos 2",
+      "address": 9800296,
+      "scene": 6,
+      "room": 4,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 5 Armos 2",
+      "address": 9800298,
+      "scene": 6,
+      "room": 5,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 8 Beamos 1",
+      "address": 9800299,
+      "scene": 6,
+      "room": 8,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 8 Beamos 2",
+      "address": 9800300,
+      "scene": 6,
+      "room": 8,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 8 Beamos 3",
+      "address": 9800301,
+      "scene": 6,
+      "room": 8,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 10 Iron Knuckle 1",
+      "address": 9800302,
+      "scene": 6,
+      "room": 10,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 12 Like Like 1",
+      "address": 9800303,
+      "scene": 6,
+      "room": 12,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 14 Wolfos 1",
+      "address": 9800304,
+      "scene": 6,
+      "room": 14,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 15 Wallmaster 1",
+      "address": 9800305,
+      "scene": 6,
+      "room": 15,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 15 Floormaster 1",
+      "address": 9800306,
+      "scene": 6,
+      "room": 15,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 15 Like Like 1",
+      "address": 9800307,
+      "scene": 6,
+      "room": 15,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 16 Beamos 1",
+      "address": 9800308,
+      "scene": 6,
+      "room": 16,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 17 Beamos 1",
+      "address": 9800309,
+      "scene": 6,
+      "room": 17,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 18 Armos 1",
+      "address": 9800310,
+      "scene": 6,
+      "room": 18,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 18 Armos 2",
+      "address": 9800311,
+      "scene": 6,
+      "room": 18,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 18 Armos 3",
+      "address": 9800312,
+      "scene": 6,
+      "room": 18,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 18 Armos 4",
+      "address": 9800313,
+      "scene": 6,
+      "room": 18,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 20 Iron Knuckle 1",
+      "address": 9800314,
+      "scene": 6,
+      "room": 20,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Door Trap 1",
+      "address": 9800315,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Door Trap 2",
+      "address": 9800316,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Door Trap 3",
+      "address": 9800317,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Door Trap 4",
+      "address": 9800318,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Door Trap 5",
+      "address": 9800319,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Door Trap 6",
+      "address": 9800320,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Torch Slug 1",
+      "address": 9800321,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Torch Slug 2",
+      "address": 9800322,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Torch Slug 3",
+      "address": 9800323,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 22 Torch Slug 4",
+      "address": 9800324,
+      "scene": 6,
+      "room": 22,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 23 Beamos 1",
+      "address": 9800325,
+      "scene": 6,
+      "room": 23,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 23 Beamos 2",
+      "address": 9800326,
+      "scene": 6,
+      "room": 23,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 23 Beamos 3",
+      "address": 9800327,
+      "scene": 6,
+      "room": 23,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 23 Beamos 4",
+      "address": 9800328,
+      "scene": 6,
+      "room": 23,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 26 Bubble 1",
+      "address": 9800329,
+      "scene": 6,
+      "room": 26,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 26 Bubble 2",
+      "address": 9800330,
+      "scene": 6,
+      "room": 26,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 26 Bubble 3",
+      "address": 9800331,
+      "scene": 6,
+      "room": 26,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 26 Lizalfos/Dinolfos 1",
+      "address": 9800332,
+      "scene": 6,
+      "room": 26,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Spirit Temple Room 26 Lizalfos/Dinolfos 2",
+      "address": 9800333,
+      "scene": 6,
+      "room": 26,
+      "region": "SPIRIT_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 1 Keese 1",
+      "address": 9800334,
+      "scene": 7,
+      "room": 1,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 1 Keese 2",
+      "address": 9800335,
+      "scene": 7,
+      "room": 1,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 1 Redead/Gibdo 1",
+      "address": 9800336,
+      "scene": 7,
+      "room": 1,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 2 Beamos 1",
+      "address": 9800337,
+      "scene": 7,
+      "room": 2,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 4 Dead Hand 1",
+      "address": 9800338,
+      "scene": 7,
+      "room": 4,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 5 Beamos 1",
+      "address": 9800339,
+      "scene": 7,
+      "room": 5,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 7 Redead/Gibdo 1",
+      "address": 9800340,
+      "scene": 7,
+      "room": 7,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 7 Redead/Gibdo 2",
+      "address": 9800341,
+      "scene": 7,
+      "room": 7,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 8 Skulltula 1",
+      "address": 9800342,
+      "scene": 7,
+      "room": 8,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 8 Skulltula 2",
+      "address": 9800343,
+      "scene": 7,
+      "room": 8,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 8 Skulltula 3",
+      "address": 9800344,
+      "scene": 7,
+      "room": 8,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 8 Skulltula 4",
+      "address": 9800345,
+      "scene": 7,
+      "room": 8,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 9 Bubble 1",
+      "address": 9800346,
+      "scene": 7,
+      "room": 9,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 9 Wallmaster 1",
+      "address": 9800347,
+      "scene": 7,
+      "room": 9,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 9 Beamos 1",
+      "address": 9800348,
+      "scene": 7,
+      "room": 9,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 9 Stalfos 1",
+      "address": 9800349,
+      "scene": 7,
+      "room": 9,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 11 Redead/Gibdo 1",
+      "address": 9800350,
+      "scene": 7,
+      "room": 11,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 11 Redead/Gibdo 2",
+      "address": 9800351,
+      "scene": 7,
+      "room": 11,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 13 Redead/Gibdo 1",
+      "address": 9800352,
+      "scene": 7,
+      "room": 13,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 13 Redead/Gibdo 2",
+      "address": 9800353,
+      "scene": 7,
+      "room": 13,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 14 Keese 1",
+      "address": 9800354,
+      "scene": 7,
+      "room": 14,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 14 Keese 2",
+      "address": 9800355,
+      "scene": 7,
+      "room": 14,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 14 Keese 3",
+      "address": 9800356,
+      "scene": 7,
+      "room": 14,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 14 Keese 4",
+      "address": 9800357,
+      "scene": 7,
+      "room": 14,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 15 Floormaster 1",
+      "address": 9800358,
+      "scene": 7,
+      "room": 15,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 15 Floormaster 2",
+      "address": 9800359,
+      "scene": 7,
+      "room": 15,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 16 Keese 1",
+      "address": 9800360,
+      "scene": 7,
+      "room": 16,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 16 Keese 2",
+      "address": 9800361,
+      "scene": 7,
+      "room": 16,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 16 Keese 3",
+      "address": 9800362,
+      "scene": 7,
+      "room": 16,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 16 Like Like 1",
+      "address": 9800363,
+      "scene": 7,
+      "room": 16,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 17 Floormaster 1",
+      "address": 9800364,
+      "scene": 7,
+      "room": 17,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 18 Skulltula 1",
+      "address": 9800365,
+      "scene": 7,
+      "room": 18,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 19 Redead/Gibdo 1",
+      "address": 9800366,
+      "scene": 7,
+      "room": 19,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 19 Redead/Gibdo 2",
+      "address": 9800367,
+      "scene": 7,
+      "room": 19,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 20 Redead/Gibdo 1",
+      "address": 9800368,
+      "scene": 7,
+      "room": 20,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 20 Redead/Gibdo 2",
+      "address": 9800369,
+      "scene": 7,
+      "room": 20,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 21 Stalfos 1",
+      "address": 9800370,
+      "scene": 7,
+      "room": 21,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Shadow Temple Room 21 Stalfos 2",
+      "address": 9800371,
+      "scene": 7,
+      "room": 21,
+      "region": "SHADOW_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 0 Skulltula 1",
+      "address": 9800372,
+      "scene": 8,
+      "room": 0,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 0 Skulltula 2",
+      "address": 9800373,
+      "scene": 8,
+      "room": 0,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 0 Skulltula 3",
+      "address": 9800374,
+      "scene": 8,
+      "room": 0,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 0 Skulltula 4",
+      "address": 9800375,
+      "scene": 8,
+      "room": 0,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 0 Wallmaster 1",
+      "address": 9800376,
+      "scene": 8,
+      "room": 0,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 0 Like Like 1",
+      "address": 9800377,
+      "scene": 8,
+      "room": 0,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 0 Bubble 1",
+      "address": 9800378,
+      "scene": 8,
+      "room": 0,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 1 Redead/Gibdo 1",
+      "address": 9800379,
+      "scene": 8,
+      "room": 1,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 1 Redead/Gibdo 2",
+      "address": 9800380,
+      "scene": 8,
+      "room": 1,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 2 Redead/Gibdo 1",
+      "address": 9800381,
+      "scene": 8,
+      "room": 2,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 3 Keese 1",
+      "address": 9800382,
+      "scene": 8,
+      "room": 3,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 3 Keese 2",
+      "address": 9800383,
+      "scene": 8,
+      "room": 3,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 3 Keese 3",
+      "address": 9800384,
+      "scene": 8,
+      "room": 3,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 3 Beamos 1",
+      "address": 9800385,
+      "scene": 8,
+      "room": 3,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 4 Dead Hand 1",
+      "address": 9800386,
+      "scene": 8,
+      "room": 4,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 5 Keese 1",
+      "address": 9800387,
+      "scene": 8,
+      "room": 5,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 5 Keese 2",
+      "address": 9800388,
+      "scene": 8,
+      "room": 5,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 5 Keese 3",
+      "address": 9800389,
+      "scene": 8,
+      "room": 5,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 5 Keese 4",
+      "address": 9800390,
+      "scene": 8,
+      "room": 5,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Bottom of the Well Room 6 Deku Baba 1",
+      "address": 9800391,
+      "scene": 8,
+      "room": 6,
+      "region": "BOTTOM_OF_THE_WELL_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 1 Freezard 1",
+      "address": 9800392,
+      "scene": 9,
+      "room": 1,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 1 Freezard 2",
+      "address": 9800393,
+      "scene": 9,
+      "room": 1,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 1 Freezard 3",
+      "address": 9800394,
+      "scene": 9,
+      "room": 1,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 1 Freezard 4",
+      "address": 9800395,
+      "scene": 9,
+      "room": 1,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 5 Keese 1",
+      "address": 9800396,
+      "scene": 9,
+      "room": 5,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 5 Keese 2",
+      "address": 9800397,
+      "scene": 9,
+      "room": 5,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 5 Keese 3",
+      "address": 9800398,
+      "scene": 9,
+      "room": 5,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 6 Freezard 1",
+      "address": 9800399,
+      "scene": 9,
+      "room": 6,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 6 Freezard 2",
+      "address": 9800400,
+      "scene": 9,
+      "room": 6,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 7 Wolfos 1",
+      "address": 9800401,
+      "scene": 9,
+      "room": 7,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 8 Freezard 1",
+      "address": 9800402,
+      "scene": 9,
+      "room": 8,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 9 Keese 1",
+      "address": 9800403,
+      "scene": 9,
+      "room": 9,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 9 Keese 2",
+      "address": 9800404,
+      "scene": 9,
+      "room": 9,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 9 Keese 3",
+      "address": 9800405,
+      "scene": 9,
+      "room": 9,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 9 Freezard 1",
+      "address": 9800406,
+      "scene": 9,
+      "room": 9,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 9 Freezard 2",
+      "address": 9800407,
+      "scene": 9,
+      "room": 9,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 9 Freezard 3",
+      "address": 9800408,
+      "scene": 9,
+      "room": 9,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 11 Keese 1",
+      "address": 9800409,
+      "scene": 9,
+      "room": 11,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 11 Keese 2",
+      "address": 9800410,
+      "scene": 9,
+      "room": 11,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ice Cavern Room 11 Keese 3",
+      "address": 9800411,
+      "scene": 9,
+      "room": 11,
+      "region": "ICE_CAVERN_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 0 Lizalfos/Dinolfos 1",
+      "address": 9800412,
+      "scene": 10,
+      "room": 0,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 0 Lizalfos/Dinolfos 2",
+      "address": 9800413,
+      "scene": 10,
+      "room": 0,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 2 Stalfos 1",
+      "address": 9800414,
+      "scene": 10,
+      "room": 2,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 2 Stalfos 2",
+      "address": 9800415,
+      "scene": 10,
+      "room": 2,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 4 Iron Knuckle 1",
+      "address": 9800416,
+      "scene": 10,
+      "room": 4,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 4 Iron Knuckle 2",
+      "address": 9800417,
+      "scene": 10,
+      "room": 4,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 7 Keese 1",
+      "address": 9800418,
+      "scene": 10,
+      "room": 7,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 7 Keese 2",
+      "address": 9800419,
+      "scene": 10,
+      "room": 7,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 7 Keese 3",
+      "address": 9800420,
+      "scene": 10,
+      "room": 7,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 7 Keese 4",
+      "address": 9800421,
+      "scene": 10,
+      "room": 7,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 7 Keese 5",
+      "address": 9800422,
+      "scene": 10,
+      "room": 7,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 7 Keese 6",
+      "address": 9800423,
+      "scene": 10,
+      "room": 7,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Ganon's Tower Room 7 Keese 7",
+      "address": 9800424,
+      "scene": 10,
+      "room": 7,
+      "region": "GANONS_TOWER_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 1 Stalfos 1",
+      "address": 9800425,
+      "scene": 11,
+      "room": 1,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 1 Stalfos 2",
+      "address": 9800426,
+      "scene": 11,
+      "room": 1,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 2 Wallmaster 1",
+      "address": 9800427,
+      "scene": 11,
+      "room": 2,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 2 Wallmaster 2",
+      "address": 9800428,
+      "scene": 11,
+      "room": 2,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 3 Wolfos 1",
+      "address": 9800429,
+      "scene": 11,
+      "room": 3,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 3 Wolfos 2",
+      "address": 9800430,
+      "scene": 11,
+      "room": 3,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 3 Door Trap 1",
+      "address": 9800431,
+      "scene": 11,
+      "room": 3,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 3 Wolfos 3",
+      "address": 9800432,
+      "scene": 11,
+      "room": 3,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 3 Wolfos 4",
+      "address": 9800433,
+      "scene": 11,
+      "room": 3,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 5 Torch Slug 1",
+      "address": 9800434,
+      "scene": 11,
+      "room": 5,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 5 Torch Slug 2",
+      "address": 9800435,
+      "scene": 11,
+      "room": 5,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 5 Keese 1",
+      "address": 9800436,
+      "scene": 11,
+      "room": 5,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 5 Keese 2",
+      "address": 9800437,
+      "scene": 11,
+      "room": 5,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 6 Bubble 1",
+      "address": 9800438,
+      "scene": 11,
+      "room": 6,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 6 Bubble 2",
+      "address": 9800439,
+      "scene": 11,
+      "room": 6,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 7 Lizalfos/Dinolfos 1",
+      "address": 9800440,
+      "scene": 11,
+      "room": 7,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 7 Lizalfos/Dinolfos 2",
+      "address": 9800441,
+      "scene": 11,
+      "room": 7,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 7 Beamos 1",
+      "address": 9800442,
+      "scene": 11,
+      "room": 7,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 9 Shell Blade 1",
+      "address": 9800443,
+      "scene": 11,
+      "room": 9,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 9 Shell Blade 2",
+      "address": 9800444,
+      "scene": 11,
+      "room": 9,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 9 Shell Blade 3",
+      "address": 9800445,
+      "scene": 11,
+      "room": 9,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 9 Shell Blade 4",
+      "address": 9800446,
+      "scene": 11,
+      "room": 9,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 10 Like Like 1",
+      "address": 9800447,
+      "scene": 11,
+      "room": 10,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 10 Like Like 2",
+      "address": 9800448,
+      "scene": 11,
+      "room": 10,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Gerudo Training Ground Room 10 Like Like 3",
+      "address": 9800449,
+      "scene": 11,
+      "room": 10,
+      "region": "GERUDO_TRAINING_GROUND_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 0 Beamos 1",
+      "address": 9800454,
+      "scene": 13,
+      "room": 0,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 0 Beamos 2",
+      "address": 9800455,
+      "scene": 13,
+      "room": 0,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 2 Freezard 1",
+      "address": 9800456,
+      "scene": 13,
+      "room": 2,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 2 Freezard 2",
+      "address": 9800457,
+      "scene": 13,
+      "room": 2,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 3 Wallmaster 1",
+      "address": 9800458,
+      "scene": 13,
+      "room": 3,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 5 Wolfos 1",
+      "address": 9800459,
+      "scene": 13,
+      "room": 5,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 6 Beamos 1",
+      "address": 9800460,
+      "scene": 13,
+      "room": 6,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 8 Wallmaster 1",
+      "address": 9800461,
+      "scene": 13,
+      "room": 8,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 9 Keese 1",
+      "address": 9800462,
+      "scene": 13,
+      "room": 9,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 9 Keese 2",
+      "address": 9800463,
+      "scene": 13,
+      "room": 9,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 9 Keese 3",
+      "address": 9800464,
+      "scene": 13,
+      "room": 9,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 9 Skulltula 1",
+      "address": 9800465,
+      "scene": 13,
+      "room": 9,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 10 Wallmaster 1",
+      "address": 9800466,
+      "scene": 13,
+      "room": 10,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 12 Bubble 1",
+      "address": 9800467,
+      "scene": 13,
+      "room": 12,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 12 Like Like 1",
+      "address": 9800468,
+      "scene": 13,
+      "room": 12,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 14 Torch Slug 1",
+      "address": 9800469,
+      "scene": 13,
+      "room": 14,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 14 Bubble 1",
+      "address": 9800470,
+      "scene": 13,
+      "room": 14,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 14 Bubble 2",
+      "address": 9800471,
+      "scene": 13,
+      "room": 14,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 14 Bubble 3",
+      "address": 9800472,
+      "scene": 13,
+      "room": 14,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 14 Bubble 4",
+      "address": 9800473,
+      "scene": 13,
+      "room": 14,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 17 Beamos 1",
+      "address": 9800474,
+      "scene": 13,
+      "room": 17,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 18 Torch Slug 1",
+      "address": 9800479,
+      "scene": 13,
+      "room": 18,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 18 Torch Slug 2",
+      "address": 9800480,
+      "scene": 13,
+      "room": 18,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 18 Wallmaster 1",
+      "address": 9800481,
+      "scene": 13,
+      "room": 18,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 18 Wallmaster 2",
+      "address": 9800482,
+      "scene": 13,
+      "room": 18,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Inside Ganon's Castle Room 18 Wallmaster 3",
+      "address": 9800483,
+      "scene": 13,
+      "room": 18,
+      "region": "GANONS_CASTLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Wall Skulltula 1",
+      "address": 9800563,
+      "scene": 3,
+      "room": -2,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Wall Skulltula 2",
+      "address": 9800564,
+      "scene": 3,
+      "room": -2,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Wall Skulltula 3",
+      "address": 9800565,
+      "scene": 3,
+      "room": -2,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Poe Sister Meg",
+      "address": 9800566,
+      "scene": 3,
+      "room": -2,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Poe Sister Joelle",
+      "address": 9800567,
+      "scene": 3,
+      "room": -2,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Poe Sister Beth",
+      "address": 9800568,
+      "scene": 3,
+      "room": -2,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    },
+    {
+      "name": "Enemy Defeat: Forest Temple Poe Sister Amy",
+      "address": 9800569,
+      "scene": 3,
+      "room": -2,
+      "region": "FOREST_TEMPLE_ENTRYWAY"
+    }
+  ],
+  "other_known_gaps": [
+    "Deku Tree ordinary wall Skulltulas at room actor indices 0, 1 and 2 are present in the supplied resource actor list but are not added as new AP checks in this release. This release remaps the existing 29 checks only.",
+    "No full Windows SoH build, live AP network session, rendered pickup test, or end-to-end game completion was performed.",
+    "Dynamic/infinite enemy spawners are not synthesized into finite per-placement checks."
+  ]
+}

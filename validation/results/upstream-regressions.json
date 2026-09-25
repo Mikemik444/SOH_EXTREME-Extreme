@@ -1,0 +1,464 @@
+[
+  {
+    "name": "clock parse random",
+    "passed": true,
+    "actual": 0,
+    "expected": 0
+  },
+  {
+    "name": "clock parse randomized",
+    "passed": true,
+    "actual": 0,
+    "expected": 0
+  },
+  {
+    "name": "clock parse dawn",
+    "passed": true,
+    "actual": 1,
+    "expected": 1
+  },
+  {
+    "name": "clock parse day",
+    "passed": true,
+    "actual": 2,
+    "expected": 2
+  },
+  {
+    "name": "clock parse dusk",
+    "passed": true,
+    "actual": 3,
+    "expected": 3
+  },
+  {
+    "name": "clock parse night",
+    "passed": true,
+    "actual": 4,
+    "expected": 4
+  },
+  {
+    "name": "Deku all-inventory 9800000",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800001",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800002",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800003",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800004",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800005",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800006",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800007",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800008",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800009",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800010",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800011",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800012",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800013",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800014",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800015",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800016",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800017",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800018",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800019",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800020",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800021",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800022",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800023",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800024",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800025",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800026",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800027",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Deku all-inventory 9800028",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "2F unavailable without Climb or hookshot",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "3F unavailable without Climb or hookshot",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "1F Baba remains available",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "3F Skulltula unavailable from floor one",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "first scrub not at entrance",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "slingshot cannot surrender hint scrub",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "last puzzle scrub requires reflection",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "hint scrub requires own soul",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "normal spider requires dedicated soul",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "adult weapon cannot bypass a child-only dungeon entrance at 2F",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "adult weapon cannot bypass a child-only dungeon entrance at 3F",
+    "passed": true,
+    "actual": false,
+    "expected": false
+  },
+  {
+    "name": "UT overwrites conflicting local clock",
+    "passed": true,
+    "actual": 2,
+    "expected": 2
+  },
+  {
+    "name": "UT overwrites conflicting local enemy option",
+    "passed": true,
+    "actual": 1,
+    "expected": 1
+  },
+  {
+    "name": "UT overwrites conflicting local climb option",
+    "passed": true,
+    "actual": 1,
+    "expected": 1
+  },
+  {
+    "name": "UT full location set",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "Malon speech is in child castle grounds",
+    "passed": true,
+    "actual": "Hyrule Castle Grounds",
+    "expected": "Hyrule Castle Grounds"
+  },
+  {
+    "name": "UT restored potion-shop speech parent 9600664",
+    "passed": true,
+    "actual": "Kak Potion Shop Front",
+    "expected": "Kak Potion Shop Front"
+  },
+  {
+    "name": "Potion-shop speech is not a Menu check 9600664",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT restored potion-shop speech parent 9600665",
+    "passed": true,
+    "actual": "Kak Potion Shop Front",
+    "expected": "Kak Potion Shop Front"
+  },
+  {
+    "name": "Potion-shop speech is not a Menu check 9600665",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT restored potion-shop speech parent 9600666",
+    "passed": true,
+    "actual": "Kak Potion Shop Front",
+    "expected": "Kak Potion Shop Front"
+  },
+  {
+    "name": "Potion-shop speech is not a Menu check 9600666",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT restored potion-shop speech parent 9600667",
+    "passed": true,
+    "actual": "Kak Potion Shop Front",
+    "expected": "Kak Potion Shop Front"
+  },
+  {
+    "name": "Potion-shop speech is not a Menu check 9600667",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT restored potion-shop speech parent 9600668",
+    "passed": true,
+    "actual": "Kak Potion Shop Front",
+    "expected": "Kak Potion Shop Front"
+  },
+  {
+    "name": "Potion-shop speech is not a Menu check 9600668",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT restored potion-shop speech parent 9600669",
+    "passed": true,
+    "actual": "Kak Potion Shop Front",
+    "expected": "Kak Potion Shop Front"
+  },
+  {
+    "name": "Potion-shop speech is not a Menu check 9600669",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT restored potion-shop speech parent 9600670",
+    "passed": true,
+    "actual": "Kak Potion Shop Front",
+    "expected": "Kak Potion Shop Front"
+  },
+  {
+    "name": "Potion-shop speech is not a Menu check 9600670",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT restored potion-shop speech parent 9600671",
+    "passed": true,
+    "actual": "Kak Potion Shop Front",
+    "expected": "Kak Potion Shop Front"
+  },
+  {
+    "name": "Potion-shop speech is not a Menu check 9600671",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT exact price table",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT required trial selection",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "UT reachability parity inventory 0",
+    "passed": true,
+    "actual": [],
+    "expected": []
+  },
+  {
+    "name": "UT reachability parity inventory 1",
+    "passed": true,
+    "actual": [],
+    "expected": []
+  },
+  {
+    "name": "UT reachability parity inventory 2",
+    "passed": true,
+    "actual": [],
+    "expected": []
+  },
+  {
+    "name": "UT reachability parity inventory 3",
+    "passed": true,
+    "actual": [],
+    "expected": []
+  },
+  {
+    "name": "UT reachability parity inventory 4",
+    "passed": true,
+    "actual": [],
+    "expected": []
+  },
+  {
+    "name": "generated random clock resolved",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "generated night clock resolved",
+    "passed": true,
+    "actual": true,
+    "expected": true
+  },
+  {
+    "name": "legacy zero clock matches native Dawn",
+    "passed": true,
+    "actual": 1,
+    "expected": 1
+  }
+]

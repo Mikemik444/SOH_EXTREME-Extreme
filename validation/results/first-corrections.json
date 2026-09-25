@@ -1,0 +1,21 @@
+{
+  "native_grass_locations": 344,
+  "ap_grass_locations": 198,
+  "native_grass_files": [
+    "soh/Enhancements/randomizer/location_access/overworld/market.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/death_mountain_trail.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/hyrule_field.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/lake_hylia.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/graveyard.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/zoras_river.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/castle_grounds.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/kokiri_forest.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/lost_woods.cpp",
+    "soh/Enhancements/randomizer/location_access/overworld/death_mountain_crater.cpp",
+    "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp",
+    "soh/Enhancements/randomizer/location_access/dungeons/deku_tree.cpp",
+    "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
+    "soh/Enhancements/randomizer/location_access/dungeons/bottom_of_the_well.cpp"
+  ]
+}

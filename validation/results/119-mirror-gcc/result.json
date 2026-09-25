@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "compiler": "g++",
+  "scope": "production snapshot parser, client methods and view with controlled services",
+  "cases": [
+    {
+      "fixture": 0,
+      "passed": true,
+      "native_assertions": 3272
+    },
+    {
+      "fixture": 1,
+      "passed": true,
+      "native_assertions": 2877
+    },
+    {
+      "fixture": 2,
+      "passed": true,
+      "native_assertions": 3060
+    },
+    {
+      "fixture": 3,
+      "passed": true,
+      "native_assertions": 3130
+    },
+    {
+      "fixture": 4,
+      "passed": true,
+      "native_assertions": 1367
+    }
+  ]
+}

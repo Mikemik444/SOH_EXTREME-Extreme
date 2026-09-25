@@ -1,3 +1,4 @@
+#include "ProgressionItemVisuals.h"
 #include "soh_assets.h"
 #include "static_data.h"
 #include "SeedContext.h"
@@ -599,6 +600,15 @@ void Rando::StaticData::InitItemTable() {
             item.SetCustomDrawFunc(Randomizer_DrawEnemySoul);
         }
     }
+
+    // SOH-EXTREME SHOVEL/ROLL VISUALS v1 BEGIN
+    // Both the world/get-item model and the native message/UI icon are replaced.
+    // Preserve item IDs, ownership effects, chest animation and AP mappings.
+    itemTable[RG_SHOVEL].CustomIcon(gExtremeShovelIconTex);
+    itemTable[RG_SHOVEL].SetCustomDrawFunc(SohExtreme_DrawShovel);
+    itemTable[RG_ROLL].CustomIcon(gExtremeRollIconTex);
+    itemTable[RG_ROLL].SetCustomDrawFunc(SohExtreme_DrawRoll);
+    // SOH-EXTREME SHOVEL/ROLL VISUALS v1 END
 
     // Init itemNameToEnum
     for (auto& item : itemTable) {

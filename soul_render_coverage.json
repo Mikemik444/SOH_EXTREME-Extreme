@@ -1,0 +1,427 @@
+{
+  "repository": "Mikemik444/SOH_EXTREME-Extreme",
+  "base_commit": "5851e0c273ae53632d03688898d0e85a1933fed0",
+  "soul_count": 84,
+  "souls": [
+    {
+      "id": "RG_ENEMY_SOUL_STALFOS",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_STALFOS"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_OCTOROK",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_OCTOROK"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_WALLMASTER",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_WALLMASTER"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_DODONGO",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_DODONGO"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_KEESE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_KEESE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_TEKTITE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_TEKTITE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_PEAHAT",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_PEAHAT"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_LIZALFOS_DINOLFOS"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_GOHMA_LARVA",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_GOHMA_LARVA"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_SHABOM",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_SHABOM"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_BABY_DODONGO",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_BABY_DODONGO"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_BIRI_BARI",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_BIRI_BARI"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_TAILPASARAN",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_TAILPASARAN"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_TORCH_SLUG",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_TORCH_SLUG"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_MOBLIN",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_MOBLIN"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_ARMOS",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_ARMOS"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_DEKU_BABA",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_DEKU_BABA"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_DEKU_SCRUB",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_DEKU_SCRUB"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_BUBBLE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_BUBBLE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_BEAMOS",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_BEAMOS"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_FLOORMASTER",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_FLOORMASTER"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_REDEAD_GIBDO",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_REDEAD_GIBDO"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_FLARE_DANCER",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_FLARE_DANCER"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_DEAD_HAND",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_DEAD_HAND"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_SHELL_BLADE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_SHELL_BLADE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_LIKE_LIKE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_LIKE_LIKE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_SPIKE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_SPIKE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_ANUBIS",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_ANUBIS"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_IRON_KNUCKLE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_IRON_KNUCKLE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_SKULL_KID",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_SKULL_KID"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_FLYING_POT",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_FLYING_POT"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_FREEZARD",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_FREEZARD"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_STINGER",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_STINGER"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_WOLFOS",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_WOLFOS"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_GUAY",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_GUAY"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_JABU_TENTACLE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_JABU_TENTACLE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_DARK_LINK",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_DARK_LINK"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_DOOR_TRAP",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_DOOR_TRAP"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_FLYING_FLOOR_TILE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_GERUDO_THIEF",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_GERUDO_THIEF"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_POE_SISTER",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_POE_SISTER"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_POE",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_POE"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_LEEVER",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_LEEVER"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_STALCHILD",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_STALCHILD"
+    },
+    {
+      "id": "RG_ENEMY_SOUL_BIG_OCTO",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_BIG_OCTO"
+    },
+    {
+      "id": "RG_SKULLTULA_SOUL",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_SKULLTULA"
+    },
+    {
+      "id": "RG_BUSINESS_SCRUB_SOUL",
+      "presentation": "SOH_SOUL_PORTRAIT",
+      "icon": "gExtremeSoul_BUSINESS_SCRUB"
+    },
+    {
+      "id": "RG_ENEMY_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_NPC_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_POT_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_CRATE_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_GRASS_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ROCK_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_TREE_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_BEEHIVE_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_SIGN_SOUL",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL_COW",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL_CUCCO",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL_DOG",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL_FISH",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL_BUG",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL_BUTTERFLY",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL_FROG",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_ANIMAL_SOUL_HORSE",
+      "presentation": "SOH_SOUL_SKULL",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_DESERT_COLOSSUS_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_GERUDO_VALLEY_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_GRAVEYARD_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_KOKIRI_FOREST_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_LAKE_HYLIA_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_LOST_WOODS_BRIDGE_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_LOST_WOODS_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_ZORAS_RIVER_BEAN_SOUL",
+      "presentation": "SOH_SOUL_BEAN",
+      "icon": "gItemIconMagicBeanTex"
+    },
+    {
+      "id": "RG_GOHMA_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_KING_DODONGO_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_BARINADE_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_PHANTOM_GANON_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_VOLVAGIA_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_MORPHA_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_BONGO_BONGO_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_TWINROVA_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    },
+    {
+      "id": "RG_GANON_SOUL",
+      "presentation": "SOH_SOUL_BOSS",
+      "icon": "gBossSoulTex"
+    }
+  ]
+}

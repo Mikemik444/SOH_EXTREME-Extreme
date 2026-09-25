@@ -1,0 +1,21 @@
+{
+  "patch": "SOH_EXTREME_All_Souls_Render_Fix",
+  "base_commit": "5851e0c273ae53632d03688898d0e85a1933fed0",
+  "base_blob_sha": {
+    "soh/Enhancements/randomizer/EnemySoulDraw.cpp": "6fe14d12219303589d41ff422d264dc7a6ec139d",
+    "soh/Enhancements/randomizer/EnemySoulIcons.h": "6b5c84f9f0fa35d641740c42316170410a82e41d"
+  },
+  "tests": {
+    "gcc_mock_cases_passed": 1248,
+    "clang_mock_cases_passed": 1248,
+    "msvc_build_run": false,
+    "in_game_run": false
+  },
+  "sha256": {
+    "README_All_Souls_Render_Fix.txt": "4bfb2dba2c2b071a0c2d566dd618b3cdeb6a359d4d872a1647df04fe2567a55e",
+    "soh/Enhancements/randomizer/EnemySoulDraw.cpp": "c9daa39f39af8f721eb5c9cc92aadc94ab85289ea31f98588aab99c38af042d6",
+    "soh/Enhancements/randomizer/EnemySoulIcons.h": "56647efe70e2bc7aa03093593d2b19bd9c640a53145746e0d7391d15d25e3762",
+    "soul_render_coverage.json": "6e4e6479e7875056d80c3f446c5b22a9fb748fafd71af097fd6720eb248ebd71",
+    "tools/verify_soul_render_patch.py": "79e9d8b3f318a68f9eb5eb30d075b9956dd6424c40aca70497bc8a1c6e67bd31"
+  }
+}

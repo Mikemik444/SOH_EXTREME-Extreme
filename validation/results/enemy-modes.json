@@ -1,0 +1,318 @@
+{
+  "group": "enemy-modes",
+  "total": 51,
+  "failures": 0,
+  "checks": [
+    {
+      "name": "enemy mode 0 full inventory",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "disabled: no enemy-soul demand",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "enemy mode 1 full inventory",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "combined: all eligible enemies need global soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "combined: one global soul unlocks all eligible combat gates",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "enemy mode 2 full inventory",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Anubis Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Armos Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Baby Dodongo Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Beamos Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Big Octo Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Biri and Bari Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Bubble Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Dark Link Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Dead Hand Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Deku Baba Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Deku Scrub Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Dodongo Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Door Trap Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Flare Dancer Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Floormaster Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Flying Floor Tile Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Flying Pot Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Freezard Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Gerudo Thief Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Gohma Larva Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Guay Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Iron Knuckle Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Jabu Jabu Tentacle Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Keese Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Leever Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Like Like Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Lizalfos and Dinolfos Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Moblin Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Octorok Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Peahat Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Poe Sister Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Poe Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Redead and Gibdo Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Shabom Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Shell Blade Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Skull Kid Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Spike Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Stalchild Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Stalfos Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Stinger Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Tailpasaran Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Tektite Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Torch Slug Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Wallmaster Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "individual: global soul cannot replace Wolfos Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    }
+  ],
+  "coverage": {
+    "individual_enemy_checks": 697,
+    "individual_enemy_soul_groups": 45
+  },
+  "scope": "Real AP 0.6.7 graph, collection/cache and rules; no game physics or UI. Restricted offline dependency adapters only."
+}

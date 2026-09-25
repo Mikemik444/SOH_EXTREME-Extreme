@@ -1,0 +1,42 @@
+[
+  {
+    "compiler": "clang++",
+    "passed": true,
+    "result": "47 soul resources and 94 production renderer/disguise cases passed",
+    "command": [
+      "clang++",
+      "-std=c++20",
+      "-D_LANGUAGE_C",
+      "-DF3DEX_GBI_2",
+      "-I/mnt/data/patch1121/native-tests/mock",
+      "-I/mnt/data/patch1121/native",
+      "-I/mnt/data/patch1121/native/assets",
+      "-I/mnt/data/patch1121/deps/libultraship/include",
+      "-I/mnt/data/patch1121/headers/soh/include",
+      "/mnt/data/patch1121/native-tests/renderer.cpp",
+      "-o",
+      "/mnt/data/patch1121/native-tests/renderer-clang++"
+    ],
+    "scope": "whole production EnemySoulDraw.cpp with actual randomizer enums and libultraship GBI/Vtx; controlled game/matrix services"
+  },
+  {
+    "compiler": "g++",
+    "passed": true,
+    "result": "47 soul resources and 94 production renderer/disguise cases passed",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-D_LANGUAGE_C",
+      "-DF3DEX_GBI_2",
+      "-I/mnt/data/patch1121/native-tests/mock",
+      "-I/mnt/data/patch1121/native",
+      "-I/mnt/data/patch1121/native/assets",
+      "-I/mnt/data/patch1121/deps/libultraship/include",
+      "-I/mnt/data/patch1121/headers/soh/include",
+      "/mnt/data/patch1121/native-tests/renderer.cpp",
+      "-o",
+      "/mnt/data/patch1121/native-tests/renderer-g++"
+    ],
+    "scope": "whole production EnemySoulDraw.cpp with actual randomizer enums and libultraship GBI/Vtx; controlled game/matrix services"
+  }
+]

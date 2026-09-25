@@ -1,0 +1,59 @@
+--- /mnt/data/current_patch/soh/Enhancements/ExtraTraps.cpp	2026-09-24 17:15:00.000000000 +0000
++++ /mnt/data/patch1121c/soh/Enhancements/ExtraTraps.cpp	2026-09-24 18:38:03.016476357 +0000
+@@ -57,20 +57,39 @@
+     std::array<int, ADD_TRAP_MAX> types{};
+ };
+ 
+-static ExtraTrapSettings GetEffectiveExtraTrapSettings() {
++static ExtraTrapSettings GetLocalExtraTrapSettings() {
+     ExtraTrapSettings settings;
++    settings.enabled = CVAR_EXTRA_TRAPS_VALUE != 0;
++    for (int i = 0; i < ADD_TRAP_MAX; ++i) {
++        settings.types[i] = CVarGetInteger(altTrapTypeCvars[i], 0);
++    }
++    return settings;
++}
++
++static ExtraTrapSettings GetEffectiveExtraTrapSettings() {
+     // Use save identity, not authentication: a temporary network disconnect must
+     // not change the effects of traps already queued in this AP save.
+     if (IS_RANDO && Archipelago_IsCurrentSaveFile()) {
+         auto context = Rando::Context::GetInstance();
+         if (context == nullptr) {
+-            return settings; // Default to the ordinary freeze effect, not local overrides.
++            // Until the AP seed context has been restored, honor the user's local
++            // Additional Traps profile rather than silently forcing plain freeze.
++            return GetLocalExtraTrapSettings();
+         }
++
+         const auto pool = context->GetOption(RSK_EXTREME_TRAP_POOL).Get();
++        if (pool == 0) {
++            // AP's normal Ice Trap pool intentionally leaves effect selection to
++            // the local Additional Traps enhancement. This preserves the AP item
++            // itself while allowing Freeze/Burn/Shock/etc. to be chosen locally.
++            return GetLocalExtraTrapSettings();
++        }
++
++        ExtraTrapSettings settings;
+         settings.enabled = pool == 1 || pool == 2;
+-        if (pool == 1) { // Ice Only
++        if (pool == 1) { // Ice Only: explicitly force the vanilla freeze effect.
+             settings.types[ADD_ICE_TRAP] = 1;
+-        } else if (pool == 2) { // Expanded; only the seed's selected types are eligible.
++        } else if (pool == 2) { // Expanded: the seed's selected types are authoritative.
+             settings.types[ADD_ICE_TRAP] = context->GetOption(RSK_EXTREME_ICE_TRAPS).Get() != 0;
+             settings.types[ADD_BURN_TRAP] = context->GetOption(RSK_EXTREME_FIRE_TRAPS).Get() != 0;
+             settings.types[ADD_SPEED_TRAP] = context->GetOption(RSK_EXTREME_SLOW_TRAPS).Get() != 0;
+@@ -80,11 +99,7 @@
+         return settings;
+     }
+ 
+-    settings.enabled = CVAR_EXTRA_TRAPS_VALUE != 0;
+-    for (int i = 0; i < ADD_TRAP_MAX; ++i) {
+-        settings.types[i] = CVarGetInteger(altTrapTypeCvars[i], 0);
+-    }
+-    return settings;
++    return GetLocalExtraTrapSettings();
+ }
+ 
+ const std::vector<EntranceIndex> simpleTeleportDestinations = {

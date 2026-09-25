@@ -1,0 +1,26 @@
+{
+  "seed": 11805,
+  "players": 1,
+  "overrides": {
+    "shuffle_enemy_soul": 0,
+    "shuffle_silver": 2,
+    "shuffle_grab": false,
+    "shuffle_climb": false,
+    "shuffle_crawl": false,
+    "shuffle_swim": false
+  },
+  "passed": true,
+  "harness": "AP 0.6.7 core, restricted offline dependency adapters; no nonempty item links or binary patch export",
+  "locations": 3705,
+  "network_locations": 3258,
+  "pool": 3253,
+  "all_state_blocked": [],
+  "resolved_world_options": {
+    "1": {
+      "frozen_starting_time": 2,
+      "boss_key_shuffle": "any_dungeon",
+      "triforce_hunt": 1
+    }
+  },
+  "seconds": 7.389
+}

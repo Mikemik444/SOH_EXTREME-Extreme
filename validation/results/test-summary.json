@@ -1,0 +1,66 @@
+{
+  "scope": "isolated production code with controlled UT/AP/ImGui/Win32 services; synthetic rows; no full game or live server",
+  "tests": [
+    {
+      "test": "python-tests",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "make-fixtures",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "core-clangpp-compile",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "core-clangpp",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "integration-clangpp",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "process-clangpp-compile",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "process-clangpp",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "core-gpp-compile",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "core-gpp",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "integration-gpp",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "process-gpp-compile",
+      "passed": true,
+      "returncode": 0
+    },
+    {
+      "test": "process-gpp",
+      "passed": true,
+      "returncode": 0
+    }
+  ],
+  "passed": true
+}

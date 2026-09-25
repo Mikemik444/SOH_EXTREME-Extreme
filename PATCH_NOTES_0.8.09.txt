@@ -1,0 +1,35 @@
+SOH-EXTREME 0.8.09 - Frontier / all-location logic safety
+
+Drop this archive over the SOH-EXTREME source root.
+
+Native SoH:
+- Check Finder always certifies checks from RR_ROOT for native and AP saves.
+- ReachabilitySearch restores CalculatingAvailableChecks after tracker calculations.
+- With All Locations Reachable enabled, native generation performs a full placed-item progression sweep.
+  A seed with any enabled randomized location still unreachable is rejected/retried.
+
+Archipelago:
+- Adds FrontierFill.py. Before normal AP fill, the single-player SOH-EXTREME world builds a guaranteed
+  progression backbone using the actual installed AP access rules.
+- If one advancement item opens more checks, it is placed in a currently reachable check.
+- If a compound gate needs multiple items/counts, the algorithm finds a 1-minimal unlock bundle and
+  reserves the entire bundle in currently reachable legal checks.
+- If no remaining advancement combination opens another check, or the required bundle is larger than
+  the reachable frontier, generation raises FillError instead of producing a soft-locked seed.
+- post_fill simulates the completed world again and rejects a stalled seed. Full accessibility requires
+  every filled SOH-EXTREME location to become reachable.
+
+Semantics:
+- Forced event/cutscene rewards such as LW Gift From Saria remain event rules. They do NOT gain NPC Soul
+  or Speak requirements just because an NPC name appears in the event.
+- Enemy Soul items remain enemy items; the reward item never changes the location's access rule.
+- Shared helper names corrected for Grab / Power Bracelet, Grass / Bush Soul, Rock / Boulder Soul and
+  Song Note 01..74. Death Link / Trap Link are not inventory items.
+
+Validation performed here:
+- All AP Python files compile.
+- LogicAudit: 553 finite enemy-instance checks pass.
+- LogicAudit: 80 Silver Rupee checks / 16 vanilla groups pass.
+- .apworld ZIP CRC passes and reports world_version 0.8.09.
+
+C++ still needs your normal Windows build.

@@ -1,0 +1,933 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_TEST",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_POH",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_OKUTA",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_WALLMAS",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_DODONGO",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_FIREFLY",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_TITE",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_REEBA",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_PEEHAT",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_ZF",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_GOMA",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_BUBBLE",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_DODOJR",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_TORCH2",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_BILI",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_TP",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_ST",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_BW",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_EIYER",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_MB",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_AM",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_DEKUBABA",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_DEKUNUTS",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_VALI",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_BB",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_YUKABYUN",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_VM",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_FLOORMAS",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_RD",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_PO_SISTERS",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_SW",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_FD",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_DH",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_DHA",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_SB",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_BIGOKUTA",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_KAREBABA",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_RR",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_BA",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_ANUBICE",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_NY",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_IK",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_SKJ",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_TUBO_TRAP",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_FZ",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_PO_FIELD",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_WEIYER",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_HINTNUTS",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_GELDB",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_WF",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_SKB",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_EN_CROW",
+      "passed": true
+    },
+    {
+      "name": "terminal defeat hook present in ACTOR_DOOR_KILLER",
+      "passed": true
+    },
+    {
+      "name": "no offspring addresses in active AP catalogue",
+      "passed": true
+    },
+    {
+      "name": "scene-placed Gohma larvae retained",
+      "passed": true
+    },
+    {
+      "name": "all three Bow-room Stalfos retained",
+      "passed": true
+    },
+    {
+      "name": "all four actual sisters retained",
+      "passed": true
+    },
+    {
+      "name": "all direct actor lifecycle callbacks pass through origin wrapper",
+      "passed": true
+    },
+    {
+      "name": "all init/update/spawn/kill/destroy notifications pass through origin wrapper",
+      "passed": true
+    },
+    {
+      "name": "capture refuses fallback address lookup",
+      "passed": true
+    },
+    {
+      "name": "rejected index explicitly clears identity",
+      "passed": true
+    },
+    {
+      "name": "Peahat births do not request AP lanes",
+      "passed": true
+    },
+    {
+      "name": "Floormaster has only the final group callback",
+      "passed": true
+    },
+    {
+      "name": "Floormaster final pickup uses last fragment position",
+      "passed": true
+    },
+    {
+      "name": "actor-compatible C bridge contains new API",
+      "passed": true
+    },
+    {
+      "name": "native receipt table matches 0.11.12 fixture hash",
+      "passed": true
+    },
+    {
+      "name": "seed-1301.json.slot1.json omits offspring from active locations",
+      "passed": true
+    },
+    {
+      "name": "seed-1301.json.slot1.json omits offspring from names",
+      "passed": true
+    },
+    {
+      "name": "seed-1301.json.slot1.json exports explicit origin policy",
+      "passed": true
+    },
+    {
+      "name": "seed-1301.json.slot1.json contains all 753 enemy checks",
+      "passed": true
+    },
+    {
+      "name": "seed-1302.json.slot1.json omits offspring from active locations",
+      "passed": true
+    },
+    {
+      "name": "seed-1302.json.slot1.json omits offspring from names",
+      "passed": true
+    },
+    {
+      "name": "seed-1302.json.slot1.json exports explicit origin policy",
+      "passed": true
+    },
+    {
+      "name": "seed-1302.json.slot1.json contains all 753 enemy checks",
+      "passed": true
+    },
+    {
+      "name": "seed-1303.json.slot1.json omits offspring from active locations",
+      "passed": true
+    },
+    {
+      "name": "seed-1303.json.slot1.json omits offspring from names",
+      "passed": true
+    },
+    {
+      "name": "seed-1303.json.slot1.json exports explicit origin policy",
+      "passed": true
+    },
+    {
+      "name": "seed-1303.json.slot1.json contains all 753 enemy checks",
+      "passed": true
+    },
+    {
+      "name": "seed-1305.json.slot1.json omits offspring from active locations",
+      "passed": true
+    },
+    {
+      "name": "seed-1305.json.slot1.json omits offspring from names",
+      "passed": true
+    },
+    {
+      "name": "seed-1305.json.slot1.json exports explicit origin policy",
+      "passed": true
+    },
+    {
+      "name": "seed-1305.json.slot1.json honors enemy shuffle disabled",
+      "passed": true
+    }
+  ],
+  "actor_types": [
+    {
+      "name": "ACTOR_EN_TEST",
+      "id": 2,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Test/z_en_test.c",
+      "active_checks": 13,
+      "defeat_callback_lines": [
+        1532,
+        1641,
+        1732
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_POH",
+      "id": 13,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Poh/z_en_poh.c",
+      "active_checks": 20,
+      "defeat_callback_lines": [
+        639
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_OKUTA",
+      "id": 14,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Okuta/z_en_okuta.c",
+      "active_checks": 33,
+      "defeat_callback_lines": [
+        257
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_WALLMAS",
+      "id": 17,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Wallmas/z_en_wallmas.c",
+      "active_checks": 14,
+      "defeat_callback_lines": [
+        260
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_DODONGO",
+      "id": 18,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Dodongo/z_en_dodongo.c",
+      "active_checks": 3,
+      "defeat_callback_lines": [
+        669
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_FIREFLY",
+      "id": 19,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Firefly/z_en_firefly.c",
+      "active_checks": 101,
+      "defeat_callback_lines": [
+        228
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_TITE",
+      "id": 27,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Tite/z_en_tite.c",
+      "active_checks": 44,
+      "defeat_callback_lines": [
+        773
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_REEBA",
+      "id": 28,
+      "category": "ACTORCAT_MISC",
+      "source": "src/overlays/actors/ovl_En_Reeba/z_en_reeba.c",
+      "active_checks": 10,
+      "defeat_callback_lines": [
+        445,
+        500
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_PEEHAT",
+      "id": 29,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Peehat/z_en_peehat.c",
+      "active_checks": 7,
+      "defeat_callback_lines": [
+        598,
+        767,
+        884
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_ZF",
+      "id": 37,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Zf/z_en_zf.c",
+      "active_checks": 12,
+      "defeat_callback_lines": [
+        1939
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_GOMA",
+      "id": 43,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Goma/z_en_goma.c",
+      "active_checks": 3,
+      "defeat_callback_lines": [
+        407,
+        679
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_BUBBLE",
+      "id": 45,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Bubble/z_en_bubble.c",
+      "active_checks": 18,
+      "defeat_callback_lines": [
+        376
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_DODOJR",
+      "id": 47,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Dodojr/z_en_dodojr.c",
+      "active_checks": 9,
+      "defeat_callback_lines": [
+        187
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_TORCH2",
+      "id": 51,
+      "category": "ACTORCAT_BOSS",
+      "source": "src/overlays/actors/ovl_En_Torch2/z_en_torch2.c",
+      "active_checks": 1,
+      "defeat_callback_lines": [
+        567
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_BILI",
+      "id": 52,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Bili/z_en_bili.c",
+      "active_checks": 19,
+      "defeat_callback_lines": [
+        236
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_TP",
+      "id": 53,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Tp/z_en_tp.c",
+      "active_checks": 5,
+      "defeat_callback_lines": [
+        294
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_ST",
+      "id": 55,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_St/z_en_st.c",
+      "active_checks": 35,
+      "defeat_callback_lines": [
+        471
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_BW",
+      "id": 56,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Bw/z_en_bw.c",
+      "active_checks": 18,
+      "defeat_callback_lines": [
+        585
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_EIYER",
+      "id": 58,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Eiyer/z_en_eiyer.c",
+      "active_checks": 7,
+      "defeat_callback_lines": [
+        614
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_MB",
+      "id": 75,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Mb/z_en_mb.c",
+      "active_checks": 6,
+      "defeat_callback_lines": [
+        1447,
+        1454
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_AM",
+      "id": 84,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Am/z_en_am.c",
+      "active_checks": 13,
+      "defeat_callback_lines": [
+        894
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_DEKUBABA",
+      "id": 85,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Dekubaba/z_en_dekubaba.c",
+      "active_checks": 24,
+      "defeat_callback_lines": [
+        411,
+        420
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_DEKUNUTS",
+      "id": 96,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Dekunuts/z_en_dekunuts.c",
+      "active_checks": 9,
+      "defeat_callback_lines": [
+        237
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_VALI",
+      "id": 99,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Vali/z_en_vali.c",
+      "active_checks": 2,
+      "defeat_callback_lines": [
+        260
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_BB",
+      "id": 105,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Bb/z_en_bb.c",
+      "active_checks": 41,
+      "defeat_callback_lines": [
+        469
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_YUKABYUN",
+      "id": 107,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Yukabyun/z_en_yukabyun.c",
+      "active_checks": 13,
+      "defeat_callback_lines": [
+        115
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_VM",
+      "id": 138,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Vm/z_en_vm.c",
+      "active_checks": 22,
+      "defeat_callback_lines": [
+        370
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_FLOORMAS",
+      "id": 142,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Floormas/z_en_floormas.c",
+      "active_checks": 5,
+      "defeat_callback_lines": [
+        393
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_RD",
+      "id": 144,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Rd/z_en_rd.c",
+      "active_checks": 34,
+      "defeat_callback_lines": [
+        661
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_PO_SISTERS",
+      "id": 145,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Po_Sisters/z_en_po_sisters.c",
+      "active_checks": 4,
+      "defeat_callback_lines": [
+        1174
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_SW",
+      "id": 149,
+      "category": "ACTORCAT_NPC",
+      "source": "src/overlays/actors/ovl_En_Sw/z_en_sw.c",
+      "active_checks": 21,
+      "defeat_callback_lines": [
+        361
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_FD",
+      "id": 153,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Fd/z_en_fd.c",
+      "active_checks": 2,
+      "defeat_callback_lines": [
+        652
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_DH",
+      "id": 164,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Dh/z_en_dh.c",
+      "active_checks": 2,
+      "defeat_callback_lines": [
+        445
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_DHA",
+      "id": 165,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Dha/z_en_dha.c",
+      "active_checks": 10,
+      "defeat_callback_lines": [
+        391
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_SB",
+      "id": 197,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Sb/z_en_sb.c",
+      "active_checks": 13,
+      "defeat_callback_lines": [
+        460
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_BIGOKUTA",
+      "id": 198,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Bigokuta/z_en_bigokuta.c",
+      "active_checks": 1,
+      "defeat_callback_lines": [
+        652
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_KAREBABA",
+      "id": 199,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Karebaba/z_en_karebaba.c",
+      "active_checks": 10,
+      "defeat_callback_lines": [
+        184
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_RR",
+      "id": 221,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Rr/z_en_rr.c",
+      "active_checks": 11,
+      "defeat_callback_lines": [
+        388
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_BA",
+      "id": 222,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Ba/z_en_ba.c",
+      "active_checks": 3,
+      "defeat_callback_lines": [
+        459
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_ANUBICE",
+      "id": 224,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Anubice/z_en_anubice.c",
+      "active_checks": 4,
+      "defeat_callback_lines": [
+        316
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_NY",
+      "id": 236,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Ny/z_en_ny.c",
+      "active_checks": 11,
+      "defeat_callback_lines": [
+        451
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_IK",
+      "id": 275,
+      "category": "ACTORCAT_BOSS",
+      "source": "src/overlays/actors/ovl_En_Ik/z_en_ik.c",
+      "active_checks": 5,
+      "defeat_callback_lines": [
+        648,
+        1442
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_SKJ",
+      "id": 277,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Skj/z_en_skj.c",
+      "active_checks": 3,
+      "defeat_callback_lines": [
+        742
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_TUBO_TRAP",
+      "id": 285,
+      "category": "ACTORCAT_PROP",
+      "source": "src/overlays/actors/ovl_En_Tubo_Trap/z_en_tubo_trap.c",
+      "active_checks": 21,
+      "defeat_callback_lines": [
+        180,
+        191,
+        202,
+        214,
+        224
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_FZ",
+      "id": 289,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Fz/z_en_fz.c",
+      "active_checks": 12,
+      "defeat_callback_lines": [
+        368
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_PO_FIELD",
+      "id": 373,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Po_Field/z_en_po_field.c",
+      "active_checks": 10,
+      "defeat_callback_lines": [
+        594
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_WEIYER",
+      "id": 396,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Weiyer/z_en_weiyer.c",
+      "active_checks": 9,
+      "defeat_callback_lines": [
+        577
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_HINTNUTS",
+      "id": 402,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Hintnuts/z_en_hintnuts.c",
+      "active_checks": 5,
+      "defeat_callback_lines": [
+        434,
+        453
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_GELDB",
+      "id": 407,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_GeldB/z_en_geldb.c",
+      "active_checks": 4,
+      "defeat_callback_lines": [
+        1328
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_WF",
+      "id": 431,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Wf/z_en_wf.c",
+      "active_checks": 12,
+      "defeat_callback_lines": [
+        1206
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_SKB",
+      "id": 432,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Skb/z_en_skb.c",
+      "active_checks": 2,
+      "defeat_callback_lines": [
+        420
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_EN_CROW",
+      "id": 448,
+      "category": "ACTORCAT_ENEMY",
+      "source": "src/overlays/actors/ovl_En_Crow/z_en_crow.c",
+      "active_checks": 27,
+      "defeat_callback_lines": [
+        195
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    },
+    {
+      "name": "ACTOR_DOOR_KILLER",
+      "id": 449,
+      "category": "ACTORCAT_BG",
+      "source": "src/overlays/actors/ovl_Door_Killer/z_door_killer.c",
+      "active_checks": 10,
+      "defeat_callback_lines": [
+        272
+      ],
+      "status": "static callback coverage; not a whole-game execution"
+    }
+  ],
+  "scope": "Static source and slot-data audit. No animation/collision/object-bank execution is implied."
+}

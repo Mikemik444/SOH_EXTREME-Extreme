@@ -1,0 +1,472 @@
+[
+  {
+    "item": "RG_ENEMY_SOUL_STALFOS",
+    "resource": "textures/parameter_static/gExtremeSoul_STALFOS",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "a14163a145161cdb726e2befb483b49ba008f367f8cdc95f4528a90b9a3490a9"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_OCTOROK",
+    "resource": "textures/parameter_static/gExtremeSoul_OCTOROK",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "ced41a3c36f97c08f4c8cd5a4ecdb91144da491f52bd33514fdd2a652b48e023"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_WALLMASTER",
+    "resource": "textures/parameter_static/gExtremeSoul_WALLMASTER",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "40a824eeb313b4b2715204962590e4efca00c91cd4b3e8ae35cc800d676c5023"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DODONGO",
+    "resource": "textures/parameter_static/gExtremeSoul_DODONGO",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "81ab34441ea56985948ad2f1ee1df21fcddf97255980cc98c975bd8f23db83a2"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_KEESE",
+    "resource": "textures/parameter_static/gExtremeSoul_KEESE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "12c2b3e86be440d5b0ab4a3ecb4d8e8cc616debdd771e7f8b106dabea038d3df"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TEKTITE",
+    "resource": "textures/parameter_static/gExtremeSoul_TEKTITE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "82b725ed9ab364a0e900bd7e9d12f1f7adee14192e83e1e41b6a305a588b433a"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_PEAHAT",
+    "resource": "textures/parameter_static/gExtremeSoul_PEAHAT",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "b836e9eb4ed9395d147e580d0d3ca8c391a67b0ee9ef25129975c5e81842c781"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS",
+    "resource": "textures/parameter_static/gExtremeSoul_LIZALFOS_DINOLFOS",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "235d0a13ae880b68e890ac5dfa1526c409489eb212ffaea71d93e86ac13230b7"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GOHMA_LARVA",
+    "resource": "textures/parameter_static/gExtremeSoul_GOHMA_LARVA",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "4b6ee50665e35d7001419d29e649cc88334901c1b5862db386506635a0285d4f"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SHABOM",
+    "resource": "textures/parameter_static/gExtremeSoul_SHABOM",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "d9b318fa01520539f4b062f9c6071fd6c967e1c0159ccacf1e74692cd842d742"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BABY_DODONGO",
+    "resource": "textures/parameter_static/gExtremeSoul_BABY_DODONGO",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "ec24ebb5b36726844f1115c678cce3a2978ddc621422bab628e093267a80e729"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BIRI_BARI",
+    "resource": "textures/parameter_static/gExtremeSoul_BIRI_BARI",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "52daf0fabd3787597c9ed0b87d6ef14b24a9711af781edf65c835fd6f9c484b5"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TAILPASARAN",
+    "resource": "textures/parameter_static/gExtremeSoul_TAILPASARAN",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "a42cab3d9d6091557996a12f77f032c7e72a293a1e786f4e3046c6f7565fca94"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TORCH_SLUG",
+    "resource": "textures/parameter_static/gExtremeSoul_TORCH_SLUG",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "1f464531bd0bf812c4a098f3abfeb3c781ef041a951615a48cc926942917cd7c"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_MOBLIN",
+    "resource": "textures/parameter_static/gExtremeSoul_MOBLIN",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "c74a31b045f14d63d4c5cf9e1cd9a6933c8cd283240c6a70d6f2e58cacb06e2f"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_ARMOS",
+    "resource": "textures/parameter_static/gExtremeSoul_ARMOS",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "57d256b7f80a09ae2be992df5ed2cca241ae8fb1626576f0cac50f67f83c5acb"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEKU_BABA",
+    "resource": "textures/parameter_static/gExtremeSoul_DEKU_BABA",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "bf55b1624ffdb0fdf03b0bdfafed31bf669ba6ef8a2f6dcc3930f789c49c3cde"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEKU_SCRUB",
+    "resource": "textures/parameter_static/gExtremeSoul_DEKU_SCRUB",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "49abd60523cfad3ed6d397027e902d4b376a7a016c765ab0920fb5fcbda25c18"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BUBBLE",
+    "resource": "textures/parameter_static/gExtremeSoul_BUBBLE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "7d3f91ad21854d8740d144cba81c551d9f2eb6967b800a1b6c78e87f7ef54531"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BEAMOS",
+    "resource": "textures/parameter_static/gExtremeSoul_BEAMOS",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "d12ec5f964390babb791a56b51ae76729f7375db14260fdc4f85af394ccab9f9"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLOORMASTER",
+    "resource": "textures/parameter_static/gExtremeSoul_FLOORMASTER",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "103a6b109e615dea1ce6fce4e8b778c808de3fdb42b9ca3cec52281272f4aa9c"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_REDEAD_GIBDO",
+    "resource": "textures/parameter_static/gExtremeSoul_REDEAD_GIBDO",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "3c89aef00736ee9082c5709bd6ebc504b4943601c19788f3f387cfe8516402a5"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLARE_DANCER",
+    "resource": "textures/parameter_static/gExtremeSoul_FLARE_DANCER",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "dd34790405138326f8c068a92f0ed20d58131592ebde0f954a819ef99b2a9ece"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEAD_HAND",
+    "resource": "textures/parameter_static/gExtremeSoul_DEAD_HAND",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "0cab3b1836c8b2cf880c9c5a4969ad737ec1f14eeedfecf7f36aa750acef081a"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SHELL_BLADE",
+    "resource": "textures/parameter_static/gExtremeSoul_SHELL_BLADE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "286fb476fbddddb35f761a7456e5215dda16a76f3a69e0f4766920237588d5b8"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LIKE_LIKE",
+    "resource": "textures/parameter_static/gExtremeSoul_LIKE_LIKE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "6a25b2b6e30d152b08b7213d71c6a0f10a50c6d6a93e1f59ce5267e0bc050073"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SPIKE",
+    "resource": "textures/parameter_static/gExtremeSoul_SPIKE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "58e06e501722ca7ae63f8eff4bfb50ffbacbdce8fd54c5fb6f870fee15408fd9"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_ANUBIS",
+    "resource": "textures/parameter_static/gExtremeSoul_ANUBIS",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "776403e479e1b37e93f11a49e6b60748c1d36d9fb7ecd02d31c5323efe5583dc"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_IRON_KNUCKLE",
+    "resource": "textures/parameter_static/gExtremeSoul_IRON_KNUCKLE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "6d3c2fd8d3231009a18d816ebb6ec203dbbda5f2575f265e20da03c5ce1fa9c6"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SKULL_KID",
+    "resource": "textures/parameter_static/gExtremeSoul_SKULL_KID",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "63efaa5e582b5d25f121c1465668cd7317e88f7a6f5bd534c42e10c83dce6ecf"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLYING_POT",
+    "resource": "textures/parameter_static/gExtremeSoul_FLYING_POT",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "7d9a0b8dcdfb00b0016e533e8d2df0b686993991f31bfe410370ad11ae021f7a"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FREEZARD",
+    "resource": "textures/parameter_static/gExtremeSoul_FREEZARD",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "6edb8395e72fd099051b449fe18eb0aa77f163abba2f9523c0d0158def58e72f"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_STINGER",
+    "resource": "textures/parameter_static/gExtremeSoul_STINGER",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "b92b12f4b8439836c93c4b14b1f4656b0b77c441d8fb5d980ba895e5128f0d0d"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_WOLFOS",
+    "resource": "textures/parameter_static/gExtremeSoul_WOLFOS",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "8cd33711aff0f44ba260fc3c1aeca7549564a8fec7292970deaa70d960d6e423"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GUAY",
+    "resource": "textures/parameter_static/gExtremeSoul_GUAY",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "c27d0445d00ef2eb1f3bc4a93a95fe4903e7a02be652979218c58ceb6fad3e2f"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_JABU_TENTACLE",
+    "resource": "textures/parameter_static/gExtremeSoul_JABU_TENTACLE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "9949731aa9066b13e490b7a0d9ed8d489d7affbd652b0a35f565bc4174a8751d"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DARK_LINK",
+    "resource": "textures/parameter_static/gExtremeSoul_DARK_LINK",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "f0bde75af84bbb1c8f800f463a193e9e942eeac829307021c0583c05b707df94"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DOOR_TRAP",
+    "resource": "textures/parameter_static/gExtremeSoul_DOOR_TRAP",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "f2e6e567e2333cc20b08ccc0710597c252ac5730870f7eaa998270bbb45928fe"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE",
+    "resource": "textures/parameter_static/gExtremeSoul_FLYING_FLOOR_TILE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "7d7323ed847de35c3edd87cfa6e664cf6efd5e44d49282af1ba539a6d782f5e9"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GERUDO_THIEF",
+    "resource": "textures/parameter_static/gExtremeSoul_GERUDO_THIEF",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "1de707cc21817b86b2a36875b2edfa5a6ff21294f36c66d86fffa31fb69f71b7"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_POE_SISTER",
+    "resource": "textures/parameter_static/gExtremeSoul_POE_SISTER",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "24004d2b37eba6ff53b7501ab83fc96f5b741e82e5f6cede052cb871ece6083e"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_POE",
+    "resource": "textures/parameter_static/gExtremeSoul_POE",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "0c36cbeffb159eaaae604c27380eec9242b7cb6068e24ac3f0ea7910a036e84e"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LEEVER",
+    "resource": "textures/parameter_static/gExtremeSoul_LEEVER",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "2430ee0595c63dfe63acbb26169c6225376ae1072f923c78875547fc7fdcceee"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_STALCHILD",
+    "resource": "textures/parameter_static/gExtremeSoul_STALCHILD",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "8ad19d68a2a1ff193a4a315ebbad8ccca55aabdf59e55b39cc9fe84174f20485"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BIG_OCTO",
+    "resource": "textures/parameter_static/gExtremeSoul_BIG_OCTO",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "842cf841df2f62352ab89560e9022fa0db0e56b4a768cb34d40c1b66b0b15722"
+  },
+  {
+    "item": "RG_SKULLTULA_SOUL",
+    "resource": "textures/parameter_static/gExtremeSoul_SKULLTULA",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "250694d504e55d54b8c563987c76b892e1b0b9a4da5dfabab0b290f72d00c965"
+  },
+  {
+    "item": "RG_BUSINESS_SCRUB_SOUL",
+    "resource": "textures/parameter_static/gExtremeSoul_BUSINESS_SCRUB",
+    "size": [
+      32,
+      32
+    ],
+    "mode": "RGBA",
+    "sha256": "a51f033fb2cfcba73d33deefa86847db4074b06213fbc64860de5982fe05d835"
+  }
+]

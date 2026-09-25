@@ -1,0 +1,22 @@
+{
+  "seed": 11804,
+  "players": 1,
+  "overrides": {
+    "shuffle_enemy_soul": 1,
+    "shuffle_silver": 0
+  },
+  "passed": true,
+  "harness": "AP 0.6.7 core, restricted offline dependency adapters; no nonempty item links or binary patch export",
+  "locations": 3625,
+  "network_locations": 3178,
+  "pool": 3173,
+  "all_state_blocked": [],
+  "resolved_world_options": {
+    "1": {
+      "frozen_starting_time": 2,
+      "boss_key_shuffle": "own_dungeon",
+      "triforce_hunt": 1
+    }
+  },
+  "seconds": 5.419
+}

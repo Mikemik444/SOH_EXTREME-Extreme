@@ -1,0 +1,22 @@
+[
+  {
+    "seed": 1302,
+    "returncode": 0,
+    "all_state_only": false
+  },
+  {
+    "seed": 1303,
+    "returncode": 0,
+    "all_state_only": false
+  },
+  {
+    "seed": 1304,
+    "returncode": 0,
+    "all_state_only": true
+  },
+  {
+    "seed": 1305,
+    "returncode": 0,
+    "all_state_only": false
+  }
+]

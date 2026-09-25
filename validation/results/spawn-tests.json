@@ -1,0 +1,105 @@
+{
+  "passed": true,
+  "suites": [
+    {
+      "name": "exact_spawn_catalog",
+      "passed": true,
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/enemy13/src",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/exact_spawn_catalog.cpp",
+        "-o",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/exact_spawn_catalog"
+      ],
+      "compile_stderr": "",
+      "stdout": "705 exact static aliases; 95 scripted aliases; coordinate, room, slot and occupancy negatives passed (735 identified placements).\n",
+      "stderr": ""
+    },
+    {
+      "name": "real_option_callsite",
+      "passed": true,
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/enemy13/src",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/real_option_callsite.cpp",
+        "-o",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/real_option_callsite"
+      ],
+      "compile_stderr": "",
+      "stdout": "Actual explicit-bool OptionValue declaration and real MegaSoul call compiled; 128 call-site states passed.\n",
+      "stderr": ""
+    },
+    {
+      "name": "bow_room_spawn_lifecycle",
+      "passed": true,
+      "command": [
+        "gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/enemy13/src",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/bow_room_spawn_lifecycle.c",
+        "-o",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/bow_room_spawn_lifecycle"
+      ],
+      "compile_stderr": "",
+      "stdout": "Real Bow-room single/pair functions retain wave counters, pass distinct slots, and handle disabled/failed spawns.\n",
+      "stderr": ""
+    },
+    {
+      "name": "native_enum_and_finder_table",
+      "passed": true,
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/enemy13/src",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/native_enum_and_finder_table.cpp",
+        "-o",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/native_enum_and_finder_table"
+      ],
+      "compile_stderr": "",
+      "stdout": "753 native finder rows compiled with production enums and exact struct; unique IDs and valid masks passed.\n",
+      "stderr": ""
+    },
+    {
+      "name": "public_c_bridge_header",
+      "passed": true,
+      "command": [
+        "gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/enemy13/src",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/public_c_bridge_header.c",
+        "-o",
+        "/mnt/data/enemy13/src/validation/results/spawn-test-build/public_c_bridge_header"
+      ],
+      "compile_stderr": "",
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

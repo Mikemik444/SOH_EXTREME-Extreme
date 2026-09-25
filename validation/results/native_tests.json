@@ -1,0 +1,94 @@
+{
+  "scope": "Production policy header and complete extracted engine functions; stubbed engine/AP services; not a whole-game build",
+  "suites": [
+    {
+      "name": "enemy_drop_policy",
+      "passed": true,
+      "compile_command": [
+        "/usr/bin/g++",
+        "-std=c++17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/validation/native",
+        "/mnt/data/validation/native-test-build/enemy_drop_policy.cpp",
+        "-o",
+        "/mnt/data/validation/native-test-build/enemy_drop_policy"
+      ],
+      "compile_stdout": "",
+      "compile_stderr": "",
+      "stdout": "280 exhaustive policy cases plus fresh-life normal loot passed\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "name": "hintnuts_freeze",
+      "passed": true,
+      "compile_command": [
+        "/usr/bin/gcc",
+        "-std=c11",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/validation/native",
+        "/mnt/data/validation/native-test-build/hintnuts_freeze.c",
+        "-o",
+        "/mnt/data/validation/native-test-build/hintnuts_freeze"
+      ],
+      "compile_stdout": "",
+      "compile_stderr": "",
+      "stdout": "5 puzzle lifecycle scenarios passed: unresolved, solved surface reward, no repeat, wrong-order reset, later solve\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "name": "enemy_pickup_receipts",
+      "passed": true,
+      "compile_command": [
+        "/usr/bin/g++",
+        "-std=c++17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/validation/native",
+        "/mnt/data/validation/native-test-build/enemy_pickup_receipts.cpp",
+        "-o",
+        "/mnt/data/validation/native-test-build/enemy_pickup_receipts"
+      ],
+      "compile_stdout": "",
+      "compile_stderr": "",
+      "stdout": "16 pickup truth-table cases and disconnected retry, duplicate pickup, invalid identity, exact spawn and grotto isolation passed\n",
+      "stderr": "",
+      "returncode": 0
+    },
+    {
+      "name": "enemy_spawn_identity",
+      "passed": true,
+      "compile_command": [
+        "/usr/bin/g++",
+        "-std=c++17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/mnt/data/validation/native",
+        "/mnt/data/validation/native-test-build/enemy_spawn_identity.cpp",
+        "-o",
+        "/mnt/data/validation/native-test-build/enemy_spawn_identity"
+      ],
+      "compile_stdout": "",
+      "compile_stderr": "",
+      "stdout": "9 spawn-identity scenarios passed: initial snapshot, immutable mutation, pointer reuse, dynamic spawn, statue, non-enemy, vanilla, grotto, null\n",
+      "stderr": "",
+      "returncode": 0
+    }
+  ],
+  "passed": true
+}

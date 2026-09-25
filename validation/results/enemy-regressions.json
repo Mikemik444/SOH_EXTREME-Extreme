@@ -1,0 +1,251 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "all 753 enemy checks are reachable with complete inventory",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Bow arena does not require its own Bow 9800720",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Bow arena does not require its own Bow 9800721",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Bow arena does not require its own Bow 9800722",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Stalfos requires own soul 9800137",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Stalfos requires own soul 9800138",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Stalfos requires own soul 9800720",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Stalfos requires own soul 9800721",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Stalfos requires own soul 9800722",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Poe Sister requires own soul 9800566",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Poe Sister requires own soul 9800567",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Poe Sister requires own soul 9800568",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Poe Sister requires own soul 9800569",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Forest Temple Red Poe Chest event cannot bypass missing sister soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Forest Temple Blue Poe Chest event cannot bypass missing sister soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Amy cube puzzle requires Grab",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Bow route requires Climb 9800720",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Bow route requires Climb 9800721",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Bow route requires Climb 9800722",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "catalogue contains Poe Soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "every Poe Soul check blocks without soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "catalogue contains Leever Soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "every Leever Soul check blocks without soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "catalogue contains Stalchild Soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "every Stalchild Soul check blocks without soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "catalogue contains Big Octo Soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "every Big Octo Soul check blocks without soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "catalogue contains Moblin Soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "every Moblin Soul check blocks without soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "catalogue contains Flying Pot Soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "every Flying Pot Soul check blocks without soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "catalogue contains Dead Hand Soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "every Dead Hand Soul check blocks without soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Poe Soul is progression",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Leever Soul is progression",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Stalchild Soul is progression",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Big Octo Soul is progression",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "day-frozen state blocks every night-only enemy",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "night-only catalogue entries exist",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "structural and child Skull Kid helper IDs not checks",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "child-only enemy cannot use adult sword or hammer",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    }
+  ]
+}

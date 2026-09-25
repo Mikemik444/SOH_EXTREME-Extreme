@@ -1,0 +1,14 @@
+[
+  {
+    "compiler": "clang++",
+    "passed": true,
+    "result": "0.11.21 Python snapshot accepted by production C++ mirror; old version and mismatched receipts rejected",
+    "scope": "production Python encoder and C++ parser/session guard; no live worker/network/UI test"
+  },
+  {
+    "compiler": "g++",
+    "passed": true,
+    "result": "0.11.21 Python snapshot accepted by production C++ mirror; old version and mismatched receipts rejected",
+    "scope": "production Python encoder and C++ parser/session guard; no live worker/network/UI test"
+  }
+]

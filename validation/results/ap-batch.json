@@ -1,0 +1,42 @@
+[
+  {
+    "command": [
+      "python",
+      "/mnt/data/enemy13/src/validation/run_case.py",
+      "--ap-root",
+      "/mnt/data/enemy13/apcore",
+      "--offline-adapters",
+      "--seed",
+      "1301",
+      "--report",
+      "/mnt/data/enemy13/src/validation/results/seed-1301.json"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "python",
+      "/mnt/data/enemy13/src/validation/run_regressions.py",
+      "--ap-root",
+      "/mnt/data/enemy13/apcore",
+      "--offline-adapters",
+      "--baseline-slot",
+      "/mnt/data/enemy13/src/validation/results/seed-1301.json.slot1.json",
+      "--report",
+      "/mnt/data/enemy13/src/validation/results/regressions.json"
+    ],
+    "returncode": 0
+  },
+  {
+    "command": [
+      "python",
+      "/mnt/data/enemy13/src/validation/run_enemy_regressions.py",
+      "--ap-root",
+      "/mnt/data/enemy13/apcore",
+      "--offline-adapters",
+      "--report",
+      "/mnt/data/enemy13/src/validation/results/enemy-regressions.json"
+    ],
+    "returncode": 0
+  }
+]

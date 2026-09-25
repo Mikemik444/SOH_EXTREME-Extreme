@@ -1,0 +1,636 @@
+{
+  "group": "capabilities",
+  "total": 103,
+  "failures": 0,
+  "checks": [
+    {
+      "name": "full inventory remains globally accessible",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "Grab missing blocks action",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Grab first physical item grants action",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Grab removal invalidates action",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Climb missing blocks action",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Climb first physical item grants action",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Climb removal invalidates action",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Crawl missing blocks action",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Crawl first physical item grants action",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Crawl removal invalidates action",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Swim missing blocks action",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Swim first physical item grants action",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Swim removal invalidates action",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "pot soul only",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "pot + Grab",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "pot + bombs without Grab",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "pot + child sword without Grab",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "pot + child boomerang without Grab",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "pot method without soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "fixed crate soul only",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "fixed crate Grab alone is not a break",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "fixed crate Roll",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "fixed crate bombs without Roll",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "fixed crate no soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "small crate soul only",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "small crate lift",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "small crate sword without Roll",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "tree soul without Roll",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "tree + Roll",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "tree cannot use bombs instead of Roll",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "tree no soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "grass soul only",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "grass bomb cut without Grab",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "grass sword cut without Grab",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "grass cutting method without soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "low hive bombs without soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "low hive bombs plus soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "upper hive boomerang without soul",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "upper hive boomerang plus soul",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "NPC Deku existence=False speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Deku existence=False speech=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Deku existence=True speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Deku existence=True speech=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "NPC Deku rejects wrong language",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Gerudo existence=False speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Gerudo existence=False speech=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Gerudo existence=True speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Gerudo existence=True speech=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "NPC Gerudo rejects wrong language",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Goron existence=False speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Goron existence=False speech=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Goron existence=True speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Goron existence=True speech=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "NPC Goron rejects wrong language",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Hylian existence=False speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Hylian existence=False speech=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Hylian existence=True speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Hylian existence=True speech=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "NPC Hylian rejects wrong language",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Kokiri existence=False speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Kokiri existence=False speech=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Kokiri existence=True speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Kokiri existence=True speech=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "NPC Kokiri rejects wrong language",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Zora existence=False speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Zora existence=False speech=True",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Zora existence=True speech=False",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "NPC Zora existence=True speech=True",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "NPC Zora rejects wrong language",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "pots metadata coverage exists",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "pots every tagged check rejects missing soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "crates metadata coverage exists",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "crates every tagged check rejects missing soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "trees metadata coverage exists",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "trees every tagged check rejects missing soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "grass metadata coverage exists",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "grass every tagged check rejects missing soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "hives metadata coverage exists",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "hives every tagged check rejects missing soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "all tagged NPC interactions require NPC Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "all tagged NPC interactions require language",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "exact Zora locations cannot substitute another language",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "exact Deku locations cannot substitute another language",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "exact Hylian locations cannot substitute another language",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "exact Gerudo locations cannot substitute another language",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "exact Goron locations cannot substitute another language",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "exact Kokiri locations cannot substitute another language",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "every first-talk check needs NPC Soul",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "every first-talk check needs speech",
+      "passed": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "Skip Zelda automatic Impa reward remains free",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "Grab blocks Graveyard Shield Grave",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Grab blocks Graveyard Heart Piece Grave",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Grab blocks Graveyard Dampes Grave",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Grab blocks Ice Cavern Before Final Room",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "strength requires Grab: Gorons Bracelet",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "strength requires Grab: Silver Gauntlets",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "strength requires Grab: Golden Gauntlets",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "boots do not permit swimming rule",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Zora Tunic cannot supply underwater access",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Deku 2F no ladder/vine ability",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "Kokiri crawlspace chest requires Crawl",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "unknown physical requirement fails closed RequireAnyItemGroups",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "unknown physical requirement fails closed RequireAnyExistingItems",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    }
+  ],
+  "coverage": {
+    "pots": 341,
+    "crates": 79,
+    "trees": 61,
+    "grass": 267,
+    "hives": 32,
+    "tagged_npc_locations": 124,
+    "exact_language_locations": 121,
+    "first_talk_checks": 114
+  },
+  "scope": "Real AP 0.6.7 graph, collection/cache and rules; no game physics or UI. Restricted offline dependency adapters only."
+}
