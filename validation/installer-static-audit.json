@@ -1,0 +1,7 @@
+{
+  "payload_hashes_verified": 112,
+  "external_stock_python_imports": [],
+  "batch_regex_fixture_variants_passed": 4,
+  "batch_idempotent": true,
+  "PowerShell_executed": false
+}

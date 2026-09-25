@@ -1,0 +1,68 @@
+--- before/arvhipelago/archipelago.json
++++ after/arvhipelago/archipelago.json
+@@ -1,7 +1,7 @@
+ {
+     "game": "SOH-EXTREME",
+     "minimum_ap_version": "0.6.7",
+-    "world_version": "0.11.21",
++    "world_version": "0.11.22",
+     "authors": [
+         "mikemik44",
+         "OpenAI"
+--- before/arvhipelago/soh_extreme/TrackerMirror.py
++++ after/arvhipelago/soh_extreme/TrackerMirror.py
+@@ -9,7 +9,7 @@
+ from typing import Any
+ 
+ PROTOCOL = "SOHExtremeFinder1"
+-VERSION = "0.11.21"
++VERSION = "0.11.22"
+ TAG = "SOHExtremeUT"
+ MAX_ENTRIES = 20000
+ MAX_BYTES = 750000
+--- before/arvhipelago/soh_extreme/__init__.py
++++ after/arvhipelago/soh_extreme/__init__.py
+@@ -1137,6 +1137,9 @@
+ 
+         region_members = {region.name: region for region in Regions}
+         native_region_aliases = {
++            # The native token says AREA; the AP enum says REGION. Without this
++            # alias, the native block/switch Grab gate cannot be projected.
++            "DODONGOS_CAVERN_BOSS_AREA": "DODONGOS_CAVERN_BOSS_REGION",
+             "THE_LOST_WOODS": "LOST_WOODS",
+             # Malon's Egg can be disabled while her speech check remains enabled.
+             # The native gate is the child castle grounds, never the Menu root.
+@@ -2359,6 +2362,9 @@
+             return rule
+ 
+         native_region_aliases = {
++            # The native token says AREA; the AP enum says REGION. Without this
++            # alias, the native block/switch Grab gate cannot be projected.
++            "DODONGOS_CAVERN_BOSS_AREA": "DODONGOS_CAVERN_BOSS_REGION",
+             "THE_LOST_WOODS": "LOST_WOODS",
+             "KF_OUTSIDE_LOST_WOODS": None,
+             "KF_LINKS_PORCH": None,
+--- before/arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py
++++ after/arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py
+@@ -398,7 +398,9 @@
+         (Regions.DODONGOS_CAVERN_LOBBY, lambda bundle: True_()),
+         (Regions.DODONGOS_CAVERN_BACK_ROOM,
+          lambda bundle: can_break_mud_walls(bundle)),
+-        (Regions.DODONGOS_CAVERN_BOSS_ENTRYWAY, lambda bundle: True_()),
++        # The block must hold the switch down. Both ages need Grab when it is
++        # shuffled; strength/explosives alone are not a substitute for pushing.
++        (Regions.DODONGOS_CAVERN_BOSS_ENTRYWAY, lambda bundle: can_grab(bundle)),
+     ])
+ 
+     # Dodongos Cavern Back Room
+--- before/arvhipelago/soh_extreme/archipelago.json
++++ after/arvhipelago/soh_extreme/archipelago.json
+@@ -1,7 +1,7 @@
+ {
+     "game": "SOH-EXTREME",
+     "minimum_ap_version": "0.6.7",
+-    "world_version": "0.11.21",
++    "world_version": "0.11.22",
+     "authors": [
+         "mikemik44",
+         "OpenAI"

@@ -57,6 +57,7 @@ E:/test/bb/build-vs/CMakeFiles/pkgRedirects/zlib-config-version.cmake
 E:/test/bb/build-vs/CMakeFiles/pkgRedirects/zlib-config.cmake
 E:/test/bb/properties.h.in
 E:/test/bb/src/boot/build.c.in
+E:/test/bb/tools/cmake/SohExtremeAssets.cmake
 E:/test/vcpkg/installed/x64-windows-static/share/SDL2_net/SDL2_net-static-targets-debug.cmake
 E:/test/vcpkg/installed/x64-windows-static/share/SDL2_net/SDL2_net-static-targets-release.cmake
 E:/test/vcpkg/installed/x64-windows-static/share/SDL2_net/SDL2_net-static-targets.cmake

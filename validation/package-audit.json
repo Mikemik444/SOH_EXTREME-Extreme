@@ -1,0 +1,18 @@
+{
+  "version": "0.11.22",
+  "source_commit": "473e6c69d146fb426fd83f9d1278c3c717fa865d",
+  "payload_files": 111,
+  "hq_pngs": 47,
+  "legacy_pngs": 47,
+  "source_preflight_files": [
+    "soh/Enhancements/randomizer/EnemySoulDraw.cpp",
+    "soh/Network/Archipelago/TrackerMirror.h",
+    "arvhipelago/soh_extreme/__init__.py",
+    "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py",
+    "arvhipelago/soh_extreme/TrackerMirror.py"
+  ],
+  "verified": true,
+  "windows_game_build_run": false,
+  "in_game_visual_test_run": false,
+  "windows_installer_executed": false
+}

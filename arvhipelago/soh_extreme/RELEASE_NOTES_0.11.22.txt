@@ -1,0 +1,34 @@
+SOH-EXTREME APWorld 0.11.22 - source-only logic update
+
+Based on the last-working extracted APWorld in arvhipelago/ at GitHub commit
+473e6c69d146fb426fd83f9d1278c3c717fa865d. Its 101 files match the supplied
+0.11.21d APWorld exactly (Git tree a19193300a57f3572180e8a8a9ce037c1c3b403d).
+
+New APWorld logic:
+- Dodongos Cavern Boss Region -> Boss Entryway calls can_grab(bundle), rather
+  than True_(). Both child and adult routes must satisfy the block/switch action.
+  Grab is innate when Shuffle Grab is off; otherwise Grab / Power Bracelet is
+  required. Other chest/boss/room requirements are unchanged.
+- Native DODONGOS_CAVERN_BOSS_AREA is aliased to the AP enum
+  DODONGOS_CAVERN_BOSS_REGION in BOTH create_regions and set_rules, preserving
+  the native Grab condition during region placement and rule projection.
+- The archive and internal manifests, plus the Python tracker transport, are
+  0.11.22, matching the C++ tracker from the already-delivered 0.11.22 soul patch.
+
+Preserved, not newly added:
+- The 0.11.21d house-pot restriction that excludes unusable indoor explosives.
+- Existing enemy-room, individual soul, ability, progressive item, time,
+  grotto, silver-rupee, trap and slot-data code from the last-working world.
+- All item/location IDs and the already-modified _vendor_oot_soh package.
+
+This APWorld contains NO new soul graphics. Graphics live in the game client.
+No stock helper downloads or replacements are needed. Zip the CONTENTS of
+arvhipelago (archipelago.json and soh_extreme/), not the outer directory.
+Restart Archipelago/Universal Tracker after replacing the installed APWorld.
+
+Existing seed placements are not changed by updating the rules. Generation
+with the new rules is required for newly placed rewards to respect this gate.
+An old seed with a circular placement is not repaired by this source update.
+
+Focused source/rule tests and syntax checks are provided outside the package.
+They are not an exhaustive native/AP parity audit or a full seed-generation test.

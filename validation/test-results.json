@@ -1,0 +1,164 @@
+{
+  "tests": [
+    {
+      "test": "GitHub-source-baseline-entire-tree",
+      "passed": true,
+      "detail": "a19193300a57f3572180e8a8a9ce037c1c3b403d"
+    },
+    {
+      "test": "GitHub-packaged-world-baseline",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Complete-0.11.22-source-package-byte-parity",
+      "passed": true,
+      "detail": "102 files compared"
+    },
+    {
+      "test": "All-bundled-Python-modules-parse",
+      "passed": true,
+      "detail": "75 modules"
+    },
+    {
+      "test": "All-bundled-JSON-parses",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Manifest-Python-C++-tracker-version-parity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Six-0.11.22-source-differences",
+      "passed": true,
+      "detail": "archipelago.json, soh_extreme/RELEASE_NOTES_0.11.22.txt, soh_extreme/TrackerMirror.py, soh_extreme/__init__.py, soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py, soh_extreme/archipelago.json"
+    },
+    {
+      "test": "Original-root-packer-path-error-reproduced",
+      "passed": true,
+      "detail": "-- The CXX compiler identification is GNU 14.2.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- Configuring done (0.2s)\nCMake Error at CMakeLists.txt:6 (add_executable):\n  Cannot find source file:\n\n    /tmp/soh build fix zctvz8u2/source with spaces/assets/tools/soh-o2r-packer/main.cpp\n\n\nCMake Error at CMakeLists.txt:6 (add_executable):\n  No SOURCES given to target: soh-o2r-packer\n\n\nCMake Generate step failed.  Build files cannot be regenerated correctly.\n"
+    },
+    {
+      "test": "CMake-surgical-patch-idempotent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "CMake-surgical-patch-CRLF-compatible",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Nested-tools-partial-root-assets-configure",
+      "passed": true,
+      "detail": "-- The CXX compiler identification is GNU 14.2.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- SOH-EXTREME packer source: /tmp/soh build fix zctvz8u2/source with spaces/soh/assets/tools/soh-o2r-packer\n-- Configuring done (0.1s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/soh build fix zctvz8u2/fixed\n"
+    },
+    {
+      "test": "Build-tools-excluded-from-soh",
+      "passed": true,
+      "detail": "soh/game.cpp"
+    },
+    {
+      "test": "Isolated-game-target-build",
+      "passed": true,
+      "detail": "[0/2] Re-checking globbed directories...\n[1/3] Building CXX object CMakeFiles/soh.dir/soh/game.cpp.o\n[2/3] Linking CXX executable soh\n"
+    },
+    {
+      "test": "Legacy-root-tools-configure",
+      "passed": true,
+      "detail": "-- The CXX compiler identification is GNU 14.2.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- SOH-EXTREME packer source: /tmp/soh build fix zctvz8u2/source with spaces/assets/tools/soh-o2r-packer\n-- Configuring done (0.2s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/soh build fix zctvz8u2/legacy\n"
+    },
+    {
+      "test": "Missing-tools-fail-explicitly",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Combined-assets-pack-staging",
+      "passed": true,
+      "detail": "-- SOH-EXTREME asset input: /tmp/soh build fix zctvz8u2/source with spaces/soh/assets/custom\n-- SOH-EXTREME asset input: /tmp/soh build fix zctvz8u2/source with spaces/assets/custom\n-- SOH-EXTREME packing 4 resource files\n-- SOH-EXTREME asset archive ready: /tmp/soh build fix zctvz8u2/stage build/soh/soh.o2r (130 bytes)\n"
+    },
+    {
+      "test": "Base-overlay-HQ-shaders-all-present",
+      "passed": true,
+      "detail": "{'objects/base': 'base-asset', 'shaders/renderer.glsl': 'current-shaders', 'textures/common': 'updated', 'textures/hq': '128x128'}"
+    },
+    {
+      "test": "Source-asset-files-unchanged",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Staging-cleaned-after-success",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Packer-failure-preserves-previous-output",
+      "passed": true,
+      "detail": "-EXTREME asset input: /tmp/soh build fix zctvz8u2/source with spaces/soh/assets/custom\n-- SOH-EXTREME asset input: /tmp/soh build fix zctvz8u2/source with spaces/assets/custom\n-- SOH-EXTREME packing 5 resource files\nCMake Error at nt/data/work/buildfix/package/patch-data/build-source-fix/tools/cmake/PackSohExtremeAssets.cmake:74 (message):\n  soh-o2r-packer failed (3); old soh.o2r was preserved.\n\n\n"
+    },
+    {
+      "test": "Empty-packer-output-preserves-previous-output",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Missing-shaders-preserves-previous-output",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "In-source-staging-rejected",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Nested-only-assets-supported",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Root-only-assets-supported",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Junction-alias-deduplicated",
+      "passed": true,
+      "detail": "-- SOH-EXTREME asset input: /tmp/soh build fix zctvz8u2/source with spaces/soh/assets/custom\n-- SOH-EXTREME packing 3 resource files\n-- SOH-EXTREME asset archive ready: /tmp/soh build fix zctvz8u2/stage build/soh/soh.o2r (100 bytes)\n"
+    },
+    {
+      "test": "Canonical-builder-no-stock-download",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Canonical-builder-no-hardcoded-gameplay-version",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Canonical-builder-hashes-every-archive-entry",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Canonical-builder-version-and-downgrade-guards",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "test": "Legacy-Python-builder-launcher-parses",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "passed": 31,
+  "windows_powershell_executed": false,
+  "full_windows_game_build": false,
+  "in_game_render_test": false,
+  "full_AP_generation": false
+}

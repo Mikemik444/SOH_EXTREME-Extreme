@@ -1,0 +1,35 @@
+add_executable(soh-o2r-packer EXCLUDE_FROM_ALL
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/tools/soh-o2r-packer/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/tools/soh-o2r-packer/PngTexture.cpp
+)
+if(MSVC)
+    set_property(TARGET soh-o2r-packer PROPERTY
+        MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+    )
+
+    target_compile_options(soh-o2r-packer PRIVATE /EHsc)
+endif()
+
+target_include_directories(soh-o2r-packer PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/Torch/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/tools/soh-o2r-packer
+)
+
+target_link_libraries(soh-o2r-packer PRIVATE torch)
+add_custom_target(GenerateSohOtr
+    COMMAND ${CMAKE_COMMAND} -E rm -r -f
+            "${CMAKE_CURRENT_SOURCE_DIR}/assets/custom/shaders"
+
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_CURRENT_SOURCE_DIR}/../libultraship/src/fast/shaders"
+            "${CMAKE_CURRENT_SOURCE_DIR}/assets/custom/shaders"
+
+    COMMAND $<TARGET_FILE:soh-o2r-packer>
+            "${CMAKE_CURRENT_SOURCE_DIR}/assets/custom"
+            "${CMAKE_BINARY_DIR}/soh/soh.o2r"
+            "${CMAKE_PROJECT_VERSION}"
+
+    DEPENDS soh-o2r-packer
+    BYPRODUCTS "${CMAKE_BINARY_DIR}/soh/soh.o2r"
+    COMMENT "Generating soh.o2r..."
+)

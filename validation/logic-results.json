@@ -1,0 +1,122 @@
+{
+  "kind": "isolated production-source regression tests (not full AP generation)",
+  "baseline_reproduced_for_child_and_adult": true,
+  "critical_route_cases": [
+    {
+      "adult": false,
+      "shuffled": false,
+      "no_logic": false,
+      "grab": false,
+      "reachable": true
+    },
+    {
+      "adult": false,
+      "shuffled": false,
+      "no_logic": false,
+      "grab": true,
+      "reachable": true
+    },
+    {
+      "adult": false,
+      "shuffled": false,
+      "no_logic": true,
+      "grab": false,
+      "reachable": true
+    },
+    {
+      "adult": false,
+      "shuffled": false,
+      "no_logic": true,
+      "grab": true,
+      "reachable": true
+    },
+    {
+      "adult": false,
+      "shuffled": true,
+      "no_logic": false,
+      "grab": false,
+      "reachable": false
+    },
+    {
+      "adult": false,
+      "shuffled": true,
+      "no_logic": false,
+      "grab": true,
+      "reachable": true
+    },
+    {
+      "adult": false,
+      "shuffled": true,
+      "no_logic": true,
+      "grab": false,
+      "reachable": true
+    },
+    {
+      "adult": false,
+      "shuffled": true,
+      "no_logic": true,
+      "grab": true,
+      "reachable": true
+    },
+    {
+      "adult": true,
+      "shuffled": false,
+      "no_logic": false,
+      "grab": false,
+      "reachable": true
+    },
+    {
+      "adult": true,
+      "shuffled": false,
+      "no_logic": false,
+      "grab": true,
+      "reachable": true
+    },
+    {
+      "adult": true,
+      "shuffled": false,
+      "no_logic": true,
+      "grab": false,
+      "reachable": true
+    },
+    {
+      "adult": true,
+      "shuffled": false,
+      "no_logic": true,
+      "grab": true,
+      "reachable": true
+    },
+    {
+      "adult": true,
+      "shuffled": true,
+      "no_logic": false,
+      "grab": false,
+      "reachable": false
+    },
+    {
+      "adult": true,
+      "shuffled": true,
+      "no_logic": false,
+      "grab": true,
+      "reachable": true
+    },
+    {
+      "adult": true,
+      "shuffled": true,
+      "no_logic": true,
+      "grab": false,
+      "reachable": true
+    },
+    {
+      "adult": true,
+      "shuffled": true,
+      "no_logic": true,
+      "grab": true,
+      "reachable": true
+    }
+  ],
+  "aliases_checked": 2,
+  "compiled_ap_modules": 75,
+  "ids_and_native_graph_unchanged": true,
+  "tracker_version": "0.11.22"
+}

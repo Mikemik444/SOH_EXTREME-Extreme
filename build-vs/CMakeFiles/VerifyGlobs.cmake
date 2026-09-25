@@ -374,6 +374,7 @@ set(OLD_GLOB
   "soh/Enhancements/randomizer/Messages/Rupees.cpp"
   "soh/Enhancements/randomizer/Messages/StaticHints.cpp"
   "soh/Enhancements/randomizer/Plandomizer.cpp"
+  "soh/Enhancements/randomizer/ProgressionItemVisuals.cpp"
   "soh/Enhancements/randomizer/RCToRandInf.cpp"
   "soh/Enhancements/randomizer/RocsFeather.cpp"
   "soh/Enhancements/randomizer/SeedContext.cpp"
@@ -688,12 +689,14 @@ set(OLD_GLOB
   "soh/Enhancements/randomizer/FishingSoulAccess.h"
   "soh/Enhancements/randomizer/LacsRequirements.h"
   "soh/Enhancements/randomizer/Plandomizer.h"
+  "soh/Enhancements/randomizer/ProgressionItemVisuals.h"
   "soh/Enhancements/randomizer/RCToRandInf.h"
   "soh/Enhancements/randomizer/RocsFeatherCycle.h"
   "soh/Enhancements/randomizer/SeedContext.h"
   "soh/Enhancements/randomizer/ShuffleRocks.h"
   "soh/Enhancements/randomizer/ShuffleSilver.h"
   "soh/Enhancements/randomizer/ShuffleTradeItems.h"
+  "soh/Enhancements/randomizer/SoulPortraitHQ.h"
   "soh/Enhancements/randomizer/Traps.h"
   "soh/Enhancements/randomizer/bean_patches.h"
   "soh/Enhancements/randomizer/draw.h"
@@ -1988,7 +1991,7 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "E:/test/bb/build-vs/CMakeFiles/cmake.verify_globs")
 endif()
 
-# soh__Extractor at CMakeLists.txt:188 (file)
+# soh__Extractor at CMakeLists.txt:187 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false RELATIVE "E:/test/bb" "E:/test/bb/soh/Extractor/*.c")
 set(OLD_GLOB
   "soh/Extractor/FastCrc32C.c"
@@ -1998,7 +2001,7 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "E:/test/bb/build-vs/CMakeFiles/cmake.verify_globs")
 endif()
 
-# soh__Extractor at CMakeLists.txt:188 (file)
+# soh__Extractor at CMakeLists.txt:187 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false RELATIVE "E:/test/bb" "E:/test/bb/soh/Extractor/*.cpp")
 set(OLD_GLOB
   "soh/Extractor/Extract.cpp"
@@ -2009,7 +2012,7 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "E:/test/bb/build-vs/CMakeFiles/cmake.verify_globs")
 endif()
 
-# soh__Extractor at CMakeLists.txt:188 (file)
+# soh__Extractor at CMakeLists.txt:187 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false RELATIVE "E:/test/bb" "E:/test/bb/soh/Extractor/*.h")
 set(OLD_GLOB
   "soh/Extractor/Extract.h"
@@ -2021,7 +2024,7 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "E:/test/bb/build-vs/CMakeFiles/cmake.verify_globs")
 endif()
 
-# soh__Extractor at CMakeLists.txt:188 (file)
+# soh__Extractor at CMakeLists.txt:187 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false RELATIVE "E:/test/bb" "E:/test/bb/soh/Extractor/*.hpp")
 set(OLD_GLOB
   )
@@ -2030,7 +2033,7 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "E:/test/bb/build-vs/CMakeFiles/cmake.verify_globs")
 endif()
 
-# src__ at CMakeLists.txt:203 (file)
+# src__ at CMakeLists.txt:202 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false RELATIVE "E:/test/bb" "E:/test/bb/src/*.c")
 set(OLD_GLOB
   "src/boot/boot_main.c"
@@ -2843,7 +2846,7 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "E:/test/bb/build-vs/CMakeFiles/cmake.verify_globs")
 endif()
 
-# src__ at CMakeLists.txt:203 (file)
+# src__ at CMakeLists.txt:202 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false RELATIVE "E:/test/bb" "E:/test/bb/src/*.h")
 set(OLD_GLOB
   "src/overlays/actors/ovl_Arms_Hook/z_arms_hook.h"

@@ -1,0 +1,16 @@
+SOH-EXTREME 0.11.22 - Enemy portrait clarity / Dodongo block switch
+
+All 47 enemy/Skulltula/Scrub portraits have dedicated 128px pickup artwork rebuilt
+from the original source portraits, a larger unlit camera-facing display, and
+cleaner legacy 32px HUD icons. Other soul classes and all item IDs are unchanged.
+
+The stock AP Dodongos Cavern Boss Region -> Boss Entryway route now calls
+can_grab(). The native BOSS_AREA token is mapped to the AP BOSS_REGION enum, so
+native-rule projection retains the same condition. The native game already had
+this condition and is not relaxed. The chest/boss beyond the switch inherit it.
+Shuffle Grab off keeps Grab innate; the normal shuffled route requires its item.
+
+UT and Check Finder use this world's rules; both ends now advertise 0.11.22 to
+prevent an old worker's permissive snapshot from being shown by the patched client.
+Restart the game and standalone AP tools after installing. Existing item placements
+are not changed: updating the tracker does not repair a deadlocked old placement.

@@ -1,0 +1,331 @@
+[
+  {
+    "item": "RG_ENEMY_SOUL_STALFOS",
+    "key": "STALFOS",
+    "symbol": "gExtremeSoul_STALFOS",
+    "resource": "textures/parameter_static/gExtremeSoul_STALFOS",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_STALFOS.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_OCTOROK",
+    "key": "OCTOROK",
+    "symbol": "gExtremeSoul_OCTOROK",
+    "resource": "textures/parameter_static/gExtremeSoul_OCTOROK",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_OCTOROK.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_WALLMASTER",
+    "key": "WALLMASTER",
+    "symbol": "gExtremeSoul_WALLMASTER",
+    "resource": "textures/parameter_static/gExtremeSoul_WALLMASTER",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_WALLMASTER.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DODONGO",
+    "key": "DODONGO",
+    "symbol": "gExtremeSoul_DODONGO",
+    "resource": "textures/parameter_static/gExtremeSoul_DODONGO",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_DODONGO.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_KEESE",
+    "key": "KEESE",
+    "symbol": "gExtremeSoul_KEESE",
+    "resource": "textures/parameter_static/gExtremeSoul_KEESE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_KEESE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TEKTITE",
+    "key": "TEKTITE",
+    "symbol": "gExtremeSoul_TEKTITE",
+    "resource": "textures/parameter_static/gExtremeSoul_TEKTITE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_TEKTITE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_PEAHAT",
+    "key": "PEAHAT",
+    "symbol": "gExtremeSoul_PEAHAT",
+    "resource": "textures/parameter_static/gExtremeSoul_PEAHAT",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_PEAHAT.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS",
+    "key": "LIZALFOS_DINOLFOS",
+    "symbol": "gExtremeSoul_LIZALFOS_DINOLFOS",
+    "resource": "textures/parameter_static/gExtremeSoul_LIZALFOS_DINOLFOS",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_LIZALFOS_DINOLFOS.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GOHMA_LARVA",
+    "key": "GOHMA_LARVA",
+    "symbol": "gExtremeSoul_GOHMA_LARVA",
+    "resource": "textures/parameter_static/gExtremeSoul_GOHMA_LARVA",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_GOHMA_LARVA.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SHABOM",
+    "key": "SHABOM",
+    "symbol": "gExtremeSoul_SHABOM",
+    "resource": "textures/parameter_static/gExtremeSoul_SHABOM",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_SHABOM.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BABY_DODONGO",
+    "key": "BABY_DODONGO",
+    "symbol": "gExtremeSoul_BABY_DODONGO",
+    "resource": "textures/parameter_static/gExtremeSoul_BABY_DODONGO",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_BABY_DODONGO.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BIRI_BARI",
+    "key": "BIRI_BARI",
+    "symbol": "gExtremeSoul_BIRI_BARI",
+    "resource": "textures/parameter_static/gExtremeSoul_BIRI_BARI",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_BIRI_BARI.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TAILPASARAN",
+    "key": "TAILPASARAN",
+    "symbol": "gExtremeSoul_TAILPASARAN",
+    "resource": "textures/parameter_static/gExtremeSoul_TAILPASARAN",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_TAILPASARAN.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TORCH_SLUG",
+    "key": "TORCH_SLUG",
+    "symbol": "gExtremeSoul_TORCH_SLUG",
+    "resource": "textures/parameter_static/gExtremeSoul_TORCH_SLUG",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_TORCH_SLUG.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_MOBLIN",
+    "key": "MOBLIN",
+    "symbol": "gExtremeSoul_MOBLIN",
+    "resource": "textures/parameter_static/gExtremeSoul_MOBLIN",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_MOBLIN.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_ARMOS",
+    "key": "ARMOS",
+    "symbol": "gExtremeSoul_ARMOS",
+    "resource": "textures/parameter_static/gExtremeSoul_ARMOS",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_ARMOS.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEKU_BABA",
+    "key": "DEKU_BABA",
+    "symbol": "gExtremeSoul_DEKU_BABA",
+    "resource": "textures/parameter_static/gExtremeSoul_DEKU_BABA",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_DEKU_BABA.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEKU_SCRUB",
+    "key": "DEKU_SCRUB",
+    "symbol": "gExtremeSoul_DEKU_SCRUB",
+    "resource": "textures/parameter_static/gExtremeSoul_DEKU_SCRUB",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_DEKU_SCRUB.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BUBBLE",
+    "key": "BUBBLE",
+    "symbol": "gExtremeSoul_BUBBLE",
+    "resource": "textures/parameter_static/gExtremeSoul_BUBBLE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_BUBBLE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BEAMOS",
+    "key": "BEAMOS",
+    "symbol": "gExtremeSoul_BEAMOS",
+    "resource": "textures/parameter_static/gExtremeSoul_BEAMOS",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_BEAMOS.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLOORMASTER",
+    "key": "FLOORMASTER",
+    "symbol": "gExtremeSoul_FLOORMASTER",
+    "resource": "textures/parameter_static/gExtremeSoul_FLOORMASTER",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_FLOORMASTER.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_REDEAD_GIBDO",
+    "key": "REDEAD_GIBDO",
+    "symbol": "gExtremeSoul_REDEAD_GIBDO",
+    "resource": "textures/parameter_static/gExtremeSoul_REDEAD_GIBDO",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_REDEAD_GIBDO.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLARE_DANCER",
+    "key": "FLARE_DANCER",
+    "symbol": "gExtremeSoul_FLARE_DANCER",
+    "resource": "textures/parameter_static/gExtremeSoul_FLARE_DANCER",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_FLARE_DANCER.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEAD_HAND",
+    "key": "DEAD_HAND",
+    "symbol": "gExtremeSoul_DEAD_HAND",
+    "resource": "textures/parameter_static/gExtremeSoul_DEAD_HAND",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_DEAD_HAND.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SHELL_BLADE",
+    "key": "SHELL_BLADE",
+    "symbol": "gExtremeSoul_SHELL_BLADE",
+    "resource": "textures/parameter_static/gExtremeSoul_SHELL_BLADE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_SHELL_BLADE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LIKE_LIKE",
+    "key": "LIKE_LIKE",
+    "symbol": "gExtremeSoul_LIKE_LIKE",
+    "resource": "textures/parameter_static/gExtremeSoul_LIKE_LIKE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_LIKE_LIKE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SPIKE",
+    "key": "SPIKE",
+    "symbol": "gExtremeSoul_SPIKE",
+    "resource": "textures/parameter_static/gExtremeSoul_SPIKE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_SPIKE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_ANUBIS",
+    "key": "ANUBIS",
+    "symbol": "gExtremeSoul_ANUBIS",
+    "resource": "textures/parameter_static/gExtremeSoul_ANUBIS",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_ANUBIS.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_IRON_KNUCKLE",
+    "key": "IRON_KNUCKLE",
+    "symbol": "gExtremeSoul_IRON_KNUCKLE",
+    "resource": "textures/parameter_static/gExtremeSoul_IRON_KNUCKLE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_IRON_KNUCKLE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SKULL_KID",
+    "key": "SKULL_KID",
+    "symbol": "gExtremeSoul_SKULL_KID",
+    "resource": "textures/parameter_static/gExtremeSoul_SKULL_KID",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_SKULL_KID.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLYING_POT",
+    "key": "FLYING_POT",
+    "symbol": "gExtremeSoul_FLYING_POT",
+    "resource": "textures/parameter_static/gExtremeSoul_FLYING_POT",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_FLYING_POT.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FREEZARD",
+    "key": "FREEZARD",
+    "symbol": "gExtremeSoul_FREEZARD",
+    "resource": "textures/parameter_static/gExtremeSoul_FREEZARD",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_FREEZARD.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_STINGER",
+    "key": "STINGER",
+    "symbol": "gExtremeSoul_STINGER",
+    "resource": "textures/parameter_static/gExtremeSoul_STINGER",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_STINGER.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_WOLFOS",
+    "key": "WOLFOS",
+    "symbol": "gExtremeSoul_WOLFOS",
+    "resource": "textures/parameter_static/gExtremeSoul_WOLFOS",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_WOLFOS.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GUAY",
+    "key": "GUAY",
+    "symbol": "gExtremeSoul_GUAY",
+    "resource": "textures/parameter_static/gExtremeSoul_GUAY",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_GUAY.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_JABU_TENTACLE",
+    "key": "JABU_TENTACLE",
+    "symbol": "gExtremeSoul_JABU_TENTACLE",
+    "resource": "textures/parameter_static/gExtremeSoul_JABU_TENTACLE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_JABU_TENTACLE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DARK_LINK",
+    "key": "DARK_LINK",
+    "symbol": "gExtremeSoul_DARK_LINK",
+    "resource": "textures/parameter_static/gExtremeSoul_DARK_LINK",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_DARK_LINK.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DOOR_TRAP",
+    "key": "DOOR_TRAP",
+    "symbol": "gExtremeSoul_DOOR_TRAP",
+    "resource": "textures/parameter_static/gExtremeSoul_DOOR_TRAP",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_DOOR_TRAP.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE",
+    "key": "FLYING_FLOOR_TILE",
+    "symbol": "gExtremeSoul_FLYING_FLOOR_TILE",
+    "resource": "textures/parameter_static/gExtremeSoul_FLYING_FLOOR_TILE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_FLYING_FLOOR_TILE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GERUDO_THIEF",
+    "key": "GERUDO_THIEF",
+    "symbol": "gExtremeSoul_GERUDO_THIEF",
+    "resource": "textures/parameter_static/gExtremeSoul_GERUDO_THIEF",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_GERUDO_THIEF.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_POE_SISTER",
+    "key": "POE_SISTER",
+    "symbol": "gExtremeSoul_POE_SISTER",
+    "resource": "textures/parameter_static/gExtremeSoul_POE_SISTER",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_POE_SISTER.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_POE",
+    "key": "POE",
+    "symbol": "gExtremeSoul_POE",
+    "resource": "textures/parameter_static/gExtremeSoul_POE",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_POE.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LEEVER",
+    "key": "LEEVER",
+    "symbol": "gExtremeSoul_LEEVER",
+    "resource": "textures/parameter_static/gExtremeSoul_LEEVER",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_LEEVER.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_STALCHILD",
+    "key": "STALCHILD",
+    "symbol": "gExtremeSoul_STALCHILD",
+    "resource": "textures/parameter_static/gExtremeSoul_STALCHILD",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_STALCHILD.rgba32.png"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BIG_OCTO",
+    "key": "BIG_OCTO",
+    "symbol": "gExtremeSoul_BIG_OCTO",
+    "resource": "textures/parameter_static/gExtremeSoul_BIG_OCTO",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_BIG_OCTO.rgba32.png"
+  },
+  {
+    "item": "RG_SKULLTULA_SOUL",
+    "key": "SKULLTULA",
+    "symbol": "gExtremeSoul_SKULLTULA",
+    "resource": "textures/parameter_static/gExtremeSoul_SKULLTULA",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_SKULLTULA.rgba32.png"
+  },
+  {
+    "item": "RG_BUSINESS_SCRUB_SOUL",
+    "key": "BUSINESS_SCRUB",
+    "symbol": "gExtremeSoul_BUSINESS_SCRUB",
+    "resource": "textures/parameter_static/gExtremeSoul_BUSINESS_SCRUB",
+    "texture": "assets/custom/textures/parameter_static/gExtremeSoul_BUSINESS_SCRUB.rgba32.png"
+  }
+]

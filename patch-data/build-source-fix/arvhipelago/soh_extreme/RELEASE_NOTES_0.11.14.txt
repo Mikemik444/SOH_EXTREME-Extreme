@@ -1,0 +1,16 @@
+SOH-EXTREME 0.11.14 - Physical capability and tracker synchronization
+
+Updates 0.11.13. Includes the 0.11.13a Dead Hand C header hotfix.
+
+Changes: complete two-route GV Waterfall PoH rule; physical HC approach/courtyard
+regions retained with Skip Zelda while only Impa's auto-reward is rooted; shared
+action rules for pots/crates/trees/grass/hives; persistent location metadata; exact
+NPC language rules and NPC-gated trading; Grab on strength/grave/block actions;
+Swim required for water contact including Iron Boots; frozen-phase time logic;
+in-game Check Finder age/time-correct category evaluation, complete live-input
+refresh and live-ammo scope. Individual animal soul checks use their own souls.
+
+This is an incremental rule repair, NOT certification of every physical route.
+The inherited 413 broad enemy entry-region anchors remain unrefined. Existing
+finite enemy IDs and the no-enemy-offspring policy are unchanged.
+See the outer patch VALIDATION.md for tests actually run and their limitations.

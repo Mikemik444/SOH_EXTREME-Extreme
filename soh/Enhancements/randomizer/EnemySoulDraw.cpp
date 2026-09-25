@@ -1,6 +1,10 @@
 #include "draw.h"
 #include "EnemySoulIcons.h"
+#include "SoulPortraitHQ.h"
 #include "soh/ResourceManagerHelpers.h"
+
+#include <fast/resource/ResourceType.h>
+#include <fast/resource/type/Texture.h>
 
 // OPEN_DISPS/CLOSE_DISPS redeclare these hooks at block scope. Include their
 // canonical C-linkage declarations before any macro expansion. Keep this header
@@ -24,10 +28,208 @@ extern "C" {
 // buffer on the stack. Texture coordinates use the same 32x32 logical size as
 // the existing portraits, independently of a replacement texture's resolution.
 static Vtx sSoulPortraitQuad[4] = {
-    { { { -24, -24, 0 }, 0, { 0, 1024 }, { 255, 255, 255, 255 } } },
-    { { { 24, -24, 0 }, 0, { 1024, 1024 }, { 255, 255, 255, 255 } } },
-    { { { 24, 24, 0 }, 0, { 1024, 0 }, { 255, 255, 255, 255 } } },
-    { { { -24, 24, 0 }, 0, { 0, 0 }, { 255, 255, 255, 255 } } },
+    { { { -32, -32, 0 }, 0, { 0, 1024 }, { 255, 255, 255, 255 } } },
+    { { { 32, -32, 0 }, 0, { 1024, 1024 }, { 255, 255, 255, 255 } } },
+    { { { 32, 32, 0 }, 0, { 1024, 0 }, { 255, 255, 255, 255 } } },
+    { { { -32, 32, 0 }, 0, { 0, 0 }, { 255, 255, 255, 255 } } },
+};
+
+
+// 4 columns x 8 rows, each displaying 32x16 texels from a 128x128 texture.
+// Storage must survive deferred display-list consumption; never allocate on the stack.
+static Vtx sHqSoulPortraitTiles[32][4] = {
+    {
+        { { { -32, 24, 0 }, 0, { 0, 512 }, { 255, 255, 255, 255 } } },
+        { { { -16, 24, 0 }, 0, { 1024, 512 }, { 255, 255, 255, 255 } } },
+        { { { -16, 32, 0 }, 0, { 1024, 0 }, { 255, 255, 255, 255 } } },
+        { { { -32, 32, 0 }, 0, { 0, 0 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -16, 24, 0 }, 0, { 1024, 512 }, { 255, 255, 255, 255 } } },
+        { { { 0, 24, 0 }, 0, { 2048, 512 }, { 255, 255, 255, 255 } } },
+        { { { 0, 32, 0 }, 0, { 2048, 0 }, { 255, 255, 255, 255 } } },
+        { { { -16, 32, 0 }, 0, { 1024, 0 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 0, 24, 0 }, 0, { 2048, 512 }, { 255, 255, 255, 255 } } },
+        { { { 16, 24, 0 }, 0, { 3072, 512 }, { 255, 255, 255, 255 } } },
+        { { { 16, 32, 0 }, 0, { 3072, 0 }, { 255, 255, 255, 255 } } },
+        { { { 0, 32, 0 }, 0, { 2048, 0 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 16, 24, 0 }, 0, { 3072, 512 }, { 255, 255, 255, 255 } } },
+        { { { 32, 24, 0 }, 0, { 4096, 512 }, { 255, 255, 255, 255 } } },
+        { { { 32, 32, 0 }, 0, { 4096, 0 }, { 255, 255, 255, 255 } } },
+        { { { 16, 32, 0 }, 0, { 3072, 0 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -32, 16, 0 }, 0, { 0, 1024 }, { 255, 255, 255, 255 } } },
+        { { { -16, 16, 0 }, 0, { 1024, 1024 }, { 255, 255, 255, 255 } } },
+        { { { -16, 24, 0 }, 0, { 1024, 512 }, { 255, 255, 255, 255 } } },
+        { { { -32, 24, 0 }, 0, { 0, 512 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -16, 16, 0 }, 0, { 1024, 1024 }, { 255, 255, 255, 255 } } },
+        { { { 0, 16, 0 }, 0, { 2048, 1024 }, { 255, 255, 255, 255 } } },
+        { { { 0, 24, 0 }, 0, { 2048, 512 }, { 255, 255, 255, 255 } } },
+        { { { -16, 24, 0 }, 0, { 1024, 512 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 0, 16, 0 }, 0, { 2048, 1024 }, { 255, 255, 255, 255 } } },
+        { { { 16, 16, 0 }, 0, { 3072, 1024 }, { 255, 255, 255, 255 } } },
+        { { { 16, 24, 0 }, 0, { 3072, 512 }, { 255, 255, 255, 255 } } },
+        { { { 0, 24, 0 }, 0, { 2048, 512 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 16, 16, 0 }, 0, { 3072, 1024 }, { 255, 255, 255, 255 } } },
+        { { { 32, 16, 0 }, 0, { 4096, 1024 }, { 255, 255, 255, 255 } } },
+        { { { 32, 24, 0 }, 0, { 4096, 512 }, { 255, 255, 255, 255 } } },
+        { { { 16, 24, 0 }, 0, { 3072, 512 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -32, 8, 0 }, 0, { 0, 1536 }, { 255, 255, 255, 255 } } },
+        { { { -16, 8, 0 }, 0, { 1024, 1536 }, { 255, 255, 255, 255 } } },
+        { { { -16, 16, 0 }, 0, { 1024, 1024 }, { 255, 255, 255, 255 } } },
+        { { { -32, 16, 0 }, 0, { 0, 1024 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -16, 8, 0 }, 0, { 1024, 1536 }, { 255, 255, 255, 255 } } },
+        { { { 0, 8, 0 }, 0, { 2048, 1536 }, { 255, 255, 255, 255 } } },
+        { { { 0, 16, 0 }, 0, { 2048, 1024 }, { 255, 255, 255, 255 } } },
+        { { { -16, 16, 0 }, 0, { 1024, 1024 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 0, 8, 0 }, 0, { 2048, 1536 }, { 255, 255, 255, 255 } } },
+        { { { 16, 8, 0 }, 0, { 3072, 1536 }, { 255, 255, 255, 255 } } },
+        { { { 16, 16, 0 }, 0, { 3072, 1024 }, { 255, 255, 255, 255 } } },
+        { { { 0, 16, 0 }, 0, { 2048, 1024 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 16, 8, 0 }, 0, { 3072, 1536 }, { 255, 255, 255, 255 } } },
+        { { { 32, 8, 0 }, 0, { 4096, 1536 }, { 255, 255, 255, 255 } } },
+        { { { 32, 16, 0 }, 0, { 4096, 1024 }, { 255, 255, 255, 255 } } },
+        { { { 16, 16, 0 }, 0, { 3072, 1024 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -32, 0, 0 }, 0, { 0, 2048 }, { 255, 255, 255, 255 } } },
+        { { { -16, 0, 0 }, 0, { 1024, 2048 }, { 255, 255, 255, 255 } } },
+        { { { -16, 8, 0 }, 0, { 1024, 1536 }, { 255, 255, 255, 255 } } },
+        { { { -32, 8, 0 }, 0, { 0, 1536 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -16, 0, 0 }, 0, { 1024, 2048 }, { 255, 255, 255, 255 } } },
+        { { { 0, 0, 0 }, 0, { 2048, 2048 }, { 255, 255, 255, 255 } } },
+        { { { 0, 8, 0 }, 0, { 2048, 1536 }, { 255, 255, 255, 255 } } },
+        { { { -16, 8, 0 }, 0, { 1024, 1536 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 0, 0, 0 }, 0, { 2048, 2048 }, { 255, 255, 255, 255 } } },
+        { { { 16, 0, 0 }, 0, { 3072, 2048 }, { 255, 255, 255, 255 } } },
+        { { { 16, 8, 0 }, 0, { 3072, 1536 }, { 255, 255, 255, 255 } } },
+        { { { 0, 8, 0 }, 0, { 2048, 1536 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 16, 0, 0 }, 0, { 3072, 2048 }, { 255, 255, 255, 255 } } },
+        { { { 32, 0, 0 }, 0, { 4096, 2048 }, { 255, 255, 255, 255 } } },
+        { { { 32, 8, 0 }, 0, { 4096, 1536 }, { 255, 255, 255, 255 } } },
+        { { { 16, 8, 0 }, 0, { 3072, 1536 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -32, -8, 0 }, 0, { 0, 2560 }, { 255, 255, 255, 255 } } },
+        { { { -16, -8, 0 }, 0, { 1024, 2560 }, { 255, 255, 255, 255 } } },
+        { { { -16, 0, 0 }, 0, { 1024, 2048 }, { 255, 255, 255, 255 } } },
+        { { { -32, 0, 0 }, 0, { 0, 2048 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -16, -8, 0 }, 0, { 1024, 2560 }, { 255, 255, 255, 255 } } },
+        { { { 0, -8, 0 }, 0, { 2048, 2560 }, { 255, 255, 255, 255 } } },
+        { { { 0, 0, 0 }, 0, { 2048, 2048 }, { 255, 255, 255, 255 } } },
+        { { { -16, 0, 0 }, 0, { 1024, 2048 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 0, -8, 0 }, 0, { 2048, 2560 }, { 255, 255, 255, 255 } } },
+        { { { 16, -8, 0 }, 0, { 3072, 2560 }, { 255, 255, 255, 255 } } },
+        { { { 16, 0, 0 }, 0, { 3072, 2048 }, { 255, 255, 255, 255 } } },
+        { { { 0, 0, 0 }, 0, { 2048, 2048 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 16, -8, 0 }, 0, { 3072, 2560 }, { 255, 255, 255, 255 } } },
+        { { { 32, -8, 0 }, 0, { 4096, 2560 }, { 255, 255, 255, 255 } } },
+        { { { 32, 0, 0 }, 0, { 4096, 2048 }, { 255, 255, 255, 255 } } },
+        { { { 16, 0, 0 }, 0, { 3072, 2048 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -32, -16, 0 }, 0, { 0, 3072 }, { 255, 255, 255, 255 } } },
+        { { { -16, -16, 0 }, 0, { 1024, 3072 }, { 255, 255, 255, 255 } } },
+        { { { -16, -8, 0 }, 0, { 1024, 2560 }, { 255, 255, 255, 255 } } },
+        { { { -32, -8, 0 }, 0, { 0, 2560 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -16, -16, 0 }, 0, { 1024, 3072 }, { 255, 255, 255, 255 } } },
+        { { { 0, -16, 0 }, 0, { 2048, 3072 }, { 255, 255, 255, 255 } } },
+        { { { 0, -8, 0 }, 0, { 2048, 2560 }, { 255, 255, 255, 255 } } },
+        { { { -16, -8, 0 }, 0, { 1024, 2560 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 0, -16, 0 }, 0, { 2048, 3072 }, { 255, 255, 255, 255 } } },
+        { { { 16, -16, 0 }, 0, { 3072, 3072 }, { 255, 255, 255, 255 } } },
+        { { { 16, -8, 0 }, 0, { 3072, 2560 }, { 255, 255, 255, 255 } } },
+        { { { 0, -8, 0 }, 0, { 2048, 2560 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 16, -16, 0 }, 0, { 3072, 3072 }, { 255, 255, 255, 255 } } },
+        { { { 32, -16, 0 }, 0, { 4096, 3072 }, { 255, 255, 255, 255 } } },
+        { { { 32, -8, 0 }, 0, { 4096, 2560 }, { 255, 255, 255, 255 } } },
+        { { { 16, -8, 0 }, 0, { 3072, 2560 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -32, -24, 0 }, 0, { 0, 3584 }, { 255, 255, 255, 255 } } },
+        { { { -16, -24, 0 }, 0, { 1024, 3584 }, { 255, 255, 255, 255 } } },
+        { { { -16, -16, 0 }, 0, { 1024, 3072 }, { 255, 255, 255, 255 } } },
+        { { { -32, -16, 0 }, 0, { 0, 3072 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -16, -24, 0 }, 0, { 1024, 3584 }, { 255, 255, 255, 255 } } },
+        { { { 0, -24, 0 }, 0, { 2048, 3584 }, { 255, 255, 255, 255 } } },
+        { { { 0, -16, 0 }, 0, { 2048, 3072 }, { 255, 255, 255, 255 } } },
+        { { { -16, -16, 0 }, 0, { 1024, 3072 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 0, -24, 0 }, 0, { 2048, 3584 }, { 255, 255, 255, 255 } } },
+        { { { 16, -24, 0 }, 0, { 3072, 3584 }, { 255, 255, 255, 255 } } },
+        { { { 16, -16, 0 }, 0, { 3072, 3072 }, { 255, 255, 255, 255 } } },
+        { { { 0, -16, 0 }, 0, { 2048, 3072 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 16, -24, 0 }, 0, { 3072, 3584 }, { 255, 255, 255, 255 } } },
+        { { { 32, -24, 0 }, 0, { 4096, 3584 }, { 255, 255, 255, 255 } } },
+        { { { 32, -16, 0 }, 0, { 4096, 3072 }, { 255, 255, 255, 255 } } },
+        { { { 16, -16, 0 }, 0, { 3072, 3072 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -32, -32, 0 }, 0, { 0, 4096 }, { 255, 255, 255, 255 } } },
+        { { { -16, -32, 0 }, 0, { 1024, 4096 }, { 255, 255, 255, 255 } } },
+        { { { -16, -24, 0 }, 0, { 1024, 3584 }, { 255, 255, 255, 255 } } },
+        { { { -32, -24, 0 }, 0, { 0, 3584 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { -16, -32, 0 }, 0, { 1024, 4096 }, { 255, 255, 255, 255 } } },
+        { { { 0, -32, 0 }, 0, { 2048, 4096 }, { 255, 255, 255, 255 } } },
+        { { { 0, -24, 0 }, 0, { 2048, 3584 }, { 255, 255, 255, 255 } } },
+        { { { -16, -24, 0 }, 0, { 1024, 3584 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 0, -32, 0 }, 0, { 2048, 4096 }, { 255, 255, 255, 255 } } },
+        { { { 16, -32, 0 }, 0, { 3072, 4096 }, { 255, 255, 255, 255 } } },
+        { { { 16, -24, 0 }, 0, { 3072, 3584 }, { 255, 255, 255, 255 } } },
+        { { { 0, -24, 0 }, 0, { 2048, 3584 }, { 255, 255, 255, 255 } } },
+    },
+    {
+        { { { 16, -32, 0 }, 0, { 3072, 4096 }, { 255, 255, 255, 255 } } },
+        { { { 32, -32, 0 }, 0, { 4096, 4096 }, { 255, 255, 255, 255 } } },
+        { { { 32, -24, 0 }, 0, { 4096, 3584 }, { 255, 255, 255, 255 } } },
+        { { { 16, -24, 0 }, 0, { 3072, 3584 }, { 255, 255, 255, 255 } } },
+    },
 };
 
 static const SohExtremeSoulVisual* ResolveSoulVisual(const GetItemEntry& entry) {
@@ -62,6 +264,31 @@ static bool HasPortraitResource(const char* icon) {
     }
     return ResourceMgr_FileExists(icon) ||
            (ResourceMgr_IsAltAssetsEnabled() && ResourceMgr_FileAltExists(icon));
+}
+
+static bool HasHqPortraitResource(const char* icon) {
+    if (!HasPortraitResource(icon)) {
+        return false;
+    }
+
+    // The legacy ResourceMgr texture-dimension wrappers are declared in this
+    // fork's header but are not linked into the game. Read the loaded texture's
+    // metadata through the resource API already used by ResourceManagerHelpers.
+    // Keep the __OTR__ name for the draw call; never pass a decoded pixel buffer
+    // to the renderer in place of the resource token.
+    const auto resource = ResourceMgr_GetResourceByNameHandlingMQ(icon);
+    if (resource == nullptr) {
+        return false;
+    }
+    const auto initData = resource->GetInitData();
+    if (initData == nullptr || initData->Type != static_cast<uint32_t>(Fast::ResourceType::Texture)) {
+        return false;
+    }
+
+    // Check the registered resource type before the cast. This follows the
+    // native resource helpers without adding an RTTI dependency.
+    const auto texture = std::static_pointer_cast<Fast::Texture>(resource);
+    return texture->Width == 128 && texture->Height == 128;
 }
 
 static void DrawSoulFlame(PlayState* play, const SohExtremeSoulVisual& visual) {
@@ -103,10 +330,21 @@ static void DrawSoulSkull(PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx);
 }
 
-static void DrawSoulPortrait(PlayState* play, const char* icon) {
-    // Portraits already contain the shared horned soul base. Drawing the native
-    // skull on top of them as well would obscure the enemy's face. Both styles
-    // share the same native flame and the skull is the missing-portrait fallback.
+static bool DrawSoulPortrait(PlayState* play, const SohExtremeSoulVisual& visual) {
+    // Rebuilt from the original portraits, NOT enlarged copies of the final 32px
+    // skull composite. Use private HQ resources only at their expected size.
+    // Mods/older archives may omit them; keep the 32px resource as a safe fallback.
+    const char* icon = SohExtreme_GetHqSoulPortrait(visual.item);
+    const bool highResolution = HasHqPortraitResource(icon);
+    if (!highResolution) {
+        icon = visual.icon;
+        if (!HasPortraitResource(icon)) {
+            return false;
+        }
+    }
+
+    // The portrait is the foreground. Its shared soul backing is subdued in the
+    // artwork, rather than a second skull model drawn on top of the enemy.
     OPEN_DISPS(play->state.gfxCtx);
     Gfx_SetupDL_25Xlu(play->state.gfxCtx);
     Matrix_Push();
@@ -131,16 +369,36 @@ static void DrawSoulPortrait(PlayState* play, const char* icon) {
     gDPSetPrimColor(POLY_XLU_DISP++, 0, 0, 255, 255, 255, 255);
     gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 255, 255);
 
-    // IMPORTANT: pass the aligned __OTR__ token itself. Passing the result of
-    // ResourceMgr_LoadTexOrDListByName discards format/dimension/PNG metadata and
-    // can produce the black or corrupted rectangles seen in the old renderer.
-    gDPLoadTextureBlock(POLY_XLU_DISP++, icon, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0,
-                       G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-    gSPVertex(POLY_XLU_DISP++, reinterpret_cast<uintptr_t>(sSoulPortraitQuad), 4, 0);
-    gSP2Triangles(POLY_XLU_DISP++, 0, 1, 2, 0, 0, 2, 3, 0);
+    // Pass the aligned __OTR__ token, not a decoded pixel pointer. For HQ
+    // portraits, load bounded tiles from the REAL 128px source; pretending it is
+    // 32px would lose its stride/coordinates and recreates corrupt rectangles.
+    if (highResolution) {
+        for (int row = 0; row < 8; ++row) {
+            for (int column = 0; column < 4; ++column) {
+                const int left = column == 0 ? 0 : column * 32 - 1;
+                const int top = row == 0 ? 0 : row * 16 - 1;
+                const int right = column == 3 ? 127 : (column + 1) * 32;
+                const int bottom = row == 7 ? 127 : (row + 1) * 16;
+                gDPPipeSync(POLY_XLU_DISP++);
+                gDPLoadTextureTile(POLY_XLU_DISP++, icon, G_IM_FMT_RGBA, G_IM_SIZ_32b,
+                                   128, 128, left, top, right, bottom, 0,
+                                   G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK,
+                                   G_TX_NOLOD, G_TX_NOLOD);
+                gSPVertex(POLY_XLU_DISP++,
+                          reinterpret_cast<uintptr_t>(sHqSoulPortraitTiles[row * 4 + column]), 4, 0);
+                gSP2Triangles(POLY_XLU_DISP++, 0, 1, 2, 0, 0, 2, 3, 0);
+            }
+        }
+    } else {
+        gDPLoadTextureBlock(POLY_XLU_DISP++, icon, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, 0,
+                           G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPVertex(POLY_XLU_DISP++, reinterpret_cast<uintptr_t>(sSoulPortraitQuad), 4, 0);
+        gSP2Triangles(POLY_XLU_DISP++, 0, 1, 2, 0, 0, 2, 3, 0);
+    }
 
     Matrix_Pop();
     CLOSE_DISPS(play->state.gfxCtx);
+    return true;
 }
 
 static void RestoreSoulRenderState(PlayState* play) {
@@ -182,9 +440,7 @@ extern "C" void Randomizer_DrawEnemySoul(PlayState* play, GetItemEntry* entry) {
             // flame. Its native renderer scales the matrix, hence the outer
             // push/pop is essential for subsequent shop/freestanding models.
             Randomizer_DrawBeanSprout(play, entry);
-        } else if (visual->kind == SOH_SOUL_PORTRAIT && HasPortraitResource(visual->icon)) {
-            DrawSoulPortrait(play, visual->icon);
-        } else {
+        } else if (visual->kind != SOH_SOUL_PORTRAIT || !DrawSoulPortrait(play, *visual)) {
             DrawSoulSkull(play);
         }
     }

@@ -31,7 +31,7 @@ echo [1/6] Rebuilding soh.o2r...
 echo NOTE: This stage intentionally uses one build worker.
 echo       CMake/FetchContent regeneration can otherwise launch overlapping
 echo       ZERO_CHECK projects and lock their .tlog files.
-cmake --build build-vs --config Release --target GenerateSohOtr --parallel 1
+cmake --build build-vs --config Release --target GenerateSohOtr --parallel 4
 if errorlevel 1 goto :fail
 
 if not exist "%CD%\build-vs\soh\soh.o2r" (

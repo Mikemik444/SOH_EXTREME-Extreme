@@ -1,0 +1,6 @@
+SOH-EXTREME 0.9.4
+
+- Fix GC Rolling Goron as Adult incorrectly appearing reachable in AP/Universal Tracker without the EXTREME NPC interaction gates.
+- The location now explicitly inherits NPC Soul when NPC Soul shuffle is enabled.
+- It also inherits the configured speech requirement: Speak for shared speech mode, or Speak Goron for individual-language mode.
+- Stock/native age and stopping-method requirements remain composed with these gates rather than being replaced.

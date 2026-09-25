@@ -1,0 +1,12 @@
+SOH-EXTREME 0.9.2 logic overhaul
+
+- Adult/Child usability is now respected by enemy combat rules.
+- Fixed native OR projections where Adult or stock abilities bypass shuffled Climb/Grab.
+- Jabu MQ water-switch geyser: Enemy Soul is required, but Adult/Bronze Scale can bypass Climb exactly as native logic allows.
+- Dodongo Cavern SE routes: Adult and normal attack/wall-break alternatives no longer incorrectly require Grab.
+- Spirit Temple Anubis bridge routes preserve normal switch alternatives instead of requiring Enemy Soul + Grab together.
+- Deku Tree MQ compass-vines route preserves Hookshot / Adult+Song of Time alternatives instead of globally requiring Climb.
+- Lake Hylia grotto no longer globally requires Grab merely because Grab is one possible rock-breaking method; normal rock-breaking alternatives remain valid. Shovel remains the global EXTREME grotto gate.
+- Progressive Scale semantics are consistent with 0.9.1: 1=Bronze/basic Swim, 2=Silver/deep dive, 3=Golden.
+- Removed the AP-only whole-dungeon upper-bound gate from finite enemy checks. Enemy checks now use parent/native reachability + soul + exact combat + grotto Shovel + special hideout gates, matching the native Check Finder design.
+- Existing soul, speech/language, Open Chest, Flow of Time, Shovel, object-break and sanity-family gates remain layered on top of the native stock rules.

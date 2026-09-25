@@ -1,0 +1,10 @@
+test_failed_or_empty_pack_preserves_existing_output (__main__.PackerTests.test_failed_or_empty_pack_preserves_existing_output) ... ok
+test_fixed_legacy_root_layout_build (__main__.PackerTests.test_fixed_legacy_root_layout_build) ... ok
+test_original_error_and_fixed_nested_layout_build (__main__.PackerTests.test_original_error_and_fixed_nested_layout_build) ... ok
+test_patch_plan_is_idempotent_for_lf_and_crlf (__main__.PackerTests.test_patch_plan_is_idempotent_for_lf_and_crlf) ... ok
+test_unknown_or_duplicate_blocks_are_rejected (__main__.PackerTests.test_unknown_or_duplicate_blocks_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 15.484s
+
+OK

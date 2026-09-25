@@ -145,6 +145,8 @@ source_group("include" FILES ${Header_Files__include})
 
 # soh (root)
 file(GLOB_RECURSE soh__ CONFIGURE_DEPENDS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "soh/*.c" "soh/*.cpp" "soh/*.h" "soh/*.hpp")
+# SOH-EXTREME: build tools are separate executables.
+list(FILTER soh__ EXCLUDE REGEX "(^|/)assets/tools/")
 
 # Add specific files that don't match the pattern
 list(APPEND soh__ ${CMAKE_CURRENT_SOURCE_DIR}/soh/Enhancements/speechsynthesizer/DarwinSpeechSynthesizer.mm)
@@ -690,41 +692,7 @@ set(BUILD_OOT ON CACHE BOOL "" FORCE)
 
 add_subdirectory(Torch)
 target_compile_definitions(torch PRIVATE PORT_VERSION_ENDIANNESS)
-add_executable(soh-o2r-packer EXCLUDE_FROM_ALL
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets/tools/soh-o2r-packer/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets/tools/soh-o2r-packer/PngTexture.cpp
-)
-if(MSVC)
-    set_property(TARGET soh-o2r-packer PROPERTY
-        MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
-    )
-
-    target_compile_options(soh-o2r-packer PRIVATE /EHsc)
-endif()
-
-target_include_directories(soh-o2r-packer PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/Torch/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets/tools/soh-o2r-packer
-)
-
-target_link_libraries(soh-o2r-packer PRIVATE torch)
-add_custom_target(GenerateSohOtr
-    COMMAND ${CMAKE_COMMAND} -E rm -r -f
-            "${CMAKE_CURRENT_SOURCE_DIR}/assets/custom/shaders"
-
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_CURRENT_SOURCE_DIR}/../libultraship/src/fast/shaders"
-            "${CMAKE_CURRENT_SOURCE_DIR}/assets/custom/shaders"
-
-    COMMAND $<TARGET_FILE:soh-o2r-packer>
-            "${CMAKE_CURRENT_SOURCE_DIR}/assets/custom"
-            "${CMAKE_BINARY_DIR}/soh/soh.o2r"
-            "${CMAKE_PROJECT_VERSION}"
-
-    DEPENDS soh-o2r-packer
-    BYPRODUCTS "${CMAKE_BINARY_DIR}/soh/soh.o2r"
-    COMMENT "Generating soh.o2r..."
-)
+include("${CMAKE_CURRENT_SOURCE_DIR}/tools/cmake/SohExtremeAssets.cmake")
 ################################################################################
 # Dependencies
 ################################################################################

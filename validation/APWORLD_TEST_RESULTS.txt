@@ -1,0 +1,12 @@
+test_all_python_and_json_files_parse (__main__.APWorldSourceTests.test_all_python_and_json_files_parse) ... ok
+test_both_region_alias_dictionaries (__main__.APWorldSourceTests.test_both_region_alias_dictionaries) ... ok
+test_explosives_do_not_open_the_block_switch_route (__main__.APWorldSourceTests.test_explosives_do_not_open_the_block_switch_route) ... ok
+test_grab_setting_and_ownership_for_both_ages (__main__.APWorldSourceTests.test_grab_setting_and_ownership_for_both_ages) ... ok
+test_manifests_and_tracker_wire_version (__main__.APWorldSourceTests.test_manifests_and_tracker_wire_version) ... ok
+test_native_projection_has_grab_on_the_same_edge (__main__.APWorldSourceTests.test_native_projection_has_grab_on_the_same_edge) ... ok
+test_no_external_stock_world_import (__main__.APWorldSourceTests.test_no_external_stock_world_import) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.851s
+
+OK

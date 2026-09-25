@@ -1,0 +1,9 @@
+SOH-EXTREME 0.9.5
+
+Climb/ledge projection fix:
+- EXTREME Hc Boulder requires Climb when Shuffle Climb is enabled.
+- EXTREME Hc Dead End Rectangle Sign requires Climb when Shuffle Climb is enabled.
+- EXTREME Hf Center Exit Arrow Sign requires Climb when Shuffle Climb is enabled.
+
+These rules mirror the physical fork and are applied to AP generation and Universal Tracker.
+The accompanying C++ patch applies the same gates to native Check Finder logic.

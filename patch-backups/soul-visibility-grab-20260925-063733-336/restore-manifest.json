@@ -1,0 +1,1238 @@
+﻿[
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\arvhipelago\\archipelago.json",
+        "Target":  "E:\\test\\bb\\arvhipelago\\archipelago.json",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\arvhipelago\\archipelago.json",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\arvhipelago\\soh_extreme\\RELEASE_NOTES_0.11.22.txt",
+        "Target":  "E:\\test\\bb\\arvhipelago\\soh_extreme\\RELEASE_NOTES_0.11.22.txt",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\arvhipelago\\soh_extreme\\RELEASE_NOTES_0.11.22.txt",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\arvhipelago\\soh_extreme\\TrackerMirror.py",
+        "Target":  "E:\\test\\bb\\arvhipelago\\soh_extreme\\TrackerMirror.py",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\arvhipelago\\soh_extreme\\TrackerMirror.py",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\arvhipelago\\soh_extreme\\__init__.py",
+        "Target":  "E:\\test\\bb\\arvhipelago\\soh_extreme\\__init__.py",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\arvhipelago\\soh_extreme\\__init__.py",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\arvhipelago\\soh_extreme\\_vendor_oot_soh\\location_access\\dungeons\\dodongos_cavern.py",
+        "Target":  "E:\\test\\bb\\arvhipelago\\soh_extreme\\_vendor_oot_soh\\location_access\\dungeons\\dodongos_cavern.py",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\arvhipelago\\soh_extreme\\_vendor_oot_soh\\location_access\\dungeons\\dodongos_cavern.py",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\arvhipelago\\soh_extreme\\archipelago.json",
+        "Target":  "E:\\test\\bb\\arvhipelago\\soh_extreme\\archipelago.json",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\arvhipelago\\soh_extreme\\archipelago.json",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\Enhancements\\randomizer\\EnemySoulDraw.cpp",
+        "Target":  "E:\\test\\bb\\soh\\Enhancements\\randomizer\\EnemySoulDraw.cpp",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\Enhancements\\randomizer\\EnemySoulDraw.cpp",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\Enhancements\\randomizer\\SoulPortraitHQ.h",
+        "Target":  "E:\\test\\bb\\soh\\Enhancements\\randomizer\\SoulPortraitHQ.h",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\Enhancements\\randomizer\\SoulPortraitHQ.h",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\Network\\Archipelago\\TrackerMirror.h",
+        "Target":  "E:\\test\\bb\\soh\\Network\\Archipelago\\TrackerMirror.h",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\Network\\Archipelago\\TrackerMirror.h",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ANUBIS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ANUBIS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ANUBIS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ANUBIS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ANUBIS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ANUBIS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ARMOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ARMOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ARMOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ARMOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ARMOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_ARMOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BABY_DODONGO.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BABY_DODONGO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BABY_DODONGO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BABY_DODONGO.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BABY_DODONGO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BABY_DODONGO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BEAMOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BEAMOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BEAMOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BEAMOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BEAMOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BEAMOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIG_OCTO.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIG_OCTO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIG_OCTO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIG_OCTO.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIG_OCTO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIG_OCTO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIRI_BARI.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIRI_BARI.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIRI_BARI.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIRI_BARI.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIRI_BARI.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BIRI_BARI.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUBBLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUBBLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUBBLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUBBLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUBBLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUBBLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUSINESS_SCRUB.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUSINESS_SCRUB.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUSINESS_SCRUB.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUSINESS_SCRUB.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUSINESS_SCRUB.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_BUSINESS_SCRUB.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DARK_LINK.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DARK_LINK.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DARK_LINK.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DARK_LINK.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DARK_LINK.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DARK_LINK.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEAD_HAND.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEAD_HAND.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEAD_HAND.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEAD_HAND.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEAD_HAND.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEAD_HAND.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_BABA.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_BABA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_BABA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_BABA.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_BABA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_BABA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_SCRUB.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_SCRUB.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_SCRUB.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_SCRUB.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_SCRUB.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DEKU_SCRUB.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DODONGO.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DODONGO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DODONGO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DODONGO.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DODONGO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DODONGO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DOOR_TRAP.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DOOR_TRAP.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DOOR_TRAP.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DOOR_TRAP.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DOOR_TRAP.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_DOOR_TRAP.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLARE_DANCER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLARE_DANCER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLARE_DANCER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLARE_DANCER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLARE_DANCER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLARE_DANCER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLOORMASTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLOORMASTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLOORMASTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLOORMASTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLOORMASTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLOORMASTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_FLOOR_TILE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_FLOOR_TILE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_FLOOR_TILE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_FLOOR_TILE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_FLOOR_TILE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_FLOOR_TILE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_POT.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_POT.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_POT.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_POT.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_POT.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FLYING_POT.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FREEZARD.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FREEZARD.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FREEZARD.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FREEZARD.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FREEZARD.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_FREEZARD.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GERUDO_THIEF.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GERUDO_THIEF.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GERUDO_THIEF.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GERUDO_THIEF.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GERUDO_THIEF.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GERUDO_THIEF.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GOHMA_LARVA.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GOHMA_LARVA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GOHMA_LARVA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GOHMA_LARVA.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GOHMA_LARVA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GOHMA_LARVA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GUAY.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GUAY.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GUAY.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GUAY.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GUAY.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_GUAY.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_IRON_KNUCKLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_IRON_KNUCKLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_IRON_KNUCKLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_IRON_KNUCKLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_IRON_KNUCKLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_IRON_KNUCKLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_JABU_TENTACLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_JABU_TENTACLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_JABU_TENTACLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_JABU_TENTACLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_JABU_TENTACLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_JABU_TENTACLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_KEESE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_KEESE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_KEESE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_KEESE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_KEESE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_KEESE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LEEVER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LEEVER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LEEVER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LEEVER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LEEVER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LEEVER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIKE_LIKE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIKE_LIKE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIKE_LIKE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIKE_LIKE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIKE_LIKE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIKE_LIKE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIZALFOS_DINOLFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIZALFOS_DINOLFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIZALFOS_DINOLFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIZALFOS_DINOLFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIZALFOS_DINOLFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_LIZALFOS_DINOLFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_MOBLIN.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_MOBLIN.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_MOBLIN.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_MOBLIN.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_MOBLIN.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_MOBLIN.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_OCTOROK.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_OCTOROK.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_OCTOROK.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_OCTOROK.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_OCTOROK.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_OCTOROK.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_PEAHAT.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_PEAHAT.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_PEAHAT.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_PEAHAT.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_PEAHAT.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_PEAHAT.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE_SISTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE_SISTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE_SISTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE_SISTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE_SISTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_POE_SISTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_REDEAD_GIBDO.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_REDEAD_GIBDO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_REDEAD_GIBDO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_REDEAD_GIBDO.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_REDEAD_GIBDO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_REDEAD_GIBDO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHABOM.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHABOM.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHABOM.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHABOM.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHABOM.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHABOM.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHELL_BLADE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHELL_BLADE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHELL_BLADE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHELL_BLADE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHELL_BLADE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SHELL_BLADE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULLTULA.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULLTULA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULLTULA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULLTULA.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULLTULA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULLTULA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULL_KID.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULL_KID.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULL_KID.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULL_KID.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULL_KID.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SKULL_KID.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SPIKE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SPIKE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SPIKE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SPIKE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SPIKE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_SPIKE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALCHILD.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALCHILD.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALCHILD.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALCHILD.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALCHILD.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALCHILD.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STALFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STINGER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STINGER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STINGER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STINGER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STINGER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_STINGER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TAILPASARAN.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TAILPASARAN.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TAILPASARAN.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TAILPASARAN.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TAILPASARAN.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TAILPASARAN.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TEKTITE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TEKTITE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TEKTITE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TEKTITE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TEKTITE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TEKTITE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TORCH_SLUG.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TORCH_SLUG.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TORCH_SLUG.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TORCH_SLUG.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TORCH_SLUG.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_TORCH_SLUG.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WALLMASTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WALLMASTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WALLMASTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WALLMASTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WALLMASTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WALLMASTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WOLFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WOLFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WOLFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WOLFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WOLFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoulHQ_WOLFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ANUBIS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ANUBIS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ANUBIS.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ANUBIS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ANUBIS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ANUBIS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ARMOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ARMOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ARMOS.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ARMOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ARMOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_ARMOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BABY_DODONGO.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BABY_DODONGO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BABY_DODONGO.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BABY_DODONGO.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BABY_DODONGO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BABY_DODONGO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BEAMOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BEAMOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BEAMOS.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BEAMOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BEAMOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BEAMOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIG_OCTO.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIG_OCTO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIG_OCTO.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIG_OCTO.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIG_OCTO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIG_OCTO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIRI_BARI.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIRI_BARI.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIRI_BARI.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIRI_BARI.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIRI_BARI.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BIRI_BARI.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUBBLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUBBLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUBBLE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUBBLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUBBLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUBBLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUSINESS_SCRUB.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUSINESS_SCRUB.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUSINESS_SCRUB.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUSINESS_SCRUB.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUSINESS_SCRUB.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_BUSINESS_SCRUB.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DARK_LINK.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DARK_LINK.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DARK_LINK.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DARK_LINK.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DARK_LINK.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DARK_LINK.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEAD_HAND.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEAD_HAND.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEAD_HAND.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEAD_HAND.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEAD_HAND.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEAD_HAND.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_BABA.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_BABA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_BABA.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_BABA.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_BABA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_BABA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_SCRUB.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_SCRUB.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_SCRUB.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_SCRUB.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_SCRUB.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DEKU_SCRUB.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DODONGO.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DODONGO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DODONGO.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DODONGO.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DODONGO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DODONGO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DOOR_TRAP.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DOOR_TRAP.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DOOR_TRAP.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DOOR_TRAP.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DOOR_TRAP.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_DOOR_TRAP.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLARE_DANCER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLARE_DANCER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLARE_DANCER.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLARE_DANCER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLARE_DANCER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLARE_DANCER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLOORMASTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLOORMASTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLOORMASTER.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLOORMASTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLOORMASTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLOORMASTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_FLOOR_TILE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_FLOOR_TILE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_FLOOR_TILE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_FLOOR_TILE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_FLOOR_TILE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_FLOOR_TILE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_POT.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_POT.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_POT.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_POT.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_POT.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FLYING_POT.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FREEZARD.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FREEZARD.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FREEZARD.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FREEZARD.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FREEZARD.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_FREEZARD.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GERUDO_THIEF.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GERUDO_THIEF.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GERUDO_THIEF.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GERUDO_THIEF.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GERUDO_THIEF.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GERUDO_THIEF.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GOHMA_LARVA.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GOHMA_LARVA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GOHMA_LARVA.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GOHMA_LARVA.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GOHMA_LARVA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GOHMA_LARVA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GUAY.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GUAY.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GUAY.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GUAY.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GUAY.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_GUAY.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_IRON_KNUCKLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_IRON_KNUCKLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_IRON_KNUCKLE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_IRON_KNUCKLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_IRON_KNUCKLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_IRON_KNUCKLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_JABU_TENTACLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_JABU_TENTACLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_JABU_TENTACLE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_JABU_TENTACLE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_JABU_TENTACLE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_JABU_TENTACLE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_KEESE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_KEESE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_KEESE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_KEESE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_KEESE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_KEESE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LEEVER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LEEVER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LEEVER.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LEEVER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LEEVER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LEEVER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIKE_LIKE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIKE_LIKE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIKE_LIKE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIKE_LIKE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIKE_LIKE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIKE_LIKE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIZALFOS_DINOLFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIZALFOS_DINOLFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIZALFOS_DINOLFOS.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIZALFOS_DINOLFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIZALFOS_DINOLFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_LIZALFOS_DINOLFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_MOBLIN.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_MOBLIN.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_MOBLIN.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_MOBLIN.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_MOBLIN.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_MOBLIN.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_OCTOROK.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_OCTOROK.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_OCTOROK.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_OCTOROK.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_OCTOROK.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_OCTOROK.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_PEAHAT.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_PEAHAT.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_PEAHAT.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_PEAHAT.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_PEAHAT.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_PEAHAT.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE_SISTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE_SISTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE_SISTER.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE_SISTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE_SISTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_POE_SISTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_REDEAD_GIBDO.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_REDEAD_GIBDO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_REDEAD_GIBDO.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_REDEAD_GIBDO.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_REDEAD_GIBDO.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_REDEAD_GIBDO.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHABOM.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHABOM.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHABOM.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHABOM.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHABOM.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHABOM.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHELL_BLADE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHELL_BLADE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHELL_BLADE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHELL_BLADE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHELL_BLADE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SHELL_BLADE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULLTULA.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULLTULA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULLTULA.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULLTULA.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULLTULA.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULLTULA.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULL_KID.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULL_KID.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULL_KID.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULL_KID.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULL_KID.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SKULL_KID.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SPIKE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SPIKE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SPIKE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SPIKE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SPIKE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_SPIKE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALCHILD.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALCHILD.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALCHILD.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALCHILD.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALCHILD.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALCHILD.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALFOS.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STALFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STINGER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STINGER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STINGER.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STINGER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STINGER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_STINGER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TAILPASARAN.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TAILPASARAN.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TAILPASARAN.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TAILPASARAN.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TAILPASARAN.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TAILPASARAN.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TEKTITE.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TEKTITE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TEKTITE.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TEKTITE.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TEKTITE.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TEKTITE.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TORCH_SLUG.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TORCH_SLUG.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TORCH_SLUG.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TORCH_SLUG.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TORCH_SLUG.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_TORCH_SLUG.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WALLMASTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WALLMASTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WALLMASTER.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WALLMASTER.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WALLMASTER.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WALLMASTER.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WOLFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WOLFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WOLFOS.rgba32.png",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WOLFOS.rgba32.png",
+        "Target":  "E:\\test\\bb\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WOLFOS.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\assets\\custom\\textures\\parameter_static\\gExtremeSoul_WOLFOS.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh_extreme.apworld",
+        "Target":  "E:\\test\\bb\\soh_extreme.apworld",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\soh_extreme.apworld",
+        "Existed":  true
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\tools\\soul_portraits_hq\\ASSET-NOTES.md",
+        "Target":  "E:\\test\\bb\\tools\\soul_portraits_hq\\ASSET-NOTES.md",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\tools\\soul_portraits_hq\\ASSET-NOTES.md",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\tools\\soul_portraits_hq\\README.md",
+        "Target":  "E:\\test\\bb\\tools\\soul_portraits_hq\\README.md",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\tools\\soul_portraits_hq\\README.md",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\tools\\soul_portraits_hq\\enemy-soul-assets.json",
+        "Target":  "E:\\test\\bb\\tools\\soul_portraits_hq\\enemy-soul-assets.json",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\tools\\soul_portraits_hq\\enemy-soul-assets.json",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\tools\\soul_portraits_hq\\portraits\\portraits-contact.png",
+        "Target":  "E:\\test\\bb\\tools\\soul_portraits_hq\\portraits\\portraits-contact.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\tools\\soul_portraits_hq\\portraits\\portraits-contact.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\tools\\soul_portraits_hq\\portraits\\shared-soul-base.rgba32.png",
+        "Target":  "E:\\test\\bb\\tools\\soul_portraits_hq\\portraits\\shared-soul-base.rgba32.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\tools\\soul_portraits_hq\\portraits\\shared-soul-base.rgba32.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\tools\\soul_portraits_hq\\portraits\\stalfos.png",
+        "Target":  "E:\\test\\bb\\tools\\soul_portraits_hq\\portraits\\stalfos.png",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\tools\\soul_portraits_hq\\portraits\\stalfos.png",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\tools\\soul_portraits_hq\\rebuild_portraits.py",
+        "Target":  "E:\\test\\bb\\tools\\soul_portraits_hq\\rebuild_portraits.py",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\source\\tools\\soul_portraits_hq\\rebuild_portraits.py",
+        "Existed":  false
+    },
+    {
+        "Source":  "E:\\test\\bb\\patch-data\\soul-visibility-grab-0.11.22\\soh_extreme.apworld",
+        "Target":  "C:\\ProgramData\\Archipelago\\custom_worlds\\soh_extreme.apworld",
+        "Backup":  "E:\\test\\bb\\patch-backups\\soul-visibility-grab-20260925-063733-336\\installed-world\\soh_extreme.apworld.backup",
+        "Existed":  true
+    }
+]

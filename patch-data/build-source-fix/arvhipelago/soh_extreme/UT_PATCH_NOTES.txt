@@ -1,0 +1,13 @@
+SOH-EXTREME 0.8.14 - Universal Tracker parity
+
+- Added ut_can_gen_without_yaml = True.
+- Added interpret_slot_data() for Universal Tracker re-generation.
+- Added restoration of the complete extreme_all_options resolved seed snapshot before SohWorld.generate_early().
+- Falls back to legacy top-level slot option fields for older slots.
+- Restores generated shop prices published by the original seed so wallet/shop reachability stays seed-accurate.
+- Universal Tracker therefore executes the same SohExtremeWorld.set_rules(), NativeLogic, NativeLogicAlternatives,
+  ForkLocations, SpeechLocations, and EnemyDropLocations graph with the actual seed options instead of defaults.
+- Bumped world_version from 0.8.13 to 0.8.14.
+
+Important: slots generated before this world published extreme_all_options can only restore the older top-level fields
+that were actually present. Generate a new seed with 0.8.14 for full exact Universal Tracker parity.

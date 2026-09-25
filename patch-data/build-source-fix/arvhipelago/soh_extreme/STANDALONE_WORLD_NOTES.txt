@@ -1,0 +1,10 @@
+SOH-EXTREME 0.9.0 standalone-world refactor
+
+- SohExtremeWorld now derives directly from CachedRuleBuilderWorld.
+- SohExtremeWebWorld and SohExtremeSettings are owned by this APWorld.
+- Generation lifecycle no longer dispatches through SohWorld via super().
+- Stock vanilla OoT tables/helper functions are still imported from oot_soh as shared source data.
+  This avoids duplicating hundreds of vanilla item/location definitions while preventing stock
+  SohWorld lifecycle/logic overrides from controlling SOH-EXTREME.
+- Universal Tracker regenerates the SOH-EXTREME game name using the complete slot snapshot.
+- SOH-EXTREME set_rules remains authoritative for custom ability/soul/time/native rules.

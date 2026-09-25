@@ -1,0 +1,24 @@
+{
+  "repository": "Mikemik444/SOH_EXTREME-Extreme",
+  "reviewed_commit": "473e6c69d146fb426fd83f9d1278c3c717fa865d",
+  "github_arvhipelago_tree": "a19193300a57f3572180e8a8a9ce037c1c3b403d",
+  "github_tree_matches_complete_0_11_21d_package": true,
+  "delivered_source_files": 102,
+  "delivered_source_tree": "63d51513c63f75dd050ab4a236be00f6a7c53c08",
+  "world_version": "0.11.22",
+  "matches_prior_0_11_22_archive_entry_bytes": true,
+  "0_11_22_changed_or_added_source_files": [
+    "archipelago.json",
+    "soh_extreme/RELEASE_NOTES_0.11.22.txt",
+    "soh_extreme/TrackerMirror.py",
+    "soh_extreme/__init__.py",
+    "soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py",
+    "soh_extreme/archipelago.json"
+  ],
+  "new_gameplay_logic_changes_in_this_hotfix": false,
+  "hazards_removed": [
+    "build_standalone_apworld.ps1 re-vendoring/0.11.2 pin",
+    "install_standalone_apworld.ps1 re-vendoring/0.11.9 pin",
+    "BUILD_FIXED_APWORLD.py selection and modification of old binary archives"
+  ]
+}

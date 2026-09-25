@@ -1,0 +1,989 @@
+[
+  {
+    "item": "RG_ENEMY_SOUL_STALFOS",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_STALFOS.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_STALFOS.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      12,
+      6,
+      103,
+      116
+    ],
+    "hq_sha256": "27843e76b55961068da5e4e6315a165aa24f68fbe0560912069fb21fdb0ca966",
+    "hud_sha256": "48082a4608e18b25f5da497c0e6139610666de2db7949fb48845f3fe524dbec6"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_OCTOROK",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_OCTOROK.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_OCTOROK.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      22,
+      6,
+      84,
+      116
+    ],
+    "hq_sha256": "86318027b7f678c28c52127e069e57c57cadb95e5a41602f534d206bc5d9657b",
+    "hud_sha256": "b2d0904cba522febd1e30232b23833f1714b59bebc2cf49995aedf2e6c39f866"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_WALLMASTER",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_WALLMASTER.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_WALLMASTER.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      27,
+      6,
+      74,
+      116
+    ],
+    "hq_sha256": "e4391e16494bed4ce9aecafcea747c24a7c3946200fe22073dd272e36a7e65b7",
+    "hud_sha256": "14798a1f2c030c48962ef2400108a13c84f9d5b18a5d1ee9ded019c2b5c64762"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DODONGO",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_DODONGO.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_DODONGO.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      35,
+      116,
+      57
+    ],
+    "hq_sha256": "6aaa713fef2774cc241c590b0354b453353190607420dd8c51b4f81b67e9dcb2",
+    "hud_sha256": "21d22cdfa67e1534e5ea5da8e87ce7855cae58af953f6242c599bd536d38d004"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_KEESE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_KEESE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_KEESE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      41,
+      116,
+      45
+    ],
+    "hq_sha256": "34c198005694bd2a1332ebbd46e8142ce71898dd386c2f79d60ada3652ae6170",
+    "hud_sha256": "2c118717d36e9dc79b6c28fb03ecb65dffc69add088d6895622672e9bb3c19f3"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TEKTITE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_TEKTITE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_TEKTITE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      36,
+      116,
+      55
+    ],
+    "hq_sha256": "3bb4b9f6c562dcda05534922218f6b1dc76a339630c9b1d89025e8127335cbf2",
+    "hud_sha256": "fb742b710dc22c45e0f167ddffb5f1acbfb8d4faa3a22dfe881a95101e9f7821"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_PEAHAT",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_PEAHAT.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_PEAHAT.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      33,
+      116,
+      62
+    ],
+    "hq_sha256": "ebe1b36cd4e541140d2075572123be6d25dab8aef2be76b944b401d4f3552f61",
+    "hud_sha256": "e97a31306c7cdb46fc0de5dee7cf3b2cce9c3d432ed6a8b13e2c3b2b2fef9f77"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_LIZALFOS_DINOLFOS.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_LIZALFOS_DINOLFOS.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      16,
+      6,
+      95,
+      116
+    ],
+    "hq_sha256": "7ae94416579c1639486255a25dfb8a14bd29c1f8bb678d57e89edf9fcdde47bc",
+    "hud_sha256": "56790c68718a9ba21eee0434de777cb1c4392122be3e90d754c84f4087f645d4"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GOHMA_LARVA",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_GOHMA_LARVA.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_GOHMA_LARVA.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      25,
+      6,
+      77,
+      116
+    ],
+    "hq_sha256": "a56f4d070c6ff880be63ed3a5dd6a48719029ba48d987b8b88fa729f88313a18",
+    "hud_sha256": "460f432b15461b46e1f1ba83b83a072e184e7cd034af16000988c07a9df5c2da"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SHABOM",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_SHABOM.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_SHABOM.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      6,
+      116,
+      115
+    ],
+    "hq_sha256": "6b69af135cc6773d03549081712c0725d264ba995345b04a0cfb265d1b1fb30d",
+    "hud_sha256": "d609648f6787d0eb12bfa9521b285f230a4746a690052d0ee608829fe76dfc6b"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BABY_DODONGO",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_BABY_DODONGO.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_BABY_DODONGO.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      37,
+      116,
+      53
+    ],
+    "hq_sha256": "2a5c84a51cfe2620e8729e9b4a25847039517c27033091faa24b5294ea79d4a4",
+    "hud_sha256": "e8110ad7c7a207059204508380501dfa48eb40ec10feef51d71157d13c2ab205"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BIRI_BARI",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_BIRI_BARI.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_BIRI_BARI.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      26,
+      6,
+      75,
+      116
+    ],
+    "hq_sha256": "4f40661e858bb65fa849d4837762d0b9e0eb20e1b1f59d7b433acea8c35fb6d4",
+    "hud_sha256": "74e3ca8dfea582e6d3fcb01ac1eff5af18d494e7aaf9c5861a76a862719e1586"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TAILPASARAN",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_TAILPASARAN.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_TAILPASARAN.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      11,
+      116,
+      106
+    ],
+    "hq_sha256": "3a3035af2ac577dbc5a95cf0ef1afa1b0402bf9fdec550a9d985015681a8f808",
+    "hud_sha256": "650f8cd678c64dd43afe6f82e7ea41d1da1eef722ebb434ecce9a52cd93bc59d"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_TORCH_SLUG",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_TORCH_SLUG.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_TORCH_SLUG.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      45,
+      116,
+      37
+    ],
+    "hq_sha256": "7beff20d2cf81b91c989998f3ae3d5c675343efe4b2c2c26b80294ba9ba7f0ac",
+    "hud_sha256": "1c9b606602ed2c82c911bdd01c6d5f6ce76827c9f4d760e0fa4ca2e69af798ab"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_MOBLIN",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_MOBLIN.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_MOBLIN.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      24,
+      6,
+      79,
+      116
+    ],
+    "hq_sha256": "16a696f815940e08a40f351ea12184d4531ec82739d75224335735527fa6c485",
+    "hud_sha256": "094a6d95971f9d38114813a0094127b826e8e1da0699f86c8cc15c3272afe7ef"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_ARMOS",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_ARMOS.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_ARMOS.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      31,
+      6,
+      65,
+      116
+    ],
+    "hq_sha256": "077efc1cbd1569d12931fe2fbd30e2cbcb16ae216403d622172a8cba33bacb98",
+    "hud_sha256": "04425015a0781373be002c6473e12915f6c756b4b58528ed46c24d26a8822416"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEKU_BABA",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_DEKU_BABA.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_DEKU_BABA.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      12,
+      116,
+      103
+    ],
+    "hq_sha256": "9a0e416653a28baf48ff000f2f4b06cca9f80689956b80f801b5d7dc8097fb94",
+    "hud_sha256": "eb530df9e9d6ff474ba1da73964761e733f82e2a9c8de48e47847f20dfe95e79"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEKU_SCRUB",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_DEKU_SCRUB.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_DEKU_SCRUB.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      25,
+      6,
+      77,
+      116
+    ],
+    "hq_sha256": "f7ab4b7313eb51a7edd8d26aa851e5dc731b66e000bb373bed42d2575c1c01b6",
+    "hud_sha256": "f4a2ae19f3a9e63b8e7f520af39dcedac34a698220a4efa640058b2c49bd948d"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BUBBLE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_BUBBLE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_BUBBLE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      9,
+      116,
+      110
+    ],
+    "hq_sha256": "aa153006f210017c899935a83e3771963cd570531d76ccec90b6bcef61d50fae",
+    "hud_sha256": "ab15e92aac0d3411915eda56dd90555f959b096e715b44cac344863bd4894442"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BEAMOS",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_BEAMOS.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_BEAMOS.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      35,
+      6,
+      57,
+      116
+    ],
+    "hq_sha256": "c71aeded31e5e2bfdfde6166248c19cbd78ea06de60bd48f233a019fef95de49",
+    "hud_sha256": "71ee8ee5da4f04103956534e93cc9e714271f3b8f9b54546b99eba9a031141d9"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLOORMASTER",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_FLOORMASTER.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_FLOORMASTER.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      28,
+      6,
+      72,
+      116
+    ],
+    "hq_sha256": "8f25193e0c1a97ca5d794ad203dc68a6928c935ca3c43edd18059f46e167e8f1",
+    "hud_sha256": "a583e3124c1e05c713fd4692f52d7185bf73a5b4301dc0cdf3901cc782a40011"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_REDEAD_GIBDO",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_REDEAD_GIBDO.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_REDEAD_GIBDO.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      40,
+      6,
+      47,
+      116
+    ],
+    "hq_sha256": "91e2049118a39aa92cf5c6c69e6b44f41d8fef1913b0934b090f4a6ac576e2de",
+    "hud_sha256": "4729ddfea75012a3b83667f8db255ff6dc4392a70fe42a5000e09154e7f37e2f"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLARE_DANCER",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_FLARE_DANCER.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_FLARE_DANCER.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      13,
+      116,
+      102
+    ],
+    "hq_sha256": "c891c8cf0c302c61eb30f056ee523088fc1c6a66caabbba640e842b1bd2912a0",
+    "hud_sha256": "ef5bd2bbda6e0e43aa1998646866dfe89cae1dc5bd49799b82bb12c260c7c12a"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DEAD_HAND",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_DEAD_HAND.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_DEAD_HAND.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      17,
+      6,
+      94,
+      116
+    ],
+    "hq_sha256": "a3503977a5b62138faca9e81b3a143f86d88c41caa0d373295ea001f3a3847e2",
+    "hud_sha256": "f8f1bc7a055eaa2d676491939ddf2704e22c3627757c76339a21e78788ccd490"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SHELL_BLADE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_SHELL_BLADE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_SHELL_BLADE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      20,
+      116,
+      87
+    ],
+    "hq_sha256": "cd51cbff15bd6731ddfd25ffd82e0ca71d13eba3ec0cc4cb9a6b40dc79f5bfd0",
+    "hud_sha256": "6af8e52ab8428676731451ee2b75f94603c1e8c579f42e735980ca4b5dcfbb40"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LIKE_LIKE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_LIKE_LIKE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_LIKE_LIKE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      15,
+      6,
+      97,
+      116
+    ],
+    "hq_sha256": "3f8d2b4bee58ab5e14e4b625d793dd384045ff8d849f92f4db024500859c83d0",
+    "hud_sha256": "1fbdb8b25ddf933922ba5952d38c0ded16ac67bffcd2972aff1754ee24fe2b1c"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SPIKE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_SPIKE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_SPIKE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      11,
+      6,
+      106,
+      116
+    ],
+    "hq_sha256": "6b9e517b8fdf4283a454c52e40587216c72756aa510ca485d9695937c6b78586",
+    "hud_sha256": "15d2e21e77aab1690d772d2bb5550e5863395e2b5c70ea097d67e228b489fa95"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_ANUBIS",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_ANUBIS.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_ANUBIS.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      42,
+      6,
+      43,
+      116
+    ],
+    "hq_sha256": "da49b7b25ab6d11012fbfe6099539796d2256282e53487c3d6a1e9adbd12bbe6",
+    "hud_sha256": "32b280e6daa1424cea759921b490535edb25c03f88d81f3e148f23889c9d5c11"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_IRON_KNUCKLE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_IRON_KNUCKLE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_IRON_KNUCKLE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      10,
+      6,
+      108,
+      116
+    ],
+    "hq_sha256": "503cb2304a39282aeab8540a2d48fe1d0918032384423ffa6d3cafceee5b095d",
+    "hud_sha256": "96f34118d53e319e6b9939778a356a0a365ec69e224058f8b6a5716eb4462eaa"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_SKULL_KID",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_SKULL_KID.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_SKULL_KID.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      9,
+      116,
+      110
+    ],
+    "hq_sha256": "2942644609ed5932112caf99e3383c731233d2b1cce1d9bb5c2e669831beb168",
+    "hud_sha256": "eb398164607071510644d9133db73e264b91f2affbc80cef06c024fccd519169"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLYING_POT",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_FLYING_POT.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_FLYING_POT.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      8,
+      6,
+      112,
+      116
+    ],
+    "hq_sha256": "849541058dd6c3cfcd8a0a1fcadd7061440c9db4eff0dff826be739b607226c7",
+    "hud_sha256": "5884adcad4348de4abb80abd9d0e72196c2ab3536c2aff562b3b008180418293"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FREEZARD",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_FREEZARD.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_FREEZARD.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      28,
+      6,
+      71,
+      116
+    ],
+    "hq_sha256": "c999764a0e7e692f41d79aea32556b349a2ac54097f00d65403c66a38b9e18c6",
+    "hud_sha256": "2f7ba17d9088f0ea971808dec0936a7020a502135a1fc914a33f6f5a806dab48"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_STINGER",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_STINGER.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_STINGER.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      35,
+      116,
+      58
+    ],
+    "hq_sha256": "ecb4d33c17d9e3b422c38e2f5fd60f0055c78e144593b64755965ab7d363a558",
+    "hud_sha256": "d394ac8282f2729a92e12310c3db9f579856ae8762dd8cd377dafd6c889eba79"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_WOLFOS",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_WOLFOS.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_WOLFOS.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      11,
+      116,
+      106
+    ],
+    "hq_sha256": "d6e521dbc61827b7df7e170d02de9876183b1ea45587563c0bd778c84a272522",
+    "hud_sha256": "56aec1a130c5ae8d96685273f33f35b037dc900c7563749186f15237e0edd2d8"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GUAY",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_GUAY.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_GUAY.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      21,
+      116,
+      85
+    ],
+    "hq_sha256": "8f6103a0f01a90e9fd7126221d79e80ea64e6163604990b84036ce8830938487",
+    "hud_sha256": "5be91e21800945fb7d54d697596532f4e0d936b739aa5185af27c42c9b265f82"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_JABU_TENTACLE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_JABU_TENTACLE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_JABU_TENTACLE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      28,
+      6,
+      71,
+      116
+    ],
+    "hq_sha256": "8d08a0d9320e8862b3d2dce961683fca52d88a73728df14cddeed2532f9c96ca",
+    "hud_sha256": "8822eb97216964ba2a568d0dbc4753c645ffb12b9a2ea9d4c77878a1c2f7e6c6"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DARK_LINK",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_DARK_LINK.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_DARK_LINK.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      38,
+      6,
+      51,
+      116
+    ],
+    "hq_sha256": "81c38a2b8e65d4966e28369686401052a994c4b7f37e46c5b90b436b64f8503c",
+    "hud_sha256": "22a624107a73db16e51a27aeff441f01f3da9f56521364f212294575500845ce"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_DOOR_TRAP",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_DOOR_TRAP.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_DOOR_TRAP.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      27,
+      6,
+      73,
+      116
+    ],
+    "hq_sha256": "639a63c5c2c488532cba2d5ff5c7f4f0521e3e151b58eed6263d2641dce186f4",
+    "hud_sha256": "36a575849adbd15bfba0e30b22279801ce2b459ff81cdd963580c70a7fbce885"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_FLYING_FLOOR_TILE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_FLYING_FLOOR_TILE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_FLYING_FLOOR_TILE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      24,
+      116,
+      79
+    ],
+    "hq_sha256": "aacc65859799a24ab55e0d829362e8d32dbd732196395cbf61f525829fb62129",
+    "hud_sha256": "c2140259b2d19d10c764a5038f4c80dd996e26646f5d4b4c7dac2522a01bc546"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_GERUDO_THIEF",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_GERUDO_THIEF.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_GERUDO_THIEF.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      32,
+      6,
+      63,
+      116
+    ],
+    "hq_sha256": "3fc33d0de486e02b1a8b06cbb15a9adf458f217d603e86fbf6f4ee65c11afd93",
+    "hud_sha256": "fe48324ef449d1114a3ebd861d535c3116b07c66a5dee1d24096b5fe8de0a228"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_POE_SISTER",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_POE_SISTER.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_POE_SISTER.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      14,
+      6,
+      100,
+      116
+    ],
+    "hq_sha256": "9a8bcc3ac78c36d44b47e7f5135c1fafd1e0f380de4b35cf7aa6e8dc472d4f5c",
+    "hud_sha256": "ee8dac3cb879438d5270d0fc52bbc6842288b3d1b454352a06726f6ae37f8b97"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_POE",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_POE.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_POE.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      12,
+      116,
+      104
+    ],
+    "hq_sha256": "204322a4bbcc32c777b7cc87befc3b3935c1496c3004e1bd71c2876d2b478622",
+    "hud_sha256": "8139ce0db7d171a0f5134dc2f49df0f9dc6800302df328bf651d7c6d353ea92a"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_LEEVER",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_LEEVER.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_LEEVER.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      11,
+      6,
+      106,
+      116
+    ],
+    "hq_sha256": "fce1f90a5a99804c443c49151d98d3ce9d50abafdc9fcd812606c2d4d5c15be1",
+    "hud_sha256": "a30730957e707cb6a7856993dc5b9b3c75aa89d6d0605c9afe53e2986597f42b"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_STALCHILD",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_STALCHILD.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_STALCHILD.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      17,
+      6,
+      93,
+      116
+    ],
+    "hq_sha256": "fe3df3fabd98e58915950601d7e21a3c9b432ff1ece4c8272cdb389e531d3f8e",
+    "hud_sha256": "1cfa9fce0d10df1ce91415b7fef1f9e11715f672f04bdbfbe1444281f76496fc"
+  },
+  {
+    "item": "RG_ENEMY_SOUL_BIG_OCTO",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_BIG_OCTO.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_BIG_OCTO.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      6,
+      17,
+      116,
+      94
+    ],
+    "hq_sha256": "9fcaeca07c690c25cb2ba875d474f28049f381343a36655cba4f5e9425963c6e",
+    "hud_sha256": "d01e6a1bcbccef94b5621dee9b4b1185450b2cf526165fb688f73d57a0c5c098"
+  },
+  {
+    "item": "RG_SKULLTULA_SOUL",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_SKULLTULA.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_SKULLTULA.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      15,
+      6,
+      98,
+      116
+    ],
+    "hq_sha256": "6b5e6a352176de916ec100065fb2e58acc9a62ec50b2ef3cd849d73e82cb665b",
+    "hud_sha256": "23d903652c821e90720eccbdfd9dfb158bcd3e0577040e2af2f2b9517a6aa49a"
+  },
+  {
+    "item": "RG_BUSINESS_SCRUB_SOUL",
+    "hq": "soh/assets/custom/textures/parameter_static/gExtremeSoulHQ_BUSINESS_SCRUB.rgba32.png",
+    "hud": "soh/assets/custom/textures/parameter_static/gExtremeSoul_BUSINESS_SCRUB.rgba32.png",
+    "hq_size": [
+      128,
+      128
+    ],
+    "hud_size": [
+      32,
+      32
+    ],
+    "portrait_bounds": [
+      28,
+      6,
+      71,
+      116
+    ],
+    "hq_sha256": "fddc9cdf8990cb584daa6795986aea9a92cf56a03cf407e1cb7e041676c2d4c5",
+    "hud_sha256": "c8ee10201973c5af6234bb7ec29fe831667b7c9736517ff61cfd06971d69a5be"
+  }
+]

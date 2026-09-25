@@ -1,0 +1,42 @@
+[
+    {
+        "Target":  "E:\\test\\bb\\ARVHIPELAGO_SOURCE_SYNC.md",
+        "Backup":  "E:\\test\\bb\\patch-backups\\build-source-fix-20260925-081638-687\\ARVHIPELAGO_SOURCE_SYNC.md",
+        "Existed":  false
+    },
+    {
+        "Target":  "E:\\test\\bb\\BUILD_FIXED_APWORLD.py",
+        "Backup":  "E:\\test\\bb\\patch-backups\\build-source-fix-20260925-081638-687\\BUILD_FIXED_APWORLD.py",
+        "Existed":  true
+    },
+    {
+        "Target":  "E:\\test\\bb\\tools\\build_standalone_apworld.ps1",
+        "Backup":  "E:\\test\\bb\\patch-backups\\build-source-fix-20260925-081638-687\\tools\\build_standalone_apworld.ps1",
+        "Existed":  true
+    },
+    {
+        "Target":  "E:\\test\\bb\\tools\\cmake\\PackSohExtremeAssets.cmake",
+        "Backup":  "E:\\test\\bb\\patch-backups\\build-source-fix-20260925-081638-687\\tools\\cmake\\PackSohExtremeAssets.cmake",
+        "Existed":  false
+    },
+    {
+        "Target":  "E:\\test\\bb\\tools\\cmake\\SohExtremeAssets.cmake",
+        "Backup":  "E:\\test\\bb\\patch-backups\\build-source-fix-20260925-081638-687\\tools\\cmake\\SohExtremeAssets.cmake",
+        "Existed":  false
+    },
+    {
+        "Target":  "E:\\test\\bb\\tools\\install_standalone_apworld.ps1",
+        "Backup":  "E:\\test\\bb\\patch-backups\\build-source-fix-20260925-081638-687\\tools\\install_standalone_apworld.ps1",
+        "Existed":  true
+    },
+    {
+        "Target":  "E:\\test\\bb\\CMakeLists.txt",
+        "Backup":  "E:\\test\\bb\\patch-backups\\build-source-fix-20260925-081638-687\\CMakeLists.txt",
+        "Existed":  true
+    },
+    {
+        "Target":  "E:\\test\\bb\\build.cmd",
+        "Backup":  "E:\\test\\bb\\patch-backups\\build-source-fix-20260925-081638-687\\build.cmd",
+        "Existed":  true
+    }
+]

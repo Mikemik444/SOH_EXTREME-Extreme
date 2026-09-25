@@ -1,0 +1,738 @@
+{
+  "RC_BOTW_B1_LADDER_SILVER": [
+    {
+      "region": "RR_BOTW_LADDER_DOOR",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/bottom_of_the_well.cpp",
+      "line": 232
+    }
+  ],
+  "RC_BOTW_B2_LADDER_SILVER": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanClimbLadder()",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/bottom_of_the_well.cpp",
+      "line": 213
+    },
+    {
+      "region": "RR_BOTW_LADDER_DOOR",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/bottom_of_the_well.cpp",
+      "line": 233
+    }
+  ],
+  "RC_BOTW_B3_LADDER_SILVER": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/bottom_of_the_well.cpp",
+      "line": 214
+    }
+  ],
+  "RC_BOTW_NW_OOZE_SILVER": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/bottom_of_the_well.cpp",
+      "line": 215
+    }
+  ],
+  "RC_BOTW_SE_OOZE_SILVER": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/bottom_of_the_well.cpp",
+      "line": 216
+    }
+  ],
+  "RC_GANONS_CASTLE_AIRBORNE_SPIRIT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "(ctx->GetTrickOption(RT_GANON_SPIRIT_TRIAL_HOOKSHOT) && logic->CanJumpslash() && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 368
+    }
+  ],
+  "RC_GANONS_CASTLE_CLOSE_PLATFORM_FIRE_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 8",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 134
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 16",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 150
+    }
+  ],
+  "RC_GANONS_CASTLE_CORNER_SPIRIT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 371
+    }
+  ],
+  "RC_GANONS_CASTLE_DISTANT_PLATFORM_FIRE_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 32 && (logic->CanUse(RG_GOLDEN_GAUNTLETS) || logic->BunnyHovers())",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 133
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 32 && (logic->CanUse(RG_GOLDEN_GAUNTLETS) || logic->BunnyHovers())",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 149
+    }
+  ],
+  "RC_GANONS_CASTLE_FLAME_JETS_FIRE_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 16",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 131
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 16",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 148
+    }
+  ],
+  "RC_GANONS_CASTLE_INNER_LEFT_LIGHT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 445
+    }
+  ],
+  "RC_GANONS_CASTLE_INNER_RIGHT_LIGHT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 444
+    }
+  ],
+  "RC_GANONS_CASTLE_LARGE_PLATFORM_FOREST_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM_MIDDLE",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 90
+    }
+  ],
+  "RC_GANONS_CASTLE_LOWER_MIDDLE_SPIRIT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 370
+    }
+  ],
+  "RC_GANONS_CASTLE_NEAR_BARRED_DOOR_SPIRIT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 372
+    }
+  ],
+  "RC_GANONS_CASTLE_NEAR_DOORMAT_SPIRIT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 369
+    }
+  ],
+  "RC_GANONS_CASTLE_ON_TARGET_FOREST_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM",
+      "condition": "(ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid()) || (logic->CanMiddairGroundJump()                                                     )",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 81
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM_MIDDLE",
+      "condition": "logic->IsAdult || logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 92
+    }
+  ],
+  "RC_GANONS_CASTLE_OUTER_LEFT_LIGHT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 442
+    }
+  ],
+  "RC_GANONS_CASTLE_OUTER_RIGHT_LIGHT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 441
+    }
+  ],
+  "RC_GANONS_CASTLE_SMALL_PLATFORM_FOREST_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM_FINAL_DOOR",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 101
+    }
+  ],
+  "RC_GANONS_CASTLE_SOT_BLOCK_FOREST_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 79
+    }
+  ],
+  "RC_GANONS_CASTLE_TORCH_SLUG_FIRE_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 16",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 130
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 8",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 147
+    }
+  ],
+  "RC_GANONS_CASTLE_UNDER_LEDGE_FOREST_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM_MIDDLE",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 91
+    }
+  ],
+  "RC_GANONS_CASTLE_UPPER_LIGHT_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "logic->CanUse(RG_HOOKSHOT) || (logic->IsAdult && logic->CanGroundJump())",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 443
+    }
+  ],
+  "RC_GANONS_GANONS_CASTLE_UNDER_PILLAR_FIRE_SILVER": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 24 && logic->CanUse(RG_GOLDEN_GAUNTLETS)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 135
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 24 && logic->CanUse(RG_GOLDEN_GAUNTLETS)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp",
+      "line": 151
+    }
+  ],
+  "RC_GTG_ABOVE_TARGET_WATER_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && ((logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 16) || logic->HasItem(RG_GOLDEN_SCALE))",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 197
+    }
+  ],
+  "RC_GTG_FIRE_RING_LAVA_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "condition": "logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood() || logic->CanUse(RG_SONG_OF_TIME) || logic->IsChild",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 169
+    }
+  ],
+  "RC_GTG_FIRE_WALL_SLOPE_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 47
+    }
+  ],
+  "RC_GTG_JUMPDOWN_SLOPE_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 50
+    }
+  ],
+  "RC_GTG_LEFT_WATER_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 16",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 198
+    }
+  ],
+  "RC_GTG_LOWER_BOULDER_SLOPE_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 48
+    }
+  ],
+  "RC_GTG_MIDDLE_WATER_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 16",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 196
+    }
+  ],
+  "RC_GTG_NEAR_BARRED_DOOR_LAVA_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 168
+    }
+  ],
+  "RC_GTG_NEAR_SWITCH_LAVA_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 167
+    }
+  ],
+  "RC_GTG_RIGHT_WATER_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 16",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 200
+    }
+  ],
+  "RC_GTG_TARGET_SLOPE_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "logic->CanUse(logic->IsAdult ? RG_HOOKSHOT : RG_LONGSHOT) || ctx->GetTrickOption(RT_GTG_WITHOUT_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 49
+    }
+  ],
+  "RC_GTG_UNDER_LEDGE_LAVA_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE_RIGHT",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 76
+    },
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "condition": "logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood() || logic->CanUse(RG_SONG_OF_TIME) || logic->IsChild",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 170
+    },
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM_UPPER_LEDGE",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 182
+    }
+  ],
+  "RC_GTG_UNDER_TARGET_WATER_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanUse(RG_IRON_BOOTS) && (logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOOKSHOT)) && logic->WaterTimer() >= 16",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 199
+    }
+  ],
+  "RC_GTG_UPPER_BOULDER_SLOPE_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 51
+    }
+  ],
+  "RC_GTG_UPPER_LAVA_SILVER": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM_UPPER_LEDGE",
+      "condition": "logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
+      "line": 181
+    }
+  ],
+  "RC_ICE_CAVERN_AIRBORNE_BLADE_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->IsAdult",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 68
+    }
+  ],
+  "RC_ICE_CAVERN_E_INNER_BLADE_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 67
+    }
+  ],
+  "RC_ICE_CAVERN_FROZEN_BLOCK_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM_NOOKS",
+      "condition": "logic->BlueFire() || (ctx->GetTrickOption(RT_VISIBLE_COLLISION) && logic->CanJumpslash())",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 181
+    }
+  ],
+  "RC_ICE_CAVERN_ICICLES_BLADE_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 64
+    }
+  ],
+  "RC_ICE_CAVERN_LOWER_BLOCK_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 157
+    }
+  ],
+  "RC_ICE_CAVERN_NEAR_BLOCK_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->IsAdult || logic->HasItem(RG_POWER_BRACELET) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 158
+    }
+  ],
+  "RC_ICE_CAVERN_NEAR_FIRE_BLOCK_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM_NOOKS",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 180
+    }
+  ],
+  "RC_ICE_CAVERN_NEAR_GS_BLOCK_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->IsAdult || logic->HasItem(RG_POWER_BRACELET) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 159
+    }
+  ],
+  "RC_ICE_CAVERN_OUTER_BLADE_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 66
+    }
+  ],
+  "RC_ICE_CAVERN_W_INNER_BLADE_SILVER": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/ice_cavern.cpp",
+      "line": 65
+    }
+  ],
+  "RC_SHADOW_AIRBORNE_SPIKES_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_CORNER_PLATFORM",
+      "condition": "ctx->GetTrickOption(RT_LENS_SHADOW) || logic->CanUse(RG_LENS_OF_TRUTH) || logic->CanUse(RG_HOVER_BOOTS) || logic->CanUse(RG_GORON_TUNIC) || logic->TakeDamage()",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 259
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_DOOR_PLATFORM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 268
+    }
+  ],
+  "RC_SHADOW_BEAMOS_PIT_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 160
+    }
+  ],
+  "RC_SHADOW_E_PIT_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 161
+    }
+  ],
+  "RC_SHADOW_E_TARGET_SPIKES_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_S_DOOR",
+      "condition": "logic->CanUse(RG_LONGSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 220
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "condition": "logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 235
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_DOOR_PLATFORM",
+      "condition": "(logic->BunnyHovers() && logic->CanJumpslash()) || logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 269
+    }
+  ],
+  "RC_SHADOW_FLOOR_SPIKES_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 236
+    }
+  ],
+  "RC_SHADOW_N_NOOK_BLADE_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 115
+    }
+  ],
+  "RC_SHADOW_N_PIT_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 158
+    }
+  ],
+  "RC_SHADOW_N_UNDER_BLADE_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 113
+    }
+  ],
+  "RC_SHADOW_PLATFORM_SPIKES_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_CORNER_PLATFORM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 258
+    }
+  ],
+  "RC_SHADOW_S_PIT_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 159
+    }
+  ],
+  "RC_SHADOW_S_UNDER_BLADE_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 117
+    }
+  ],
+  "RC_SHADOW_TALL_BLOCK_BLADE_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "(logic->IsAdult && (logic->CanUse(RG_HOVER_BOOTS) || logic->CanGroundJump())) || logic->CanUse(RG_HOOKSHOT) || logic->BunnyHood()",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 114
+    }
+  ],
+  "RC_SHADOW_W_NOOK_BLADE_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 116
+    }
+  ],
+  "RC_SHADOW_W_PIT_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 162
+    }
+  ],
+  "RC_SHADOW_W_TARGET_SPIKES_SILVER": [
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_S_DOOR",
+      "condition": "logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 219
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "condition": "logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 237
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_W_DOOR",
+      "condition": "logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 249
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_CORNER_PLATFORM",
+      "condition": "(logic->BunnyHovers() && logic->CanJumpslash()) || logic->CanUse(RG_HOOKSHOT) || logic->CanRecoilHover(RECOIL_SWORD_AND_SHIELD)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 260
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_DOOR_PLATFORM",
+      "condition": "logic->CanUse(RG_LONGSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/shadow_temple.cpp",
+      "line": 270
+    }
+  ],
+  "RC_SPIRIT_AIRBORNE_BOULDER_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_ABOVE_BOULDERS",
+      "condition": "logic->CanUse(RG_HOVER_BOOTS) || logic->CanJumpslash() || logic->CanUse(RG_LONGSHOT) || logic->BunnyHood()",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 176
+    }
+  ],
+  "RC_SPIRIT_AIRBORNE_SUN_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 313
+    }
+  ],
+  "RC_SPIRIT_E_HIGH_CHILD_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 98
+    }
+  ],
+  "RC_SPIRIT_E_LOW_CHILD_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 97
+    }
+  ],
+  "RC_SPIRIT_MID_PLATFORM_SUN_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 314
+    }
+  ],
+  "RC_SPIRIT_NEAR_CHEST_SUN_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_CHEST_LEDGE",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SUN_BLOCK_CHEST_LEDGE, []{return true;}, true)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 335
+    }
+  ],
+  "RC_SPIRIT_NEAR_DOOR_SUN_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 315
+    }
+  ],
+  "RC_SPIRIT_NEAR_LIGHT_SUN_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 312
+    }
+  ],
+  "RC_SPIRIT_NE_BOULDER_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 189
+    }
+  ],
+  "RC_SPIRIT_NW_BOULDER_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 186
+    }
+  ],
+  "RC_SPIRIT_SE_BOULDER_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 188
+    }
+  ],
+  "RC_SPIRIT_SW_BOULDER_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 187
+    }
+  ],
+  "RC_SPIRIT_TORCH_CHILD_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 99
+    }
+  ],
+  "RC_SPIRIT_W_HIGH_CHILD_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT)",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 95
+    }
+  ],
+  "RC_SPIRIT_W_LOW_CHILD_SILVER": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "true",
+      "file": "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp",
+      "line": 96
+    }
+  ]
+}

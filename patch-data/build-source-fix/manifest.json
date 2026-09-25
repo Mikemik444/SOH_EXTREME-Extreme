@@ -1,0 +1,912 @@
+{
+  "hotfix": "0.11.22-build-source-sync",
+  "world_version": "0.11.22",
+  "reviewed_commit": "473e6c69d146fb426fd83f9d1278c3c717fa865d",
+  "files": [
+    {
+      "path": "ARVHIPELAGO_SOURCE_SYNC.md",
+      "sha256": "c626b72d232c6772fea6def7109629f369282d137b10323533f61d13acf738b4",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "f275c18346b09ce016b7b249701773298b8043a6"
+      ]
+    },
+    {
+      "path": "BUILD_FIXED_APWORLD.py",
+      "sha256": "f65522a35002302b3b204f22c70295ca5a24814596c7d9fd3e1544d9121f651d",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "4e2e184cc1cbc16972b6f7b4761bea76dfa6a6be",
+        "a1077df56be467c94625d833380a36db188564c7"
+      ]
+    },
+    {
+      "path": "arvhipelago/archipelago.json",
+      "sha256": "b6114181127e7d043e23ebf8e6858c29f88c8aa7ae9172afafcf347519b22fc6",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "739ab117eace92ac963dd8ad851fa2ad47b84496",
+        "d8f784e581afa02493b989cdf2f7528171ac2af2"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/CLIENT_NAMESPACE_0.9.3.txt",
+      "sha256": "f17df4f1de4e39b263de2878ce49af103ae10ae2d6caf18d79399c51f7b78bea",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "b7b8ff53c7a762fbca1eadae9f038535483d67b8"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/EnemyDropLocations.py",
+      "sha256": "81330e2c314f3a35b13cc8933d17fee80f5e94a087054e61a6eb05feb3c7a9fa",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "0b16c4afc4bf280aec8f002f0d048f03ced07628"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/EnemyDropRules.py",
+      "sha256": "a444469b7df7a8e1615dbc84e8e945a5ac1aca989769f6328c6d638055c73db2",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "00a8b0d7828ee42a7535a0369a97842a95f9a378"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/EnemyRoomGraph.json",
+      "sha256": "55d11aae327b46886f769cbdcc9586f323b6e4ca4b88a46ce40f019d8528497c",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "70aebe831372cc0c52cbb28f5845f90ecfc6d8ef"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/EnemyRoomLogic.py",
+      "sha256": "8489d393188762ad7608ed98fad27a1e88156de766e6a7f72d8d2a36586e6226",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "65c8ed52b25ba79151995d3713e52d8ecfb4f99f"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/EnemyRoomMap.json",
+      "sha256": "5f3d5abaaae9e9463ecd52bc729a70dddb13c76b8fd1086b752751b622146701",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "1a1405bb6834fab4119d029266893561813af11d"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/ForkLocations.py",
+      "sha256": "9463050b26edbf25f9e92a5fecdc0e00eafdda6bf2cb20dd613779c2f36956b0",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "54da76d8cabfd74a08018d5cc6d2a36c2953baab"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/FrontierFill.py",
+      "sha256": "59e5bea04a2977e7848c95434dbf5236374950a80c83388c194d70d12fd24ac2",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "68db9846dc30ef3533017c3193376e3f0e8f3087"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/HOTFIX_0.11.21d.txt",
+      "sha256": "904a9aa2d50fd87a2d04fb7c0235de6bae089d6a3c2fadca4d135c6084063d82",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "27a159987a287c44b2ecc4db4ac6bd4653a20dea"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/LOGIC_FIX_0.9.4.txt",
+      "sha256": "65486c1c892e8fd16ad9e102b44ac8433a2684e26602424ec00d9c8f4816383a",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "31eb6ce37bb1da7683c8dada2ecc3b8758f0088f"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/LOGIC_FIX_0.9.5.txt",
+      "sha256": "6e3923da970b365edf6daa2c8ce2f63bdfd26bbcb0e87eb9a495d6484ef2a7ec",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "d55dc4891657f63135841d9330daa231b1339ab2"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/LOGIC_NOTES.txt",
+      "sha256": "cda1e6ed86a835d5887211d8f2d80166fc3284b5e186eabaceebeb75bcebbbf2",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "baaf45d44e04ef86a8ac6d1e353450d8a25d6038"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/LOGIC_OVERHAUL_0.9.2.txt",
+      "sha256": "a9252e14cc54d838eb01cf17e122458bf98fae2291e2383d9c929f589a1b43d9",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "5543df589930bdcca603478de755686f9971a195"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/LogicAudit.py",
+      "sha256": "72e1c185a2258644cb68713efe39ca4441d90661a2f72451f750be36f5cf8825",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "8f3590c9bab25b15a9501c08fd2508e077a6c6a7"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/NativeAbilityAudit.py",
+      "sha256": "290a6dcc35d0d139f59a9d60938c75afdd4efa88e30b76dea3360dbbf7476988",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "2c2da4b60a3e944b3a2fa696529d1b07bab78237"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/NativeLocationRequirements.py",
+      "sha256": "fee5cf30aa6c863aa62143573c8bbdce38ad9965489aea63d85f94a00d04b982",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "28a4c3db01e1be40e094c6e431a0b19cd5b4c93e"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/NativeLogic.py",
+      "sha256": "856b9b00f20db6afa18915f5bc4fef49636c65a80e7cfe72821216c6733ba419",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "2ff8a35acd46676c756f573b77199485a87b2803"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/NativeLogicAlternatives.py",
+      "sha256": "f16da4e99d4ff4e613751e22cef22fa6e54294d0f7a2d00d68ef0b4f60c8fe63",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "230e3c2833ca66994efec6bea1e8e91f5d9f86ff"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/NativeRegionMap.py",
+      "sha256": "20a29f6d1cefb75f14e16deb85e16a62ae6e3b02241e799252dd9b77edbbd874",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "7008727018dba21621884a85ef90c1e61710983d"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/Options.py",
+      "sha256": "aae188d0bc743bf186aca925b6c39902b5fbb5d8a553bdbb33afa27e9c25be70",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "dfd007aaad74ec7a54c964afc95dea8891afbe0d"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/RELEASE_NOTES_0.11.10.txt",
+      "sha256": "983dff1ccd0e558c6ef1a45ce4bf5270e4afe3ce5b972344ec96de13c062429f",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "207b8495fde85fbe003a4b3fa9e6a56c5cda0b0d"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/RELEASE_NOTES_0.11.14.txt",
+      "sha256": "f44ad42e17b825416c04e223beb0758b5b362fc187fb688efbf40087391bf522",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "21e0720b92ec7e8f0585ce2cd75e8a8e54ac0d9c"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/RELEASE_NOTES_0.11.15.txt",
+      "sha256": "3b7aadf5334f82e4d29b53ff9c219ae9ca877f0687d7f98a5baa0a6ced7956e7",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "ac2ed1e88e94f168a20b8682b17064902568d27d"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/RELEASE_NOTES_0.11.16.txt",
+      "sha256": "6685eceadaa5f21a505deebfa10468fb3d3131eba0cc2ba38f254f55c9f4ae46",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "f8639cc4504e5316dafbaf0a2e8b9ede8e056d33"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/RELEASE_NOTES_0.11.17.txt",
+      "sha256": "89217085011cbbe2727b01e24f9746751f85d398c163fa86ccf3c25c745c95b7",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "bcbee763544224908d68787d5eee2108a62b7096"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/RELEASE_NOTES_0.11.22.txt",
+      "sha256": "00552e8601726065e7ba06149ea9f8e41c6f591cc7be8a73ad149e023d95e30b",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "29325842ec246b20af5d53e93e1451f34234ceb5"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/STANDALONE_WORLD_NOTES.txt",
+      "sha256": "bcb682f5df6648f3142ee6bac97d46bee97879e55ae1b3d5860aa29ba563050e",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "735e1b3e5573409f3b73dcfb73c9dcc23e5b6f24"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/SettingsParityAudit.py",
+      "sha256": "5034fb94ec37a523c59eb0e324cf7729862a1c805a8a139cd813eeef0a54df5e",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "ccaf1968cdc55e8debf0c2b34c596bc183abc857"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/SilverRoomLogic.py",
+      "sha256": "a73149fd6dcd5beb27bafde9648a733217f4bda50bf8177efffe5542e23d77aa",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "bdf3112c022a892f972bb21eba1d72e8c490c759"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/SilverRoomRoutes.json",
+      "sha256": "750e0a1792c32c8f7b379a5136b6510776d53441b2199025b66f6cd81463cc03",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "0c00a09bc43c07f9c3c969e2303ff9f869e6b939"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/SpeechLocations.py",
+      "sha256": "e4e831fb0db247ede4e4b2af1eebb2109e8f367c336a8d48752216da4318f1ad",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "c700f22f77c8adc469c4ca87a04cfe3fabc7e1ba"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/TEMPLATE_README.txt",
+      "sha256": "3ea54071134e6dea306500f547a2c8cf097f94d159c84ecefc6b5aa2f3aa8942",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "376f27e1819fb0483876430b5d63438515438270"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/TrackerClient.py",
+      "sha256": "771e23123a5dcfd0d57cdb561d366ca79937a1d48b40d077ae65762c4a74d2d1",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "ca38c593fd4859bed29b50dae43883848dea439f"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/TrackerMirror.py",
+      "sha256": "abf653e3e552e093954456c93202037beb22565f79a7d5f394c5cebdc08fc176",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "2b5f0b170d396dc3f3e34c2777d2ca77a0f9362f",
+        "78365360206af24a0ff5cca0c614ca7d69da93b5"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/TrackerWorker.py",
+      "sha256": "ed3908c7a485ff435748c2e47ec13e11d8087018f4d7d40889eec19dd185755a",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "902635b17738b6da75cec971a762618a7017bcc4"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/UT_PATCH_NOTES.txt",
+      "sha256": "e83e03e288aecac88e0147b49b0e21d03023c138630b49671c1bd5dc64c89a98",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "80e83da7f15165e51633c0ef9ad391033ef50b17"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/__init__.py",
+      "sha256": "7cb218f39f60d329d73cc89e6c68366f139b71641a51f73dfa1d142be213dabb",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "269ba568f6023e7196408a86e1ae96b089b97a0c",
+        "2f9661220d6e1bea315592701c6e92022cfdd3a7"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/.apignore",
+      "sha256": "83a6ebda36e4508c91caba443ad3c4304fd972d0ffa0a8306deb862a77b577bf",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "e19255845ca31c01858b458273b9c780a11e33db"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/Client.py",
+      "sha256": "e30bbbffbc09b4f117d9be92ce3e4e4045fb3b49a8c1bb3b5d5d0c09f6ad6be5",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "f49f9fa33b67683a6b6451d931c39aaa7cbf4ff7"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/DungeonRewardShuffle.py",
+      "sha256": "e6f542640c33be7baa0e0911f4d62b9a8deff3410088d23b60071121a249061e",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "9dd0319ffcb583c49381ad864a9daf750fb72bf9"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/Enums.py",
+      "sha256": "dc3ac1b68397d1fc30c7048e514f70dbd2439f3dc476e6936044a43d152db047",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "5b6f366d56897c9a7453997797fcf0d9c36a8381"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/Hints.py",
+      "sha256": "16ebeb630a9af6c1adc02446328a13ed2a956bd16b5799dbc256d9e98a9b5331",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "c6b0eb4f133c5d98a7845a176fc12fd44fccfb5b"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/ItemPool.py",
+      "sha256": "b2f518381e91184840bf0daa3c62a4345016d1e8dffea511f04bd5cd6cb06c5a",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "38db3747050fbddf56e2689b266898ff2a2f3c72"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/Items.py",
+      "sha256": "d73570705037b07841ee99a8bf06804566d7d6139e49c7578020eb4c6c106272",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "000f655325d1dad3f6df1037e599f9c94313fef2"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/KeyShuffle.py",
+      "sha256": "7998cf49a800257e72fde55c79614f9bd6d382cc7e44bfe48c3513ec538e09ae",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "04e318056e163280aab08a8715d8464ec9d985e1"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/LICENSE",
+      "sha256": "f66c14cec56600dec0a63c5dc14d9fe3dc4efbcdfbf34b100b6fcf1f1e3ded00",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "60d31b7b7de80c6301e579ab644a3d092f64cc4e"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/Locations.py",
+      "sha256": "c4d34bdce131b56df238ea0f5ab7cd029d74d5cf63a149f51e02237000e0a3e9",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "ca5a9ef6d2fd6ce5cb83e9f7f2ae451566ab0054"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py",
+      "sha256": "1a4d427afb8dd15bd654c04c4872e7a5d888ed5efbd1000d078ba9fb70e6bff3",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "151ffdb4ebc4ac8e1ed7c6af556fc2cb1f9708d0"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/Options.py",
+      "sha256": "87b33737ef64bb5d8a956127146eb5fc3504930fde25af1753f80476a9faf909",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "0ca6d12051b76df9b0b94d38726d895c6d6cf56c"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/Presets.py",
+      "sha256": "6cccc4532eb8341f884cc2fe4ca0d60ba2f869c27786ad70a219d4060d7cf37b",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "eff245e5d95b2840558bdead84f4819cf778e415"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/RegionAgeAccess.py",
+      "sha256": "acbf58c8ee65ad5de1e137b3331b23e709df37928757a30db6d43bbde4dad2d6",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "df952e154af2d4ea6c0760acc907db7375d0c63e"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/Regions.py",
+      "sha256": "e4684394a403d3c0f2b7b5aa89b2f17359d6810f1c4bb99117684f5be781a256",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "1d60fb643495a24f08dc26ac016e80ce779e18ed"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/SOURCE.txt",
+      "sha256": "4c726ffbb242244792acf86b31e85d4d684acc5b73e15b709fe282212070a834",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "f7fe7aa078d03aab291d37c877274875bb4a9fc0"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/ShopItems.py",
+      "sha256": "1a426b61e1d817a68b94a8a3fe67e2ad27c4e8786f8ec1daeb4ed48ad7d366e1",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "c4a1f9a3129cf1d1b2d597fddabc2ff89089a60d"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/SongShuffle.py",
+      "sha256": "a4384751f3c8fe0219d6c534eb745d78f7c5bbd8a3078b83c11f6c658769ba2d",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "d3db80d68a808e4a3690674ffdc58663e8c249b8"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/UniversalTracker.py",
+      "sha256": "46a5186362a9081c19b7ca79d1ea1edb6339465ffb8b8cc122ee8433fcc6d2c0",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "b2e5f1bdddf8d5d99b1d603bb20075845344511e"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/__init__.py",
+      "sha256": "58d62c0aa2db763e197c261d56aafa2f2bec445b2d5c3319740f568633ba7677",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "b74a928140afed07a333122bff45afba1daf9412"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/archipelago.json",
+      "sha256": "3360227f8b49344f1b9d77cbbafe69200c095811db35bba8d8e14c5c904bc873",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "76ce9bd8f76b7cb75eb34612444043e13dbdc1fa"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/docs/en_Ship of Harkinian.md",
+      "sha256": "3f93fdab85bf82b2232932065ad49eeb5b3da32591636f3ad7e9ae1ea20c13ff",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "b8b39df15c3595e738da8af566dbb77248bc1746"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/docs/guide_en.md",
+      "sha256": "f91538249e3ca090011110348452b8245bd0656760aed9f87d4537371aa68267",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "0adc032f91eef5ad4bbf3a9fa1c25bdc4e4ad81a"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/bottom_of_the_well.py",
+      "sha256": "8285fd526192079461782dad0601f344a38f8ba7663769f6fbd7a375ab9be133",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "df8be9042e806e8862b977c9f650db534239310a"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/deku_tree.py",
+      "sha256": "fddab92341ff68858624f3c93326d37e1b76b51369a7306af35e7c1ff817254a",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "0d3f17d19ab1487045cf1e60c3f98166776e6d5b"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py",
+      "sha256": "f415f4d901a43f24ca24c32c4ea461902971956f04a68daae86ee3bbc92f7f82",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "04222878aea9f07005890a75c09891ff2b5e6d19",
+        "4071eb477f91b50894a1d417b5fde4db40439d13"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/fire_temple.py",
+      "sha256": "8fdcc5cca4cff7640c4f9ae1fc87fba26428876c93b588913a690d7cd7e1a346",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "c20d1f73903c70a58461c639fd128fe205740e35"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/forest_temple.py",
+      "sha256": "4fe279931c3fe5b3a4ea64ab9d6b1ddf09f24bab15217e9112c26324eb470c25",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "6f92261e5f84ad697731f037cd9c27678a6ba51e"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/ganons_castle.py",
+      "sha256": "ad9399319ca5d632bdec451afb0d46dc0fc026087532fbe6cacfea47267eadc1",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "a8cb01d9f80ccf16b17445fe5a33ec80d0e670a8"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/gerudo_training_ground.py",
+      "sha256": "f8b0872051ac3d3f71b977558ee373e408bbae4ac76af1b09547bfeec9a58b4f",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "004994beff28eebed090eb3c3f09dc2c1239c7a6"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/ice_cavern.py",
+      "sha256": "14a9ea23f9e898886ae468f3d18c064d3ff993798be098ad2f0db426f0a435a3",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "4ae5089129704c91d19cec26403f9a9d20729768"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/jabujabus_belly.py",
+      "sha256": "c08bb3d21cd736db0c94ae8424f2ff16ac16af246f95cb11e652ff5917247a9d",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "cc59365807930b937015a0d1fa5cff3bd62b9a7c"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/shadow_temple.py",
+      "sha256": "7cca3d96af4b9b77c558d66e587f0f8b0b6faebe5497bcc3e44893d63a643f5f",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "ec08c587c0c2c33a21e9273eb333f299d672ff21"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py",
+      "sha256": "ec863400288e93449e5939f2743f24906f3e49ba314a0ce1471f0cce5914771f",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "f2a039f92ede2a5f8144688f43e12256d5d4a092"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/water_temple.py",
+      "sha256": "2caff34c6f4ff25ed8057cdbf1c119ab12ddff1ff0aa137d503c3b463d8bfc51",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "f0e3eaa47b4fbff9bdb1da308228dcfc0918a4ad"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py",
+      "sha256": "81e7beccb93c191121735c20627d463c5225810fa3e72e7c061a0cc2f444cf26",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "82ce0a4fc1ed622a7eaee3ab7dd879cb14cc3ea3"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_crater.py",
+      "sha256": "3105ca387918de6884ea4b21685c1489694b287e45195704b7af59979deb9af8",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "34d6e1b10ef14c1c61ecef7f5b94d4c7cfaefff5"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_trail.py",
+      "sha256": "c453b08d4b931e9ac7643170c583b43ce63c3076d4f153e05f75df82a0a4f1cb",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "58ff5223eab9c941dfed395236c7024b4c75ef67"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/desert_colossus.py",
+      "sha256": "9db1fa172089097a5cf203be6b41680b995ef031dd3b8fe66720a6c785ce3bc2",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "866a0ea15d1f2d4546103a52d175e77d8dde2d8f"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py",
+      "sha256": "63b63ea3e9ede4e359112d20e6659080c8e5e549b7987550c635304763eac380",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "b387eee544c94266279bdc46a70ce53f3698f552"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_valley.py",
+      "sha256": "c1233761b6393cc00a27ef231ceaae4ff2c8528e56ecf1cf3ace95e5e96e2880",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "671998fa0fcc2645d4e99940ddf504e1bc1d8e66"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/goron_city.py",
+      "sha256": "cfa3c6aec3bdc5d21d811b26f523fd97fd0a2729204cd72ae7bba935cf061dad",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "567c3aa32e89da4065123a12ad4cf00ae795266a"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/graveyard.py",
+      "sha256": "ed68b79a6d2fba23f03e309ffc2ea066b263b31cfc89c2d6ae07a2016de05492",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "d45191e8ece8cf59aa133e90e9104854a2c7463e"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py",
+      "sha256": "b10ccf2e873eb270c0ea6d613b028c3fd9b3de62d0df35c423d87a9b4e70d2ce",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "49baf420c794f1da12e044e0305ebf5588d58c23"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py",
+      "sha256": "c17aab5c9aa5740a0d0c7b89a6c79cf988b8eb3c2a021a19a5fefefb5d421e9f",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "2b2fe2cc15fed15d8ee73ade0a03bf5b38b87ec8"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py",
+      "sha256": "c8101bbd2fb1f06cdc8cbe32291bfcf699871d447625489b5654b8773284143d",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "eec19fe12f2649c464ff3af37e17a3137b2de394"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py",
+      "sha256": "ee70949f2e2e311afe16483f855dd093b5c7c179ab583ac3ab976e972aa17503",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "caaec8cf40252df9fdd71c0cf7cf95b1b1e55cfd"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lake_hylia.py",
+      "sha256": "f4fdab5b2cb9899232046fa6654a309e9c31c032468be3ad12279f733544daef",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "00d0399d7ef287a40263e57c4dcd79a4bec766e8"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lon_lon_ranch.py",
+      "sha256": "0a8a50b08f25204d665c4389e2500ad2bedaff872be0a2f6bbff0af0d4a01991",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "dd9220dcdce12d8dc55cd2470c2aa52a2f4cea34"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py",
+      "sha256": "4928a51878704459ffbedcc057d1f7fd3f3bb8b3e65575ba622d8e2b1b019e22",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "1abd8b927aebc31c6f5dc20bf34931c4a2804cde"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/market.py",
+      "sha256": "16eb4d1b5c39936f36a6022ce42a1f4aca0f575b94c57afbd000e129fbd71de6",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "fbc3e662b47d5a9b124cf5a8b4c275573bfb49d0"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/sacred_forest_meadow.py",
+      "sha256": "e4c9077ca4f0110d99e36764b6c7b59e86541999deac11c37a2c889e5048e498",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "328485db7a91b5564967e5145a2079c30add4fd3"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/temple_of_time.py",
+      "sha256": "39c2e95f24174715a0137be117189ddcd3efa8c8a28b00fe0f60d03b20bf9279",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "59d5a17772315e22535316b97666027449368670"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/thieves_hideout.py",
+      "sha256": "29bebd9be0a7369a95852e6a781c84c414a99515da95521868124ecb114b5b9f",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "f861da0dc2b6d70ea01488ce380be547e1d77f0b"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py",
+      "sha256": "535ef71151baa83b3b5224d7db24854f39f7ce1eb4704a8a2e1fffb9090de65c",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "79139c25cc1fe9515f33a90923763f51e408ddcf"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_fountain.py",
+      "sha256": "88bb1cb5bf2915c7c13ebb7862c770c0651040dc5c6bb94d7435a6ead12ea4a6",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "dc45b2a7a60b27943c2dc1866f58fc332de5351f"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_river.py",
+      "sha256": "a93a8f57c43c8a20b4e9a100b4fa89886d751bc09a1e98634c155c41ee5263f1",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "b0c075db3ba5b26615000bac42553ea99f35a9d8"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/_vendor_oot_soh/location_access/root.py",
+      "sha256": "d1c1c9021da8bcc0275b2cc50b1a2f9d6d0b858eb361fa439501116558c7039e",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "c97d7f8eeff97c63a42400f3ee420388941addf0"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/archipelago.json",
+      "sha256": "b6114181127e7d043e23ebf8e6858c29f88c8aa7ae9172afafcf347519b22fc6",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "739ab117eace92ac963dd8ad851fa2ad47b84496",
+        "d8f784e581afa02493b989cdf2f7528171ac2af2"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/docs/guide_en.md",
+      "sha256": "2aa1efdbbbf036db3beb77114ed8e714d2adab698b52f8b908c2b8df81b2868c",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "5d56abe9b54212ac8cb91209adc733923d8389b6"
+      ]
+    },
+    {
+      "path": "arvhipelago/soh_extreme/shared_logic.py",
+      "sha256": "f26bae6f61e456a114f9a5ff299bdbfcb119db6a4e2b49c46c7da930d26bbe73",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "e98e787a7ea817f67e50eb4d7d732bf2852e98a3"
+      ]
+    },
+    {
+      "path": "soh/Network/Archipelago/TrackerMirror.h",
+      "sha256": "4c2229687285c914e033571c87b5a56e61ce62b6d8cff88912215594f4791845",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "4fe3bbd7b3b60d4de3631af8d01d69a569029214",
+        "6acdc39c5b6edb5de779a306f3ca5fcba84b48a6"
+      ]
+    },
+    {
+      "path": "soh/assets/tools/soh-o2r-packer/PngTexture.cpp",
+      "sha256": "906646c41bec8fe6f4034f56a4fb180dab9b7be70d5e6a6881a69b7395d3a8fa",
+      "mode": "missing_only",
+      "allowed_git_text_hashes": [
+        "4405688333fbcaa279848eda80565f8bf392b212"
+      ]
+    },
+    {
+      "path": "soh/assets/tools/soh-o2r-packer/PngTexture.h",
+      "sha256": "198eb41863f5a19e4fa076e431172766f3a19609ca160ec4fb242da059d94a20",
+      "mode": "missing_only",
+      "allowed_git_text_hashes": [
+        "674d6f5ddcf04d6be795fb79995a1e3cc768338e"
+      ]
+    },
+    {
+      "path": "soh/assets/tools/soh-o2r-packer/main.cpp",
+      "sha256": "04b592fc171aaae15a489c828f62fb9c8a83975cf874c4d73f758c8a87abaed6",
+      "mode": "missing_only",
+      "allowed_git_text_hashes": [
+        "6048c06206e8c4fbea095cebadafdd48a8f947e3"
+      ]
+    },
+    {
+      "path": "tools/build_standalone_apworld.ps1",
+      "sha256": "7df4323ab1eba4551eec8fd62acfc31b22eec7343791f70528d5f804f4405d92",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "7af9bcf51e1ea41311d51c6c1d61f08f36c58884",
+        "bc7da78a765bc42f7610e357ca1b7a11eb3f6bdb"
+      ]
+    },
+    {
+      "path": "tools/cmake/PackSohExtremeAssets.cmake",
+      "sha256": "f8a6c11bc78b7cf564396a259431599b4a0a12ab4ff29ce882d1cc3671ffe144",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "4d47bb853dddd203eccfbcaf82e52be0a15423f9"
+      ]
+    },
+    {
+      "path": "tools/cmake/SohExtremeAssets.cmake",
+      "sha256": "65113aac1f68aa47bd662f27934e642c88c8f22930e493fe02a199e9103da804",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "26e741a15fcb77ec30d6d577ea36b224477b955e"
+      ]
+    },
+    {
+      "path": "tools/install_standalone_apworld.ps1",
+      "sha256": "f119ed640bbb4d328b48ff54e5195c02a1375fa7d30e2feb330b0f952b14e1da",
+      "mode": "protected",
+      "allowed_git_text_hashes": [
+        "70c7302c452ea0c7f9f2d6e76c5c73086fd8d938",
+        "f9984bc36aa9c1a2371124f5f657a8a5d406b97b"
+      ]
+    }
+  ]
+}
