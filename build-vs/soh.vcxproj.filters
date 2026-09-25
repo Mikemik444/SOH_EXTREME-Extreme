@@ -3903,6 +3903,9 @@
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\SoulPortraitHQ.h">
       <Filter>soh\Enhancements\randomizer</Filter>
     </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\SoulPortraitTiles.h">
+      <Filter>soh\Enhancements\randomizer</Filter>
+    </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\Traps.h">
       <Filter>soh\Enhancements\randomizer</Filter>
     </ClInclude>

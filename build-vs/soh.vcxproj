@@ -687,6 +687,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="E:\test\bb\soh\Enhancements\randomizer\ShuffleTrees.cpp" />
     <ClCompile Include="E:\test\bb\soh\Enhancements\randomizer\ShuffleWonderItems.cpp" />
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\SoulPortraitHQ.h" />
+    <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\SoulPortraitTiles.h" />
     <ClCompile Include="E:\test\bb\soh\Enhancements\randomizer\Traps.cpp" />
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\Traps.h" />
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\bean_patches.h" />

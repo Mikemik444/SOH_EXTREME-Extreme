@@ -697,6 +697,7 @@ set(OLD_GLOB
   "soh/Enhancements/randomizer/ShuffleSilver.h"
   "soh/Enhancements/randomizer/ShuffleTradeItems.h"
   "soh/Enhancements/randomizer/SoulPortraitHQ.h"
+  "soh/Enhancements/randomizer/SoulPortraitTiles.h"
   "soh/Enhancements/randomizer/Traps.h"
   "soh/Enhancements/randomizer/bean_patches.h"
   "soh/Enhancements/randomizer/draw.h"
