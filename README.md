@@ -407,3 +407,4 @@ Compared to a more standard SoH or OoT randomizer setup, SOH-EXTREME stands out 
 SOH-EXTREME builds on the broader Ship of Harkinian and Archipelago ecosystems while introducing its own custom gameplay, logic, and client behavior.
 
 If you are browsing the repository, this README is intended as a high-level feature overview for the custom client and game logic contained here.
+"# SOH_EXTREME_APWORLD_FILE" 
