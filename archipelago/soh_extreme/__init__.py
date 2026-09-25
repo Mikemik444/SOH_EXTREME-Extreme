@@ -741,14 +741,14 @@ class SohExtremeLogicState(LogicMixin):
         # so every hook MUST return the copied state.
         return new_state
 
-    def _soh_invalidate(self, player):
+    def _soh_extreme_invalidate(self, player):
         self._soh_child_reachable_regions[player] = set()
         self._soh_adult_reachable_regions[player] = set()
         self._soh_child_blocked_regions[player] = set()
         self._soh_adult_blocked_regions[player] = set()
         self._soh_stale[player] = True
 
-    def _soh_update_age_reachable_regions(self, player):
+    def _soh_extreme_update_age_reachable_regions(self, player):
         """Vendored equivalent of stock SoH RegionAgeAccess.SohAgeLogic.
 
         Kept here so standalone SOH-EXTREME does not need to register the stock
@@ -788,7 +788,7 @@ class SohExtremeLogicState(LogicMixin):
 
         self._soh_age[player] = Ages.null
 
-    def _soh_can_reach_as_age(self, region, age, player):
+    def _soh_extreme_can_reach_as_age(self, region, age, player):
         # Match the stock SoH recursion guard.  Region rules themselves may ask
         # for an age while the breadth-first search is already evaluating one.
         if self._soh_age[player] == Ages.null:
@@ -1838,7 +1838,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 if state._soh_extreme_virtual_swim.get(self.player, False):
                     state._soh_extreme_virtual_swim[self.player] = False
                     state.remove(self.create_item("Swim", create_as_event=True))
-            state._soh_invalidate(self.player)
+            state._soh_extreme_invalidate(self.player)
             return changed
 
         if self.options.shuffle_grab.value and item.name in SOH_ITEM_ALIASES["Strength Upgrade"]:
@@ -1847,12 +1847,12 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             strength_name = _soh_item_name(self, "Strength Upgrade") or "Strength Upgrade"
             if state.has(strength_name, self.player):
                 changed = super().remove(state, item)
-                state._soh_invalidate(self.player)
+                state._soh_extreme_invalidate(self.player)
                 return changed
             if state._soh_extreme_virtual_grab.get(self.player, False):
                 state._soh_extreme_virtual_grab[self.player] = False
                 state.remove(self.create_item("Grab / Power Bracelet", create_as_event=True))
-                state._soh_invalidate(self.player)
+                state._soh_extreme_invalidate(self.player)
                 return True
 
         changed = super().remove(state, item)
@@ -1860,7 +1860,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             return False
         # Clearing only _soh_stale left previously reachable child/adult
         # regions accessible after an ability, song, or button was removed.
-        state._soh_invalidate(self.player)
+        state._soh_extreme_invalidate(self.player)
         if item.name == str(Items.HEART_CONTAINER):
             state.soh_heart_count[self.player] -= 1
         if item.name in (str(Items.PIECE_OF_HEART), str(Items.PIECE_OF_HEART_WINNER)):

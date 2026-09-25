@@ -291,7 +291,7 @@ def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"],
 
 
 @dataclasses.dataclass
-class CanAffordSlot(Rule, game="Ship of Harkinian"):
+class CanAffordSlot(Rule, game="SOH-EXTREME"):
     location: Locations
 
     def _instantiate(self, world: "SohWorld") -> Rule.Resolved: # type: ignore
@@ -362,7 +362,7 @@ def has_bottle(bundle: tuple[Regions, "SohWorld"]) -> Rule:  # soup
 
 #Exists just to make the bottle rule somewhat more understandable in explains
 @dataclasses.dataclass()
-class HasBottleCount(WrapperRule, game="Ship of Harkinian"):
+class HasBottleCount(WrapperRule, game="SOH-EXTREME"):
     count: int
 
     def _instantiate(self, world: World) -> Rule.Resolved:
@@ -499,7 +499,7 @@ def can_get_deku_baba_nuts(bundle: tuple[Regions, "SohWorld"]) -> Rule:
 
 
 @dataclasses.dataclass
-class IsAdult(Rule, game="Ship of Harkinian"):
+class IsAdult(Rule, game="SOH-EXTREME"):
     parent_region: Regions
 
     def _instantiate(self, world: "SohWorld") -> Rule.Resolved: # type: ignore
@@ -509,7 +509,7 @@ class IsAdult(Rule, game="Ship of Harkinian"):
         parent_region: Regions
         force_recalculate = True
         def _evaluate(self, state: CollectionState) -> bool:
-            return state._soh_can_reach_as_age(self.parent_region, Ages.ADULT, self.player) # type: ignore
+            return state._soh_extreme_can_reach_as_age(self.parent_region, Ages.ADULT, self.player) # type: ignore
 
         def item_dependencies(self) -> dict[str, set[int]]:
             return {}
@@ -541,7 +541,7 @@ class IsAdult(Rule, game="Ship of Harkinian"):
             return f"Can reach {str(self.parent_region)} as Adult Link"
 
 @dataclasses.dataclass
-class IsChild(Rule, game="Ship of Harkinian"):
+class IsChild(Rule, game="SOH-EXTREME"):
     parent_region: Regions
 
     def _instantiate(self, world: "SohWorld") -> Rule.Resolved: # type: ignore
@@ -551,7 +551,7 @@ class IsChild(Rule, game="Ship of Harkinian"):
         parent_region: Regions
         force_recalculate = True
         def _evaluate(self, state: CollectionState) -> bool:
-            return state._soh_can_reach_as_age(self.parent_region, Ages.CHILD, self.player) # type: ignore
+            return state._soh_extreme_can_reach_as_age(self.parent_region, Ages.CHILD, self.player) # type: ignore
 
         def item_dependencies(self) -> dict[str, set[int]]:
             return {}
@@ -1202,7 +1202,7 @@ def water_timer_at_least(bundle: tuple[Regions, "SohWorld"], amount: int) -> Rul
 
 
 @dataclasses.dataclass
-class HeartsAtLeast(Rule, game="Ship of Harkinian"):
+class HeartsAtLeast(Rule, game="SOH-EXTREME"):
     amount: int
     def _instantiate(self, world: World) -> Rule.Resolved:
         return self.Resolved(player=world.player, amount = self.amount, caching_enabled=getattr(world, "rule_caching_enabled", False))
@@ -1265,7 +1265,7 @@ def trade_quest_step(item: Items, bundle: tuple[Regions, "SohWorld"]) -> Rule:
         | Filtered(rule, options=[OptionFilter(ShuffleAdultTradeItems, True)])
 
 @dataclasses.dataclass
-class ItemsPlusGregEnough(Rule, game="Ship of Harkinian"):
+class ItemsPlusGregEnough(Rule, game="SOH-EXTREME"):
     target: FieldResolver
     item_tag: GroupTag | list[Events]   # todo figure out a way to change dungeon events to a tag as well
     greg: FieldResolver
@@ -1333,7 +1333,7 @@ def can_clear_stalagmite(bundle: tuple[Regions, "SohWorld"]):
 
 
 @dataclasses.dataclass
-class CanWinTriforceHunt(Rule, game="Ship of Harkinian"):
+class CanWinTriforceHunt(Rule, game="SOH-EXTREME"):
     def _instantiate(self, world: "SohWorld") -> Rule.Resolved: # type: ignore
         return self.Resolved(player = world.player, caching_enabled=getattr(world, "rule_caching_enabled", False))
 

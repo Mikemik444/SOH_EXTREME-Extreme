@@ -86,7 +86,7 @@ class SohRegionData(NamedTuple):
 
 
 class SohRegion(Region):
-    game = "Ship of Harkinian"
+    game = "SOH-EXTREME"
 
     def __init__(self, name: str, player: int, multiworld: MultiWorld, hint: str | None = None):
         super().__init__(name, player, multiworld, hint)
@@ -94,7 +94,7 @@ class SohRegion(Region):
     def can_reach(self, state) -> bool:
         if state._soh_stale[self.player]:
             stored_age = state._soh_age[self.player]
-            state._soh_update_age_reachable_regions(self.player)
+            state._soh_extreme_update_age_reachable_regions(self.player)
             state._soh_age[self.player] = stored_age
 
         if state._soh_age[self.player] == Ages.CHILD:

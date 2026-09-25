@@ -5,7 +5,7 @@ from .Enums import *
 
 
 class SohItem(Item):
-    game = "Ship of Harkinian"
+    game = "SOH-EXTREME"
 
 
 # for convenience for things like songs and magic

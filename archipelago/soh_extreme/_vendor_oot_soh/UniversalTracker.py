@@ -7,9 +7,9 @@ if TYPE_CHECKING:
 
 def setup_options_from_slot_data(world: "SohWorld") -> None:
     if hasattr(world.multiworld, "re_gen_passthrough"):
-        if "Ship of Harkinian" in world.multiworld.re_gen_passthrough:
+        if "SOH-EXTREME" in world.multiworld.re_gen_passthrough:
             world.using_ut = True
-            world.passthrough = world.multiworld.re_gen_passthrough["Ship of Harkinian"]
+            world.passthrough = world.multiworld.re_gen_passthrough["SOH-EXTREME"]
             world.options.closed_forest.value = world.passthrough["closed_forest"]
             world.options.kakariko_gate.value = world.passthrough["kakariko_gate"]
             world.options.door_of_time.value = world.passthrough["door_of_time"]

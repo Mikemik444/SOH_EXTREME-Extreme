@@ -257,7 +257,7 @@ def no_shop_shuffle(world: "SohWorld") -> None:
 
 def update_shop_prices(world: "SohWorld", new_prices: dict[Locations, int]) -> None:
     world.shop_prices.update(new_prices)
-    world.multiworld.state._soh_invalidate(world.player)
+    world.multiworld.state._soh_extreme_invalidate(world.player)
 
 def generate_prices(world: "SohWorld") -> None:
     if world.using_ut:

@@ -6,7 +6,7 @@ from .Enums import Locations, Ages, DungeonLocations
 
 
 class SohLocation(Location):
-    game = "Ship of Harkinian"
+    game = "SOH-EXTREME"
 
     def can_reach(self, state: CollectionState) -> bool:
         can_reach = False

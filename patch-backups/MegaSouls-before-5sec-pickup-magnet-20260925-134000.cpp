@@ -679,11 +679,6 @@ static SohExtreme::EnemySpawnKey EnemySpawnKeyFor(const Actor* actor) {
 struct EnemyDefeatDropIdentity {
     int32_t placementIndex = -1;
     int64_t locationId = -1;
-
-    // If the physical AP reward has not been collected after about five
-    // seconds, it becomes a pickup magnet and flies to Link.
-    uint16_t ageFrames = 0;
-    bool magnetizedToPlayer = false;
 };
 
 static ObjectExtension::Register<EnemyDefeatDropIdentity> gEnemyDefeatDropIdentityRegister;
@@ -1324,49 +1319,6 @@ static void RegisterMegaSouls() {
     COND_HOOK(OnActorUpdate, shouldRegister, [handleEnemyDeath](void* actorRef) {
         Actor* actor = static_cast<Actor*>(actorRef);
         if (actor == nullptr) return;
-
-        // Physical Enemy Defeat AP rewards get five seconds to behave normally.
-        // If Link has not collected one by then, magnetize it to the player.
-        auto* enemyPickup =
-            ObjectExtension::GetInstance().Get<EnemyDefeatDropIdentity>(actor);
-        if (enemyPickup != nullptr) {
-            if (enemyPickup->ageFrames < 0xFFFF) {
-                ++enemyPickup->ageFrames;
-            }
-
-            Player* player = gPlayState != nullptr ? GET_PLAYER(gPlayState) : nullptr;
-            if (enemyPickup->ageFrames >= 100 && player != nullptr &&
-                !Player_InCsMode(gPlayState)) {
-                enemyPickup->magnetizedToPlayer = true;
-            }
-
-            if (enemyPickup->magnetizedToPlayer && player != nullptr) {
-                actor->gravity = 0.0f;
-                actor->velocity.x = 0.0f;
-                actor->velocity.y = 0.0f;
-                actor->velocity.z = 0.0f;
-                actor->speedXZ = 0.0f;
-
-                const float targetX = player->actor.world.pos.x;
-                const float targetY = player->actor.world.pos.y + 20.0f;
-                const float targetZ = player->actor.world.pos.z;
-
-                Math_ApproachF(&actor->world.pos.x, targetX, 1.0f, 55.0f);
-                Math_ApproachF(&actor->world.pos.y, targetY, 1.0f, 55.0f);
-                Math_ApproachF(&actor->world.pos.z, targetZ, 1.0f, 55.0f);
-
-                const float dx = actor->world.pos.x - targetX;
-                const float dy = actor->world.pos.y - targetY;
-                const float dz = actor->world.pos.z - targetZ;
-                if ((dx * dx + dy * dy + dz * dz) <= (55.0f * 55.0f)) {
-                    actor->world.pos.x = targetX;
-                    actor->world.pos.y = targetY;
-                    actor->world.pos.z = targetZ;
-                }
-
-                actor->home.pos = actor->world.pos;
-            }
-        }
         if (IsPoeSisterIntroActor(actor) && IsMegaEnemySoulGone(actor)) HideGoneEnemy(actor);
         const auto* identity = ObjectExtension::GetInstance().Get<EnemyDefeatIdentity>(actor);
         if (identity != nullptr && identity->deathObserved && !identity->defeatHandled) handleEnemyDeath(actor);
