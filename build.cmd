@@ -3,7 +3,7 @@ setlocal EnableExtensions
 cd /d "%~dp0"
 
 echo ============================================================
-echo SOH-EXTREME 0.7.55 - SAFE BUILD
+echo SOH-EXTREME - SAFE BUILD + APWORLD SOURCE SYNC
 echo ============================================================
 echo.
 
@@ -18,7 +18,20 @@ if not exist "build-vs" (
     exit /b 1
 )
 
-echo [0/6] Installing/verifying official Archipelago item model assets...
+if not exist "archipelago\soh_extreme\__init__.py" (
+    echo ERROR: Canonical APWorld source was not found:
+    echo   %CD%\archipelago\soh_extreme\__init__.py
+    echo.
+    echo The source folder must be named archipelago, not arvhipelago.
+    exit /b 1
+)
+
+echo [0/7] Rebuilding and installing SOH-EXTREME APWorld from archipelago\...
+powershell -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\build_standalone_apworld.ps1" -ProjectRoot "%CD%"
+if errorlevel 1 goto :fail
+
+echo.
+echo [1/7] Installing/verifying official Archipelago item model assets...
 if exist ".\install_official_ap_model_assets.ps1" (
     powershell -NoProfile -ExecutionPolicy Bypass -File ".\install_official_ap_model_assets.ps1"
     if errorlevel 1 goto :fail
@@ -27,7 +40,7 @@ if exist ".\install_official_ap_model_assets.ps1" (
 )
 
 echo.
-echo [1/6] Rebuilding soh.o2r...
+echo [2/7] Rebuilding soh.o2r...
 echo NOTE: This stage intentionally uses one build worker.
 echo       CMake/FetchContent regeneration can otherwise launch overlapping
 echo       ZERO_CHECK projects and lock their .tlog files.
@@ -40,12 +53,12 @@ if not exist "%CD%\build-vs\soh\soh.o2r" (
 )
 
 echo.
-echo [2/6] Building the Release executable...
+echo [3/7] Building the Release executable...
 cmake --build build-vs --config Release --target soh --parallel 8
 if errorlevel 1 goto :fail
 
 echo.
-echo [3/6] Copying the fresh soh.o2r to runtime locations...
+echo [4/7] Copying the fresh soh.o2r to runtime locations...
 copy /Y "%CD%\build-vs\soh\soh.o2r" "%CD%\soh.o2r" >nul
 if errorlevel 1 goto :fail
 
@@ -65,13 +78,10 @@ if exist "%CD%\x64\Release" (
 )
 
 echo.
-echo [4/6] Copying the fresh executable to the source-root runtime...
+echo [5/7] Copying the fresh executable to the source-root runtime...
 set "FRESH_EXE="
 
-rem This is the output path used by the current SOH-EXTREME Visual Studio build.
 if exist "%CD%\x64\Release\soh.exe" set "FRESH_EXE=%CD%\x64\Release\soh.exe"
-
-rem Keep compatibility with alternate CMake output layouts.
 if not defined FRESH_EXE if exist "%CD%\build-vs\Release\soh.exe" set "FRESH_EXE=%CD%\build-vs\Release\soh.exe"
 if not defined FRESH_EXE if exist "%CD%\build-vs\soh\Release\soh.exe" set "FRESH_EXE=%CD%\build-vs\soh\Release\soh.exe"
 
@@ -87,22 +97,29 @@ if not defined FRESH_EXE (
 copy /Y "%FRESH_EXE%" "%CD%\soh.exe" >nul
 if errorlevel 1 goto :fail
 
-rem APCpp.dll is normally copied beside the executable by CMake.
-rem Mirror whichever fresh copy exists to the source root.
 if exist "%CD%\x64\Release\APCpp.dll" copy /Y "%CD%\x64\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
 if exist "%CD%\build-vs\Release\APCpp.dll" copy /Y "%CD%\build-vs\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
 if exist "%CD%\build-vs\soh\Release\APCpp.dll" copy /Y "%CD%\build-vs\soh\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
 
 echo.
-echo [5/6] Runtime verification...
+echo [6/7] Runtime/APWorld verification...
 for %%F in ("%FRESH_EXE%") do echo Fresh EXE: %%~fF  %%~zF bytes
 for %%F in ("%CD%\soh.exe") do echo Root  EXE: %%~fF  %%~zF bytes
 for %%F in ("%CD%\soh.o2r") do echo Root  O2R: %%~fF  %%~zF bytes
+for %%F in ("%CD%\soh_extreme.apworld") do echo APWorld: %%~fF  %%~zF bytes
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\build_standalone_apworld.ps1" -ProjectRoot "%CD%" -CheckOnly
+if errorlevel 1 goto :fail
 
 echo.
-echo [6/6] Done.
+echo [7/7] Done.
 echo ============================================================
 echo BUILD COMPLETE
+echo.
+echo IMPORTANT:
+echo   Restart Archipelago after this build.
+echo   Generate a NEW seed/room using the newly installed APWorld.
+echo.
 echo Launch: %CD%\soh.exe
 echo ============================================================
 exit /b 0

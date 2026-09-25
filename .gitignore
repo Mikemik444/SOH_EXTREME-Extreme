@@ -3,6 +3,7 @@ __pycache__/
 .pyc
 .DS_Store
 x64/
+soh/
 
 # Text editor remnants
 .vscode/

@@ -1,28 +1,6 @@
 {
-  "hotfix": "0.11.21b",
-  "apworld_version": "0.11.21 (unchanged)",
-  "apply_over": "0.11.21a",
-  "new_seed_required": false,
-  "new_assets_required": false,
-  "native_replacements": [
-    {
-      "path": "soh/Enhancements/ExtraTraps.cpp",
-      "base_archive": "soh_extreme_build(2).zip",
-      "base_sha256": "e0c8282d873b63958a5e7dc4c5b839209a29fa8f850219a4ef4608eadd5352d9",
-      "new_sha256": "5c7943a462705c11cfe4c6f965104d20e2832ae9c61311d8f9a28d55ff2f59da"
-    },
-    {
-      "path": "soh/Network/Archipelago/ArchipelagoClient.cpp",
-      "base_archive": "SOH-EXTREME-0.11.21a-apcpp-crash-hotfix.zip",
-      "base_sha256": "3402de351c59b110036132fcd9bd9f89f52cb03e9106019d91cc070a2b8db385",
-      "new_sha256": "b9b79fbbd5385c9785ec1c0a05d651af30b7f241608ddcf33d78b2cb5b5b67e9"
-    },
-    {
-      "path": "soh/SohGui/SohMenuEnhancements.cpp",
-      "base_archive": "soh_extreme_build(2).zip",
-      "base_sha256": "1c5d8220b729ab61afc39c3c1bdd7a8f1467ef22d2638e0933bef5d7db2ac2dc",
-      "new_sha256": "dcfcb4054ec51559337eddd84d56b0995c885000a600ac8d7e5525566927f709"
-    }
-  ],
-  "client_unrelated_content_unchanged": true
+  "README_APWORLD_SYNC_FIX.txt": "d32e5efdfceb64cc52b19dacf67444b05e0c3a62989af419ce8161123a711981",
+  "REBUILD_APWORLD_ONLY.cmd": "8b61c66f70cb05d005200b0ca620da13644aa214b45a60c3fd0069926c192608",
+  "build.cmd": "4b7f2c90bd9d0ab49b7451de325c328a7d2f8e6b7f82fe148fe53426f69a67fc",
+  "tools/build_standalone_apworld.ps1": "0fed4f28e8307381b2820f9ae051fd21340a9dd78a716fa4e416901465cb89ce"
 }

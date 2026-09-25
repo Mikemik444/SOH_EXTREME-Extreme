@@ -1,0 +1,10 @@
+{
+    "version":  "0.11.22",
+    "canonical_source":  "E:\\test\\bb\\archipelago",
+    "output":  "E:\\test\\bb\\soh_extreme.apworld",
+    "installed":  "C:\\ProgramData\\Archipelago\\custom_worlds\\soh_extreme.apworld",
+    "files":  99,
+    "source_archive_parity":  true,
+    "sha256":  "800df005c95edd8dfc444f441d5b7ce651774f2cf8d8e572b2dcd42e833343ae",
+    "checked_utc":  "2026-09-25T21:28:45.3432585Z"
+}
