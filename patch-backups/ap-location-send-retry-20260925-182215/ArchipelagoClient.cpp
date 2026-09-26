@@ -1,4 +1,4 @@
-﻿#include "ArchipelagoClient.h"
+#include "ArchipelagoClient.h"
 #include "TrackerWorkerConfig.h"
 
 static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<std::string, int64_t>& out);
@@ -859,7 +859,6 @@ void ArchipelagoClient::Enable() {
     scoutedLocations.clear();
     scoutedLocationNameIndex.clear();
     reportedLocations.clear();
-    pendingLocationReports.clear();
     activeLocations.clear();
     authoritativeLocationNameIndex.clear();
     locationNameMapLoaded = false;
@@ -3457,11 +3456,7 @@ void ArchipelagoClient::Update() {
     // APCpp tells us about locations already checked on the server. Remember those so
     // the periodic local reconciliation pass does not spam duplicate sends.
     for (int64_t loc : checked) {
-        const bool newlyConfirmed = reportedLocations.insert(loc).second;
-        pendingLocationReports.erase(loc);
-        if (newlyConfirmed) {
-            CheckTracker::NotifyArchipelagoLocationReported(loc);
-        }
+        reportedLocations.insert(loc);
         SPDLOG_DEBUG("[Archipelago] Server confirms location {} checked", loc);
     }
 
@@ -3500,16 +3495,9 @@ void ArchipelagoClient::Update() {
             RequestLocationScouts();
             SyncCollectedLocations();
         } else if (++syncFrameCounter >= 60) {
-            // Retry LocationChecks until the AP server confirms them.
+            // Roughly once per second at 60 FPS. SendLocation() deduplicates locations
+            // that the server/client already knows about.
             syncFrameCounter = 0;
-            if (!pendingLocationReports.empty()) {
-                std::vector<int64_t> retryLocations(pendingLocationReports.begin(),
-                                                    pendingLocationReports.end());
-                pendingLocationReports.clear();
-                for (int64_t locationId : retryLocations) {
-                    SendLocation(locationId, false);
-                }
-            }
             SyncCollectedLocations();
         }
 
@@ -3955,14 +3943,14 @@ void ArchipelagoClient::SendLocation(int64_t locationId, bool notifyRemote) {
         return;
     }
 
-    // reportedLocations means SERVER-CONFIRMED only. Never mark a location reported
-    // merely because we attempted to send it: a websocket disconnect between here and
-    // APCpp would otherwise permanently eat the check and reconciliation would skip it.
-    if (reportedLocations.find(locationId) != reportedLocations.end()) return;
+    // Location checks are idempotent on the AP server, but avoiding repeats makes the
+    // server log useful and prevents a per-frame flood during reconciliation.
+    if (!reportedLocations.insert(locationId).second) return;
 
-    // Keep only one outstanding attempt for a location. It remains pending until
-    // AP's checked-location callback confirms the LocationChecks packet.
-    if (!pendingLocationReports.insert(locationId).second) return;
+    // Synthetic AP-only tracker rows (NPC Speech and individual Enemy Defeats)
+    // have no native RandomizerCheck status to drive the normal tracker callback.
+    // Update their area counter immediately when the AP location is accepted.
+    CheckTracker::NotifyArchipelagoLocationReported(locationId);
 
     // A remote item is never received back through our ReceivedItems callback, so
     // the player needs feedback at the moment this location is checked.  Use the
@@ -3984,7 +3972,7 @@ void ArchipelagoClient::SendLocation(int64_t locationId, bool notifyRemote) {
         }
     }
 
-    SPDLOG_INFO("[Archipelago] Sending checked location {} (awaiting server confirmation)", locationId);
+    SPDLOG_INFO("[Archipelago] Sending checked location {}", locationId);
     AP_SendItem(locationId);
 }
 
@@ -4248,4 +4236,3 @@ extern "C" void Archipelago_InitSaveFile(void) {
     client.EndFileSelectActivation();
     SPDLOG_INFO("[Archipelago] Initialized new SOH-EXTREME save; AP replay/scout work deferred to gameplay");
 }
-

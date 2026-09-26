@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <atomic>
 #include <cstddef>
@@ -166,10 +166,7 @@ class ArchipelagoClient {
     // This is authoritative and decouples native RC checks from baked AP ids/names.
     std::unordered_map<std::string, int64_t> authoritativeLocationNameIndex;
     bool locationNameMapLoaded = false;
-    // Server-confirmed AP checks only.
     std::unordered_set<int64_t> reportedLocations;
-    // LocationChecks sent but not yet acknowledged by the AP server.
-    std::unordered_set<int64_t> pendingLocationReports;
     std::unordered_set<int64_t> activeLocations;
     std::unordered_map<std::string, int> slotSettings;
     std::unordered_map<int64_t, uint16_t> shopPrices;
@@ -225,4 +222,3 @@ class ArchipelagoClient {
     std::string saveSlot;
     std::string cachedSlotSettingsJson;
 };
-
