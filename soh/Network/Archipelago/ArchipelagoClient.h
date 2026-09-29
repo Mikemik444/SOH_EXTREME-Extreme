@@ -11,6 +11,7 @@
 #include <vector>
 #include "TrackerMirror.h"
 #include "TrackerWorker.h"
+#include "ArchipelagoSaveSnapshot.h"
 
 
 class ArchipelagoClient {
@@ -48,6 +49,10 @@ class ArchipelagoClient {
     bool PrepareCheckFinderMappings();
     bool IsLocationActive(int64_t locationId) const;
     bool IsLocationReported(int64_t locationId) const;
+    bool IsLocationSubmitted(int64_t locationId) const;
+    void LoadPendingLocations(const std::vector<int64_t>& locations);
+    // Game-thread only, paired with the engine's inventory snapshot.
+    ArchipelagoSaveSnapshot CaptureSaveSnapshot() const;
     size_t GetActiveLocationCount() const;
     size_t GetReportedActiveLocationCount() const;
     void ApplyScoutedPlacements();
@@ -85,6 +90,9 @@ class ArchipelagoClient {
     ArchipelagoClient& operator=(const ArchipelagoClient&) = delete;
 
     void BeginItemReplay();
+    void QueueSlotData(const std::string& key, const std::string& raw);
+    void DrainSlotData();
+    void UpdateGoal();
     void ResetFinderMirror();
     void ServiceFinderWorker();
     SohExtreme::TrackerWorker finderWorker;
@@ -95,6 +103,7 @@ class ArchipelagoClient {
     std::string finderWorkerError;
     SohExtreme::TrackerMirrorState finderMirror;
     std::string pendingFinderPayload;
+    std::string pendingFinderNonce;
     std::string finderMirrorError;
     double finderNextRequest = 0.0;
     void QueueItem(int64_t itemId, bool notify);
@@ -149,6 +158,8 @@ class ArchipelagoClient {
 
     std::atomic<bool> enabled{ false };
     std::mutex queueMutex;
+    // Callback-owned mailbox. Live settings/maps below belong to the game thread.
+    std::unordered_map<std::string, std::string> pendingSlotData;
     std::deque<PendingItem> pendingItems;
     std::deque<int64_t> pendingCheckedLocations;
     std::deque<PendingScout> pendingScouts;
@@ -184,7 +195,9 @@ class ArchipelagoClient {
     bool lastPlayerAlive = true;
     bool suppressNextDeathLinkSend = false;
     size_t expectedScoutCount = 0;
+    double nextScoutRequest = 0.0;
     bool wasAuthenticated = false;
+    bool goalReported = false;
     uint32_t syncFrameCounter = 0;
     bool scoutsRequested = false;
     // Scene-local gameplay never needs every RC mapped. Check Finder does, but only

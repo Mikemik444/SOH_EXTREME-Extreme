@@ -12,7 +12,7 @@
 #include "soh/SohGui/SohGui.hpp"
 #include "soh/Network/Archipelago/ArchipelagoClient.h"
 
-static thread_local bool gSavingArchipelagoSnapshot = false;
+static thread_local const ArchipelagoSaveSnapshot* gSavingArchipelagoSnapshot = nullptr;
 
 extern "C" {
 #include "z64.h"
@@ -313,6 +313,16 @@ void SaveManager::LoadRandomizer() {
     ArchipelagoClient::GetInstance().LoadSaveMetadata(archipelagoSave, archipelagoReceivedItemCount,
                                                        archipelagoServer, archipelagoSlot, archipelagoSettingsJson);
     ArchipelagoClient::GetInstance().LoadFallbackNpcSpeechHashes(archipelagoFallbackNpcSpeechHashes);
+    size_t pendingLocationCount = 0;
+    std::vector<int64_t> pendingLocations;
+    SaveManager::Instance->LoadData("archipelagoPendingLocationCount", pendingLocationCount, (size_t)0);
+    pendingLocationCount = std::min(pendingLocationCount, size_t{50000});
+    SaveManager::Instance->LoadArray("archipelagoPendingLocations", pendingLocationCount, [&](size_t) {
+        int64_t id = 0;
+        SaveManager::Instance->LoadData("", id, int64_t{0});
+        if (id > 0) pendingLocations.push_back(id);
+    });
+    ArchipelagoClient::GetInstance().LoadPendingLocations(pendingLocations);
 
     std::shared_ptr<Randomizer> randomizer = OTRGlobals::Instance->gRandomizer;
 
@@ -346,8 +356,7 @@ void SaveManager::SaveRandomizer(SaveContext* saveContext, int sectionID, bool f
     }
 
     auto randoContext = Rando::Context::GetInstance();
-    auto& archipelago = ArchipelagoClient::GetInstance();
-    const bool lightweightArchipelagoSave = gSavingArchipelagoSnapshot;
+    const bool lightweightArchipelagoSave = gSavingArchipelagoSnapshot != nullptr && gSavingArchipelagoSnapshot->active;
 
     if (lightweightArchipelagoSave) {
         // Archipelago is authoritative for placement/model/price data.  Writing
@@ -519,18 +528,23 @@ void SaveManager::SaveRandomizer(SaveContext* saveContext, int sectionID, bool f
 
     SaveManager::Instance->SaveData("pendingIceTrapCount", saveContext->ship.pendingIceTrapCount);
 
-    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 2);
+    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 3);
     SaveManager::Instance->SaveData("archipelagoSave", lightweightArchipelagoSave);
     if (lightweightArchipelagoSave) {
-        SaveManager::Instance->SaveData("archipelagoReceivedItemCount", archipelago.GetAppliedItemCount());
-        SaveManager::Instance->SaveData("archipelagoServer", archipelago.GetSaveServer());
-        SaveManager::Instance->SaveData("archipelagoSlot", archipelago.GetSaveSlot());
+        const auto& archipelago = *gSavingArchipelagoSnapshot;
+        SaveManager::Instance->SaveData("archipelagoReceivedItemCount", archipelago.receivedItemCount);
+        SaveManager::Instance->SaveData("archipelagoServer", archipelago.server);
+        SaveManager::Instance->SaveData("archipelagoSlot", archipelago.slot);
         // Persist the exact flat gRando.Settings snapshot delivered by this AP slot.
         // It is restored before scene actor initialization on the next load, eliminating
         // the race where local menu values were visible until networking finished.
-        SaveManager::Instance->SaveData("archipelagoSettingsJson", archipelago.GetCachedSlotSettingsJson());
+        SaveManager::Instance->SaveData("archipelagoSettingsJson", archipelago.settingsJson);
 
-        const auto fallbackNpcSpeechHashes = archipelago.GetFallbackNpcSpeechHashes();
+        SaveManager::Instance->SaveData("archipelagoPendingLocationCount", archipelago.pendingLocations.size());
+        SaveManager::Instance->SaveArray("archipelagoPendingLocations", archipelago.pendingLocations.size(),
+            [&](size_t i) { SaveManager::Instance->SaveData("", archipelago.pendingLocations[i]); });
+
+        const auto fallbackNpcSpeechHashes = archipelago.fallbackNpcSpeechHashes;
         SaveManager::Instance->SaveData("archipelagoFallbackNpcSpeechCount", fallbackNpcSpeechHashes.size());
         SaveManager::Instance->SaveArray("archipelagoFallbackNpcSpeechHashes", fallbackNpcSpeechHashes.size(),
                                          [&](size_t i) {
@@ -1341,13 +1355,13 @@ int copy_file(const char* src, const char* dst) {
 
 // Threaded SaveFile takes copy of gSaveContext for local unmodified storage
 
-void SaveManager::SaveFileThreaded(int fileNum, SaveContext* saveContext, int sectionID, bool archipelagoSaveSnapshot) {
+void SaveManager::SaveFileThreaded(int fileNum, SaveContext* saveContext, int sectionID, ArchipelagoSaveSnapshot archipelagoSaveSnapshot) {
     saveMtx.lock();
-    gSavingArchipelagoSnapshot = archipelagoSaveSnapshot;
+    gSavingArchipelagoSnapshot = &archipelagoSaveSnapshot;
     SPDLOG_INFO("Save File - fileNum: {}", fileNum);
     // Needed for first time save, hasn't changed in forever anyway
     saveBlock["version"] = 1;
-    if (IS_RANDO) {
+    if (saveContext->ship.quest.id == QUEST_RANDOMIZER) {
         saveBlock["fileType"] = FILE_TYPE_SAVE_RANDO;
     } else {
         saveBlock["fileType"] = FILE_TYPE_SAVE_VANILLA;
@@ -1399,7 +1413,7 @@ void SaveManager::SaveFileThreaded(int fileNum, SaveContext* saveContext, int se
     fclose(w);
 #else
     std::ofstream output(tempFile);
-    if (archipelagoSaveSnapshot) {
+    if (archipelagoSaveSnapshot.active) {
         // AP saves intentionally omit the huge native placement/hint payload,
         // so compact JSON keeps the remaining synchronous lifecycle wait tiny.
         output << saveBlock.dump() << '\n';
@@ -1425,7 +1439,7 @@ void SaveManager::SaveFileThreaded(int fileNum, SaveContext* saveContext, int se
     InitMeta(fileNum);
     GameInteractor::Instance->ExecuteHooks<GameInteractor::OnSaveFile>(fileNum, sectionID);
     SPDLOG_INFO("Save File Finish - fileNum: {}", fileNum);
-    gSavingArchipelagoSnapshot = false;
+    gSavingArchipelagoSnapshot = nullptr;
     saveMtx.unlock();
 }
 
@@ -1444,12 +1458,11 @@ void SaveManager::SaveSection(int fileNum, int sectionID, bool threaded) {
     auto saveContext = new SaveContext;
     memcpy(saveContext, &gSaveContext, sizeof(gSaveContext));
 
-    // Capture AP ownership on the calling/gameplay thread.  Do not ask the live
-    // Archipelago client from the worker after Reset/file-select has started
-    // changing session state.
-    const bool archipelagoSaveSnapshot =
-        saveContext->ship.quest.id == QUEST_RANDOMIZER &&
-        ArchipelagoClient::GetInstance().IsCurrentSaveArchipelago();
+    // Capture ALL AP persistence fields beside inventory on the game thread.
+    // The worker owns this value even if another receipt or save load happens.
+    auto archipelagoSaveSnapshot = ArchipelagoClient::GetInstance().CaptureSaveSnapshot();
+    archipelagoSaveSnapshot.active = archipelagoSaveSnapshot.active &&
+        saveContext->ship.quest.id == QUEST_RANDOMIZER;
 
     if (threaded) {
         smThreadPool->detach_task(

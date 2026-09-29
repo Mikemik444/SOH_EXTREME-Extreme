@@ -79,32 +79,13 @@ if exist "%CD%\x64\Release" (
 
 echo.
 echo [5/7] Copying the fresh executable to the source-root runtime...
-set "FRESH_EXE="
-
-if exist "%CD%\x64\Release\soh.exe" set "FRESH_EXE=%CD%\x64\Release\soh.exe"
-if not defined FRESH_EXE if exist "%CD%\build-vs\Release\soh.exe" set "FRESH_EXE=%CD%\build-vs\Release\soh.exe"
-if not defined FRESH_EXE if exist "%CD%\build-vs\soh\Release\soh.exe" set "FRESH_EXE=%CD%\build-vs\soh\Release\soh.exe"
-
-if not defined FRESH_EXE (
-    echo ERROR: Could not find the newly built soh.exe.
-    echo Checked:
-    echo   %CD%\x64\Release\soh.exe
-    echo   %CD%\build-vs\Release\soh.exe
-    echo   %CD%\build-vs\soh\Release\soh.exe
-    goto :fail
-)
-
-copy /Y "%FRESH_EXE%" "%CD%\soh.exe" >nul
+powershell -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\copy_ap_runtime.ps1" -ProjectRoot "%CD%"
 if errorlevel 1 goto :fail
-
-if exist "%CD%\x64\Release\APCpp.dll" copy /Y "%CD%\x64\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
-if exist "%CD%\build-vs\Release\APCpp.dll" copy /Y "%CD%\build-vs\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
-if exist "%CD%\build-vs\soh\Release\APCpp.dll" copy /Y "%CD%\build-vs\soh\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
 
 echo.
 echo [6/7] Runtime/APWorld verification...
-for %%F in ("%FRESH_EXE%") do echo Fresh EXE: %%~fF  %%~zF bytes
 for %%F in ("%CD%\soh.exe") do echo Root  EXE: %%~fF  %%~zF bytes
+for %%F in ("%CD%\APCpp.dll") do echo Root  DLL: %%~fF  %%~zF bytes
 for %%F in ("%CD%\soh.o2r") do echo Root  O2R: %%~fF  %%~zF bytes
 for %%F in ("%CD%\soh_extreme.apworld") do echo APWorld: %%~fF  %%~zF bytes
 
@@ -118,7 +99,8 @@ echo BUILD COMPLETE
 echo.
 echo IMPORTANT:
 echo   Restart Archipelago after this build.
-echo   Generate a NEW seed/room using the newly installed APWorld.
+echo   These client fixes work with existing compatible seeds and saves.
+echo   New APWorld generation settings apply when generating a new seed.
 echo.
 echo Launch: %CD%\soh.exe
 echo ============================================================

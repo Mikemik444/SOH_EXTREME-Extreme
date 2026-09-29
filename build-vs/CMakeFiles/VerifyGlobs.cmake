@@ -760,6 +760,7 @@ set(OLD_GLOB
   "soh/Network/Archipelago/ArchipelagoAssets.h"
   "soh/Network/Archipelago/ArchipelagoC.h"
   "soh/Network/Archipelago/ArchipelagoClient.h"
+  "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h"
   "soh/Network/Archipelago/TrackerMirror.h"
   "soh/Network/Archipelago/TrackerRegions.h"
   "soh/Network/Archipelago/TrackerWorker.h"

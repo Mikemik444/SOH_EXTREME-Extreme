@@ -29,6 +29,8 @@ bool Archipelago_PrepareCheckFinderMappings(void);
 // AP-only/synthetic location helpers used by Check Finder (NPC Speech, etc.).
 bool Archipelago_IsLocationActive(int64_t locationId);
 bool Archipelago_IsLocationReported(int64_t locationId);
+// Accepted into this save's retry queue, or confirmed by the server.
+bool Archipelago_IsLocationSubmitted(int64_t locationId);
 uint32_t Archipelago_GetActiveLocationCount(void);
 uint32_t Archipelago_GetReportedActiveLocationCount(void);
 // Resolve/apply AP placements only for checks belonging to one scene.

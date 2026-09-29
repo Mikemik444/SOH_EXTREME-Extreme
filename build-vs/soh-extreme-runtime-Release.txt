@@ -1,0 +1,2 @@
+E:/test/bb/x64/Release/soh.exe
+E:/test/bb/build-vs/_deps/apcpp-build/Release/APCpp.dll

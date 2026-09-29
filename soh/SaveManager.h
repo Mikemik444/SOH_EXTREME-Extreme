@@ -58,6 +58,7 @@ typedef enum {
 #include <BS_thread_pool.hpp>
 
 #include <nlohmann/json.hpp>
+#include "Network/Archipelago/ArchipelagoSaveSnapshot.h"
 
 class SaveManager {
   public:
@@ -162,7 +163,8 @@ class SaveManager {
     void ConvertFromUnversioned();
     void CreateDefaultGlobal();
 
-    void SaveFileThreaded(int fileNum, SaveContext* saveContext, int sectionID, bool archipelagoSaveSnapshot);
+    void SaveFileThreaded(int fileNum, SaveContext* saveContext, int sectionID,
+                          ArchipelagoSaveSnapshot archipelagoSaveSnapshot);
 
     void InitMeta(int slotNum);
     void StartupCheckAndInitMeta(int slotNum);

@@ -324,6 +324,7 @@ if(NOT CMAKE_SYSTEM_NAME MATCHES "NintendoSwitch|CafeOS")
         GIT_SUBMODULES_RECURSE TRUE
     )
     FetchContent_MakeAvailable(apcpp)
+    include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeAPCppSafety.cmake")
     # APCpp currently declares C++17 globally; restore Ship's standard for targets declared below.
     set(CMAKE_CXX_STANDARD 20)
 endif()

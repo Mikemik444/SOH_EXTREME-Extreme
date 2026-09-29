@@ -4992,6 +4992,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         if data["triforce_hunt"]:
             cv("ShuffleWincon", 7)  # RO_WINCON_TRIFORCE_PIECES
             cv("WinconTriforceCount", data["triforce_hunt_pieces_required"])
+        else:
+            cv("ShuffleWincon", 0)  # Do not inherit a previous Triforce Hunt file.
+            cv("WinconTriforceCount", 0)
         cv("ShuffleSongs", data["shuffle_songs"])
         cv("ShuffleTokens", data["shuffle_skull_tokens"])
         cv("GsExpectSunsSong", data["skulls_sun_song"])
@@ -5037,6 +5040,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         cv("ShopsanityPriceRange2", data["shuffle_shops_maximum_price"])
         cv("ShopsanityPricesAffordable", data["shop_affordable_prices"])
         cv("Fishsanity", {0: 0, 1: 2, 2: 3, 3: 4}.get(data["shuffle_fish"], 0))
+        # Native count 17 selects physical fish identities instead of sequential
+        # catches. AP's active manifest includes 15 fish per age, excluding loaches.
+        pond_fish = data["shuffle_fish"] in (1, 3)
+        cv("FishsanityPondCount", 17 if pond_fish else 0)
+        cv("FishsanityAgeSplit", int(pond_fish))
         cv("ShuffleScrubs", data["shuffle_scrubs"])
         cv("ScrubsPrices", 5 if data["scrub_affordable_prices"] else 4)
         cv("ScrubsPriceRange1", data["shuffle_scrubs_minimum_price"])

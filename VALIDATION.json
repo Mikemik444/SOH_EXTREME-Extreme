@@ -1,0 +1,64 @@
+{
+  "repository": "https://github.com/Mikemik444/SOH_EXTREME-Extreme",
+  "base_commit": "9bc10e7191b546754a50da6463e074276d33862f",
+  "build": "Windows x64 Release, MSVC 2022",
+  "tests": [
+    {
+      "name": "ap_rewards",
+      "passed": true
+    },
+    {
+      "name": "ap_mailbox_and_replay",
+      "passed": true
+    },
+    {
+      "name": "ap_goal",
+      "passed": true
+    },
+    {
+      "name": "pond_checks",
+      "passed": true
+    },
+    {
+      "name": "enemy_finder_option",
+      "passed": true
+    },
+    {
+      "name": "ap_receive_safety",
+      "passed": true
+    },
+    {
+      "name": "apcpp_message_queue",
+      "passed": true
+    },
+    {
+      "name": "AP fish and goal slot settings: 8 combinations",
+      "passed": true
+    },
+    {
+      "name": "AP Triforce percentage: 50 combinations",
+      "passed": true
+    }
+  ],
+  "apworld_files_verified": 101,
+  "apcpp_windows_loader": "passed",
+  "limits": [
+    "No connected in-game AP playthrough",
+    "Original intermittent crash not reproduced"
+  ],
+  "source_sha256": {
+    "CMakeLists.txt": "f007a4ce1c044796088ac419c81194c1241339cf92de2447f6dd5a46c11a9cc6",
+    "Cmake/SohExtremeAPCppSafety.cmake": "80446f6746a98e1529dd9b143d2112551d3047e070e901696e5ad823f3b9e0dc",
+    "archipelago/soh_extreme/__init__.py": "a1af25ef0d5d08c171252d3a9a1807c5083ea21041c3d609c529df73fccaf4b5",
+    "soh/Enhancements/randomizer/fishsanity.cpp": "3d2aae28dcf35b924fe8f5db651e43784f3d551191cb1b3bf7b0e01c5b411c84",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "7a7b092efa2fa6664d6b31f1708104443cbf0a1888c31ab6014150498db22166",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "892869236bc0e8e097cbf3a1efbfa637180d5b4fb16ee2f8b74447489a1f7f19",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "b36a8a83d70776367ba86a02d7a397d8d90faab7a57d2d8e2101869b328142b2",
+    "validation/test_ap_gameplay_fixes.py": "b35ff5ebde13d1ab09a5187fb181ba88930301bf4b53bbf5506aa7b0407f85d7"
+  },
+  "runtime_sha256": {
+    "soh.exe": "09736e73261053c4f06fc243e9ba56405a4acf8ac54c55f132c56eea53984e6a",
+    "APCpp.dll": "32252ea9497fcb1d0233d7555c5548c03c929c63cffaa1f8cd92dad14cf274af"
+  },
+  "apworld_sha256": "f6252242d5c5671869863904dccfd0247346f0272e4467385b132e44063fc333"
+}

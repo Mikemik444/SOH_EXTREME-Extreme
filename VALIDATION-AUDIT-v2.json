@@ -1,0 +1,422 @@
+{
+  "repository": "https://github.com/Mikemik444/SOH_EXTREME-Extreme",
+  "base_commit": "9bc10e7191b546754a50da6463e074276d33862f",
+  "release": "AP Audit v2",
+  "build": "Windows x64 Release; MSVC 2022; successful",
+  "source_files": [
+    "CMakeLists.txt",
+    "Cmake/SohExtremeAPCppSafety.cmake",
+    "archipelago/soh_extreme/__init__.py",
+    "build.cmd",
+    "soh/Enhancements/randomizer/MegaSouls.cpp",
+    "soh/Enhancements/randomizer/fishsanity.cpp",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp",
+    "soh/Network/Archipelago/ArchipelagoC.h",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp",
+    "soh/Network/Archipelago/ArchipelagoClient.h",
+    "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h",
+    "soh/SaveManager.cpp",
+    "soh/SaveManager.h",
+    "tools/build_standalone_apworld.ps1",
+    "tools/copy_ap_runtime.ps1",
+    "validation/test_ap_delivery_audit.py",
+    "validation/test_ap_gameplay_fixes.py"
+  ],
+  "focused_suites": [
+    {
+      "name": "ap_rewards",
+      "passed": true
+    },
+    {
+      "name": "ap_mailbox_and_replay",
+      "passed": true
+    },
+    {
+      "name": "ap_goal",
+      "passed": true
+    },
+    {
+      "name": "pond_checks",
+      "passed": true
+    },
+    {
+      "name": "enemy_finder_option",
+      "passed": true
+    },
+    {
+      "name": "ap_receive_safety",
+      "passed": true
+    },
+    {
+      "name": "apcpp_message_queue",
+      "passed": true
+    },
+    {
+      "name": "AP fish and goal slot settings: 8 combinations",
+      "passed": true
+    },
+    {
+      "name": "AP Triforce percentage: 50 combinations",
+      "passed": true
+    },
+    {
+      "name": "location_delivery_and_isolation",
+      "passed": true
+    },
+    {
+      "name": "partial_scout_recovery",
+      "passed": true
+    },
+    {
+      "name": "save_snapshot_consistency",
+      "passed": true
+    },
+    {
+      "name": "major_receipt_identity",
+      "passed": true
+    },
+    {
+      "name": "AP save/receipt/enemy integration boundaries",
+      "passed": true
+    }
+  ],
+  "tracker_transport_tests": {
+    "passed": true,
+    "count": 11,
+    "scope": "Controlled host; no live server"
+  },
+  "logic_suites": {
+    "reported": {
+      "passed": true,
+      "assertions": 13398
+    },
+    "enemy_rooms": {
+      "passed": true,
+      "assertions": 2485
+    },
+    "capabilities": {
+      "passed": true,
+      "assertions": 103
+    },
+    "locations": {
+      "passed": true,
+      "assertions": 284
+    },
+    "ut": {
+      "passed": true,
+      "assertions": 29
+    },
+    "fishing": {
+      "passed": true,
+      "assertions": 251
+    }
+  },
+  "ut_reachability_comparisons": 70490,
+  "logic_environment": {
+    "archipelago": "0.6.7",
+    "commit": "debe4cf035c7c15efe6fb95f72343af0d420c68c",
+    "dependencies": "Normal AP dependencies",
+    "fixture_adaptations": [
+      "Current world version 0.11.22 expected",
+      "All-inventory check in old location suite restricted to actual network locations, excluding optional virtual action/event nodes"
+    ]
+  },
+  "generations": {
+    "baseline": {
+      "seed": 290901,
+      "players": 1,
+      "overrides": {},
+      "passed": true,
+      "harness": "AP 0.6.7 core with normal dependencies",
+      "locations": 3705,
+      "network_locations": 3258,
+      "pool": 3253,
+      "all_state_blocked": [],
+      "resolved_world_options": {
+        "1": {
+          "frozen_starting_time": 2,
+          "boss_key_shuffle": "own_dungeon",
+          "triforce_hunt": 1
+        }
+      },
+      "sphere_sizes": [
+        37,
+        16,
+        27,
+        59,
+        36,
+        212,
+        176,
+        73,
+        157,
+        44,
+        31,
+        11,
+        83,
+        10,
+        9,
+        11,
+        35,
+        20,
+        34,
+        71,
+        65,
+        82,
+        44,
+        37,
+        3,
+        1,
+        6,
+        7,
+        42,
+        79,
+        335,
+        230,
+        185,
+        155,
+        76,
+        26,
+        31,
+        120,
+        221,
+        206,
+        209,
+        123,
+        99,
+        75,
+        51,
+        20,
+        11,
+        7,
+        1,
+        5,
+        1
+      ],
+      "replay_blocked": [],
+      "beatable": true,
+      "seconds": 32.938
+    },
+    "two-player-off": {
+      "seed": 290902,
+      "players": 2,
+      "overrides": {
+        "shuffle_enemy_drops": false,
+        "npc_speech_sanity": false,
+        "triforce_hunt": false,
+        "shuffle_fish": "off"
+      },
+      "passed": true,
+      "harness": "AP 0.6.7 core with normal dependencies",
+      "locations": 5590,
+      "network_locations": 4694,
+      "pool": 4682,
+      "all_state_blocked": [],
+      "resolved_world_options": {
+        "1": {
+          "frozen_starting_time": 2,
+          "boss_key_shuffle": "own_dungeon",
+          "triforce_hunt": 0
+        },
+        "2": {
+          "frozen_starting_time": 2,
+          "boss_key_shuffle": "own_dungeon",
+          "triforce_hunt": 0
+        }
+      },
+      "sphere_sizes": [
+        74,
+        13,
+        32,
+        58,
+        117,
+        71,
+        212,
+        103,
+        46,
+        54,
+        123,
+        120,
+        54,
+        9,
+        148,
+        148,
+        23,
+        6,
+        3,
+        1,
+        6,
+        6,
+        10,
+        34,
+        58,
+        62,
+        84,
+        46,
+        274,
+        240,
+        216,
+        265,
+        582,
+        322,
+        209,
+        117,
+        227,
+        98,
+        148,
+        207,
+        108,
+        39,
+        28,
+        152,
+        99,
+        177,
+        139,
+        69,
+        24,
+        11,
+        36,
+        64,
+        12,
+        5,
+        1
+      ],
+      "replay_blocked": [],
+      "beatable": true,
+      "seconds": 32.813
+    },
+    "pond-percentage": {
+      "seed": 290903,
+      "players": 1,
+      "overrides": {
+        "shuffle_fish": "pond",
+        "triforce_hunt": true,
+        "triforce_hunt_pieces_total": 100,
+        "triforce_hunt_pieces_required_percentage": 50
+      },
+      "passed": true,
+      "harness": "AP 0.6.7 core with normal dependencies",
+      "locations": 3691,
+      "network_locations": 3244,
+      "pool": 3239,
+      "all_state_blocked": [],
+      "resolved_world_options": {
+        "1": {
+          "frozen_starting_time": 2,
+          "boss_key_shuffle": "own_dungeon",
+          "triforce_hunt": 1
+        }
+      },
+      "sphere_sizes": [
+        37,
+        13,
+        28,
+        16,
+        11,
+        116,
+        160,
+        198,
+        64,
+        94,
+        60,
+        130,
+        111,
+        54,
+        53,
+        39,
+        3,
+        7,
+        5,
+        182,
+        111,
+        33,
+        110,
+        214,
+        128,
+        38,
+        20,
+        7,
+        2,
+        6,
+        10,
+        20,
+        50,
+        12,
+        11,
+        45,
+        70,
+        102,
+        238,
+        226,
+        287,
+        222,
+        74,
+        61,
+        46,
+        68,
+        86,
+        13
+      ],
+      "replay_blocked": [],
+      "beatable": true,
+      "seconds": 24.219
+    }
+  },
+  "runtime_copy_tests": [
+    {
+      "name": "copies exact rebuilt EXE and DLL with matching SHA256",
+      "passed": true
+    },
+    {
+      "name": "missing DLL rejects pair before replacing EXE",
+      "passed": true
+    },
+    {
+      "name": "malformed manifest rejected",
+      "passed": true
+    },
+    {
+      "name": "missing manifest rejected without fallback to stale DLL",
+      "passed": true
+    }
+  ],
+  "apworld_sync": {
+    "passed": true,
+    "files": 99,
+    "install_parity_and_idempotence": true,
+    "scope": "Isolated fake AP installation; user installation untouched"
+  },
+  "apworld_files_verified": 101,
+  "apcpp_windows_loader": "passed",
+  "limits": [
+    "No connected in-game AP playthrough",
+    "Original intermittent crash not reproduced"
+  ],
+  "source_sha256": {
+    "CMakeLists.txt": "f007a4ce1c044796088ac419c81194c1241339cf92de2447f6dd5a46c11a9cc6",
+    "Cmake/SohExtremeAPCppSafety.cmake": "80446f6746a98e1529dd9b143d2112551d3047e070e901696e5ad823f3b9e0dc",
+    "archipelago/soh_extreme/__init__.py": "a1af25ef0d5d08c171252d3a9a1807c5083ea21041c3d609c529df73fccaf4b5",
+    "build.cmd": "d2b29f27315bf407c45a839134617bece63e564601f390b42dacdb13c7fac74e",
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "0a5dc3be8725457cc78769d6cd3f0ffdaab3a794ed457e448056af8b32f1cce7",
+    "soh/Enhancements/randomizer/fishsanity.cpp": "3d2aae28dcf35b924fe8f5db651e43784f3d551191cb1b3bf7b0e01c5b411c84",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "7a7b092efa2fa6664d6b31f1708104443cbf0a1888c31ab6014150498db22166",
+    "soh/Network/Archipelago/ArchipelagoC.h": "f7c0b76e4b9d413d22ae169d6abd146bef1d05858519ff17c01cc26d7b2eae7c",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "8d7d147fa917ebb9ecdd304beb532c401d1db42728c1f12ef9d1012fe010fd17",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "2b032acc38b6145b8e391e7c94ea3570b3f81d58cb95ca0e6538b609a4309c8d",
+    "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h": "c86c60a0570467b26019b191a8a25791cb55eb971a120d18b0700cd05fec1ffb",
+    "soh/SaveManager.cpp": "85ff9bedb3864ad9eb849f198f92ded5e35840641358a026a3c5b57d499d2aa4",
+    "soh/SaveManager.h": "fc915f7516d36959d5a5674219e01d27b3c68543f43ed8bd1ac2d0d853edaa6e",
+    "tools/build_standalone_apworld.ps1": "ab541722e396a515cc1a9050058dbc6ca169a61acee3d0dc398f9d4f6dda2e26",
+    "tools/copy_ap_runtime.ps1": "fa25848bf6eaa69b6036c6b3861a1daf593d7a16f503da90fac773c6be09ec72",
+    "validation/test_ap_delivery_audit.py": "29bfd2f27a3770ca5f675bb87250016e8ad3290cf172b6519db5547d3972edfb",
+    "validation/test_ap_gameplay_fixes.py": "b35ff5ebde13d1ab09a5187fb181ba88930301bf4b53bbf5506aa7b0407f85d7"
+  },
+  "runtime_sha256": {
+    "soh.exe": "15697465959fd8ed6e390cba641e8c962342480a481fbfcce60256dba67b2681",
+    "APCpp.dll": "32252ea9497fcb1d0233d7555c5548c03c929c63cffaa1f8cd92dad14cf274af"
+  },
+  "apworld_sha256": "8d5c19a6afd6c3e933b7682c288d67c7c4f95bdda68341d6afefc083fc52a0a9",
+  "source_patch_checks": [
+    "Reverse application against fixed source passed",
+    "Forward application against base commit passed (isolated index)"
+  ]
+}

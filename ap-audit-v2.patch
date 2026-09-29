@@ -1,0 +1,2300 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index debca8e2..898cd64b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -324,6 +324,7 @@ if(NOT CMAKE_SYSTEM_NAME MATCHES "NintendoSwitch|CafeOS")
+         GIT_SUBMODULES_RECURSE TRUE
+     )
+     FetchContent_MakeAvailable(apcpp)
++    include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeAPCppSafety.cmake")
+     # APCpp currently declares C++17 globally; restore Ship's standard for targets declared below.
+     set(CMAKE_CXX_STANDARD 20)
+ endif()
+diff --git a/Cmake/SohExtremeAPCppSafety.cmake b/Cmake/SohExtremeAPCppSafety.cmake
+index 92da082e..77c61533 100644
+--- a/Cmake/SohExtremeAPCppSafety.cmake
++++ b/Cmake/SohExtremeAPCppSafety.cmake
+@@ -42,6 +42,60 @@ function(soh_extreme_repair_apcpp source_dir)
+         endif()
+     endif()
+ 
++    # One websocket producer and one game-thread consumer share messageQueue.
++    # Even push_back vs pop_front/empty is undefined without synchronization.
++    set(queue_marker "SOH-EXTREME synchronized AP message queue")
++    string(FIND "${main}" "${queue_marker}" queue_fixed)
++    if(queue_fixed EQUAL -1)
++        set(old_queue [=[bool AP_IsMessagePending() {
++    return !messageQueue.empty();
++}
++
++AP_Message* AP_GetLatestMessage() {
++    return messageQueue.front();
++}
++
++void AP_ClearLatestMessage() {
++    if (AP_IsMessagePending()) {
++        delete messageQueue.front();
++        messageQueue.pop_front();
++    }
++}]=])
++        set(new_queue [=[bool AP_IsMessagePending() {
++    std::lock_guard<std::mutex> lock(messageQueueMutex);
++    return !messageQueue.empty();
++}
++
++AP_Message* AP_GetLatestMessage() {
++    std::lock_guard<std::mutex> lock(messageQueueMutex);
++    // Single consumer: the pointer stays valid until it calls ClearLatestMessage.
++    return messageQueue.empty() ? nullptr : messageQueue.front();
++}
++
++void AP_ClearLatestMessage() {
++    std::lock_guard<std::mutex> lock(messageQueueMutex);
++    if (!messageQueue.empty()) {
++        delete messageQueue.front();
++        messageQueue.pop_front();
++    }
++}]=])
++        string(FIND "${main}" "${old_queue}" queue_found)
++        string(FIND "${main}" "std::deque<AP_Message*> messageQueue;" queue_decl)
++        if(queue_found EQUAL -1 OR queue_decl EQUAL -1)
++            message(FATAL_ERROR "SOH-EXTREME: APCpp message queue differs from the reviewed revision. Nothing was overwritten.")
++        endif()
++        string(REPLACE "${old_queue}" "${new_queue}" main "${main}")
++        string(REPLACE "messageQueue.push_back(msg);" "AP_QueueMessage(msg);" main "${main}")
++        string(REPLACE "std::deque<AP_Message*> messageQueue;" [=[// SOH-EXTREME synchronized AP message queue
++std::deque<AP_Message*> messageQueue;
++std::mutex messageQueueMutex;
++static void AP_QueueMessage(AP_Message* message) {
++    std::lock_guard<std::mutex> lock(messageQueueMutex);
++    messageQueue.push_back(message);
++}]=] main "${main}")
++        string(PREPEND main "#include <mutex>\n")
++    endif()
++
+     # Reader/FastWriter mutate their own parse/output buffers. Tracker Bounce
+     # messages are sent on the game thread while the websocket thread parses
+     # Received/Retrieved packets. Give each thread its own codec instances.
+diff --git a/archipelago/soh_extreme/__init__.py b/archipelago/soh_extreme/__init__.py
+index fcd8a10b..05ab914b 100644
+--- a/archipelago/soh_extreme/__init__.py
++++ b/archipelago/soh_extreme/__init__.py
+@@ -4992,6 +4992,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
+         if data["triforce_hunt"]:
+             cv("ShuffleWincon", 7)  # RO_WINCON_TRIFORCE_PIECES
+             cv("WinconTriforceCount", data["triforce_hunt_pieces_required"])
++        else:
++            cv("ShuffleWincon", 0)  # Do not inherit a previous Triforce Hunt file.
++            cv("WinconTriforceCount", 0)
+         cv("ShuffleSongs", data["shuffle_songs"])
+         cv("ShuffleTokens", data["shuffle_skull_tokens"])
+         cv("GsExpectSunsSong", data["skulls_sun_song"])
+@@ -5037,6 +5040,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
+         cv("ShopsanityPriceRange2", data["shuffle_shops_maximum_price"])
+         cv("ShopsanityPricesAffordable", data["shop_affordable_prices"])
+         cv("Fishsanity", {0: 0, 1: 2, 2: 3, 3: 4}.get(data["shuffle_fish"], 0))
++        # Native count 17 selects physical fish identities instead of sequential
++        # catches. AP's active manifest includes 15 fish per age, excluding loaches.
++        pond_fish = data["shuffle_fish"] in (1, 3)
++        cv("FishsanityPondCount", 17 if pond_fish else 0)
++        cv("FishsanityAgeSplit", int(pond_fish))
+         cv("ShuffleScrubs", data["shuffle_scrubs"])
+         cv("ScrubsPrices", 5 if data["scrub_affordable_prices"] else 4)
+         cv("ScrubsPriceRange1", data["shuffle_scrubs_minimum_price"])
+diff --git a/build.cmd b/build.cmd
+index ed551f8a..15c81f7d 100644
+--- a/build.cmd
++++ b/build.cmd
+@@ -79,32 +79,13 @@ if exist "%CD%\x64\Release" (
+ 
+ echo.
+ echo [5/7] Copying the fresh executable to the source-root runtime...
+-set "FRESH_EXE="
+-
+-if exist "%CD%\x64\Release\soh.exe" set "FRESH_EXE=%CD%\x64\Release\soh.exe"
+-if not defined FRESH_EXE if exist "%CD%\build-vs\Release\soh.exe" set "FRESH_EXE=%CD%\build-vs\Release\soh.exe"
+-if not defined FRESH_EXE if exist "%CD%\build-vs\soh\Release\soh.exe" set "FRESH_EXE=%CD%\build-vs\soh\Release\soh.exe"
+-
+-if not defined FRESH_EXE (
+-    echo ERROR: Could not find the newly built soh.exe.
+-    echo Checked:
+-    echo   %CD%\x64\Release\soh.exe
+-    echo   %CD%\build-vs\Release\soh.exe
+-    echo   %CD%\build-vs\soh\Release\soh.exe
+-    goto :fail
+-)
+-
+-copy /Y "%FRESH_EXE%" "%CD%\soh.exe" >nul
++powershell -NoProfile -ExecutionPolicy Bypass -File "%CD%\tools\copy_ap_runtime.ps1" -ProjectRoot "%CD%"
+ if errorlevel 1 goto :fail
+ 
+-if exist "%CD%\x64\Release\APCpp.dll" copy /Y "%CD%\x64\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
+-if exist "%CD%\build-vs\Release\APCpp.dll" copy /Y "%CD%\build-vs\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
+-if exist "%CD%\build-vs\soh\Release\APCpp.dll" copy /Y "%CD%\build-vs\soh\Release\APCpp.dll" "%CD%\APCpp.dll" >nul
+-
+ echo.
+ echo [6/7] Runtime/APWorld verification...
+-for %%F in ("%FRESH_EXE%") do echo Fresh EXE: %%~fF  %%~zF bytes
+ for %%F in ("%CD%\soh.exe") do echo Root  EXE: %%~fF  %%~zF bytes
++for %%F in ("%CD%\APCpp.dll") do echo Root  DLL: %%~fF  %%~zF bytes
+ for %%F in ("%CD%\soh.o2r") do echo Root  O2R: %%~fF  %%~zF bytes
+ for %%F in ("%CD%\soh_extreme.apworld") do echo APWorld: %%~fF  %%~zF bytes
+ 
+@@ -118,7 +99,8 @@ echo BUILD COMPLETE
+ echo.
+ echo IMPORTANT:
+ echo   Restart Archipelago after this build.
+-echo   Generate a NEW seed/room using the newly installed APWorld.
++echo   These client fixes work with existing compatible seeds and saves.
++echo   New APWorld generation settings apply when generating a new seed.
+ echo.
+ echo Launch: %CD%\soh.exe
+ echo ============================================================
+diff --git a/soh/Enhancements/randomizer/MegaSouls.cpp b/soh/Enhancements/randomizer/MegaSouls.cpp
+index 959f049a..15aec04b 100644
+--- a/soh/Enhancements/randomizer/MegaSouls.cpp
++++ b/soh/Enhancements/randomizer/MegaSouls.cpp
+@@ -752,11 +752,11 @@ extern "C" bool MegaSoul_TryCollectEnemyDefeatPickup(Actor* itemActor) {
+     if (SohExtreme::IsEnemyOffspringPlacement(index)) return false;
+     if (!Archipelago_IsCurrentSaveActive() || !Archipelago_IsLocationActive(locationId)) return false;
+     if (!Archipelago_IsLocationReported(locationId)) Archipelago_ReportLocation(locationId);
+-    // SendLocation rejects disconnected/not-ready sessions. Do NOT consume the
+-    // physical actor in that case. Reported means accepted by the local client;
+-    // the saved outbox below resends after reconnect until the server knows it.
++    // Consume once accepted into the save's outbox; a slow acknowledgment must
++    // not leave a collected reward hovering over Link or lose the local journal.
++    // Server-confirmed checks remain separate for the Check Finder.
+     if (!SohExtreme::CanConsumeEnemyPickup(Archipelago_IsCurrentSaveActive(),
+-            Archipelago_IsLocationActive(locationId), Archipelago_IsLocationReported(locationId))) return false;
++            Archipelago_IsLocationActive(locationId), Archipelago_IsLocationSubmitted(locationId))) return false;
+     MarkEnemyDefeatCollected(static_cast<size_t>(index));
+     gLiveEnemyPickups[index] = nullptr;
+     PersistEnemyDefeatJournal();
+diff --git a/soh/Enhancements/randomizer/fishsanity.cpp b/soh/Enhancements/randomizer/fishsanity.cpp
+index ec90b517..5cd46b08 100644
+--- a/soh/Enhancements/randomizer/fishsanity.cpp
++++ b/soh/Enhancements/randomizer/fishsanity.cpp
+@@ -1,4 +1,5 @@
+ #include <libultraship/bridge/consolevariablebridge.h>
++#include <unordered_set>
+ 
+ #include "soh/Enhancements/game-interactor/GameInteractor.h"
+ #include "../../OTRGlobals.h"
+@@ -11,6 +12,7 @@
+ #include "soh/Enhancements/randomizer/item_category_adj.h"
+ #include "soh/Enhancements/randomizer/particle_cmc.h"
+ #include "soh/frame_interpolation.h"
++#include "soh/Network/Archipelago/ArchipelagoC.h"
+ 
+ extern "C" {
+ #include "variables.h"
+@@ -77,7 +79,9 @@ static ActorFunc drawEnFish = NULL;
+ static Color_RGB8 fsPulseColor = { 30, 240, 200 };
+ 
+ static s16 fishGroupCounter = 0;
+-static bool enableAdvance = false;
++// A catch lasts many frames. Advance once when the fish leaves the hoisted
++// state, independently of whether its reward belongs to this AP player.
++static std::unordered_set<Actor*> hoistedFish;
+ 
+ /**
+  * @brief Get fishsanity fishing pond options from the requested source
+@@ -162,19 +166,23 @@ static bool IsFish(CheckIdentity* fish) {
+  * @brief Resolves a pond fish's CheckIdentity directly from params & pond age
+  */
+ static CheckIdentity GetPondFish(s16 params, bool adultPond) {
++    if (params < 100 || params >= 100 + Rando::StaticData::randomizerFishingPondFish.size()) {
++        return defaultIdentity;
++    }
+     auto pair = Rando::StaticData::randomizerFishingPondFish[params - 100];
+     RandomizerCheck rc = adultPond ? pair.second : pair.first;
++    if (rc == RC_UNKNOWN_CHECK) return defaultIdentity;
+     return { OTRGlobals::Instance->gRandomizer->GetRandomizerInfFromCheck(rc), rc };
+ }
+ 
+ /**
+  * @brief Returns the identity for a caught pond fish given its params
+  */
+-static CheckIdentity IdentifyPondFish(u8 fishParams) {
++static CheckIdentity IdentifyPondFish(s16 fishParams) {
+     auto [mode, pondCount, ageSplit] = GetOptions();
+     CheckIdentity identity = defaultIdentity;
+ 
+-    if (!GetPondFishShuffled()) {
++    if (!GetPondFishShuffled() || fishParams < 100 || fishParams > 116) {
+         return identity;
+     }
+ 
+@@ -184,6 +192,11 @@ static CheckIdentity IdentifyPondFish(u8 fishParams) {
+         identity = LINK_IS_ADULT ? NextAdultPondFish : NextChildPondFish;
+     }
+ 
++    // The AP pond has 15 ordinary fish per age, without the native loach checks.
++    if (Archipelago_IsCurrentSaveActive() &&
++        !Archipelago_ShouldHandleCheck(static_cast<int32_t>(identity.randomizerCheck))) {
++        return defaultIdentity;
++    }
+     return identity;
+ }
+ 
+@@ -361,24 +374,26 @@ static void Fishsanity_DrawFishing(Actor* actor, PlayState* play) {
+     if (!MegaSoul_ArePondFishPresent()) {
+         return;
+     }
+-    // Reflect the ACTUAL randomized/AP item on each pond fish instead of giving
+-    // every shuffled fish the same aqua pulse. GetFinalGIEntry() refreshes the
+-    // Archipelago scout for this check before returning the display item.
+     CheckIdentity fish = IdentifyFish(play->sceneNum, actor->params);
+-    Color_RGB8 itemColor = fsPulseColor;
+-    if (fish.randomizerCheck != RC_UNKNOWN_CHECK) {
+-        GetItemEntry randoItem =
+-            Rando::Context::GetInstance()->GetFinalGIEntry(fish.randomizerCheck, true, GI_FISH);
+-        const GetItemCategory category = Randomizer_AdjustItemCategory(randoItem);
+-        const Color_RGBA8 cmcColor = Randomizer_GetParticleCMCColor(category, COLOR_PRIMARY);
+-        itemColor.r = cmcColor.r;
+-        itemColor.g = cmcColor.g;
+-        itemColor.b = cmcColor.b;
++    if (!IsFish(&fish) || Flags_GetRandomizerInf(fish.randomizerInf) || hoistedFish.count(actor)) {
++        if (drawFishing != nullptr) drawFishing(actor, play);
++        return;
+     }
+-
+-    Fishsanity_OpenGreyscaleColor(play, &itemColor, (actor->params - 100) * 20);
+-    drawFishing(actor, play);
+-    Fishsanity_CloseGreyscaleColor(play);
++    GetItemEntry reward = Rando::Context::GetInstance()->GetFinalGIEntry(fish.randomizerCheck, true, GI_FISH);
++    if (CVarGetInteger(CVAR_RANDOMIZER_ENHANCEMENT("MysteriousShuffle"), 0)) reward = GET_ITEM_MYSTERY;
++
++    // Fishing_DrawFish normally updates this through the skeleton's mouth limb.
++    // Keep a live hook/line attachment while rendering an item instead.
++    auto* pondFish = reinterpret_cast<Fishing*>(actor);
++    pondFish->fishMouthPos = actor->world.pos;
++    pondFish->fishMouthPos.y += 5.0f;
++    Matrix_Push();
++    Matrix_Translate(actor->world.pos.x, actor->world.pos.y, actor->world.pos.z, MTXMODE_NEW);
++    Matrix_RotateY(play->gameplayFrames * 0.04f, MTXMODE_APPLY);
++    Matrix_Scale(0.3f, 0.3f, 0.3f, MTXMODE_APPLY);
++    EnItem00_CustomItemsParticles(actor, play, reward);
++    GetItemEntry_Draw(play, reward);
++    Matrix_Pop();
+ }
+ 
+ /**
+@@ -386,6 +401,7 @@ static void Fishsanity_DrawFishing(Actor* actor, PlayState* play) {
+  */
+ static void OnActorInitHandler(void* refActor) {
+     Actor* actor = static_cast<Actor*>(refActor);
++    hoistedFish.erase(actor);
+ 
+     CheckIdentity fish;
+ 
+@@ -409,20 +425,15 @@ static void OnActorInitHandler(void* refActor) {
+     }
+ 
+     if (actor->id == ACTOR_FISHING && gPlayState->sceneNum == SCENE_FISHING_POND && actor->params >= 100 &&
+-        actor->params <= 117 && GetPondFishShuffled()) {
++        actor->params <= 116 && GetPondFishShuffled()) {
+         // Initialize pond fish for fishsanity
+         fish = IdentifyFish(gPlayState->sceneNum, actor->params);
+ 
+-        // With every pond fish shuffled, caught fish will not spawn unless all fish have been caught.
+-        if (RAND_GET_OPTION(RSK_FISHSANITY_POND_COUNT).Get() > 16 && !GetPondCleared()) {
+-            // Create effect for uncaught fish
+-            if (!Flags_GetRandomizerInf(fish.randomizerInf)) {
+-                actor->shape.shadowDraw = Fishsanity_DrawEffShadow;
+-                if (!drawFishing) {
+-                    drawFishing = actor->draw;
+-                }
+-                actor->draw = Fishsanity_DrawFishing;
+-            }
++        if (IsFish(&fish)) {
++            if (!drawFishing) drawFishing = actor->draw;
++            // Keep the wrapper installed: sequential catches can expose another
++            // reward on the same fish, and AP scouts can arrive after actor init.
++            actor->draw = Fishsanity_DrawFishing;
+         }
+     }
+ }
+@@ -439,21 +450,18 @@ static void OnActorUpdateHandler(void* refActor) {
+     Actor* actor = static_cast<Actor*>(refActor);
+ 
+     // Detect fish catch
+-    if (actor->id == ACTOR_FISHING && GetPondFishShuffled() && MegaSoul_ArePondFishPresent()) {
++    if (actor->id == ACTOR_FISHING && actor->params >= 100 && actor->params <= 116 &&
++        GetPondFishShuffled() && MegaSoul_ArePondFishPresent()) {
+         Fishing* fish = static_cast<Fishing*>(refActor);
+ 
+         // State 6 -> Fish caught and hoisted
+-        if (fish->fishState == 6) {
++        if (fish->fishState == 6 && hoistedFish.insert(actor).second) {
+             CheckIdentity identity = IdentifyFish(gPlayState->sceneNum, actor->params);
+-            if (identity.randomizerCheck != RC_UNKNOWN_CHECK) {
++            if (IsFish(&identity) && !Flags_GetRandomizerInf(identity.randomizerInf)) {
+                 Flags_SetRandomizerInf(identity.randomizerInf);
+-                enableAdvance = true;
+-                // Remove uncaught effect
+-                if (actor->shape.shadowDraw != NULL) {
+-                    actor->shape.shadowDraw = NULL;
+-                    actor->draw = drawFishing;
+-                }
+             }
++        } else if (fish->fishState != 6 && hoistedFish.erase(actor)) {
++            UpdateCurrentPondFish();
+         }
+     }
+ 
+@@ -512,6 +520,7 @@ bool GetFishLocationIncluded(Rando::Location* loc, FishsanityOptionsSource optio
+ }
+ 
+ void InitializeFromSave() {
++    hoistedFish.clear();
+     UpdateCurrentPondFish();
+ }
+ 
+@@ -520,6 +529,8 @@ void InitializeFromSave() {
+ void RegisterShuffleFish() {
+     bool shouldRegister = IS_RANDO && RAND_GET_OPTION(RSK_FISHSANITY).IsNot(RO_FISHSANITY_OFF);
+     COND_HOOK(OnSceneInit, shouldRegister, [](int16_t sceneNum) {
++        hoistedFish.clear();
++        if (sceneNum == SCENE_FISHING_POND) UpdateCurrentPondFish();
+         if (sceneNum == SCENE_ZORAS_DOMAIN) {
+             fishGroupCounter = 0;
+         }
+@@ -527,11 +538,8 @@ void RegisterShuffleFish() {
+ 
+     COND_HOOK(OnActorInit, shouldRegister, OnActorInitHandler);
+     COND_HOOK(OnActorUpdate, shouldRegister, OnActorUpdateHandler);
+-    COND_HOOK(OnItemReceive, shouldRegister, [](GetItemEntry itemEntry) {
+-        if (enableAdvance) {
+-            enableAdvance = false;
+-            UpdateCurrentPondFish();
+-        }
++    COND_HOOK(OnActorDestroy, shouldRegister, [](void* actor) {
++        if (hoistedFish.erase(static_cast<Actor*>(actor))) UpdateCurrentPondFish();
+     });
+ 
+     COND_VB_SHOULD(VB_BOTTLE_ACTOR, shouldRegister, {
+diff --git a/soh/Enhancements/randomizer/randomizer_check_tracker.cpp b/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
+index cd15223b..485a31ef 100644
+--- a/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
++++ b/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
+@@ -133,10 +133,21 @@ static bool IsNpcSpeechVisible(const NpcSpeechFinderEntry& entry) {
+ }
+ 
+ static bool IsEnemyDefeatVisible(const EnemyDefeatFinderEntry& entry) {
+-    return Archipelago_IsCurrentSaveActive() && Archipelago_IsLocationActive(entry.locationId) &&
++    return RAND_GET_OPTION(RSK_SHUFFLE_ENEMY_DROPS).Get() &&
++           Archipelago_IsCurrentSaveActive() && Archipelago_IsLocationActive(entry.locationId) &&
+            entry.area >= RCAREA_KOKIRI_FOREST && entry.area < RCAREA_INVALID;
+ }
+ 
++static bool IsFinderRowEnabled(int64_t id) {
++    if (RAND_GET_OPTION(RSK_SHUFFLE_ENEMY_DROPS).Get()) return true;
++    static const std::set<int64_t> enemyIds = [] {
++        std::set<int64_t> ids;
++        for (const auto& entry : kEnemyDefeatFinderEntries) ids.insert(entry.locationId);
++        return ids;
++    }();
++    return !enemyIds.contains(id);
++}
++
+ static bool EnemyFinderMelee(Rando::Logic* enemyLogic) {
+     return enemyLogic->CanUse(RG_KOKIRI_SWORD) || enemyLogic->CanUse(RG_MASTER_SWORD) ||
+            enemyLogic->CanUse(RG_BIGGORON_SWORD) || enemyLogic->CanUse(RG_GIANTS_KNIFE) ||
+@@ -1712,7 +1723,10 @@ static void DrawUniversalFinderMirror() {
+         return;
+     }
+     size_t normal = 0, glitched = 0;
+-    for (const auto& row : snapshot->rows) { if (row.state == 1) ++normal; else ++glitched; }
++    for (const auto& row : snapshot->rows) {
++        if (!IsFinderRowEnabled(row.id)) continue;
++        if (row.state == 1) ++normal; else ++glitched;
++    }
+     ImGui::Text("In logic: %u   Glitched: %u   Checked: %u / %u",
+         static_cast<unsigned>(normal), static_cast<unsigned>(glitched),
+         static_cast<unsigned>(snapshot->checked.size()), static_cast<unsigned>(snapshot->active.size()));
+@@ -1743,6 +1757,7 @@ static void DrawUniversalFinderMirror() {
+             const auto area = FinderRowArea(id, client);
+             return area == RCAREA_INVALID ? -1 : static_cast<int>(area);
+         }, [&](const SohExtreme::TrackerRow& row) {
++            if (!IsFinderRowEnabled(row.id)) return false;
+             const std::string text = row.region + " | " + row.name;
+             return filter.PassFilter(text.c_str());
+         });
+diff --git a/soh/Network/Archipelago/ArchipelagoC.h b/soh/Network/Archipelago/ArchipelagoC.h
+index 313f748f..06439179 100644
+--- a/soh/Network/Archipelago/ArchipelagoC.h
++++ b/soh/Network/Archipelago/ArchipelagoC.h
+@@ -29,6 +29,8 @@ bool Archipelago_PrepareCheckFinderMappings(void);
+ // AP-only/synthetic location helpers used by Check Finder (NPC Speech, etc.).
+ bool Archipelago_IsLocationActive(int64_t locationId);
+ bool Archipelago_IsLocationReported(int64_t locationId);
++// Accepted into this save's retry queue, or confirmed by the server.
++bool Archipelago_IsLocationSubmitted(int64_t locationId);
+ uint32_t Archipelago_GetActiveLocationCount(void);
+ uint32_t Archipelago_GetReportedActiveLocationCount(void);
+ // Resolve/apply AP placements only for checks belonging to one scene.
+diff --git a/soh/Network/Archipelago/ArchipelagoClient.cpp b/soh/Network/Archipelago/ArchipelagoClient.cpp
+index 049f5169..a6b90079 100644
+--- a/soh/Network/Archipelago/ArchipelagoClient.cpp
++++ b/soh/Network/Archipelago/ArchipelagoClient.cpp
+@@ -10,6 +10,8 @@ static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<
+ #include <chrono>
+ #include <set>
+ #include <random>
++#include <limits>
++#include <nlohmann/json.hpp>
+ #include <ship/Context.h>
+ #include <ship/window/Window.h>
+ 
+@@ -75,16 +77,10 @@ constexpr int AP_LOCATION_REPORTS_PER_FRAME = 4;
+ // Some SoH major/randomizer items successfully finish their hold-item sequence
+ // without producing the generic OnItemReceive callback AP normally uses as its
+ // transaction completion. Never let that wedge the entire receive queue forever.
+-// We only use the fallback AFTER the item/cutscene state has ended and Link is alive.
++// Retry only after the item/cutscene state has ended and Link is alive.
+ uint32_t gAwaitingMajorFrames = 0;
+-constexpr uint32_t AP_MAJOR_RECEIVE_FALLBACK_MIN_FRAMES = 12;
+ constexpr uint32_t AP_MAJOR_RECEIVE_VERIFY_TIMEOUT_FRAMES = 90;
+ 
+-// A get-item animation or OnItemReceive callback alone is not proof that the
+-// reward reached the save. Important AP receives are committed only after the
+-// persistent state changes too.
+-uint64_t gAwaitingMajorStateDigestBefore = 0;
+-bool gAwaitingMajorCallbackSeen = false;
+ 
+ static uint64_t HashApReceiptBytes(uint64_t hash, const void* data, size_t size) {
+     const auto* bytes = static_cast<const uint8_t*>(data);
+@@ -147,10 +143,6 @@ static uint64_t CaptureApPersistentGrantDigest() {
+     return hash;
+ }
+ 
+-static void ResetApMajorVerificationState() {
+-    gAwaitingMajorStateDigestBefore = 0;
+-    gAwaitingMajorCallbackSeen = false;
+-}
+ 
+ constexpr int64_t AP_ITEM_ROLL = 9500000;
+ constexpr int64_t AP_ITEM_GRAB = 9500001;
+@@ -609,10 +601,10 @@ void ArchipelagoClient::RegisterCallbacks() {
+     // Bounced callback disables its automatic DeathLink handling, so SOH-EXTREME
+     // handles BOTH link protocols here and advertises the matching tags after auth.
+     AP_RegisterSlotDataIntCallback("death_link", [](int value) {
+-        ArchipelagoClient::GetInstance().deathLinkEnabled = value != 0;
++        ArchipelagoClient::GetInstance().QueueSlotData("death_link", value != 0 ? "1" : "0");
+     });
+     AP_RegisterSlotDataIntCallback("trap_link", [](int value) {
+-        ArchipelagoClient::GetInstance().trapLinkEnabled = value != 0;
++        ArchipelagoClient::GetInstance().QueueSlotData("trap_link", value != 0 ? "1" : "0");
+     });
+     AP_RegisterBouncedCallback([](AP_Bounce bounce) {
+         auto& client = ArchipelagoClient::GetInstance();
+@@ -625,14 +617,15 @@ void ArchipelagoClient::RegisterCallbacks() {
+             if (!payload.empty() && payload.size() <= 1000000) {
+                 const auto nonce = ExtractJsonString(bounce.data, "nonce");
+                 std::scoped_lock lock(client.queueMutex);
+-                if (nonce == client.finderMirror.Nonce()) client.pendingFinderPayload = payload;
++                client.pendingFinderNonce = nonce;
++                client.pendingFinderPayload = payload;
+             }
+         }
+-        if (BounceHasTag(bounce, "DeathLink") && client.deathLinkEnabled) {
++        if (BounceHasTag(bounce, "DeathLink")) {
+             client.QueueDeathLink(ExtractJsonString(bounce.data, "source"),
+                                   ExtractJsonString(bounce.data, "cause"));
+         }
+-        if (BounceHasTag(bounce, "TrapLink") && client.trapLinkEnabled) {
++        if (BounceHasTag(bounce, "TrapLink")) {
+             client.QueueTrapLink(ExtractJsonString(bounce.data, "source"),
+                                  ExtractJsonString(bounce.data, "trap_name"));
+         }
+@@ -642,13 +635,13 @@ void ArchipelagoClient::RegisterCallbacks() {
+     // fork's native gRando.Settings CVar names. It is intentionally raw JSON so all
+     // settings arrive as one readiness boundary before file-select is allowed to start.
+     AP_RegisterSlotDataRawCallback("extreme_soh_cvars", [](std::string raw) {
+-        ArchipelagoClient::GetInstance().SetSlotSettingsFromJson(raw);
++        ArchipelagoClient::GetInstance().QueueSlotData("extreme_soh_cvars", raw);
+     });
+     AP_RegisterSlotDataRawCallback("extreme_shop_prices", [](std::string raw) {
+-        ArchipelagoClient::GetInstance().SetShopPricesFromJson(raw);
++        ArchipelagoClient::GetInstance().QueueSlotData("extreme_shop_prices", raw);
+     });
+     AP_RegisterSlotDataIntCallback("extreme_kakariko_gate_open", [](int value) {
+-        ArchipelagoClient::GetInstance().kakarikoGateOpen = value != 0;
++        ArchipelagoClient::GetInstance().QueueSlotData("extreme_kakariko_gate_open", value != 0 ? "1" : "0");
+     });
+ 
+     // The AP server only allows LocationScouts for locations that actually exist in
+@@ -656,13 +649,13 @@ void ArchipelagoClient::RegisterCallbacks() {
+     // static SoH location table is invalid when options remove locations and causes the
+     // AP 0.6.7 server to close the connection (for example: "No location 61 for player").
+     AP_RegisterSlotDataRawCallback("extreme_active_locations", [](std::string raw) {
+-        ArchipelagoClient::GetInstance().SetActiveLocationsFromJson(raw);
++        ArchipelagoClient::GetInstance().QueueSlotData("extreme_active_locations", raw);
+     });
+     // Standalone SOH-EXTREME owns its own location namespace.  Never assume the
+     // compiled ArchipelagoLocationMap.inc still has the seed's exact ids/names.
+     // The APWorld publishes the authoritative active name -> id table per slot.
+     AP_RegisterSlotDataRawCallback("extreme_location_name_to_id", [](std::string raw) {
+-        ArchipelagoClient::GetInstance().SetLocationNameMapFromJson(raw);
++        ArchipelagoClient::GetInstance().QueueSlotData("extreme_location_name_to_id", raw);
+     });
+ 
+     // The old per-setting native callbacks were intentionally removed here.
+@@ -692,6 +685,7 @@ void ArchipelagoClient::ResetFinderMirror() {
+     for (auto& c : nonce) c = hex[random() & 15u];
+     finderMirror.Reset(nonce);
+     pendingFinderPayload.clear();
++    pendingFinderNonce.clear();
+     finderMirrorError.clear();
+     finderNextRequest = 0.0;
+ }
+@@ -788,17 +782,19 @@ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::str
+         return nullptr;
+     }
+     std::string payload;
++    std::string payloadNonce;
+     uint64_t received = 0;
+     std::set<int64_t> active;
+     {
+         std::scoped_lock lock(queueMutex);
+         payload.swap(pendingFinderPayload);
++        payloadNonce.swap(pendingFinderNonce);
+         received = incomingItemOrdinal;
+         active.insert(activeLocations.begin(), activeLocations.end());
+     }
+     const double now = FinderMirrorClock();
+     const auto slot = static_cast<uint32_t>(AP_GetPlayerID());
+-    if (!payload.empty()) {
++    if (!payload.empty() && payloadNonce == finderMirror.Nonce()) {
+         try {
+             finderMirror.Accept(SohExtreme::DecodeTrackerSnapshot(payload), slot, now, finderMirrorError);
+         } catch (const std::exception& error) {
+@@ -849,6 +845,7 @@ void ArchipelagoClient::Enable() {
+     {
+         std::scoped_lock lock(queueMutex);
+         ResetFinderMirror();
++        pendingSlotData.clear();
+         pendingItems.clear();
+         pendingCheckedLocations.clear();
+         pendingScouts.clear();
+@@ -859,7 +856,6 @@ void ArchipelagoClient::Enable() {
+     scoutedLocations.clear();
+     scoutedLocationNameIndex.clear();
+     reportedLocations.clear();
+-    pendingLocationReports.clear();
+     activeLocations.clear();
+     authoritativeLocationNameIndex.clear();
+     locationNameMapLoaded = false;
+@@ -883,6 +879,7 @@ void ArchipelagoClient::Enable() {
+     activeLocationsPendingRefresh.store(false);
+     settingsEnforceFrameCounter = 0;
+     wasAuthenticated = false;
++    goalReported = false;
+     syncFrameCounter = 0;
+     incomingItemOrdinal = 0;
+     receivedItemSnapshot.clear();
+@@ -893,14 +890,14 @@ void ArchipelagoClient::Enable() {
+     awaitingMajorSequence = 0;
+     awaitingMajorApItemId = 0;
+     gAwaitingMajorFrames = 0;
+-    currentSaveIsArchipelago = false;
+-    saveMetadataLoaded = false;
+-    saveIdentityMismatch = false;
+-    saveServer.clear();
+-    saveSlot.clear();
++    saveIdentityMismatch = currentSaveIsArchipelago &&
++        ((!saveSlot.empty() && saveSlot != slot) ||
++         (!saveServer.empty() && saveServer != (server ? server : "")));
+     // Migration fallback for pre-0.5.9 saves.  A real AP save overrides this
+     // with its own serialized receive count as soon as SaveManager loads it.
+-    appliedItemCount = static_cast<uint64_t>(std::max(0, CVarGetInteger(GetReceivedCountCVar().c_str(), 0)));
++    if (!saveMetadataLoaded) {
++        appliedItemCount = static_cast<uint64_t>(std::max(0, CVarGetInteger(GetReceivedCountCVar().c_str(), 0)));
++    }
+     SPDLOG_INFO("[Archipelago] Loaded persisted received-item count {}", appliedItemCount);
+ 
+     enabled = true;
+@@ -921,6 +918,8 @@ void ArchipelagoClient::Disable() {
+     }
+     std::scoped_lock lock(queueMutex);
+     ResetFinderMirror();
++    pendingSlotData.clear();
++    goalReported = false;
+     pendingItems.clear();
+     pendingCheckedLocations.clear();
+     pendingScouts.clear();
+@@ -951,15 +950,10 @@ void ArchipelagoClient::Disable() {
+     awaitingMajorSequence = 0;
+     awaitingMajorApItemId = 0;
+     gAwaitingMajorFrames = 0;
+-    currentSaveIsArchipelago = false;
+     newSaveReplayPending = false;
+     gDeferredLocationReports.clear();
+     gNewSaveReplayTargetCount = 0;
+     gNewSaveReplayGraceFrames = 0;
+-    saveMetadataLoaded = false;
+-    saveIdentityMismatch = false;
+-    saveServer.clear();
+-    saveSlot.clear();
+     chatMessages.clear();
+ }
+ 
+@@ -984,6 +978,8 @@ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receiv
+ 
+     ResetFinderMirror();
+     currentSaveIsArchipelago = isArchipelagoSave;
++    pendingLocationReports.clear();
++    saveRuntimeSynchronized = false;
+     newSaveReplayPending = false;
+     gDeferredLocationReports.clear();
+     gNewSaveReplayTargetCount = 0;
+@@ -996,6 +992,7 @@ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receiv
+     awaitingMajorApItemId = 0;
+     gAwaitingMajorFrames = 0;
+     saveMetadataLoaded = true;
++    goalReported = false;
+     saveServer = server;
+     saveSlot = slot;
+ 
+@@ -1020,11 +1017,14 @@ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receiv
+         restoredSettingCount = slotSettings.size();
+         applySettingsBeforeScene = true;
+     } else if (isArchipelagoSave && !cachedSettingsJson.empty()) {
++        // The caller holds queueMutex during metadata loading. Do not call the
++        // locking setter here; ApplySlotSettings supplies the pond compatibility defaults.
+         std::unordered_map<std::string, int64_t> parsed;
+         if (ParseFlatStringIntObject(cachedSettingsJson, parsed)) {
+             slotSettings.clear();
+             for (const auto& [key, value] : parsed) {
+-                slotSettings[key] = static_cast<int>(value);
++                if (value >= std::numeric_limits<int>::min() && value <= std::numeric_limits<int>::max())
++                    slotSettings[key] = static_cast<int>(value);
+             }
+             slotSettingsLoaded = true;
+             restoredSettingCount = slotSettings.size();
+@@ -1099,8 +1099,8 @@ void ArchipelagoClient::BeginItemReplay() {
+     std::scoped_lock lock(queueMutex);
+     incomingItemOrdinal = 0;
+     receivedItemSnapshot.clear();
+-    SPDLOG_INFO("[Archipelago] Beginning server item-state replay; {} AP items already applied locally",
+-                appliedItemCount);
++    pendingItems.clear();
++    SPDLOG_INFO("[Archipelago] Beginning server item-state replay");
+ }
+ 
+ void ArchipelagoClient::QueueItem(int64_t itemId, bool notify) {
+@@ -1109,18 +1109,9 @@ void ArchipelagoClient::QueueItem(int64_t itemId, bool notify) {
+     const uint64_t sequence = incomingItemOrdinal++;
+     receivedItemSnapshot.push_back(itemId);
+ 
+-    // APCpp always invokes the item callback for the complete ReceivedItems replay,
+-    // including items the player already owns.  Its notify flag is not a reliable
+-    // persistence boundary across process restarts, so use our own monotonically
+-    // increasing receive count instead.  This is what prevents a starting item from
+-    // being granted again forever on reconnect/startup.
+-    if (sequence < appliedItemCount) {
+-        SPDLOG_DEBUG("[Archipelago] Replay item #{} id {} already applied; skipping", sequence, itemId);
+-        return;
+-    }
+-
+-    const std::string itemName = GetApItemDisplayName(itemId);
+-    SPDLOG_INFO("[Archipelago] Received {} (item id {}, receive #{}, notify={})", itemName, itemId, sequence, notify);
++    // Deduplication happens on the game thread against this save's receipt cursor.
++    // Reconnect can replay while an earlier major item is still being animated.
++    SPDLOG_DEBUG("[Archipelago] Queued item {} at sequence {}", itemId, sequence);
+     pendingItems.push_back({ itemId, notify, sequence });
+ }
+ 
+@@ -1294,40 +1285,16 @@ static bool ApplyExtremePersistentApItem(int64_t apItemId) {
+ void ArchipelagoClient::FinalizeMajorItemReceipt(int modIndex, int itemId, int getItemId) {
+     if (!awaitingMajorItemReceipt) return;
+ 
+-    // Once GiveItemEntryWithoutActor() has successfully started an AP major-item
+-    // receive, the next OnItemReceive callback is the transaction completion.
+-    //
+-    // Do NOT require the callback's mod/item/get-item tuple to be byte-for-byte
+-    // identical to the entry we submitted. Several custom SOH-EXTREME abilities and
+-    // Souls (notably Shovel) are normalized by the native get-item path before
+-    // OnItemReceive fires. The old strict comparison left awaitingMajorItemReceipt
+-    // stuck forever. While stuck, every later AP reward (including Grass checks)
+-    // remained queued until the save was reloaded.
+-    //
+-    // Link cannot receive a second pickup while the major get-item cutscene is active,
+-    // so the first OnItemReceive after our successful GiveItemEntryWithoutActor call
+-    // is the safe commit point. Keep the tuple comparison as diagnostics only.
++    // Vanilla Item_Give can canonicalize GetItemID aliases, but preserves the
++    // mod/item identity. Randomizer receipts preserve their complete entry.
+     if (modIndex != awaitingMajorModIndex || itemId != awaitingMajorItemId ||
+-        (awaitingMajorGetItemId != 0 && getItemId != awaitingMajorGetItemId)) {
+-        SPDLOG_WARN(
+-            "[Archipelago] Major receive callback normalized by SoH: expected mod/item/get {}/{}/{}, got {}/{}/{}; committing active AP receive",
+-            awaitingMajorModIndex, awaitingMajorItemId, awaitingMajorGetItemId,
+-            modIndex, itemId, getItemId);
++        (modIndex == MOD_RANDOMIZER && getItemId != awaitingMajorGetItemId)) {
++        SPDLOG_DEBUG("[Archipelago] Ignoring unrelated item callback while AP receive is pending");
++        return;
+     }
+-
+     const uint64_t sequence = awaitingMajorSequence;
+     const int64_t apItemId = awaitingMajorApItemId;
+ 
+-    gAwaitingMajorCallbackSeen = true;
+-
+-    if (CaptureApPersistentGrantDigest() == gAwaitingMajorStateDigestBefore) {
+-        SPDLOG_WARN(
+-            "[Archipelago] Major AP receive #{} item {} got completion callback but persistent state "
+-            "has not changed; withholding popup and commit",
+-            sequence, apItemId);
+-        return;
+-    }
+-
+     // SOH-EXTREME 0.7.55: make the AP receive path authoritative for every custom
+     // persistent ability/soul.  Native Randomizer_Item_Give normally sets these,
+     // but AP get-item presentation used to leave some custom RandomizerInf flags
+@@ -1379,7 +1346,6 @@ void ArchipelagoClient::FinalizeMajorItemReceipt(int modIndex, int itemId, int g
+ 
+     SPDLOG_INFO("[Archipelago] Major AP item {} receive #{} verified in persistent state; committing now",
+                 apItemId, sequence);
+-    ResetApMajorVerificationState();
+     MarkItemApplied(sequence);
+     Notification::Emit({
+         .prefix = "Archipelago",
+@@ -1397,6 +1363,7 @@ void ArchipelagoClient::PrimeNewSaveMetadata() {
+     std::scoped_lock lock(queueMutex);
+ 
+     appliedItemCount = 0;
++    pendingLocationReports.clear();
+     awaitingMajorItemReceipt = false;
+     awaitingMajorSequence = 0;
+     awaitingMajorApItemId = 0;
+@@ -1614,39 +1581,16 @@ int32_t ArchipelagoClient::MapApItemToRandomizerGet(int64_t itemId) const {
+ }
+ 
+ static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<std::string, int64_t>& out) {
+-    out.clear();
+-    size_t i = 0;
+-    auto skipWs = [&]() { while (i < raw.size() && std::isspace(static_cast<unsigned char>(raw[i]))) ++i; };
+-    skipWs();
+-    if (i >= raw.size() || raw[i++] != '{') return false;
+-    for (;;) {
+-        skipWs();
+-        if (i < raw.size() && raw[i] == '}') { ++i; break; }
+-        if (i >= raw.size() || raw[i++] != '"') return false;
+-        std::string key;
+-        while (i < raw.size() && raw[i] != '"') {
+-            if (raw[i] == '\\' && i + 1 < raw.size()) ++i;
+-            key.push_back(raw[i++]);
+-        }
+-        if (i >= raw.size() || raw[i++] != '"') return false;
+-        skipWs();
+-        if (i >= raw.size() || raw[i++] != ':') return false;
+-        skipWs();
+-        bool negative = false;
+-        if (i < raw.size() && raw[i] == '-') { negative = true; ++i; }
+-        if (i >= raw.size() || !std::isdigit(static_cast<unsigned char>(raw[i]))) return false;
+-        int64_t value = 0;
+-        while (i < raw.size() && std::isdigit(static_cast<unsigned char>(raw[i]))) {
+-            value = value * 10 + (raw[i++] - '0');
+-        }
+-        out[key] = negative ? -value : value;
+-        skipWs();
+-        if (i < raw.size() && raw[i] == ',') { ++i; continue; }
+-        if (i < raw.size() && raw[i] == '}') { ++i; break; }
+-        return false;
++    const auto json = nlohmann::json::parse(raw, nullptr, false);
++    if (!json.is_object()) return false;
++    std::unordered_map<std::string, int64_t> parsed;
++    for (const auto& entry : json.items()) {
++        if (!entry.value().is_number_integer() ||
++            (entry.value().is_number_unsigned() && entry.value().get<uint64_t>() > INT64_MAX)) return false;
++        parsed.emplace(entry.key(), entry.value().get<int64_t>());
+     }
+-    skipWs();
+-    return i == raw.size();
++    out = std::move(parsed);
++    return true;
+ }
+ 
+ static void RefreshArchipelagoRandomizerHooks() {
+@@ -1665,6 +1609,33 @@ static void RefreshArchipelagoRandomizerHooks() {
+     SPDLOG_INFO("[Archipelago] Refreshed ALL native IS_RANDO hooks from authoritative AP settings");
+ }
+ 
++void ArchipelagoClient::QueueSlotData(const std::string& key, const std::string& raw) {
++    if (raw.size() > 8 * 1024 * 1024) {
++        SPDLOG_ERROR("[Archipelago] Ignoring oversized slot data {}", key);
++        return;
++    }
++    std::scoped_lock lock(queueMutex);
++    pendingSlotData[key] = raw;
++}
++
++void ArchipelagoClient::DrainSlotData() {
++    std::unordered_map<std::string, std::string> updates;
++    {
++        std::scoped_lock lock(queueMutex);
++        updates.swap(pendingSlotData);
++    }
++    // Called only on the game thread, including the file-select readiness path.
++    for (const auto& [key, raw] : updates) {
++        if (key == "extreme_soh_cvars") SetSlotSettingsFromJson(raw);
++        else if (key == "extreme_shop_prices") SetShopPricesFromJson(raw);
++        else if (key == "extreme_active_locations") SetActiveLocationsFromJson(raw);
++        else if (key == "extreme_location_name_to_id") SetLocationNameMapFromJson(raw);
++        else if (key == "death_link") deathLinkEnabled = raw == "1";
++        else if (key == "trap_link") trapLinkEnabled = raw == "1";
++        else if (key == "extreme_kakariko_gate_open") kakarikoGateOpen = raw == "1";
++    }
++}
++
+ void ArchipelagoClient::SetSlotSettingsFromJson(const std::string& raw) {
+     std::unordered_map<std::string, int64_t> parsed;
+     if (!ParseFlatStringIntObject(raw, parsed)) {
+@@ -1675,9 +1646,20 @@ void ArchipelagoClient::SetSlotSettingsFromJson(const std::string& raw) {
+     std::unordered_map<std::string, int> nextSettings;
+     nextSettings.reserve(parsed.size());
+     for (const auto& [key, value] : parsed) {
++        if (value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max()) {
++            SPDLOG_ERROR("[Archipelago] Slot setting {} is out of range", key);
++            return;
++        }
+         nextSettings[key] = static_cast<int>(value);
+     }
+ 
++    const auto fishMode = nextSettings.find("Fishsanity");
++    if (fishMode != nextSettings.end()) {
++        const bool pond = fishMode->second == RO_FISHSANITY_POND || fishMode->second == RO_FISHSANITY_BOTH;
++        nextSettings.try_emplace("FishsanityPondCount", pond ? 17 : 0);
++        nextSettings.try_emplace("FishsanityAgeSplit", pond ? 1 : 0);
++    }
++
+     size_t loadedCount = 0;
+     bool settingsChanged = false;
+     {
+@@ -1759,6 +1741,12 @@ void ArchipelagoClient::ApplySlotSettings() {
+         if (!slotSettingsLoaded) {
+             return;
+         }
++        const auto fish = slotSettings.find("Fishsanity");
++        if (fish != slotSettings.end()) {
++            const bool pond = fish->second == RO_FISHSANITY_POND || fish->second == RO_FISHSANITY_BOTH;
++            slotSettings.try_emplace("FishsanityPondCount", pond ? 17 : 0);
++            slotSettings.try_emplace("FishsanityAgeSplit", pond ? 1 : 0);
++        }
+         settingsSnapshot = slotSettings;
+     }
+ 
+@@ -1894,6 +1882,12 @@ void ArchipelagoClient::EnforceSlotSettings() {
+     std::unordered_map<std::string, int> settingsSnapshot;
+     {
+         std::scoped_lock lock(queueMutex);
++        const auto fish = slotSettings.find("Fishsanity");
++        if (fish != slotSettings.end()) {
++            const bool pond = fish->second == RO_FISHSANITY_POND || fish->second == RO_FISHSANITY_BOTH;
++            slotSettings.try_emplace("FishsanityPondCount", pond ? 17 : 0);
++            slotSettings.try_emplace("FishsanityAgeSplit", pond ? 1 : 0);
++        }
+         settingsSnapshot = slotSettings;
+     }
+ 
+@@ -1939,42 +1933,20 @@ void ArchipelagoClient::ApplyPostInitSlotState() {
+ }
+ 
+ void ArchipelagoClient::SetActiveLocationsFromJson(const std::string& raw) {
+-    // APCpp gives raw slot data as JSON text.  This value is deliberately just a flat
+-    // array of positive integer location IDs, so do not pull jsoncpp into soh.exe only
+-    // to parse it.  jsoncpp in APCpp is built /MD while SoH is /MT, which causes
+-    // LNK2038 RuntimeLibrary mismatches on MSVC.  Scanning the integers here keeps the
+-    // Archipelago DLL boundary clean and avoids any extra CRT dependency.
++    const auto json = nlohmann::json::parse(raw, nullptr, false);
++    if (!json.is_array()) {
++        SPDLOG_ERROR("[Archipelago] Invalid active location manifest");
++        return;
++    }
+     std::unordered_set<int64_t> parsed;
+-    int64_t value = 0;
+-    bool inNumber = false;
+-
+-    for (char c : raw) {
+-        if (c >= '0' && c <= '9') {
+-            inNumber = true;
+-            value = (value * 10) + static_cast<int64_t>(c - '0');
+-            continue;
+-        }
+-
+-        if (inNumber) {
+-            parsed.insert(value);
+-            value = 0;
+-            inNumber = false;
++    for (const auto& id : json) {
++        if (!id.is_number_integer() || (id.is_number_unsigned() && id.get<uint64_t>() > INT64_MAX) ||
++            id.get<int64_t>() <= 0) {
++            SPDLOG_ERROR("[Archipelago] Invalid active location ID");
++            return;
+         }
++        parsed.insert(id.get<int64_t>());
+     }
+-    if (inNumber) {
+-        parsed.insert(value);
+-    }
+-
+-    // An empty array is valid (for example, a pathological option combination), but
+-    // malformed non-array slot data should not be treated as successfully loaded.
+-    const auto first = raw.find_first_not_of(" \t\r\n");
+-    const auto last = raw.find_last_not_of(" \t\r\n");
+-    if (first == std::string::npos || last == std::string::npos ||
+-        raw[first] != '[' || raw[last] != ']') {
+-        SPDLOG_ERROR("[Archipelago] Invalid extreme_active_locations slot data: {}", raw);
+-        return;
+-    }
+-
+     activeLocations = std::move(parsed);
+     activeLocationsLoaded = true;
+     scoutsRequested = false;
+@@ -1988,7 +1960,9 @@ void ArchipelagoClient::SetActiveLocationsFromJson(const std::string& raw) {
+ }
+ 
+ void ArchipelagoClient::RequestLocationScouts() {
+-    if (!IsAuthenticated() || scoutsRequested) return;
++    if (!IsAuthenticated()) return;
++    const double now = FinderMirrorClock();
++    if (scoutsRequested && now < nextScoutRequest) return;
+ 
+     // Never scout the full static map. Archipelago validates LocationScouts against the
+     // current slot, and many SoH checks do not exist for every option combination.
+@@ -2002,17 +1976,20 @@ void ArchipelagoClient::RequestLocationScouts() {
+     // that happen to exist in the baked rcToApLocation table. The latter was missing a
+     // large number of stock SoH freestanding checks (for example KF Behind Mido's House
+     // Rupee), which made them impossible to report or receive placements for.
+-    std::set<int64_t> locations(activeLocations.begin(), activeLocations.end());
++    expectedScoutCount = activeLocations.size();
++    std::set<int64_t> locations;
++    for (int64_t id : activeLocations) {
++        if (!scoutedLocations.contains(id)) locations.insert(id);
++    }
++    nextScoutRequest = now + 3.0;
+ 
+     if (locations.empty()) {
+-        expectedScoutCount = 0;
+         scoutsRequested = true;
+         return;
+     }
+ 
+-    expectedScoutCount = locations.size();
+     scoutsRequested = true;
+-    SPDLOG_INFO("[Archipelago] Scouting all {} ACTIVE SOH-EXTREME locations in chunks", locations.size());
++    SPDLOG_INFO("[Archipelago] Scouting {} missing ACTIVE SOH-EXTREME locations in chunks", locations.size());
+ 
+     // Large all-sanity slots can exceed 2,000 locations.  Split scout requests
+     // into modest packets instead of asking APCpp/server to process one giant
+@@ -2049,6 +2026,38 @@ bool ArchipelagoClient::IsLocationActive(int64_t locationId) const {
+     return activeLocationsLoaded && activeLocations.find(locationId) != activeLocations.end();
+ }
+ 
++bool ArchipelagoClient::IsLocationSubmitted(int64_t locationId) const {
++    return reportedLocations.contains(locationId) || pendingLocationReports.contains(locationId);
++}
++
++void ArchipelagoClient::LoadPendingLocations(const std::vector<int64_t>& locations) {
++    pendingLocationReports.clear();
++    if (!currentSaveIsArchipelago) return;
++    for (int64_t id : locations) {
++        if (id > 0 && !reportedLocations.contains(id)) pendingLocationReports.insert(id);
++    }
++}
++
++ArchipelagoSaveSnapshot ArchipelagoClient::CaptureSaveSnapshot() const {
++    ArchipelagoSaveSnapshot snapshot;
++    snapshot.active = currentSaveIsArchipelago;
++    if (snapshot.active) {
++        snapshot.receivedItemCount = appliedItemCount;
++        snapshot.server = saveServer;
++        snapshot.slot = saveSlot;
++        snapshot.settingsJson = cachedSlotSettingsJson;
++        snapshot.fallbackNpcSpeechHashes = fallbackNpcSpeechHashes;
++        snapshot.pendingLocations.assign(pendingLocationReports.begin(), pendingLocationReports.end());
++        // A native check can be saved on the same frame it is collected, before
++        // the deferred report reaches SendLocation(). Include that queue too.
++        for (int64_t id : gDeferredLocationReports) {
++            if (!reportedLocations.contains(id) && !pendingLocationReports.contains(id))
++                snapshot.pendingLocations.push_back(id);
++        }
++    }
++    return snapshot;
++}
++
+ bool ArchipelagoClient::IsLocationReported(int64_t locationId) const {
+     return reportedLocations.find(locationId) != reportedLocations.end();
+ }
+@@ -2071,7 +2080,7 @@ size_t ArchipelagoClient::GetReportedActiveLocationCount() const {
+ }
+ 
+ bool ArchipelagoClient::PrepareCheckFinderMappings() {
+-    if (!enabled.load() || !activeLocationsLoaded) {
++    if (!currentSaveIsArchipelago || saveIdentityMismatch || !activeLocationsLoaded) {
+         return false;
+     }
+ 
+@@ -2345,6 +2354,7 @@ std::string ArchipelagoClient::GetRemoteItemDescription(int32_t randomizerCheck)
+ }
+ 
+ void ArchipelagoClient::EnsureLocationScouts() {
++    DrainSlotData();
+     RequestLocationScouts();
+ }
+ void ArchipelagoClient::RefreshPlacementForCheck(int32_t randomizerCheck) {
+@@ -2352,7 +2362,7 @@ void ArchipelagoClient::RefreshPlacementForCheck(int32_t randomizerCheck) {
+     // placement reconciliation.  Always make the scouted AP placement authoritative
+     // immediately before SoH chooses a model.  This fixes stale native models for
+     // freestanding items, shops, and item drops spawned from grass/rocks/etc.
+-    if (!IsEnabled() || !IsAuthenticated() || scoutedLocations.empty()) return;
++    if (!IsGameplaySessionActive() || scoutedLocations.empty()) return;
+ 
+     auto ctx = Rando::Context::GetInstance();
+     if (!ctx) return;
+@@ -2398,7 +2408,7 @@ void ArchipelagoClient::RefreshPlacementForCheck(int32_t randomizerCheck) {
+ }
+ 
+ void ArchipelagoClient::RefreshPlacementsForScene(int16_t sceneNum) {
+-    if (!IsEnabled() || !IsAuthenticated() || scoutedLocations.empty()) return;
++    if (!IsGameplaySessionActive() || scoutedLocations.empty()) return;
+ 
+     // Build the native scene -> RC list once. This cache is static game data and
+     // does not depend on the AP slot.
+@@ -2429,6 +2439,7 @@ void ArchipelagoClient::RefreshPlacementsForScene(int16_t sceneNum) {
+ }
+ 
+ void ArchipelagoClient::ApplyScoutedPlacements() {
++    if (!IsGameplaySessionActive()) return;
+     auto ctx = Rando::Context::GetInstance();
+     if (!ctx || scoutedLocations.empty()) return;
+ 
+@@ -2492,6 +2503,13 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
+         return false;
+     }
+ 
++    // Keep the receive cursor and reward untouched during death, scene changes,
++    // and pause. In particular a Heart Piece must not revive a dying AP player.
++    if (gSaveContext.health <= 0 || gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
++        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF || GameInteractor::IsGameplayPaused()) {
++        return false;
++    }
++
+     Player* player = GET_PLAYER(gPlayState);
+     if (player == nullptr || Player_InBlockingCsMode(gPlayState, player) ||
+         (player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM | PLAYER_STATE1_CARRYING_ACTOR))) {
+@@ -2709,6 +2727,54 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
+     auto item = Rando::StaticData::RetrieveItem(randoGet);
+     GetItemEntry giEntry = item.GetGIEntry_Copy();
+ 
++    // These rewards must behave identically during live delivery and historical
++    // replay. Neither path relies on the native local-check animation hook.
++    if (randoGet == RG_GOLD_SKULLTULA_TOKEN || randoGet == RG_PIECE_OF_HEART ||
++        randoGet == RG_HEART_CONTAINER) {
++        if (giEntry.itemId == ITEM_NONE) return false;
++        Item_Give(gPlayState, static_cast<uint8_t>(giEntry.itemId));
++        if (randoGet == RG_PIECE_OF_HEART || randoGet == RG_HEART_CONTAINER) {
++            // Item_Give adds the fourth piece; the local-check receive handler
++            // normally converts it into capacity, but AP does not enter that handler.
++            const uint32_t pieces = (gSaveContext.inventory.questItems >> (QUEST_HEART_PIECE + 4)) & 0xF;
++            if (pieces >= 4) {
++                gSaveContext.inventory.questItems = (gSaveContext.inventory.questItems & 0x0FFFFFFF) |
++                    ((pieces % 4) << (QUEST_HEART_PIECE + 4));
++                gSaveContext.healthCapacity += (pieces / 4) * FULL_HEART_HEALTH;
++            }
++            gSaveContext.health = gSaveContext.healthCapacity;
++            gSaveContext.healthAccumulator = 0;
++        }
++        if (!historicalNewSaveReplay) {
++            Notification::Emit({ .prefix = "Archipelago", .message = "received",
++                                 .suffix = item.GetName().english, .remainingTime = 4.0f });
++        }
++        return true;
++    }
++
++    if (randoGet == RG_PROGRESSIVE_WALLET) {
++        // Resolve from the live save, not the check finder's simulated inventory.
++        const int level = CUR_UPG_VALUE(UPG_WALLET);
++        const int maxLevel = RAND_GET_OPTION(RSK_INCLUDE_TYCOON_WALLET).Get() ? 3 : 2;
++        if (!Flags_GetRandomizerInf(RAND_INF_HAS_WALLET)) {
++            Flags_SetRandomizerInf(RAND_INF_HAS_WALLET);
++        } else if (level < maxLevel) {
++            Inventory_ChangeUpgrade(UPG_WALLET, level + 1);
++        } else if (RAND_GET_OPTION(RSK_INFINITE_UPGRADES).IsNot(RO_INF_UPGRADES_OFF)) {
++            Randomizer_Item_Give(gPlayState, Rando::StaticData::RetrieveItem(RG_WALLET_INF).GetGIEntry_Copy());
++        }
++        if (RAND_GET_OPTION(RSK_FULL_WALLETS).Get()) {
++            gSaveContext.rupees = static_cast<s16>(CUR_CAPACITY(UPG_WALLET));
++            gSaveContext.rupeeAccumulator = 0;
++        }
++        if (!historicalNewSaveReplay) {
++            Notification::Emit({ .prefix = "Archipelago", .message = "received",
++                                 .suffix = item.GetName().english, .remainingTime = 4.0f });
++        }
++        // An extra wallet at the maximum tier is still a valid AP receipt.
++        return true;
++    }
++
+     // A newly-created local AP file may need to reconstruct a large server-side
+     // ReceivedItems history. Starting a hold-item cutscene for every historical
+     // major item can leave the first session effectively locked in item presentation
+@@ -2760,80 +2826,6 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
+         return true;
+     }
+ 
+-    // These AP rewards are vanilla inventory/stat items even though they are looked
+-    // up through the randomizer table. Apply them through Item_Give unconditionally
+-    // so their save fields are updated regardless of IsMajorItem classification.
+-    // This also covers Piece of Heart (WINNER), which maps to RG_PIECE_OF_HEART.
+-    if (randoGet == RG_GOLD_SKULLTULA_TOKEN || randoGet == RG_PIECE_OF_HEART ||
+-        randoGet == RG_HEART_CONTAINER) {
+-        if (giEntry.itemId == ITEM_NONE) {
+-            SPDLOG_ERROR("[Archipelago] Vanilla stat reward {} ({}) has no vanilla ItemID",
+-                         itemId, item.GetName().english);
+-            return true;
+-        }
+-
+-        const uint64_t statDigestBefore = CaptureApPersistentGrantDigest();
+-        SPDLOG_INFO("[Archipelago] Applying vanilla stat reward id {} ({}) with Item_Give (itemId={})",
+-                    itemId, item.GetName().english, giEntry.itemId);
+-        Item_Give(gPlayState, static_cast<uint8_t>(giEntry.itemId));
+-        if (CaptureApPersistentGrantDigest() == statDigestBefore) {
+-            SPDLOG_ERROR("[Archipelago] Vanilla stat reward {} ({}) did not change persistent state; retrying",
+-                         itemId, item.GetName().english);
+-            return false;
+-        }
+-        Notification::Emit({
+-            .prefix = "Archipelago",
+-            .message = "received",
+-            .suffix = item.GetName().english,
+-            .remainingTime = 4.0f,
+-        });
+-        return true;
+-    }
+-
+-    // Progressive Wallet needs an explicit save-state progression path in AP mode.
+-    // The generic major get-item path can normalize the child/adult wallet entry to
+-    // a different vanilla get-item callback and then commit the AP receive even though
+-    // the wallet tier did not advance.  That was visible as a server-side
+-    // "Received Progressive Wallet" while the rupee cap stayed at 99.
+-    //
+-    // Apply exactly one wallet step and verify the resulting state before allowing
+-    // the transactional queue entry to commit.  This is idempotent with AP replay
+-    // because MarkItemApplied() remains the persistence boundary.
+-    if (randoGet == RG_PROGRESSIVE_WALLET) {
+-        const bool hadChildWallet = Flags_GetRandomizerInf(RAND_INF_HAS_WALLET);
+-        const int beforeLevel = CUR_UPG_VALUE(UPG_WALLET);
+-
+-        if (!hadChildWallet) {
+-            Flags_SetRandomizerInf(RAND_INF_HAS_WALLET);
+-        } else if (beforeLevel == 0) {
+-            Item_Give(gPlayState, ITEM_WALLET_ADULT);
+-        } else if (beforeLevel == 1) {
+-            Item_Give(gPlayState, ITEM_WALLET_GIANT);
+-        } else {
+-            // Tycoon/infinite wallet tiers are fork-native randomizer entries.
+-            Randomizer_Item_Give(gPlayState, giEntry);
+-        }
+-
+-        const bool hasChildWallet = Flags_GetRandomizerInf(RAND_INF_HAS_WALLET);
+-        const int afterLevel = CUR_UPG_VALUE(UPG_WALLET);
+-        const bool advanced = (!hadChildWallet && hasChildWallet) || (afterLevel > beforeLevel);
+-        SPDLOG_INFO("[Archipelago] Progressive Wallet direct grant: child {} -> {}, level {} -> {}, advanced={}",
+-                    hadChildWallet, hasChildWallet, beforeLevel, afterLevel, advanced);
+-
+-        if (!advanced) {
+-            SPDLOG_ERROR("[Archipelago] Progressive Wallet did not advance; leaving AP receive queued for retry");
+-            return false;
+-        }
+-
+-        Notification::Emit({
+-            .prefix = "Archipelago",
+-            .message = "received",
+-            .suffix = item.GetName().english,
+-            .remainingTime = 4.0f,
+-        });
+-        return true;
+-    }
+-
+     // Match normal randomizer UX more closely: only advancement/major items interrupt
+     // gameplay with the hold-item animation. Refills, ammo, rupees, maps/compasses,
+     // ordinary hearts, and other non-major rewards are applied immediately and shown
+@@ -2941,8 +2933,6 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
+         awaitingMajorItemId = static_cast<int>(giEntry.itemId);
+         awaitingMajorGetItemId = static_cast<int>(giEntry.getItemId);
+         gAwaitingMajorFrames = 0;
+-        gAwaitingMajorStateDigestBefore = CaptureApPersistentGrantDigest();
+-        gAwaitingMajorCallbackSeen = false;
+     }
+ 
+     if (!GiveItemEntryWithoutActor(gPlayState, giEntry)) {
+@@ -2957,7 +2947,6 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
+             awaitingMajorItemId = 0;
+             awaitingMajorGetItemId = 0;
+             gAwaitingMajorFrames = 0;
+-            ResetApMajorVerificationState();
+         }
+ 
+         SPDLOG_DEBUG("[Archipelago] Link cannot receive major item {} yet; retrying", itemId);
+@@ -3134,7 +3123,8 @@ void ArchipelagoClient::RefreshSongNotes() {
+ }
+ 
+ bool ArchipelagoClient::IsGameplaySessionActive() const {
+-    return gPlayState != nullptr && gSaveContext.ship.quest.id == QUEST_RANDOMIZER;
++    return currentSaveIsArchipelago && !saveIdentityMismatch &&
++           gPlayState != nullptr && gSaveContext.ship.quest.id == QUEST_RANDOMIZER;
+ }
+ 
+ void ArchipelagoClient::BeginFileSelectActivation() {
+@@ -3160,7 +3150,38 @@ void ArchipelagoClient::SendChatMessage(const std::string& message) {
+     SPDLOG_INFO("[Archipelago] Chat sent: {}", trimmed);
+ }
+ 
++void ArchipelagoClient::UpdateGoal() {
++    if (!IsGameplaySessionActive() || gPlayState == nullptr) return;
++    if (!IsAuthenticated()) goalReported = false;
++    auto ctx = Rando::Context::GetInstance();
++    if (!ctx) return;
++    auto* win = ctx->GetItemLocation(RC_WINCON);
++    const int required = RAND_GET_OPTION(RSK_WINCON_TRIFORCE_COUNT).Get();
++    const bool huntComplete = RAND_GET_OPTION(RSK_WINCON).Is(RO_WINCON_TRIFORCE_PIECES) &&
++        required > 0 && gSaveContext.ship.quest.data.randomizer.triforcePiecesCollected >= required;
++    // An interrupted item presentation is not a committed goal.
++    if (awaitingMajorItemReceipt) return;
++    if (huntComplete && win != nullptr && !win->HasObtained()) {
++        win->SetCheckStatus(RCSHOW_COLLECTED);
++    }
++    const bool complete = gSaveContext.ship.stats.gameComplete || (win != nullptr && win->HasObtained());
++    if (complete && IsAuthenticated() && !goalReported) {
++        AP_StoryComplete();
++        goalReported = true;
++        SPDLOG_INFO("[Archipelago] Goal complete; sent CLIENT_GOAL");
++    }
++    Player* player = GET_PLAYER(gPlayState);
++    if (huntComplete && !gSaveContext.ship.stats.gameComplete && player != nullptr &&
++        gSaveContext.health > 0 && !GameInteractor::IsGameplayPaused() &&
++        gPlayState->transitionTrigger == TRANS_TRIGGER_OFF &&
++        !Player_InBlockingCsMode(gPlayState, player) &&
++        !(player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM))) {
++        GameInteractor_SetTriforceHuntCreditsWarpActive(true);
++    }
++}
++
+ void ArchipelagoClient::Update() {
++    if (enabled.load()) DrainSlotData();
+     ServiceFinderWorker();
+     if (!enabled.load()) return;
+ 
+@@ -3299,6 +3320,8 @@ void ArchipelagoClient::Update() {
+     while (!deaths.empty() && !ownSlot.empty() && deaths.front().source == ownSlot) deaths.pop_front();
+     while (!traps.empty() && !ownSlot.empty() && traps.front().source == ownSlot) traps.pop_front();
+ 
++    if (!deathLinkEnabled) deaths.clear();
++    if (!trapLinkEnabled) traps.clear();
+     if (!deaths.empty()) {
+         if (gPlayState != nullptr && GET_PLAYER(gPlayState) != nullptr) {
+             const auto& death = deaths.front();
+@@ -3344,28 +3367,11 @@ void ArchipelagoClient::Update() {
+                 (majorPlayer->stateFlags1 &
+                  (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM | PLAYER_STATE1_CARRYING_ACTOR));
+ 
+-            const bool persistentStateChanged =
+-                CaptureApPersistentGrantDigest() != gAwaitingMajorStateDigestBefore;
+-
+-            if (persistentStateChanged &&
+-                (gAwaitingMajorCallbackSeen ||
+-                 (!stillInMajorReceive &&
+-                  gAwaitingMajorFrames >= AP_MAJOR_RECEIVE_FALLBACK_MIN_FRAMES))) {
+-                if (!gAwaitingMajorCallbackSeen) {
+-                    SPDLOG_WARN(
+-                        "[Archipelago] Major AP receive #{} item {} changed persistent state without "
+-                        "OnItemReceive; committing from verified post-animation state",
+-                        awaitingMajorSequence, awaitingMajorApItemId);
+-                }
+-
+-                FinalizeMajorItemReceipt(awaitingMajorModIndex, awaitingMajorItemId,
+-                                         awaitingMajorGetItemId);
+-            } else if (!persistentStateChanged && !stillInMajorReceive &&
+-                       gAwaitingMajorFrames >= AP_MAJOR_RECEIVE_VERIFY_TIMEOUT_FRAMES) {
+-                SPDLOG_ERROR(
+-                    "[Archipelago] Major AP receive #{} item {} presentation finished but persistent "
+-                    "state never changed; NOT committing and NOT notifying; queued item will retry",
+-                    awaitingMajorSequence, awaitingMajorApItemId);
++            // Never infer a receipt from unrelated inventory changes. If the
++            // engine did not report this item, retry after its presentation ends.
++            if (!stillInMajorReceive && gAwaitingMajorFrames >= AP_MAJOR_RECEIVE_VERIFY_TIMEOUT_FRAMES) {
++                SPDLOG_WARN("[Archipelago] AP receive #{} item {} had no matching receipt; retrying",
++                            awaitingMajorSequence, awaitingMajorApItemId);
+ 
+                 awaitingMajorItemReceipt = false;
+                 awaitingMajorSequence = 0;
+@@ -3374,7 +3380,6 @@ void ArchipelagoClient::Update() {
+                 awaitingMajorItemId = 0;
+                 awaitingMajorGetItemId = 0;
+                 gAwaitingMajorFrames = 0;
+-                ResetApMajorVerificationState();
+             }
+         }
+     }
+@@ -3393,6 +3398,9 @@ void ArchipelagoClient::Update() {
+             PendingItem nextItem{};
+             {
+                 std::scoped_lock lock(queueMutex);
++                while (!pendingItems.empty() && pendingItems.front().sequence < appliedItemCount) {
++                    pendingItems.pop_front();
++                }
+                 if (awaitingMajorItemReceipt || pendingItems.empty()) {
+                     break;
+                 }
+@@ -3514,13 +3522,8 @@ void ArchipelagoClient::Update() {
+         }
+ 
+ 
+-        // If the initial LocationScouts packet was lost or arrived before the
+-        // server finished authentication, retry until we actually have placement
+-        // data. Once data is present there is no reason to keep rescouting.
+-        if (scoutedLocations.empty() && syncFrameCounter == 0) {
+-            scoutsRequested = false;
+-            RequestLocationScouts();
+-        }
++        // Throttled internally; retries only missing records after a partial reply.
++        RequestLocationScouts();
+     } else if (wasAuthenticated) {
+         // Preserve the last server-confirmed location set across a temporary
+         // disconnect. Enable() clears it when intentionally connecting to a
+@@ -3553,6 +3556,8 @@ void ArchipelagoClient::Update() {
+         }
+     }
+ 
++    UpdateGoal();
++
+     // Keep Flow of Time frozen until its progression item is received.
+     if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("ShuffleFlowOfTime"), 0) &&
+         !Flags_GetRandomizerInf(RAND_INF_FLOW_OF_TIME) && gPlayState != nullptr) {
+@@ -3593,7 +3598,7 @@ void ArchipelagoClient::SyncCollectedLocations() {
+ 
+ 
+ bool ArchipelagoClient::OwnsCheck(int32_t randomizerCheck) {
+-    if (!enabled.load()) return false;
++    if (!currentSaveIsArchipelago || saveIdentityMismatch) return false;
+ 
+     const int64_t apLocation = ResolveApLocationForCheck(randomizerCheck);
+     if (apLocation < 0) return false;
+@@ -3606,7 +3611,7 @@ bool ArchipelagoClient::OwnsCheck(int32_t randomizerCheck) {
+ }
+ 
+ bool ArchipelagoClient::OwnsCheckCached(int32_t randomizerCheck) const {
+-    if (!enabled.load()) return false;
++    if (!currentSaveIsArchipelago || saveIdentityMismatch) return false;
+ 
+     auto it = rcToApLocation.find(randomizerCheck);
+     if (it == rcToApLocation.end()) {
+@@ -3876,7 +3881,7 @@ bool ArchipelagoClient::ReportFallbackNpcSpeech(const Actor* actor) {
+     for (int64_t i = 0; i < AP_EXTREME_SPEECH_FALLBACK_COUNT; ++i) {
+         const int64_t candidate = AP_EXTREME_SPEECH_FALLBACK_BASE + i;
+         if (activeLocations.find(candidate) != activeLocations.end() &&
+-            reportedLocations.find(candidate) == reportedLocations.end()) {
++            !IsLocationSubmitted(candidate)) {
+             speechLocation = candidate;
+             break;
+         }
+@@ -3918,17 +3923,17 @@ bool ArchipelagoClient::ReportNpcSpeechLocation(int64_t speechLocation) {
+     // This is the critical "first interaction" test. reportedLocations is also
+     // rebuilt from Archipelago's checked-locations callback after reconnect/load,
+     // so an NPC already checked on the server immediately goes back to normal dialog.
+-    if (reportedLocations.find(speechLocation) != reportedLocations.end()) return false;
++    if (IsLocationSubmitted(speechLocation)) return false;
+ 
+     auto scoutIt = scoutedLocations.find(speechLocation);
+     const std::string speechName =
+         scoutIt != scoutedLocations.end() ? scoutIt->second.locationName : "NPC Speech";
+ 
+-    // SendLocation inserts into reportedLocations synchronously before handing the
+-    // check to APCpp, so a second A press cannot trigger the speech check twice.
++    // Reserve the check locally before waiting for the network acknowledgment.
++    // The saved outbox retries even if the connection drops on this interaction.
+     SendLocation(speechLocation, true);
+ 
+-    if (reportedLocations.find(speechLocation) == reportedLocations.end()) {
++    if (!IsLocationSubmitted(speechLocation)) {
+         // Authentication/session changed between the tests above and SendLocation.
+         return false;
+     }
+@@ -3948,7 +3953,7 @@ bool ArchipelagoClient::ReportNpcSpeechLocation(int64_t speechLocation) {
+ }
+ 
+ void ArchipelagoClient::SendLocation(int64_t locationId, bool notifyRemote) {
+-    if (!IsAuthenticated() || !IsGameplaySessionActive()) return;
++    if (!IsGameplaySessionActive()) return;
+     if (!activeLocationsLoaded) return;
+     if (activeLocations.find(locationId) == activeLocations.end()) {
+         SPDLOG_WARN("[Archipelago] Refusing to send inactive/invalid AP location {}", locationId);
+@@ -3985,7 +3990,7 @@ void ArchipelagoClient::SendLocation(int64_t locationId, bool notifyRemote) {
+     }
+ 
+     SPDLOG_INFO("[Archipelago] Sending checked location {} (awaiting server confirmation)", locationId);
+-    AP_SendItem(locationId);
++    if (IsAuthenticated()) AP_SendItem(locationId);
+ }
+ 
+ void ArchipelagoClient::RegisterHooks() {
+@@ -4121,19 +4126,9 @@ void ArchipelagoClient::RegisterHooks() {
+                              static_cast<int32_t>(rc));
+             }
+ 
+-            // RC_WINCON is SOH's canonical completed-goal check.  LocationChecks
+-            // alone do not tell an Archipelago server that the client reached its
+-            // goal, so explicitly send CLIENT_GOAL (StatusUpdate = 30).  This is
+-            // intentionally done for both a newly-collected and a saved win check:
+-            // the latter lets an already-completed local file repair a missing goal
+-            // report after upgrading the client/reconnecting.  AP goal updates are
+-            // idempotent, and the server's release-on-goal policy is responsible for
+-            // releasing remaining items without marking their locations collected.
+-            if (rc == RC_WINCON && apClient.IsAuthenticated() &&
+-                apClient.IsCurrentSaveArchipelago()) {
+-                SPDLOG_INFO("[Archipelago] Win condition complete; sending CLIENT_GOAL status");
+-                AP_StoryComplete();
+-            }
++            // UpdateGoal reports completion from the active gameplay save and
++            // retries once per authentication, including already-completed saves.
++
+         });
+ }
+ 
+@@ -4185,6 +4180,10 @@ extern "C" bool Archipelago_IsLocationActive(int64_t locationId) {
+     return ArchipelagoClient::GetInstance().IsLocationActive(locationId);
+ }
+ 
++extern "C" bool Archipelago_IsLocationSubmitted(int64_t locationId) {
++    return ArchipelagoClient::GetInstance().IsLocationSubmitted(locationId);
++}
++
+ extern "C" bool Archipelago_IsLocationReported(int64_t locationId) {
+     return ArchipelagoClient::GetInstance().IsLocationReported(locationId);
+ }
+@@ -4248,4 +4247,3 @@ extern "C" void Archipelago_InitSaveFile(void) {
+     client.EndFileSelectActivation();
+     SPDLOG_INFO("[Archipelago] Initialized new SOH-EXTREME save; AP replay/scout work deferred to gameplay");
+ }
+-
+diff --git a/soh/Network/Archipelago/ArchipelagoClient.h b/soh/Network/Archipelago/ArchipelagoClient.h
+index a2841468..e4a0fe81 100644
+--- a/soh/Network/Archipelago/ArchipelagoClient.h
++++ b/soh/Network/Archipelago/ArchipelagoClient.h
+@@ -11,6 +11,7 @@
+ #include <vector>
+ #include "TrackerMirror.h"
+ #include "TrackerWorker.h"
++#include "ArchipelagoSaveSnapshot.h"
+ 
+ 
+ class ArchipelagoClient {
+@@ -48,6 +49,10 @@ class ArchipelagoClient {
+     bool PrepareCheckFinderMappings();
+     bool IsLocationActive(int64_t locationId) const;
+     bool IsLocationReported(int64_t locationId) const;
++    bool IsLocationSubmitted(int64_t locationId) const;
++    void LoadPendingLocations(const std::vector<int64_t>& locations);
++    // Game-thread only, paired with the engine's inventory snapshot.
++    ArchipelagoSaveSnapshot CaptureSaveSnapshot() const;
+     size_t GetActiveLocationCount() const;
+     size_t GetReportedActiveLocationCount() const;
+     void ApplyScoutedPlacements();
+@@ -85,6 +90,9 @@ class ArchipelagoClient {
+     ArchipelagoClient& operator=(const ArchipelagoClient&) = delete;
+ 
+     void BeginItemReplay();
++    void QueueSlotData(const std::string& key, const std::string& raw);
++    void DrainSlotData();
++    void UpdateGoal();
+     void ResetFinderMirror();
+     void ServiceFinderWorker();
+     SohExtreme::TrackerWorker finderWorker;
+@@ -95,6 +103,7 @@ class ArchipelagoClient {
+     std::string finderWorkerError;
+     SohExtreme::TrackerMirrorState finderMirror;
+     std::string pendingFinderPayload;
++    std::string pendingFinderNonce;
+     std::string finderMirrorError;
+     double finderNextRequest = 0.0;
+     void QueueItem(int64_t itemId, bool notify);
+@@ -149,6 +158,8 @@ class ArchipelagoClient {
+ 
+     std::atomic<bool> enabled{ false };
+     std::mutex queueMutex;
++    // Callback-owned mailbox. Live settings/maps below belong to the game thread.
++    std::unordered_map<std::string, std::string> pendingSlotData;
+     std::deque<PendingItem> pendingItems;
+     std::deque<int64_t> pendingCheckedLocations;
+     std::deque<PendingScout> pendingScouts;
+@@ -184,7 +195,9 @@ class ArchipelagoClient {
+     bool lastPlayerAlive = true;
+     bool suppressNextDeathLinkSend = false;
+     size_t expectedScoutCount = 0;
++    double nextScoutRequest = 0.0;
+     bool wasAuthenticated = false;
++    bool goalReported = false;
+     uint32_t syncFrameCounter = 0;
+     bool scoutsRequested = false;
+     // Scene-local gameplay never needs every RC mapped. Check Finder does, but only
+diff --git a/soh/SaveManager.cpp b/soh/SaveManager.cpp
+index fb657bca..eadaf6ea 100644
+--- a/soh/SaveManager.cpp
++++ b/soh/SaveManager.cpp
+@@ -12,7 +12,7 @@
+ #include "soh/SohGui/SohGui.hpp"
+ #include "soh/Network/Archipelago/ArchipelagoClient.h"
+ 
+-static thread_local bool gSavingArchipelagoSnapshot = false;
++static thread_local const ArchipelagoSaveSnapshot* gSavingArchipelagoSnapshot = nullptr;
+ 
+ extern "C" {
+ #include "z64.h"
+@@ -313,6 +313,16 @@ void SaveManager::LoadRandomizer() {
+     ArchipelagoClient::GetInstance().LoadSaveMetadata(archipelagoSave, archipelagoReceivedItemCount,
+                                                        archipelagoServer, archipelagoSlot, archipelagoSettingsJson);
+     ArchipelagoClient::GetInstance().LoadFallbackNpcSpeechHashes(archipelagoFallbackNpcSpeechHashes);
++    size_t pendingLocationCount = 0;
++    std::vector<int64_t> pendingLocations;
++    SaveManager::Instance->LoadData("archipelagoPendingLocationCount", pendingLocationCount, (size_t)0);
++    pendingLocationCount = std::min(pendingLocationCount, size_t{50000});
++    SaveManager::Instance->LoadArray("archipelagoPendingLocations", pendingLocationCount, [&](size_t) {
++        int64_t id = 0;
++        SaveManager::Instance->LoadData("", id, int64_t{0});
++        if (id > 0) pendingLocations.push_back(id);
++    });
++    ArchipelagoClient::GetInstance().LoadPendingLocations(pendingLocations);
+ 
+     std::shared_ptr<Randomizer> randomizer = OTRGlobals::Instance->gRandomizer;
+ 
+@@ -346,8 +356,7 @@ void SaveManager::SaveRandomizer(SaveContext* saveContext, int sectionID, bool f
+     }
+ 
+     auto randoContext = Rando::Context::GetInstance();
+-    auto& archipelago = ArchipelagoClient::GetInstance();
+-    const bool lightweightArchipelagoSave = gSavingArchipelagoSnapshot;
++    const bool lightweightArchipelagoSave = gSavingArchipelagoSnapshot != nullptr && gSavingArchipelagoSnapshot->active;
+ 
+     if (lightweightArchipelagoSave) {
+         // Archipelago is authoritative for placement/model/price data.  Writing
+@@ -519,18 +528,23 @@ void SaveManager::SaveRandomizer(SaveContext* saveContext, int sectionID, bool f
+ 
+     SaveManager::Instance->SaveData("pendingIceTrapCount", saveContext->ship.pendingIceTrapCount);
+ 
+-    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 2);
++    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 3);
+     SaveManager::Instance->SaveData("archipelagoSave", lightweightArchipelagoSave);
+     if (lightweightArchipelagoSave) {
+-        SaveManager::Instance->SaveData("archipelagoReceivedItemCount", archipelago.GetAppliedItemCount());
+-        SaveManager::Instance->SaveData("archipelagoServer", archipelago.GetSaveServer());
+-        SaveManager::Instance->SaveData("archipelagoSlot", archipelago.GetSaveSlot());
++        const auto& archipelago = *gSavingArchipelagoSnapshot;
++        SaveManager::Instance->SaveData("archipelagoReceivedItemCount", archipelago.receivedItemCount);
++        SaveManager::Instance->SaveData("archipelagoServer", archipelago.server);
++        SaveManager::Instance->SaveData("archipelagoSlot", archipelago.slot);
+         // Persist the exact flat gRando.Settings snapshot delivered by this AP slot.
+         // It is restored before scene actor initialization on the next load, eliminating
+         // the race where local menu values were visible until networking finished.
+-        SaveManager::Instance->SaveData("archipelagoSettingsJson", archipelago.GetCachedSlotSettingsJson());
++        SaveManager::Instance->SaveData("archipelagoSettingsJson", archipelago.settingsJson);
++
++        SaveManager::Instance->SaveData("archipelagoPendingLocationCount", archipelago.pendingLocations.size());
++        SaveManager::Instance->SaveArray("archipelagoPendingLocations", archipelago.pendingLocations.size(),
++            [&](size_t i) { SaveManager::Instance->SaveData("", archipelago.pendingLocations[i]); });
+ 
+-        const auto fallbackNpcSpeechHashes = archipelago.GetFallbackNpcSpeechHashes();
++        const auto fallbackNpcSpeechHashes = archipelago.fallbackNpcSpeechHashes;
+         SaveManager::Instance->SaveData("archipelagoFallbackNpcSpeechCount", fallbackNpcSpeechHashes.size());
+         SaveManager::Instance->SaveArray("archipelagoFallbackNpcSpeechHashes", fallbackNpcSpeechHashes.size(),
+                                          [&](size_t i) {
+@@ -1341,13 +1355,13 @@ int copy_file(const char* src, const char* dst) {
+ 
+ // Threaded SaveFile takes copy of gSaveContext for local unmodified storage
+ 
+-void SaveManager::SaveFileThreaded(int fileNum, SaveContext* saveContext, int sectionID, bool archipelagoSaveSnapshot) {
++void SaveManager::SaveFileThreaded(int fileNum, SaveContext* saveContext, int sectionID, ArchipelagoSaveSnapshot archipelagoSaveSnapshot) {
+     saveMtx.lock();
+-    gSavingArchipelagoSnapshot = archipelagoSaveSnapshot;
++    gSavingArchipelagoSnapshot = &archipelagoSaveSnapshot;
+     SPDLOG_INFO("Save File - fileNum: {}", fileNum);
+     // Needed for first time save, hasn't changed in forever anyway
+     saveBlock["version"] = 1;
+-    if (IS_RANDO) {
++    if (saveContext->ship.quest.id == QUEST_RANDOMIZER) {
+         saveBlock["fileType"] = FILE_TYPE_SAVE_RANDO;
+     } else {
+         saveBlock["fileType"] = FILE_TYPE_SAVE_VANILLA;
+@@ -1399,7 +1413,7 @@ void SaveManager::SaveFileThreaded(int fileNum, SaveContext* saveContext, int se
+     fclose(w);
+ #else
+     std::ofstream output(tempFile);
+-    if (archipelagoSaveSnapshot) {
++    if (archipelagoSaveSnapshot.active) {
+         // AP saves intentionally omit the huge native placement/hint payload,
+         // so compact JSON keeps the remaining synchronous lifecycle wait tiny.
+         output << saveBlock.dump() << '\n';
+@@ -1425,7 +1439,7 @@ void SaveManager::SaveFileThreaded(int fileNum, SaveContext* saveContext, int se
+     InitMeta(fileNum);
+     GameInteractor::Instance->ExecuteHooks<GameInteractor::OnSaveFile>(fileNum, sectionID);
+     SPDLOG_INFO("Save File Finish - fileNum: {}", fileNum);
+-    gSavingArchipelagoSnapshot = false;
++    gSavingArchipelagoSnapshot = nullptr;
+     saveMtx.unlock();
+ }
+ 
+@@ -1444,12 +1458,11 @@ void SaveManager::SaveSection(int fileNum, int sectionID, bool threaded) {
+     auto saveContext = new SaveContext;
+     memcpy(saveContext, &gSaveContext, sizeof(gSaveContext));
+ 
+-    // Capture AP ownership on the calling/gameplay thread.  Do not ask the live
+-    // Archipelago client from the worker after Reset/file-select has started
+-    // changing session state.
+-    const bool archipelagoSaveSnapshot =
+-        saveContext->ship.quest.id == QUEST_RANDOMIZER &&
+-        ArchipelagoClient::GetInstance().IsCurrentSaveArchipelago();
++    // Capture ALL AP persistence fields beside inventory on the game thread.
++    // The worker owns this value even if another receipt or save load happens.
++    auto archipelagoSaveSnapshot = ArchipelagoClient::GetInstance().CaptureSaveSnapshot();
++    archipelagoSaveSnapshot.active = archipelagoSaveSnapshot.active &&
++        saveContext->ship.quest.id == QUEST_RANDOMIZER;
+ 
+     if (threaded) {
+         smThreadPool->detach_task(
+diff --git a/soh/SaveManager.h b/soh/SaveManager.h
+index eb20a2b8..2a2a6479 100644
+--- a/soh/SaveManager.h
++++ b/soh/SaveManager.h
+@@ -58,6 +58,7 @@ typedef enum {
+ #include <BS_thread_pool.hpp>
+ 
+ #include <nlohmann/json.hpp>
++#include "Network/Archipelago/ArchipelagoSaveSnapshot.h"
+ 
+ class SaveManager {
+   public:
+@@ -162,7 +163,8 @@ class SaveManager {
+     void ConvertFromUnversioned();
+     void CreateDefaultGlobal();
+ 
+-    void SaveFileThreaded(int fileNum, SaveContext* saveContext, int sectionID, bool archipelagoSaveSnapshot);
++    void SaveFileThreaded(int fileNum, SaveContext* saveContext, int sectionID,
++                          ArchipelagoSaveSnapshot archipelagoSaveSnapshot);
+ 
+     void InitMeta(int slotNum);
+     void StartupCheckAndInitMeta(int slotNum);
+diff --git a/tools/build_standalone_apworld.ps1 b/tools/build_standalone_apworld.ps1
+index 2d2accbc..3e01b6fa 100644
+--- a/tools/build_standalone_apworld.ps1
++++ b/tools/build_standalone_apworld.ps1
+@@ -20,9 +20,16 @@ $SourceRoot = Join-Path $Root 'archipelago'
+ $PackageRoot = Join-Path $SourceRoot 'soh_extreme'
+ $Output = Join-Path $Root 'soh_extreme.apworld'
+ 
+-function Get-Hash([string]$Path) {
+-    return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+-}
++function Get-Hash([string]$Path) {
++    $Stream = [IO.File]::OpenRead($Path)
++    $Hasher = [Security.Cryptography.SHA256]::Create()
++    try {
++        return ([BitConverter]::ToString($Hasher.ComputeHash($Stream))).Replace('-', '').ToLowerInvariant()
++    } finally {
++        $Stream.Dispose()
++        $Hasher.Dispose()
++    }
++}
+ 
+ function Get-ZipEntryHash($Entry) {
+     $Stream = $Entry.Open()
+diff --git a/soh/Network/Archipelago/ArchipelagoSaveSnapshot.h b/soh/Network/Archipelago/ArchipelagoSaveSnapshot.h
+new file mode 100644
+--- /dev/null
++++ b/soh/Network/Archipelago/ArchipelagoSaveSnapshot.h
+@@ -0,0 +1,17 @@
++#pragma once
++
++#include <cstdint>
++#include <string>
++#include <vector>
++
++// Copied with SaveContext on the game thread, then owned by one save job.
++// A writer must never pair old inventory with a newer live AP receipt cursor.
++struct ArchipelagoSaveSnapshot {
++    bool active = false;
++    uint64_t receivedItemCount = 0;
++    std::string server;
++    std::string slot;
++    std::string settingsJson;
++    std::vector<uint64_t> fallbackNpcSpeechHashes;
++    std::vector<int64_t> pendingLocations;
++};
+diff --git a/tools/copy_ap_runtime.ps1 b/tools/copy_ap_runtime.ps1
+new file mode 100644
+--- /dev/null
++++ b/tools/copy_ap_runtime.ps1
+@@ -0,0 +1,48 @@
++[CmdletBinding()]
++param(
++    [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
++    [string]$BuildRoot = '',
++    [string]$Destination = ''
++)
++$ErrorActionPreference = 'Stop'
++Set-StrictMode -Version Latest
++function Get-RuntimeSHA256([string]$Path) {
++    $algorithm = [Security.Cryptography.SHA256]::Create()
++    $stream = [IO.File]::OpenRead($Path)
++    try {
++        return [BitConverter]::ToString($algorithm.ComputeHash($stream))
++    } finally {
++        $stream.Dispose()
++        $algorithm.Dispose()
++    }
++}
++if (-not $BuildRoot) { $BuildRoot = Join-Path $ProjectRoot 'build-vs' }
++if (-not $Destination) { $Destination = $ProjectRoot }
++$manifest = Join-Path $BuildRoot 'soh-extreme-runtime-Release.txt'
++if (-not (Test-Path -LiteralPath $manifest -PathType Leaf)) {
++    throw "CMake runtime manifest missing: $manifest. Configure and build the patched source first."
++}
++$paths = @(Get-Content -LiteralPath $manifest | Where-Object { $_.Trim() })
++if ($paths.Count -ne 2 -or [IO.Path]::GetFileName($paths[0]) -ne 'soh.exe' -or
++    [IO.Path]::GetFileName($paths[1]) -ne 'APCpp.dll') {
++    throw 'The runtime manifest must contain the exact soh.exe and APCpp.dll target paths.'
++}
++# Validate the complete pair before replacing either destination file.
++foreach ($path in $paths) {
++    if (-not [IO.Path]::IsPathRooted($path) -or -not (Test-Path -LiteralPath $path -PathType Leaf)) {
++        throw "Built runtime file missing: $path"
++    }
++}
++if (-not (Test-Path -LiteralPath $Destination -PathType Container)) {
++    throw "Runtime destination does not exist: $Destination"
++}
++foreach ($path in $paths) {
++    $target = Join-Path $Destination ([IO.Path]::GetFileName($path))
++    if ([IO.Path]::GetFullPath($path) -ne [IO.Path]::GetFullPath($target)) {
++        Copy-Item -LiteralPath $path -Destination $target -Force
++    }
++    if ((Get-RuntimeSHA256 $path) -ne (Get-RuntimeSHA256 $target)) {
++        throw "Runtime copy verification failed: $target"
++    }
++    Write-Host "Verified runtime: $target"
++}
+diff --git a/validation/test_ap_delivery_audit.py b/validation/test_ap_delivery_audit.py
+new file mode 100644
+--- /dev/null
++++ b/validation/test_ap_delivery_audit.py
+@@ -0,0 +1,199 @@
++"""Production AP delivery/save functions with controlled engine/network services.
++
++Run in a VS x64 developer terminal with --include-dir pointing to the directory
++containing nlohmann/json.hpp. No live server or game is simulated by these tests.
++"""
++from pathlib import Path
++import argparse, json, subprocess, sys
++from run_native_tests import function
++parser=argparse.ArgumentParser(description=__doc__)
++parser.add_argument('--source-root',type=Path,default=Path(__file__).resolve().parent.parent)
++parser.add_argument('--include-dir',type=Path,required=True)
++parser.add_argument('--output',type=Path,default=Path('work/ap-delivery-tests'))
++a=parser.parse_args();root=a.source_root.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
++ap=(root/'soh/Network/Archipelago/ArchipelagoClient.cpp').read_text(encoding='utf-8')
++save=(root/'soh/SaveManager.cpp').read_text(encoding='utf-8')
++results=[]
++def run(name,code):
++ src=out/(name+'.cpp');exe=out/(name+'.exe');src.write_text(code,encoding='utf-8')
++ c=subprocess.run(['cl','/nologo','/std:c++20','/Zc:preprocessor','/EHsc','/MD','/I',str(root),'/I',str(a.include_dir.resolve()),str(src),'/Fo'+str(out/(name+'.obj')),'/Fe'+str(exe)],capture_output=True,text=True)
++ r=subprocess.run([str(exe)],capture_output=True,text=True) if c.returncode==0 else None
++ passed=c.returncode==0 and r.returncode==0
++ log=c.stdout+c.stderr+(r.stdout+r.stderr if r else '')
++ (out/(name+'.log')).write_text(log)
++ results.append(dict(name=name,passed=passed))
++ print(('PASS ' if passed else 'FAIL ')+name,flush=True)
++ if not passed:print(log[-5000:])
++common=r'''
++#include <cassert>
++#include <atomic>
++#include <algorithm>
++#include <cstring>
++#include <cstdint>
++#include <deque>
++#include <functional>
++#include <map>
++#include <set>
++#include <string>
++#include <unordered_map>
++#include <unordered_set>
++#include <vector>
++#include <nlohmann/json.hpp>
++#include "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h"
++#define SPDLOG_DEBUG(...) ((void)0)
++#define SPDLOG_INFO(...) ((void)0)
++#define SPDLOG_WARN(...) ((void)0)
++#define SPDLOG_ERROR(...) ((void)0)
++#define CVAR_RANDOMIZER_SETTING(x) x
++int CVarGetInteger(const char*,int){return 1;}
++struct Notice{std::string prefix,message,suffix;float remainingTime;};
++namespace Notification {void Emit(Notice){}}
++namespace CheckTracker{void RecalculateAvailableChecks(){}}
++constexpr int QUEST_RANDOMIZER=1;
++struct SaveContext{struct {struct{int id=QUEST_RANDOMIZER;}quest;}ship;int inventory=0;}gSaveContext;
++struct Play{int sceneNum=1;}play;Play*gPlayState=&play;
++struct Actor{int id=0,params=0;struct{struct{int x=0,y=0,z=0;}pos;}home;};
++bool Archipelago_IsManualSpeechActor(const Actor*){return true;}
++uint64_t Archipelago_NpcSpeechIdentity(const Actor*a,int16_t){return a->id;}
++constexpr int64_t AP_EXTREME_SPEECH_FALLBACK_BASE=1000,AP_EXTREME_SPEECH_FALLBACK_COUNT=3;
++double clockValue=0;double FinderMirrorClock(){return clockValue;}
++std::vector<int64_t>sent;std::vector<std::set<int64_t>>scoutPackets;
++void AP_SendItem(int64_t id){sent.push_back(id);}int AP_GetPlayerID(){return 1;}
++void AP_SendLocationScouts(std::set<int64_t> ids,bool){scoutPackets.push_back(ids);}
++std::deque<int64_t> gDeferredLocationReports;
++class ArchipelagoClient {public:
++ static ArchipelagoClient&GetInstance(){static ArchipelagoClient instance;return instance;}
++ bool currentSaveIsArchipelago=true,saveIdentityMismatch=false,authenticated=true,activeLocationsLoaded=true;
++ std::atomic_bool enabled=true;
++ bool IsAuthenticated()const{return authenticated;}
++ uint64_t appliedItemCount=0;std::string saveServer="server",saveSlot="slot",cachedSlotSettingsJson="{}";
++ std::vector<uint64_t>fallbackNpcSpeechHashes;std::unordered_set<uint64_t>fallbackNpcSpeechSeen;
++ std::unordered_set<int64_t>activeLocations,reportedLocations,pendingLocationReports;
++ struct Scout{int playerId=1;std::string itemName="Item",playerName="Player",locationName="NPC";};
++ std::unordered_map<int64_t,Scout>scoutedLocations;
++ std::unordered_map<int32_t,int64_t>rcToApLocation;
++ bool scoutsRequested=false;size_t expectedScoutCount=0;double nextScoutRequest=0;
++ int64_t ResolveApLocationForCheck(int32_t rc){auto it=rcToApLocation.find(rc);return it==rcToApLocation.end()?-1:it->second;}
++ bool IsGameplaySessionActive()const;bool OwnsCheck(int32_t);bool OwnsCheckCached(int32_t)const;
++ void SendLocation(int64_t,bool=false);bool IsLocationSubmitted(int64_t)const;
++ bool ReportNpcSpeechLocation(int64_t);bool ReportFallbackNpcSpeech(const Actor*);
++ void LoadPendingLocations(const std::vector<int64_t>&);ArchipelagoSaveSnapshot CaptureSaveSnapshot()const;
++ void RequestLocationScouts();
++};
++'''
++methods='\n'.join(function(ap,sig) for sig in [
++ 'bool ArchipelagoClient::IsGameplaySessionActive()', 'bool ArchipelagoClient::OwnsCheck(',
++ 'bool ArchipelagoClient::OwnsCheckCached(', 'void ArchipelagoClient::SendLocation(',
++ 'bool ArchipelagoClient::IsLocationSubmitted(', 'bool ArchipelagoClient::ReportNpcSpeechLocation(',
++ 'bool ArchipelagoClient::ReportFallbackNpcSpeech(', 'void ArchipelagoClient::LoadPendingLocations(',
++ 'ArchipelagoSaveSnapshot ArchipelagoClient::CaptureSaveSnapshot()', 'void ArchipelagoClient::RequestLocationScouts()'])
++run('location_delivery_and_isolation',common+methods+r'''
++int main(){ArchipelagoClient c;c.activeLocations={10,1000,1001,1002};c.rcToApLocation={{1,10}};
++ assert(c.OwnsCheck(1)&&c.OwnsCheckCached(1));
++ // A connected AP client must neither steal nor send a local randomizer's checks.
++ c.currentSaveIsArchipelago=false;assert(!c.OwnsCheck(1)&&!c.OwnsCheckCached(1));c.SendLocation(10);assert(sent.empty());
++ c.currentSaveIsArchipelago=true;c.saveIdentityMismatch=true;c.SendLocation(10);assert(sent.empty());assert(!c.OwnsCheck(1));
++ c.saveIdentityMismatch=false;c.authenticated=false;
++ assert(c.ReportNpcSpeechLocation(10));assert(c.pendingLocationReports.contains(10));assert(sent.empty());
++ assert(!c.ReportNpcSpeechLocation(10)); // accepted once without an ACK
++ Actor first{1},second{2};assert(c.ReportFallbackNpcSpeech(&first));assert(!c.ReportFallbackNpcSpeech(&first));
++ assert(c.ReportFallbackNpcSpeech(&second));assert(c.pendingLocationReports.contains(1000)&&c.pendingLocationReports.contains(1001));
++ assert(c.fallbackNpcSpeechHashes.size()==2);
++ auto saved=c.CaptureSaveSnapshot();ArchipelagoClient loaded;loaded.LoadPendingLocations(saved.pendingLocations);
++ assert(loaded.IsLocationSubmitted(10)&&loaded.IsLocationSubmitted(1000)&&loaded.IsLocationSubmitted(1001));
++ assert(loaded.reportedLocations.empty()); // queued is never a fabricated server ACK
++ c.authenticated=true;auto retry=c.pendingLocationReports;c.pendingLocationReports.clear();
++ for(auto id:retry)c.SendLocation(id);assert(sent.size()==3);
++ c.reportedLocations.insert(10);c.pendingLocationReports.erase(10);c.SendLocation(10);assert(sent.size()==3);
++ c.SendLocation(999999);assert(sent.size()==3);assert(!c.IsLocationSubmitted(999999));
++ c.currentSaveIsArchipelago=false;c.LoadPendingLocations({1001});assert(c.pendingLocationReports.empty());
++}
++''')
++run('partial_scout_recovery',common+methods+r'''
++int main(){ArchipelagoClient c;for(int64_t id=1;id<=600;++id)c.activeLocations.insert(id);
++ c.RequestLocationScouts();assert(c.expectedScoutCount==600&&scoutPackets.size()==3);
++ for(const auto&p:scoutPackets)assert(p.size()<=256);
++ for(int64_t id=1;id<=256;++id)c.scoutedLocations[id]={};
++ clockValue=2;c.RequestLocationScouts();assert(scoutPackets.size()==3);
++ clockValue=3;c.RequestLocationScouts();assert(scoutPackets.size()==5&&c.expectedScoutCount==600);
++ size_t retryCount=0;for(size_t i=3;i<scoutPackets.size();++i)for(auto id:scoutPackets[i]){assert(id>256);++retryCount;}
++ assert(retryCount==344);
++ for(int64_t id=257;id<=600;++id)c.scoutedLocations[id]={};
++ clockValue=6;c.RequestLocationScouts();assert(scoutPackets.size()==5&&c.expectedScoutCount==600);
++ c.authenticated=false;c.scoutedLocations.clear();clockValue=12;c.RequestLocationScouts();assert(scoutPackets.size()==5);
++ c.authenticated=true;c.scoutsRequested=false;c.RequestLocationScouts();assert(scoutPackets.size()==8);
++}
++''')
++metadata=save[save.index('    SaveManager::Instance->SaveData("archipelagoMetadataVersion"'):save.index('    std::shared_ptr<Randomizer> randomizer',save.index('    SaveManager::Instance->SaveData("archipelagoMetadataVersion"'))]
++run('save_snapshot_consistency',common+methods+r'''
++struct Pool{std::deque<std::function<void()>>jobs;template<class F>void detach_task(F f){jobs.emplace_back(f);}}pool;
++static thread_local const ArchipelagoSaveSnapshot*gSavingArchipelagoSnapshot=nullptr;
++class SaveManager{public:static SaveManager*Instance;int sectionIndex=10;Pool*smThreadPool=&pool;
++ nlohmann::json data;std::string arrayKey;bool inArray=false;std::vector<nlohmann::json>writes;
++ template<class T>void SaveData(std::string key,T value){if(inArray)data[arrayKey].push_back(value);else data[key]=value;}
++ template<class F>void SaveArray(std::string key,size_t size,F fn){data[key]=nlohmann::json::array();arrayKey=key;inArray=true;for(size_t i=0;i<size;++i)fn(i);inArray=false;}
++ void SaveSection(int,int,bool);
++ void SaveFileThreaded(int file,SaveContext*context,int,ArchipelagoSaveSnapshot snapshot){
++ gSavingArchipelagoSnapshot=&snapshot;const bool lightweightArchipelagoSave=snapshot.active;data=nlohmann::json::object();
++ data["inventory"]=context->inventory;data["file"]=file;
++'''+metadata+r'''
++ writes.push_back(data);delete context;gSavingArchipelagoSnapshot=nullptr;}
++};SaveManager*SaveManager::Instance=nullptr;
++'''+function(save,'void SaveManager::SaveSection(')+r'''
++int main(){SaveManager writer;SaveManager::Instance=&writer;auto&c=ArchipelagoClient::GetInstance();
++ c.appliedItemCount=1;c.pendingLocationReports={1000};c.fallbackNpcSpeechHashes={11};gSaveContext.inventory=1;
++ writer.SaveSection(0,0,true);
++ c.appliedItemCount=2;c.pendingLocationReports={1001};c.fallbackNpcSpeechHashes.push_back(22);gSaveContext.inventory=2;
++ writer.SaveSection(0,0,true);
++ // A different file can become live before either background save executes.
++ c.currentSaveIsArchipelago=false;c.saveSlot="other";c.appliedItemCount=99;gSaveContext.inventory=99;
++ while(!pool.jobs.empty()){auto job=pool.jobs.front();pool.jobs.pop_front();job();}
++ assert(writer.writes.size()==2);
++ for(size_t i=0;i<2;++i){const auto&w=writer.writes[i];assert(w["inventory"]==i+1);assert(w["archipelagoReceivedItemCount"]==i+1);
++ assert(w["archipelagoSave"]==true&&w["archipelagoSlot"]=="slot");assert(w["archipelagoPendingLocations"][0]==1000+i);
++ assert(w["archipelagoFallbackNpcSpeechCount"]==i+1);}
++ writer.SaveSection(1,0,false);assert(writer.writes.back()["archipelagoSave"]==false);
++ writer.SaveSection(0xff,0,true);assert(pool.jobs.empty());
++}
++''')
++
++# Compile the production receipt gate separately from ability-specific engine flags.
++major=function(ap,'void ArchipelagoClient::FinalizeMajorItemReceipt(')
++major_gate=major[major.index('    if (!awaitingMajorItemReceipt)'):major.index('    // SOH-EXTREME 0.7.55:')]
++run('major_receipt_identity',r'''
++#include <cassert>
++#include <cstdint>
++#define SPDLOG_DEBUG(...) ((void)0)
++constexpr int MOD_NONE=0,MOD_RANDOMIZER=1;
++bool awaitingMajorItemReceipt=true;int awaitingMajorModIndex=MOD_NONE,awaitingMajorItemId=20,awaitingMajorGetItemId=45;
++uint64_t awaitingMajorSequence=3;int64_t awaitingMajorApItemId=650;int commits=0;
++void callback(int modIndex,int itemId,int getItemId){
++'''+major_gate+r'''
++ ++commits;awaitingMajorItemReceipt=false;}
++int main(){callback(MOD_NONE,1,1);assert(commits==0); // incidental rupee/heart
++ callback(MOD_RANDOMIZER,20,45);assert(commits==0); // different item namespace
++ callback(MOD_NONE,20,99);assert(commits==1); // vanilla GetItemID alias
++ callback(MOD_NONE,20,99);assert(commits==1); // callback only once
++ awaitingMajorItemReceipt=true;awaitingMajorModIndex=MOD_RANDOMIZER;
++ callback(MOD_RANDOMIZER,20,99);assert(commits==1);
++ callback(MOD_RANDOMIZER,20,45);assert(commits==2); // capped/duplicate item is still received
++}
++''')
++
++# These are integration boundaries: regression tests above would not detect a
++# caller continuing to read live metadata or infer a grant from unrelated ammo.
++save_body=function(save,'void SaveManager::SaveRandomizer(')
++assert 'ArchipelagoClient::GetInstance()' not in save_body
++assert 'if (saveContext->ship.quest.id == QUEST_RANDOMIZER)' in function(save,'void SaveManager::SaveFileThreaded(')
++update=function(ap,'void ArchipelagoClient::Update()')
++assert 'gAwaitingMajorStateDigestBefore' not in update
++assert 'LoadPendingLocations(pendingLocations)' in save
++for sig in ('void ArchipelagoClient::Enable()', 'void ArchipelagoClient::Disable()'):
++ body=function(ap,sig)
++ assert 'currentSaveIsArchipelago = false' not in body
++ assert 'saveServer.clear()' not in body and 'saveSlot.clear()' not in body
++enemy=(root/'soh/Enhancements/randomizer/MegaSouls.cpp').read_text(encoding='utf-8')
++assert 'Archipelago_IsLocationActive(locationId), Archipelago_IsLocationSubmitted(locationId)' in enemy
++results.append(dict(name='AP save/receipt/enemy integration boundaries',passed=True))
++(out/'results.json').write_text(json.dumps(results,indent=2))
++sys.exit(0 if all(r['passed'] for r in results) else 1)
+diff --git a/validation/test_ap_gameplay_fixes.py b/validation/test_ap_gameplay_fixes.py
+new file mode 100644
+--- /dev/null
++++ b/validation/test_ap_gameplay_fixes.py
+@@ -0,0 +1,307 @@
++"""Execute changed production function bodies with controlled engine services.
++
++This validates state transitions without claiming an in-game/AP-server playthrough.
++Run from a VS x64 developer environment. Supply the nlohmann header include
++directory and the APCpp source directory after CMake has applied its repairs.
++Example: python validation/test_ap_gameplay_fixes.py --include-dir PATH
++         --apcpp-source build-vs/_deps/apcpp-src --output work/ap-gameplay-tests
++"""
++from pathlib import Path
++import ast, json, subprocess, sys, re, argparse
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++from run_native_tests import function
++parser = argparse.ArgumentParser(description=__doc__)
++parser.add_argument('--source-root', type=Path, default=Path(__file__).resolve().parent.parent)
++parser.add_argument('--include-dir', type=Path, required=True, help='Directory containing nlohmann/json.hpp')
++parser.add_argument('--apcpp-source', type=Path, required=True, help='Patched APCpp source directory')
++parser.add_argument('--output', type=Path, default=Path('work/ap-gameplay-tests'))
++args = parser.parse_args()
++ROOT = args.source_root.resolve()
++OUT = args.output.resolve()
++OUT.mkdir(parents=True, exist_ok=True)
++ap = (ROOT/'soh/Network/Archipelago/ArchipelagoClient.cpp').read_text()
++fish = (ROOT/'soh/Enhancements/randomizer/fishsanity.cpp').read_text()
++results=[]
++def run(name, source):
++    src=OUT/(name+'.cpp'); exe=OUT/(name+'.exe')
++    src.write_text(source)
++    proc=subprocess.run(['cl','/nologo','/std:c++20','/Zc:preprocessor','/EHsc','/MD','/I',str(args.include_dir.resolve()),str(src),'/Fo'+str(OUT/(name+'.obj')),'/Fe'+str(exe)],capture_output=True,text=True)
++    result=subprocess.run([str(exe)],capture_output=True,text=True) if proc.returncode==0 else None
++    passed=proc.returncode==0 and result.returncode==0
++    log=proc.stdout+proc.stderr+(result.stdout+result.stderr if result else '')
++    (OUT/(name+'.log')).write_text(log)
++    results.append({'name':name,'passed':passed,'log':str(OUT/(name+'.log'))})
++    print(('PASS ' if passed else 'FAIL ')+name, flush=True)
++    if not passed: print(log[-8000:])
++
++common=r'''
++#include <cassert>
++#include <cstdint>
++#include <string>
++#include <array>
++#include <set>
++#include <unordered_set>
++#include <unordered_map>
++#include <deque>
++#include <mutex>
++#include <thread>
++#include <vector>
++#include <algorithm>
++#include <limits>
++#include <nlohmann/json.hpp>
++#define SPDLOG_INFO(...) ((void)0)
++#define SPDLOG_DEBUG(...) ((void)0)
++#define SPDLOG_WARN(...) ((void)0)
++#define SPDLOG_ERROR(...) ((void)0)
++'''
++
++reward=ap[ap.index('    // These rewards must behave identically'):ap.index('    // A newly-created local AP file')]
++run('ap_rewards',common+r'''
++using s16=int16_t;
++enum { RG_GOLD_SKULLTULA_TOKEN,RG_PIECE_OF_HEART,RG_HEART_CONTAINER,RG_PROGRESSIVE_WALLET,RG_WALLET_INF,
++ITEM_NONE=255,UPG_WALLET=0,RAND_INF_HAS_WALLET=0,RAND_INF_HAS_INFINITE_MONEY=1,
++RSK_INCLUDE_TYCOON_WALLET=0,RSK_INFINITE_UPGRADES=1,RSK_FULL_WALLETS=2,RO_INF_UPGRADES_OFF=0,
++QUEST_HEART_PIECE=24,FULL_HEART_HEALTH=16 };
++struct Option {int value;int Get(){return value;}bool IsNot(int x){return value!=x;}} options[3];
++#define RAND_GET_OPTION(k) options[k]
++struct {struct {uint32_t questItems=0;}inventory;int health=16,healthCapacity=48,healthAccumulator=0,rupees=0,rupeeAccumulator=0;}gSaveContext;
++int walletLevel=0,tokens=0,notifications=0; bool flags[2]={}; void* gPlayState=nullptr;
++bool Flags_GetRandomizerInf(int f){return flags[f];}void Flags_SetRandomizerInf(int f){flags[f]=true;}
++void Inventory_ChangeUpgrade(int,int v){walletLevel=v;}
++int capacity(){return std::array<int,4>{99,200,500,999}[walletLevel];}
++#define CUR_UPG_VALUE(x) walletLevel
++#define CUR_CAPACITY(x) capacity()
++void Item_Give(void*,uint8_t item){if(item==RG_PIECE_OF_HEART)gSaveContext.inventory.questItems+=1u<<28;
++else if(item==RG_HEART_CONTAINER){gSaveContext.healthCapacity+=16;gSaveContext.health+=16;}else ++tokens;}
++struct GI {int itemId;}; struct Item {GI GetGIEntry_Copy(){return {RG_WALLET_INF};}
++struct Name {std::string english="reward";};Name GetName(){return {};}}item;
++namespace Rando::StaticData {Item RetrieveItem(int){return {};}}
++void Randomizer_Item_Give(void*,GI){flags[RAND_INF_HAS_INFINITE_MONEY]=true;}
++namespace Notification {struct N{std::string prefix,message,suffix;float remainingTime;};void Emit(N){++notifications;}}
++bool give(int randoGet,bool historicalNewSaveReplay=false){GI giEntry{randoGet};
++'''+reward+r'''
++return false;}
++int main(){
++for(bool historical:{false,true}){
++ gSaveContext={};gSaveContext.healthCapacity=48;notifications=0;
++ for(int i=1;i<=8;++i){gSaveContext.health=1;gSaveContext.healthAccumulator=-8;assert(give(RG_PIECE_OF_HEART,historical));
++ assert(gSaveContext.healthCapacity==48+(i/4)*16);assert(gSaveContext.health==gSaveContext.healthCapacity);
++ assert(gSaveContext.inventory.questItems>>28==i%4);assert(gSaveContext.healthAccumulator==0);}
++ gSaveContext.health=1;assert(give(RG_HEART_CONTAINER,historical));assert(gSaveContext.health==96);
++ assert(notifications==(historical?0:9));
++ for(bool tycoon:{false,true})for(bool full:{false,true})for(bool infinite:{false,true}){
++  flags[0]=flags[1]=false;walletLevel=0;gSaveContext.rupees=7;options[0].value=tycoon;options[1].value=infinite;options[2].value=full;
++  for(int i=0;i<7;++i){assert(give(RG_PROGRESSIVE_WALLET,historical));assert(flags[0]);assert(walletLevel==std::min(i,tycoon?3:2));
++   assert(gSaveContext.rupees==(full?capacity():7));}
++  assert(flags[1]==infinite);
++ }
++}
++}
++''')
++
++parser=function(ap,'static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<std::string, int64_t>& out) {')
++active=function(ap,'void ArchipelagoClient::SetActiveLocationsFromJson(')
++mail='\n'.join(function(ap,s) for s in ['void ArchipelagoClient::QueueSlotData(', 'void ArchipelagoClient::DrainSlotData(', 'void ArchipelagoClient::BeginItemReplay(', 'void ArchipelagoClient::QueueItem('])
++run('ap_mailbox_and_replay',common+r'''
++class ArchipelagoClient {public:
++std::mutex queueMutex;std::unordered_map<std::string,std::string>pendingSlotData;
++std::unordered_set<int64_t>activeLocations;bool activeLocationsLoaded=false,scoutsRequested=true,checkFinderMappingsPrepared=true,activeLocationsPendingRefresh=false;
++std::unordered_map<int,int>scoutedLocations,scoutedLocationNameIndex;
++bool deathLinkEnabled=false,trapLinkEnabled=false,kakarikoGateOpen=false;
++std::thread::id gameThread=std::this_thread::get_id();int settingsCalls=0;
++uint64_t incomingItemOrdinal=0;std::vector<int64_t>receivedItemSnapshot;
++struct PendingItem{int64_t id;bool notify;uint64_t sequence;};std::deque<PendingItem>pendingItems;
++void QueueSlotData(const std::string&,const std::string&);void DrainSlotData();void BeginItemReplay();void QueueItem(int64_t,bool);
++void SetActiveLocationsFromJson(const std::string&);
++void SetSlotSettingsFromJson(const std::string&){assert(std::this_thread::get_id()==gameThread);++settingsCalls;}
++void SetShopPricesFromJson(const std::string&){} void SetLocationNameMapFromJson(const std::string&){}
++};
++'''+parser+active.replace('activeLocationsPendingRefresh.store(true);','activeLocationsPendingRefresh = true;')+mail+r'''
++int main(){
++ std::unordered_map<std::string,int64_t>obj;
++ assert(ParseFlatStringIntObject(R"({"escaped\"name":42,"unicode\u0041":-3})",obj));assert(obj["escaped\"name"]==42);assert(obj["unicodeA"]==-3);
++ for(auto bad:{"{\"x\":9223372036854775808}","{\"x\":1e99}","{\"x\":true}","{\"x\":1,}","[]","{\"x\":2}junk"})assert(!ParseFlatStringIntObject(bad,obj));
++ ArchipelagoClient c;c.SetActiveLocationsFromJson("[1,2,3]");
++ for(auto bad:{"[1,-2]","[0]","[true]","[1.5]","[99999999999999999999999999]","[1,]","{}"}){c.SetActiveLocationsFromJson(bad);assert(c.activeLocations.size()==3);}
++ std::thread net([&]{for(int i=0;i<10000;++i)c.QueueSlotData("extreme_soh_cvars","{}");c.QueueSlotData("death_link","1");});
++ net.join();assert(c.settingsCalls==0);assert(!c.deathLinkEnabled);c.DrainSlotData();assert(c.settingsCalls==1&&c.deathLinkEnabled);
++ c.QueueItem(44,true);c.QueueItem(7,true);c.BeginItemReplay();assert(c.pendingItems.empty());c.QueueItem(44,false);c.QueueItem(7,false);
++ assert(c.pendingItems.size()==2&&c.pendingItems[0].sequence==0&&c.pendingItems[1].sequence==1);
++ c.SetActiveLocationsFromJson("[]");assert(c.activeLocations.empty());
++}
++''')
++
++goal=function(ap,'void ArchipelagoClient::UpdateGoal() {')
++run('ap_goal',common+r'''
++enum {RC_WINCON,RSK_WINCON_TRIFORCE_COUNT,RSK_WINCON,RO_WINCON_TRIFORCE_PIECES=7,RCSHOW_COLLECTED=1,TRANS_TRIGGER_OFF=0,
++PLAYER_STATE1_IN_ITEM_CS=1,PLAYER_STATE1_GETTING_ITEM=2};
++struct Option{int v=0;int Get(){return v;}bool Is(int x){return v==x;}}options[4];
++#define RAND_GET_OPTION(k) options[k]
++struct Player{int stateFlags1=0;}testPlayer;
++struct Play {int transitionTrigger=0;}play;Play* gPlayState=&play;
++#define GET_PLAYER(p) (&testPlayer)
++bool paused=false,blocking=false,warp=false;int reports=0;
++bool Player_InBlockingCsMode(Play*,Player*){return blocking;}
++namespace GameInteractor{bool IsGameplayPaused(){return paused;}}
++void GameInteractor_SetTriforceHuntCreditsWarpActive(bool v){warp=v;}
++void AP_StoryComplete(){++reports;}
++struct {struct {struct {struct {struct {int triforcePiecesCollected=0;}randomizer;}data;}quest;struct{bool gameComplete=false;}stats;}ship;int health=48;}gSaveContext;
++struct Win {bool obtained=false;int changes=0;bool HasObtained(){return obtained;}void SetCheckStatus(int){obtained=true;++changes;}}win;
++namespace Rando {struct Context {static Context* GetInstance(){static Context c;return &c;}Win*GetItemLocation(int){return &win;}};}
++struct ArchipelagoClient{bool active=true,auth=true,awaitingMajorItemReceipt=false,goalReported=false;
++ bool IsGameplaySessionActive(){return active;}bool IsAuthenticated(){return auth;}void UpdateGoal();};
++'''+goal+r'''
++int main(){ArchipelagoClient c;options[RSK_WINCON].v=7;options[RSK_WINCON_TRIFORCE_COUNT].v=25;
++ gSaveContext.ship.quest.data.randomizer.triforcePiecesCollected=24;c.UpdateGoal();assert(!warp&&reports==0);
++ gSaveContext.ship.quest.data.randomizer.triforcePiecesCollected=25;c.awaitingMajorItemReceipt=true;c.UpdateGoal();assert(!warp&&reports==0);
++ c.awaitingMajorItemReceipt=false;blocking=true;c.UpdateGoal();assert(!warp&&reports==1&&win.changes==1);
++ blocking=false;c.UpdateGoal();assert(warp&&reports==1);c.UpdateGoal();assert(reports==1&&win.changes==1);
++ c.auth=false;c.UpdateGoal();assert(!c.goalReported);c.auth=true;c.UpdateGoal();assert(reports==2);
++ gSaveContext.ship.stats.gameComplete=true;warp=false;c.UpdateGoal();assert(!warp&&reports==2);
++ win={};gSaveContext.ship.stats.gameComplete=false;c.goalReported=false;options[RSK_WINCON].v=0;c.UpdateGoal();assert(!warp&&reports==2);
++ options[RSK_WINCON].v=7;options[RSK_WINCON_TRIFORCE_COUNT].v=0;c.UpdateGoal();assert(!warp&&reports==2);
++}
++''')
++
++table=fish[fish.index('std::array<std::pair<RandomizerCheck, RandomizerCheck>, 17>'):fish.index('\nstd::unordered_map<int8_t, RandomizerCheck>')]
++checks=sorted(set(re.findall(r'\bRC_[A-Z0-9_]+',table)) - {'RC_UNKNOWN_CHECK'})
++fish_impl='\n'.join(function(fish,x) for x in ['static CheckIdentity GetPondFish(', 'static CheckIdentity IdentifyPondFish(', 'static void UpdateCurrentPondFish('])
++catch=fish[fish.index('    // Detect fish catch'):fish.index('    if (actor->id == ACTOR_EN_FISH',fish.index('    // Detect fish catch'))]
++run('pond_checks',common+'\nenum RandomizerCheck {RC_UNKNOWN_CHECK=0,'+','.join(checks)+'};\n'+r'''
++using s16=int16_t;using RandomizerInf=int;
++enum {RAND_INF_MAX=99999,RO_FISHSANITY_POND=2,RO_FISHSANITY_BOTH=4,ACTOR_FISHING=10};
++namespace Rando::StaticData {extern std::array<std::pair<RandomizerCheck,RandomizerCheck>,17>randomizerFishingPondFish;}
++'''+table+r'''
++struct CheckIdentity{int randomizerInf;RandomizerCheck randomizerCheck;};
++struct PondOptions{int mode=2,numFish=17;bool ageSplit=true;}testOptions;
++PondOptions GetOptions(){return testOptions;} bool adult=false,apSave=true,fishPresent=true;
++#define LINK_IS_ADULT adult
++bool IsAdultPond(){return adult&&testOptions.ageSplit;}
++bool GetPondFishShuffled(){return (testOptions.mode==2||testOptions.mode==4)&&testOptions.numFish>0;}
++std::set<int>activeChecks,flags;
++bool Archipelago_IsCurrentSaveActive(){return apSave;}
++bool Archipelago_ShouldHandleCheck(int rc){return activeChecks.contains(rc);}
++bool Flags_GetRandomizerInf(int inf){return flags.contains(inf);}
++void Flags_SetRandomizerInf(int inf){assert(inf!=RAND_INF_MAX);flags.insert(inf);}
++struct RandoStub{int GetRandomizerInfFromCheck(int rc){return rc?1000+rc:RAND_INF_MAX;}}rando;
++struct Globals{RandoStub*gRandomizer=&rando;};Globals globals;
++struct OTRGlobals{static inline Globals*Instance=&globals;};
++static const CheckIdentity defaultIdentity{RAND_INF_MAX,RC_UNKNOWN_CHECK};
++CheckIdentity NextChildPondFish=defaultIdentity,NextAdultPondFish=defaultIdentity;
++bool IsFish(CheckIdentity*f){return f->randomizerCheck!=RC_UNKNOWN_CHECK&&f->randomizerInf!=RAND_INF_MAX;}
++'''+fish_impl+r'''
++struct Actor{int id=ACTOR_FISHING;s16 params=100;};struct Fishing{Actor actor;int fishState=0;};
++struct Play{int sceneNum=0;}testPlay;Play*gPlayState=&testPlay;
++bool MegaSoul_ArePondFishPresent(){return fishPresent;}
++std::unordered_set<Actor*>hoistedFish;
++CheckIdentity IdentifyFish(int,int params){return IdentifyPondFish(params);}
++void update(Fishing*fish){void*refActor=fish;Actor*actor=&fish->actor;
++'''+catch+r'''
++}
++int main(){
++ for(auto pair:Rando::StaticData::randomizerFishingPondFish){activeChecks.insert(pair.first);activeChecks.insert(pair.second);}
++ // Invalid actor params and the missing second adult loach never index the table.
++ for(bool age:{false,true}){adult=age;for(int param:{-32768,-1,0,99,117,255,32767})assert(IdentifyPondFish(param).randomizerCheck==RC_UNKNOWN_CHECK);}
++ adult=true;assert(GetPondFish(116,true).randomizerInf==RAND_INF_MAX);
++ activeChecks.clear();for(int i=0;i<15;++i){auto pair=Rando::StaticData::randomizerFishingPondFish[i];activeChecks.insert(pair.first);activeChecks.insert(pair.second);}
++ std::set<int>caught;
++ for(bool age:{false,true}){adult=age;for(int i=0;i<15;++i){Fishing f;f.actor.params=100+i;f.fishState=6;
++  auto id=IdentifyPondFish(100+i);assert(id.randomizerCheck!=RC_UNKNOWN_CHECK);caught.insert(id.randomizerCheck);hoistedFish.clear();update(&f);update(&f);assert(flags.contains(id.randomizerInf));}
++  assert(IdentifyPondFish(115).randomizerCheck==RC_UNKNOWN_CHECK);assert(IdentifyPondFish(116).randomizerCheck==RC_UNKNOWN_CHECK);}
++ assert(caught.size()==30&&flags.size()==30);
++ // Local count mode: a remote/unrelated item callback is not needed to advance,
++ // and many hoist frames cannot consume the next sequential check.
++ apSave=false;adult=false;testOptions.numFish=3;testOptions.ageSplit=false;flags.clear();hoistedFish.clear();UpdateCurrentPondFish();
++ Fishing f;for(int i=0;i<3;++i){f.fishState=6;update(&f);for(int j=0;j<20;++j)update(&f);assert(flags.size()==i+1);f.fishState=0;update(&f);}
++ adult=true;f.fishState=6;update(&f);assert(flags.size()==3);
++}
++''')
++
++tracker=(ROOT/'soh/Enhancements/randomizer/randomizer_check_tracker.cpp').read_text()
++run('enemy_finder_option',common+r'''
++enum {RSK_SHUFFLE_ENEMY_DROPS=0,RCAREA_KOKIRI_FOREST=0,RCAREA_INVALID=10};
++struct Option{bool enabled=false;bool Get(){return enabled;}}option;
++#define RAND_GET_OPTION(x) option
++bool apActive=true;std::set<int64_t>active{9700001,9700002,25};
++bool Archipelago_IsCurrentSaveActive(){return apActive;}bool Archipelago_IsLocationActive(int64_t id){return active.contains(id);}
++struct EnemyDefeatFinderEntry{int64_t locationId;int area;};
++EnemyDefeatFinderEntry kEnemyDefeatFinderEntries[]={{9700001,0},{9700002,1}};
++'''+function(tracker,'static bool IsEnemyDefeatVisible(')+function(tracker,'static bool IsFinderRowEnabled(')+r'''
++int main(){for(bool enabled:{false,true}){option.enabled=enabled;for(auto&e:kEnemyDefeatFinderEntries){assert(IsEnemyDefeatVisible(e)==enabled);assert(IsFinderRowEnabled(e.locationId)==enabled);}assert(IsFinderRowEnabled(25));}
++ apActive=false;assert(!IsEnemyDefeatVisible(kEnemyDefeatFinderEntries[0]));}
++''')
++
++gate=ap[ap.index('    if (gPlayState == nullptr)',ap.index('bool ArchipelagoClient::ProcessItem')):ap.index('    const bool historicalNewSaveReplay',ap.index('bool ArchipelagoClient::ProcessItem'))]
++run('ap_receive_safety',common+r'''
++enum {GAMEOVER_INACTIVE=0,TRANS_TRIGGER_OFF=0,PLAYER_STATE1_IN_ITEM_CS=1,PLAYER_STATE1_GETTING_ITEM=2,PLAYER_STATE1_CARRYING_ACTOR=4};
++struct Player{int stateFlags1=0;}testPlayer;Player*testPlayerPtr=&testPlayer;
++struct Play{struct{int state=0;}gameOverCtx;int transitionTrigger=0;}testPlay;Play*gPlayState=&testPlay;
++struct{int health=48;}gSaveContext;bool paused=false,blocking=false;
++#define GET_PLAYER(p) testPlayerPtr
++bool Player_InBlockingCsMode(Play*,Player*){return blocking;}
++namespace GameInteractor{bool IsGameplayPaused(){return paused;}}
++bool canReceive(int64_t itemId=1){
++'''+gate+r'''
++return true;}
++int main(){assert(canReceive());gPlayState=nullptr;assert(!canReceive());gPlayState=&testPlay;
++ for(int bits=0;bits<256;++bits){gSaveContext.health=(bits&1)?0:48;testPlay.gameOverCtx.state=!!(bits&2);testPlay.transitionTrigger=!!(bits&4);
++ paused=bits&8;blocking=bits&16;testPlayerPtr=(bits&32)?nullptr:&testPlayer;testPlayer.stateFlags1=(bits&64)?PLAYER_STATE1_GETTING_ITEM:0;
++ if(bits&128)testPlayer.stateFlags1|=PLAYER_STATE1_CARRYING_ACTOR;assert(canReceive()==(bits==0));}
++}
++''')
++
++apcpp=(args.apcpp_source/'Archipelago.cpp').read_text()
++queue='\n'.join(function(apcpp,x) for x in ['static void AP_QueueMessage(', 'bool AP_IsMessagePending()', 'AP_Message* AP_GetLatestMessage()', 'void AP_ClearLatestMessage()'])
++run('apcpp_message_queue',common+r'''
++struct AP_Message{std::string text;};std::mutex messageQueueMutex;std::deque<AP_Message*>messageQueue;
++'''+queue+r'''
++int main(){assert(AP_GetLatestMessage()==nullptr);AP_ClearLatestMessage();
++ constexpr int count=100000;std::thread producer([]{for(int i=0;i<count;++i)AP_QueueMessage(new AP_Message{std::to_string(i)});});
++ for(int i=0;i<count;){if(!AP_IsMessagePending()){std::this_thread::yield();continue;}auto*m=AP_GetLatestMessage();assert(m&&m->text==std::to_string(i));AP_ClearLatestMessage();++i;}
++ producer.join();assert(!AP_IsMessagePending());assert(AP_GetLatestMessage()==nullptr);}
++''')
++
++# Execute the actual slot-data statements for all AP fish modes and both goals.
++tree=ast.parse((ROOT/'archipelago/soh_extreme/__init__.py').read_text())
++fn=next(n for n in ast.walk(tree) if isinstance(n,ast.FunctionDef) and n.name=='fill_slot_data')
++selected=[]
++for n in fn.body:
++    code=ast.unparse(n)
++    if (isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Name) and n.value.func.id=='cv' and n.value.args and isinstance(n.value.args[0],ast.Constant) and str(n.value.args[0].value).startswith('Fishsanity')) or (isinstance(n,ast.Assign) and code.startswith('pond_fish =')) or (isinstance(n,ast.If) and code.startswith("if data['triforce_hunt']:")):
++        selected.append(n)
++compiled=compile(ast.Module(body=selected,type_ignores=[]),'<production slot settings>','exec')
++for mode in range(4):
++    for hunt in (False,True):
++        settings={};exec(compiled,{'cv':lambda k,v:settings.__setitem__(k,v),'data':{'shuffle_fish':mode,'triforce_hunt':hunt,'triforce_hunt_pieces_required':25}})
++        assert settings['Fishsanity']==(0,2,3,4)[mode]
++        assert settings['FishsanityPondCount']==(17 if mode in (1,3) else 0)
++        assert settings['FishsanityAgeSplit']==int(mode in (1,3))
++        assert settings['ShuffleWincon']==(7 if hunt else 0)
++        assert settings['WinconTriforceCount']==(25 if hunt else 0)
++results.append({'name':'AP fish and goal slot settings: 8 combinations','passed':True})
++print('PASS AP slot settings',flush=True)
++# Exercise the APWorld's actual percentage calculation, including capped pools.
++from types import SimpleNamespace as NS
++pool_tree = ast.parse((ROOT/'archipelago/soh_extreme/_vendor_oot_soh/ItemPool.py').read_text())
++create = next(n for n in pool_tree.body if isinstance(n, ast.FunctionDef) and n.name == 'create_triforce_pieces')
++scope = {'get_open_location_count': lambda w: w.open_count,
++         'Items': NS(TRIFORCE_PIECE='Triforce Piece'),
++         'ItemClassification': NS(useful=1, skip_balancing=2)}
++exec(compile(ast.Module(body=[create], type_ignores=[]), '<production percentage calculation>', 'exec'), scope)
++for total in (1, 3, 20, 100, 200):
++    for percentage in (1, 25, 50, 75, 100):
++        for open_count in (7, 500):
++            world = NS(open_count=open_count, using_ut=False,
++                       options=NS(triforce_hunt_pieces_total=NS(value=total),
++                                  triforce_hunt_pieces_required_percentage=NS(value=percentage)),
++                       create_item=lambda item, **kwargs: item)
++            world.add_items_to_item_pool_list = lambda items: setattr(world, 'items', items)
++            scope['create_triforce_pieces'](world)
++            actual_total = min(total, open_count)
++            assert len(world.items) == actual_total
++            assert world.triforce_pieces_required == max(1, round(actual_total * (percentage * .01)))
++            assert world.options.triforce_hunt_pieces_total.value == actual_total
++results.append({'name': 'AP Triforce percentage: 50 combinations', 'passed': True})
++print('PASS AP Triforce percentage', flush=True)
++(OUT/'results.json').write_text(json.dumps(results,indent=2))
++sys.exit(0 if all(r['passed'] for r in results) else 1)

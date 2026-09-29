@@ -1,4 +1,5 @@
 #include <libultraship/bridge/consolevariablebridge.h>
+#include <unordered_set>
 
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "../../OTRGlobals.h"
@@ -11,6 +12,7 @@
 #include "soh/Enhancements/randomizer/item_category_adj.h"
 #include "soh/Enhancements/randomizer/particle_cmc.h"
 #include "soh/frame_interpolation.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 extern "C" {
 #include "variables.h"
@@ -77,7 +79,9 @@ static ActorFunc drawEnFish = NULL;
 static Color_RGB8 fsPulseColor = { 30, 240, 200 };
 
 static s16 fishGroupCounter = 0;
-static bool enableAdvance = false;
+// A catch lasts many frames. Advance once when the fish leaves the hoisted
+// state, independently of whether its reward belongs to this AP player.
+static std::unordered_set<Actor*> hoistedFish;
 
 /**
  * @brief Get fishsanity fishing pond options from the requested source
@@ -162,19 +166,23 @@ static bool IsFish(CheckIdentity* fish) {
  * @brief Resolves a pond fish's CheckIdentity directly from params & pond age
  */
 static CheckIdentity GetPondFish(s16 params, bool adultPond) {
+    if (params < 100 || params >= 100 + Rando::StaticData::randomizerFishingPondFish.size()) {
+        return defaultIdentity;
+    }
     auto pair = Rando::StaticData::randomizerFishingPondFish[params - 100];
     RandomizerCheck rc = adultPond ? pair.second : pair.first;
+    if (rc == RC_UNKNOWN_CHECK) return defaultIdentity;
     return { OTRGlobals::Instance->gRandomizer->GetRandomizerInfFromCheck(rc), rc };
 }
 
 /**
  * @brief Returns the identity for a caught pond fish given its params
  */
-static CheckIdentity IdentifyPondFish(u8 fishParams) {
+static CheckIdentity IdentifyPondFish(s16 fishParams) {
     auto [mode, pondCount, ageSplit] = GetOptions();
     CheckIdentity identity = defaultIdentity;
 
-    if (!GetPondFishShuffled()) {
+    if (!GetPondFishShuffled() || fishParams < 100 || fishParams > 116) {
         return identity;
     }
 
@@ -184,6 +192,11 @@ static CheckIdentity IdentifyPondFish(u8 fishParams) {
         identity = LINK_IS_ADULT ? NextAdultPondFish : NextChildPondFish;
     }
 
+    // The AP pond has 15 ordinary fish per age, without the native loach checks.
+    if (Archipelago_IsCurrentSaveActive() &&
+        !Archipelago_ShouldHandleCheck(static_cast<int32_t>(identity.randomizerCheck))) {
+        return defaultIdentity;
+    }
     return identity;
 }
 
@@ -361,24 +374,26 @@ static void Fishsanity_DrawFishing(Actor* actor, PlayState* play) {
     if (!MegaSoul_ArePondFishPresent()) {
         return;
     }
-    // Reflect the ACTUAL randomized/AP item on each pond fish instead of giving
-    // every shuffled fish the same aqua pulse. GetFinalGIEntry() refreshes the
-    // Archipelago scout for this check before returning the display item.
     CheckIdentity fish = IdentifyFish(play->sceneNum, actor->params);
-    Color_RGB8 itemColor = fsPulseColor;
-    if (fish.randomizerCheck != RC_UNKNOWN_CHECK) {
-        GetItemEntry randoItem =
-            Rando::Context::GetInstance()->GetFinalGIEntry(fish.randomizerCheck, true, GI_FISH);
-        const GetItemCategory category = Randomizer_AdjustItemCategory(randoItem);
-        const Color_RGBA8 cmcColor = Randomizer_GetParticleCMCColor(category, COLOR_PRIMARY);
-        itemColor.r = cmcColor.r;
-        itemColor.g = cmcColor.g;
-        itemColor.b = cmcColor.b;
+    if (!IsFish(&fish) || Flags_GetRandomizerInf(fish.randomizerInf) || hoistedFish.count(actor)) {
+        if (drawFishing != nullptr) drawFishing(actor, play);
+        return;
     }
+    GetItemEntry reward = Rando::Context::GetInstance()->GetFinalGIEntry(fish.randomizerCheck, true, GI_FISH);
+    if (CVarGetInteger(CVAR_RANDOMIZER_ENHANCEMENT("MysteriousShuffle"), 0)) reward = GET_ITEM_MYSTERY;
 
-    Fishsanity_OpenGreyscaleColor(play, &itemColor, (actor->params - 100) * 20);
-    drawFishing(actor, play);
-    Fishsanity_CloseGreyscaleColor(play);
+    // Fishing_DrawFish normally updates this through the skeleton's mouth limb.
+    // Keep a live hook/line attachment while rendering an item instead.
+    auto* pondFish = reinterpret_cast<Fishing*>(actor);
+    pondFish->fishMouthPos = actor->world.pos;
+    pondFish->fishMouthPos.y += 5.0f;
+    Matrix_Push();
+    Matrix_Translate(actor->world.pos.x, actor->world.pos.y, actor->world.pos.z, MTXMODE_NEW);
+    Matrix_RotateY(play->gameplayFrames * 0.04f, MTXMODE_APPLY);
+    Matrix_Scale(0.3f, 0.3f, 0.3f, MTXMODE_APPLY);
+    EnItem00_CustomItemsParticles(actor, play, reward);
+    GetItemEntry_Draw(play, reward);
+    Matrix_Pop();
 }
 
 /**
@@ -386,6 +401,7 @@ static void Fishsanity_DrawFishing(Actor* actor, PlayState* play) {
  */
 static void OnActorInitHandler(void* refActor) {
     Actor* actor = static_cast<Actor*>(refActor);
+    hoistedFish.erase(actor);
 
     CheckIdentity fish;
 
@@ -409,20 +425,15 @@ static void OnActorInitHandler(void* refActor) {
     }
 
     if (actor->id == ACTOR_FISHING && gPlayState->sceneNum == SCENE_FISHING_POND && actor->params >= 100 &&
-        actor->params <= 117 && GetPondFishShuffled()) {
+        actor->params <= 116 && GetPondFishShuffled()) {
         // Initialize pond fish for fishsanity
         fish = IdentifyFish(gPlayState->sceneNum, actor->params);
 
-        // With every pond fish shuffled, caught fish will not spawn unless all fish have been caught.
-        if (RAND_GET_OPTION(RSK_FISHSANITY_POND_COUNT).Get() > 16 && !GetPondCleared()) {
-            // Create effect for uncaught fish
-            if (!Flags_GetRandomizerInf(fish.randomizerInf)) {
-                actor->shape.shadowDraw = Fishsanity_DrawEffShadow;
-                if (!drawFishing) {
-                    drawFishing = actor->draw;
-                }
-                actor->draw = Fishsanity_DrawFishing;
-            }
+        if (IsFish(&fish)) {
+            if (!drawFishing) drawFishing = actor->draw;
+            // Keep the wrapper installed: sequential catches can expose another
+            // reward on the same fish, and AP scouts can arrive after actor init.
+            actor->draw = Fishsanity_DrawFishing;
         }
     }
 }
@@ -439,21 +450,18 @@ static void OnActorUpdateHandler(void* refActor) {
     Actor* actor = static_cast<Actor*>(refActor);
 
     // Detect fish catch
-    if (actor->id == ACTOR_FISHING && GetPondFishShuffled() && MegaSoul_ArePondFishPresent()) {
+    if (actor->id == ACTOR_FISHING && actor->params >= 100 && actor->params <= 116 &&
+        GetPondFishShuffled() && MegaSoul_ArePondFishPresent()) {
         Fishing* fish = static_cast<Fishing*>(refActor);
 
         // State 6 -> Fish caught and hoisted
-        if (fish->fishState == 6) {
+        if (fish->fishState == 6 && hoistedFish.insert(actor).second) {
             CheckIdentity identity = IdentifyFish(gPlayState->sceneNum, actor->params);
-            if (identity.randomizerCheck != RC_UNKNOWN_CHECK) {
+            if (IsFish(&identity) && !Flags_GetRandomizerInf(identity.randomizerInf)) {
                 Flags_SetRandomizerInf(identity.randomizerInf);
-                enableAdvance = true;
-                // Remove uncaught effect
-                if (actor->shape.shadowDraw != NULL) {
-                    actor->shape.shadowDraw = NULL;
-                    actor->draw = drawFishing;
-                }
             }
+        } else if (fish->fishState != 6 && hoistedFish.erase(actor)) {
+            UpdateCurrentPondFish();
         }
     }
 
@@ -512,6 +520,7 @@ bool GetFishLocationIncluded(Rando::Location* loc, FishsanityOptionsSource optio
 }
 
 void InitializeFromSave() {
+    hoistedFish.clear();
     UpdateCurrentPondFish();
 }
 
@@ -520,6 +529,8 @@ void InitializeFromSave() {
 void RegisterShuffleFish() {
     bool shouldRegister = IS_RANDO && RAND_GET_OPTION(RSK_FISHSANITY).IsNot(RO_FISHSANITY_OFF);
     COND_HOOK(OnSceneInit, shouldRegister, [](int16_t sceneNum) {
+        hoistedFish.clear();
+        if (sceneNum == SCENE_FISHING_POND) UpdateCurrentPondFish();
         if (sceneNum == SCENE_ZORAS_DOMAIN) {
             fishGroupCounter = 0;
         }
@@ -527,11 +538,8 @@ void RegisterShuffleFish() {
 
     COND_HOOK(OnActorInit, shouldRegister, OnActorInitHandler);
     COND_HOOK(OnActorUpdate, shouldRegister, OnActorUpdateHandler);
-    COND_HOOK(OnItemReceive, shouldRegister, [](GetItemEntry itemEntry) {
-        if (enableAdvance) {
-            enableAdvance = false;
-            UpdateCurrentPondFish();
-        }
+    COND_HOOK(OnActorDestroy, shouldRegister, [](void* actor) {
+        if (hoistedFish.erase(static_cast<Actor*>(actor))) UpdateCurrentPondFish();
     });
 
     COND_VB_SHOULD(VB_BOTTLE_ACTOR, shouldRegister, {

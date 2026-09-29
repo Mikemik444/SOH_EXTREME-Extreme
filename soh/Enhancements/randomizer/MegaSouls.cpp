@@ -752,11 +752,11 @@ extern "C" bool MegaSoul_TryCollectEnemyDefeatPickup(Actor* itemActor) {
     if (SohExtreme::IsEnemyOffspringPlacement(index)) return false;
     if (!Archipelago_IsCurrentSaveActive() || !Archipelago_IsLocationActive(locationId)) return false;
     if (!Archipelago_IsLocationReported(locationId)) Archipelago_ReportLocation(locationId);
-    // SendLocation rejects disconnected/not-ready sessions. Do NOT consume the
-    // physical actor in that case. Reported means accepted by the local client;
-    // the saved outbox below resends after reconnect until the server knows it.
+    // Consume once accepted into the save's outbox; a slow acknowledgment must
+    // not leave a collected reward hovering over Link or lose the local journal.
+    // Server-confirmed checks remain separate for the Check Finder.
     if (!SohExtreme::CanConsumeEnemyPickup(Archipelago_IsCurrentSaveActive(),
-            Archipelago_IsLocationActive(locationId), Archipelago_IsLocationReported(locationId))) return false;
+            Archipelago_IsLocationActive(locationId), Archipelago_IsLocationSubmitted(locationId))) return false;
     MarkEnemyDefeatCollected(static_cast<size_t>(index));
     gLiveEnemyPickups[index] = nullptr;
     PersistEnemyDefeatJournal();

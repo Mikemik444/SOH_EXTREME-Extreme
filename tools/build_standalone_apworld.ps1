@@ -21,7 +21,14 @@ $PackageRoot = Join-Path $SourceRoot 'soh_extreme'
 $Output = Join-Path $Root 'soh_extreme.apworld'
 
 function Get-Hash([string]$Path) {
-    return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+    $Stream = [IO.File]::OpenRead($Path)
+    $Hasher = [Security.Cryptography.SHA256]::Create()
+    try {
+        return ([BitConverter]::ToString($Hasher.ComputeHash($Stream))).Replace('-', '').ToLowerInvariant()
+    } finally {
+        $Stream.Dispose()
+        $Hasher.Dispose()
+    }
 }
 
 function Get-ZipEntryHash($Entry) {

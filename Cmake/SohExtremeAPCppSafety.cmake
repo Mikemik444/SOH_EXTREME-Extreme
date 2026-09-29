@@ -42,6 +42,60 @@ function(soh_extreme_repair_apcpp source_dir)
         endif()
     endif()
 
+    # One websocket producer and one game-thread consumer share messageQueue.
+    # Even push_back vs pop_front/empty is undefined without synchronization.
+    set(queue_marker "SOH-EXTREME synchronized AP message queue")
+    string(FIND "${main}" "${queue_marker}" queue_fixed)
+    if(queue_fixed EQUAL -1)
+        set(old_queue [=[bool AP_IsMessagePending() {
+    return !messageQueue.empty();
+}
+
+AP_Message* AP_GetLatestMessage() {
+    return messageQueue.front();
+}
+
+void AP_ClearLatestMessage() {
+    if (AP_IsMessagePending()) {
+        delete messageQueue.front();
+        messageQueue.pop_front();
+    }
+}]=])
+        set(new_queue [=[bool AP_IsMessagePending() {
+    std::lock_guard<std::mutex> lock(messageQueueMutex);
+    return !messageQueue.empty();
+}
+
+AP_Message* AP_GetLatestMessage() {
+    std::lock_guard<std::mutex> lock(messageQueueMutex);
+    // Single consumer: the pointer stays valid until it calls ClearLatestMessage.
+    return messageQueue.empty() ? nullptr : messageQueue.front();
+}
+
+void AP_ClearLatestMessage() {
+    std::lock_guard<std::mutex> lock(messageQueueMutex);
+    if (!messageQueue.empty()) {
+        delete messageQueue.front();
+        messageQueue.pop_front();
+    }
+}]=])
+        string(FIND "${main}" "${old_queue}" queue_found)
+        string(FIND "${main}" "std::deque<AP_Message*> messageQueue;" queue_decl)
+        if(queue_found EQUAL -1 OR queue_decl EQUAL -1)
+            message(FATAL_ERROR "SOH-EXTREME: APCpp message queue differs from the reviewed revision. Nothing was overwritten.")
+        endif()
+        string(REPLACE "${old_queue}" "${new_queue}" main "${main}")
+        string(REPLACE "messageQueue.push_back(msg);" "AP_QueueMessage(msg);" main "${main}")
+        string(REPLACE "std::deque<AP_Message*> messageQueue;" [=[// SOH-EXTREME synchronized AP message queue
+std::deque<AP_Message*> messageQueue;
+std::mutex messageQueueMutex;
+static void AP_QueueMessage(AP_Message* message) {
+    std::lock_guard<std::mutex> lock(messageQueueMutex);
+    messageQueue.push_back(message);
+}]=] main "${main}")
+        string(PREPEND main "#include <mutex>\n")
+    endif()
+
     # Reader/FastWriter mutate their own parse/output buffers. Tracker Bounce
     # messages are sent on the game thread while the websocket thread parses
     # Received/Retrieved packets. Give each thread its own codec instances.

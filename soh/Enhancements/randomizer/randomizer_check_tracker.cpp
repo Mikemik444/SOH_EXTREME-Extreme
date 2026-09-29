@@ -133,8 +133,19 @@ static bool IsNpcSpeechVisible(const NpcSpeechFinderEntry& entry) {
 }
 
 static bool IsEnemyDefeatVisible(const EnemyDefeatFinderEntry& entry) {
-    return Archipelago_IsCurrentSaveActive() && Archipelago_IsLocationActive(entry.locationId) &&
+    return RAND_GET_OPTION(RSK_SHUFFLE_ENEMY_DROPS).Get() &&
+           Archipelago_IsCurrentSaveActive() && Archipelago_IsLocationActive(entry.locationId) &&
            entry.area >= RCAREA_KOKIRI_FOREST && entry.area < RCAREA_INVALID;
+}
+
+static bool IsFinderRowEnabled(int64_t id) {
+    if (RAND_GET_OPTION(RSK_SHUFFLE_ENEMY_DROPS).Get()) return true;
+    static const std::set<int64_t> enemyIds = [] {
+        std::set<int64_t> ids;
+        for (const auto& entry : kEnemyDefeatFinderEntries) ids.insert(entry.locationId);
+        return ids;
+    }();
+    return !enemyIds.contains(id);
 }
 
 static bool EnemyFinderMelee(Rando::Logic* enemyLogic) {
@@ -1712,7 +1723,10 @@ static void DrawUniversalFinderMirror() {
         return;
     }
     size_t normal = 0, glitched = 0;
-    for (const auto& row : snapshot->rows) { if (row.state == 1) ++normal; else ++glitched; }
+    for (const auto& row : snapshot->rows) {
+        if (!IsFinderRowEnabled(row.id)) continue;
+        if (row.state == 1) ++normal; else ++glitched;
+    }
     ImGui::Text("In logic: %u   Glitched: %u   Checked: %u / %u",
         static_cast<unsigned>(normal), static_cast<unsigned>(glitched),
         static_cast<unsigned>(snapshot->checked.size()), static_cast<unsigned>(snapshot->active.size()));
@@ -1743,6 +1757,7 @@ static void DrawUniversalFinderMirror() {
             const auto area = FinderRowArea(id, client);
             return area == RCAREA_INVALID ? -1 : static_cast<int>(area);
         }, [&](const SohExtreme::TrackerRow& row) {
+            if (!IsFinderRowEnabled(row.id)) return false;
             const std::string text = row.region + " | " + row.name;
             return filter.PassFilter(text.c_str());
         });
