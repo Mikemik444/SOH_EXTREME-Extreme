@@ -29,6 +29,7 @@ def make_context_class(base):
             self._mirror_packet = None
             self._mirror_sender = None
             self._mirror_last_request_time = 0.0
+            self._mirror_live_shields = None
             super().__init__(*args, **kwargs)
 
         def make_gui(self):
@@ -42,6 +43,7 @@ def make_context_class(base):
                 self._mirror_last_state=None
                 self._mirror_last_signature=None
                 self._mirror_packet=None
+                self._mirror_live_shields=None
             super().on_package(cmd,args)
             if cmd != 'Bounced' or self.game != 'SOH-EXTREME':return
             data=args.get('data')
@@ -51,17 +53,27 @@ def make_context_class(base):
             if not isinstance(nonce,str) or not re.fullmatch(r'[a-f0-9]{32}',nonce):return
             if self._managed_nonce is not None and nonce != self._managed_nonce:return
             if type(request) is not int or not 0 < request <= 0xffffffffffffffff:return
+            shields=data.get('live_shields')
+            if self._managed_nonce is not None and (type(shields) is not int or not 0 <= shields <= 3):return
             now=time.monotonic()
             if now-self._mirror_last_request_time < 0.1:return
             self._mirror_last_request_time=now
             sub=self._mirror_subscription
             if sub and sub[0]==nonce and request<sub[1]:return
             self._mirror_subscription=(nonce,request)
+            # Only the game-owned worker accepts live equipment. Standalone UT
+            # continues to show generation logic, including planned purchases.
+            self._mirror_live_shields=shields if self._managed_nonce is not None else None
             # Re-evaluate using UT itself on a game request. This also handles
             # snapshots requested before the first ReceivedItems update.
             self.updateTracker()
 
         def updateTracker(self):
+            world=self.tracker_core.get_current_world()
+            if world is not None:
+                # UT builds a fresh CollectionState on every update, so removing
+                # a shield also removes routes/events previously opened by it.
+                world._extreme_live_shields=self._mirror_live_shields
             result=super().updateTracker()
             self._mirror_last_state=result
             if self._mirror_subscription and getattr(result,'state',None) is not None:
@@ -83,7 +95,8 @@ def make_context_class(base):
                     slot=self.slot,producer=self._mirror_producer,received=received,
                     active=active,checked=checked,rows=rows,
                     manual_count=len(self.tracker_core.manual_items),
-                    ignored_count=len(self.tracker_core.ignored_locations))
+                    ignored_count=len(self.tracker_core.ignored_locations),
+                    live_shields=self._mirror_live_shields)
             except (ValueError,KeyError,AttributeError,TypeError):
                 logging.getLogger('Client').exception('SOH-EXTREME tracker mirror rejected an invalid snapshot')
                 return
@@ -104,6 +117,9 @@ def make_context_class(base):
 
         async def disconnect(self, allow_autoreconnect=False):
             self._mirror_subscription=None
+            self._mirror_live_shields=None
+            world=self.tracker_core.get_current_world()
+            if world is not None:world._extreme_live_shields=None
             self._mirror_packet=None
             self._mirror_last_state=None
             if self._mirror_sender is not None and not self._mirror_sender.done():

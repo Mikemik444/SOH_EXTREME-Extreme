@@ -1,0 +1,5246 @@
+{
+  "repository": "https://github.com/Mikemik444/SOH_EXTREME-Extreme",
+  "base_commit": "9bc10e7191b546754a50da6463e074276d33862f",
+  "version": "0.11.25",
+  "source_files": 47,
+  "build": "MSVC 2022 Windows x64 Release; completed exit 0",
+  "grass_logic_and_tracker": {
+    "passed": true,
+    "checks": 852,
+    "tests": [
+      {
+        "test": "helper grab=False age=child soul=False strength=0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/False/0",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=False strength=1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/False/1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=False strength=2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/False/2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=False strength=3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/False/3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=False strength=4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/False/4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=True strength=0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/True/0",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=True strength=1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/True/1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=True strength=2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/True/2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=True strength=3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/True/3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=child soul=True strength=4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/child/True/4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=False strength=0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/False/0",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=False strength=1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/False/1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=False strength=2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/False/2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=False strength=3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/False/3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=False strength=4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/False/4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=True strength=0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/True/0",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=True strength=1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/True/1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=True strength=2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/True/2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=True strength=3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/True/3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=False age=adult soul=True strength=4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate False/adult/True/4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-0: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-0: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-0: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-0: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-1: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-1: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-1: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-1: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-2: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-2: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-2: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-2: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-3: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-3: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-3: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-3: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False strength-4: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False strength-4: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True strength-4: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True strength-4: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False sword-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False sword-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True sword-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True sword-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False boomerang-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False boomerang-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True boomerang-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True boomerang-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=False bombs-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=False bombs-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=False soul=True bombs-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=False soul=True bombs-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "grass before strength removal False",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "grass after strength removal False",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=False strength=0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/False/0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=False strength=1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/False/1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=False strength=2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/False/2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=False strength=3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/False/3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=False strength=4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/False/4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=True strength=0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/True/0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=True strength=1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/True/1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=True strength=2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/True/2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=True strength=3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/True/3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=child soul=True strength=4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/child/True/4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=False strength=0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/False/0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=False strength=1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/False/1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=False strength=2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/False/2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=False strength=3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/False/3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=False strength=4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/False/4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=True strength=0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/True/0",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=True strength=1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/True/1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=True strength=2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/True/2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=True strength=3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/True/3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "helper grab=True age=adult soul=True strength=4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "rocks keep basic Grab gate True/adult/True/4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-0: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-0: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-0: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-0: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-1: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-1: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-1: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-1: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-2: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-2: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-2: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-2: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-3: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-3: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-3: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-3: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False strength-4: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False strength-4: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True strength-4: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True strength-4: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False sword-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False sword-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True sword-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True sword-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False boomerang-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False boomerang-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True boomerang-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True boomerang-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 6",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 7",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 8",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 9",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 10",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 11",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=False bombs-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=False bombs-without-grab: KF Child Grass 12",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 6",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 7",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 8",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 9",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 10",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 11",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "UT grab=True soul=True bombs-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "AP grab=True soul=True bombs-without-grab: KF Child Grass 12",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "grass before strength removal True",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "grass after strength removal True",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      }
+    ],
+    "ut_source_sha256": "510b3f3f265948227515b5fff575b0e081c667e7d6ca8b1860e25852bae5b167"
+  },
+  "native_grass": {
+    "passed": true,
+    "log": "grass_native.cpp\nPASS 768 native grass/carry/rock assertions\n"
+  },
+  "generation_with_grab": {
+    "seed": 290930,
+    "players": 1,
+    "overrides": {
+      "shuffle_grab": true
+    },
+    "passed": true,
+    "harness": "AP 0.6.7 core with normal dependencies",
+    "locations": 3219,
+    "network_locations": 2770,
+    "pool": 2769,
+    "all_state_blocked": [],
+    "resolved_world_options": {
+      "1": {
+        "frozen_starting_time": 2,
+        "boss_key_shuffle": "anywhere",
+        "triforce_hunt": 1
+      }
+    },
+    "sphere_sizes": [
+      243,
+      508,
+      504,
+      270,
+      300,
+      136,
+      152,
+      81,
+      320,
+      426,
+      134,
+      58,
+      30,
+      19,
+      12,
+      9,
+      5,
+      6,
+      6
+    ],
+    "replay_blocked": [],
+    "beatable": true,
+    "seconds": 16.313
+  },
+  "previous_release_validation": {
+    "version": "0.11.24",
+    "file": "VALIDATION-AP-NETWORK-FIX.json",
+    "sha256": "c36dfd835842e886e28dc99b5984f3cc4d20f8fff0f51fbf31106e9d9cb115ed",
+    "rerun": false
+  },
+  "apworld": {
+    "version": "0.11.25",
+    "files": 100,
+    "source_archive_parity": true,
+    "sha256": "abf7d9baab2bc58b03118083efd4e6d140ca408491066924991e44603593b509"
+  },
+  "dll_loader": "passed",
+  "patch_forward_reverse": "passed",
+  "source_sha256": {
+    "CMakeLists.txt": "ed65574a75540039c45f875126b27476870676d14028eca21dc5ac88361fc359",
+    "Cmake/SohExtremeAPCppHints.cmake": "edcbf152f5a8fd4c4ca5344d1fa0ba1b17fe87222acac2a866ee924ea108397b",
+    "Cmake/SohExtremeAPCppSafety.cmake": "00b9686af610105d6750237a2db15bb42d2dd82ccf1d81a5d6592e1e161a647e",
+    "archipelago/archipelago.json": "b43d82cfc2b6972b56cd3f9b1b99d46deb1cf1d93d19ae76a2f1d40534d348a1",
+    "archipelago/soh_extreme/EnemyDropLocations.py": "216f4aee3c8394791b4b1998fb8ee994fcebb11967230860bdd92e5b39651f0c",
+    "archipelago/soh_extreme/EnemyDropRules.py": "4180a8f0f24496647bd249aed8400c8173c0c75ff4f11ff665e6dc1491309a6e",
+    "archipelago/soh_extreme/NativeSettings.py": "5595ec489a92fc144fcb70445665a015fae4cc0a9238d5b985e54c31f214dc90",
+    "archipelago/soh_extreme/TrackerClient.py": "33d617f165d1148f206d1cfdc4e0524c4ec1a789fde4e09b4af713252c8b9563",
+    "archipelago/soh_extreme/TrackerMirror.py": "7e04fac9e209e7fc68a4f4e288aab2fa2838fe19d792ab5599594a27466dd0c4",
+    "archipelago/soh_extreme/__init__.py": "4c90a21337c5fb02c2ba752259c6119f3395aa815e2ab4a934ae7415001ff1f6",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "baee20c0f6ef6b2528671ab7235a5120a01eb76ea785e35c39b940928cf70337",
+    "archipelago/soh_extreme/archipelago.json": "b43d82cfc2b6972b56cd3f9b1b99d46deb1cf1d93d19ae76a2f1d40534d348a1",
+    "build.cmd": "f79db6eb0b24d6bd14b463d67ac9a3b17625d39ae262737772a754de60d7c498",
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "0a5dc3be8725457cc78769d6cd3f0ffdaab3a794ed457e448056af8b32f1cce7",
+    "soh/Enhancements/randomizer/Messages/ItemMessages.cpp": "ebbf51cee8ad6f7921ca960466a230a54ece98b49e849e0e4767d9e01944f61c",
+    "soh/Enhancements/randomizer/Messages/MerchantMessages.cpp": "b0fe56957036e44716f14bba4e5f013a7d02dc9b7d6773b98780215c2d78ae8b",
+    "soh/Enhancements/randomizer/fishsanity.cpp": "3d2aae28dcf35b924fe8f5db651e43784f3d551191cb1b3bf7b0e01c5b411c84",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "98f5ed32bf0a36dc701a083b46761599ca28461a6a7b704d45082c5a360f1448",
+    "soh/Enhancements/randomizer/item_list.cpp": "7b514ddafcfc8206a8f16772d851709f1ee5a8a08c2cdf2bc2ca91454ae27846",
+    "soh/Enhancements/randomizer/item_location.cpp": "4132e12086cce68da20989c93b9b4bd24b0c7107fc2c55e4d4d7859accb62a2b",
+    "soh/Enhancements/randomizer/logic.cpp": "578bceb5925fd3bc3e16356c10638eadd5333d05ebe81408f07372be6a6a679e",
+    "soh/Enhancements/randomizer/randomizer.cpp": "87727e6449e14409630f22723061f8d1f223076cf51c16ad4355ef0174ed075c",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "f313a1d26c411f61658d6fe70b35d88efbd3522dc41f8589aafb2fc9e3973d5a",
+    "soh/Network/Archipelago/ArchipelagoC.h": "c4dc0294a5894535ae930e23305d9ec910a571164280d96da03e72e1478c6bad",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "97c576b2eab071a0bb83e5ad317a3c5bf4f0862a7a9643bc5b32ece0b30192a4",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "215f72416ab4ef2ff44fe6b214726cfe0fc419345d03ee947cb11c7334b35c90",
+    "soh/Network/Archipelago/ArchipelagoEnemyFinderMap.inc": "f3ce0f1e32fd0dd5d70e486838e8137e89c64c8da8f5cb7453dede60dad046ca",
+    "soh/Network/Archipelago/ArchipelagoNativeDefaults.inc": "591cb9f419b571b4bd4b1e9c8c27b775d98f89d1d68c70cb3b0edf66f4aa58e2",
+    "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h": "c86c60a0570467b26019b191a8a25791cb55eb971a120d18b0700cd05fec1ffb",
+    "soh/Network/Archipelago/TrackerMirror.h": "c1d27c7b2e2aba8c0ae3a49d1565e805036aa6d85634a380cb7394ac3749053b",
+    "soh/SaveManager.cpp": "85ff9bedb3864ad9eb849f198f92ded5e35840641358a026a3c5b57d499d2aa4",
+    "soh/SaveManager.h": "fc915f7516d36959d5a5674219e01d27b3c68543f43ed8bd1ac2d0d853edaa6e",
+    "soh/SohGui/SohMenuNetwork.cpp": "e6fa39bddca0266f5a7a4283564bcce75bae3ee03ae33c9f96513d664b417379",
+    "src/overlays/actors/ovl_En_GirlA/z_en_girla.c": "a59151f610f869696ad96d87a25be29853f206ab33521b06652cb9b62d86cf67",
+    "tools/build_standalone_apworld.ps1": "ab541722e396a515cc1a9050058dbc6ca169a61acee3d0dc398f9d4f6dda2e26",
+    "tools/copy_ap_runtime.ps1": "fa25848bf6eaa69b6036c6b3861a1daf593d7a16f503da90fac773c6be09ec72",
+    "validation/fixtures/ap_user_settings_20260929.yaml": "0f38f37a25bd65e3b7e7d6f0881d1337a21b9a15e1c97d29bf8e53b0b91d6921",
+    "validation/test_ap_delivery_audit.py": "1d88f2f7c05554f6046eb4d6ae7ec98b1753ec9b3e86b875514ac02a5f50062f",
+    "validation/test_ap_gameplay_fixes.py": "3706b885d73bd97177dd07bffb6343a9aad720a752cba490b6747ecf742b2728",
+    "validation/test_ap_hints_protocol.cpp": "89715f7481dffc9cf2008a30ee3b9ec44aa83e51fdcf74b1181e3bfc1d83f8af",
+    "validation/test_ap_presentation.py": "39e9d0bf56086632166eeb551ea410d6e412945b1829ae5294c42a3500f5407f",
+    "validation/test_ap_purchase_prices.py": "d78ffa2f7f7976604aab012f7a54c749ec1c378c78eb082388b37a08c66bd052",
+    "validation/test_ap_slot_contract.py": "e3a93ab66ba2abf91b6e84fa054b1bb5cc1a195eb68575d53c065d990d5d9155",
+    "validation/test_deku_logic.py": "dcea65325f17f0bcaa648e2dd108d625b5f6170e5f480512d68f72004e3b4ce8",
+    "validation/test_deku_native.py": "e8a5fdd23ad0ac432cddd68c0908405ccfba371c676e3e299ab6d38f3cd7db44",
+    "validation/test_grass_native.py": "18fcc7725ea69622172bf8144c3b3a7b83a87b20a53a4a3815ffe6a3c62f7988",
+    "validation/test_grass_strength.py": "5db75b52d79b022a6b9483c961bd880f89668157468442ec9b431d3a7a074317"
+  },
+  "runtime_sha256": {
+    "soh.exe": "2f30e824625e8397e9d1be8409fe4088bd743dcd9e0eb2dd1e357dcd2bf2a6d8",
+    "APCpp.dll": "6df0e4f01ecc053c8def49e6eb529c1cc4bd0bf2b0b79c5f78ebcede4007c32f"
+  },
+  "limits": [
+    "No connected in-game playthrough",
+    "Generated test seed uses supplied options plus Shuffle Grab, not original seed placements",
+    "Not exhaustive for all settings"
+  ]
+}

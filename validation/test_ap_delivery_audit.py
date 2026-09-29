@@ -75,6 +75,7 @@ class ArchipelagoClient {public:
  bool scoutsRequested=false;size_t expectedScoutCount=0;double nextScoutRequest=0;
  int64_t ResolveApLocationForCheck(int32_t rc){auto it=rcToApLocation.find(rc);return it==rcToApLocation.end()?-1:it->second;}
  bool IsGameplaySessionActive()const;bool OwnsCheck(int32_t);bool OwnsCheckCached(int32_t)const;
+ void QueueRemotePresentation(int64_t){} // Presentation lifecycle is covered by test_ap_presentation.py.
  void SendLocation(int64_t,bool=false);bool IsLocationSubmitted(int64_t)const;
  bool ReportNpcSpeechLocation(int64_t);bool ReportFallbackNpcSpeech(const Actor*);
  void LoadPendingLocations(const std::vector<int64_t>&);ArchipelagoSaveSnapshot CaptureSaveSnapshot()const;

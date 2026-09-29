@@ -794,6 +794,11 @@ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::str
     }
     const double now = FinderMirrorClock();
     const auto slot = static_cast<uint32_t>(AP_GetPlayerID());
+    // Shop reachability and receipt history cannot tell whether Link has bought
+    // a shield yet, or lost one to fire/a Like Like. Read the live save on this
+    // main-thread path and require the reply to match this exact equipment.
+    const uint32_t liveShields = (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU) ? 1u : 0u) |
+                                (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) ? 2u : 0u);
     if (!payload.empty() && payloadNonce == finderMirror.Nonce()) {
         try {
             finderMirror.Accept(SohExtreme::DecodeTrackerSnapshot(payload), slot, now, finderMirrorError);
@@ -808,13 +813,13 @@ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::str
         bounce.tags = &tags;
         bounce.data = "{\"soh_extreme_tracker\":\"SOHExtremeFinder1\",\"kind\":\"request\",\"slot\":" +
             std::to_string(slot) + ",\"nonce\":\"" + finderMirror.Nonce() + "\",\"request\":" +
-            std::to_string(request) + "}";
+            std::to_string(request) + ",\"live_shields\":" + std::to_string(liveShields) + "}";
         AP_SendBounce(bounce);
         finderNextRequest = now + 2.0;
     }
     std::set<int64_t> checked;
     for (const auto id : reportedLocations) if (active.count(id)) checked.insert(id);
-    const auto* result = finderMirror.Current(slot, received, active, checked, now, status);
+    const auto* result = finderMirror.Current(slot, received, active, checked, now, status, liveShields);
     if (!result && !finderWorkerError.empty()) status = finderWorkerError;
     else if (!result && !finderMirrorError.empty()) status += " " + finderMirrorError;
     return result;
@@ -824,6 +829,7 @@ void ArchipelagoClient::Enable() {
     if (enabled.load()) {
         return;
     }
+    ResetRemotePresentations();
 
     // A refused/failed APCpp session can remain initialized even after the UI considers
     // it inactive.  Always tear down stale state before starting a fresh connection.
@@ -851,6 +857,8 @@ void ArchipelagoClient::Enable() {
         pendingScouts.clear();
         pendingDeathLinks.clear();
         pendingTrapLinks.clear();
+        hints.clear();
+        hintSnapshotLoaded = false;
         chatMessages.clear();
     }
     scoutedLocations.clear();
@@ -911,6 +919,7 @@ void ArchipelagoClient::Enable() {
 }
 
 void ArchipelagoClient::Disable() {
+    ResetRemotePresentations();
     // Shutdown should be safe even if our UI state and APCpp state got out of sync.
     enabled = false;
     if (AP_IsInit()) {
@@ -954,6 +963,8 @@ void ArchipelagoClient::Disable() {
     gDeferredLocationReports.clear();
     gNewSaveReplayTargetCount = 0;
     gNewSaveReplayGraceFrames = 0;
+    hints.clear();
+    hintSnapshotLoaded = false;
     chatMessages.clear();
 }
 
@@ -974,6 +985,7 @@ std::string ArchipelagoClient::GetReceivedCountCVar() const {
 void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receivedItemCount,
                                                const std::string& server, const std::string& slot,
                                                const std::string& cachedSettingsJson) {
+    ResetRemotePresentations();
     std::unique_lock<std::mutex> lock(queueMutex);
 
     ResetFinderMirror();
@@ -1653,6 +1665,12 @@ void ArchipelagoClient::SetSlotSettingsFromJson(const std::string& raw) {
         nextSettings[key] = static_cast<int>(value);
     }
 
+    // These native-only rules are not part of the AP ruleset. Old seeds did
+    // not publish them and must not inherit a local randomizer menu selection.
+    static const std::unordered_map<std::string, int> nativeDefaults = {
+#include "ArchipelagoNativeDefaults.inc"
+    };
+    for (const auto& [key, value] : nativeDefaults) nextSettings.try_emplace(key, value);
     const auto fishMode = nextSettings.find("Fishsanity");
     if (fishMode != nextSettings.end()) {
         const bool pond = fishMode->second == RO_FISHSANITY_POND || fishMode->second == RO_FISHSANITY_BOTH;
@@ -2331,6 +2349,132 @@ int64_t ArchipelagoClient::ResolveApLocationForCheck(int32_t randomizerCheck) {
     return matched;
 }
 
+// AP names are external text, not native message formatting/control codes.
+static std::string ApMessageName(const std::string& name) {
+    std::string result;
+    for (unsigned char c : name) {
+        if (c < 0x20 || c == 0x7f || c == '%' || c == '&' || c == '^' || c == '@' || c == '#') {
+            result += ' ';
+        } else {
+            result += static_cast<char>(c);
+        }
+    }
+    // The native textbox has a fixed buffer; leave room for wrapping/control bytes.
+    if (result.size() > 160) {
+        size_t end = 160;
+        while (end > 0 && (static_cast<unsigned char>(result[end]) & 0xc0) == 0x80) --end;
+        result.resize(end);
+        result += "...";
+    }
+    return result;
+}
+
+void ArchipelagoClient::DrainMessages() {
+    for (int i = 0; i < 32 && AP_IsMessagePending(); ++i) {
+        AP_Message* message = AP_GetLatestMessage();
+        if (message != nullptr && message->type == AP_MessageType::HintList) {
+            hints.clear();
+            for (const auto& row : static_cast<AP_HintListMessage*>(message)->hints) {
+                hints.push_back({ row.item, row.location, row.finder, row.recipient, row.entrance, row.found });
+            }
+            std::stable_sort(hints.begin(), hints.end(), [](const HintInfo& a, const HintInfo& b) {
+                if (a.found != b.found) return !a.found;
+                return a.item < b.item;
+            });
+            hintSnapshotLoaded = true;
+        } else if (message != nullptr) {
+            const std::string line = message->text;
+            {
+                std::scoped_lock lock(queueMutex);
+                chatMessages.push_back(line);
+                while (chatMessages.size() > 200) chatMessages.pop_front();
+            }
+            if (IsGameplaySessionActive() &&
+                (message->type == AP_MessageType::Chat || message->type == AP_MessageType::ServerChat)) {
+                Notification::Emit({ .prefix = "Archipelago", .message = line, .remainingTime = 6.0f });
+            }
+            SPDLOG_INFO("[Archipelago Chat] {}", line);
+        }
+        AP_ClearLatestMessage();
+    }
+}
+
+void ArchipelagoClient::ResetRemotePresentations() {
+    remotePresentations.clear();
+    presentedRemoteLocations.clear();
+    remotePickupDescription.clear();
+    remotePresentationActive = false;
+    remotePresentationReceived = false;
+    remotePresentationFrames = 0;
+}
+
+void ArchipelagoClient::QueueRemotePresentation(int64_t locationId) {
+    // A fresh physical check is presented once. Reconnect reconciliation never
+    // calls this method, and repeated actor hooks cannot replay the presentation.
+    if (presentedRemoteLocations.insert(locationId).second) remotePresentations.push_back(locationId);
+}
+
+bool ArchipelagoClient::ProcessRemotePresentation() {
+    if (remotePresentationActive) {
+        if (gPlayState == nullptr) return true;
+        Player* player = GET_PLAYER(gPlayState);
+        if (player == nullptr) return true;
+        ++remotePresentationFrames;
+        const bool busy = Player_InBlockingCsMode(gPlayState, player) ||
+            (player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM));
+        if (busy) return true;
+        if (!remotePresentationReceived && remotePresentationFrames < 90) return true;
+        if (remotePresentationReceived && !remotePresentations.empty()) remotePresentations.pop_front();
+        // Interrupted cosmetics retry; they never alter the AP receipt cursor.
+        remotePresentationActive = false;
+        remotePickupDescription.clear();
+        return true;
+    }
+    if (awaitingMajorItemReceipt || remotePresentations.empty()) return false;
+    {
+        std::scoped_lock lock(queueMutex);
+        // Deliver incoming rewards before starting another cosmetic send
+        // animation. A burst of remote checks must not delay our progression.
+        if (!pendingItems.empty()) return false;
+    }
+    const auto scout = scoutedLocations.find(remotePresentations.front());
+    if (scout == scoutedLocations.end()) return false; // Metadata can arrive later; receiving still runs.
+    const auto& item = scout->second;
+    if (item.playerId == AP_GetPlayerID()) {
+        remotePresentations.pop_front();
+        return false; // Our own reward comes through the normal receipt transaction.
+    }
+    const std::string itemName = item.itemName.empty() ? "Archipelago Item" : item.itemName;
+    const std::string recipient = item.playerName.empty() ? "Player " + std::to_string(item.playerId) : item.playerName;
+    if ((item.flags & 3) == 0) { // AP advancement/useful flags; filler stays quick.
+        Notification::Emit({ .prefix = "Archipelago", .message = "found " + itemName + " for",
+                             .suffix = recipient, .remainingTime = 5.0f });
+        remotePresentations.pop_front();
+        return false;
+    }
+    if (gPlayState == nullptr || gSaveContext.health <= 0 ||
+        gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
+        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF || GameInteractor::IsGameplayPaused()) return false;
+    Player* player = GET_PLAYER(gPlayState);
+    if (player == nullptr || Player_InBlockingCsMode(gPlayState, player) ||
+        (player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM |
+                                PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_IN_WATER)) ||
+        !(player->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) return false;
+    remotePickupDescription = ApMessageName(itemName) + " for " + ApMessageName(recipient);
+    remotePresentationReceived = false;
+    remotePresentationFrames = 0;
+    remotePresentationActive = true;
+    auto entry = Rando::StaticData::RetrieveItem(RG_AP_REMOTE_IMPORTANT).GetGIEntry_Copy();
+    if (!GiveItemEntryWithoutActor(gPlayState, entry)) {
+        remotePresentationActive = false;
+        remotePickupDescription.clear();
+        return false;
+    }
+    Notification::Emit({ .prefix = "Archipelago", .message = "found " + itemName + " for",
+                         .suffix = recipient, .remainingTime = 5.0f });
+    return true;
+}
+
 std::string ArchipelagoClient::GetRemoteItemDescription(int32_t randomizerCheck) {
     if (!IsAuthenticated() || scoutedLocations.empty()) return {};
     const int64_t apLocation = ResolveApLocationForCheck(randomizerCheck);
@@ -2340,10 +2484,10 @@ std::string ArchipelagoClient::GetRemoteItemDescription(int32_t randomizerCheck)
     const auto& info = scoutIt->second;
     if (info.playerId == AP_GetPlayerID()) return {};
 
-    std::string result = info.itemName.empty() ? "Archipelago Item" : info.itemName;
+    std::string result = info.itemName.empty() ? "Archipelago Item" : ApMessageName(info.itemName);
     result += " for ";
     if (!info.playerName.empty()) {
-        result += info.playerName;
+        result += ApMessageName(info.playerName);
     } else if (info.playerId > 0) {
         result += "Player " + std::to_string(info.playerId);
     } else {
@@ -2362,7 +2506,7 @@ void ArchipelagoClient::RefreshPlacementForCheck(int32_t randomizerCheck) {
     // placement reconciliation.  Always make the scouted AP placement authoritative
     // immediately before SoH chooses a model.  This fixes stale native models for
     // freestanding items, shops, and item drops spawned from grass/rocks/etc.
-    if (!IsGameplaySessionActive() || scoutedLocations.empty()) return;
+    if (!IsGameplaySessionActive()) return;
 
     auto ctx = Rando::Context::GetInstance();
     if (!ctx) return;
@@ -2370,16 +2514,19 @@ void ArchipelagoClient::RefreshPlacementForCheck(int32_t randomizerCheck) {
     const int64_t apLocation = ResolveApLocationForCheck(randomizerCheck);
     if (apLocation < 0) return;
 
-    auto scoutIt = scoutedLocations.find(apLocation);
-    if (scoutIt == scoutedLocations.end()) return;
-
     auto* loc = ctx->GetItemLocation(static_cast<RandomizerCheck>(randomizerCheck));
-    if (loc == nullptr || loc->HasObtained()) return;
+    if (loc == nullptr) return;
 
+    // Prices arrive in slot data independently of item scouts. They belong to
+    // the location and must survive SetPlacedItem's default item-price update.
     auto priceIt = shopPrices.find(apLocation);
     if (priceIt != shopPrices.end()) {
-        loc->SetPrice(priceIt->second);
+        loc->SetCustomPrice(priceIt->second);
     }
+    if (loc->HasObtained()) return;
+
+    auto scoutIt = scoutedLocations.find(apLocation);
+    if (scoutIt == scoutedLocations.end()) return;
 
     const auto& info = scoutIt->second;
     RandomizerGet display = RG_NONE;
@@ -2408,7 +2555,7 @@ void ArchipelagoClient::RefreshPlacementForCheck(int32_t randomizerCheck) {
 }
 
 void ArchipelagoClient::RefreshPlacementsForScene(int16_t sceneNum) {
-    if (!IsGameplaySessionActive() || scoutedLocations.empty()) return;
+    if (!IsGameplaySessionActive()) return;
 
     // Build the native scene -> RC list once. This cache is static game data and
     // does not depend on the AP slot.
@@ -2460,7 +2607,7 @@ void ArchipelagoClient::ApplyScoutedPlacements() {
 
         auto priceIt = shopPrices.find(apLocation);
         if (priceIt != shopPrices.end()) {
-            loc->SetPrice(priceIt->second);
+            loc->SetCustomPrice(priceIt->second);
         }
         if (loc->HasObtained()) continue;
 
@@ -2813,7 +2960,9 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         const bool afterLargeChest = Flags_GetRandomizerInf(RAND_INF_CAN_OPEN_LARGE_CHEST);
         SPDLOG_INFO("[Archipelago] Open Chest applied (small={}, large={})",
                     afterSmallChest, afterLargeChest);
-        if (afterSmallChest == beforeSmallChest && afterLargeChest == beforeLargeChest) {
+        const bool capped = afterSmallChest &&
+            (afterLargeChest || !RAND_GET_OPTION(RSK_SHUFFLE_OPEN_CHEST).Is(RO_OPEN_CHEST_PROGRESSIVE));
+        if (afterSmallChest == beforeSmallChest && afterLargeChest == beforeLargeChest && !capped) {
             SPDLOG_ERROR("[Archipelago] Open Chest state did not advance; retrying");
             return false;
         }
@@ -3184,6 +3333,7 @@ void ArchipelagoClient::Update() {
     if (enabled.load()) DrainSlotData();
     ServiceFinderWorker();
     if (!enabled.load()) return;
+    DrainMessages();
 
     // Title/file-select safety boundary. APCpp may stay connected so authentication
     // can complete, but NOTHING that mutates gameplay state is processed until the
@@ -3280,26 +3430,6 @@ void ArchipelagoClient::Update() {
         SPDLOG_INFO("[Archipelago] Reconciled loaded randomizer save with authoritative AP slot state (lazy placements)");
     }
 
-    // Pull APCpp's presentable message queue only while an AP gameplay session is active.
-    // This gives SoH a persistent in-game chat log without touching UI/game state from
-    // APCpp's networking callback thread.
-    for (int i = 0; i < 16 && AP_IsMessagePending(); ++i) {
-        AP_Message* message = AP_GetLatestMessage();
-        if (message != nullptr) {
-            const std::string line = message->text;
-            {
-                std::scoped_lock lock(queueMutex);
-                chatMessages.push_back(line);
-                while (chatMessages.size() > 200) chatMessages.pop_front();
-            }
-            if (message->type == AP_MessageType::Chat || message->type == AP_MessageType::ServerChat) {
-                Notification::Emit({ .prefix = "Archipelago", .message = line, .remainingTime = 6.0f });
-            }
-            SPDLOG_INFO("[Archipelago Chat] {}", line);
-        }
-        AP_ClearLatestMessage();
-    }
-
     std::deque<int64_t> checked;
     std::deque<PendingScout> scouts;
     std::deque<PendingDeathLink> deaths;
@@ -3387,7 +3517,9 @@ void ArchipelagoClient::Update() {
     // Brand-new local AP files reconstruct already-received server history silently
     // and in a small per-frame batch. Live rewards remain strictly one-at-a-time so
     // normal hold-item animations cannot overwrite one another.
-    if (gNewSaveReplayGraceFrames > 0) {
+    if (ProcessRemotePresentation()) {
+        // One presentation owns Link's get-item entry until it finishes.
+    } else if (gNewSaveReplayGraceFrames > 0) {
         --gNewSaveReplayGraceFrames;
     } else {
         const bool reconstructing =
@@ -3644,15 +3776,8 @@ void ArchipelagoClient::ReportCheck(int32_t randomizerCheck) {
     //
     // Remote-item feedback does not require a network round-trip, so keep that
     // immediate using the scout data that is already resident in memory.
-    auto scoutIt = scoutedLocations.find(apLocation);
-    if (scoutIt != scoutedLocations.end() && scoutIt->second.playerId != AP_GetPlayerID()) {
-        const auto& info = scoutIt->second;
-        Notification::Emit({
-            .prefix = "Archipelago",
-            .message = "sent " + info.itemName + " to",
-            .suffix = info.playerName,
-            .remainingTime = 5.0f,
-        });
+    if (reportedLocations.count(apLocation) == 0 && pendingLocationReports.count(apLocation) == 0) {
+        QueueRemotePresentation(apLocation);
     }
 
     if (reportedLocations.find(apLocation) == reportedLocations.end() &&
@@ -3974,20 +4099,7 @@ void ArchipelagoClient::SendLocation(int64_t locationId, bool notifyRemote) {
     // scout record we already loaded for the physical placement.  Reconciliation
     // calls SendLocation() with notifyRemote=false, preventing old checks from
     // spamming notifications after reconnect/load.
-    if (notifyRemote) {
-        auto scoutIt = scoutedLocations.find(locationId);
-        if (scoutIt != scoutedLocations.end() && scoutIt->second.playerId != AP_GetPlayerID()) {
-            const auto& info = scoutIt->second;
-            Notification::Emit({
-                .prefix = "Archipelago",
-                .message = "sent " + info.itemName + " to",
-                .suffix = info.playerName,
-                .remainingTime = 5.0f,
-            });
-            SPDLOG_INFO("[Archipelago] Sent remote item {} to {} from {}",
-                        info.itemName, info.playerName, info.locationName);
-        }
-    }
+    if (notifyRemote) QueueRemotePresentation(locationId);
 
     SPDLOG_INFO("[Archipelago] Sending checked location {} (awaiting server confirmation)", locationId);
     if (IsAuthenticated()) AP_SendItem(locationId);
@@ -4021,7 +4133,13 @@ void ArchipelagoClient::RegisterHooks() {
     // path. This hook closes that transaction and immediately saves both inventory
     // and the per-save AP receive cursor.
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnItemReceive>([](GetItemEntry itemEntry) {
-        ArchipelagoClient::GetInstance().FinalizeMajorItemReceipt(
+        auto& client = ArchipelagoClient::GetInstance();
+        if (client.remotePresentationActive && itemEntry.modIndex == MOD_RANDOMIZER &&
+            itemEntry.getItemId == RG_AP_REMOTE_IMPORTANT) {
+            client.remotePresentationReceived = true;
+            return;
+        }
+        client.FinalizeMajorItemReceipt(
             static_cast<int>(itemEntry.modIndex), static_cast<int>(itemEntry.itemId),
             static_cast<int>(itemEntry.getItemId));
     });
@@ -4246,4 +4364,8 @@ extern "C" void Archipelago_InitSaveFile(void) {
 
     client.EndFileSelectActivation();
     SPDLOG_INFO("[Archipelago] Initialized new SOH-EXTREME save; AP replay/scout work deferred to gameplay");
+}
+
+extern "C" const char* Archipelago_GetRemotePickupDescription(void) {
+    return ArchipelagoClient::GetInstance().GetRemotePickupDescription().c_str();
 }

@@ -58,6 +58,7 @@ def enemy_drop_rule(world, entry):
             "explosive": explosive, "explosive_or_melee": explosive | melee,
             "hookshot_and_melee": hook & melee, "hookshot_or_melee": hook | melee,
             "boomerang_and_melee": rang & melee, "boomerang": rang,
+            "sword_or_boomerang": sword | rang,
             "fire": fire, "fire_or_melee": fire | melee, "bow": bow,
         }.get(entry.combat)
         if combat is None:

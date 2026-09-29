@@ -13,6 +13,7 @@
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/Enhancements/custom-message/CustomMessageTypes.h"
 #include "soh/Enhancements/randomizer/Traps.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/Enhancements/randomizer/item.h"
 #include "soh/Enhancements/randomizer/randomizer.h"
 #include "soh/ShipInit.hpp"
@@ -143,6 +144,14 @@ void BuildCustomItemMessage(Player* player, CustomMessage& msg) {
         rgid = player->getItemEntry.getItemId;
     } else {
         rgid = player->getItemId;
+    }
+    if (rgid == RG_AP_REMOTE_IMPORTANT || rgid == RG_AP_REMOTE_NORMAL) {
+        const char* description = Archipelago_GetRemotePickupDescription();
+        msg = CustomMessage("You found %g[[1]]%w!", TODO_TRANSLATE, TODO_TRANSLATE, TEXTBOX_TYPE_BLUE);
+        msg.InsertNames({ CustomMessage(description != nullptr && description[0] != '\0'
+                                           ? description : "an Archipelago item") });
+        msg.AutoFormat(ITEM_CUSTOM);
+        return;
     }
     CustomMessage name =
         CustomMessage(Rando::StaticData::RetrieveItem(static_cast<RandomizerGet>(rgid)).GetName(), TEXTBOX_TYPE_BLUE);

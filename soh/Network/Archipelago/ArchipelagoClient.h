@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <atomic>
 #include <cstddef>
@@ -71,6 +71,13 @@ class ArchipelagoClient {
     bool IsGameplaySessionActive() const;
     std::vector<std::string> GetChatMessages();
     void SendChatMessage(const std::string& message);
+    struct HintInfo {
+        std::string item, location, finder, recipient, entrance;
+        bool found = false;
+    };
+    const std::vector<HintInfo>& GetHints() const { return hints; }
+    bool HasHintSnapshot() const { return hintSnapshotLoaded; }
+    const std::string& GetRemotePickupDescription() const { return remotePickupDescription; }
 
     // Per-save Archipelago receipt state.  This is serialized by SaveManager so
     // each save resumes the server ReceivedItems stream at exactly the point
@@ -89,6 +96,18 @@ class ArchipelagoClient {
     ArchipelagoClient(const ArchipelagoClient&) = delete;
     ArchipelagoClient& operator=(const ArchipelagoClient&) = delete;
 
+    void DrainMessages();
+    void ResetRemotePresentations();
+    void QueueRemotePresentation(int64_t locationId);
+    bool ProcessRemotePresentation();
+    std::vector<HintInfo> hints;
+    bool hintSnapshotLoaded = false;
+    std::deque<int64_t> remotePresentations;
+    std::unordered_set<int64_t> presentedRemoteLocations;
+    std::string remotePickupDescription;
+    bool remotePresentationActive = false;
+    bool remotePresentationReceived = false;
+    unsigned remotePresentationFrames = 0;
     void BeginItemReplay();
     void QueueSlotData(const std::string& key, const std::string& raw);
     void DrainSlotData();
@@ -238,4 +257,3 @@ class ArchipelagoClient {
     std::string saveSlot;
     std::string cachedSlotSettingsJson;
 };
-

@@ -9,7 +9,7 @@ import struct
 from typing import Any
 
 PROTOCOL = "SOHExtremeFinder1"
-VERSION = "0.11.22"
+VERSION = "0.11.27"
 TAG = "SOHExtremeUT"
 MAX_ENTRIES = 20000
 MAX_BYTES = 750000
@@ -25,7 +25,7 @@ def _integer(value: Any, low: int, high: int) -> int:
 def encode_snapshot(*, nonce: str, request: int, revision: int, slot: int,
                     producer: str, received: int, active: set[int], checked: set[int],
                     rows: list[dict], manual_count: int = 0, ignored_count: int = 0,
-                    version: str = VERSION) -> str:
+                    version: str = VERSION, live_shields: int | None = None) -> str:
     if not nonce or len(nonce) > 64 or not producer or len(producer) > 64:
         raise ValueError("Invalid tracker session identity")
     if len(active) > MAX_ENTRIES or len(rows) > MAX_ENTRIES or not checked <= active:
@@ -42,6 +42,7 @@ def encode_snapshot(*, nonce: str, request: int, revision: int, slot: int,
     text(nonce); text(producer); text(version)
     u32(slot);u64(request);u64(revision);u64(received)
     u32(manual_count);u32(ignored_count)
+    u32(0xffffffff if live_shields is None else _integer(live_shields, 0, 3))
     for ids in (active, checked):
         u32(len(ids))
         for i in sorted(ids):u64(_integer(i, 1, 0x7fffffffffffffff))

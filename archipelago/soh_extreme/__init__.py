@@ -36,7 +36,7 @@ from rule_builder.rules import Rule, Has, And, Or, True_, CanReachRegion, CanRea
 from ._vendor_oot_soh.Enums import Ages
 from ._vendor_oot_soh.LogicHelpers import (
     can_use, can_use_any, has_item, has_explosives, blast_or_smash, blue_fire,
-    can_cut_shrubs, can_jump_slash, can_jump_slash_except_hammer,
+    can_cut_shrubs, can_collect_grass, can_jump_slash, can_jump_slash_except_hammer,
     can_hit_at_range, can_reflect_nuts, is_child, is_adult,
     can_climb, can_swim, can_play_song, can_do_trick, water_timer_at_least, fire_timer_at_least, at_day, at_night,
 )
@@ -1358,7 +1358,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     region = broad_region
                     exact_single += 1
                 else:
-                    region = neutral_region
+                    # This adult-only pickup's routes are all within Gerudo
+                    # Valley. Parenting it to Menu forces the starting age
+                    # during location evaluation, hiding it from child-start
+                    # seeds even after they can visit the valley as adult.
+                    region = (actual_regions[str(loc.region)]
+                              if loc.rc == "RC_GV_WONDER_UPPER_WATERFALL"
+                              else neutral_region)
                     self._fork_multi_region_sources[loc.address] = tuple(
                         sorted(projected_sources)
                     )
@@ -3394,9 +3400,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                         # count because the Wonder actors are not present as Adult.
                         pillar_route = can_use(Items.HOVER_BOOTS, bundle) | (grab_rule() & animal_rule("Cucco"))
                         rule = is_child(bundle) & upper_child_route & pillar_route
+                    elif rc.startswith("RC_ZR_WONDER_NEAR_CUCCO_"):
+                        # These triggers are in the water. Reaching the nearby
+                        # bank/Cucco does not collect them without surface Swim.
+                        rule = is_child(bundle) & upper_child_route & swim_rule()
                     else:
-                        # Before ladder, Frog Bridge, lower land bridge and near-
-                        # Cucco wonders live in the upper child section itself.
+                        # Before ladder, Frog Bridge and lower land bridge
+                        # wonders live in the upper child section itself.
                         rule = is_child(bundle) & upper_child_route
                 # Dampe race wonders are inside the race tunnel. Their
                 # NPC/Speak gates are installed explicitly below.
@@ -3632,16 +3642,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if o.shuffle_grass_bush_soul.value and ((tags & grass_tags) or is_named_grass or is_named_bush):
                 require(location, 'Grass / Bush Soul')
 
-            # Grass checks are collectable either by lifting with EXTREME Grab
-            # OR by using a normal shrub-breaking method (sword/stick, bombs,
-            # Bombchus, boomerang, etc.). Do not require Grab as a hard AND gate:
-            # that disagrees with the runtime and can create fake deadlocks when
-            # Bombs are the intended route. Grass/Bush Soul remains an independent
-            # existence gate above.
+            # Match En_Kusa's carry gate: Grab plus real Strength, OR a valid
+            # cutting method. Basic Grab alone cannot lift grass in either age.
+            # Share the inherited helper so this overlay cannot bypass its gate.
             if (tags & grass_tags) or is_named_grass:
                 bundle = native_bundle_for_location(location)
                 if bundle is not None:
-                    require_native_existing(location, can_cut_shrubs(bundle) | grab_rule())
+                    require_native_existing(location, can_collect_grass(bundle))
             is_tree_check = bool((tags & LocTag.Tree) or is_named_tree)
             if o.shuffle_tree_soul.value and is_tree_check:
                 require(location, 'Tree Soul')
@@ -4391,6 +4398,19 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             zr_front_break = zr_front_break & Has("Rock / Boulder Soul")
         zr_upper_child_entry = zr_deep_swim | zr_front_break
 
+        # Native RR_ZR_ATOP_LADDER is contracted into broad Zora River by AP.
+        # Its upper-circle ledge needs Climb at either age, and Child also
+        # needs a usable Cucco (correct Soul mode + Grab). Basic Swim reaches
+        # other parts of the ladder subregion, not this ledge. is_adult checks
+        # actual adult reachability, so owning adult equipment is no bypass.
+        zr_upper_circle = climb_rule() & (
+            is_adult(zr_bundle)
+            | (is_child(zr_bundle) & grab_rule() & animal_rule("Cucco"))
+        )
+        for zr_loc in FORK_LOCATIONS:
+            if zr_loc.rc.startswith("RC_ZR_UPPER_CIRCLE_") and self._fork_location_enabled(zr_loc):
+                require_native_fork(self.get_location(zr_loc.name), zr_upper_circle)
+
         # Before-ladder wonders are Child-only, need surface swimming to reach
         # their triggers, and need either the front rock route or the deeper
         # backside/shortcut route.
@@ -4957,7 +4977,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # This gives the native client one authoritative settings snapshot to apply
         # before Randomizer_InitSaveFile() instead of relying on whatever happened
         # to be selected in the local randomizer menu.
-        cvars = {}
+        from .NativeSettings import NATIVE_AP_DEFAULTS
+        cvars = dict(NATIVE_AP_DEFAULTS)
         def cv(name, value):
             cvars[name] = int(value)
 
@@ -5033,6 +5054,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         cv("ShuffleEnemyDrops", o.shuffle_enemy_drops.value)
         cv("ShuffleBeanSouls", o.shuffle_bean_souls.value)
         cv("ShuffleFreestanding", data["shuffle_freestanding_items"])
+        # AP permits buying a first shield/tunic; native refill-only mode would
+        # make the Buy Deku Shield event promise an unobtainable shield.
+        cv("ShopShieldsTunicsGate", 0)
         cv("Shopsanity", 1 if data["shuffle_shops"] else 0)
         cv("ShopsanityCount", data["shuffle_shops_item_amount"])
         cv("ShopsanityPrices", 5 if data["shop_affordable_prices"] else 4)

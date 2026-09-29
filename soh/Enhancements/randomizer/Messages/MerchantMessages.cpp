@@ -27,6 +27,7 @@ extern PlayState* gPlayState;
      RAND_GET_OPTION(RSK_SHUFFLE_MERCHANTS).Is(RO_SHUFFLE_MERCHANTS_ALL))
 
 void BuildMerchantMessage(CustomMessage& msg, RandomizerCheck rc, bool mysterious = true) {
+    Archipelago_RefreshPlacementForCheck(static_cast<int32_t>(rc));
     auto location = RAND_GET_ITEM(rc);
     RandomizerGet rgid = location->GetPlacedRandomizerGet();
     CustomMessage itemName;
@@ -47,18 +48,13 @@ void BuildMerchantMessage(CustomMessage& msg, RandomizerCheck rc, bool mysteriou
         }
         itemName = CustomMessage(trickName);
         color = "%g";
+    } else if (rgid == RG_AP_REMOTE_IMPORTANT || rgid == RG_AP_REMOTE_NORMAL) {
+        const char* description = Archipelago_GetRemoteItemDescription(static_cast<int32_t>(rc));
+        itemName = CustomMessage(description != nullptr && description[0] != '\0'
+                                     ? description : "an Archipelago item");
+        color = rgid == RG_AP_REMOTE_IMPORTANT ? "%g" : "%w";
     } else if (inShop) {
-        if (rgid == RG_AP_REMOTE_IMPORTANT || rgid == RG_AP_REMOTE_NORMAL) {
-            const char* apDescription = Archipelago_GetRemoteItemDescription(static_cast<int32_t>(rc));
-            if (apDescription != nullptr && apDescription[0] != '\0') {
-                itemName = CustomMessage(apDescription);
-                color = rgid == RG_AP_REMOTE_IMPORTANT ? "%g" : "%w";
-            } else {
-                itemName = CustomMessage(Rando::StaticData::RetrieveItem(rgid).GetName());
-            }
-        } else {
-            itemName = CustomMessage(Rando::StaticData::RetrieveItem(rgid).GetName());
-        }
+        itemName = CustomMessage(Rando::StaticData::RetrieveItem(rgid).GetName());
     } else {
         // Hint text brings its own article
         itemName = Rando::StaticData::RetrieveItem(rgid).GetHint().GetHintMessage();
@@ -148,8 +144,13 @@ void BuildCarpetGuyFailToBuyMessage(uint16_t* textId, bool* loadFromMessageTable
 }
 
 void BuildScrubMessage(uint16_t* textId, bool* loadFromMessageTable) {
-    EnDns* enDns = reinterpret_cast<EnDns*>(GET_PLAYER(gPlayState)->talkActor);
-    RandomizerCheck rc = ObjectExtension::GetInstance().Get<ScrubIdentity>(enDns)->identity.randomizerCheck;
+    if (gPlayState == nullptr || GET_PLAYER(gPlayState) == nullptr) return;
+    Actor* actor = GET_PLAYER(gPlayState)->talkActor;
+    if (actor == nullptr || actor->id != ACTOR_EN_DNS) return;
+    auto* identity = ObjectExtension::GetInstance().Get<ScrubIdentity>(actor);
+    if (identity == nullptr) return;
+    RandomizerCheck rc = identity->identity.randomizerCheck;
+    Archipelago_RefreshPlacementForCheck(static_cast<int32_t>(rc));
     uint16_t price = RAND_GET_ITEM(rc)->GetPrice();
     CustomMessage msg;
     if (price == 0) {

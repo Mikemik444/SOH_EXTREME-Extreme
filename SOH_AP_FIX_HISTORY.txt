@@ -1,0 +1,100 @@
+SOH-EXTREME / ARCHIPELAGO: USER REQUIREMENTS AND FIX HISTORY
+Updated 2026-09-29 for cumulative release 0.11.27
+Repository: https://github.com/Mikemik444/SOH_EXTREME-Extreme
+
+PURPOSE
+This file records the reports and decisions from this repair conversation so
+future work can refer to them. It is project documentation, not a promise of
+permanent assistant memory across chats. Keep it with the source and bring it
+into any new repair conversation. New reports should become regression cases.
+
+CURRENT ZORA RIVER REQUIREMENTS (0.11.27)
+- Wonder Near Cucco 1-3: child Link, access to that river section, and Swim.
+  With Swim shuffled, physical Progressive Scale #1 grants Swim/Bronze Scale.
+  Being on the bank, carrying a Cucco, or owning adult equipment is insufficient.
+- Upper Circle Boulder and Upper Circle Rock 1-8: Climb AND either
+  (child + usable Cucco + Grab) OR actual adult access. Climb is required on
+  BOTH routes. Merely owning adult equipment does not unlock adult age.
+- A usable Cucco needs Cucco Soul in individual-animal mode, Animal Soul in
+  shared mode, and no soul item when animal souls are not shuffled. Grab and
+  Climb likewise become innate only when their own shuffles are disabled.
+- Existing object interaction and Rock / Boulder Soul requirements remain.
+  Names and network IDs stay stable. Apply these rules to native Check Finder,
+  the AP generator and Universal Tracker, not just the displayed list.
+- Tests: validation/test_zr_routes.py (actual AP/UT receipt matrix),
+  validation/test_zr_native.py (compiled production location predicates).
+
+GRASS / STRENGTH (0.11.25)
+- With Grab shuffled, Strength #1 supplies basic Grab / Power Bracelet.
+  It permits appropriate small-object interactions, not lifting grass.
+- Strength #2 supplies Goron's Bracelet and permits lifting grass. Without
+  Grab shuffle, the normal first Strength supplies Goron's Bracelet.
+- Valid cutting methods remain alternatives. Sticks alone do not cut grass.
+- Tests: validation/test_grass_strength.py, validation/test_grass_native.py.
+
+MIDO, DEKU SCRUBS AND BABAS (0.11.26 and earlier)
+- Closed Forest On or Deku Only: before Mido moves, his path requires Kokiri
+  Sword and Deku Shield, plus NPC Soul and Kokiri speech when those are shuffled.
+  Individual speech means Speak Kokiri; another language is not sufficient.
+- The five child Withered Deku Babas in Kokiri Forest Room 1 are BEYOND Mido.
+  Their native/AP region is KF Outside Deku Tree, not the main forest.
+- Closed Forest Off keeps the open path. Enemy soul and combat gates still apply.
+- Solid upright/spinning Withered Babas require a usable sword or boomerang;
+  Deku Sticks are not a valid kill method for these actors.
+- Deku Tree scrub barriers need a shield that can reflect nuts. Live finder
+  state must reflect owned equipment, not a future shop purchase event.
+- AP-managed settings disable the stale refill-only shield/tunic purchase
+  restriction. Vanilla stock prices remain separate from randomized slot prices.
+- Tests: validation/test_mido_routes.py, test_mido_native.py, test_deku_logic.py,
+  test_deku_native.py. Gerudo Valley adult waterfall parent regression:
+  validation/test_waterfall_parent.py.
+
+NETWORK / ITEM PRESENTATION (0.11.24 and earlier)
+- Network > Archipelago includes the server's hint list, filtering and found state.
+- Scrub/merchant AP item descriptions should show the item rather than No Hint.
+- Important/useful remote AP rewards queue a named pickup textbox and hold-up
+  presentation. Fillers retain quick notifications. Safe animation gates remain.
+- Received-item handling has priority to reduce avoidable delays; this does not
+  promise zero network latency. Queue/save/connection safety fixes are retained.
+- AP name/control-character handling and PrintJSON player-ID parsing were hardened.
+- Tests: validation/test_ap_presentation.py, test_ap_hints_protocol.cpp,
+  test_ap_slot_contract.py, test_ap_delivery_audit.py and native delivery tests.
+
+EARLIER GAMEPLAY / BUILD REPORTS (RETAINED IN CUMULATIVE OVERLAYS)
+- Randomized pond fish checks must submit once and display the reward model.
+- Disabled enemy checks must not leak into Check Finder. Enemy-drop shuffle,
+  enemy souls and enemy model randomization are distinct settings.
+- AP heart pieces/containers heal to maximum; Full Wallets fills wallet upgrades.
+- Scrubs charge their resolved price once; randomized shop prices can be zero.
+- Triforce Hunt uses the resolved required percentage and reports completion.
+- AP reconnect/replay, receipt persistence, save isolation, main-thread delivery
+  and scout retry were audited and patched. No specific unlogged crash can be
+  proven fixed without its reproduction/log.
+- build.cmd packages/verifies the matching APWorld and runtime. Use a fresh
+  Command Prompt after replacing source. Wait for the complete successful build.
+- Relevant tests include validation/test_ap_gameplay_fixes.py,
+  test_ap_purchase_prices.py, test_apworld_update.py and the earlier delivery tests.
+
+SETTINGS / OLD SEED CAVEAT
+The earlier pasted YAML and the later supplied spoiler are different settings.
+For the current reports, use the 216 resolved settings reconstructed in
+validation/fixtures/ap_mido_seed_settings_20260929.yaml. That seed enables
+Closed Forest, shuffled abilities, individual language/animal/enemy souls and
+NPC Soul. Triforce Hunt uses 60 pieces with 50 percent required (30 pieces).
+
+The supplied AP_99430200357528780636 multiworld was generated with older rules.
+Correcting logic does not relocate already placed items. With corrected Mido
+and ZR rules, offline replay stalls after 33 checks; an extra Climb alone reaches
+355 checks but still stalls. An extra Climb plus one physical Progressive Scale
+reaches the goal and all 3,258 checks in the replay, assuming eventual delivery
+of all 39 SOH items placed in the other game. The other game's logic is not run.
+No server messages, item grants or save modifications were performed here.
+Regenerate with the updated APWorld, or use the explicit host recovery steps
+in README-ZORA-RIVER.txt if keeping that old seed.
+
+VALIDATION LIMITS
+Passing generation establishes consistency under the encoded rules. It cannot
+prove those rules capture every physical obstacle in the game. No connected
+in-game playthrough has been performed by these automated checks, and not every
+settings combination is certified. Continue recording concrete counterexamples
+like the screenshots, then test both missing-item cases and valid alternatives.

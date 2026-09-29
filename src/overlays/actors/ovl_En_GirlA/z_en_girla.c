@@ -864,6 +864,9 @@ s32 EnGirlA_CanBuy_Fairy(PlayState* play, EnGirlA* this) {
 
 s32 EnGirlA_CanBuy_Randomizer(PlayState* play, EnGirlA* this) {
     ShopItemIdentity shopItemIdentity = Randomizer_IdentifyShopItem(play->sceneNum, this->randoSlotIndex);
+    // Keep the payment callback's cached price in sync with the price checked
+    // here, including AP prices received after the shelf actor was initialized.
+    this->basePrice = shopItemIdentity.itemPrice;
     GetItemEntry getItemEntry = Randomizer_GetItemFromKnownCheckWithoutObtainabilityCheck(
         shopItemIdentity.identity.randomizerCheck, shopItemIdentity.ogItemId);
     ItemObtainability itemObtainability =

@@ -1,0 +1,49 @@
+{
+  "repository": "https://github.com/Mikemik444/SOH_EXTREME-Extreme",
+  "base_commit": "9bc10e7191b546754a50da6463e074276d33862f",
+  "requires_source_update": "AP Audit v2",
+  "build": "Windows x64 Release; MSVC 2022; successful",
+  "tests": [
+    {
+      "name": "Production AP price/placement and scrub/shop payment regression",
+      "passed": true
+    },
+    {
+      "name": "scrub identity initializes from AP location price",
+      "passed": true
+    },
+    {
+      "name": "shop identity initializes from AP location price",
+      "passed": true
+    },
+    {
+      "name": "Scene prices refresh before scout responses",
+      "passed": true
+    }
+  ],
+  "slot_price_test": {
+    "passed": true,
+    "generated_shop_price": 0,
+    "generated_scrub_price": 40,
+    "shop_slots": 64,
+    "scrub_prices_verified_in_slot_data": 36,
+    "scope": "Real AP 0.6.7 world setup and production price generation/slot export"
+  },
+  "apcpp_windows_loader": "passed",
+  "patch_forward_and_reverse_checks": "passed",
+  "source_sha256": {
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "3e577e5f6e01baada76ffe1d4b374951b760d1015a8bde843f48c283a07baf5e",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "98f5ed32bf0a36dc701a083b46761599ca28461a6a7b704d45082c5a360f1448",
+    "soh/Enhancements/randomizer/item_location.cpp": "4132e12086cce68da20989c93b9b4bd24b0c7107fc2c55e4d4d7859accb62a2b",
+    "soh/Enhancements/randomizer/randomizer.cpp": "f2c1610f3ced3f51816a9aa18e21c656155bea4736768fb705f41668d39afef9",
+    "src/overlays/actors/ovl_En_GirlA/z_en_girla.c": "a59151f610f869696ad96d87a25be29853f206ab33521b06652cb9b62d86cf67",
+    "validation/test_ap_purchase_prices.py": "d78ffa2f7f7976604aab012f7a54c749ec1c378c78eb082388b37a08c66bd052"
+  },
+  "runtime_sha256": {
+    "soh.exe": "0d3971e781e04d95db109d81e84cb70104268b220ad96b7ed9b309c9696337e5",
+    "APCpp.dll": "32252ea9497fcb1d0233d7555c5548c03c929c63cffaa1f8cd92dad14cf274af"
+  },
+  "limits": [
+    "No connected in-game playthrough"
+  ]
+}

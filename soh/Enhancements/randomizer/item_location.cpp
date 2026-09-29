@@ -108,6 +108,11 @@ void ItemLocation::ApplyPlacedItemEffect() const {
 }
 
 uint16_t ItemLocation::GetPrice() const {
+    // A location's explicit price (including zero) overrides the displayed
+    // item's stock price. AP scrubs/shops can contain any scouted item model.
+    if (hasCustomPrice) {
+        return price;
+    }
     // RANDOTODO if we ever change price of shop items, this needs replacing with proper price assignment in Fill
     if (StaticData::RetrieveItem(placedItem).GetItemType() == ITEMTYPE_SHOP) {
         return StaticData::RetrieveItem(placedItem).GetPrice();

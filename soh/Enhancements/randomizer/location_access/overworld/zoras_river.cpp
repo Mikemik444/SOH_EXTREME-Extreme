@@ -3,6 +3,15 @@
 
 using namespace Rando;
 
+// Reaching the river/ladder subregion does not by itself reach this high ledge.
+// Child needs a live Cucco and Grab; Adult can make the crossing. Both routes
+// still need the ladder, including when the broader subregion has bean access.
+static bool CanReachZrUpperCircle() {
+    return logic->CanClimbLadder() &&
+           (logic->IsAdult || (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) &&
+                               logic->HasItem(RG_POWER_BRACELET)));
+}
+
 void RegionTable_Init_ZoraRiver() {
     // clang-format off
     areaTable[RR_ZR_FRONT] = Region("ZR Front", SCENE_ZORAS_RIVER, {}, {
@@ -98,9 +107,9 @@ void RegionTable_Init_ZoraRiver() {
         LOCATION(RC_ZR_WONDER_LOWER_LAND_BRIDGE_2,           logic->IsChild && logic->HasItem(RG_BRONZE_SCALE)),
         LOCATION(RC_ZR_WONDER_LOWER_LAND_BRIDGE_3,           logic->IsChild && logic->HasItem(RG_BRONZE_SCALE)),
         LOCATION(RC_ZR_WONDER_LOWER_LAND_BRIDGE_4,           logic->IsChild && logic->HasItem(RG_BRONZE_SCALE)),
-        LOCATION(RC_ZR_WONDER_NEAR_CUCCO_1,                  logic->IsChild), // Requires backflip with Iron Boots
-        LOCATION(RC_ZR_WONDER_NEAR_CUCCO_2,                  logic->IsChild), // Requires backflip with Iron Boots
-        LOCATION(RC_ZR_WONDER_NEAR_CUCCO_3,                  logic->IsChild),
+        LOCATION(RC_ZR_WONDER_NEAR_CUCCO_1,                  logic->IsChild && logic->HasItem(RG_BRONZE_SCALE)),
+        LOCATION(RC_ZR_WONDER_NEAR_CUCCO_2,                  logic->IsChild && logic->HasItem(RG_BRONZE_SCALE)),
+        LOCATION(RC_ZR_WONDER_NEAR_CUCCO_3,                  logic->IsChild && logic->HasItem(RG_BRONZE_SCALE)),
         LOCATION(RC_ZR_NEAR_DOMAIN_GOSSIP_STONE,             true),
     }, {
         //Exits
@@ -126,15 +135,15 @@ void RegionTable_Init_ZoraRiver() {
         LOCATION(RC_ZR_GS_NEAR_RAISED_GROTTOS,              logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) && logic->CanGetNightTimeGS()),
         LOCATION(RC_ZR_NEAR_GROTTOS_GOSSIP_STONE_FAIRY,     logic->CallGossipFairy()),
         LOCATION(RC_ZR_NEAR_GROTTOS_GOSSIP_STONE_FAIRY_BIG, logic->CanUse(RG_SONG_OF_STORMS)),
-        LOCATION(RC_ZR_UPPER_CIRCLE_BOULDER,                logic->BlastOrSmash()),
-        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_1,                 logic->CanBreakRocks()),
-        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_2,                 logic->CanBreakRocks()),
-        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_3,                 logic->CanBreakRocks()),
-        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_4,                 logic->CanBreakRocks()),
-        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_5,                 logic->CanBreakRocks()),
-        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_6,                 logic->CanBreakRocks()),
-        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_7,                 logic->CanBreakRocks()),
-        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_8,                 logic->CanBreakRocks()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_BOULDER,                CanReachZrUpperCircle() && logic->BlastOrSmash()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_1,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_2,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_3,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_4,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_5,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_6,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_7,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
+        LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_8,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
         // These Wonder actors are physically above the Zora River ladder.
         // Keeping them in this subregion makes Check Finder inherit the actual
         // Climb/Swim/Cucco+Grab route instead of treating broad upper-ZR access

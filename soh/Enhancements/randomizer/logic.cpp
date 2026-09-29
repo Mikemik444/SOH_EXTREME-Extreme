@@ -1900,12 +1900,10 @@ bool Logic::CanPickUpGrass() {
     if (ctx->GetOption(RSK_SHUFFLE_GRASS_SOUL) && !HasItem(RG_GRASS_SOUL)) {
         return false;
     }
-    // Shuffle Grab adds a tier before vanilla Strength:
-    // 1) Grab / Power Bracelet -> lift grass and small rocks
-    // 2) Goron Bracelet        -> bomb flowers / first real Strength tier
-    // 3) Silver Gauntlets      -> silver blocks and silver boulders
-    // 4) Golden Gauntlets      -> everything
-    return HasItem(RG_POWER_BRACELET);
+    // The player's carry action rejects En_Kusa without actual Strength in
+    // either age. Shuffled Grab alone only permits basic objects such as small
+    // rocks and cuccos. HasItem(Goron's Bracelet) also checks the Grab flag.
+    return HasItem(RG_GORONS_BRACELET);
 }
 
 bool Logic::CanStunDeku() {

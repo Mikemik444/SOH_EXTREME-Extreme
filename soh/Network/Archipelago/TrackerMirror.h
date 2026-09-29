@@ -16,7 +16,7 @@ namespace SohExtreme {
 constexpr size_t kTrackerMaxEntries = 20000;
 constexpr size_t kTrackerMaxBytes = 750000;
 constexpr const char* kTrackerProtocol = "SOHExtremeFinder1";
-constexpr const char* kTrackerVersion = "0.11.22";
+constexpr const char* kTrackerVersion = "0.11.27";
 struct TrackerRow {
     int64_t id = 0;
     uint8_t state = 0; // 1 normal; 2 UT's separate glitched state
@@ -26,6 +26,7 @@ struct TrackerRow {
 struct TrackerSnapshot {
     std::string nonce, producer, version;
     uint32_t slot = 0, manualCount = 0, ignoredCount = 0;
+    uint32_t liveShields = 0xffffffffu; // 1 Deku, 2 Hylian; sentinel for standalone UT
     uint64_t request = 0, revision = 0, received = 0;
     std::set<int64_t> active, checked;
     std::vector<TrackerRow> rows;
@@ -89,6 +90,9 @@ inline TrackerSnapshot DecodeTrackerSnapshot(const std::string& encoded) {
     result.slot = static_cast<uint32_t>(integer(4));
     result.request = integer(8); result.revision = integer(8); result.received = integer(8);
     result.manualCount = static_cast<uint32_t>(integer(4)); result.ignoredCount = static_cast<uint32_t>(integer(4));
+    result.liveShields = static_cast<uint32_t>(integer(4));
+    if (result.liveShields > 3 && result.liveShields != 0xffffffffu)
+        throw std::invalid_argument("Invalid tracker shield inventory");
     auto locations = [&](std::set<int64_t>& out) {
         const auto count = integer(4);
         if (count > kTrackerMaxEntries) throw std::invalid_argument("Too many tracker locations");
@@ -127,7 +131,7 @@ class TrackerMirrorState {
     uint64_t NextRequest() { return ++request_; }
     const std::string& Nonce() const { return nonce_; }
     bool Accept(TrackerSnapshot candidate, uint32_t slot, double now, std::string& error) {
-        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.22 on both sides."; return false; }
+        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.27 on both sides."; return false; }
         if (nonce_.empty() || candidate.nonce != nonce_ || candidate.slot != slot ||
             candidate.request == 0 || candidate.request > request_) { error = "Wrong tracker session."; return false; }
         if (!producer_.empty() && producer_ != candidate.producer && now - lastReceive_ <= 10.0) {
@@ -141,14 +145,18 @@ class TrackerMirrorState {
         hasSnapshot_ = true; lastReceive_ = now; error.clear(); return true;
     }
     const TrackerSnapshot* Current(uint32_t slot, uint64_t received, const std::set<int64_t>& active,
-                                   const std::set<int64_t>& checked, double now, std::string& status) const {
+                                   const std::set<int64_t>& checked, double now, std::string& status,
+                                   uint32_t liveShields = 0xffffffffu) const {
         if (!hasSnapshot_) { status = "Starting the automatic AP tracker..."; return nullptr; }
         if (now - lastReceive_ > 10.0) { status = "Tracker snapshot expired; waiting for a live update."; return nullptr; }
         if (snapshot_.slot != slot || snapshot_.active != active) { status = "Tracker location manifest differs from this slot."; return nullptr; }
         if (snapshot_.received != received || snapshot_.checked != checked) {
             status = "Synchronizing AP items and checked locations with Universal Tracker..."; return nullptr;
         }
-        status = "Automatic AP tracker - Universal Tracker rules.";
+        if (snapshot_.liveShields != liveShields) {
+            status = "Synchronizing Link's shield inventory with the AP tracker..."; return nullptr;
+        }
+        status = "Automatic AP tracker - Universal Tracker rules, using Link's owned shields.";
         return &snapshot_;
     }
   private:

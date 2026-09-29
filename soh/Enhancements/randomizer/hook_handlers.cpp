@@ -1035,6 +1035,7 @@ static ScrubIdentity IdentifyScrub(s32 sceneNum, s32 actorParams, s32 respawnDat
         IdentifyCheck(&scrubIdentity.identity, location);
 
         scrubIdentity.getItemId = (GetItemID)Rando::StaticData::RetrieveItem(location->GetVanillaItem()).GetItemID();
+        Archipelago_RefreshPlacementForCheck(static_cast<int32_t>(scrubIdentity.identity.randomizerCheck));
         scrubIdentity.itemPrice =
             OTRGlobals::Instance->gRandoContext->GetItemLocation(scrubIdentity.identity.randomizerCheck)->GetPrice();
     }
@@ -2293,6 +2294,14 @@ u32 EnDns_RandomizerPurchaseableCheck(EnDns* enDns) {
     auto checkIdentity = ObjectExtension::GetInstance().Get<ScrubIdentity>(enDns);
     if (checkIdentity != nullptr && Flags_GetRandomizerInf(checkIdentity->identity.randomizerInf)) {
         return DNS_CANBUY_RESULT_CANT_GET_NOW;
+    }
+    if (checkIdentity != nullptr) {
+        // A scout/slot update may have arrived after this actor was initialized.
+        // Cache the accepted location price for the later payment callback.
+        const auto rc = checkIdentity->identity.randomizerCheck;
+        Archipelago_RefreshPlacementForCheck(static_cast<int32_t>(rc));
+        checkIdentity->itemPrice = Rando::Context::GetInstance()->GetItemLocation(rc)->GetPrice();
+        enDns->dnsItemEntry->itemPrice = checkIdentity->itemPrice;
     }
     if (gSaveContext.rupees < enDns->dnsItemEntry->itemPrice) {
         return DNS_CANBUY_RESULT_NEED_RUPEES;

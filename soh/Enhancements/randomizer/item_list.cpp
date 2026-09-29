@@ -512,7 +512,7 @@ void Rando::StaticData::InitItemTable() {
     // Cosmetic-only placeholders for items belonging to another Archipelago player.
     // They deliberately use the existing harmless Triforce Piece GI plumbing while
     // replacing the displayed icon with Archipelago's logo.
-    itemTable[RG_AP_REMOTE_IMPORTANT] =                 Item(RG_AP_REMOTE_IMPORTANT,              Text{ "Archipelago Item" }, ITEMTYPE_ITEM, 0xDF, false, LOGIC_NONE, RHT_NONE, RG_AP_REMOTE_IMPORTANT, OBJECT_GI_BOMB_2, GID_TRIFORCE_PIECE, TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_LONG, ITEM_CATEGORY_JUNK, MOD_RANDOMIZER).CustomIcon(gArchipelagoItemImportantTex);
+    itemTable[RG_AP_REMOTE_IMPORTANT] =                 Item(RG_AP_REMOTE_IMPORTANT,              Text{ "Archipelago Item" }, ITEMTYPE_ITEM, 0xDF, false, LOGIC_NONE, RHT_NONE, RG_AP_REMOTE_IMPORTANT, OBJECT_GI_BOMB_2, GID_TRIFORCE_PIECE, TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_LONG, ITEM_CATEGORY_MAJOR, MOD_RANDOMIZER).CustomIcon(gArchipelagoItemImportantTex);
     itemTable[RG_AP_REMOTE_NORMAL] =                    Item(RG_AP_REMOTE_NORMAL,                 Text{ "Archipelago Item" }, ITEMTYPE_ITEM, 0xDF, false, LOGIC_NONE, RHT_NONE, RG_AP_REMOTE_NORMAL, OBJECT_GI_BOMB_2, GID_TRIFORCE_PIECE, TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_SHORT, ITEM_CATEGORY_JUNK, MOD_RANDOMIZER).CustomIcon(gArchipelagoItemNormalTex);
     itemTable[RG_AP_REMOTE_IMPORTANT].SetCustomDrawFunc(Randomizer_DrawArchipelagoItem);
     itemTable[RG_AP_REMOTE_NORMAL].SetCustomDrawFunc(Randomizer_DrawArchipelagoItem);

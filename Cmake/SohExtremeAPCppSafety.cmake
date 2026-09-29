@@ -96,6 +96,31 @@ static void AP_QueueMessage(AP_Message* message) {
         string(PREPEND main "#include <mutex>\n")
     endif()
 
+    # PrintJSON text is a string in the AP protocol, including player_id parts.
+    # JsonCpp asInt() on that string throws on the websocket thread.
+    set(old_player_text "msg->text += getPlayer(0, itr[\"text\"].asInt()).alias;")
+    set(new_player_text [=[// SOH-EXTREME: parse string-valued PrintJSON player IDs.
+                        const auto& part = itr["text"];
+                        if (!part.isString() && !part.isInt()) continue;
+                        const std::string value = part.asString();
+                        try {
+                            size_t consumed = 0;
+                            const int slot = std::stoi(value, &consumed);
+                            if (consumed == value.size() && map_players.count(slot))
+                                msg->text += getPlayer(ap_player_team, slot).alias;
+                            else msg->text += value;
+                        } catch (const std::exception&) {
+                            msg->text += value;
+                        }]=])
+    string(FIND "${main}" "${new_player_text}" player_fixed)
+    if(player_fixed EQUAL -1)
+        string(FIND "${main}" "${old_player_text}" player_found)
+        if(player_found EQUAL -1)
+            message(FATAL_ERROR "SOH-EXTREME: APCpp PrintJSON player text differs; nothing was overwritten.")
+        endif()
+        string(REPLACE "${old_player_text}" "${new_player_text}" main "${main}")
+    endif()
+
     # Reader/FastWriter mutate their own parse/output buffers. Tracker Bounce
     # messages are sent on the game thread while the websocket thread parses
     # Received/Retrieved packets. Give each thread its own codec instances.

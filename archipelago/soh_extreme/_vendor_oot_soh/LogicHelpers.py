@@ -231,10 +231,10 @@ def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"],
         return HasAny(Items.MAGIC_BEAN_PACK, Events.CAN_BUY_BEANS)
 
     if item == Items.DEKU_SHIELD:
-        return Has(Items.BUY_DEKU_SHIELD)
+        return HasOwnedShield(1, Items.BUY_DEKU_SHIELD)
 
     if item == Items.HYLIAN_SHIELD:
-        return Has(Items.BUY_HYLIAN_SHIELD)
+        return HasOwnedShield(2, Items.BUY_HYLIAN_SHIELD)
 
     if item == Items.GORON_TUNIC:
         return HasAny(Items.BUY_GORON_TUNIC, Items.GORON_TUNIC)
@@ -288,6 +288,35 @@ def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"],
 
     return Has(item, count)
 
+
+
+@dataclasses.dataclass
+class HasOwnedShield(Rule, game="SOH-EXTREME"):
+    """Generation can plan purchases; the game-owned tracker knows actual equipment."""
+    mask: int
+    purchase: str
+
+    def _instantiate(self, world: "SohWorld") -> Rule.Resolved:
+        return self.Resolved(mask=self.mask, purchase=self.purchase, player=world.player,
+                             caching_enabled=getattr(world, "rule_caching_enabled", False))
+
+    class Resolved(Rule.Resolved):
+        mask: int
+        purchase: str
+        force_recalculate = True
+
+        def _evaluate(self, state: CollectionState) -> bool:
+            world = state.multiworld.worlds[self.player]
+            owned = getattr(world, "_extreme_live_shields", None)
+            if owned is not None:
+                return bool(owned & self.mask)
+            return state.has(self.purchase, self.player)
+
+        def item_dependencies(self) -> dict[str, set[int]]:
+            return {self.purchase: {id(self)}}
+
+        def __str__(self) -> str:
+            return "Own Deku Shield" if self.mask == 1 else "Own Hylian Shield"
 
 
 @dataclasses.dataclass
@@ -829,7 +858,8 @@ def _can_kill_enemy_combat(bundle: tuple[Regions, "SohWorld"], enemy: Enemies, d
         return can_use_sword(bundle) | (can_use(Items.STICKS, bundle) & can_do_trick(Tricks.BOTW_CHILD_DEADHAND, bundle))
 
     if enemy == Enemies.WITHERED_DEKU_BABA:
-        return can_attack(bundle) | can_use(Items.BOOMERANG, bundle)
+        # En_Karebaba's upright/spinning collider rejects sticks and hammer.
+        return can_use_sword(bundle) | can_use(Items.BOOMERANG, bundle)
 
     if enemy in [Enemies.LIKE_LIKE, Enemies.FLOORMASTER]:
         return can_damage(bundle)
@@ -1064,7 +1094,7 @@ def can_pass_enemy(bundle: tuple[Regions, "SohWorld"], enemy: Enemies,
 
 
 def can_cut_shrubs(bundle: tuple[Regions, "SohWorld"]) -> Rule:
-    """Destroy a shrub; lifting grass is the separate can_grab alternative."""
+    """Destroy a shrub; lifting grass additionally requires real Strength."""
     return extreme_requirement(bundle, "shuffle_grass_bush_soul", "Grass / Bush Soul") & (
         can_use_sword(bundle) | has_explosives(bundle) |
         can_use_any([Items.BOOMERANG, Items.MEGATON_HAMMER], bundle))
@@ -1072,9 +1102,14 @@ def can_cut_shrubs(bundle: tuple[Regions, "SohWorld"]) -> Rule:
 
 
 def can_collect_grass(bundle: tuple[Regions, "SohWorld"]) -> Rule:
-    """En_Kusa's check: cut it, or lift/throw it using Grab. Not contact bushes."""
+    """En_Kusa: cut it, or lift with Grab AND Goron's Bracelet in either age.
+
+    With shuffled Grab, physical Strength #1 grants only Grab; #2 grants the
+    first real Strength tier. has_item follows that shift and also checks Grab.
+    This matches the player's En_Kusa carry gate, not contact bushes.
+    """
     return (extreme_requirement(bundle, "shuffle_grass_bush_soul", "Grass / Bush Soul")
-            & (can_cut_shrubs(bundle) | can_grab(bundle)))
+            & (can_cut_shrubs(bundle) | has_item(Items.GORONS_BRACELET, bundle)))
 
 
 def hookshot_or_boomerang(bundle: tuple[Regions, "SohWorld"]) -> Rule:

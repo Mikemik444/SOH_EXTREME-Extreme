@@ -24,7 +24,7 @@ void SohMenu::AddMenuNetwork() {
 
     // Archipelago / SOH-EXTREME
     path = { "Network", "Archipelago", SECTION_COLUMN_1 };
-    AddSidebarEntry("Network", path.sidebarName, 3);
+    AddSidebarEntry("Network", path.sidebarName, 2);
     AddWidget(path,
               "Connect this SOH-EXTREME build directly to an Archipelago server. "
               "Use the SOH-EXTREME APWorld on the server so custom Souls, Shovel, "
@@ -155,6 +155,35 @@ void SohMenu::AddMenuNetwork() {
         if (!canChat) {
             ImGui::TextDisabled("Chat and server commands become active after Archipelago authenticates.");
         }
+    });
+
+    path = { "Network", "Archipelago", SECTION_COLUMN_2 };
+    AddWidget(path, "Archipelago Hints", WIDGET_SEPARATOR_TEXT);
+    AddWidget(path, "##ArchipelagoHints", WIDGET_CUSTOM).CustomFunction([](WidgetInfo& info) {
+        auto& ap = ArchipelagoClient::GetInstance();
+        static ImGuiTextFilter filter;
+        static bool hideFound = false;
+        filter.Draw("Search hints", -1.0f);
+        ImGui::Checkbox("Hide found hints", &hideFound);
+        ImGui::TextWrapped("Known server hints update automatically. Use !hint in chat for server hint commands.");
+        const auto& hints = ap.GetHints();
+        if (!ap.IsAuthenticated()) ImGui::TextDisabled("Connect to load your hints.");
+        else if (!ap.HasHintSnapshot()) ImGui::TextDisabled("Loading server hints...");
+        else if (hints.empty()) ImGui::TextDisabled("No hints have been revealed for this slot yet.");
+        ImGui::Text("%zu known hints", hints.size());
+        ImGui::BeginChild("##APHintList", ImVec2(0, ImGui::GetTextLineHeightWithSpacing() * 24.0f),
+                          ImGuiChildFlags_Borders);
+        for (const auto& hint : hints) {
+            if (hideFound && hint.found) continue;
+            const std::string searchable = hint.item + " " + hint.recipient + " " + hint.location + " " + hint.finder;
+            if (!filter.PassFilter(searchable.c_str())) continue;
+            ImGui::TextWrapped("%s: %s", hint.found ? "Found" : "Not found", hint.item.c_str());
+            ImGui::TextWrapped("For %s", hint.recipient.c_str());
+            ImGui::TextWrapped("%s — %s's world", hint.location.c_str(), hint.finder.c_str());
+            if (!hint.entrance.empty()) ImGui::TextWrapped("Entrance: %s", hint.entrance.c_str());
+            ImGui::Separator();
+        }
+        ImGui::EndChild();
     });
 
     // Sail

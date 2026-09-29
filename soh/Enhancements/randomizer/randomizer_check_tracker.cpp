@@ -87,6 +87,7 @@ enum EnemyFinderCombat : uint8_t {
     EFC_BOOMERANG,
     EFC_FIRE_OR_MELEE,
     EFC_CONTACT, EFC_FIRE, EFC_BOW, EFC_BOOMERANG_AND_MELEE,
+    EFC_SWORD_OR_BOOMERANG,
 };
 
 enum EnemyFinderGate : uint8_t { EFG_NONE, EFG_AMY, EFG_ANUBIS, EFG_COFFIN, EFG_COMPOSER, EFG_FOREST_BLOCK_TOP, EFG_GRAVE, EFG_MEG, EFG_NIGHT, EFG_PEAHAT_LARVA, EFG_SFM_MOBLIN, EFG_SWIM };
@@ -169,6 +170,10 @@ static bool EnemyFinderCombatReachable(Rando::Logic* enemyLogic, EnemyFinderComb
         case EFC_FIRE: return enemyLogic->CanUse(RG_DINS_FIRE) || enemyLogic->CanUse(RG_FIRE_ARROWS);
         case EFC_BOW: return enemyLogic->CanUse(RG_FAIRY_BOW);
         case EFC_BOOMERANG_AND_MELEE: return enemyLogic->CanUse(RG_BOOMERANG) && melee;
+        case EFC_SWORD_OR_BOOMERANG:
+            return enemyLogic->CanUse(RG_KOKIRI_SWORD) || enemyLogic->CanUse(RG_MASTER_SWORD) ||
+                   enemyLogic->CanUse(RG_BIGGORON_SWORD) || enemyLogic->CanUse(RG_GIANTS_KNIFE) ||
+                   enemyLogic->CanUse(RG_BOOMERANG);
         case EFC_MELEE: return melee;
         case EFC_RANGED: return ranged;
         case EFC_REFLECT_NUTS: return enemyLogic->CanReflectNuts();

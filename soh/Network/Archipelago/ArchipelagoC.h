@@ -41,6 +41,7 @@ void Archipelago_RefreshPlacementForCheck(int32_t randomizerCheck);
 // Returns "<item> for <player>" for a scouted remote AP placement.
 // Empty string means the check is not a known remote placement.
 const char* Archipelago_GetRemoteItemDescription(int32_t randomizerCheck);
+const char* Archipelago_GetRemotePickupDescription(void);
 
 #ifdef __cplusplus
 }

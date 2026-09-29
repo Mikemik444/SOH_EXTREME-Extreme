@@ -21,6 +21,7 @@
 #include "randomizerTypes.h"
 #include "randomizerEnumStrings.h"
 #include "soh/ObjectExtension/ObjectExtension.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/Enhancements/randomizer/RCToRandInf.h"
 #include "dungeon.h"
 #include "logic.h"
@@ -843,6 +844,7 @@ ShopItemIdentity Randomizer::IdentifyShopItem(s32 sceneNum, u8 slotIndex) {
     if (location->GetRandomizerCheck() != RC_UNKNOWN_CHECK) {
         IdentifyCheck(&shopItemIdentity.identity, location);
         shopItemIdentity.ogItemId = (GetItemID)Rando::StaticData::RetrieveItem(location->GetVanillaItem()).GetItemID();
+        Archipelago_RefreshPlacementForCheck(static_cast<int32_t>(shopItemIdentity.identity.randomizerCheck));
 
         RandomizerGet randoGet = Rando::Context::GetInstance()
                                      ->GetItemLocation(shopItemIdentity.identity.randomizerCheck)
@@ -1510,6 +1512,10 @@ extern "C" u16 Randomizer_Item_Give(PlayState* play, GetItemEntry giEntry) {
             }
             break;
         }
+        case RG_AP_REMOTE_IMPORTANT:
+        case RG_AP_REMOTE_NORMAL:
+            // Presentation only: the server gives this item to its actual owner.
+            break;
         default:
             // Archipelago can deliver any shuffled SoH reward through this path.
             // If the randomizer entry carries a real vanilla ItemID, give that

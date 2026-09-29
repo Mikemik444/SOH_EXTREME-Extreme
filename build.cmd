@@ -41,10 +41,8 @@ if exist ".\install_official_ap_model_assets.ps1" (
 
 echo.
 echo [2/7] Rebuilding soh.o2r...
-echo NOTE: This stage intentionally uses one build worker.
-echo       CMake/FetchContent regeneration can otherwise launch overlapping
-echo       ZERO_CHECK projects and lock their .tlog files.
-cmake --build build-vs --config Release --target GenerateSohOtr --parallel 4
+echo NOTE: Let this build finish before starting another build in this folder.
+cmake --build build-vs --config Release --target GenerateSohOtr --parallel 4 -- /p:PreferredToolArchitecture=x64
 if errorlevel 1 goto :fail
 
 if not exist "%CD%\build-vs\soh\soh.o2r" (
@@ -54,7 +52,12 @@ if not exist "%CD%\build-vs\soh\soh.o2r" (
 
 echo.
 echo [3/7] Building the Release executable...
-cmake --build build-vs --config Release --target soh --parallel 8
+rem MSVC incremental LTCG can exhaust its heap with a stale cache after source overlays.
+rem Rebuild only these two generated link caches; compiled objects are retained.
+if exist "build-vs\soh.dir\Release\soh.iobj" del /Q "build-vs\soh.dir\Release\soh.iobj"
+if exist "build-vs\soh.dir\Release\soh.ipdb" del /Q "build-vs\soh.dir\Release\soh.ipdb"
+rem Use the 64-bit compiler/linker host for this large target.
+cmake --build build-vs --config Release --target soh --parallel 4 -- /p:PreferredToolArchitecture=x64
 if errorlevel 1 goto :fail
 
 echo.
