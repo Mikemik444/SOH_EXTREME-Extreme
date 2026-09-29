@@ -4098,6 +4098,9 @@
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\ArchipelagoSaveSnapshot.h">
       <Filter>soh\Network\Archipelago</Filter>
     </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\Network\Archipelago\NpcSpeechIdentity.h">
+      <Filter>soh\Network\Archipelago</Filter>
+    </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\TrackerMirror.h">
       <Filter>soh\Network\Archipelago</Filter>
     </ClInclude>

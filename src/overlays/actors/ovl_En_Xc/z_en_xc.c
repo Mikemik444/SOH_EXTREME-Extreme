@@ -5,6 +5,7 @@
  */
 
 #include "z_en_xc.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "overlays/actors/ovl_En_Arrow/z_en_arrow.h"
 #include "overlays/actors/ovl_Door_Warp1/z_door_warp1.h"
 #include "objects/object_xc/object_xc.h"
@@ -2209,7 +2210,8 @@ void EnXc_InitTempleOfTime(EnXc* this, PlayState* play) {
                 gSaveContext.cutsceneTrigger = 1;
             }
             this->action = SHEIK_ACTION_30; // Not sure what this does exactly
-        } else if (!Flags_GetEventChkInf(EVENTCHKINF_LEARNED_PRELUDE_OF_LIGHT)) {
+        } else if (!Flags_GetEventChkInf(EVENTCHKINF_LEARNED_PRELUDE_OF_LIGHT) ||
+                   Archipelago_HasPendingNpcConversation(&this->actor)) {
             func_80B3C9EC(this);
         } else {
             Actor_Kill(&this->actor);

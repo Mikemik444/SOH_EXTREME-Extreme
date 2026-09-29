@@ -1,0 +1,4073 @@
+[
+  {
+    "id": 10000000,
+    "name": "NPC Speech: Anju",
+    "matches": [
+      [
+        "ACTOR_EN_NIW_LADY",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "either",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_IMPAS_HOUSE",
+        "age": "either",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 6
+  },
+  {
+    "id": 10000002,
+    "name": "NPC Speech: Bombchu Bowling Owner",
+    "matches": [
+      [
+        "ACTOR_EN_BOM_BOWL_MAN",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_BOMBCHU_BOWLING",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "MARKET_BOMBCHU_BOWLING",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "MARKET_BOMBCHU_BOWLING",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "MARKET_BOMBCHU_BOWLING",
+        "age": "adult",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000003,
+    "name": "NPC Speech: Bonooru",
+    "matches": [
+      [
+        "ACTOR_EN_KAKASI",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Deku",
+    "routes": [
+      {
+        "region": "LAKE_HYLIA",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000004,
+    "name": "NPC Speech: Carpenter 0",
+    "matches": [
+      [
+        "ACTOR_EN_DAIKU",
+        -1,
+        3,
+        0
+      ],
+      [
+        "ACTOR_EN_DAIKU_KAKARIKO",
+        -1,
+        3,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "GV_CARPENTER_TENT",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      },
+      {
+        "region": "KAK_POTION_SHOP_FRONT",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 12
+  },
+  {
+    "id": 10000005,
+    "name": "NPC Speech: Carpenter 1",
+    "matches": [
+      [
+        "ACTOR_EN_DAIKU",
+        -1,
+        3,
+        1
+      ],
+      [
+        "ACTOR_EN_DAIKU_KAKARIKO",
+        -1,
+        3,
+        1
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "GV_CARPENTER_TENT",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 12
+  },
+  {
+    "id": 10000006,
+    "name": "NPC Speech: Carpenter 2",
+    "matches": [
+      [
+        "ACTOR_EN_DAIKU",
+        -1,
+        3,
+        2
+      ],
+      [
+        "ACTOR_EN_DAIKU_KAKARIKO",
+        -1,
+        3,
+        2
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "GV_CARPENTER_TENT",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      },
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 13
+  },
+  {
+    "id": 10000007,
+    "name": "NPC Speech: Carpenter 3",
+    "matches": [
+      [
+        "ACTOR_EN_DAIKU",
+        -1,
+        3,
+        3
+      ],
+      [
+        "ACTOR_EN_DAIKU_KAKARIKO",
+        -1,
+        3,
+        3
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "GV_CARPENTER_TENT",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      },
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 13
+  },
+  {
+    "id": 10000008,
+    "name": "NPC Speech: Carpet Merchant",
+    "matches": [
+      [
+        "ACTOR_EN_JS",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "HAUNTED_WASTELAND",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000011,
+    "name": "NPC Speech: Cucco Girl",
+    "matches": [
+      [
+        "ACTOR_EN_NIW_GIRL",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000012,
+    "name": "NPC Speech: Dampe",
+    "matches": [
+      [
+        "ACTOR_EN_PO_RELAY",
+        -1,
+        0,
+        0
+      ],
+      [
+        "ACTOR_EN_TK",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "THE_GRAVEYARD",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "GRAVEYARD_DAMPES_GRAVE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 5
+  },
+  {
+    "id": 10000013,
+    "name": "NPC Speech: Darunia",
+    "matches": [
+      [
+        "ACTOR_EN_DU",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GC_DARUNIAS_CHAMBER",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 7
+  },
+  {
+    "id": 10000016,
+    "name": "NPC Speech: Deku Tree Basement Scrub",
+    "matches": [
+      [
+        "ACTOR_EN_HINTNUTS",
+        0,
+        255,
+        0,
+        4
+      ]
+    ],
+    "language": "Deku",
+    "routes": [
+      {
+        "region": "DEKU_TREE_BASEMENT_SCRUB_ROOM",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "reflect",
+          "Deku Scrub Soul"
+        ]
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000017,
+    "name": "NPC Speech: Deku Tree Boss Door Scrub",
+    "matches": [
+      [
+        "ACTOR_EN_HINTNUTS",
+        0,
+        255,
+        3,
+        9
+      ]
+    ],
+    "language": "Deku",
+    "routes": [
+      {
+        "region": "DEKU_TREE_OUTSIDE_BOSS_ROOM",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "reflect",
+          "Deku Scrub Soul"
+        ]
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000018,
+    "name": "NPC Speech: Deku Tree Slingshot Room Scrub",
+    "matches": [
+      [
+        "ACTOR_EN_HINTNUTS",
+        0,
+        255,
+        0,
+        1
+      ]
+    ],
+    "language": "Deku",
+    "routes": [
+      {
+        "region": "DEKU_TREE_2F_MIDDLE_ROOM",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "reflect",
+          "Deku Scrub Soul"
+        ]
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000019,
+    "name": "NPC Speech: Deku Tree Sprout",
+    "matches": [
+      [
+        "ACTOR_OBJ_DEKUJR",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Deku",
+    "routes": [
+      {
+        "region": "KF_OUTSIDE_DEKU_TREE",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 1
+  },
+  {
+    "id": 10000020,
+    "name": "NPC Speech: Diving Game Zora",
+    "matches": [
+      [
+        "ACTOR_EN_DIVING_GAME",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "climb"
+        ]
+      }
+    ],
+    "source_rows": 6
+  },
+  {
+    "id": 10000021,
+    "name": "NPC Speech: Fishing Pond Owner",
+    "matches": [
+      [
+        "ACTOR_FISHING",
+        -1,
+        65535,
+        1
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "LH_FISHING_HOLE",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000022,
+    "name": "NPC Speech: Gerudo Valley Bridge Guard",
+    "matches": [
+      [
+        "ACTOR_EN_GE1",
+        90,
+        65535,
+        0
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "GERUDO_VALLEY",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000023,
+    "name": "NPC Speech: Gerudo Valley Cucco Keeper",
+    "matches": [
+      [
+        "ACTOR_EN_GE1",
+        90,
+        65535,
+        5
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "GV_LOWER_STREAM",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000024,
+    "name": "NPC Speech: Gerudo Fortress Gate Guard",
+    "matches": [
+      [
+        "ACTOR_EN_GE1",
+        93,
+        65535,
+        0
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "GF_OUTSIDE_GATE",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      }
+    ],
+    "source_rows": 2
+  },
+  {
+    "id": 10000025,
+    "name": "NPC Speech: Gerudo Training Ground Guard",
+    "matches": [
+      [
+        "ACTOR_EN_GE1",
+        93,
+        65535,
+        14918
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "GF_OUTSIDE_GTG",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      }
+    ],
+    "source_rows": 2
+  },
+  {
+    "id": 10001022,
+    "name": "NPC Speech: Gerudo Fortress Ground Resident",
+    "matches": [
+      [
+        "ACTOR_EN_GE1",
+        93,
+        65535,
+        4,
+        -1,
+        [
+          -857,
+          112,
+          -3123
+        ]
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "GERUDO_FORTRESS_OUTSKIRTS",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10001023,
+    "name": "NPC Speech: Gerudo Fortress Rooftop Resident",
+    "matches": [
+      [
+        "ACTOR_EN_GE1",
+        93,
+        65535,
+        4,
+        -1,
+        [
+          682,
+          602,
+          -307
+        ]
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "GF_NEAR_CHEST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000027,
+    "name": "NPC Speech: Gerudo Archery Host",
+    "matches": [
+      [
+        "ACTOR_EN_GE1",
+        93,
+        65535,
+        69
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "GF_HBA_RANGE",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters",
+          "bow"
+        ]
+      }
+    ],
+    "source_rows": 1
+  },
+  {
+    "id": 10000028,
+    "name": "NPC Speech: Gerudo Fortress Gate Operator",
+    "matches": [
+      [
+        "ACTOR_EN_GE1",
+        93,
+        65535,
+        769
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "GF_OUTSIDE_GATE",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenters"
+        ]
+      }
+    ],
+    "source_rows": 2
+  },
+  {
+    "id": 10000029,
+    "name": "NPC Speech: Goron City Rolling Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        0
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GORON_CITY",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "stop_goron"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000030,
+    "name": "NPC Speech: Goron City Link the Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        1
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GORON_CITY",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "stop_goron"
+        ]
+      }
+    ],
+    "source_rows": 1
+  },
+  {
+    "id": 10000031,
+    "name": "NPC Speech: Goron City Stairwell Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        10
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GORON_CITY",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000032,
+    "name": "NPC Speech: Fire Temple Boulder Maze Upper Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        10243
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_BOULDER_MAZE_UPPER",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000033,
+    "name": "NPC Speech: Fire Temple Big Lava Room South Goron Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        1027
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_BIG_LAVA_ROOM_SOUTH_GORON",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000034,
+    "name": "NPC Speech: Goron City Woods Entrance Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        11
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GORON_CITY",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000035,
+    "name": "NPC Speech: Fire Temple West Peak Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        11267
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_WEST_PEAK",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000036,
+    "name": "NPC Speech: DMT Fairy Hint Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        12
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "DEATH_MOUNTAIN_SUMMIT",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000037,
+    "name": "NPC Speech: Market Bazaar Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        13
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "MARKET_BAZAAR",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000038,
+    "name": "NPC Speech: Biggoron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        2
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "DEATH_MOUNTAIN_SUMMIT",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 1
+  },
+  {
+    "id": 10000039,
+    "name": "NPC Speech: Fire Temple Big Lava Room North Goron Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        2051
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_GORON",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000040,
+    "name": "NPC Speech: Fire Temple Boulder Maze Lower Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        3075
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_BOULDER_MAZE_LOWER",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000041,
+    "name": "NPC Speech: DMT Bomb Flower Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        4
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "DEATH_MOUNTAIN_TRAIL",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000042,
+    "name": "NPC Speech: Fire Temple Shortcut Room Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        4099
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_SHORTCUT_ROOM",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000043,
+    "name": "NPC Speech: DMT Rolling Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        5
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "DEATH_MOUNTAIN_TRAIL",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "Goron's Ruby"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000044,
+    "name": "NPC Speech: Fire Temple Boulder Maze Lower Side Room Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        5123
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_BOULDER_MAZE_LOWER_SIDE_ROOM",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000045,
+    "name": "NPC Speech: DMT Cavern Entrance Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        6
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "DEATH_MOUNTAIN_TRAIL",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000046,
+    "name": "NPC Speech: Goron City Entrance Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        7
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GORON_CITY",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000047,
+    "name": "NPC Speech: Goron City Island Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        8
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GORON_CITY",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000048,
+    "name": "NPC Speech: Fire Temple Near Boss Room Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        8195
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_NEAR_BOSS_ROOM",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000049,
+    "name": "NPC Speech: Goron City Bottom Floor Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        31,
+        9
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GORON_CITY",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000050,
+    "name": "NPC Speech: Fire Temple Loop Goron Room Goron",
+    "matches": [
+      [
+        "ACTOR_EN_GO2",
+        -1,
+        64543,
+        9219
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "FIRE_TEMPLE_LOOP_GORON_ROOM",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000051,
+    "name": "NPC Speech: Granny",
+    "matches": [
+      [
+        "ACTOR_EN_DS",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_GRANNYS_POTION_SHOP",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000052,
+    "name": "NPC Speech: Graveyard Boy",
+    "matches": [
+      [
+        "ACTOR_EN_CS",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "THE_GRAVEYARD",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 1
+  },
+  {
+    "id": 10000053,
+    "name": "NPC Speech: Grog",
+    "matches": [
+      [
+        "ACTOR_EN_HS",
+        -1,
+        0,
+        0
+      ],
+      [
+        "ACTOR_EN_HS2",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "LOST_WOODS",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 1
+  },
+  {
+    "id": 10000054,
+    "name": "NPC Speech: Happy Mask Shop Guest",
+    "matches": [
+      [
+        "ACTOR_EN_GUEST",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_MASK_SHOP",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000055,
+    "name": "NPC Speech: Hyrule Castle Gate Guard",
+    "matches": [
+      [
+        "ACTOR_EN_HEISHI2",
+        95,
+        65535,
+        65282
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "HYRULE_CASTLE_GROUNDS",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "HYRULE_CASTLE_GROUNDS",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "HYRULE_CASTLE_GROUNDS",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "HYRULE_CASTLE_GROUNDS",
+        "age": "adult",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000058,
+    "name": "NPC Speech: Ingo",
+    "matches": [
+      [
+        "ACTOR_EN_IN",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "LLR_STABLES",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "LLR_STABLES",
+        "age": "child",
+        "time": "day",
+        "gates": [
+          "Zelda's Letter"
+        ]
+      },
+      {
+        "region": "LON_LON_RANCH",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "LLR_TALONS_HOUSE",
+        "age": "adult",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 25
+  },
+  {
+    "id": 10000059,
+    "name": "NPC Speech: Kaepora Gaebora",
+    "matches": [
+      [
+        "ACTOR_EN_OWL",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Any",
+    "routes": [
+      {
+        "region": "DEATH_MOUNTAIN_SUMMIT",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 30
+  },
+  {
+    "id": 10000060,
+    "name": "NPC Speech: Kakariko Rooftop Man",
+    "matches": [
+      [
+        "ACTOR_EN_ANI",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_ROOFTOP",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000061,
+    "name": "NPC Speech: Kakariko Mountain Gate Guard",
+    "matches": [
+      [
+        "ACTOR_EN_HEISHI2",
+        82,
+        65535,
+        65285
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 2
+  },
+  {
+    "id": 10000062,
+    "name": "NPC Speech: Kakariko Entrance Guard",
+    "matches": [
+      [
+        "ACTOR_EN_HEISHI4",
+        82,
+        65535,
+        65280
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 2
+  },
+  {
+    "id": 10000063,
+    "name": "NPC Speech: Kakariko Impas House Guard",
+    "matches": [
+      [
+        "ACTOR_EN_HEISHI4",
+        82,
+        65535,
+        65284
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 2
+  },
+  {
+    "id": 10000065,
+    "name": "NPC Speech: King Zora",
+    "matches": [
+      [
+        "ACTOR_EN_KZ",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "climb"
+        ]
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000066,
+    "name": "NPC Speech: Kokiri Girl by the Stepping Stones",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        0
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KF_MIDOS_HOUSE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 7
+  },
+  {
+    "id": 10000067,
+    "name": "NPC Speech: Kokiri Boy by the Shop",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        1
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KF_HOUSE_OF_TWINS",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 7
+  },
+  {
+    "id": 10000068,
+    "name": "NPC Speech: Kokiri Sword Training Boy",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        2
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000069,
+    "name": "NPC Speech: Kokiri Forest Exit Boy",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        3
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000070,
+    "name": "NPC Speech: Kokiri Rock-Lifting Boy",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        4
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KF_MIDOS_HOUSE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 7
+  },
+  {
+    "id": 10000071,
+    "name": "NPC Speech: Kokiri Girl on the Shop Awning",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        5
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KF_KOKIRI_SHOP",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 7
+  },
+  {
+    "id": 10000072,
+    "name": "NPC Speech: Kokiri Girl by Sarias House",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        6
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KF_SARIAS_HOUSE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 7
+  },
+  {
+    "id": 10000073,
+    "name": "NPC Speech: Kokiri Know-It-All Brother 1",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        7
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KF_KNOW_IT_ALL_HOUSE",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 12
+  },
+  {
+    "id": 10000074,
+    "name": "NPC Speech: Kokiri Know-It-All Brother 2",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        8
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KF_KNOW_IT_ALL_HOUSE",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000075,
+    "name": "NPC Speech: Kokiri Twins House Girl",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        9
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KF_HOUSE_OF_TWINS",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000076,
+    "name": "NPC Speech: Kokiri Shop Customer",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        10
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KF_KOKIRI_SHOP",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000077,
+    "name": "NPC Speech: Kokiri Know-It-All Brother 3",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        11
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KF_KNOW_IT_ALL_HOUSE",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000078,
+    "name": "NPC Speech: Kokiri Fado",
+    "matches": [
+      [
+        "ACTOR_EN_KO",
+        -1,
+        255,
+        12
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "Forest Medallion"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000079,
+    "name": "NPC Speech: Lakeside Scientist",
+    "matches": [
+      [
+        "ACTOR_EN_MK",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "LH_LAB",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000080,
+    "name": "NPC Speech: Lost Woods Skull Kid 1",
+    "matches": [
+      [
+        "ACTOR_EN_SKJ",
+        91,
+        65535,
+        0
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "LOST_WOODS",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "sarias_song"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000081,
+    "name": "NPC Speech: Lost Woods Skull Kid Duet",
+    "matches": [
+      [
+        "ACTOR_EN_SKJ",
+        91,
+        65535,
+        7167
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "LOST_WOODS",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "ocarina"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000086,
+    "name": "NPC Speech: Malon",
+    "matches": [
+      [
+        "ACTOR_EN_MA1",
+        -1,
+        0,
+        0
+      ],
+      [
+        "ACTOR_EN_MA2",
+        -1,
+        0,
+        0
+      ],
+      [
+        "ACTOR_EN_MA3",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "LON_LON_RANCH",
+        "age": "child",
+        "time": "day",
+        "gates": [
+          "Zelda's Letter"
+        ]
+      },
+      {
+        "region": "LLR_STABLES",
+        "age": "child",
+        "time": "night",
+        "gates": [
+          "Zelda's Letter"
+        ]
+      }
+    ],
+    "source_rows": 20
+  },
+  {
+    "id": 10000087,
+    "name": "NPC Speech: Market Entrance Guard",
+    "matches": [
+      [
+        "ACTOR_EN_HEISHI4",
+        27,
+        65535,
+        65288
+      ],
+      [
+        "ACTOR_EN_HEISHI4",
+        28,
+        65535,
+        65288
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_ENTRANCE",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "MARKET_ENTRANCE",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000088,
+    "name": "NPC Speech: Market Guardhouse Soldier",
+    "matches": [
+      [
+        "ACTOR_EN_HEISHI4",
+        77,
+        65535,
+        65288
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_GUARD_HOUSE",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "MARKET_GUARD_HOUSE",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10001080,
+    "name": "NPC Speech: Market Night Gate Guard Left",
+    "matches": [
+      [
+        "ACTOR_EN_HEISHI4",
+        33,
+        65535,
+        65288,
+        -1,
+        [
+          -106,
+          0,
+          -510
+        ]
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10001081,
+    "name": "NPC Speech: Market Night Gate Guard Right",
+    "matches": [
+      [
+        "ACTOR_EN_HEISHI4",
+        33,
+        65535,
+        65288,
+        -1,
+        [
+          111,
+          0,
+          -510
+        ]
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000090,
+    "name": "NPC Speech: Market Gossip Man 1",
+    "matches": [
+      [
+        "ACTOR_EN_MU",
+        32,
+        65535,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000091,
+    "name": "NPC Speech: Market Gossip Man 2",
+    "matches": [
+      [
+        "ACTOR_EN_MU",
+        32,
+        65535,
+        1
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000092,
+    "name": "NPC Speech: Dancing Couple",
+    "matches": [
+      [
+        "ACTOR_EN_TG",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000093,
+    "name": "NPC Speech: Medigoron",
+    "matches": [
+      [
+        "ACTOR_EN_GM",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GC_MEDIGORON",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000094,
+    "name": "NPC Speech: Mido",
+    "matches": [
+      [
+        "ACTOR_EN_MD",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KOKIRI_FOREST",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "midos_house"
+        ]
+      },
+      {
+        "region": "LOST_WOODS",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 7
+  },
+  {
+    "id": 10000095,
+    "name": "NPC Speech: Mutoh",
+    "matches": [
+      [
+        "ACTOR_EN_TORYO",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "GV_FORTRESS_SIDE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 6
+  },
+  {
+    "id": 10000096,
+    "name": "NPC Speech: Nabooru",
+    "matches": [
+      [
+        "ACTOR_EN_NB",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Gerudo",
+    "routes": [
+      {
+        "region": "SPIRIT_TEMPLE_CHILD",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000097,
+    "name": "NPC Speech: Pierre",
+    "matches": [
+      [
+        "ACTOR_EN_KAKASI3",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Deku",
+    "routes": [
+      {
+        "region": "LAKE_HYLIA",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000098,
+    "name": "NPC Speech: Poe Collector",
+    "matches": [
+      [
+        "ACTOR_EN_GB",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_GUARD_HOUSE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 1
+  },
+  {
+    "id": 10000099,
+    "name": "NPC Speech: Princess Ruto",
+    "matches": [
+      [
+        "ACTOR_EN_RU1",
+        -1,
+        0,
+        0
+      ],
+      [
+        "ACTOR_EN_RU2",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "JABU_JABUS_BELLY_MAIN",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 23
+  },
+  {
+    "id": 10000100,
+    "name": "NPC Speech: Princess Zelda",
+    "matches": [
+      [
+        "ACTOR_EN_ZL4",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "HC_GARDEN",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000101,
+    "name": "NPC Speech: Running Man",
+    "matches": [
+      [
+        "ACTOR_EN_MM",
+        -1,
+        0,
+        0
+      ],
+      [
+        "ACTOR_EN_MM2",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "GV_CARPENTER_TENT",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 6
+  },
+  {
+    "id": 10000102,
+    "name": "NPC Speech: Saria",
+    "matches": [
+      [
+        "ACTOR_EN_SA",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "SACRED_FOREST_MEADOW",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "Zelda's Letter"
+        ]
+      }
+    ],
+    "source_rows": 9
+  },
+  {
+    "id": 10000103,
+    "name": "NPC Speech: Sheik",
+    "matches": [
+      [
+        "ACTOR_EN_XC",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "TEMPLE_OF_TIME",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 10
+  },
+  {
+    "id": 10000104,
+    "name": "NPC Speech: Kokiri Shopkeeper",
+    "matches": [
+      [
+        "ACTOR_EN_OSSAN",
+        -1,
+        65535,
+        0
+      ]
+    ],
+    "language": "Kokiri",
+    "routes": [
+      {
+        "region": "KF_KOKIRI_SHOP",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000105,
+    "name": "NPC Speech: Kakariko Potion Shopkeeper",
+    "matches": [
+      [
+        "ACTOR_EN_OSSAN",
+        -1,
+        65535,
+        1
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_POTION_SHOP_FRONT",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000106,
+    "name": "NPC Speech: Happy Mask Salesman",
+    "matches": [
+      [
+        "ACTOR_EN_OSSAN",
+        -1,
+        65535,
+        10
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_MASK_SHOP",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000107,
+    "name": "NPC Speech: Bombchu Shopkeeper",
+    "matches": [
+      [
+        "ACTOR_EN_OSSAN",
+        -1,
+        65535,
+        2
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_BOMBCHU_SHOP",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000108,
+    "name": "NPC Speech: Market Potion Shopkeeper",
+    "matches": [
+      [
+        "ACTOR_EN_OSSAN",
+        -1,
+        65535,
+        3
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_POTION_SHOP",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000109,
+    "name": "NPC Speech: Bazaar Shopkeeper",
+    "matches": [
+      [
+        "ACTOR_EN_OSSAN",
+        -1,
+        65535,
+        4
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_BAZAAR",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "KAK_BAZAAR",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000110,
+    "name": "NPC Speech: Zora Shopkeeper",
+    "matches": [
+      [
+        "ACTOR_EN_OSSAN",
+        -1,
+        65535,
+        7
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZD_SHOP",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000111,
+    "name": "NPC Speech: Goron Shopkeeper",
+    "matches": [
+      [
+        "ACTOR_EN_OSSAN",
+        -1,
+        65535,
+        8
+      ]
+    ],
+    "language": "Goron",
+    "routes": [
+      {
+        "region": "GC_SHOP",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000112,
+    "name": "NPC Speech: Skulltula House Resident 0",
+    "matches": [
+      [
+        "ACTOR_EN_SSH",
+        -1,
+        255,
+        0
+      ],
+      [
+        "ACTOR_EN_STH",
+        -1,
+        255,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_HOUSE_OF_SKULLTULA",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000113,
+    "name": "NPC Speech: Skulltula House Resident 1",
+    "matches": [
+      [
+        "ACTOR_EN_SSH",
+        -1,
+        255,
+        1
+      ],
+      [
+        "ACTOR_EN_STH",
+        -1,
+        255,
+        1
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_HOUSE_OF_SKULLTULA",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000114,
+    "name": "NPC Speech: Skulltula House Resident 2",
+    "matches": [
+      [
+        "ACTOR_EN_SSH",
+        -1,
+        255,
+        2
+      ],
+      [
+        "ACTOR_EN_STH",
+        -1,
+        255,
+        2
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_HOUSE_OF_SKULLTULA",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000115,
+    "name": "NPC Speech: Skulltula House Resident 3",
+    "matches": [
+      [
+        "ACTOR_EN_SSH",
+        -1,
+        255,
+        3
+      ],
+      [
+        "ACTOR_EN_STH",
+        -1,
+        255,
+        3
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_HOUSE_OF_SKULLTULA",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000116,
+    "name": "NPC Speech: Skulltula House Resident 4",
+    "matches": [
+      [
+        "ACTOR_EN_SSH",
+        -1,
+        255,
+        4
+      ],
+      [
+        "ACTOR_EN_STH",
+        -1,
+        255,
+        4
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_HOUSE_OF_SKULLTULA",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000117,
+    "name": "NPC Speech: Skulltula House Resident 5",
+    "matches": [
+      [
+        "ACTOR_EN_SSH",
+        -1,
+        255,
+        5
+      ],
+      [
+        "ACTOR_EN_STH",
+        -1,
+        255,
+        5
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_HOUSE_OF_SKULLTULA",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000118,
+    "name": "NPC Speech: Talon",
+    "matches": [
+      [
+        "ACTOR_EN_TA",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "LLR_TALONS_HOUSE",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "Zelda's Letter"
+        ]
+      }
+    ],
+    "source_rows": 17
+  },
+  {
+    "id": 10000119,
+    "name": "NPC Speech: Townsperson 00",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 12
+  },
+  {
+    "id": 10000120,
+    "name": "NPC Speech: Townsperson 01",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        1
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000121,
+    "name": "NPC Speech: Townsperson 02",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        2
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 9
+  },
+  {
+    "id": 10000122,
+    "name": "NPC Speech: Townsperson 03",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        3
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000123,
+    "name": "NPC Speech: Townsperson 04",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        4
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000124,
+    "name": "NPC Speech: Townsperson 05",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        5
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 6
+  },
+  {
+    "id": 10000125,
+    "name": "NPC Speech: Townsperson 06",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        6
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000126,
+    "name": "NPC Speech: Townsperson 07",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        7
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 9
+  },
+  {
+    "id": 10000127,
+    "name": "NPC Speech: Townsperson 08",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        8
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000128,
+    "name": "NPC Speech: Townsperson 09",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        9
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 9
+  },
+  {
+    "id": 10000129,
+    "name": "NPC Speech: Townsperson 10",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        10
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 9
+  },
+  {
+    "id": 10000130,
+    "name": "NPC Speech: Townsperson 11",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        11
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000131,
+    "name": "NPC Speech: Townsperson 12",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        12
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 6
+  },
+  {
+    "id": 10000132,
+    "name": "NPC Speech: Townsperson 13",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        13
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_BACK_ALLEY",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000133,
+    "name": "NPC Speech: Townsperson 14",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        14
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_MAN_IN_GREEN_HOUSE",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "MARKET_MAN_IN_GREEN_HOUSE",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "MARKET_BACK_ALLEY",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 8
+  },
+  {
+    "id": 10000134,
+    "name": "NPC Speech: Townsperson 15",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        15
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_BACK_ALLEY",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000135,
+    "name": "NPC Speech: Townsperson 16",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        16
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000136,
+    "name": "NPC Speech: Townsperson 17",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        17
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_IMPAS_HOUSE",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_IMPAS_HOUSE",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      },
+      {
+        "region": "KAK_IMPAS_HOUSE",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_IMPAS_HOUSE",
+        "age": "adult",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000137,
+    "name": "NPC Speech: Townsperson 18",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        18
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "adult",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000138,
+    "name": "NPC Speech: Townsperson 19",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        19
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_POTION_SHOP",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "MARKET_POTION_SHOP",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000139,
+    "name": "NPC Speech: Townsperson 20",
+    "matches": [
+      [
+        "ACTOR_EN_HY",
+        -1,
+        127,
+        20
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_BAZAAR",
+        "age": "child",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "MARKET_BAZAAR",
+        "age": "child",
+        "time": "night",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000140,
+    "name": "NPC Speech: Treasure Chest Game Owner",
+    "matches": [
+      [
+        "ACTOR_EN_TAKARA_MAN",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "MARKET_TREASURE_CHEST_GAME",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000141,
+    "name": "NPC Speech: Windmill Man",
+    "matches": [
+      [
+        "ACTOR_EN_FU",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "KAK_WINDMILL",
+        "age": "either",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000142,
+    "name": "NPC Speech: Zora 00",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        0
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000143,
+    "name": "NPC Speech: Zora 01",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        1
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000144,
+    "name": "NPC Speech: Zora 02",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        2
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000145,
+    "name": "NPC Speech: Zora 03",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        3
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "swim"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000146,
+    "name": "NPC Speech: Zora 04",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        4
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "swim"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000147,
+    "name": "NPC Speech: Zora 05",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        5
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "swim"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000148,
+    "name": "NPC Speech: Zora 06",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        6
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "LAKE_HYLIA",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "swim"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000149,
+    "name": "NPC Speech: Zora 07",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        7
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "LAKE_HYLIA",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "swim"
+        ]
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10000150,
+    "name": "NPC Speech: Zora 08",
+    "matches": [
+      [
+        "ACTOR_EN_ZO",
+        -1,
+        63,
+        8
+      ]
+    ],
+    "language": "Zora",
+    "routes": [
+      {
+        "region": "ZD_SHOP",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 4
+  },
+  {
+    "id": 10000151,
+    "name": "NPC Speech: Magic Bean Salesman",
+    "matches": [
+      [
+        "ACTOR_EN_MS",
+        84,
+        65535,
+        65535
+      ]
+    ],
+    "language": "Hylian",
+    "routes": [
+      {
+        "region": "ZR_FRONT",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 3
+  },
+  {
+    "id": 10002144,
+    "name": "NPC Speech: Child Shooting Gallery Owner",
+    "language": "Hylian",
+    "matches": [
+      [
+        "ACTOR_EN_SYATEKI_MAN",
+        -1,
+        0,
+        0,
+        -1,
+        null,
+        "child"
+      ]
+    ],
+    "routes": [
+      {
+        "region": "MARKET_SHOOTING_GALLERY",
+        "age": "child",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 0
+  },
+  {
+    "id": 10002145,
+    "name": "NPC Speech: Adult Shooting Gallery Owner",
+    "language": "Hylian",
+    "matches": [
+      [
+        "ACTOR_EN_SYATEKI_MAN",
+        -1,
+        0,
+        0,
+        -1,
+        null,
+        "adult"
+      ]
+    ],
+    "routes": [
+      {
+        "region": "KAK_SHOOTING_GALLERY",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      }
+    ],
+    "source_rows": 0
+  },
+  {
+    "id": 10002500,
+    "name": "NPC Speech: Deku Theater Leader",
+    "language": "Deku",
+    "matches": [
+      [
+        "ACTOR_EN_DNT_JIJI",
+        -1,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "region": "DEKU_THEATER",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "theater_mask"
+        ]
+      }
+    ],
+    "source_rows": 0
+  },
+  {
+    "id": 10003147,
+    "name": "NPC Speech: Lw Deku Scrub Near Bridge Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LW_DEKU_SCRUB_NEAR_BRIDGE",
+    "anchor": 688,
+    "native_region": "RR_LW_UNDER_BRIDGE",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003148,
+    "name": "NPC Speech: Lw Deku Scrub Near Deku Theater Left Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT",
+    "anchor": 689,
+    "native_region": "RR_LW_BEYOND_MIDO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003149,
+    "name": "NPC Speech: Lw Deku Scrub Near Deku Theater Right Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT",
+    "anchor": 690,
+    "native_region": "RR_LW_BEYOND_MIDO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003150,
+    "name": "NPC Speech: Lw Deku Scrub Grotto Front Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LW_DEKU_SCRUB_GROTTO_FRONT",
+    "anchor": 691,
+    "native_region": "RR_LW_SCRUBS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003151,
+    "name": "NPC Speech: Lw Deku Scrub Grotto Rear Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LW_DEKU_SCRUB_GROTTO_REAR",
+    "anchor": 692,
+    "native_region": "RR_LW_SCRUBS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003152,
+    "name": "NPC Speech: Sfm Deku Scrub Grotto Front Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_SFM_DEKU_SCRUB_GROTTO_FRONT",
+    "anchor": 693,
+    "native_region": "RR_SFM_STORMS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003153,
+    "name": "NPC Speech: Sfm Deku Scrub Grotto Rear Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_SFM_DEKU_SCRUB_GROTTO_REAR",
+    "anchor": 694,
+    "native_region": "RR_SFM_STORMS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003154,
+    "name": "NPC Speech: Hf Deku Scrub Grotto Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_HF_DEKU_SCRUB_GROTTO",
+    "anchor": 695,
+    "native_region": "RR_HF_INSIDE_FENCE_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003155,
+    "name": "NPC Speech: Llr Deku Scrub Grotto Left Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LLR_DEKU_SCRUB_GROTTO_LEFT",
+    "anchor": 696,
+    "native_region": "RR_LLR_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003156,
+    "name": "NPC Speech: Llr Deku Scrub Grotto Center Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LLR_DEKU_SCRUB_GROTTO_CENTER",
+    "anchor": 697,
+    "native_region": "RR_LLR_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003157,
+    "name": "NPC Speech: Llr Deku Scrub Grotto Right Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LLR_DEKU_SCRUB_GROTTO_RIGHT",
+    "anchor": 698,
+    "native_region": "RR_LLR_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003158,
+    "name": "NPC Speech: Gc Deku Scrub Grotto Left Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GC_DEKU_SCRUB_GROTTO_LEFT",
+    "anchor": 699,
+    "native_region": "RR_GC_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003159,
+    "name": "NPC Speech: Gc Deku Scrub Grotto Center Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GC_DEKU_SCRUB_GROTTO_CENTER",
+    "anchor": 700,
+    "native_region": "RR_GC_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003160,
+    "name": "NPC Speech: Gc Deku Scrub Grotto Right Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GC_DEKU_SCRUB_GROTTO_RIGHT",
+    "anchor": 701,
+    "native_region": "RR_GC_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003161,
+    "name": "NPC Speech: Dmc Deku Scrub Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_DMC_DEKU_SCRUB",
+    "anchor": 702,
+    "native_region": "RR_DMC_SCRUB",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003162,
+    "name": "NPC Speech: Dmc Deku Scrub Grotto Left Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_DMC_DEKU_SCRUB_GROTTO_LEFT",
+    "anchor": 703,
+    "native_region": "RR_DMC_SCRUB_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003163,
+    "name": "NPC Speech: Dmc Deku Scrub Grotto Center Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_DMC_DEKU_SCRUB_GROTTO_CENTER",
+    "anchor": 704,
+    "native_region": "RR_DMC_SCRUB_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003164,
+    "name": "NPC Speech: Dmc Deku Scrub Grotto Right Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_DMC_DEKU_SCRUB_GROTTO_RIGHT",
+    "anchor": 705,
+    "native_region": "RR_DMC_SCRUB_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003165,
+    "name": "NPC Speech: Zr Deku Scrub Grotto Front Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_ZR_DEKU_SCRUB_GROTTO_FRONT",
+    "anchor": 706,
+    "native_region": "RR_ZR_STORMS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003166,
+    "name": "NPC Speech: Zr Deku Scrub Grotto Rear Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_ZR_DEKU_SCRUB_GROTTO_REAR",
+    "anchor": 707,
+    "native_region": "RR_ZR_STORMS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003167,
+    "name": "NPC Speech: Lh Deku Scrub Grotto Left Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LH_DEKU_SCRUB_GROTTO_LEFT",
+    "anchor": 708,
+    "native_region": "RR_LH_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003168,
+    "name": "NPC Speech: Lh Deku Scrub Grotto Center Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LH_DEKU_SCRUB_GROTTO_CENTER",
+    "anchor": 709,
+    "native_region": "RR_LH_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003169,
+    "name": "NPC Speech: Lh Deku Scrub Grotto Right Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_LH_DEKU_SCRUB_GROTTO_RIGHT",
+    "anchor": 710,
+    "native_region": "RR_LH_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003170,
+    "name": "NPC Speech: Gv Deku Scrub Grotto Front Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GV_DEKU_SCRUB_GROTTO_FRONT",
+    "anchor": 711,
+    "native_region": "RR_GV_STORMS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003171,
+    "name": "NPC Speech: Gv Deku Scrub Grotto Rear Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GV_DEKU_SCRUB_GROTTO_REAR",
+    "anchor": 712,
+    "native_region": "RR_GV_STORMS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003172,
+    "name": "NPC Speech: Colossus Deku Scrub Grotto Front Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_COLOSSUS_DEKU_SCRUB_GROTTO_FRONT",
+    "anchor": 713,
+    "native_region": "RR_COLOSSUS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003173,
+    "name": "NPC Speech: Colossus Deku Scrub Grotto Rear Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_COLOSSUS_DEKU_SCRUB_GROTTO_REAR",
+    "anchor": 714,
+    "native_region": "RR_COLOSSUS_GROTTO",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003174,
+    "name": "NPC Speech: Dodongos Cavern Deku Scrub Side Room Near Dodongos Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS",
+    "anchor": 716,
+    "native_region": "RR_DODONGOS_CAVERN_NEAR_DODONGO_ROOM",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003175,
+    "name": "NPC Speech: Dodongos Cavern Deku Scrub Lobby Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_DODONGOS_CAVERN_DEKU_SCRUB_LOBBY",
+    "anchor": 717,
+    "native_region": "RR_DODONGOS_CAVERN_LOBBY",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003176,
+    "name": "NPC Speech: Dodongos Cavern Deku Scrub Near Bomb Bag Left Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT",
+    "anchor": 718,
+    "native_region": "RR_DODONGOS_CAVERN_2F_SIDE_ROOM",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003177,
+    "name": "NPC Speech: Dodongos Cavern Deku Scrub Near Bomb Bag Right Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_RIGHT",
+    "anchor": 719,
+    "native_region": "RR_DODONGOS_CAVERN_2F_SIDE_ROOM",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003178,
+    "name": "NPC Speech: Jabu Jabus Belly Deku Scrub Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_JABU_JABUS_BELLY_DEKU_SCRUB",
+    "anchor": 724,
+    "native_region": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003179,
+    "name": "NPC Speech: Ganons Castle Deku Scrub Left Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GANONS_CASTLE_DEKU_SCRUB_LEFT",
+    "anchor": 725,
+    "native_region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003180,
+    "name": "NPC Speech: Ganons Castle Deku Scrub Center Left Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT",
+    "anchor": 726,
+    "native_region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003181,
+    "name": "NPC Speech: Ganons Castle Deku Scrub Center Right Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT",
+    "anchor": 727,
+    "native_region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+    "routes": [],
+    "source_rows": 0
+  },
+  {
+    "id": 10003182,
+    "name": "NPC Speech: Ganons Castle Deku Scrub Right Conversation",
+    "language": "Deku",
+    "matches": [],
+    "native_rc": "RC_GANONS_CASTLE_DEKU_SCRUB_RIGHT",
+    "anchor": 728,
+    "native_region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+    "routes": [],
+    "source_rows": 0
+  }
+]

@@ -9,7 +9,7 @@ from rule_builder.cached_world import CachedRuleBuilderWorld
 from worlds.AutoWorld import WebWorld, LogicMixin
 from settings import Group, Bool
 from Fill import fill_restrictive
-from ._vendor_oot_soh.Items import SohItem, item_data_table, item_table
+from ._vendor_oot_soh.Items import SohItem, item_data_table, item_table, GroupTag
 from ._vendor_oot_soh.Locations import LocTag, SohLocation, location_data_table, location_table, token_amounts
 from ._vendor_oot_soh.Enums import Locations, Regions, Items, Events, EnemyDistance, GanonsTrials, Tricks
 from ._vendor_oot_soh.KeyShuffle import (
@@ -47,6 +47,7 @@ from .ForkLocations import FORK_LOCATIONS, FORK_LOCATION_NAME_TO_ID
 from .EnemyDropLocations import ENEMY_DROP_LOCATIONS, ENEMY_DROP_LOCATION_NAME_TO_ID
 from .NativeRegionMap import FORK_NATIVE_REGIONS
 from .SpeechLocations import SPEECH_LOCATIONS, SPEECH_LOCATION_NAME_TO_ID
+from . import NpcSpeech
 from .NativeLogic import (
     NATIVE_REGION_EDGES, NATIVE_CUSTOM_ENTRANCES, NATIVE_CUSTOM_LOCATIONS,
     NATIVE_CUSTOM_EVENTS, NATIVE_LOCATION_METADATA_RULES, NATIVE_UNMAPPED_LOCATION_RULES,
@@ -856,7 +857,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
     item_name_to_id = dict(item_table) | EXTREME_ITEMS
     location_name_to_id = (dict(location_table) | FORK_LOCATION_NAME_TO_ID |
-                           SPEECH_LOCATION_NAME_TO_ID | NPC_SPEECH_FALLBACK_NAME_TO_ID |
+                           SPEECH_LOCATION_NAME_TO_ID | NpcSpeech.NAME_TO_ID | NPC_SPEECH_FALLBACK_NAME_TO_ID |
                            ENEMY_DROP_LOCATION_NAME_TO_ID)
     item_name_groups = {k: set(v) for k, v in _create_groups(item_data_table).items() if k != "Everything"} | {
         "Extreme Abilities": {"Roll", "Grab / Power Bracelet", "Climb", "Crawl", "Speak", "Open Chest", "Shovel", "Flow of Time"},
@@ -868,7 +869,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         "SOH-EXTREME Fork Locations": set(FORK_LOCATION_NAME_TO_ID),
         "Wonder Items": {loc.name for loc in FORK_LOCATIONS if loc.family == "wonder"},
         "Silver Rupee Checks": {loc.name for loc in FORK_LOCATIONS if loc.family == "silver"},
-        "NPC Speech Sanity": set(SPEECH_LOCATION_NAME_TO_ID) | set(NPC_SPEECH_FALLBACK_NAME_TO_ID),
+        "NPC Speech Sanity": set(SPEECH_LOCATION_NAME_TO_ID) | set(NpcSpeech.NAME_TO_ID),
         "Enemy Drops": set(ENEMY_DROP_LOCATION_NAME_TO_ID),
     }
 
@@ -1180,7 +1181,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # in this generated world while the custom NPC Soul / Speak / age/time
         # rules are layered in set_rules().
         self._exact_speech_region_names = set()
-        if self.options.npc_speech_sanity.value:
+        if self.options.npc_speech_sanity.value and NpcSpeech.identity_version(self) == 1:
             stock_locations_by_address = {
                 location.address: location
                 for location in self.multiworld.get_locations(self.player)
@@ -1250,6 +1251,26 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 "SOH-EXTREME added %d generic flavor-NPC placeholder checks (exact-only mode)",
                 fallback_added,
             )
+
+        self._npc_conversations = {}
+        if self.options.npc_speech_sanity.value and NpcSpeech.identity_version(self) == 2:
+            # A moving character has OR routes across physical regions. Keeping
+            # its location at Menu avoids accidentally ANDing its first placement
+            # with every other age/room. Each location receives the complete
+            # route rule below; no conversation is freely reachable from Menu.
+            menu = actual_regions["Menu"]
+            for entry in NpcSpeech.active_entries(self):
+                region = menu
+                if entry.get("native_rc"):
+                    stock_name = next((str(name) for name, data in location_data_table.items()
+                                       if data.loc_id == entry["anchor"]), None)
+                    anchor = stock_locations_by_name.get(stock_name)
+                    region = anchor.parent_region if anchor is not None else resolve_native_region(entry["native_region"])
+                    if region is None:
+                        raise OptionError(f"Missing scrub conversation region: {entry['name']}")
+                location = SohExtremeLocation(self.player, entry["name"], entry["id"], region)
+                region.locations.append(location)
+                self._npc_conversations[entry["name"]] = entry
 
         # Shuffle Enemy Drops: one normal AP location for every finite vanilla
         # enemy actor placement extracted from oot.o2r.  These are NOT
@@ -1711,7 +1732,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # important progression.
         resolved_classification = data.classification if classification is None else classification
         item_name = str(name)
-        if "Triforce" in item_name and "Piece" in item_name:
+        # Boss souls live in the stock table; keep the same unconditional
+        # important-item contract as EXTREME's enemy/animal/object/bean souls.
+        if ((data.tags or 0) & GroupTag.Boss_Soul) or ("Triforce" in item_name and "Piece" in item_name):
             resolved_classification = ItemClassification.progression
 
         return SohExtremeItem(item_name, resolved_classification,
@@ -3309,7 +3332,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     # substitute for Climb for these ten checks.
                     rule = climb_rule() & water_access
                 elif rc.startswith("RC_HF_WONDER_BRIDGE_"):
-                    rule = is_child(bundle)
+                    # The drawbridge is raised at night. Surface access to
+                    # Hyrule Field cannot substitute for the lowered bridge.
+                    rule = is_child(bundle) & at_day(bundle)
                 elif rc == "RC_KAK_WONDER_UNDER_CONSTRUCTION":
                     # The hidden construction-area Wonder/rupee is physically
                     # reachable as child without Roc's Feather. The previous AP
@@ -3810,7 +3835,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # NPC Speech Sanity locations are real talk interactions. Region reachability
         # supplies spatial/age/entrance logic; shuffled Speak and NPC Soul stack.
         # IMPORTANT: this block must live after require() is defined.
-        if self.options.npc_speech_sanity.value:
+        if self.options.npc_speech_sanity.value and NpcSpeech.identity_version(self) == 1:
             for speech in SPEECH_LOCATIONS:
                 name = f"NPC Speech: {speech.rc[3:].replace('_', ' ').title()}"
                 try:
@@ -3855,6 +3880,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     require(location, "Flow of Time")
 
                 require_native_existing(location, flavor_world_rule)
+
+        for name, entry in self._npc_conversations.items():
+            location = self.get_location(name)
+            add_resolved_rule(location, NpcSpeech.conversation_rule(
+                self, entry, location.parent_region.name), register_indirects=True)
 
         # Apply source-aware gates to stock resource/helper events. These are
         # progression events in the inherited SoH world and therefore can appear
@@ -5309,6 +5339,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "shuffle_business_scrub_soul": o.shuffle_business_scrub_soul.value,
             "shuffle_shovel": o.shuffle_shovel.value,
             "npc_speech_sanity": o.npc_speech_sanity.value,
+            "npc_speech_identity_version": NpcSpeech.identity_version(self),
             "song_note_shuffle": o.song_note_shuffle.value,
             "shuffle_flow_of_time": o.shuffle_flow_of_time.value,
             "frozen_starting_time": o.frozen_starting_time.value,

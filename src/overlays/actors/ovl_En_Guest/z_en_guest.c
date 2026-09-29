@@ -5,6 +5,7 @@
  */
 
 #include "z_en_guest.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "objects/object_os_anime/object_os_anime.h"
 #include "objects/object_boj/object_boj.h"
 #include "vt.h"
@@ -54,7 +55,8 @@ static InitChainEntry sInitChain[] = {
 void EnGuest_Init(Actor* thisx, PlayState* play) {
     EnGuest* this = (EnGuest*)thisx;
 
-    if (Flags_GetInfTable(INFTABLE_SHOWED_ZELDAS_LETTER_TO_GATE_GUARD)) {
+    if (Flags_GetInfTable(INFTABLE_SHOWED_ZELDAS_LETTER_TO_GATE_GUARD) &&
+        !Archipelago_HasPendingNpcConversation(&this->actor)) {
         Actor_Kill(&this->actor);
     } else {
         this->osAnimeBankIndex = Object_GetIndex(&play->objectCtx, OBJECT_OS_ANIME);

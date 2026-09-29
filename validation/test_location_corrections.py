@@ -37,8 +37,8 @@ def resolved(r,w):
 
 def byid(w,i):return next(l for l in w.get_locations() if l.address==i)
 try:
- m=setup(17173,overrides={'boss_key_shuffle':'anywhere','shuffle_roll':True,'shuffle_open_chest':'progressive'},stop_before='pre_fill');w=m.worlds[1];full=m.get_all_state(False)
- ck('version',w.world_version.as_simple_string(),'0.11.17')
+ m=setup(17173,overrides={'boss_key_shuffle':'anywhere','shuffle_roll':True,'shuffle_open_chest':'progressive'});w=m.worlds[1];full=m.get_all_state(False)
+ ck('version',w.world_version.as_simple_string(),json.loads((a.source_root/'archipelago/soh_extreme/archipelago.json').read_text())['world_version'])
  ck('all inventory locations in AP model',[l.name for l in w.get_locations() if not l.can_reach(full)],[])
  if a.group=='actions':
   # Grass collection is an OR, not a global Grab AND. The native per-location
@@ -138,10 +138,10 @@ try:
   # Reconstruct the entire graph from slot data against conflicting local knobs.
   # No comparing just one selected category: every address/name is included.
   slot=convert_to_base_types(w.fill_slot_data())
-  tm=setup(17174,overrides={'boss_key_shuffle':'anywhere','shuffle_npc_soul':False,'shuffle_speak':0,'shuffle_animal_soul':0,'shuffle_grass_bush_soul':False,'shuffle_grab':False,'shuffle_climb':False,'shuffle_roll':False},passthrough=slot,stop_before='pre_fill');tw=tm.worlds[1];tf=tm.get_all_state(False)
+  tm=setup(17174,overrides={'boss_key_shuffle':'anywhere','shuffle_npc_soul':False,'shuffle_speak':0,'shuffle_animal_soul':0,'shuffle_grass_bush_soul':False,'shuffle_grab':False,'shuffle_climb':False,'shuffle_roll':False},passthrough=slot);tw=tm.worlds[1];tf=tm.get_all_state(False)
   names={l.name for l in w.get_locations()};tnames={l.name for l in tw.get_locations()}
   ck('UT graph location set',sorted(tnames),sorted(names));results[-1].update(actual=len(tnames),expected=len(names))
-  for name in ('shuffle_npc_soul','shuffle_speak','shuffle_animal_soul','shuffle_grass_bush_soul','shuffle_grab','shuffle_climb','shuffle_roll'):
+  for name in w.options_dataclass.type_hints:
    ck('UT authoritative option '+name,getattr(tw.options,name).value,getattr(w.options,name).value)
   patterns=[[],['Grab / Power Bracelet'],['Climb'],['Crawl'],['NPC Soul'],['Speak Hylian'],['Speak Deku'],['Grass / Bush Soul'],['Pot Soul'],['Crate Soul'],['Rock / Boulder Soul'],['Cucco Soul'],['Fish Soul'],['Progressive Scale'],['Progressive Hookshot'],['Progressive Ocarina'],['Song Note 25'],['Flow of Time'],['Roll']]
   for missing in patterns:
@@ -152,4 +152,4 @@ try:
 except Exception as e:
  traceback.print_exc();results.append(dict(test='unhandled exception',passed=False,error=repr(e),traceback=traceback.format_exc()))
 rpt=dict(scope=__doc__,group=a.group,checks=results,total=len(results),failures=sum(not r['passed'] for r in results),coverage=coverage)
-a.report.parent.mkdir(parents=True,exist_ok=True);a.report.write_text(json.dumps(rpt,indent=2));print('TOTAL',rpt['total'],'FAILURES',rpt['failures'],coverage,flush=True);raise SystemExit(bool(rpt['failures']))
+a.report.parent.mkdir(parents=True,exist_ok=True);a.report.write_text(json.dumps(rpt,indent=2,default=lambda v:sorted(v) if isinstance(v,set) else str(v)),encoding='utf-8');print('TOTAL',rpt['total'],'FAILURES',rpt['failures'],coverage,flush=True);raise SystemExit(bool(rpt['failures']))

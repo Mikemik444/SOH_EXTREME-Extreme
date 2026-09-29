@@ -11,6 +11,7 @@ from worlds.soh_extreme._vendor_oot_soh.Enums import Locations
 from worlds.soh_extreme._vendor_oot_soh.Locations import location_data_table
 from worlds.soh_extreme.ForkLocations import FORK_LOCATIONS
 from worlds.soh_extreme.SpeechLocations import SPEECH_LOCATIONS
+from worlds.soh_extreme.NpcSpeech import CATALOG as NPC_CONVERSATIONS
 from worlds.soh_extreme.EnemyDropLocations import ENEMY_DROP_LOCATIONS
 
 
@@ -26,6 +27,7 @@ def collect(root,w):
     rc_by_id={int(id_):rc for rc,id_ in re.findall(r'static_cast<int>\((RC_\w+)\),\s*(\d+)LL',text)}
     fork={f.address:f for f in FORK_LOCATIONS};enemy={e.address:e for e in ENEMY_DROP_LOCATIONS}
     speeches={s.address:s for s in SPEECH_LOCATIONS}
+    conversations={e["id"]:e for e in NPC_CONVERSATIONS}
     stock={d.loc_id:k for k,d in location_data_table.items() if d.loc_id is not None}
     native_norm=collections.defaultdict(set)
     for rc in sources:native_norm[normalize(rc[3:])].add(rc)
@@ -35,6 +37,11 @@ def collect(root,w):
         if l.address in enemy:
             e=enemy[l.address];r.update(kind='enemy',source_match='placement_catalogue',scene=e.scene_id,room=e.room,actor=e.actor_id,combat=e.combat,encounter_gate=e.encounter_gate)
             r['findings'].append('room_route_unreviewed' if e.region_token.endswith('ENTRYWAY') else 'physical_encounter_not_playtested')
+        elif l.address in conversations:
+            e=conversations[l.address]
+            r.update(kind='speech',source_match='npc_identity_catalogue',
+                     actor_matches=e['matches'],language=e['language'],routes=e['routes'])
+            r['findings'].append('compiled_identity_tests_passed_not_full_world_playtest')
         elif l.address in speeches:
             e=speeches[l.address];r.update(kind='speech',source_match='speech_catalogue',rc=e.rc)
             r['findings'].append('first_talk_runtime_identity_requires_review')
@@ -51,7 +58,8 @@ def collect(root,w):
             r['native_sources']=sources.get(r['rc'],[])
             r['native_metadata']=metadata.get(r['rc'])
             if not r['native_sources']:r['findings'].append('no_native_location_expression')
-        elif r['kind'] not in ('enemy','event'):r['findings'].append('native_identity_not_resolved')
+        elif r['kind'] not in ('enemy','event') and r['source_match'] != 'npc_identity_catalogue':
+            r['findings'].append('native_identity_not_resolved')
         if r['native_sources']:
             exact=[s for s in r['native_sources'] if normalize(s['region'][3:]).replace('THE','')==normalize(next((reg.name for reg in __import__('worlds.soh_extreme._vendor_oot_soh.Enums',fromlist=['Regions']).Regions if str(reg)==l.parent_region.name),l.parent_region.name)).replace('THE','')]
             if not exact:r['findings'].append('native_ap_region_crosswalk_requires_review')

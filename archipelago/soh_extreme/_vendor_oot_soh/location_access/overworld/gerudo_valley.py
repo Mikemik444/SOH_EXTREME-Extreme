@@ -38,8 +38,9 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.HYRULE_FIELD, lambda bundle: True_()),
         (Regions.GV_UPPER_STREAM,
          lambda bundle: is_child(bundle) | has_item(Items.BRONZE_SCALE, bundle) | take_damage(bundle)),
-        (Regions.GV_CRATE_LEDGE, lambda bundle: is_child(
-            bundle) | can_use(Items.LONGSHOT, bundle)),
+        (Regions.GV_CRATE_LEDGE, lambda bundle:
+         (is_child(bundle) & can_grab(bundle) & has_animal_soul(bundle, "Cucco"))
+         | can_use(Items.LONGSHOT, bundle)),
         (Regions.GV_GROTTO_LEDGE, lambda bundle: True_()),
         (Regions.GV_FORTRESS_SIDE, lambda bundle: (is_adult(bundle) & (
             can_use(Items.EPONA, bundle) | can_use(Items.LONGSHOT,

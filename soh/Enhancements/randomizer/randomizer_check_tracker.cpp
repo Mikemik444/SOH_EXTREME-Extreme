@@ -1676,6 +1676,18 @@ void SetAreaSpoiled(RandomizerCheckArea rcArea) {
 void InternalRecalculateAvailableChecks(RandomizerRegion startingRegion, RandoAgeTime startingAgeTime);
 
 static RandomizerCheckArea FinderRowArea(int64_t id, const ArchipelagoClient& client) {
+    struct ConversationArea { int64_t location; RandomizerCheckArea area; };
+    static const ConversationArea conversationAreas[] = {
+#include "soh/Network/Archipelago/NpcSpeechAreas.inc"
+    };
+    auto conversationArea = RCAREA_INVALID;
+    for (const auto& entry : conversationAreas) {
+        if (entry.location != id) continue;
+        if (entry.area == GetCheckArea()) return entry.area;
+        if (conversationArea == RCAREA_INVALID) conversationArea = entry.area;
+    }
+    if (conversationArea != RCAREA_INVALID) return conversationArea;
+
     const auto rc = client.GetFinderNativeCheck(id);
     if (rc > static_cast<int32_t>(RC_UNKNOWN_CHECK)) {
         const auto* location = Rando::StaticData::GetLocation(static_cast<RandomizerCheck>(rc));

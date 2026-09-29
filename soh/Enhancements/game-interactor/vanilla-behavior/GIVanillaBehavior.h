@@ -2832,6 +2832,7 @@ typedef enum {
     // ```
     // #### `args`
     // - None
+    // Argument: Actor* selected talk target (also valid for C-Up conversations).
     VB_SKIP_TALKING,
 
     // #### `result`

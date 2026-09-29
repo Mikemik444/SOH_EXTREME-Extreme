@@ -163,7 +163,10 @@ try:
                 check('disabled: no enemy-soul demand',[e.name for e in nonspiders if not w.get_location(e.name).can_reach(s)],[])
     else:
         for start in ('day','night'):
-            mw=setup(1418,overrides={'frozen_starting_time':start,'skulls_sun_song':False});w=mw.worlds[1];b=(Regions.HYRULE_FIELD,w)
+            # Isolate the clock from a shield shop that might itself be behind
+            # a night-only route in the supplied shop shuffle.
+            mw=setup(1418,overrides={'frozen_starting_time':start,'skulls_sun_song':False,
+                'closed_forest':'off','start_with_deku_shield':True});w=mw.worlds[1];b=(Regions.HYRULE_FIELD,w)
             s=snapshot(mw,w,{'Flow of Time'})
             check(start+' frozen day helper',eval_rule(at_day(b),w,s),start=='day')
             check(start+' frozen night helper',eval_rule(at_night(b),w,s),start=='night')

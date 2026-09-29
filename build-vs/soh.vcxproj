@@ -865,6 +865,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="E:\test\bb\soh\Network\Archipelago\ArchipelagoClient.cpp" />
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\ArchipelagoClient.h" />
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\ArchipelagoSaveSnapshot.h" />
+    <ClInclude Include="E:\test\bb\soh\Network\Archipelago\NpcSpeechIdentity.h" />
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\TrackerMirror.h" />
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\TrackerRegions.h" />
     <ClCompile Include="E:\test\bb\soh\Network\Archipelago\TrackerWorker.cpp" />

@@ -1,4 +1,5 @@
 ﻿#include "ArchipelagoClient.h"
+#include "NpcSpeechIdentity.h"
 #include "TrackerWorkerConfig.h"
 
 static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<std::string, int64_t>& out);
@@ -1888,7 +1889,7 @@ void ArchipelagoClient::ApplySlotSettings() {
         slotValue("ShuffleCrates"), RAND_GET_OPTION(RSK_SHUFFLE_CRATES).Get(),
         slotValue("CrateSoul"), RAND_GET_OPTION(RSK_SHUFFLE_CRATE_SOUL).Get(),
         slotValue("ShuffleSpeak"), RAND_GET_OPTION(RSK_SHUFFLE_SPEAK).Get(),
-        slotValue("NPCSpeechSanity"), RAND_GET_OPTION(RSK_NPC_SPEECH_SANITY).Get(),
+        slotValue("NpcSpeechSanity"), RAND_GET_OPTION(RSK_NPC_SPEECH_SANITY).Get(),
         slotValue("FlowOfTime"), RAND_GET_OPTION(RSK_SHUFFLE_FLOW_OF_TIME).Get());
 }
 
@@ -3921,16 +3922,50 @@ static bool Archipelago_IsManualSpeechActor(const Actor* actor) {
     }
 }
 
-static bool Archipelago_HasExtremeSpeak() {
-    // SOH-EXTREME intentionally exposes ONE AP item named "Speak".
-    // Receiving it sets every underlying Ship race-speak flag, so checking ANY
-    // one of those flags is the canonical runtime test for our single ability.
-    return Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_DEKU) ||
-           Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_GERUDO) ||
-           Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_GORON) ||
-           Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_HYLIAN) ||
-           Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_KOKIRI) ||
-           Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_ZORA);
+static bool Archipelago_HasNpcLanguage(int language) {
+    if (!RAND_GET_OPTION(RSK_SHUFFLE_SPEAK)) return true;
+    static constexpr RandomizerInf flags[] = {
+        RAND_INF_CAN_SPEAK_DEKU, RAND_INF_CAN_SPEAK_GERUDO, RAND_INF_CAN_SPEAK_GORON,
+        RAND_INF_CAN_SPEAK_HYLIAN, RAND_INF_CAN_SPEAK_KOKIRI, RAND_INF_CAN_SPEAK_ZORA,
+    };
+    if (language >= 0 && language < 6) return Flags_GetRandomizerInf(flags[language]);
+    // Kaepora Gaebora accepts any learned language, matching ShuffleSpeak.
+    for (const auto flag : flags) if (Flags_GetRandomizerInf(flag)) return true;
+    return false;
+}
+
+static int64_t Archipelago_ResolveScrubConversation(const Actor* actor, int16_t scene) {
+    if (actor == nullptr || actor->id != ACTOR_EN_DNS || OTRGlobals::Instance->gRandomizer == nullptr) return -1;
+    int params = actor->params == 6 ? 3 : actor->params;
+    if (scene == SCENE_GROTTOS) {
+        params = TWO_ACTOR_PARAMS(params, gSaveContext.respawn[RESPAWN_MODE_RETURN].data & 0xFF);
+    }
+    const auto* location = OTRGlobals::Instance->gRandomizer->GetCheckObjectFromActor(ACTOR_EN_DNS, scene, params);
+    if (location == nullptr) return -1;
+    struct Entry { RandomizerCheck rc; int64_t location; };
+    static const Entry entries[] = {
+#include "NpcSpeechScrubs.inc"
+    };
+    for (const auto& e : entries) if (e.rc == location->GetRandomizerCheck()) return e.location;
+    return -1;
+}
+
+static int64_t Archipelago_ConversationForActor(const Actor* actor) {
+    if (gPlayState == nullptr || actor == nullptr) return -1;
+    const auto* identity = SohExtreme::ResolveNpcSpeechIdentity(
+        actor->id, gPlayState->sceneNum, actor->params, actor->room, LINK_IS_ADULT,
+        static_cast<int>(actor->home.pos.x), static_cast<int>(actor->home.pos.y),
+        static_cast<int>(actor->home.pos.z));
+    return identity != nullptr ? identity->location :
+        Archipelago_ResolveScrubConversation(actor, gPlayState->sceneNum);
+}
+
+extern "C" bool Archipelago_HasPendingNpcConversation(const Actor* actor) {
+    auto& client = ArchipelagoClient::GetInstance();
+    if (!client.IsGameplaySessionActive() ||
+        !CVarGetInteger(CVAR_RANDOMIZER_SETTING("NpcSpeechSanity"), 0)) return false;
+    const auto location = Archipelago_ConversationForActor(actor);
+    return location >= 0 && client.IsLocationActive(location) && !client.IsLocationSubmitted(location);
 }
 
 static int64_t Archipelago_ResolveNpcSpeechLocation(const Actor* actor, int16_t sceneNum) {
@@ -4144,34 +4179,60 @@ void ArchipelagoClient::RegisterHooks() {
             static_cast<int>(itemEntry.getItemId));
     });
 
-    // NPC Speech Sanity mirrors shuffled signs:
-    // first A press = AP check, later presses = normal dialogue.
-    //
-    // Mapped NPCs use their real speech location (fully randomized).
-    // Flavor/unmapped NPCs use a persistent randomized generic location, but only
-    // when Ship's own ShuffleSpeak code considers that actor manually speakable.
-    // This prevents unrelated ACTORCAT_NPC actors from silently consuming checks.
+    // Some real conversations (including the Skull Kid duet) are started by
+    // the NPC script instead of Player_ActionHandler_Talk. Observe the actual
+    // opening textbox as well; queued/server-confirmed IDs deduplicate both paths.
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnDialogMessage>([]() {
+        if (gPlayState == nullptr || gPlayState->msgCtx.msgMode != MSGMODE_TEXT_START ||
+            gPlayState->msgCtx.talkActor == nullptr ||
+            !ArchipelagoClient::GetInstance().IsGameplaySessionActive()) return;
+        Actor* actor = gPlayState->msgCtx.talkActor;
+        // An actor can destroy itself after opening a textbox. Never dereference
+        // a stale message pointer; only inspect actors still owned by the scene.
+        bool live = false;
+        for (int category = 0; category < ACTORCAT_MAX && !live; ++category) {
+            for (Actor* candidate = gPlayState->actorCtx.actorLists[category].head;
+                 candidate != nullptr; candidate = candidate->next) {
+                if (candidate == actor) { live = true; break; }
+            }
+        }
+        if (!live || (actor->naviEnemyId != 0xFF &&
+            gPlayState->msgCtx.textId == actor->naviEnemyId + 0x600)) return;
+        // The game has already begun this conversation. Do not reject a forced
+        // introduction after it happened just because it bypassed manual Speak.
+        ArchipelagoClient::GetInstance().ReportNpcSpeechLocation(Archipelago_ConversationForActor(actor));
+    });
+
+    // First conversation with a real NPC = one persistent AP location. Later
+    // conversations retain their normal behavior, including while offline or
+    // while the first check is awaiting server acknowledgment.
     COND_VB_SHOULD(VB_SKIP_TALKING, true, {
-        if (!*should || gPlayState == nullptr ||
-            !CVarGetInteger(CVAR_RANDOMIZER_SETTING("NpcSpeechSanity"), 0)) {
-            return;
+        Actor* actor = va_arg(args, Actor*);
+        auto& client = ArchipelagoClient::GetInstance();
+        if (!*should || gPlayState == nullptr || actor == nullptr ||
+            !client.IsGameplaySessionActive() ||
+            !CVarGetInteger(CVAR_RANDOMIZER_SETTING("NpcSpeechSanity"), 0)) return;
+        // C-Up enemy information is Navi's dialogue, not an NPC conversation.
+        if (actor->naviEnemyId != 0xFF && actor->textId == actor->naviEnemyId + 0x600) return;
+        if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !Flags_GetRandomizerInf(RAND_INF_NPC_SOUL)) return;
+        const auto* identity = SohExtreme::ResolveNpcSpeechIdentity(
+            actor->id, gPlayState->sceneNum, actor->params, actor->room, LINK_IS_ADULT,
+            static_cast<int>(actor->home.pos.x), static_cast<int>(actor->home.pos.y),
+            static_cast<int>(actor->home.pos.z));
+        const int64_t conversation = identity != nullptr ? identity->location :
+            Archipelago_ResolveScrubConversation(actor, gPlayState->sceneNum);
+        if (conversation >= 0 && client.IsLocationActive(conversation)) {
+            if (!Archipelago_HasNpcLanguage(identity != nullptr ? identity->language : 0)) return;
+            const bool checked = client.ReportNpcSpeechLocation(conversation);
+            // Scripted/automatic dialogue must run its actor state machine. It
+            // still checks once; receipt presentation waits until Link is free.
+            if (checked && !(actor->flags & ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED)) *should = false;
+            return; // Also return for pending/checked identities: never take another NPC's item.
         }
-
-        Player* player = GET_PLAYER(gPlayState);
-        Actor* actor = player != nullptr ? player->talkActor : nullptr;
-        if (actor == nullptr || actor->category != ACTORCAT_NPC ||
-            (actor->flags & ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED)) {
-            return;
-        }
-
-        if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) &&
-            !Flags_GetRandomizerInf(RAND_INF_NPC_SOUL)) {
-            return;
-        }
-        if (RAND_GET_OPTION(RSK_SHUFFLE_SPEAK) && !Archipelago_HasExtremeSpeak()) {
-            return;
-        }
-
+        // Compatibility with seeds generated before identity version 2. These
+        // checks keep their original reward-based meanings and server IDs.
+        if (actor->flags & ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED) return;
+        if (!Archipelago_HasNpcLanguage(identity != nullptr ? identity->language : 6)) return;
         int64_t speechLocation = -1;
 
         auto rando = OTRGlobals::Instance->gRandomizer;
@@ -4193,8 +4254,7 @@ void ArchipelagoClient::RegisterHooks() {
                         return;
                     }
                     // Already checked mapped NPC -> normal dialogue.
-                    if (ArchipelagoClient::GetInstance().reportedLocations.find(candidate) !=
-                        ArchipelagoClient::GetInstance().reportedLocations.end()) {
+                    if (client.IsLocationSubmitted(candidate)) {
                         return;
                     }
                 }
@@ -4210,8 +4270,7 @@ void ArchipelagoClient::RegisterHooks() {
                 *should = false;
                 return;
             }
-            if (ArchipelagoClient::GetInstance().reportedLocations.find(speechLocation) !=
-                ArchipelagoClient::GetInstance().reportedLocations.end()) {
+            if (client.IsLocationSubmitted(speechLocation)) {
                 return;
             }
         }
@@ -4219,7 +4278,8 @@ void ArchipelagoClient::RegisterHooks() {
         // No native speech location exists for this NPC (for example ordinary
         // Kokiri/Market flavor NPCs). Only true manual-Speak actors are eligible
         // for the persistent generic first-talk bank.
-        if (Archipelago_IsManualSpeechActor(actor) &&
+        if (client.IsLocationActive(AP_EXTREME_SPEECH_FALLBACK_BASE) &&
+            Archipelago_IsManualSpeechActor(actor) &&
             ArchipelagoClient::GetInstance().ReportFallbackNpcSpeech(actor)) {
             *should = false;
         }

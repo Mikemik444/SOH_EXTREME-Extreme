@@ -14,6 +14,9 @@
 extern "C" {
 #endif
 
+// Keep optional NPC conversations available until their AP check is collected.
+struct Actor;
+bool Archipelago_HasPendingNpcConversation(const struct Actor* actor);
 bool Archipelago_IsAuthenticatedForFileSelect(void);
 // True only for the enabled AP client's current Archipelago save.
 bool Archipelago_IsCurrentSaveActive(void);

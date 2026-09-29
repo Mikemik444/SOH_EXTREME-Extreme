@@ -87,6 +87,13 @@ class ShuffleBeanSouls(Toggle):
     """Shuffle the ten native per-area Bean Souls."""
     display_name = "Shuffle Bean Souls"
 class NpcSpeechSanity(Toggle):
+    """The first conversation with each catalogued NPC is an Archipelago check.
+    Later conversations behave normally. Moving characters and transformed
+    versions share one check; a shopkeeper has one check, not one per shelf.
+    NPC Soul, the NPC's language, and physical access apply when shuffled.
+    Changing this option or upgrading a legacy speech seed requires generation
+    with the matching APWorld; a client update cannot add server locations.
+    """
     display_name = "NPC Speech Sanity"
 
 class SongNoteShuffle(Choice):

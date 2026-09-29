@@ -1,5 +1,5 @@
 SOH-EXTREME / ARCHIPELAGO: USER REQUIREMENTS AND FIX HISTORY
-Updated 2026-09-29 for cumulative release 0.11.27
+Updated 2026-09-29 for cumulative release 0.11.29
 Repository: https://github.com/Mikemik444/SOH_EXTREME-Extreme
 
 PURPOSE
@@ -8,7 +8,74 @@ future work can refer to them. It is project documentation, not a promise of
 permanent assistant memory across chats. Keep it with the source and bring it
 into any new repair conversation. New reports should become regression cases.
 
-CURRENT ZORA RIVER REQUIREMENTS (0.11.27)
+NPC SPEECH SANITY REPAIR (0.11.29)
+- Intended behavior: first conversation with each NPC is one AP check; subsequent
+  conversations behave normally. A character who moves or changes models shares
+  one identity. A shopkeeper is one conversation, independent of the eight shelves.
+- User talked to all Kokiri without any speech checks being sent. The supplied
+  server log confirms Speak Kokiri and NPC Soul were received; ordinary checks
+  worked. AP_32037442678715337267 slot 4 had npc_speech_sanity=1 and the correct
+  native NpcSpeechSanity=1. The option was linked; the 114-entry reward-based
+  location map omitted ordinary Kokiri. Its disabled generic bank had no checks.
+- New seeds use identity version 2 and a finite 181-conversation catalogue,
+  including all 13 Kokiri child identities, Mido, Saria and the shopkeeper.
+  Grog's child/adult models share an identity. The Skull Kid duet uses its actual
+  conversation controller. Capturing Gerudo sentries, the transient membership-
+  card giver and cinematic scenery are outside the current catalogue. This is
+  finite conversation coverage, not every possible dialogue actor. No anonymous
+  capacity checks are added.
+- Player conversation hooks now receive the selected actor, including C-Up.
+  Script-started textboxes are observed as well. Queued and server-confirmed
+  checks both stop duplicate sends. Normal dialogue resumes even before the
+  acknowledgment, and automatic dialogue state machines are left running.
+- Manual first-talk checks require NPC Soul and the specific language when
+  enabled. Physical region/age/time rules govern AP and UT. Conversation rules
+  do not require buying the stock or earning the NPC's normal reward. Named
+  moving/story NPCs can use conservative guaranteed routes in the tracker.
+- Sheik's normal dialogue and the Mask Shop guest remain available until their
+  version-2 conversation is checked, preventing their story despawn from losing
+  those checks. Old seeds/native games retain the original despawn behavior.
+- The textbox observer verifies the actor is still in the live scene list before
+  dereferencing it; stale dialogue pointers and Navi enemy descriptions are ignored.
+- Legacy seed IDs are not remapped. UT can reconstruct their original 114 speech
+  locations. The supplied existing seed cannot gain nonexistent Kokiri locations
+  from a client update: install the matching APWorld and generate a NEW multiworld.
+- Validation: 215 compiled C++ assertions, 127 AP/UT/slot assertions, full day/night
+  generation replays, and 181 fresh inventories across 3,325 configured AP checks
+  (601,825 AP-versus-UT comparisons). No connected in-game playthrough performed.
+
+ALL ABILITIES / SOULS / TIME AUDIT (0.11.28)
+- User explicitly requires every shuffled capability to affect logic, not just
+  Grab and Climb. Checks stay available for normal item placement, and become
+  in logic only when an actual route and interaction are possible.
+- Scope includes Roll, Grab/Strength, Climb, Crawl, Swim/Scales, speech and every
+  language, chest opening, Shovel, Flow of Time, fishing pole, stick/nut bags,
+  ocarina/buttons/song notes, wallets, and enemy/boss/animal/object/NPC/bean souls.
+- Gerudo Valley Crate Ledge child route now requires Cucco Soul (or shared
+  Animal Soul) plus Grab in native and AP logic. A reachable adult with Longshot
+  remains a valid alternative. Both crate and contained heart piece share it.
+- Hyrule Field drawbridge Wonder Items 1-3 require child Link and reachable day.
+  Frozen night without Flow of Time no longer passes. Normal child drawbridge
+  entry also needs day; genuine alternate entrances are retained.
+- Crates already require Crate Soul AND a valid action: large crates accept
+  Roll, explosives or usable Hammer; small crates also accept appropriate
+  jumpslash/Grab. Soul ownership by itself never supplies an interaction.
+- All 84 native soul entries are already major items with long hold-up animation
+  and advancement metadata. AP boss souls now also reject caller attempts to
+  downgrade them to filler, matching the other soul items' progression status.
+- Latest YAML snapshot: validation/fixtures/ap_latest_settings_20260929.yaml.
+  It supersedes the old spoiler fixture for this audit, not the old seed's
+  already resolved settings. There are 3,266 candidate network locations before
+  prefill; eight become vanilla shop-stock events, leaving 3,258 AP checks.
+- Every final check was evaluated with 181 fresh inventory scenarios, removing
+  capability receipts before collecting/sweeping events. 589,698 AP/installed-UT
+  comparisons passed, alongside source prerequisite/action/age/time/equipment
+  tests, all-setting slot reconstruction and compiled native route tests.
+- The automated source crosswalk explicitly retains ambiguous region mappings
+  and untested physical encounters for review. It is not a physical playthrough
+  or proof that all possible settings combinations are correct.
+
+ZORA RIVER REQUIREMENTS (0.11.27, retained)
 - Wonder Near Cucco 1-3: child Link, access to that river section, and Swim.
   With Swim shuffled, physical Progressive Scale #1 grants Swim/Bronze Scale.
   Being on the bank, carrying a Cucco, or owning adult equipment is insufficient.
@@ -77,8 +144,8 @@ EARLIER GAMEPLAY / BUILD REPORTS (RETAINED IN CUMULATIVE OVERLAYS)
 
 SETTINGS / OLD SEED CAVEAT
 The earlier pasted YAML and the later supplied spoiler are different settings.
-For the current reports, use the 216 resolved settings reconstructed in
-validation/fixtures/ap_mido_seed_settings_20260929.yaml. That seed enables
+The previous Zora River release used the 216 resolved settings reconstructed in
+validation/fixtures/ap_mido_seed_settings_20260929.yaml. That older seed enables
 Closed Forest, shuffled abilities, individual language/animal/enemy souls and
 NPC Soul. Triforce Hunt uses 60 pieces with 50 percent required (30 pieces).
 
@@ -89,8 +156,10 @@ and ZR rules, offline replay stalls after 33 checks; an extra Climb alone reache
 reaches the goal and all 3,258 checks in the replay, assuming eventual delivery
 of all 39 SOH items placed in the other game. The other game's logic is not run.
 No server messages, item grants or save modifications were performed here.
-Regenerate with the updated APWorld, or use the explicit host recovery steps
-in README-ZORA-RIVER.txt if keeping that old seed.
+That recovery was tested against 0.11.27. It was not revalidated against the
+additional 0.11.28 gates and is not a guarantee for the new rules. Existing item
+placements do not change when updating. Regenerate with the matching APWorld
+for the new logic to govern placement. No recovery commands were sent.
 
 VALIDATION LIMITS
 Passing generation establishes consistency under the encoded rules. It cannot

@@ -6218,7 +6218,7 @@ s32 Player_ActionHandler_Talk(Player* this, PlayState* play) {
                     // text will be used. This is especially important to prevent unwanted behavior with regards to mask
                     // trading.
                     this->currentMask = sSavedCurrentMask;
-                    if (GameInteractor_Should(VB_SKIP_TALKING, true)) {
+                    if (GameInteractor_Should(VB_SKIP_TALKING, true, talkOfferActor)) {
                         Player_StartTalking(play, talkOfferActor);
                     }
                     return true;

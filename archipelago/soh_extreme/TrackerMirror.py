@@ -6,10 +6,11 @@ No locations/items are granted or checked by this module. Strings use UTF-8.
 from __future__ import annotations
 import base64
 import struct
+from .NpcSpeech import display_region
 from typing import Any
 
 PROTOCOL = "SOHExtremeFinder1"
-VERSION = "0.11.27"
+VERSION = "0.11.29"
 TAG = "SOHExtremeUT"
 MAX_ENTRIES = 20000
 MAX_BYTES = 750000
@@ -79,6 +80,6 @@ def snapshot_rows(core, tracker_state, world, active: set[int], checked: set[int
             label=str(loc.name)
             if i in aliases:label+=' ('+str(aliases[i])+')'
             rows.append({'id':i,'state':status,'name':label,
-                         'region':str(loc.parent_region.name) if loc.parent_region else ''})
+                         'region':display_region(loc)})
     rows.sort(key=lambda r:(r['state'],r['region'],r['name'],r['id']))
     return rows
