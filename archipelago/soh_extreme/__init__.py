@@ -4941,6 +4941,14 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         from .FrontierFill import validate_filled_world
         validate_filled_world(self)
 
+    @classmethod
+    def stage_pre_output(cls, multiworld) -> None:
+        # This stage runs once for all SOH slots, after every world's post-fill,
+        # progression balancing, finalize_multiworld and individual pre_output.
+        # Recheck the actual final placements, including cross-game deliveries.
+        from .FrontierFill import validate_final_multiworld
+        validate_final_multiworld(multiworld)
+
     def fill_slot_data(self):
         # Publish every resolved option directly.  Dynamic seed state that is not
         # an Option is added below.  This makes SOH-EXTREME slot data independent

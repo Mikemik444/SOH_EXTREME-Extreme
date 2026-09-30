@@ -1,5 +1,5 @@
 SOH-EXTREME / ARCHIPELAGO: USER REQUIREMENTS AND FIX HISTORY
-Updated 2026-09-29 for cumulative release 0.11.32
+Updated 2026-09-29 for cumulative release 0.11.33
 Repository: https://github.com/Mikemik444/SOH_EXTREME-Extreme
 
 PURPOSE
@@ -7,6 +7,27 @@ This file records the reports and decisions from this repair conversation so
 future work can refer to them. It is project documentation, not a promise of
 permanent assistant memory across chats. Keep it with the source and bring it
 into any new repair conversation. New reports should become regression cases.
+
+FINAL MULTIWORLD BEATABILITY VALIDATION (0.11.33)
+- User requested an audit to avoid another impossible seed, including every
+  shuffled ability/soul, physical route, age and frozen-time restriction.
+- Read the current Players/SOH-EXTREME.yaml and copied a reproducible fixture
+  to validation/fixtures/ap_beatability_settings_20260929.yaml.
+- Replayed AP_71565912878447906591 (0.11.32) with its original SOH and three
+  Jigsaw placements. All 3,457 checks and all four goals were reachable in 29
+  spheres. No optimistic remote pregrants or hypothetical recovery items.
+  Jigsaw thresholds were verified using its PuzzleBoard and saved piece order.
+- Found the existing strict post-fill guard skipped multiplayer. Added a final
+  stage_pre_output validation after balancing/finalization, replaying every
+  player's actual locations. Reject stalled goals, unfilled SOH checks and
+  unreachable Full SOH checks/progression before exporting a seed.
+- Tests deliberately inject self-locks, a cross-player cycle, unreachable
+  Full filler, an inaccessible remote SOH item, duplicate-event risk and a
+  late placement change. Preserve Minimal and actual starting inventory.
+- This release changes validation and matching tracker versions, not gameplay
+  access rules or IDs. The audited 0.11.32 seed does not require regeneration.
+- Generation matrix and source audits are recorded in
+  VALIDATION-BEATABILITY-FIX.json. No server grants, save edits or installations.
 
 FROZEN DUSK / LON LON RANCH GUAYS (0.11.32)
 - User reported nighttime Ranch Guays in logic while stuck just before night,

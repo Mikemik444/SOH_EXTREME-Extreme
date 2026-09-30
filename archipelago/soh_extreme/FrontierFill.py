@@ -229,3 +229,78 @@ def validate_filled_world(world) -> None:
             f"{len(fill_locked)} placement/frontier lock(s)). "
             f"Blocked examples: {sample}", multiworld=world.multiworld
         )
+
+
+def validate_final_multiworld(multiworld) -> None:
+    """Fail before export if the final multiworld stalls under its actual rules.
+
+    Unlike the early single-player guard, this runs after balancing and follows
+    real cross-player placements. Never pregrant remote items or use all-state
+    inventory to prove accessibility. Each location is collected at most once.
+    Rule validation cannot certify runtime collision or actor behavior.
+    """
+    from Fill import FillError
+
+    soh_players = {p for p in multiworld.player_ids
+                   if multiworld.worlds[p].game == 'SOH-EXTREME'}
+    if not soh_players:
+        return
+    if hasattr(multiworld, '_soh_final_validation'):
+        del multiworld._soh_final_validation
+    full_players = {p for p in soh_players
+                    if multiworld.worlds[p].options.accessibility.current_key == 'full'}
+    all_locations = sorted(multiworld.get_locations(), key=lambda loc: (loc.player, loc.name))
+    unfilled = [loc for loc in all_locations
+                if loc.player in soh_players and loc.address is not None and loc.item is None]
+    if unfilled:
+        raise FillError(
+            'SOH-EXTREME final validation found unfilled checks: '
+            + ', '.join(str(loc) for loc in unfilled[:20]), multiworld=multiworld)
+
+    state = CollectionState(multiworld)
+    remaining = [loc for loc in all_locations if loc.item is not None]
+    sphere_sizes = []
+    while remaining:
+        remaining = [loc for loc in remaining
+                     if loc not in state.locations_checked and loc not in state.advancements]
+        sphere = [loc for loc in remaining if loc.can_reach(state)]
+        if not sphere:
+            break
+        sphere_sizes.append(len(sphere))
+        collected = set(sphere)
+        remaining = [loc for loc in remaining if loc not in collected]
+        for loc in sphere:
+            if loc in state.locations_checked or loc in state.advancements:
+                continue
+            # Mark advancement events too, so a world's collect hook that sweeps
+            # advancements cannot grant this location for a second time.
+            if loc.advancement:
+                state.advancements.add(loc)
+            state.collect(loc.item, True, loc)
+
+    failed_goals = [p for p in multiworld.player_ids if not multiworld.has_beaten_game(state, p)]
+    required_blocked = [loc for loc in remaining if loc.player in full_players
+                        or (loc.advancement and loc.item.player in full_players)]
+    if failed_goals or required_blocked:
+        reasons = []
+        if failed_goals:
+            reasons.append('unreachable goal(s): ' + ', '.join(
+                f'{multiworld.player_name[p]} (slot {p})' for p in failed_goals))
+        if required_blocked:
+            reasons.append(f'{len(required_blocked)} unreachable Full-accessibility check(s)')
+        examples = required_blocked or remaining
+        raise FillError(
+            'SOH-EXTREME final multiworld validation failed after progression balancing: '
+            + '; '.join(reasons) + '. No seed was exported. Blocked examples: '
+            + ', '.join(str(loc) for loc in examples[:25]), multiworld=multiworld)
+
+    multiworld._soh_final_validation = dict(
+        passed=True, sphere_sizes=sphere_sizes,
+        players={p: dict(goal_met=True, full_accessibility=p in full_players,
+                        network_checks=sum(loc.player == p and loc.address is not None for loc in all_locations),
+                        checked=sum(loc.player == p and loc.address is not None
+                                    and (loc in state.locations_checked or loc in state.advancements)
+                                    for loc in all_locations)) for p in sorted(soh_players)})
+    logger.info('SOH-EXTREME final multiworld validation passed: all %d player goals reachable; '
+                'Full accessibility verified for %d SOH slot(s), %d progression spheres.',
+                len(multiworld.player_ids), len(full_players), len(sphere_sizes))

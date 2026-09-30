@@ -91,7 +91,12 @@ def main():
             t=time.monotonic(); print('STAGE fill',flush=True)
             distribute_items_restrictive(mw)
             print('DONE fill',round(time.monotonic()-t,3),flush=True)
-            call_all(mw,'post_fill'); call_all(mw,'finalize_multiworld')
+            call_all(mw,'post_fill')
+            if mw.players > 1:
+                from Fill import balance_multiworld_progression
+                balance_multiworld_progression(mw)
+            call_all(mw,'finalize_multiworld'); call_all(mw,'pre_output')
+            result['final_validation'] = getattr(mw, '_soh_final_validation', None)
             state=CollectionState(mw); remaining=set(mw.get_locations()); spheres=[]
             while remaining:
                 remaining.difference_update(state.advancements)
