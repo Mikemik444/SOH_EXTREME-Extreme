@@ -1,5 +1,5 @@
 SOH-EXTREME / ARCHIPELAGO: USER REQUIREMENTS AND FIX HISTORY
-Updated 2026-09-29 for cumulative release 0.11.33
+Updated 2026-09-29 for cumulative release 0.11.34
 Repository: https://github.com/Mikemik444/SOH_EXTREME-Extreme
 
 PURPOSE
@@ -8,7 +8,41 @@ future work can refer to them. It is project documentation, not a promise of
 permanent assistant memory across chats. Keep it with the source and bring it
 into any new repair conversation. New reports should become regression cases.
 
-FINAL MULTIWORLD BEATABILITY VALIDATION (0.11.33)
+RAISED ZR GROTTOS / SKULL KID SOUL / SKELETON KEY (0.11.34)
+- User reported ZR Open Grotto and Fairy Grotto checks without the child ledge
+  route. Both entrances now inherit Climb plus child Grab/Cucco Soul, or actual
+  adult access. Fairy Grotto also needs its rock-cover interaction and Rock Soul.
+  Shovel and the contents' own requirements still apply. The rules gate the
+  entrance, including every chest, fairy, resource event and other check inside.
+- The user's NPC Speech: Lost Woods Skull Kid Duet screenshot exposed a second
+  omission. En_Skj uses enemy souls even for its invisible minigame controller;
+  the child companions also become NPC-category actors. NPC Soul alone does not
+  unhide them. Both speech checks, the song reward, memory game and mask trade
+  now require Skull Kid Soul (or shared Enemy Soul) in Gone Until Found mode,
+  with the existing NPC/language/instrument/age/region gates. Invincible mode
+  permits noncombat interaction without an enemy soul, matching runtime behavior.
+- All five enemy-backed conversation catalogue entries were inspected: three
+  Deku Tree scrubs already have their own soul and reflection requirements; the
+  two Skull Kid entries were missing the enemy existence requirement.
+- Skeleton Key already satisfies native SmallKeys and AP dungeon/fortress keys
+  and overworld doors. No additional item grant or runtime change was needed.
+  Tests remove every ordinary key and keyring and compare all network checks
+  using Skeleton Key alone, with negative controls and independent ability gates.
+- CORRECTION: the earlier passed replay of AP_47506236260385279514 used incomplete
+  access rules. Under this release's rules, the original four-world placements
+  stall after 220 of 3457 checks, with no goal reached. Flow of Time was placed
+  at ZR Fairy Grotto Fairy 3; Climb and Cucco Soul are also outside the reachable
+  frontier. Updating the game/tracker cannot move those already placed items.
+  Generate a new multiworld with this APWorld. Previous reports are historical
+  results under their older rules, not valid assurances for the corrected graph.
+- Evidence: 7200 ZR AP/UT assertions (1820 failed before); 896 compiled native
+  ZR assertions; 894 Skull Kid AP/UT assertions (396 failed before); 384 native
+  Skull Kid assertions; 6946 AP/UT Skeleton Key assertions and 2880 native key
+  assertions. Additional final build/generation results are in the release report.
+- Source and Windows packages are cumulative. No installed game, APWorld, save,
+  live server or received item history was modified by the repair task.
+
+FINAL MULTIWORLD BEATABILITY VALIDATION (0.11.33; HISTORICAL RULES)
 - User requested an audit to avoid another impossible seed, including every
   shuffled ability/soul, physical route, age and frozen-time restriction.
 - Read the current Players/SOH-EXTREME.yaml and copied a reproducible fixture

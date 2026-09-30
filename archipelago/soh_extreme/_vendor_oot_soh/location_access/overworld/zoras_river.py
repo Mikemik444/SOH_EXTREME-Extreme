@@ -157,9 +157,9 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.ZORA_RIVER, world, [
         (Regions.ZR_FRONT, lambda bundle: True_()),
-        (Regions.ZR_OPEN_GROTTO, lambda bundle: True_()),
-        # I am not sure that there's any scenario where blast or smash wouldn't apply to here, not sure why this needs here (which checks if the other age opened it, basically)?
-        (Regions.ZR_FAIRY_GROTTO, lambda bundle: blast_or_smash(bundle)),
+        (Regions.ZR_OPEN_GROTTO, lambda bundle: can_reach_zr_raised_ledge(bundle)),
+        (Regions.ZR_FAIRY_GROTTO, lambda bundle:
+         can_reach_zr_raised_ledge(bundle) & can_break_rocks(bundle)),
         (Regions.ZR_FROM_SHORTCUT, lambda bundle: has_item(
             Items.SILVER_SCALE, bundle) | can_use(Items.IRON_BOOTS, bundle)),
         (Regions.ZR_STORMS_GROTTO, lambda bundle: can_open_storms_grotto(bundle)),

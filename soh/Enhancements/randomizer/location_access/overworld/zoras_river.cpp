@@ -3,7 +3,8 @@
 
 using namespace Rando;
 
-// Reaching the river/ladder subregion does not by itself reach this high ledge.
+// Reaching the river/ladder subregion does not by itself reach this high ledge,
+// which holds the circle of rocks and the Open/Fairy grotto entrances.
 // Child needs a live Cucco and Grab; Adult can make the crossing. Both routes
 // still need the ladder, including when the broader subregion has bean access.
 static bool CanReachZrUpperCircle() {
@@ -160,8 +161,8 @@ void RegionTable_Init_ZoraRiver() {
         //Exits
         ENTRANCE(RR_ZORAS_RIVER,     true),
         ENTRANCE(RR_ZR_PILLAR,       (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOVER_BOOTS) || (logic->BunnyHood() && (logic->IsAdult || logic->CanJumpslash()))),
-        ENTRANCE(RR_ZR_OPEN_GROTTO,  true),
-        ENTRANCE(RR_ZR_FAIRY_GROTTO, AnyAgeTime([]{return logic->CanBreakRocks();})),
+        ENTRANCE(RR_ZR_OPEN_GROTTO,  CanReachZrUpperCircle()),
+        ENTRANCE(RR_ZR_FAIRY_GROTTO, CanReachZrUpperCircle() && AnyAgeTime([]{return logic->CanBreakRocks();})),
     });
 
     areaTable[RR_ZR_PILLAR] = Region("ZR Pillar", SCENE_ZORAS_RIVER, {

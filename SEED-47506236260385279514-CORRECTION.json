@@ -1,0 +1,24 @@
+{
+  "passed": false,
+  "seed": "47506236260385279514",
+  "scope": "Read-only replay of actual SOH + Jigsaw multidata, without remote pregrants.\n\nRestores SOH's slot data and original placements. Jigsaw uses its saved merge\nthresholds, verified against PuzzleBoard from the supplied Jigsaw APWorld.\nOnly initial inventory and checks reached in earlier spheres grant items.\nThis checks the installed rule graphs, not live actors/collision or server state.\n",
+  "soh_version": "0.11.33",
+  "multidata_sha256": "a201ed7dc107d2c2e869bc164812475a7d34b559d46f3ba5f038cf0668fa8670",
+  "jigsaw_apworld_sha256": "2889e4644da4cc67c9ba8501a16a94e95149a183612f690fa92a7a778aa4739b",
+  "optimistic_remote_pregrants": 0,
+  "extra_recovery_items": 0,
+  "total_checks": 3457,
+  "soh_checks": 3319,
+  "goals": {
+    "4": false,
+    "1": false,
+    "2": false,
+    "3": false
+  },
+  "goal_spheres": {},
+  "sphere_count": 5,
+  "rules_version": "0.11.34",
+  "remaining_checks": 3237,
+  "reached_checks": 220,
+  "correction": "Supersedes the earlier passed result under incomplete 0.11.33 rules. Regenerate this multiworld with the corrected APWorld; updating code does not move existing items."
+}

@@ -41,7 +41,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (EventLocations.LW_BUG_GRASS, Events.CAN_ACCESS_BUGS,
          lambda bundle: can_cut_shrubs(bundle)),
         (EventLocations.LW_SKULL_KID_MASK_TRADE, Events.SOLD_SKULL_MASK,
-         lambda bundle: is_child(bundle) & can_use(Items.SARIAS_SONG, bundle) & has_item(Events.CAN_BORROW_SKULL_MASK,
+         lambda bundle: can_interact_skull_kid(bundle) & is_child(bundle) & can_use(Items.SARIAS_SONG, bundle) & has_item(Events.CAN_BORROW_SKULL_MASK,
                                                                                              bundle) & has_item(
              Items.CHILD_WALLET, bundle)),
         (EventLocations.LW_BRIDGE_BEAN_PATCH, LocalEvents.LW_BRIDGE_BEAN_PLANTED,
@@ -50,13 +50,13 @@ def set_region_rules(world: "SohWorld") -> None:
     # Locations
     add_locations(Regions.LOST_WOODS, world, [
         (Locations.LW_SKULL_KID, lambda bundle: is_child(
-            bundle) & can_use(Items.SARIAS_SONG, bundle)),
+            bundle) & can_interact_skull_kid(bundle) & can_use(Items.SARIAS_SONG, bundle)),
         (Locations.LW_TRADE_COJIRO, lambda bundle: is_adult(
             bundle) & can_use(Items.COJIRO, bundle)),
         (Locations.LW_TRADE_ODD_POTION, lambda bundle: is_adult(
             bundle) & can_use(Items.ODD_POTION, bundle)),
         (Locations.LW_OCARINA_MEMORY_GAME, lambda bundle:
-            is_child(bundle) & has_item(Items.FAIRY_OCARINA, bundle) & has_enough_ocarina_buttons(bundle, 5)),
+            can_interact_skull_kid(bundle) & is_child(bundle) & has_item(Items.FAIRY_OCARINA, bundle) & has_enough_ocarina_buttons(bundle, 5)),
         (Locations.LW_TARGET_IN_WOODS, lambda bundle: is_child(
             bundle) & can_use(Items.FAIRY_SLINGSHOT, bundle)),
         (Locations.LW_DEKU_SCRUB_NEAR_BRIDGE,

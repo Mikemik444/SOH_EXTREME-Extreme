@@ -152,11 +152,33 @@ def has_animal_soul(bundle, animal: str) -> Rule:
     return Has("Animal Soul" if mode.value == 1 else animal + " Soul")
 
 
+def can_reach_zr_raised_ledge(bundle) -> Rule:
+    """The high ledge shared by ZR's circle of rocks and two raised grottos.
+
+    Child needs the Cucco crossing and ladder. Adult has a normal crossing,
+    but adult equipment alone does not establish an actual adult route here.
+    """
+    return can_climb(bundle) & (
+        is_adult(bundle) | (is_child(bundle) & can_grab(bundle) & has_animal_soul(bundle, "Cucco")))
+
+
 def can_interact_npc(bundle, language: str) -> Rule:
     rule = extreme_requirement(bundle, "shuffle_npc_soul", "NPC Soul")
     mode = getattr(bundle[1].options, "shuffle_speak", None)
     if mode is not None and mode.value:
         rule &= Has("Speak" if mode.value == 1 else "Speak " + language)
+    return rule
+
+
+def can_interact_skull_kid(bundle) -> Rule:
+    # Child Skull Kids become NPCs after initialization, but En_Skj (including
+    # the invisible duet controller) also participates in the enemy soul system.
+    rule = can_interact_npc(bundle, "Kokiri")
+    options = bundle[1].options
+    mode = getattr(options, "shuffle_enemy_soul", None)
+    behavior = getattr(options, "enemy_soul_behavior", None)
+    if mode is not None and mode.value and (behavior is None or behavior.value == 0):
+        rule &= Has("Enemy Soul" if mode.value == 1 else "Skull Kid Soul")
     return rule
 
 

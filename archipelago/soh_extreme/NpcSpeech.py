@@ -44,6 +44,8 @@ def active_entries(world):
 def conversation_rule(world, entry, scrub_region=None):
     o = world.options
     rules = []
+    if any(match[0] == "ACTOR_EN_SKJ" for match in entry["matches"]):
+        rules.append(H.can_interact_skull_kid((Regions.LOST_WOODS, world)))
     if o.shuffle_npc_soul.value:
         rules.append(Has("NPC Soul"))
     if o.shuffle_speak.value == 1:

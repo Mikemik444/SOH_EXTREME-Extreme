@@ -3,6 +3,17 @@
 
 using namespace Rando;
 
+static bool CanInteractWithSkullKid() {
+    const auto ctx = Rando::Context::GetInstance();
+    const auto mode = ctx->GetOption(RSK_SHUFFLE_ENEMY_SOUL).Get();
+    // Child actors change to NPC category; the duet controller remains a prop.
+    // All use En_Skj's enemy-soul update gate in Gone Until Found mode.
+    return (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) &&
+           (!ctx->GetOption(RSK_SHUFFLE_SPEAK) || logic->HasItem(RG_SPEAK_KOKIRI)) &&
+           (mode == 0 || ctx->GetOption(RSK_ENEMY_SOUL_BEHAVIOR).Get() != 0 ||
+            logic->HasItem(mode == 1 ? RG_ENEMY_SOUL : RG_ENEMY_SOUL_SKULL_KID));
+}
+
 void RegionTable_Init_LostWoods() {
     // clang-format off
     areaTable[RR_LW_FOREST_EXIT] = Region("LW Forest Exit", SCENE_LOST_WOODS, {}, {}, {
@@ -15,10 +26,10 @@ void RegionTable_Init_LostWoods() {
         EVENT_ACCESS(LOGIC_PLANT_LOST_WOODS_BRIDGE_BEAN, CanPlantBean(RG_LOST_WOODS_BRIDGE_BEAN_SOUL)),
         EVENT_ACCESS(LOGIC_FAIRY_ACCESS,                 logic->IsChild && logic->BeanPlanted(LOGIC_PLANT_LOST_WOODS_BRIDGE_BEAN) && logic->CanUse(RG_SONG_OF_STORMS)),
         EVENT_ACCESS(LOGIC_BUG_ACCESS,                   logic->IsChild && logic->CanCutShrubs()),
-        EVENT_ACCESS(LOGIC_SOLD_SKULL_MASK,              logic->IsChild && logic->HasItem(RG_SKULL_MASK) && logic->CanUse(RG_SARIAS_SONG) && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_KOKIRI) && logic->HasItem(RG_SPEAK_HYLIAN)),
+        EVENT_ACCESS(LOGIC_SOLD_SKULL_MASK,              CanInteractWithSkullKid() && logic->IsChild && logic->HasItem(RG_SKULL_MASK) && logic->CanUse(RG_SARIAS_SONG) && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_KOKIRI) && logic->HasItem(RG_SPEAK_HYLIAN)),
     }, {
         //Locations
-        LOCATION(RC_LW_SKULL_KID,                       logic->IsChild && logic->CanUse(RG_SARIAS_SONG)),
+        LOCATION(RC_LW_SKULL_KID,                       CanInteractWithSkullKid() && logic->IsChild && logic->CanUse(RG_SARIAS_SONG)),
         LOCATION(RC_LW_TRADE_COJIRO,                    logic->IsAdult && logic->CanUse(RG_COJIRO)),
         //I cannot think of a case where you can use Odd pot but not Cojiro to reset the quadrant should you have both. If one exists, add it to logic
         LOCATION(RC_LW_TRADE_ODD_POTION,                logic->IsAdult && logic->CanUse(RG_ODD_POTION)),
@@ -30,7 +41,7 @@ void RegionTable_Init_LostWoods() {
                                                                                                               //3 buttons        => 3.75%
                                                                                                               //4 buttons        => 25.3125%
                                                                                                               //5 buttons        => 100%
-        LOCATION(RC_LW_OCARINA_MEMORY_GAME,             logic->IsChild && logic->HasItem(RG_FAIRY_OCARINA) && logic->OcarinaButtons() >= 5),
+        LOCATION(RC_LW_OCARINA_MEMORY_GAME,             CanInteractWithSkullKid() && logic->IsChild && logic->HasItem(RG_FAIRY_OCARINA) && logic->OcarinaButtons() >= 5),
         LOCATION(RC_LW_TARGET_IN_WOODS,                 logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)),
         LOCATION(RC_LW_GS_BEAN_PATCH_NEAR_BRIDGE,       logic->CanSpawnSoilSkull(RG_LOST_WOODS_BRIDGE_BEAN_SOUL) && logic->CanAttack()),
         //RANDOTODO handle collecting some of these as you leave the shortcut from the other side

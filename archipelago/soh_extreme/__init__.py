@@ -39,6 +39,7 @@ from ._vendor_oot_soh.LogicHelpers import (
     can_cut_shrubs, can_collect_grass, can_jump_slash, can_jump_slash_except_hammer,
     can_hit_at_range, can_reflect_nuts, is_child, is_adult,
     can_climb, can_swim, can_play_song, can_do_trick, water_timer_at_least, fire_timer_at_least, at_day, at_night,
+    can_reach_zr_raised_ledge, can_break_rocks,
 )
 from worlds.generic.Rules import add_rule
 from Options import OptionError
@@ -4433,13 +4434,22 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # needs a usable Cucco (correct Soul mode + Grab). Basic Swim reaches
         # other parts of the ladder subregion, not this ledge. is_adult checks
         # actual adult reachability, so owning adult equipment is no bypass.
-        zr_upper_circle = climb_rule() & (
-            is_adult(zr_bundle)
-            | (is_child(zr_bundle) & grab_rule() & animal_rule("Cucco"))
-        )
+        zr_upper_circle = can_reach_zr_raised_ledge(zr_bundle)
         for zr_loc in FORK_LOCATIONS:
             if zr_loc.rc.startswith("RC_ZR_UPPER_CIRCLE_") and self._fork_location_enabled(zr_loc):
                 require_native_fork(self.get_location(zr_loc.name), zr_upper_circle)
+
+        # The grottos share that raised ledge. Gate the actual entrances so
+        # every chest, fairy, fish, hive, grass and resource event inherits the
+        # physical approach. Broad Zora River access is insufficient.
+        self._extreme_zr_grotto_route_contract = []
+        for target, route in (
+            (Regions.ZR_OPEN_GROTTO, zr_upper_circle),
+            (Regions.ZR_FAIRY_GROTTO, zr_upper_circle & can_break_rocks(zr_bundle)),
+        ):
+            if not require_entrance(str(Regions.ZORA_RIVER), str(target), route):
+                raise OptionError(f"SOH-EXTREME raised ZR grotto entrance missing: {target}")
+            self._extreme_zr_grotto_route_contract.append(str(target))
 
         # Before-ladder wonders are Child-only, need surface swimming to reach
         # their triggers, and need either the front rock route or the deeper
