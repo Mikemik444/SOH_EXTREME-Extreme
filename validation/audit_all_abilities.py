@@ -9,6 +9,8 @@ from ut_harness import tracker
 from location_source_audit import collect
 from audit_prerequisites import expected_for, resolve_item
 from BaseClasses import CollectionState
+from worlds.soh_extreme import NpcSpeech
+from worlds.soh_extreme._vendor_oot_soh.Enums import Regions, Ages
 from pathlib import Path
 from collections import Counter
 import argparse, json, hashlib
@@ -46,6 +48,22 @@ for label,removed in scenarios:
         per_location[i]['scenarios']+=1
         if direct:reachable+=1
         if direct!=ut:failures.append(dict(scenario=label,id=i,name=l.name,error='AP/UT mismatch',ap=direct,ut=ut))
+        npc = NpcSpeech.BY_NAME.get(l.name)
+        if direct and npc and npc['routes']:
+            # Independent necessary condition: the actual age-specific graph
+            # must reach a physical NPC route, regardless of its own rule.
+            previous=s._soh_age[1]
+            route_reachable=False
+            try:
+                for route in npc['routes']:
+                    ages=(Ages.CHILD,Ages.ADULT) if route['age']=='either' else (Ages.CHILD,) if route['age']=='child' else (Ages.ADULT,)
+                    for age in ages:
+                        s._soh_age[1]=age
+                        route_reachable |= w.get_region(str(Regions[route['region']])).can_reach(s)
+            finally:
+                s._soh_age[1]=previous
+            if not route_reachable:
+                failures.append(dict(scenario=label,id=i,name=l.name,error='NPC reachable without a physical route'))
         if not removed and not direct:failures.append(dict(scenario=label,id=i,name=l.name,error='blocked with complete inventory'))
         required=expectations.get(i,set())&absent
         if required:

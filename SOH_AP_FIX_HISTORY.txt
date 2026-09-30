@@ -1,5 +1,5 @@
 SOH-EXTREME / ARCHIPELAGO: USER REQUIREMENTS AND FIX HISTORY
-Updated 2026-09-29 for cumulative release 0.11.29
+Updated 2026-09-29 for cumulative release 0.11.32
 Repository: https://github.com/Mikemik444/SOH_EXTREME-Extreme
 
 PURPOSE
@@ -8,7 +8,88 @@ future work can refer to them. It is project documentation, not a promise of
 permanent assistant memory across chats. Keep it with the source and bring it
 into any new repair conversation. New reports should become regression cases.
 
-NPC SPEECH SANITY REPAIR (0.11.29)
+FROZEN DUSK / LON LON RANCH GUAYS (0.11.32)
+- User reported nighttime Ranch Guays in logic while stuck just before night,
+  without Flow of Time, Sun's Song, an Ocarina or all Ocarina buttons.
+- Read-only inspection of the running game's configuration confirmed shuffled
+  Flow of Time and FrozenStartingTime=3 (Dusk). No game files were changed.
+- The runtime freezes Dusk at 0xB555. The engine sets night only when the clock
+  is greater than 0xC000 or less than 0x4555. Dusk is therefore still daytime.
+  AP rules and native generation reset logic incorrectly grouped Dusk with Night.
+- Corrected enemy spawn-time rules, shared AP day/night helpers, Market wonder
+  gates/night-name fallbacks and both native region reset paths. Dawn, Day and
+  Dusk now count as day; only the Night preset starts at night.
+- All 15 Ranch Guays remain child-night checks with the same IDs. They require
+  nighttime access, their soul and a usable weapon. They stay out of logic at
+  frozen dusk without Flow, even if other progression or song items are owned.
+  A true Night start does not need Flow to collect its already available Guays.
+  With Flow received, normal waiting can reach night without song equipment.
+- Runtime clock values, item receipts and save contents are unchanged. This
+  corrects the tracker for existing dusk slots but does not relocate old items.
+  Generate new multiworlds with 0.11.32 for corrected placement rules. Existing
+  0.11.30/earlier worlds also retain the previous grotto/other placement defects.
+- Verification: old rules failed 34 dusk assertions; corrected AP/UT suite has
+  680 passing assertions across Dawn/Day/Dusk/Night; 105 compiled engine clock
+  and native reset assertions; 36 mandatory-time checks; Dusk and Night seed
+  generation/replay through all 3319 checks and the goal. No live playthrough.
+
+WOLFOS / GROTTO ENEMY IDENTITIES (0.11.31)
+- User reported LW Wolfos checks actually belong in Sacred Forest Meadow and
+  its grotto, and the two grotto Wolfos produced no AP rewards.
+- Read-only extraction of the supplied oot.o2r proved grotto entrance numbers
+  differ from room numbers. Spawn 8 enters room 7; physical grotto ID 22 is the
+  SFM Wolfos grotto. The old catalogue incorrectly used ID 25 (LW scrub grotto).
+- IDs 9800505/9800506 now bind each SFM grotto Wolfos separately. The outside
+  child Wolfos (9800536) belongs in SFM Entryway, before the gate it guards.
+- Audited all 28 non-fairy grotto routes. Corrected the eight actual enemy
+  placements: SFM Wolfos pair, Kak Redead pair, HF Tektite, HF Cow Skulltula,
+  HF Near Kak Skulltula, and GV Octorok. Finder labels, regions, AP rules and
+  runtime spawn identities agree with the scene's actual entrance/room table.
+- Six nonexistent duplicate checks were removed from new generation:
+  9800496, 9800497, 9800498, 9800503, 9800504, 9800507. Receipt array indices
+  remain stable and these IDs remain reserved; stale data cannot award them.
+- Native Wolfos death already dispatched the AP defeat hook. The mismatched
+  grotto identity prevented it from finding the pending AP check. No extra
+  death hook or automatic item grant was added. Re-enter the grotto after updating
+  so actors receive their corrected identities; already collected IDs stay done.
+- Existing multiworlds retain old names, placements and the six nonexistent
+  checks. A new seed generated with 0.11.31 is required for the complete repair.
+  No server, installed game, save or live item receipts were modified here.
+- Verification: 131 compiled spawn/reward assertions; 58 source/asset assertions;
+  97 AP/UT grotto/age/ability assertions; 181 inventories across all 3319 checks;
+  full generation and collection replay for frozen day and night starts. Windows
+  Release build succeeded. No connected in-game playthrough was performed.
+
+CLOSED FOREST / NPC PHYSICAL ROUTES (0.11.30)
+- AP_77252263651583399414 was generated with 0.11.29, Closed Forest On,
+  shuffled abilities, NPC Soul, individual languages and Rock / Boulder Soul.
+- The 0.11.29 NPC patch was faulty: its Menu-parent conversations used IsChild
+  and IsAdult as if these always checked their named region. SohLocation already
+  selects an age while evaluating its rule; those predicates then test age only.
+  This let Speak + NPC Soul mark distant conversations reachable inside the forest.
+- Every conversation alternative now explicitly requires its physical region.
+  A ConversationRegion predicate avoids caching results across child/adult age
+  evaluations. Both age and physical route are required, including Mido's house.
+- All route requirements (Climb, Crawl, Swim, Grab, other actions, keys, souls,
+  time and dungeon progression) are inherited from the actual region graph.
+  Manual NPC interaction still requires NPC Soul and the correct language.
+  Roll, chest opening and Shovel remain required where the route or action uses
+  them, not as arbitrary requirements on every conversation.
+- Closed Forest and the Rock Soul + explosives shortcut rules were already
+  present. The new speech checks bypassed them and introduced bad placements.
+  Missing NPC Soul freezes NPC updates/collision in the runtime; generation must
+  not rely on an exit that closes when the Soul is collected. Runtime Soul
+  behavior is unchanged by this AP route repair.
+- Read-only replay of that seed with the corrected rules stops after 37 checks,
+  even pregranting all 118 SOH receipts placed in the other games. Hypothetical
+  Climb + Rock Soul only reaches 479/3325; it does not fully repair the seed.
+  No grants or server/save changes were made. Regenerate using 0.11.30.
+- Validation: 3,176 sparse-inventory/physical-route/child-and-adult-start assertions;
+  181 whole-graph inventories and 601,825 AP/UT comparisons; explicit day/night
+  generation and independent collection replays. Physical in-game playthrough
+  and exhaustive testing of every setting combination remain outside this proof.
+
+NPC SPEECH SANITY REPAIR (0.11.29; route bug corrected in 0.11.30)
 - Intended behavior: first conversation with each NPC is one AP check; subsequent
   conversations behave normally. A character who moves or changes models shares
   one identity. A shopkeeper is one conversation, independent of the eight shelves.

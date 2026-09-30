@@ -1,0 +1,345 @@
+{
+  "provenance": "Read-only extraction from supplied oot.o2r; scene entrance command maps spawn numbers to rooms. Enemy-only metadata, no game assets.",
+  "resource_sha256": {
+    "scenes/shared/kakusiana_scene/kakusiana_scene": "bfe7f668b6fe8995cc26449815e8dcc0cb19cfba56973426bf2f38086ed9d08a",
+    "scenes/shared/kakusiana_scene/kakusiana_room_9": "375f505c7c79ef4b9b120b7e01a5ec7925688806ea062d87006b71d9dee43f77",
+    "scenes/shared/kakusiana_scene/kakusiana_room_12": "6c183fd0dcefe448d2e95281e6d13b7dacc2fc39319fb77ce5f14cb4e8b63495",
+    "scenes/shared/kakusiana_scene/kakusiana_room_0": "84c74851f494fc6cac63c347c6a0c8868cc7c0556a9d654c8f0c0dfb2604c81d",
+    "scenes/shared/kakusiana_scene/kakusiana_room_3": "256936e4a36b555621f902ae5af27eac30f76d4747abc0062951b62b6e89c6b6",
+    "scenes/shared/kakusiana_scene/kakusiana_room_2": "6f8c80df0d7cd537435395657629d1debe364c69eecd093c04e3d601dd9cd02c",
+    "scenes/shared/kakusiana_scene/kakusiana_room_8": "87f121858bc7bc3f750d41235ac622601b910bb6a949c8c6877339d9cd0ec6ea",
+    "scenes/shared/kakusiana_scene/kakusiana_room_10": "1f48ec92247c91c4a96da5202c7f489d74569dd4502613b0d19b7695af59397f",
+    "scenes/shared/kakusiana_scene/kakusiana_room_13": "4840e896093686ae26a4bdf287e0a5b2f8929cd9ba5ae850d75bb2cd1d39f361",
+    "scenes/shared/kakusiana_scene/kakusiana_room_4": "1467b931200901f910b35037854a3cf93b5f62e93dec77174696ea2a161ab0cc",
+    "scenes/shared/kakusiana_scene/kakusiana_room_1": "6df7b292321580278c58bb1b27a197bb1058aab5e0374bf96f998ac6eeb206cd",
+    "scenes/shared/kakusiana_scene/kakusiana_room_7": "0840c90238bd49b2319858af015d4cc233bbb4f18226d3ff686e49b2dfc8dd45",
+    "scenes/shared/kakusiana_scene/kakusiana_room_6": "12873cc7dbc7b69ad3dee71196825364e4e1c2d1fe33d22f342b27c95e4d1524",
+    "scenes/shared/kakusiana_scene/kakusiana_room_5": "d85b61d9414cbb98f1d73958a2bae0b05a231967dc4ca5c56525ccaeee8e3fde",
+    "scenes/shared/kakusiana_scene/kakusiana_room_11": "601e19e30ace3a88516084b94ea49b4ab0fd1fef5b32e8ce5b99a8866c4d4fa4",
+    "scenes/shared/spot05_scene/spot05_room_0": "9e0dcba2c131b3c39aa285d2aeee7f0aa2b225e1e316c4422b198e3efe97a77e"
+  },
+  "grottos": [
+    {
+      "grotto_id": 0,
+      "entrance": "ENTR_GROTTOS_10",
+      "spawn": 10,
+      "room": 9,
+      "route": "Desert Colossus -> Colossus Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 1,
+      "entrance": "ENTR_GROTTOS_4",
+      "spawn": 4,
+      "room": 12,
+      "route": "Lake Hylia -> LH Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 2,
+      "entrance": "ENTR_GROTTOS_10",
+      "spawn": 10,
+      "room": 9,
+      "route": "Zora River -> ZR Storms Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 4,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "Zora River -> ZR Open Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 5,
+      "entrance": "ENTR_GROTTOS_4",
+      "spawn": 4,
+      "room": 12,
+      "route": "DMC Lower Nearby -> DMC Hammer Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 6,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "DMC Upper Nearby -> DMC Upper Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 7,
+      "entrance": "ENTR_GROTTOS_4",
+      "spawn": 4,
+      "room": 12,
+      "route": "GC Grotto Platform -> GC Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 8,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "Death Mountain -> DMT Storms Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 9,
+      "entrance": "ENTR_GROTTOS_13",
+      "spawn": 13,
+      "room": 3,
+      "route": "Death Mountain Summit -> DMT Cow Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 10,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "Kak Backyard -> Kak Open Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 11,
+      "entrance": "ENTR_GROTTOS_3",
+      "spawn": 3,
+      "room": 2,
+      "route": "Kakariko Village -> Kak Redead Grotto",
+      "enemies": [
+        {
+          "index": 0,
+          "actor_id": 144,
+          "params": 32514,
+          "position": [
+            1693,
+            1,
+            -437
+          ]
+        },
+        {
+          "index": 1,
+          "actor_id": 144,
+          "params": 32513,
+          "position": [
+            1930,
+            1,
+            -445
+          ]
+        }
+      ]
+    },
+    {
+      "grotto_id": 12,
+      "entrance": "ENTR_GROTTOS_9",
+      "spawn": 9,
+      "room": 8,
+      "route": "Hyrule Castle Grounds -> HC Storms Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 13,
+      "entrance": "ENTR_GROTTOS_11",
+      "spawn": 11,
+      "room": 10,
+      "route": "Hyrule Field -> HF Tektite Grotto",
+      "enemies": [
+        {
+          "index": 2,
+          "actor_id": 27,
+          "params": 65534,
+          "position": [
+            3034,
+            -20,
+            768
+          ]
+        }
+      ]
+    },
+    {
+      "grotto_id": 14,
+      "entrance": "ENTR_GROTTOS_1",
+      "spawn": 1,
+      "room": 13,
+      "route": "Hyrule Field -> HF Near Kak Grotto",
+      "enemies": [
+        {
+          "index": 0,
+          "actor_id": 55,
+          "params": 1,
+          "position": [
+            624,
+            343,
+            -372
+          ]
+        }
+      ]
+    },
+    {
+      "grotto_id": 16,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "Hyrule Field -> HF Near Market Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 17,
+      "entrance": "ENTR_GROTTOS_5",
+      "spawn": 5,
+      "room": 4,
+      "route": "Hyrule Field -> HF Cow Grotto",
+      "enemies": [
+        {
+          "index": 0,
+          "actor_id": 55,
+          "params": 1,
+          "position": [
+            3073,
+            190,
+            280
+          ]
+        }
+      ]
+    },
+    {
+      "grotto_id": 18,
+      "entrance": "ENTR_GROTTOS_2",
+      "spawn": 2,
+      "room": 1,
+      "route": "Hyrule Field -> HF Inside Fence Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 19,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "Hyrule Field -> HF Open Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 20,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "Hyrule Field -> HF Southeast Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 21,
+      "entrance": "ENTR_GROTTOS_4",
+      "spawn": 4,
+      "room": 12,
+      "route": "Lon Lon Ranch -> LLR Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 22,
+      "entrance": "ENTR_GROTTOS_8",
+      "spawn": 8,
+      "room": 7,
+      "route": "SFM Entryway -> SFM Wolfos Grotto",
+      "enemies": [
+        {
+          "index": 0,
+          "actor_id": 431,
+          "params": 65280,
+          "position": [
+            1324,
+            -118,
+            813
+          ]
+        },
+        {
+          "index": 1,
+          "actor_id": 431,
+          "params": 65280,
+          "position": [
+            1063,
+            -118,
+            733
+          ]
+        }
+      ]
+    },
+    {
+      "grotto_id": 23,
+      "entrance": "ENTR_GROTTOS_10",
+      "spawn": 10,
+      "room": 9,
+      "route": "Sacred Forest Meadow -> SFM Storms Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 25,
+      "entrance": "ENTR_GROTTOS_7",
+      "spawn": 7,
+      "room": 6,
+      "route": "LW Beyond Mido -> LW Scrubs Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 26,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "Lost Woods -> LW Near Shortcuts Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 27,
+      "entrance": "ENTR_GROTTOS_0",
+      "spawn": 0,
+      "room": 0,
+      "route": "Kokiri Forest -> KF Storms Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 30,
+      "entrance": "ENTR_GROTTOS_10",
+      "spawn": 10,
+      "room": 9,
+      "route": "GV Fortress Side -> GV Storms Grotto",
+      "enemies": []
+    },
+    {
+      "grotto_id": 31,
+      "entrance": "ENTR_GROTTOS_6",
+      "spawn": 6,
+      "room": 5,
+      "route": "GV Grotto Ledge -> GV Octorok Grotto",
+      "enemies": [
+        {
+          "index": 0,
+          "actor_id": 14,
+          "params": 65280,
+          "position": [
+            31,
+            -133,
+            820
+          ]
+        }
+      ]
+    },
+    {
+      "grotto_id": 32,
+      "entrance": "ENTR_GROTTOS_12",
+      "spawn": 12,
+      "room": 11,
+      "route": "LW Beyond Mido -> Deku Theater",
+      "enemies": []
+    }
+  ],
+  "meadow_wolfos": {
+    "scene": 86,
+    "room": 0,
+    "index": 1,
+    "actor_id": 431,
+    "params": 7936,
+    "position": [
+      -345,
+      0,
+      1658
+    ]
+  }
+}

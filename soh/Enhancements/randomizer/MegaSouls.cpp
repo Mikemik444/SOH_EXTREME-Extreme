@@ -691,7 +691,7 @@ static ObjectExtension::Register<EnemyDefeatDropIdentity> gEnemyDefeatDropIdenti
 extern void EnItem00_DrawRandomizedItem(EnItem00* enItem00, PlayState* play);
 
 static bool EnemyDefeatLocationStillPending(int32_t placementIndex, int64_t locationId) {
-    if (SohExtreme::IsEnemyOffspringPlacement(placementIndex)) return false;
+    if (SohExtreme::IsRetiredEnemyPlacement(placementIndex)) return false;
     if (placementIndex < 0 || placementIndex >= static_cast<int32_t>(kEnemyPlacementCount) ||
         locationId < 0) {
         return false;
@@ -749,7 +749,7 @@ extern "C" bool MegaSoul_TryCollectEnemyDefeatPickup(Actor* itemActor) {
         static_cast<size_t>(identity->placementIndex) >= kEnemyPlacementCount) return false;
     const int32_t index = identity->placementIndex;
     const int64_t locationId = identity->locationId;
-    if (SohExtreme::IsEnemyOffspringPlacement(index)) return false;
+    if (SohExtreme::IsRetiredEnemyPlacement(index)) return false;
     if (!Archipelago_IsCurrentSaveActive() || !Archipelago_IsLocationActive(locationId)) return false;
     if (!Archipelago_IsLocationReported(locationId)) Archipelago_ReportLocation(locationId);
     // Consume once accepted into the save's outbox; a slow acknowledgment must
@@ -791,7 +791,7 @@ static void ReplayCollectedEnemyChecks() {
     if (!Archipelago_IsCurrentSaveActive()) return;
     for (size_t i = 0; i < kEnemyPlacementCount; ++i) {
         const int64_t id = kEnemyDefeatPlacements[i].locationId;
-        if (!SohExtreme::IsEnemyOffspringPlacement(static_cast<int32_t>(i)) &&
+        if (!SohExtreme::IsRetiredEnemyPlacement(static_cast<int32_t>(i)) &&
             EnemyDefeatWasCollected(i) && Archipelago_IsLocationActive(id) &&
             !Archipelago_IsLocationReported(id)) Archipelago_ReportLocation(id);
     }
@@ -896,7 +896,8 @@ extern "C" int32_t MegaSoul_FindEnemyDefeatSpawn(int16_t scene, int8_t room, int
     if (grotto >= 0 && actorIndex >= 0) {
         for (size_t i = 0; i < kEnemyPlacementCount; ++i) {
             const auto& e = kEnemyDefeatPlacements[i];
-            if (e.scene == scene && e.room == room && e.grottoId == grotto &&
+            if (!SohExtreme::IsRetiredEnemyPlacement(static_cast<int32_t>(i)) &&
+                e.scene == scene && e.room == room && e.grottoId == grotto &&
                 e.actorListIndex == actorIndex && e.actorId == actorId && e.params == params)
                 return static_cast<int32_t>(i);
         }
@@ -939,7 +940,7 @@ extern "C" void MegaSoul_CaptureEnemyDefeatIdentityFrom(Actor* actor, int32_t in
     auto* identity = ObjectExtension::GetInstance().Get<EnemyDefeatIdentity>(actor);
     if (identity == nullptr) return;
     if (enemyCreated || index < 0 || static_cast<size_t>(index) >= kEnemyPlacementCount ||
-        SohExtreme::IsEnemyOffspringPlacement(index) || kEnemyDefeatPlacements[index].actorId != actor->id) {
+        SohExtreme::IsRetiredEnemyPlacement(index) || kEnemyDefeatPlacements[index].actorId != actor->id) {
         index = -1;
     }
     const int32_t old = identity->placementIndex;
@@ -973,7 +974,7 @@ extern "C" int32_t MegaSoul_GetEnemyDefeatPlacement(const Actor* actor) {
 extern "C" void MegaSoul_BeginEnemyDefeatLife(Actor* actor, int32_t index) {
     if (actor == nullptr || !IS_RANDO || !Archipelago_IsCurrentSaveActive() || index < 0 ||
         static_cast<size_t>(index) >= kEnemyPlacementCount || kEnemyDefeatPlacements[index].actorId != actor->id ||
-        SohExtreme::IsEnemyOffspringPlacement(index)) return;
+        SohExtreme::IsRetiredEnemyPlacement(index)) return;
     const auto* origin = ObjectExtension::GetInstance().Get<EnemySourceIdentity>(actor);
     if (origin != nullptr && origin->enemyCreated) return;
     auto* identity = ObjectExtension::GetInstance().Get<EnemyDefeatIdentity>(actor);
@@ -1022,7 +1023,8 @@ extern "C" bool MegaSoul_IsEnemyDefeatSpawnPending(int16_t scene, int8_t room, i
     const int8_t grotto = scene == SCENE_GROTTOS ? static_cast<int8_t>(EntranceTracker::GetCurrentGrottoId()) : -1;
     for (size_t i = 0; i < kEnemyPlacementCount; ++i) {
         const auto& e = kEnemyDefeatPlacements[i];
-        if (e.scene == scene && e.room == room && e.grottoId == grotto && e.actorListIndex == actorIndex &&
+        if (!SohExtreme::IsRetiredEnemyPlacement(static_cast<int32_t>(i)) &&
+                e.scene == scene && e.room == room && e.grottoId == grotto && e.actorListIndex == actorIndex &&
             e.actorId == actorId && e.params == params) return MegaSoul_IsEnemyDefeatPlacementPending(static_cast<int32_t>(i));
     }
     return false;

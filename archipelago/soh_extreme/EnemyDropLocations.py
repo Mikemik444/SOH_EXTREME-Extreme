@@ -508,20 +508,14 @@ ENEMY_DROP_LOCATIONS = (
     EnemyDropLocationData('Enemy Defeat: Market Ruins Room 0 Redead/Gibdo 6', 9800491, 34, 0, -1, 5, 144, 33026, 'Redead and Gibdo Soul', 'melee', 'MARKET', 15, ''),
     EnemyDropLocationData('Enemy Defeat: Market Ruins Room 0 Redead/Gibdo 7', 9800492, 34, 0, -1, 6, 144, 33026, 'Redead and Gibdo Soul', 'melee', 'MARKET', 15, ''),
     EnemyDropLocationData('Enemy Defeat: Market Ruins Room 0 Redead/Gibdo 8', 9800493, 34, 0, -1, 7, 144, 33024, 'Redead and Gibdo Soul', 'melee', 'MARKET', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: Colossus Grotto Room 10 Tektite 1', 9800494, 62, 10, 0, 2, 27, 65534, 'Tektite Soul', 'ranged_or_melee', 'COLOSSUS_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: Lake Hylia Grotto Room 4 Skulltula 1', 9800495, 62, 4, 1, 0, 55, 1, None, 'ranged_or_melee', 'LH_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: ZR Storms Grotto Room 10 Tektite 1', 9800496, 62, 10, 2, 2, 27, 65534, 'Tektite Soul', 'ranged_or_melee', 'ZR_STORMS_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: DMC Hammer Grotto Room 4 Skulltula 1', 9800497, 62, 4, 5, 0, 55, 1, None, 'ranged_or_melee', 'DMC_HAMMER_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: Goron City Grotto Room 4 Skulltula 1', 9800498, 62, 4, 7, 0, 55, 1, None, 'ranged_or_melee', 'GC_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: DMT Cow Grotto Room 13 Skulltula 1', 9800499, 62, 13, 9, 0, 55, 1, None, 'ranged_or_melee', 'DMT_COW_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: HF Cow Grotto Room 5 Octorok 1', 9800500, 62, 5, 17, 0, 14, 65280, 'Octorok Soul', 'ranged', 'HF_COW_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: HF Inside Fence Grotto Room 2 Redead/Gibdo 1', 9800501, 62, 2, 18, 0, 144, 32514, 'Redead and Gibdo Soul', 'melee', 'HF_INSIDE_FENCE_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: HF Inside Fence Grotto Room 2 Redead/Gibdo 2', 9800502, 62, 2, 18, 1, 144, 32513, 'Redead and Gibdo Soul', 'melee', 'HF_INSIDE_FENCE_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: LLR Grotto Room 4 Skulltula 1', 9800503, 62, 4, 21, 0, 55, 1, None, 'ranged_or_melee', 'LLR_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: SFM Storms Grotto Room 10 Tektite 1', 9800504, 62, 10, 23, 2, 27, 65534, 'Tektite Soul', 'ranged_or_melee', 'SFM_STORMS_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: LW Scrubs Grotto Room 7 Wolfos 1', 9800505, 62, 7, 25, 0, 431, 65280, 'Wolfos Soul', 'melee', 'LW_SCRUBS_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: LW Scrubs Grotto Room 7 Wolfos 2', 9800506, 62, 7, 25, 1, 431, 65280, 'Wolfos Soul', 'melee', 'LW_SCRUBS_GROTTO', 15, ''),
-    EnemyDropLocationData('Enemy Defeat: GV Storms Grotto Room 10 Tektite 1', 9800507, 62, 10, 30, 2, 27, 65534, 'Tektite Soul', 'ranged_or_melee', 'GV_STORMS_GROTTO', 15, ''),
+    EnemyDropLocationData('Enemy Defeat: HF Tektite Grotto Room 10 Tektite 1', 9800494, 62, 10, 13, 2, 27, 65534, 'Tektite Soul', 'ranged_or_melee', 'HF_TEKTITE_GROTTO', 15, ''),
+    EnemyDropLocationData('Enemy Defeat: HF Cow Grotto Room 4 Skulltula 1', 9800495, 62, 4, 17, 0, 55, 1, None, 'ranged_or_melee', 'HF_COW_GROTTO', 15, ''),
+    EnemyDropLocationData('Enemy Defeat: HF Near Kak Grotto Room 13 Skulltula 1', 9800499, 62, 13, 14, 0, 55, 1, None, 'ranged_or_melee', 'HF_NEAR_KAK_GROTTO', 15, ''),
+    EnemyDropLocationData('Enemy Defeat: GV Octorok Grotto Room 5 Octorok 1', 9800500, 62, 5, 31, 0, 14, 65280, 'Octorok Soul', 'ranged', 'GV_OCTOROK_GROTTO', 15, ''),
+    EnemyDropLocationData('Enemy Defeat: Kak Redead Grotto Room 2 Redead/Gibdo 1', 9800501, 62, 2, 11, 0, 144, 32514, 'Redead and Gibdo Soul', 'melee', 'KAK_REDEAD_GROTTO', 15, ''),
+    EnemyDropLocationData('Enemy Defeat: Kak Redead Grotto Room 2 Redead/Gibdo 2', 9800502, 62, 2, 11, 1, 144, 32513, 'Redead and Gibdo Soul', 'melee', 'KAK_REDEAD_GROTTO', 15, ''),
+    EnemyDropLocationData('Enemy Defeat: SFM Wolfos Grotto Room 7 Wolfos 1', 9800505, 62, 7, 22, 0, 431, 65280, 'Wolfos Soul', 'melee', 'SFM_WOLFOS_GROTTO', 15, ''),
+    EnemyDropLocationData('Enemy Defeat: SFM Wolfos Grotto Room 7 Wolfos 2', 9800506, 62, 7, 22, 1, 431, 65280, 'Wolfos Soul', 'melee', 'SFM_WOLFOS_GROTTO', 15, ''),
     EnemyDropLocationData('Enemy Defeat: Redead Grave Room 0 Redead/Gibdo 1', 9800508, 63, 0, -1, 1, 144, 32514, 'Redead and Gibdo Soul', 'melee', 'THE_GRAVEYARD', 15, ''),
     EnemyDropLocationData("Enemy Defeat: Royal Family's Tomb Room 0 Keese 1", 9800509, 65, 0, -1, 0, 19, 3, 'Keese Soul', 'ranged', 'THE_GRAVEYARD', 15, ''),
     EnemyDropLocationData("Enemy Defeat: Royal Family's Tomb Room 0 Keese 2", 9800510, 65, 0, -1, 1, 19, 3, 'Keese Soul', 'ranged', 'THE_GRAVEYARD', 15, ''),
@@ -550,7 +544,7 @@ ENEMY_DROP_LOCATIONS = (
     EnemyDropLocationData('Enemy Defeat: Kokiri Forest Room 1 Withered Deku Baba 3', 9800533, 85, 1, -1, 3, 199, 1, 'Deku Baba Soul', 'sword_or_boomerang', 'KF_OUTSIDE_DEKU_TREE', 3, ''),
     EnemyDropLocationData('Enemy Defeat: Kokiri Forest Room 1 Withered Deku Baba 4', 9800534, 85, 1, -1, 4, 199, 1, 'Deku Baba Soul', 'sword_or_boomerang', 'KF_OUTSIDE_DEKU_TREE', 3, ''),
     EnemyDropLocationData('Enemy Defeat: Kokiri Forest Room 1 Withered Deku Baba 5', 9800535, 85, 1, -1, 5, 199, 1, 'Deku Baba Soul', 'sword_or_boomerang', 'KF_OUTSIDE_DEKU_TREE', 3, ''),
-    EnemyDropLocationData('Enemy Defeat: Sacred Forest Meadow Room 0 Wolfos 1', 9800536, 86, 0, -1, 1, 431, 7936, 'Wolfos Soul', 'melee', 'SACRED_FOREST_MEADOW', 3, ''),
+    EnemyDropLocationData('Enemy Defeat: Sacred Forest Meadow Room 0 Wolfos 1', 9800536, 86, 0, -1, 1, 431, 7936, 'Wolfos Soul', 'melee', 'SFM_ENTRYWAY', 3, ''),
     EnemyDropLocationData('Enemy Defeat: Sacred Forest Meadow Room 0 Deku Scrub 1', 9800537, 86, 0, -1, 5, 96, 65280, 'Deku Scrub Soul', 'ranged', 'SACRED_FOREST_MEADOW', 3, ''),
     EnemyDropLocationData('Enemy Defeat: Sacred Forest Meadow Room 0 Deku Scrub 2', 9800538, 86, 0, -1, 6, 96, 65280, 'Deku Scrub Soul', 'ranged', 'SACRED_FOREST_MEADOW', 3, ''),
     EnemyDropLocationData('Enemy Defeat: Sacred Forest Meadow Room 0 Deku Scrub 3', 9800539, 86, 0, -1, 7, 96, 768, 'Deku Scrub Soul', 'ranged', 'SACRED_FOREST_MEADOW', 3, ''),
@@ -787,3 +781,8 @@ ENEMY_DROP_LOCATION_BY_NAME = {loc.name: loc for loc in ENEMY_DROP_LOCATIONS}
 # Removed in 0.11.13: Peahat-created offspring. These IDs are NEVER reused.
 ENEMY_OFFSPRING_RETIRED_IDS = frozenset(range(9800765, 9800786))
 assert not ENEMY_OFFSPRING_RETIRED_IDS.intersection(ENEMY_DROP_LOCATION_NAME_TO_ID.values())
+
+# 0.11.31: entrance indices were mistaken for room indices in the grotto
+# export. These duplicate/nonexistent placements stay reserved, never recycled.
+ENEMY_GROTTO_RETIRED_IDS = frozenset((9800496, 9800497, 9800498, 9800503, 9800504, 9800507))
+assert not ENEMY_GROTTO_RETIRED_IDS.intersection(ENEMY_DROP_LOCATION_NAME_TO_ID.values())

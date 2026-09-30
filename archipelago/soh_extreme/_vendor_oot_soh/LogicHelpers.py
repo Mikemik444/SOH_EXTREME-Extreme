@@ -626,7 +626,8 @@ def _time_access(bundle, want_day: bool) -> Rule:
     if flow is None or not flow.value:
         return cycle
     # Random is resolved once by generate_early and restored from slot data.
-    start_is_day = options.frozen_starting_time.value in (1, 2)
+    # Dusk (0xB555) is still daytime: the engine sets night after 0xC000.
+    start_is_day = options.frozen_starting_time.value in (1, 2, 3)
     if start_is_day == want_day:
         return True_()
     return Has("Flow of Time") & cycle

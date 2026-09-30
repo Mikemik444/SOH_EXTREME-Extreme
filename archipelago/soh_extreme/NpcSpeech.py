@@ -4,8 +4,9 @@ IDs are permanent. Do not sort/renumber the catalogue when adding a character.
 Old seeds retain SpeechLocations.py via their absent identity-version field.
 """
 import json
+from dataclasses import dataclass
 from importlib.resources import files
-from rule_builder.rules import And, Or, Has
+from rule_builder.rules import And, Or, Has, CanReachRegion
 from ._vendor_oot_soh import LogicHelpers as H
 from ._vendor_oot_soh.Enums import Regions, Items, Events
 
@@ -14,6 +15,17 @@ CATALOG = tuple(json.loads(files(__package__).joinpath("NpcSpeechCatalog.json").
 NAME_TO_ID = {e["name"]: e["id"] for e in CATALOG}
 BY_NAME = {e["name"]: e for e in CATALOG}
 LANGUAGES = ("Deku", "Gerudo", "Goron", "Hylian", "Kokiri", "Zora")
+
+
+@dataclass
+class ConversationRegion(CanReachRegion, game="SOH-EXTREME"):
+    """Region access under SohLocation's current child/adult evaluation.
+
+    The generic region-rule cache has no age in its key. Do not reuse a child
+    result for an adult route, or an adult result for a child-only NPC.
+    """
+    class Resolved(CanReachRegion.Resolved):
+        force_recalculate = True
 
 
 def identity_version(world):
@@ -57,7 +69,12 @@ def conversation_rule(world, entry, scrub_region=None):
     for route in routes:
         region = Regions[route["region"]]
         b = (region, world)
-        gates = [H.is_child(b) if route["age"] == "child" else H.is_adult(b)
+        # SohLocation evaluates its rules with an age already selected. In that
+        # context IsChild/IsAdult only check the age; they do not test the named
+        # region. These NPCs have Menu as their parent to support moving actors,
+        # so every alternative must explicitly require its physical region too.
+        gates = [ConversationRegion(str(region)),
+                 H.is_child(b) if route["age"] == "child" else H.is_adult(b)
                  if route["age"] == "adult" else (H.is_child(b) | H.is_adult(b))]
         if route["time"] != "either":
             gates.append(H.at_day(b) if route["time"] == "day" else H.at_night(b))
@@ -76,7 +93,9 @@ def conversation_rule(world, entry, scrub_region=None):
             elif gate == "bow": gates.append(H.can_use(Items.FAIRY_BOW, b))
             elif gate == "sarias_song": gates.append(H.can_use(Items.SARIAS_SONG, b))
             elif gate == "ocarina": gates.append(H.can_use(Items.FAIRY_OCARINA, b))
-            elif gate == "midos_house": gates.append(H.is_child((Regions.KF_MIDOS_HOUSE, world)))
+            elif gate == "midos_house":
+                gates.append(ConversationRegion(str(Regions.KF_MIDOS_HOUSE)) &
+                             H.is_child((Regions.KF_MIDOS_HOUSE, world)))
             elif gate == "theater_mask": gates.append(H.has_item(Events.CAN_BORROW_SKULL_MASK, b))
             else: gates.append(Has(gate))
         alternatives.append(And(*gates))

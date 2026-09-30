@@ -3364,11 +3364,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     rule = is_child(bundle)
                 elif rc.startswith("RC_MKT_WONDER_DAY_"):
                     rule = is_child(bundle)
-                    if o.shuffle_flow_of_time.value and o.frozen_starting_time.value in (3, 4):
+                    if o.shuffle_flow_of_time.value and o.frozen_starting_time.value == 4:
                         rule &= Has("Flow of Time")
                 elif rc.startswith("RC_MKT_WONDER_NIGHT_"):
                     rule = is_child(bundle)
-                    if o.shuffle_flow_of_time.value and o.frozen_starting_time.value in (1, 2):
+                    if o.shuffle_flow_of_time.value and o.frozen_starting_time.value in (1, 2, 3):
                         rule &= Has("Flow of Time")
                 elif rc == "RC_SHADOW_TEMPLE_WONDER_THREE_POTS":
                     rule = can_use(Items.FAIRY_BOW, bundle)
@@ -3501,11 +3501,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # requirement. Do not lock every Market check behind Flow: an adult
             # route or a child already inside a night Market remains legitimate.
 
-            # Conversely, a frozen DAWN/DAY start must not satisfy explicitly
+            # Conversely, a frozen DAWN/DAY/DUSK start must not satisfy explicitly
             # night-only checks until time is unlocked.  The stock day/night-cycle
             # events cover most of these; these name fallbacks cover fork/native
             # checks that bypass those helper events.
-            if o.frozen_starting_time.value in (1, 2):
+            if o.frozen_starting_time.value in (1, 2, 3):
                 for location in self.get_locations():
                     upper = location.name.upper()
                     if " NIGHT " in f" {upper} " or "NIGHT BALCONY" in upper:

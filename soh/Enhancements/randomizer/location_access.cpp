@@ -1275,10 +1275,10 @@ void AccessReset() {
 
     // SOH-EXTREME: honor the frozen starting time used by Flow of Time.
     // FrozenStartingTime values are Random=0, Dawn=1, Day=2, Dusk=3, Night=4.
-    // Generated AP slots resolve this to a concrete value; Dusk/Night start in
-    // logical night, Dawn/Day start in logical day.
+    // Dusk freezes at 0xB555, still inside the engine's daytime interval
+    // [0x4555, 0xC000]. Only the Night preset starts in logical night.
     const bool frozenNight = ctx->GetOption(RSK_SHUFFLE_FLOW_OF_TIME) &&
-                             ctx->GetOption(RSK_FROZEN_STARTING_TIME).Get() >= 3;
+                             ctx->GetOption(RSK_FROZEN_STARTING_TIME).Get() == 4;
     if (frozenNight) {
         if (ctx->GetOption(RSK_SELECTED_STARTING_AGE).Is(RO_AGE_CHILD)) {
             RegionTable(RR_ROOT)->childNight = true;
@@ -1308,10 +1308,10 @@ void ResetAllLocations() {
 
     // SOH-EXTREME: honor the frozen starting time used by Flow of Time.
     // FrozenStartingTime values are Random=0, Dawn=1, Day=2, Dusk=3, Night=4.
-    // Generated AP slots resolve this to a concrete value; Dusk/Night start in
-    // logical night, Dawn/Day start in logical day.
+    // Dusk freezes at 0xB555, still inside the engine's daytime interval
+    // [0x4555, 0xC000]. Only the Night preset starts in logical night.
     const bool frozenNight = ctx->GetOption(RSK_SHUFFLE_FLOW_OF_TIME) &&
-                             ctx->GetOption(RSK_FROZEN_STARTING_TIME).Get() >= 3;
+                             ctx->GetOption(RSK_FROZEN_STARTING_TIME).Get() == 4;
     if (frozenNight) {
         if (ctx->GetOption(RSK_SELECTED_STARTING_AGE).Is(RO_AGE_CHILD)) {
             RegionTable(RR_ROOT)->childNight = true;

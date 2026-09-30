@@ -70,7 +70,8 @@ def enemy_drop_rule(world, entry):
     def time_available(night):
         if not o.shuffle_flow_of_time.value:
             return True_()
-        starts_night = o.frozen_starting_time.value in (3, 4)
+        # Dusk freezes at 0xB555, before the engine's >0xC000 night boundary.
+        starts_night = o.frozen_starting_time.value == 4
         return True_() if starts_night == night else Has("Flow of Time")
 
     ages = []
