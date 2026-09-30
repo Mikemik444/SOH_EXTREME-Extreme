@@ -1,3 +1,132 @@
+0.11.39 - NATIVE MODELS FOR ENEMY AP PICKUPS (2026-09-30)
+- User requested the actual item model for SOH-EXTREME rewards from enemy drops.
+- Resolve AP-only enemy placements from their scout metadata. Own-slot rewards
+  and other SOH-EXTREME players' rewards use the native item model; foreign,
+  unknown-game and unmapped rewards use the appropriate AP logo. Ice traps
+  keep their stable native disguise and Mysterious Shuffle still applies.
+- Copy the recipient game through APCpp LocationInfo and the main-thread scout
+  mailbox. Item names, aliases and numeric IDs alone never identify a game.
+- Existing physical pickups update when scout metadata arrives. The model is
+  cosmetic: collection still reports the AP location and ReceivedItems grants
+  the reward. Preserve deferred collection if the outbox cannot accept it yet.
+- Rebuild and replace BOTH soh.exe and APCpp.dll: LocationInfo has a new field.
+  No seed regeneration is needed for this model change. APWorld .39 contains
+  the same location/item/logic data as .38, with only the version updated.
+- 897 compiled model/mailbox/pickup assertions passed; actual rebuilt DLL
+  parser/callback tests and AP presentation/delivery regressions passed.
+  Release build and APWorld parity passed. No rendered/connected playtest.
+- Cumulative with .38 doorway pots, .37 hold-up/window changes and prior fixes;
+  their documented new-seed requirements still apply to those catalog changes.
+
+0.11.38 - DODONGO'S CAVERN DOORWAY POTS (2026-09-30)
+- User reported two ordinary pots by the lower Lizalfos doorway dropping
+  nothing and sending no AP check. Server log showed other pots reporting.
+- Audit of all 341 non-MQ native pots found exactly two missing AP catalog
+  entries: RC_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT_1 and _2. Their physical
+  placements in ddan_room_1 match the native coordinates (3507,-964) and
+  (3617,-911). These were unassigned pots, not undelivered server items.
+- Restore AP IDs 943/944, names, native mappings and the exact Near Lower
+  Lizalfos region. Require Pot Soul when shuffled and a usable break/lift
+  action, with the existing age/route rules. No other IDs are renumbered.
+- AP-inactive pots retain vanilla drop behavior instead of empty randomizer
+  dummies. Guard invalid pot identities and failed collectible allocation.
+- UT only includes these newly added checks if the server manifest has them.
+  Existing seeds have no items assigned there; a new seed is needed for the
+  two additional AP rewards. Existing seeds can use the runtime/pickup fixes.
+- 739 catalog/AP/UT assertions and 134 compiled runtime assertions passed.
+  AP delivery regressions and Windows Release build passed. A fresh seed
+  passed full progression replay with 3319 network checks, including these
+  pots and excluding the two retired courtyard windows. No live playtest.
+- Cumulative with 0.11.37 and earlier fixes. Keep matching 0.11.38 APWorld.
+
+0.11.37 - IMPORTANT PICKUPS AND RETIRED COURTYARD WINDOWS (2026-09-30)
+- Remove EXTREME Hc Wonder Courtyard Left Window and Right Window from new AP
+  seed generation in every Wonder shuffle mode and from location hint groups.
+  Preserve their IDs solely for compatibility with existing server placements.
+  UT reconstructs them only if the old server explicitly owns those checks;
+  updating cannot silently hide an already placed progression item. A new seed
+  generated with this APWorld is required to remove them from a run entirely.
+- Native window draw/drop/guard overrides now respect AP location ownership.
+  New AP seeds leave these retired windows at their normal game behavior.
+- User reported notification-only Jigsaw pieces for Jig2 from rocks, plus enemy
+  souls and other important items missing Link's overhead presentation.
+- Fast Pickup Text now preserves major, small-key and boss-key animations in
+  AP saves even when the actor is a rock/bush/enemy drop. Ordinary refills keep
+  the quick pickup behavior. The preceding build fails 45 of 384 branch tests.
+- AP-only enemy pickups now request remote-item presentations. Saved enemy
+  journal reconciliation has a separate silent path, preventing old animation
+  replays. RC rock checks, enemy IDs and NPC checks share the presentation queue.
+- All live major receipts, including flag-backed souls, abilities, door keys
+  and adult trade items, wait for the matching engine grant. A get-item offer
+  can be interrupted or overwritten; it is no longer treated as a receipt.
+- Combined Speak now emits the native Return_Item_Entry completion hook after
+  setting its six language flags, preventing a stalled transactional receipt.
+- Progressive Wallets now use the same overhead receipt path, resolving the
+  native tier from live inventory and filling its new capacity on completion.
+  Important tokens for token-based bridge/boss-key settings also hold overhead.
+- Regressions cover 84 soul types, all language/ability receipts, trade/door
+  keys, burst protection, interrupted offers, remote Jigsaw flag subtypes,
+  Fast Pickup Text, silent journal retry, and existing AP delivery safeguards.
+- Keep the matching 0.11.37 APWorld installed for the tracker version handshake.
+  Existing seeds can use the pickup fixes without regeneration; removing the
+  two window placements requires a new seed. Save format unchanged. No live
+  gameplay was performed. See packaged validation for generation/test evidence.
+
+0.11.36 - OVERHEAD PICKUPS, WONDER TRIGGERS AND SUN'S SONG (2026-09-30)
+- User requested all abilities and all souls held overhead, including Open
+  Chest, plus song-note and Silver Rupee progress in pickup text.
+- Remove the synchronous Open Chest receipt bypass. Wait for the matching native
+  item receipt and grant one tier, including the second progressive tier.
+- Give Flow of Time its own native item presentation. Preserve all 84 soul
+  presentations; cover their AP IDs, native flags and major item table entries.
+- Add a presentation-only Song Note item without renumbering existing native
+  items. The callback grants its individual persistent note before committing.
+  Name its song and show progress/completion for all 74 notes across 12 songs.
+- Silver Rupees show the actual puzzle count/total (including MQ and pouches)
+  and now wait for the real grant before the AP receive cursor advances.
+- Historical reconstruction stays silent; duplicate receipts remain deduplicated.
+- Remove accidental sword/Grass Soul gates from proximity-triggered KF Crawl
+  Grass and LW Back Skull Kids Grass Wonders. Preserve physical child/Crawl
+  routes and the action/soul requirements of real cuttable grass.
+- Seven Hyrule Field parent Peahats require day, even though their actor exists
+  underground at night. Offspring do not complete the parent's check.
+- User clarified: usable Sun's Song changes day/night without Flow of Time,
+  then the new phase stays frozen. Freeze passive engine time only, allowing
+  native song acceleration and reload transitions. Apply starting time once on
+  new save creation, retaining saved time across loads and reconnects.
+- AP, Universal Tracker and native search accept playable Sun's Song or Flow
+  as time-change alternatives. Require instrument, song, shuffled buttons and
+  all shuffled notes; preserve age, route, soul and combat requirements.
+- Evidence and exact build results are in VALIDATION-ABILITY-WONDER-FIX.json.
+  No connected/rendered game playthrough or exhaustive beatability guarantee.
+  No live game, save, installed APWorld or server state changed by this task.
+
+0.11.35 - PHYSICAL INTERACTION AND THREE-SEED CORRECTION (2026-09-29)
+- User asked for actual reachable progression, including every enabled ability,
+  soul, age and route, rather than trusting a spoiler generated by faulty rules.
+- Source-derived chest identity/type contract replaces name matching. TCG chests
+  are large; add six persistent minigame keys, key counts and Skeleton alternative.
+  Owner conversation/payment does not require the chest-opening ability.
+- Dungeon Start With small keys no longer silently grants the separate Fortress
+  or Treasure Chest Game key rings; their shuffle settings remain authoritative.
+- Correct enemy-clear requirements on nine dungeon chests; correct Grab and
+  outer-hand traversal in Spirit Temple, the Sun Block silver/fire alternatives,
+  and heat access on eleven crater rock/boulder checks.
+- Use native Spirit age/key accounting, including small-key counts without
+  Skeleton Key. Gate Goron City's maze rock behind the boulder route, Forest's
+  first-room ledge behind Climb/Longshot, and DMT's near-Kak Skulltula behind a
+  collection method. Hidden Skulltulas, Market's crate and Anju's cucco crate
+  now include their physical action requirements. Preserve Giant's Knife for
+  stalagmites; gate the Ice Cavern alcove and Water river underwater checks.
+- Add partial-inventory source interaction audits, quantitative chest/key tests,
+  and source-condition checks at each generated progression sphere. Keep unknown
+  source clauses explicit. AP/UT agreement alone is never physical certification.
+- A / 28329797861162018978: second Open Chest -> Shovel -> Skulltula Soul ->
+  second Open Chest dependency loop. Updating does not relocate these items.
+- C / 56771124513727284418: corrected rules permit Link's Triforce goal, but
+  stall the Jigsaw players/full access. Prior provisional pass was incomplete.
+- B / 15869480947154709792: all checks/all four goals complete in audited replay.
+- Regenerate A and C with the matching fixed APWorld. No recovery items granted.
 SOH-EXTREME / ARCHIPELAGO: USER REQUIREMENTS AND FIX HISTORY
 Updated 2026-09-29 for cumulative release 0.11.34
 Repository: https://github.com/Mikemik444/SOH_EXTREME-Extreme

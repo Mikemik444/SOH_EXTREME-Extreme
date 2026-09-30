@@ -1173,7 +1173,7 @@ extern "C" u16 Randomizer_Item_Give(PlayState* play, GetItemEntry giEntry) {
         Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_HYLIAN);
         Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_KOKIRI);
         Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_ZORA);
-        return giEntry.itemId;
+        return Return_Item_Entry(giEntry, RG_NONE);
     }
 
     // if it's an item that just sets a randomizerInf, set it
@@ -1514,6 +1514,8 @@ extern "C" u16 Randomizer_Item_Give(PlayState* play, GetItemEntry giEntry) {
         }
         case RG_AP_REMOTE_IMPORTANT:
         case RG_AP_REMOTE_NORMAL:
+        case RG_AP_SONG_NOTE:
+            // AP notes commit their exact flag in the receive callback.
             // Presentation only: the server gives this item to its actual owner.
             break;
         default:

@@ -8,6 +8,7 @@
 #include "particle_cmc.h"
 #include "soh/Enhancements/randomizer/randomizer.h"
 #include "soh/Enhancements/randomizer/RCToRandInf.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 extern "C" {
 #include "overlays/actors/ovl_En_Wonder_Item/z_en_wonder_item.h"
@@ -125,6 +126,12 @@ static CheckIdentity IdentifyWonderItem(s32 sceneNum, s32 par1, s32 par2) {
     return wonderIdentity;
 }
 
+static bool IsCourtyardWindowShuffled(RandomizerCheck rc) {
+    // Retired in new AP seeds. Old servers retain their existing placements.
+    // Leave the original window reward/guard behavior alone when not active.
+    return !Archipelago_IsCurrentSaveFile() || Archipelago_ShouldHandleCheck(rc);
+}
+
 uint8_t EnWonderItem_RandomizerHoldsItem(EnWonderItem* wonderActor, PlayState* play) {
     const CheckIdentity* wonderIdentity = ObjectExtension::GetInstance().Get<CheckIdentity>(&wonderActor->actor);
     if (wonderIdentity == nullptr) {
@@ -144,6 +151,10 @@ uint8_t EnWonderItem_RandomizerHoldsItem(EnWonderItem* wonderActor, PlayState* p
         }
     }
     RandomizerCheck rc = wonderIdentity->randomizerCheck;
+    if ((rc == RC_HC_WONDER_COURTYARD_LEFT_WINDOW || rc == RC_HC_WONDER_COURTYARD_RIGHT_WINDOW) &&
+        !IsCourtyardWindowShuffled(rc)) {
+        return false;
+    }
     uint8_t isDungeon = Rando::StaticData::GetLocation(rc)->IsDungeon();
     auto wonderSetting = RAND_GET_OPTION(RSK_SHUFFLE_WONDER_ITEMS);
     if (!IS_RANDO || (wonderSetting.Is(RO_SHUFFLE_WONDER_ITEMS_OVERWORLD) && isDungeon) ||
@@ -305,7 +316,8 @@ void RegisterShuffleWonderItems() {
 
     // Do not spawn castle courtyard guard bomb, instead spawn the randomized item
     COND_VB_SHOULD(VB_WONDER_HEISHI_ITEM, shouldRegisterOverworld, {
-        if (!Flags_GetRandomizerInf(RAND_INF_HC_WONDER_COURTYARD_LEFT_WINDOW)) {
+        if (IsCourtyardWindowShuffled(RC_HC_WONDER_COURTYARD_LEFT_WINDOW) &&
+            !Flags_GetRandomizerInf(RAND_INF_HC_WONDER_COURTYARD_LEFT_WINDOW)) {
             Vec3f* pos = va_arg(args, Vec3f*);
             f32 rotY = (f32)va_arg(args, double);
 
@@ -317,8 +329,10 @@ void RegisterShuffleWonderItems() {
     // If courtyard items are uncollected, keep guards patrolling
     COND_VB_SHOULD(VB_WONDER_HEISHI_PATROLLING, shouldRegisterOverworld, {
         EnHeishi1* guardActor = va_arg(args, EnHeishi1*);
-        if (!Flags_GetRandomizerInf(RAND_INF_HC_WONDER_COURTYARD_LEFT_WINDOW) ||
-            !Flags_GetRandomizerInf(RAND_INF_HC_WONDER_COURTYARD_RIGHT_WINDOW)) {
+        if ((IsCourtyardWindowShuffled(RC_HC_WONDER_COURTYARD_LEFT_WINDOW) &&
+             !Flags_GetRandomizerInf(RAND_INF_HC_WONDER_COURTYARD_LEFT_WINDOW)) ||
+            (IsCourtyardWindowShuffled(RC_HC_WONDER_COURTYARD_RIGHT_WINDOW) &&
+             !Flags_GetRandomizerInf(RAND_INF_HC_WONDER_COURTYARD_RIGHT_WINDOW))) {
             *should = guardActor->type != 5;
         }
     });

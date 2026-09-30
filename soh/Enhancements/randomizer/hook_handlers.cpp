@@ -21,6 +21,7 @@
 #include "LacsRequirements.h"
 
 extern "C" bool MegaSoul_TryCollectEnemyDefeatPickup(Actor* itemActor);
+extern "C" bool MegaSoul_IsEnemyDefeatPickup(const Actor* itemActor);
 
 extern "C" {
 #include "macros.h"
@@ -1355,8 +1356,10 @@ void RandomizerOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_l
             // Collecting that pickup reports the exact AP enemy location; killing
             // the enemy by itself never consumes the check.
             if (item00->actor.params == ITEM00_SOH_DUMMY &&
-                MegaSoul_TryCollectEnemyDefeatPickup(&item00->actor)) {
-                Actor_Kill(&item00->actor);
+                MegaSoul_IsEnemyDefeatPickup(&item00->actor)) {
+                if (MegaSoul_TryCollectEnemyDefeatPickup(&item00->actor)) Actor_Kill(&item00->actor);
+                // A pending AP pickup must not fall through to generic dummy
+                // collection if its outbox cannot accept the check yet.
                 *should = false;
                 break;
             }

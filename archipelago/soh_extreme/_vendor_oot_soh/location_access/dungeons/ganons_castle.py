@@ -275,7 +275,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Locations.GANONS_CASTLE_LIGHT_TRIAL_FIRST_RIGHT_CHEST, lambda bundle: True_()),
         (Locations.GANONS_CASTLE_LIGHT_TRIAL_SECOND_RIGHT_CHEST, lambda bundle: True_()),
         (Locations.GANONS_CASTLE_LIGHT_TRIAL_THIRD_RIGHT_CHEST, lambda bundle: True_()),
-        (Locations.GANONS_CASTLE_LIGHT_TRIAL_INVISIBLE_ENEMIES_CHEST, lambda bundle: (can_do_trick(Tricks.LENS_GANON, bundle) |
+        (Locations.GANONS_CASTLE_LIGHT_TRIAL_INVISIBLE_ENEMIES_CHEST, lambda bundle: can_kill_enemy(bundle, Enemies.BIG_SKULLTULA) & can_kill_enemy(bundle, Enemies.KEESE, EnemyDistance.CLOSE, True, 3) & (can_do_trick(Tricks.LENS_GANON, bundle) |
                                                                                       can_use(Items.LENS_OF_TRUTH, bundle))),
         (Locations.GANONS_CASTLE_LIGHT_TRIAL_LULLABY_CHEST, lambda bundle: (can_use(Items.ZELDAS_LULLABY, bundle) &
                                                                             small_keys(Items.GANONS_CASTLE_SMALL_KEY, 1, bundle))),

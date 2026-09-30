@@ -28,7 +28,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Locations
     add_locations(Regions.SHADOW_TEMPLE_BEGINNING, world, [
         (Locations.SHADOW_TEMPLE_MAP_CHEST,
-         lambda bundle: can_jump_slash_except_hammer(bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.REDEAD) & can_kill_enemy(bundle, Enemies.KEESE)),
         (Locations.SHADOW_TEMPLE_HOVER_BOOTS_CHEST,
          lambda bundle: can_kill_enemy(bundle, Enemies.DEAD_HAND)),
         (Locations.SHADOW_TEMPLE_NEAR_DEAD_HAND_POT1,
@@ -59,7 +59,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Locations
     add_locations(Regions.SHADOW_TEMPLE_FIRST_BEAMOS, world, [
         (Locations.SHADOW_TEMPLE_COMPASS_CHEST,
-         lambda bundle: can_jump_slash_except_hammer(bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.GIBDO)),
         (Locations.SHADOW_TEMPLE_EARLY_SILVER_RUPEE_CHEST, lambda bundle: can_use(
             Items.HOVER_BOOTS, bundle) | can_use(Items.HOOKSHOT, bundle)),
         (Locations.SHADOW_TEMPLE_BEAMOS_SONG_OF_STORMS_FAIRY,
@@ -76,15 +76,15 @@ def set_region_rules(world: "SohWorld") -> None:
     # Locations
     add_locations(Regions.SHADOW_TEMPLE_HUGE_PIT, world, [
         (Locations.SHADOW_TEMPLE_INVISIBLE_BLADES_VISIBLE_CHEST,
-         lambda bundle: can_jump_slash_except_hammer(bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.LIKE_LIKE) & can_kill_enemy(bundle, Enemies.KEESE)),
         (Locations.SHADOW_TEMPLE_INVISIBLE_BLADES_INVISIBLE_CHEST,
-         lambda bundle: can_jump_slash_except_hammer(bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.LIKE_LIKE) & can_kill_enemy(bundle, Enemies.KEESE) & (can_do_trick(Tricks.LENS_SHADOW, bundle) | can_use(Items.LENS_OF_TRUTH, bundle))),
         (Locations.SHADOW_TEMPLE_FALLING_SPIKES_LOWER_CHEST, lambda bundle: True_()),
         (Locations.SHADOW_TEMPLE_FALLING_SPIKES_UPPER_CHEST, lambda bundle: (can_do_trick(Tricks.SHADOW_UMBRELLA_HOVER, bundle) & can_use(
             Items.HOVER_BOOTS, bundle)) | can_do_trick(Tricks.SHADOW_UMBRELLA_CLIP, bundle) | has_item(Items.GORONS_BRACELET, bundle)),
         (Locations.SHADOW_TEMPLE_FALLING_SPIKES_SWITCH_CHEST, lambda bundle: (can_do_trick(Tricks.SHADOW_UMBRELLA_HOVER, bundle) & can_use(
             Items.HOVER_BOOTS, bundle)) | can_do_trick(Tricks.SHADOW_UMBRELLA_CLIP, bundle) | has_item(Items.GORONS_BRACELET, bundle)),
-        (Locations.SHADOW_TEMPLE_INVISIBLE_SPIKES_CHEST, lambda bundle: small_keys(Items.SHADOW_TEMPLE_SMALL_KEY, 2, bundle) & (
+        (Locations.SHADOW_TEMPLE_INVISIBLE_SPIKES_CHEST, lambda bundle: can_kill_enemy(bundle, Enemies.REDEAD) & small_keys(Items.SHADOW_TEMPLE_SMALL_KEY, 2, bundle) & (
             (can_do_trick(Tricks.LENS_SHADOW_PLATFORM, bundle) & can_do_trick(Tricks.LENS_SHADOW, bundle)) | can_use(Items.LENS_OF_TRUTH, bundle))),
         (Locations.SHADOW_TEMPLE_FREESTANDING_KEY, lambda bundle: small_keys(Items.SHADOW_TEMPLE_SMALL_KEY, 2, bundle) & ((can_do_trick(Tricks.LENS_SHADOW_PLATFORM, bundle) & can_do_trick(Tricks.LENS_SHADOW, bundle)) | can_use(
             Items.LENS_OF_TRUTH, bundle)) & can_use(Items.HOOKSHOT, bundle) & (can_use(Items.BOMB_BAG, bundle) | has_item(Items.GORONS_BRACELET, bundle) | (can_do_trick(Tricks.SHADOW_FREESTANDING_KEY, bundle) & can_use(Items.BOMBCHUS_5, bundle)))),
@@ -118,7 +118,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Shadow Temple Wind Tunnel
     # Locations
     add_locations(Regions.SHADOW_TEMPLE_WIND_TUNNEL, world, [
-        (Locations.SHADOW_TEMPLE_WIND_HINT_CHEST, lambda bundle: True_()),
+        (Locations.SHADOW_TEMPLE_WIND_HINT_CHEST, lambda bundle: can_kill_enemy(bundle, Enemies.REDEAD)),
         (Locations.SHADOW_TEMPLE_AFTER_WIND_ENEMY_CHEST, lambda bundle: can_kill_enemy(
             bundle, Enemies.GIBDO, EnemyDistance.CLOSE, True, 2)),
         (Locations.SHADOW_TEMPLE_AFTER_WIND_HIDDEN_CHEST,

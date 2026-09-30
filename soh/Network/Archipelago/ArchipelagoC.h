@@ -22,6 +22,8 @@ bool Archipelago_IsAuthenticatedForFileSelect(void);
 bool Archipelago_IsCurrentSaveActive(void);
 // Save identity, independent of connection/enabled state, for physical seed rules.
 bool Archipelago_IsCurrentSaveFile(void);
+// Freeze passive outdoor time until Flow; explicit Sun's Song changes still run.
+bool Archipelago_ShouldFreezeTime(void);
 void Archipelago_InitSaveFile(void);
 bool Archipelago_ShouldHandleCheck(int32_t randomizerCheck);
 // Cheap tracker-only ownership query: never performs name resolution/scans.
@@ -40,11 +42,16 @@ uint32_t Archipelago_GetReportedActiveLocationCount(void);
 void Archipelago_RefreshScenePlacements(int16_t sceneNum);
 void Archipelago_ReportCheck(int32_t randomizerCheck);
 void Archipelago_ReportLocation(int64_t locationId);
+// Retry a previously collected journal entry without replaying its presentation.
+void Archipelago_ReconcileLocation(int64_t locationId);
 void Archipelago_RefreshPlacementForCheck(int32_t randomizerCheck);
+// Cosmetic RandomizerGet for an AP-only pickup; never grants or reports it.
+int32_t Archipelago_GetLocationDisplayItem(int64_t locationId);
 // Returns "<item> for <player>" for a scouted remote AP placement.
 // Empty string means the check is not a known remote placement.
 const char* Archipelago_GetRemoteItemDescription(int32_t randomizerCheck);
 const char* Archipelago_GetRemotePickupDescription(void);
+const char* Archipelago_GetSongNotePickupDescription(void);
 
 #ifdef __cplusplus
 }

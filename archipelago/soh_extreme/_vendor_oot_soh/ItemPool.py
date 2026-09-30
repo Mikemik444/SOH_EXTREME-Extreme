@@ -663,8 +663,10 @@ def give_starting_items(world: "SohWorld") -> None:
         world.push_precollected(world.create_item(song, True))
 
     if world.options.small_key_shuffle == "start_with":
-        for key_ring in key_to_ring.values():
-            world.push_precollected(world.create_item(key_ring, True))
+        # This option covers the eight dungeons. Fortress and Treasure Chest
+        # Game keys have their own settings and must not be granted here.
+        for key in small_key_option_matching(world):
+            world.push_precollected(world.create_item(key_to_ring[key], True))
         
     if world.options.boss_key_shuffle == "start_with":
         for boss_key in dungeon_boss_key_vanilla_mapping.values():

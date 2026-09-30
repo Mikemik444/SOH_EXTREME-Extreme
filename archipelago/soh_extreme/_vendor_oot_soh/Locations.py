@@ -1071,6 +1071,8 @@ pots_dungeon_location_table: dict[str, SohLocData] = {
     Locations.DODONGOS_CAVERN_SIDE_ROOM_POT2:                  SohLocData(940, LocTag.Dodongos_Cavern | LocTag.Pot, DungeonLocations.DODONGOS_CAVERN),
     Locations.DODONGOS_CAVERN_SIDE_ROOM_POT3:                  SohLocData(941, LocTag.Dodongos_Cavern | LocTag.Pot, DungeonLocations.DODONGOS_CAVERN),
     Locations.DODONGOS_CAVERN_SIDE_ROOM_POT4:                  SohLocData(942, LocTag.Dodongos_Cavern | LocTag.Pot, DungeonLocations.DODONGOS_CAVERN),
+    Locations.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT1:         SohLocData(943, LocTag.Dodongos_Cavern | LocTag.Pot, DungeonLocations.DODONGOS_CAVERN),
+    Locations.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT2:         SohLocData(944, LocTag.Dodongos_Cavern | LocTag.Pot, DungeonLocations.DODONGOS_CAVERN),
     Locations.DODONGOS_CAVERN_TORCH_ROOM_POT1:                 SohLocData(945, LocTag.Dodongos_Cavern | LocTag.Pot, DungeonLocations.DODONGOS_CAVERN),
     Locations.DODONGOS_CAVERN_TORCH_ROOM_POT2:                 SohLocData(946, LocTag.Dodongos_Cavern | LocTag.Pot, DungeonLocations.DODONGOS_CAVERN),
     Locations.DODONGOS_CAVERN_TORCH_ROOM_POT3:                 SohLocData(947, LocTag.Dodongos_Cavern | LocTag.Pot, DungeonLocations.DODONGOS_CAVERN),

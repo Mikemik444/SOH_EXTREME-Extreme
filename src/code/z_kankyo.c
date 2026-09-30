@@ -6,6 +6,7 @@
 #include "soh/frame_interpolation.h"
 #include "soh/OTRGlobals.h"
 #include "soh/ResourceManagerHelpers.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/Enhancements/savestate_serialize.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 
@@ -929,10 +930,14 @@ void Environment_Update(PlayState* play, EnvironmentContext* envCtx, LightContex
                 if ((envCtx->unk_1A == 0) && !FrameAdvance_IsEnabled(play) &&
                     (play->transitionMode == TRANS_MODE_OFF || ((void)0, gSaveContext.gameMode) != GAMEMODE_NORMAL)) {
 
-                    if (IS_DAY || gTimeSpeed >= 0x190) {
-                        gSaveContext.dayTime += gTimeSpeed;
-                    } else {
-                        gSaveContext.dayTime += gTimeSpeed * 2; // time moves twice as fast at night
+                    // Sun's Song deliberately advances to the opposite phase.
+                    // Once it finishes, stay at that phase until Flow is owned.
+                    if (!Archipelago_ShouldFreezeTime() || gSaveContext.sunsSongState == SUNSSONG_SPEED_TIME) {
+                        if (IS_DAY || gTimeSpeed >= 0x190) {
+                            gSaveContext.dayTime += gTimeSpeed;
+                        } else {
+                            gSaveContext.dayTime += gTimeSpeed * 2; // time moves twice as fast at night
+                        }
                     }
                 }
             }

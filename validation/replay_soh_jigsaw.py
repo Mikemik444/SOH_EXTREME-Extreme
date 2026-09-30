@@ -17,6 +17,7 @@ p.add_argument('--multidata', type=Path, required=True)
 p.add_argument('--jigsaw-apworld', type=Path, required=True)
 p.add_argument('--slot', type=int, required=True)
 p.add_argument('--report', type=Path, required=True)
+p.add_argument('--physical-source-root', type=Path)
 a = p.parse_args()
 raw = a.multidata.read_bytes()
 assert raw[0] == 3
@@ -47,6 +48,10 @@ for i in sorted(other):
 
 m = setup(290932, passthrough=d['slot_data'][a.slot], stop_before='pre_fill')
 w = m.worlds[1]
+physical_constraints={};physical_rejections=[];physical_unknown={}
+if a.physical_source_root:
+    from audit_physical_interactions import build_constraints, allows_interaction
+    physical_constraints,physical_unknown,_=build_constraints(w,a.physical_source_root)
 locations = {l.address: l for l in w.get_locations() if type(l.address) is int}
 assert set(locations) == set(d['locations'][a.slot])
 by_id = {v: k for k, v in w.item_name_to_id.items()}
@@ -76,6 +81,10 @@ while True:
     for player, i in sorted(remaining):
         if player == a.slot:
             can_reach = locations[i].can_reach(s)
+            if can_reach and i in physical_constraints and not allows_interaction(w,s,physical_constraints[i]):
+                physical_rejections.append(dict(sphere=len(waves),id=i,name=locations[i].name,
+                    sources=physical_constraints[i][2]['native_sources']))
+                can_reach=False
         else:
             thresholds = d['slot_data'][player]['possible_merges']
             can_reach = thresholds[min(piece_counts[player], len(thresholds)-1)] >= i - 234782000
@@ -101,6 +110,12 @@ while True:
     remaining.difference_update(reachable)
     waves.append(wave)
 result = dict(passed=not remaining and all(goals.values()), seed=d['seed_name'],
+    rules_version=__import__('worlds.soh_extreme.TrackerMirror',fromlist=['VERSION']).VERSION,
+    physical_constraints=len(physical_constraints),physical_rejections=physical_rejections,
+    untranslated_physical_atoms=dict(physical_unknown),
+    final_inventory=dict(s.prog_items[1]),
+    rejected_dependencies={str(i):{name:s.count(name,1) for name in rule.item_dependencies()}
+        for i,(rule,_,_) in physical_constraints.items() if any(r['id']==i for r in physical_rejections)},
     scope=__doc__, soh_version=d['slot_data'][a.slot]['apworld_version'],
     multidata_sha256=hashlib.sha256(raw).hexdigest(),
     jigsaw_apworld_sha256=hashlib.sha256(a.jigsaw_apworld.read_bytes()).hexdigest(),

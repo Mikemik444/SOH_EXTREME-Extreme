@@ -1,0 +1,82 @@
+{
+  "rules_version": "0.11.35",
+  "seeds": {
+    "A": {
+      "seed": "28329797861162018978",
+      "passed": false,
+      "rules_version": "0.11.35",
+      "goals": {
+        "4": false,
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "goal_spheres": {},
+      "sphere_count": 14,
+      "multidata_sha256": "f088da50431f80fb58a04a16c1c4ea65802b582438d4e21575977e49c52ad15c",
+      "jigsaw_apworld_sha256": "2889e4644da4cc67c9ba8501a16a94e95149a183612f690fa92a7a778aa4739b",
+      "physical_constraints": 2311,
+      "reached": 907,
+      "total": 3457,
+      "remaining": 2550,
+      "extra_recovery_items": 0
+    },
+    "B": {
+      "seed": "15869480947154709792",
+      "passed": true,
+      "rules_version": "0.11.35",
+      "goals": {
+        "4": true,
+        "1": true,
+        "2": true,
+        "3": true
+      },
+      "goal_spheres": {
+        "4": 22,
+        "1": 29,
+        "2": 30,
+        "3": 31
+      },
+      "sphere_count": 36,
+      "multidata_sha256": "4c2c30f5f6eabe08d4d78de848815ba050fe684ae2292303b5325e7ab1cd19e4",
+      "jigsaw_apworld_sha256": "2889e4644da4cc67c9ba8501a16a94e95149a183612f690fa92a7a778aa4739b",
+      "physical_constraints": 2311,
+      "reached": 3457,
+      "total": 3457,
+      "remaining": 0,
+      "extra_recovery_items": 0
+    },
+    "C": {
+      "seed": "56771124513727284418",
+      "passed": false,
+      "rules_version": "0.11.35",
+      "goals": {
+        "4": true,
+        "1": false,
+        "2": false,
+        "3": false
+      },
+      "goal_spheres": {
+        "4": 24
+      },
+      "sphere_count": 26,
+      "multidata_sha256": "0fe9ea3bbef188dea4c1206685784630f42230d3c13ad676bcbe8128b27e4c38",
+      "jigsaw_apworld_sha256": "2889e4644da4cc67c9ba8501a16a94e95149a183612f690fa92a7a778aa4739b",
+      "physical_constraints": 2311,
+      "reached": 2158,
+      "total": 3457,
+      "remaining": 1299,
+      "extra_recovery_items": 0
+    }
+  },
+  "correction": "Supersedes the provisional 0.11.34 pass for C. A and C need regeneration for full multiworld access.",
+  "a_cycle": [
+    "Second Open Chest at SFM GS requires Skulltula Soul",
+    "Skulltula Soul at DMC Upper Grotto Grass 4 requires Shovel",
+    "Shovel at Treasure Chest Game Key 4 requires the second Open Chest"
+  ],
+  "limitations": [
+    "Source-derived necessary conditions are audited; untranslated clauses are reported, not certified.",
+    "No connected physical playthrough or exhaustive settings certification."
+  ]
+}

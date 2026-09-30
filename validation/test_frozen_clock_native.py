@@ -1,4 +1,4 @@
-"""Compile the real clock freeze, engine day/night classification and region resets.
+"""Compile the real passive clock freeze, Sun's Song transition and region resets.
 
 Game state and region storage are test adapters. No connected gameplay is simulated.
 """
@@ -11,7 +11,12 @@ r=Path(__file__).resolve().parents[1];out=a.output.resolve();out.mkdir(parents=T
 client=(r/'soh/Network/Archipelago/ArchipelagoClient.cpp').read_text(encoding='utf-8')
 environment=(r/'src/code/z_kankyo.c').read_text(encoding='utf-8')
 regions=(r/'soh/Enhancements/randomizer/location_access.cpp').read_text(encoding='utf-8')
-freeze=function(client,'if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("ShuffleFlowOfTime"), 0) &&')
+freeze=function(client,'extern "C" bool Archipelago_ShouldFreezeTime(void)')
+initialize=function(client,'if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("ShuffleFlowOfTime"), 0))')
+tick=function(environment,'if (!Archipelago_ShouldFreezeTime() ||')
+parameter=(r/'src/code/z_parameter.c').read_text(encoding='utf-8')
+song=function(parameter,'if (play->envCtx.timeIncrement != 0)')
+assert 'Keep Flow of Time frozen' not in client
 classify=function(environment,'if (((void)0, gSaveContext.dayTime) > 0xC000')
 # The extraction helper returns one brace-delimited body; retain the real else
 # branch as well so a previous nightFlag cannot contaminate a daytime case.
@@ -26,15 +31,19 @@ code=r'''
 #include <vector>
 #include <string>
 using u16=uint16_t;
-struct Save {u16 dayTime=0,skyboxTime=0;int nightFlag=0;} gSaveContext;
-bool hasFlow=false,shuffle=true;int preset=1,age=0;
-int dummyPlay=1;int* gPlayState=&dummyPlay;
+enum {SUNSSONG_INACTIVE,SUNSSONG_START,SUNSSONG_SPEED_TIME,OCARINA_MODE_04,GAMEMODE_NORMAL,GAMEMODE_END_CREDITS};
+struct Save {u16 dayTime=0,skyboxTime=0;int nightFlag=0,sunsSongState=SUNSSONG_INACTIVE,gameMode=GAMEMODE_NORMAL;} gSaveContext;
+bool hasFlow=false,shuffle=true,apSave=true;int preset=1,age=0;
+bool Archipelago_IsCurrentSaveFile(){return apSave;}
+struct Play {struct {int timeIncrement=1;} envCtx;struct {int ocarinaMode=0;} msgCtx;} game;
+Play* play=&game;
+u16 gTimeSpeed=10,sPrevTimeSpeed=10;int D_80125B60=0;
+#define IS_DAY (gSaveContext.dayTime>=0x4555&&gSaveContext.dayTime<=0xC000)
 #define CVAR_RANDOMIZER_SETTING(x) x
 bool Flags_GetRandomizerInf(int){return hasFlow;}
 constexpr int RAND_INF_FLOW_OF_TIME=1;
 int CVarGetInteger(const char* key,int fallback){return std::string(key)=="FrozenStartingTime"?preset:shuffle;}
-void FreezeTime(){
-'''+freeze+'\n}\nvoid ClassifyClock(){\n'+classify+r'''
+'''+freeze+'\nvoid InitializeClock(){\n'+initialize+'\n}\nvoid Tick(){\n'+tick+'\n}\nvoid SunSong(){\n'+song+'\n}\nvoid ClassifyClock(){\n'+classify+r'''
 }
 enum RandomizerRegion {RR_ROOT,RR_OTHER};
 using RandomizerCheck=int;
@@ -59,7 +68,7 @@ int tests=0;void ck(bool result){++tests;assert(result);}
 int main(){
  const u16 clocks[]={0x4555,0x8000,0xB555,0x0000};
  for(preset=1;preset<=4;++preset){
-  shuffle=true;hasFlow=false;FreezeTime();ClassifyClock();
+  shuffle=true;hasFlow=false;InitializeClock();ClassifyClock();
   ck(gSaveContext.dayTime==clocks[preset-1]);ck(gSaveContext.skyboxTime==gSaveContext.dayTime);
   ck(bool(gSaveContext.nightFlag)==(preset==4));
   for(age=0;age<2;++age){
@@ -72,8 +81,27 @@ int main(){
     ck(!table[RR_OTHER].childDay&&!table[RR_OTHER].childNight&&!table[RR_OTHER].adultDay&&!table[RR_OTHER].adultNight);
    }
   }
-  hasFlow=true;gSaveContext.dayTime=0xCAFE;FreezeTime();ck(gSaveContext.dayTime==0xCAFE);
-  hasFlow=false;shuffle=false;gSaveContext.dayTime=0xBEEF;FreezeTime();ck(gSaveContext.dayTime==0xBEEF);
+  for(int frame=0;frame<300;++frame)Tick();ck(gSaveContext.dayTime==clocks[preset-1]);
+  // Execute the actual accelerated Sun's Song state machine twice: both
+  // night -> day and day -> night, refreezing after each successful change.
+  for(int use=0;use<2;++use){
+   ClassifyClock();bool wasNight=gSaveContext.nightFlag;
+   gSaveContext.sunsSongState=SUNSSONG_START;int frames=0;
+   do {SunSong();Tick();++frames;} while(gSaveContext.sunsSongState!=SUNSSONG_INACTIVE&&frames<400);
+   ClassifyClock();ck(frames<400);ck(bool(gSaveContext.nightFlag)!=wasNight);
+   u16 frozen=gSaveContext.dayTime;for(int frame=0;frame<300;++frame)Tick();
+   ck(gSaveContext.dayTime==frozen);ck(gTimeSpeed==10);
+  }
+  // Scene-reload song changes and loaded save time are explicit writes; the
+  // passive tick must preserve them instead of resetting to the seed preset.
+  for(auto target:{0,0x8001,0xBEEF}){
+   gSaveContext.dayTime=target;for(int frame=0;frame<30;++frame)Tick();ck(gSaveContext.dayTime==target);
+  }
+  hasFlow=true;gSaveContext.dayTime=0x8000;Tick();ck(gSaveContext.dayTime==0x800A);
+  hasFlow=false;shuffle=false;gSaveContext.dayTime=0x8000;Tick();ck(gSaveContext.dayTime==0x800A);
+  shuffle=true;apSave=false;gSaveContext.dayTime=0x8000;Tick();ck(gSaveContext.dayTime==0x800A);apSave=true;
+  gSaveContext.gameMode=GAMEMODE_END_CREDITS;gSaveContext.dayTime=0x8000;Tick();ck(gSaveContext.dayTime==0x800A);
+  gSaveContext.gameMode=GAMEMODE_NORMAL;
  }
  for(auto clock:{0x4554,0x4555,0xB555,0xC000,0xC001}){
   gSaveContext.dayTime=clock;ClassifyClock();ck(bool(gSaveContext.nightFlag)==(clock<0x4555||clock>0xC000));

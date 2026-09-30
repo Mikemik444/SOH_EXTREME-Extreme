@@ -179,6 +179,15 @@ def create_regions_and_locations(world: "SohWorld") -> None:
     if world.options.shuffle_pots == "dungeon" or world.options.shuffle_pots == "all":
         world.included_locations.update(pots_dungeon_location_table)
 
+    # Added in 0.11.38: old servers never assigned items to these two pots.
+    # UT must reproduce that server's manifest, not add phantom pending checks.
+    if world.using_ut:
+        active = set(world.passthrough.get("extreme_active_locations", ()))
+        for name, address in ((Locations.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT1, 943),
+                              (Locations.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT2, 944)):
+            if address not in active:
+                world.included_locations.pop(name, None)
+
     # Crates (Overworld)
     if world.options.shuffle_crates == "overworld" or world.options.shuffle_crates == "all":
         world.included_locations.update(crates_overworld_location_table)

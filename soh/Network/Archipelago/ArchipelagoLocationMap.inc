@@ -1685,6 +1685,8 @@
     { static_cast<int>(RC_DODONGOS_CAVERN_SIDE_ROOM_POT_2), 940LL }, // Dodongos Cavern Side Room Pot 2
     { static_cast<int>(RC_DODONGOS_CAVERN_SIDE_ROOM_POT_3), 941LL }, // Dodongos Cavern Side Room Pot 3
     { static_cast<int>(RC_DODONGOS_CAVERN_SIDE_ROOM_POT_4), 942LL }, // Dodongos Cavern Side Room Pot 4
+    { static_cast<int>(RC_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT_1), 943LL }, // Dodongos Cavern Near Lizalfos Room Pot 1
+    { static_cast<int>(RC_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT_2), 944LL }, // Dodongos Cavern Near Lizalfos Room Pot 2
     { static_cast<int>(RC_DODONGOS_CAVERN_TORCH_ROOM_POT_1), 945LL }, // Dodongos Cavern Torch Room Pot 1
     { static_cast<int>(RC_DODONGOS_CAVERN_TORCH_ROOM_POT_2), 946LL }, // Dodongos Cavern Torch Room Pot 2
     { static_cast<int>(RC_DODONGOS_CAVERN_TORCH_ROOM_POT_3), 947LL }, // Dodongos Cavern Torch Room Pot 3

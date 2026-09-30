@@ -556,7 +556,8 @@ std::vector<RandomizerCheck> ReachabilitySearch(const std::vector<RandomizerChec
         // shuffled Flow of Time gate after a save/recalculation.
         const bool canAdvanceTime =
             region->timePass &&
-            (!ctx->GetOption(RSK_SHUFFLE_FLOW_OF_TIME) || logic->HasItem(RG_FLOW_OF_TIME));
+            (!ctx->GetOption(RSK_SHUFFLE_FLOW_OF_TIME) || logic->HasItem(RG_FLOW_OF_TIME) ||
+             logic->CanUse(RG_SUNS_SONG));
         if (startingAgeTime == RAT_CHILD_DAY) {
             region->childDay = true;
             region->childNight = canAdvanceTime;

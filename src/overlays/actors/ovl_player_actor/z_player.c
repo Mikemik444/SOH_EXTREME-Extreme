@@ -1,3 +1,4 @@
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 /*
  * File: z_player.c
  * Overlay: ovl_player_actor
@@ -7345,8 +7346,15 @@ s32 Player_ActionHandler_2(Player* this, PlayState* play) {
                 uint8_t skipItemCutsceneRando = IS_RANDO && giEntry.modIndex == MOD_NONE &&
                                                 Item_CheckObtainability(giEntry.itemId) != ITEM_NONE && isDropToSkip;
 
-                // Show cutscene when picking up a item.
-                if (showItemCutscene && !skipItemCutscene && !skipItemCutsceneRando) {
+                // AP progression keeps its overhead presentation even when Fast
+                // Pickup Text is enabled for ordinary rock/bush/enemy refills.
+                const bool apImportantItem = Archipelago_IsCurrentSaveFile() &&
+                    (giEntry.getItemCategory == ITEM_CATEGORY_MAJOR ||
+                     giEntry.getItemCategory == ITEM_CATEGORY_SMALL_KEY ||
+                     giEntry.getItemCategory == ITEM_CATEGORY_BOSS_KEY);
+
+                // Show cutscene when picking up an item.
+                if (showItemCutscene && (apImportantItem || (!skipItemCutscene && !skipItemCutsceneRando))) {
 
                     Player_DetachHeldActor(play, this);
                     func_8083AE40(this, giEntry.objectId);

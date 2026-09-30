@@ -518,6 +518,15 @@ void Rando::StaticData::InitItemTable() {
     itemTable[RG_AP_REMOTE_NORMAL].SetCustomDrawFunc(Randomizer_DrawArchipelagoItem);
 
     // Mega Randomizer progression items. Reuse the bean icon so they work without adding new asset files.
+    itemTable[RG_AP_SONG_NOTE] = Item(RG_AP_SONG_NOTE, Text{ "Song Note" }, ITEMTYPE_ITEM,
+        RG_AP_SONG_NOTE, true, LOGIC_NONE, RHT_NONE, RG_AP_SONG_NOTE, OBJECT_GI_MELODY,
+        GID_SONG_TIME, TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_LONG,
+        ITEM_CATEGORY_MAJOR, MOD_RANDOMIZER);
+    // Flow of Time is its own ability: use the time-themed model without granting Sun's Song.
+    itemTable[RG_FLOW_OF_TIME] = Item(RG_FLOW_OF_TIME, Text{ "Flow of Time" }, ITEMTYPE_ITEM,
+        RG_FLOW_OF_TIME, true, LOGIC_NONE, RHT_NONE, RG_FLOW_OF_TIME, OBJECT_GI_MELODY,
+        GID_SONG_SUN, TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_LONG,
+        ITEM_CATEGORY_MAJOR, MOD_RANDOMIZER);
     itemTable[RG_ROLL] =                                Item(RG_ROLL, Text{ "Roll" }, ITEMTYPE_ITEM, 0xE0, true, LOGIC_NONE, RHT_BEAN_SOUL, RG_ROLL, OBJECT_GI_BEAN, GID_BEAN, TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_LONG, ITEM_CATEGORY_MAJOR, MOD_RANDOMIZER).CustomIcon(gItemIconMagicBeanTex);
     itemTable[RG_ENEMY_SOUL] =                          Item(RG_ENEMY_SOUL, Text{ "Enemy Soul" }, ITEMTYPE_ITEM, 0xE0, true, LOGIC_NONE, RHT_BEAN_SOUL, RG_ENEMY_SOUL, OBJECT_GI_SUTARU, GID_SKULL_TOKEN, TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_LONG, ITEM_CATEGORY_MAJOR, MOD_RANDOMIZER).CustomIcon(gBossSoulTex);
     itemTable[RG_NPC_SOUL] =                            Item(RG_NPC_SOUL, Text{ "NPC Soul" }, ITEMTYPE_ITEM, 0xE0, true, LOGIC_NONE, RHT_BEAN_SOUL, RG_NPC_SOUL, OBJECT_GI_SUTARU, GID_SKULL_TOKEN, TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_LONG, ITEM_CATEGORY_MAJOR, MOD_RANDOMIZER).CustomIcon(gBossSoulTex);

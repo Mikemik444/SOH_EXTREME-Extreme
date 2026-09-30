@@ -65,7 +65,10 @@ for mode in ('individual_animals','all_animals_as_1','off'):
 for phase in ('day','night'):
     m=setup(290938,overrides=dict(common,shuffle_flow_of_time=True,frozen_starting_time=phase),stop_before='pre_fill'); w=m.worlds[1]
     evaluate=tracker(w,a.ut_core)
-    base=[it.name for it in m.itempool if it.name not in ('Flow of Time','Song of Time','Prelude of Light')]
+    # This negative control has no way to change time. Usable Sun's Song is now
+    # a valid alternative to Flow, tested independently by test_sun_time_logic.
+    unavailable={'Flow of Time','Song of Time','Prelude of Light',"Sun's Song",*w.SONG_NOTE_GROUPS["Sun's Song"]}
+    base=[it.name for it in m.itempool if it.name not in unavailable]
     for flow in (False,True):
         result=evaluate(base+(['Flow of Time'] if flow else [])); day=phase=='day' or flow
         for i in range(1,4):

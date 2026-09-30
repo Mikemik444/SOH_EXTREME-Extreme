@@ -279,6 +279,7 @@ constexpr int64_t AP_LAST_SONG_NOTE = 9500093;
 // 9.2.3-based world. This is the same numbering used by Items.py.
 constexpr int64_t AP_BASE_ITEM_MIN = 1;
 constexpr int64_t AP_BASE_ITEM_MAX = 276;
+constexpr int64_t AP_ITEM_PROGRESSIVE_WALLET = 44;
 
 static void SetQuestSong(int quest) {
     gSaveContext.inventory.questItems |= (1u << quest);
@@ -301,7 +302,7 @@ static RandomizerGet MapApItemNameToRandomizerGet(const std::string& itemName) {
     // All 74 SOH-EXTREME Song Notes intentionally share one physical display model.
     // Their actual reward is still the exact AP note ID handled by ProcessItem().
     if (itemName.rfind("Song Note", 0) == 0) {
-        return RG_SONG_OF_TIME;
+        return RG_AP_SONG_NOTE;
     }
 
     return RG_NONE;
@@ -340,6 +341,44 @@ static RandomizerGet GetIceTrapDisguise(int64_t apLocation) {
         kMajorDisguises[x % (sizeof(kMajorDisguises) / sizeof(kMajorDisguises[0]))];
     RandomizerGet display = MapApItemNameToRandomizerGet(fakeName);
     return display != RG_NONE ? display : RG_PROGRESSIVE_HOOKSHOT;
+}
+
+struct SongNotes { const char* name; int count; int quest; };
+static constexpr SongNotes kApSongNotes[] = {
+        {"Zelda's Lullaby", 6, QUEST_SONG_LULLABY},
+        {"Epona's Song", 6, QUEST_SONG_EPONA},
+        {"Saria's Song", 6, QUEST_SONG_SARIA},
+        {"Sun's Song", 6, QUEST_SONG_SUN},
+        {"Song of Time", 6, QUEST_SONG_TIME},
+        {"Song of Storms", 6, QUEST_SONG_STORMS},
+        {"Minuet of Forest", 6, QUEST_SONG_MINUET},
+        {"Bolero of Fire", 8, QUEST_SONG_BOLERO},
+        {"Serenade of Water", 5, QUEST_SONG_SERENADE},
+        {"Requiem of Spirit", 6, QUEST_SONG_REQUIEM},
+        {"Nocturne of Shadow", 7, QUEST_SONG_NOCTURNE},
+        {"Prelude of Light", 6, QUEST_SONG_PRELUDE},
+    };
+
+static std::string BuildApSongNotePickupDescription(int64_t itemId) {
+    if (itemId < AP_FIRST_SONG_NOTE || itemId > AP_LAST_SONG_NOTE) return {};
+    const int note = static_cast<int>(itemId - AP_FIRST_SONG_NOTE);
+    int offset = 0;
+    for (const auto& song : kApSongNotes) {
+        if (note < offset + song.count) {
+            int collected = 0;
+            for (int i = 0; i < song.count; ++i) {
+                // The textbox opens before the receipt callback. Include this
+                // pickup once, even if the server sends an already-owned note.
+                if (offset + i == note || Flags_GetRandomizerInf(
+                        static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + offset + i))) ++collected;
+            }
+            return "You found a %g" + std::string(song.name) + "%w note!&Notes: %y" +
+                std::to_string(collected) + "/" + std::to_string(song.count) + "%w" +
+                (collected == song.count ? " - Song complete!" : ".");
+        }
+        offset += song.count;
+    }
+    return {};
 }
 
 static std::string GetApItemDisplayName(int64_t itemId) {
@@ -590,7 +629,7 @@ void ArchipelagoClient::RegisterCallbacks() {
         auto& client = ArchipelagoClient::GetInstance();
         for (const auto& item : locations) {
             client.QueueLocationInfo(item.location, item.item, item.player, item.flags, item.itemName, item.playerName,
-                                     item.locationName);
+                                     item.locationName, item.itemGame);
         }
     });
 
@@ -1200,6 +1239,7 @@ static bool ApplyExtremePersistentApItem(int64_t apItemId) {
         case AP_ITEM_GRAB: Flags_SetRandomizerInf(RAND_INF_CAN_GRAB); return true;
         case AP_ITEM_CLIMB: Flags_SetRandomizerInf(RAND_INF_CAN_CLIMB); return true;
         case AP_ITEM_CRAWL: Flags_SetRandomizerInf(RAND_INF_CAN_CRAWL); return true;
+        case AP_ITEM_FLOW_OF_TIME: Flags_SetRandomizerInf(RAND_INF_FLOW_OF_TIME); return true;
         case AP_ITEM_SPEAK:
             Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_DEKU);
             Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_GERUDO);
@@ -1308,48 +1348,27 @@ void ArchipelagoClient::FinalizeMajorItemReceipt(int modIndex, int itemId, int g
     const uint64_t sequence = awaitingMajorSequence;
     const int64_t apItemId = awaitingMajorApItemId;
 
-    // SOH-EXTREME 0.7.55: make the AP receive path authoritative for every custom
-    // persistent ability/soul.  Native Randomizer_Item_Give normally sets these,
-    // but AP get-item presentation used to leave some custom RandomizerInf flags
-    // unset.  Apply them ONLY after OnItemReceive, so a death during the animation
-    // cannot consume the AP queue entry or persist a half-received progression item.
-    switch (apItemId) {
-        case AP_ITEM_ROLL: Flags_SetRandomizerInf(RAND_INF_HAS_ROLL); break;
-        case AP_ITEM_GRAB: Flags_SetRandomizerInf(RAND_INF_CAN_GRAB); break;
-        case AP_ITEM_CLIMB: Flags_SetRandomizerInf(RAND_INF_CAN_CLIMB); break;
-        case AP_ITEM_CRAWL: Flags_SetRandomizerInf(RAND_INF_CAN_CRAWL); break;
-        case AP_ITEM_SPEAK:
-            Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_DEKU);
-            Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_GERUDO);
-            Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_GORON);
-            Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_HYLIAN);
-            Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_KOKIRI);
-            Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_ZORA);
-            break;
-        case AP_ITEM_ENEMY_SOUL: Flags_SetRandomizerInf(RAND_INF_ENEMY_SOUL); break;
-        case AP_ITEM_NPC_SOUL: Flags_SetRandomizerInf(RAND_INF_NPC_SOUL); break;
-        case AP_ITEM_ANIMAL_SOUL: Flags_SetRandomizerInf(RAND_INF_ANIMAL_SOUL); break;
-        case AP_ITEM_POT_SOUL: Flags_SetRandomizerInf(RAND_INF_POT_SOUL); break;
-        case AP_ITEM_CRATE_SOUL: Flags_SetRandomizerInf(RAND_INF_CRATE_SOUL); break;
-        case AP_ITEM_GRASS_SOUL: Flags_SetRandomizerInf(RAND_INF_GRASS_SOUL); break;
-        case AP_ITEM_ROCK_SOUL: Flags_SetRandomizerInf(RAND_INF_ROCK_SOUL); break;
-        case AP_ITEM_TREE_SOUL: Flags_SetRandomizerInf(RAND_INF_TREE_SOUL); break;
-        case AP_ITEM_BEEHIVE_SOUL: Flags_SetRandomizerInf(RAND_INF_BEEHIVE_SOUL); break;
-        case AP_ITEM_SIGN_SOUL: Flags_SetRandomizerInf(RAND_INF_SIGN_SOUL); break;
-        case AP_ITEM_SKULLTULA_SOUL: Flags_SetRandomizerInf(RAND_INF_SKULLTULA_SOUL); break;
-        case AP_ITEM_BUSINESS_SCRUB_SOUL: Flags_SetRandomizerInf(RAND_INF_BUSINESS_SCRUB_SOUL); break;
-        case AP_ITEM_SHOVEL: Flags_SetRandomizerInf(RAND_INF_HAS_SHOVEL); break;
-        case AP_ITEM_DMC_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_DEATH_MOUNTAIN_CRATER_BEAN_SOUL); break;
-        case AP_ITEM_DMT_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL); break;
-        case AP_ITEM_COLOSSUS_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_DESERT_COLOSSUS_BEAN_SOUL); break;
-        case AP_ITEM_GV_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_GERUDO_VALLEY_BEAN_SOUL); break;
-        case AP_ITEM_GRAVEYARD_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_GRAVEYARD_BEAN_SOUL); break;
-        case AP_ITEM_KF_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_KOKIRI_FOREST_BEAN_SOUL); break;
-        case AP_ITEM_LH_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_LAKE_HYLIA_BEAN_SOUL); break;
-        case AP_ITEM_LW_BRIDGE_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_LOST_WOODS_BRIDGE_BEAN_SOUL); break;
-        case AP_ITEM_LW_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_LOST_WOODS_BEAN_SOUL); break;
-        case AP_ITEM_ZR_BEAN_SOUL: Flags_SetRandomizerInf(RAND_INF_ZORAS_RIVER_BEAN_SOUL); break;
-        default: break;
+    // Native grants have completed. Verify idempotent custom progression here,
+    // never when the engine has merely accepted a get-item offer.
+    if (ApplyExtremePersistentApItem(apItemId)) {
+        const auto rg = static_cast<RandomizerGet>(getItemId);
+        auto flag = Rando::StaticData::RandoGetToRandInf.find(rg);
+        if (flag != Rando::StaticData::RandoGetToRandInf.end() &&
+            !Flags_GetRandomizerInf(static_cast<RandomizerInf>(flag->second))) return;
+    }
+
+    if (apItemId >= AP_FIRST_SONG_NOTE && apItemId <= AP_LAST_SONG_NOTE) {
+        const auto flag = static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + apItemId - AP_FIRST_SONG_NOTE);
+        Flags_SetRandomizerInf(flag);
+        if (!Flags_GetRandomizerInf(flag)) return;
+        RefreshSongNotes();
+    }
+
+    if (apItemId == AP_ITEM_PROGRESSIVE_WALLET && RAND_GET_OPTION(RSK_FULL_WALLETS).Get()) {
+        // The native grant has installed the new capacity. Finish the fill now,
+        // including repeat/capped wallets, without a delayed rupee accumulator.
+        gSaveContext.rupees = static_cast<s16>(CUR_CAPACITY(UPG_WALLET));
+        gSaveContext.rupeeAccumulator = 0;
     }
 
     awaitingMajorItemReceipt = false;
@@ -1444,7 +1463,7 @@ void ArchipelagoClient::QueueCheckedLocation(int64_t locationId) {
 
 void ArchipelagoClient::QueueLocationInfo(int64_t locationId, int64_t itemId, int playerId, int flags,
                                           const std::string& itemName, const std::string& playerName,
-                                          const std::string& locationName) {
+                                          const std::string& locationName, const std::string& itemGame) {
     std::scoped_lock lock(queueMutex);
     PendingScout scout;
     scout.locationId = locationId;
@@ -1454,6 +1473,7 @@ void ArchipelagoClient::QueueLocationInfo(int64_t locationId, int64_t itemId, in
     scout.info.itemName = itemName;
     scout.info.playerName = playerName;
     scout.info.locationName = locationName;
+    scout.info.itemGame = itemGame;
     pendingScouts.push_back(std::move(scout));
 }
 
@@ -1475,7 +1495,7 @@ int32_t ArchipelagoClient::MapApItemToRandomizerGet(int64_t itemId) const {
         case AP_ITEM_GRAB: randoGet = RG_POWER_BRACELET; break;
         case AP_ITEM_CLIMB: randoGet = RG_CLIMB; break;
         case AP_ITEM_CRAWL: randoGet = RG_CRAWL; break;
-        case AP_ITEM_SPEAK: randoGet = RG_NPC_SOUL; break; // visual stand-in for flag-only Speak
+        case AP_ITEM_SPEAK: randoGet = RG_SPEAK_HYLIAN; break;
         case AP_ITEM_OPEN_CHEST: randoGet = RG_OPEN_CHEST; break;
         case AP_ITEM_ENEMY_SOUL: randoGet = RG_ENEMY_SOUL; break;
         case AP_ITEM_NPC_SOUL: randoGet = RG_NPC_SOUL; break;
@@ -1490,7 +1510,7 @@ int32_t ArchipelagoClient::MapApItemToRandomizerGet(int64_t itemId) const {
         case AP_ITEM_SKULLTULA_SOUL: randoGet = RG_SKULLTULA_SOUL; break;
         case AP_ITEM_BUSINESS_SCRUB_SOUL: randoGet = RG_BUSINESS_SCRUB_SOUL; break;
         case AP_ITEM_SHOVEL: randoGet = RG_SHOVEL; break;
-        case AP_ITEM_FLOW_OF_TIME: randoGet = RG_SUNS_SONG; break; // time-themed visual
+        case AP_ITEM_FLOW_OF_TIME: randoGet = RG_FLOW_OF_TIME; break;
         case AP_ITEM_DMC_BEAN_SOUL: randoGet = RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL; break;
         case AP_ITEM_DMT_BEAN_SOUL: randoGet = RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL; break;
         case AP_ITEM_COLOSSUS_BEAN_SOUL: randoGet = RG_DESERT_COLOSSUS_BEAN_SOUL; break;
@@ -1585,7 +1605,7 @@ int32_t ArchipelagoClient::MapApItemToRandomizerGet(int64_t itemId) const {
         case AP_ITEM_GANONS_CASTLE_MQ_SILVER_SHADOW: randoGet = RG_GANONS_CASTLE_MQ_SILVER_SHADOW; break;
         default:
             if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
-                randoGet = RG_SONG_OF_TIME; // note-family visual; reward remains exact note flag
+                randoGet = RG_AP_SONG_NOTE; // presentation only; receipt grants the exact note flag
             }
             break;
     }
@@ -2401,6 +2421,7 @@ void ArchipelagoClient::DrainMessages() {
 }
 
 void ArchipelagoClient::ResetRemotePresentations() {
+    songNotePickupDescription.clear();
     remotePresentations.clear();
     presentedRemoteLocations.clear();
     remotePickupDescription.clear();
@@ -2502,6 +2523,25 @@ void ArchipelagoClient::EnsureLocationScouts() {
     DrainSlotData();
     RequestLocationScouts();
 }
+
+int32_t ArchipelagoClient::GetLocationDisplayItem(int64_t locationId) const {
+    // AP-only enemy checks have no native RC/ItemLocation. Read the game-thread
+    // scout snapshot directly, without inventing a native check or local grant.
+    if (!IsGameplaySessionActive()) return RG_AP_REMOTE_IMPORTANT;
+    const auto scout = scoutedLocations.find(locationId);
+    if (scout == scoutedLocations.end()) return RG_AP_REMOTE_IMPORTANT;
+    const auto& info = scout->second;
+    // Names and numeric IDs overlap between games. Only the recipient's game
+    // (or our own slot) can authorize interpreting them as SOH-EXTREME items.
+    if (info.playerId != AP_GetPlayerID() && info.itemGame != "SOH-EXTREME") {
+        return GetRemoteArchipelagoDisplay(info.flags);
+    }
+    RandomizerGet display = MapApItemNameToRandomizerGet(info.itemName);
+    if (display == RG_NONE) display = static_cast<RandomizerGet>(MapApItemToRandomizerGet(info.itemId));
+    if (display == RG_ICE_TRAP || info.itemName == "Ice Trap") display = GetIceTrapDisguise(locationId);
+    return display != RG_NONE ? display : GetRemoteArchipelagoDisplay(info.flags);
+}
+
 void ArchipelagoClient::RefreshPlacementForCheck(int32_t randomizerCheck) {
     // Actor draw/drop code can ask for a GetItemEntry long after the initial AP
     // placement reconciliation.  Always make the scouted AP placement authoritative
@@ -2646,6 +2686,7 @@ void ArchipelagoClient::ApplyScoutedPlacements() {
 }
 
 bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t sequence) {
+    if (awaitingMajorItemReceipt) return false;
     if (gPlayState == nullptr) {
         SPDLOG_DEBUG("[Archipelago] Deferring item {} until a save is loaded", itemId);
         return false;
@@ -2794,38 +2835,11 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         case AP_ITEM_SPIRIT_MQ_SILVER_BIG_WALL: randoGet = RG_SPIRIT_MQ_SILVER_BIG_WALL; break;
         case AP_ITEM_GANONS_CASTLE_MQ_SILVER_WATER: randoGet = RG_GANONS_CASTLE_MQ_SILVER_WATER; break;
         case AP_ITEM_GANONS_CASTLE_MQ_SILVER_SHADOW: randoGet = RG_GANONS_CASTLE_MQ_SILVER_SHADOW; break;
-            case AP_ITEM_FLOW_OF_TIME:
-                Flags_SetRandomizerInf(RAND_INF_FLOW_OF_TIME);
-                if (!Flags_GetRandomizerInf(RAND_INF_FLOW_OF_TIME)) {
-                    SPDLOG_ERROR("[Archipelago] Flow of Time failed persistence verification; retrying");
-                    return false;
-                }
-                if (!historicalNewSaveReplay) {
-                    Notification::Emit({ .prefix = "Archipelago", .message = "received", .suffix = "Flow of Time",
-                                         .remainingTime = 4.0f });
-                }
-                return true;
+            case AP_ITEM_FLOW_OF_TIME: randoGet = RG_FLOW_OF_TIME; break;
             default:
                 if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
-                    int noteIndex = static_cast<int>(itemId - AP_FIRST_SONG_NOTE);
-                    const RandomizerInf noteFlag =
-                        static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + noteIndex);
-                    Flags_SetRandomizerInf(noteFlag);
-                    if (!Flags_GetRandomizerInf(noteFlag)) {
-                        SPDLOG_ERROR("[Archipelago] Song Note {} failed persistence verification; retrying",
-                                     noteIndex + 1);
-                        return false;
-                    }
-                    RefreshSongNotes();
-                    if (!historicalNewSaveReplay) {
-                        Notification::Emit({
-                            .prefix = "Archipelago",
-                            .message = "received",
-                            .suffix = "Song Note " + std::to_string(noteIndex + 1),
-                            .remainingTime = 3.0f,
-                        });
-                    }
-                    return true;
+                    randoGet = RG_AP_SONG_NOTE;
+                    break;
                 }
                 SPDLOG_WARN("[Archipelago] Unknown SOH-EXTREME item id {}", itemId);
                 return true;
@@ -2873,12 +2887,29 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
     }
 
     auto item = Rando::StaticData::RetrieveItem(randoGet);
-    GetItemEntry giEntry = item.GetGIEntry_Copy();
+    GetItemEntry giEntry;
+    if (randoGet == RG_PROGRESSIVE_WALLET && !historicalNewSaveReplay) {
+        // Choose the overhead model from the real save, never the check finder's
+        // simulated inventory. Let that native item grant exactly one tier.
+        const int level = CUR_UPG_VALUE(UPG_WALLET);
+        const bool tycoon = RAND_GET_OPTION(RSK_INCLUDE_TYCOON_WALLET).Get();
+        RandomizerGet wallet = RG_CHILD_WALLET;
+        if (Flags_GetRandomizerInf(RAND_INF_HAS_WALLET)) {
+            if (level == 0) wallet = RG_ADULT_WALLET;
+            else if (level == 1) wallet = RG_GIANT_WALLET;
+            else if (level == 2 && tycoon) wallet = RG_TYCOON_WALLET;
+            else if (RAND_GET_OPTION(RSK_INFINITE_UPGRADES).IsNot(RO_INF_UPGRADES_OFF)) wallet = RG_WALLET_INF;
+            else wallet = tycoon ? RG_TYCOON_WALLET : RG_GIANT_WALLET;
+        }
+        giEntry = Rando::StaticData::RetrieveItem(wallet).GetGIEntry_Copy();
+    } else {
+        giEntry = item.GetGIEntry_Copy();
+    }
 
     // These rewards must behave identically during live delivery and historical
     // replay. Neither path relies on the native local-check animation hook.
-    if (randoGet == RG_GOLD_SKULLTULA_TOKEN || randoGet == RG_PIECE_OF_HEART ||
-        randoGet == RG_HEART_CONTAINER) {
+    if ((randoGet == RG_GOLD_SKULLTULA_TOKEN && (historicalNewSaveReplay || !item.IsMajorItem())) ||
+        randoGet == RG_PIECE_OF_HEART || randoGet == RG_HEART_CONTAINER) {
         if (giEntry.itemId == ITEM_NONE) return false;
         Item_Give(gPlayState, static_cast<uint8_t>(giEntry.itemId));
         if (randoGet == RG_PIECE_OF_HEART || randoGet == RG_HEART_CONTAINER) {
@@ -2900,7 +2931,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         return true;
     }
 
-    if (randoGet == RG_PROGRESSIVE_WALLET) {
+    if (randoGet == RG_PROGRESSIVE_WALLET && historicalNewSaveReplay) {
         // Resolve from the live save, not the check finder's simulated inventory.
         const int level = CUR_UPG_VALUE(UPG_WALLET);
         const int maxLevel = RAND_GET_OPTION(RSK_INCLUDE_TYCOON_WALLET).Get() ? 3 : 2;
@@ -2928,6 +2959,13 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
     // major item can leave the first session effectively locked in item presentation
     // for minutes. Apply historical rewards directly and silently instead.
     if (historicalNewSaveReplay) {
+        if (randoGet == RG_AP_SONG_NOTE) {
+            const auto flag = static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + itemId - AP_FIRST_SONG_NOTE);
+            Flags_SetRandomizerInf(flag);
+            if (!Flags_GetRandomizerInf(flag)) return false;
+            RefreshSongNotes();
+            return true;
+        }
         if (ApplyExtremePersistentApItem(itemId)) {
             return true;
         }
@@ -2940,39 +2978,6 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
             SPDLOG_WARN("[Archipelago] Historical AP item {} ({}) has no direct give path; treating as consumed",
                         itemId, item.GetName().english);
         }
-        return true;
-    }
-
-    // Open Chest is a pure randomizer progression flag.  Do not defer it to the
-    // over-the-head major-item animation path: AP can mark the network item as
-    // received before that animation finishes, leaving generation/tracker state
-    // ahead of the actual save flag.  Apply it synchronously here.
-    //
-    // Randomizer_Item_Give already implements progressive semantics:
-    //   first copy  -> RAND_INF_CAN_OPEN_CHEST
-    //   second copy -> RAND_INF_CAN_OPEN_LARGE_CHEST
-    if (randoGet == RG_OPEN_CHEST) {
-        const bool beforeSmallChest = Flags_GetRandomizerInf(RAND_INF_CAN_OPEN_CHEST);
-        const bool beforeLargeChest = Flags_GetRandomizerInf(RAND_INF_CAN_OPEN_LARGE_CHEST);
-        SPDLOG_INFO("[Archipelago] Applying Open Chest immediately (small={}, large={})",
-                    beforeSmallChest, beforeLargeChest);
-        Randomizer_Item_Give(gPlayState, giEntry);
-        const bool afterSmallChest = Flags_GetRandomizerInf(RAND_INF_CAN_OPEN_CHEST);
-        const bool afterLargeChest = Flags_GetRandomizerInf(RAND_INF_CAN_OPEN_LARGE_CHEST);
-        SPDLOG_INFO("[Archipelago] Open Chest applied (small={}, large={})",
-                    afterSmallChest, afterLargeChest);
-        const bool capped = afterSmallChest &&
-            (afterLargeChest || !RAND_GET_OPTION(RSK_SHUFFLE_OPEN_CHEST).Is(RO_OPEN_CHEST_PROGRESSIVE));
-        if (afterSmallChest == beforeSmallChest && afterLargeChest == beforeLargeChest && !capped) {
-            SPDLOG_ERROR("[Archipelago] Open Chest state did not advance; retrying");
-            return false;
-        }
-        Notification::Emit({
-            .prefix = "Archipelago",
-            .message = "received",
-            .suffix = item.GetName().english,
-            .remainingTime = 4.0f,
-        });
         return true;
     }
 
@@ -3043,38 +3048,12 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         return false;
     }
 
-    // Overworld building keys are one-shot RandomizerInf flags. They are not
-    // consumable dungeon key counters, and setting their flag twice is harmless.
-    // Some of these custom randomizer get-item entries can fail to produce the
-    // OnItemReceive completion that the generic AP transaction waits for, leaving
-    // the entire receive queue stuck until reload.
-    //
-    // Keep their normal hold animation, but commit the AP queue as soon as the
-    // animation successfully starts and set the persistent key flag ourselves.
-    const bool isOverworldDoorKey =
-        randoGet >= RG_GUARD_HOUSE_KEY && randoGet <= RG_FISHING_HOLE_KEY;
-
-    // Adult-trade progression from Cojiro through Claim Check is also represented
-    // by persistent RandomizerInf flags in SOH-EXTREME. These items can play a
-    // perfectly valid hold animation without reliably producing the generic
-    // OnItemReceive completion AP was waiting on (Poacher's Saw reproduced this).
-    const bool isAdultTradeFlagItem =
-        randoGet >= RG_COJIRO && randoGet <= RG_CLAIM_CHECK;
-
-    const bool isImmediateFlagMajor = isOverworldDoorKey || isAdultTradeFlagItem;
-
-    // Custom SOH-EXTREME abilities/souls use a synchronous persistence path below.
-    // Other base-game major items (dungeon keys, boss keys, equipment, etc.) use
-    // OnItemReceive as the transaction commit point.
-    //
-    // CRITICAL: arm the transaction BEFORE GiveItemEntryWithoutActor().
-    //
-    // Some vanilla major items can invoke OnItemReceive synchronously from inside
-    // GiveItemEntryWithoutActor(). The old order armed awaitingMajorItemReceipt only
-    // AFTER the give call returned, so that callback was missed. The code then set
-    // awaitingMajorItemReceipt=true after the only completion callback had already
-    // happened, permanently blocking every later AP reward until the save reloaded.
-    const bool transactionalBaseMajor = !isExtremeProgression && !isImmediateFlagMajor;
+    // Every live major receipt must survive the actual engine grant. Merely
+    // offering getItemEntry is not an animation or a receipt: another actor,
+    // a trap or a scene transition can replace that offer before Link handles it.
+    // Flag-backed souls/abilities/door keys use Return_Item_Entry just like other
+    // randomizer items. Arm BEFORE the give so synchronous callbacks count too.
+    const bool transactionalBaseMajor = true;
     if (transactionalBaseMajor) {
         awaitingMajorItemReceipt = true;
         awaitingMajorSequence = sequence;
@@ -3083,6 +3062,10 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         awaitingMajorItemId = static_cast<int>(giEntry.itemId);
         awaitingMajorGetItemId = static_cast<int>(giEntry.getItemId);
         gAwaitingMajorFrames = 0;
+    }
+
+    if (randoGet == RG_AP_SONG_NOTE) {
+        songNotePickupDescription = BuildApSongNotePickupDescription(itemId);
     }
 
     if (!GiveItemEntryWithoutActor(gPlayState, giEntry)) {
@@ -3101,74 +3084,6 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
 
         SPDLOG_DEBUG("[Archipelago] Link cannot receive major item {} yet; retrying", itemId);
         return false;
-    }
-
-    // Flag-backed majors are idempotent progression state. Apply their RandomizerInf
-    // immediately after the hold animation starts so a missing OnItemReceive callback
-    // cannot wedge the entire AP queue. This covers overworld building keys and the
-    // adult-trade chain (Cojiro -> Claim Check, including Poacher's Saw).
-    if (isImmediateFlagMajor) {
-        auto randInfIt = Rando::StaticData::RandoGetToRandInf.find(randoGet);
-        if (randInfIt != Rando::StaticData::RandoGetToRandInf.end()) {
-            const RandomizerInf expectedFlag = static_cast<RandomizerInf>(randInfIt->second);
-            Flags_SetRandomizerInf(expectedFlag);
-            if (!Flags_GetRandomizerInf(expectedFlag)) {
-                SPDLOG_ERROR("[Archipelago] Flag-backed major {} failed persistence verification; retrying",
-                             static_cast<int>(randoGet));
-                return false;
-            }
-        } else {
-            SPDLOG_ERROR("[Archipelago] Flag-backed major {} had no RandomizerInf mapping; retrying",
-                         static_cast<int>(randoGet));
-            return false;
-        }
-
-        SPDLOG_INFO("[Archipelago] Flag-backed major {} verified in persistent state",
-                    static_cast<int>(randoGet));
-        Notification::Emit({
-            .prefix = "Archipelago",
-            .message = "received",
-            .suffix = GetApItemDisplayName(itemId),
-            .remainingTime = 4.0f,
-        });
-        return true;
-    }
-
-    // Custom SOH-EXTREME abilities/souls are pure RandomizerInf state. Some of
-    // their synthetic get-item entries do not emit OnItemReceive at all, so keep
-    // their existing synchronous persistence/commit behavior.
-    const uint64_t extremeDigestBefore = CaptureApPersistentGrantDigest();
-    if (ApplyExtremePersistentApItem(itemId)) {
-        bool verified = CaptureApPersistentGrantDigest() != extremeDigestBefore;
-
-        auto randInfIt = Rando::StaticData::RandoGetToRandInf.find(randoGet);
-        if (!verified && randInfIt != Rando::StaticData::RandoGetToRandInf.end()) {
-            verified = Flags_GetRandomizerInf(static_cast<RandomizerInf>(randInfIt->second));
-        }
-
-        if (!verified && itemId == AP_ITEM_SPEAK) {
-            verified =
-                Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_DEKU) &&
-                Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_GERUDO) &&
-                Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_GORON) &&
-                Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_HYLIAN) &&
-                Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_KOKIRI) &&
-                Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_ZORA);
-        }
-
-        if (!verified) {
-            SPDLOG_ERROR("[Archipelago] Custom major item {} failed persistence verification; retrying", itemId);
-            return false;
-        }
-
-        SPDLOG_INFO("[Archipelago] Custom major item {} verified in persistent state", itemId);
-        Notification::Emit({
-            .prefix = "Archipelago",
-            .message = "received",
-            .suffix = GetApItemDisplayName(itemId),
-            .remainingTime = 4.0f,
-        });
-        return true;
     }
 
     // If OnItemReceive fired synchronously inside GiveItemEntryWithoutActor(),
@@ -3232,24 +3147,10 @@ void ArchipelagoClient::SendTrapLink(const std::string& trapName) {
 }
 
 void ArchipelagoClient::RefreshSongNotes() {
-    struct SongNotes { const char* name; int count; int quest; };
-    static constexpr SongNotes songs[] = {
-        {"Zelda's Lullaby", 6, QUEST_SONG_LULLABY},
-        {"Epona's Song", 6, QUEST_SONG_EPONA},
-        {"Saria's Song", 6, QUEST_SONG_SARIA},
-        {"Sun's Song", 6, QUEST_SONG_SUN},
-        {"Song of Time", 6, QUEST_SONG_TIME},
-        {"Song of Storms", 6, QUEST_SONG_STORMS},
-        {"Minuet of Forest", 6, QUEST_SONG_MINUET},
-        {"Bolero of Fire", 8, QUEST_SONG_BOLERO},
-        {"Serenade of Water", 5, QUEST_SONG_SERENADE},
-        {"Requiem of Spirit", 6, QUEST_SONG_REQUIEM},
-        {"Nocturne of Shadow", 7, QUEST_SONG_NOCTURNE},
-        {"Prelude of Light", 6, QUEST_SONG_PRELUDE},
-    };
+
 
     int offset = 0;
-    for (const auto& song : songs) {
+    for (const auto& song : kApSongNotes) {
         int collected = 0;
         for (int i = 0; i < song.count; ++i) {
             if (HasNote(RAND_INF_SONG_NOTE_0, offset + i)) ++collected;
@@ -3691,15 +3592,6 @@ void ArchipelagoClient::Update() {
 
     UpdateGoal();
 
-    // Keep Flow of Time frozen until its progression item is received.
-    if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("ShuffleFlowOfTime"), 0) &&
-        !Flags_GetRandomizerInf(RAND_INF_FLOW_OF_TIME) && gPlayState != nullptr) {
-        static constexpr u16 kTimes[] = { 0x4555, 0x8000, 0xB555, 0x0000 };
-        int selected = CVarGetInteger(CVAR_RANDOMIZER_SETTING("FrozenStartingTime"), 1);
-        if (selected <= 0 || selected > 4) selected = 1;
-        gSaveContext.dayTime = kTimes[selected - 1];
-        gSaveContext.skyboxTime = gSaveContext.dayTime;
-    }
 }
 
 void ArchipelagoClient::SyncCollectedLocations() {
@@ -4337,6 +4229,14 @@ extern "C" bool Archipelago_IsCurrentSaveFile(void) {
     return ArchipelagoClient::GetInstance().IsCurrentSaveArchipelago();
 }
 
+extern "C" bool Archipelago_ShouldFreezeTime(void) {
+    // Physical save rules apply offline too. Only passive clock progression is
+    // frozen; the engine must still be able to execute Sun's Song time changes.
+    return Archipelago_IsCurrentSaveFile() && gSaveContext.gameMode == GAMEMODE_NORMAL &&
+           CVarGetInteger(CVAR_RANDOMIZER_SETTING("ShuffleFlowOfTime"), 0) &&
+           !Flags_GetRandomizerInf(RAND_INF_FLOW_OF_TIME);
+}
+
 extern "C" bool Archipelago_IsCurrentSaveActive(void) {
     auto& client = ArchipelagoClient::GetInstance();
     return client.IsEnabled() && client.IsCurrentSaveArchipelago();
@@ -4383,7 +4283,13 @@ extern "C" void Archipelago_ReportCheck(int32_t randomizerCheck) {
 }
 
 extern "C" void Archipelago_ReportLocation(int64_t locationId) {
-    ArchipelagoClient::GetInstance().SendLocation(locationId);
+    // Physical AP-only pickup, including enemy defeat rewards.
+    ArchipelagoClient::GetInstance().SendLocation(locationId, true);
+}
+
+extern "C" void Archipelago_ReconcileLocation(int64_t locationId) {
+    // Saved journals replay delivery only, never past pickup animations.
+    ArchipelagoClient::GetInstance().SendLocation(locationId, false);
 }
 
 extern "C" const char* Archipelago_GetRemoteItemDescription(int32_t randomizerCheck) {
@@ -4394,6 +4300,10 @@ extern "C" const char* Archipelago_GetRemoteItemDescription(int32_t randomizerCh
 
 extern "C" void Archipelago_RefreshPlacementForCheck(int32_t randomizerCheck) {
     ArchipelagoClient::GetInstance().RefreshPlacementForCheck(randomizerCheck);
+}
+
+extern "C" int32_t Archipelago_GetLocationDisplayItem(int64_t locationId) {
+    return ArchipelagoClient::GetInstance().GetLocationDisplayItem(locationId);
 }
 
 extern "C" void Archipelago_InitSaveFile(void) {
@@ -4417,6 +4327,17 @@ extern "C" void Archipelago_InitSaveFile(void) {
     gSaveContext.ship.quest.data.randomizer.triforcePiecesCollected = 0;
     client.ApplyPostInitSlotState();
 
+    // Choose the frozen phase once. Saved time and explicit Sun's Song changes
+    // must survive loading, scene changes and reconnects.
+    if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("ShuffleFlowOfTime"), 0)) {
+        static constexpr u16 kTimes[] = { 0x4555, 0x8000, 0xB555, 0x0000 };
+        int selected = CVarGetInteger(CVAR_RANDOMIZER_SETTING("FrozenStartingTime"), 1);
+        if (selected <= 0 || selected > 4) selected = 1;
+        gSaveContext.dayTime = kTimes[selected - 1];
+        gSaveContext.skyboxTime = gSaveContext.dayTime;
+        gSaveContext.nightFlag = selected == 4;
+    }
+
     // SaveManager needs the AP marker/identity on the very first disk write, but
     // rebuilding ReceivedItems here can contend with APCpp callbacks and stall
     // the name-entry transition. Prime metadata only; replay begins in gameplay.
@@ -4428,4 +4349,8 @@ extern "C" void Archipelago_InitSaveFile(void) {
 
 extern "C" const char* Archipelago_GetRemotePickupDescription(void) {
     return ArchipelagoClient::GetInstance().GetRemotePickupDescription().c_str();
+}
+
+extern "C" const char* Archipelago_GetSongNotePickupDescription(void) {
+    return ArchipelagoClient::GetInstance().GetSongNotePickupDescription().c_str();
 }

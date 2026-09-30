@@ -505,7 +505,7 @@ def set_region_rules(world: "SohWorld") -> None:
                                                               can_use(Items.HOVER_BOOTS, bundle) |
                                                               can_use(Items.HOOKSHOT, bundle)))),
         (Locations.WATER_TEMPLE_GS_RIVER, lambda bundle: ((can_use(Items.IRON_BOOTS, bundle) &
-                                                           can_use(Items.HOOKSHOT, bundle)) |
+                                                           can_use(Items.HOOKSHOT, bundle) & water_timer_at_least(bundle, 8)) |
                                                           (can_do_trick(Tricks.WATER_RIVER_GS, bundle) &
                                                            can_use(Items.LONGSHOT, bundle)))),
         (Locations.WATER_TEMPLE_RIVER_POT1, lambda bundle: can_break_pots(bundle)),

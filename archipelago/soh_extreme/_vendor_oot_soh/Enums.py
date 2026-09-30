@@ -1948,6 +1948,8 @@ class Locations(StrEnum):
     DODONGOS_CAVERN_SIDE_ROOM_POT4 = "Dodongos Cavern Side Room Pot 4"
     DODONGOS_CAVERN_SIDE_ROOM_POT5 = "Dodongos Cavern Side Room Pot 5"
     DODONGOS_CAVERN_SIDE_ROOM_POT6 = "Dodongos Cavern Side Room Pot 6"
+    DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT1 = "Dodongos Cavern Near Lizalfos Room Pot 1"
+    DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT2 = "Dodongos Cavern Near Lizalfos Room Pot 2"
     DODONGOS_CAVERN_TORCH_ROOM_POT1 = "Dodongos Cavern Torch Room Pot 1"
     DODONGOS_CAVERN_TORCH_ROOM_POT2 = "Dodongos Cavern Torch Room Pot 2"
     DODONGOS_CAVERN_TORCH_ROOM_POT3 = "Dodongos Cavern Torch Room Pot 3"

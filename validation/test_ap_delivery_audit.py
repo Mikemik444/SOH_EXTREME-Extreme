@@ -160,7 +160,7 @@ int main(){SaveManager writer;SaveManager::Instance=&writer;auto&c=ArchipelagoCl
 
 # Compile the production receipt gate separately from ability-specific engine flags.
 major=function(ap,'void ArchipelagoClient::FinalizeMajorItemReceipt(')
-major_gate=major[major.index('    if (!awaitingMajorItemReceipt)'):major.index('    // SOH-EXTREME 0.7.55:')]
+major_gate=major[major.index('    if (!awaitingMajorItemReceipt)'):major.index('    // Native grants have completed.')]
 run('major_receipt_identity',r'''
 #include <cassert>
 #include <cstdint>
@@ -195,6 +195,8 @@ for sig in ('void ArchipelagoClient::Enable()', 'void ArchipelagoClient::Disable
  assert 'saveServer.clear()' not in body and 'saveSlot.clear()' not in body
 enemy=(root/'soh/Enhancements/randomizer/MegaSouls.cpp').read_text(encoding='utf-8')
 assert 'Archipelago_IsLocationActive(locationId), Archipelago_IsLocationSubmitted(locationId)' in enemy
+assert 'Archipelago_ReportLocation(locationId)' in function(enemy,'extern "C" bool MegaSoul_TryCollectEnemyDefeatPickup(')
+assert 'Archipelago_ReconcileLocation(id)' in function(enemy,'static void ReplayCollectedEnemyChecks()')
 results.append(dict(name='AP save/receipt/enemy integration boundaries',passed=True))
 (out/'results.json').write_text(json.dumps(results,indent=2))
 sys.exit(0 if all(r['passed'] for r in results) else 1)

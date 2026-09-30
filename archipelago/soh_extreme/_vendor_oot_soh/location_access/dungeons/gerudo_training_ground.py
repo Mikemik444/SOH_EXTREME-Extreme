@@ -153,9 +153,9 @@ def set_region_rules(world: "SohWorld") -> None:
     # Locations
     add_locations(Regions.GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM, world, [
         (Locations.GERUDO_TRAINING_GROUND_HEAVY_BLOCK_FIRST_CHEST,
-         lambda bundle: can_jump_slash_except_hammer(bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.LIKE_LIKE)),
         (Locations.GERUDO_TRAINING_GROUND_HEAVY_BLOCK_SECOND_CHEST,
-         lambda bundle: can_jump_slash_except_hammer(bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.LIKE_LIKE)),
         (Locations.GERUDO_TRAINING_GROUND_HEAVY_BLOCK_THIRD_CHEST,
          lambda bundle: can_jump_slash_except_hammer(bundle)),
         (Locations.GERUDO_TRAINING_GROUND_HEAVY_BLOCK_FOURTH_CHEST,

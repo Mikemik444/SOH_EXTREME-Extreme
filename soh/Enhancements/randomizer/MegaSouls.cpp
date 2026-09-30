@@ -704,6 +704,17 @@ static bool EnemyDefeatLocationStillPending(int32_t placementIndex, int64_t loca
         EnemyDefeatWasCollected(static_cast<size_t>(placementIndex)));
 }
 
+static void DrawEnemyDefeatPickup(EnItem00* item00, PlayState* play) {
+    const auto* identity = ObjectExtension::GetInstance().Get<EnemyDefeatDropIdentity>(&item00->actor);
+    if (identity != nullptr) {
+        // Scouts may arrive after the enemy dies. Resolve on draw so the same
+        // pickup updates, including the normal native progressive-item model.
+        const auto display = static_cast<RandomizerGet>(Archipelago_GetLocationDisplayItem(identity->locationId));
+        item00->itemEntry = Rando::StaticData::RetrieveItem(display).GetGIEntry_Copy();
+    }
+    EnItem00_DrawRandomizedItem(item00, play);
+}
+
 static EnItem00* SpawnEnemyDefeatPickup(Actor* enemy, int32_t placementIndex, int64_t locationId) {
     if (enemy == nullptr || gPlayState == nullptr ||
         !EnemyDefeatLocationStillPending(placementIndex, locationId)) {
@@ -724,12 +735,13 @@ static EnItem00* SpawnEnemyDefeatPickup(Actor* enemy, int32_t placementIndex, in
     dropIdentity.locationId = locationId;
     ObjectExtension::GetInstance().Set<EnemyDefeatDropIdentity>(&item00->actor, std::move(dropIdentity));
 
-    // Use the official coloured Archipelago pickup model. The pickup itself
-    // only reports the location; the server still sends the actual placed item.
+    // The entry is display-only. EnemyDefeatDropIdentity owns collection and
+    // reports the AP location; only ReceivedItems grants the actual reward.
     item00->randoInf = RAND_INF_MAX;
     item00->randoCheck = RC_UNKNOWN_CHECK;
-    item00->itemEntry = *Rando::StaticData::RetrieveItem(RG_AP_REMOTE_IMPORTANT).GetGIEntry();
-    item00->actor.draw = reinterpret_cast<ActorFunc>(EnItem00_DrawRandomizedItem);
+    const auto display = static_cast<RandomizerGet>(Archipelago_GetLocationDisplayItem(locationId));
+    item00->itemEntry = Rando::StaticData::RetrieveItem(display).GetGIEntry_Copy();
+    item00->actor.draw = reinterpret_cast<ActorFunc>(DrawEnemyDefeatPickup);
     item00->actor.velocity.y = 8.0f;
     item00->actor.speedXZ = 2.0f;
     item00->actor.world.rot.y = static_cast<int16_t>(Rand_CenteredFloat(65536.0f));
@@ -793,7 +805,7 @@ static void ReplayCollectedEnemyChecks() {
         const int64_t id = kEnemyDefeatPlacements[i].locationId;
         if (!SohExtreme::IsRetiredEnemyPlacement(static_cast<int32_t>(i)) &&
             EnemyDefeatWasCollected(i) && Archipelago_IsLocationActive(id) &&
-            !Archipelago_IsLocationReported(id)) Archipelago_ReportLocation(id);
+            !Archipelago_IsLocationReported(id)) Archipelago_ReconcileLocation(id);
     }
 }
 

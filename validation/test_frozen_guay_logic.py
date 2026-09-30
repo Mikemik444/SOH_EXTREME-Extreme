@@ -39,7 +39,7 @@ for phase,clock in (('dawn',0x4555),('day',0x8000),('dusk',0xB555),('night',0x00
         for name in receipts:s.collect(w.create_item(name),True)
         s.sweep_for_advancements([l for l in w.get_locations() if l.address is None])
         result=evaluate(receipts)
-        expected=label!='Guay Soul missing' and ('Flow of Time' not in remove or engine_night)
+        expected=label!='Guay Soul missing' and (label!='flow and song equipment missing' or engine_night)
         for l in guays:
             direct=l.can_reach(s)
             ck(phase+' / '+label+' / '+l.name,direct,expected)
@@ -50,8 +50,8 @@ for phase,clock in (('dawn',0x4555),('day',0x8000),('dusk',0xB555),('night',0x00
                 previous=s._soh_age[1];s._soh_age[1]=age
                 try:
                     b=(Regions.LON_LON_RANCH,w)
-                    ck(phase+' day helper '+str(age),at_day(b).resolve(w)(s),not engine_night)
-                    ck(phase+' night helper '+str(age),at_night(b).resolve(w)(s),engine_night)
+                    ck(phase+' day helper '+str(age),at_day(b).resolve(w)(s),True)
+                    ck(phase+' night helper '+str(age),at_night(b).resolve(w)(s),True)
                 finally:s._soh_age[1]=previous
         if label=='time unlocked':
             # The Ranch Guay placements are child-night only, even with time free.

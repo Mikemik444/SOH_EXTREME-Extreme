@@ -57,6 +57,7 @@ class ArchipelagoClient {
     size_t GetReportedActiveLocationCount() const;
     void ApplyScoutedPlacements();
     void RefreshPlacementForCheck(int32_t randomizerCheck);
+    int32_t GetLocationDisplayItem(int64_t locationId) const;
     void RefreshPlacementsForScene(int16_t sceneNum);
     void EnsureLocationScouts();
     std::string GetRemoteItemDescription(int32_t randomizerCheck);
@@ -77,6 +78,7 @@ class ArchipelagoClient {
     };
     const std::vector<HintInfo>& GetHints() const { return hints; }
     bool HasHintSnapshot() const { return hintSnapshotLoaded; }
+    const std::string& GetSongNotePickupDescription() const { return songNotePickupDescription; }
     const std::string& GetRemotePickupDescription() const { return remotePickupDescription; }
 
     // Per-save Archipelago receipt state.  This is serialized by SaveManager so
@@ -105,6 +107,7 @@ class ArchipelagoClient {
     std::deque<int64_t> remotePresentations;
     std::unordered_set<int64_t> presentedRemoteLocations;
     std::string remotePickupDescription;
+    std::string songNotePickupDescription;
     bool remotePresentationActive = false;
     bool remotePresentationReceived = false;
     unsigned remotePresentationFrames = 0;
@@ -132,7 +135,8 @@ class ArchipelagoClient {
     void SendDeathLink();
     void SendTrapLink(const std::string& trapName);
     void QueueLocationInfo(int64_t locationId, int64_t itemId, int playerId, int flags, const std::string& itemName,
-                           const std::string& playerName, const std::string& locationName);
+                           const std::string& playerName, const std::string& locationName,
+                           const std::string& itemGame);
     bool ProcessItem(int64_t itemId, bool notify, uint64_t sequence);
     void MarkItemApplied(uint64_t sequence);
     void FinalizeMajorItemReceipt(int modIndex, int itemId, int getItemId);
@@ -160,6 +164,7 @@ class ArchipelagoClient {
         std::string itemName;
         std::string playerName;
         std::string locationName;
+        std::string itemGame;
     };
     void IndexScoutedLocation(int64_t locationId, const ScoutedLocation& info);
     struct PendingScout {

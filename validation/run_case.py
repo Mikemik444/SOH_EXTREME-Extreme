@@ -71,6 +71,7 @@ def setup(seed=1001, players=1, overrides=None, stop_before=None, passthrough=No
 
 def main():
     args=argparse.ArgumentParser(parents=[BOOTSTRAP]); args.add_argument('--seed',type=int,default=1001); args.add_argument('--players',type=int,default=1); args.add_argument('--overrides',default='{}'); args.add_argument('--all-state-only',action='store_true'); args.add_argument('--report',required=True)
+    args.add_argument('--physical-source-root',type=Path)
     a=args.parse_args(); Path(a.report).parent.mkdir(parents=True,exist_ok=True); result={'seed':a.seed,'players':a.players,'overrides':json.loads(a.overrides),'passed':False,'harness':('AP 0.6.7 core, restricted offline dependency adapters; no nonempty item links or binary patch export' if BOOT_ARGS.offline_adapters else 'AP 0.6.7 core with normal dependencies')}
     start=time.monotonic()
     try:
@@ -97,17 +98,26 @@ def main():
                 balance_multiworld_progression(mw)
             call_all(mw,'finalize_multiworld'); call_all(mw,'pre_output')
             result['final_validation'] = getattr(mw, '_soh_final_validation', None)
+            constraints={};physical_rejections=[]
+            if a.physical_source_root:
+                from audit_physical_interactions import build_constraints, allows_interaction
+                constraints={p:build_constraints(w,a.physical_source_root)[0] for p,w in mw.worlds.items()}
             state=CollectionState(mw); remaining=set(mw.get_locations()); spheres=[]
             while remaining:
                 remaining.difference_update(state.advancements)
                 sphere={loc for loc in remaining if loc.can_reach(state)}
+                for loc in list(sphere):
+                    if loc.address in constraints.get(loc.player,{}) and not allows_interaction(mw.worlds[loc.player],state,constraints[loc.player][loc.address]):
+                        physical_rejections.append(dict(sphere=len(spheres),player=loc.player,name=loc.name,id=loc.address))
+                        sphere.remove(loc)
                 if not sphere: break
                 remaining.difference_update(sphere); spheres.append(len(sphere))
                 for loc in sorted(sphere,key=lambda l:(l.player,l.name)):
                     if loc.item is not None and loc not in state.advancements: state.collect(loc.item,True,loc)
-            result.update(sphere_sizes=spheres,replay_blocked=[(l.player,l.name) for l in remaining],beatable=mw.has_beaten_game(state))
+            result.update(sphere_sizes=spheres,replay_blocked=[(l.player,l.name) for l in remaining],beatable=mw.has_beaten_game(state),physical_rejections=physical_rejections)
             assert result['beatable'],'Goal not met'
             assert not remaining,'Full accessibility failed independent replay'
+            assert not physical_rejections,'AP marked a check reachable before its source-derived interaction requirements'
             for p,w in mw.worlds.items():
                 slot=convert_to_base_types(w.fill_slot_data()); json.dumps(slot)
                 Path(a.report+f'.slot{p}.json').write_text(json.dumps(slot))

@@ -120,6 +120,11 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
 
     # Dodongos Cavern Near Lower Lizalfos
+    # These are the two physical pots outside the lower Lizalfos doorway.
+    add_locations(Regions.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, world, [
+        (Locations.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT1, lambda bundle: can_break_pots(bundle)),
+        (Locations.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS_POT2, lambda bundle: can_break_pots(bundle)),
+    ])
     # Connections
     connect_regions(Regions.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, world, [
         (Regions.DODONGOS_CAVERN_SE_CORRIDOR, lambda bundle: True_()),

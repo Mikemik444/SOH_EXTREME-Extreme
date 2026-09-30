@@ -9,7 +9,7 @@ from Options import OptionError
 from ._vendor_oot_soh.Enums import Regions, Items
 from ._vendor_oot_soh.LogicHelpers import (
     can_use, has_item, has_explosives, is_child, is_adult,
-    has_fire_source_with_torch,
+    has_fire_source_with_torch, can_play_song,
 )
 from .EnemyRoomLogic import resolve_enemy_region, event_item, ENEMY_ROOM_MAP
 
@@ -72,7 +72,7 @@ def enemy_drop_rule(world, entry):
             return True_()
         # Dusk freezes at 0xB555, before the engine's >0xC000 night boundary.
         starts_night = o.frozen_starting_time.value == 4
-        return True_() if starts_night == night else Has("Flow of Time")
+        return True_() if starts_night == night else (Has("Flow of Time") | can_play_song(Items.SUNS_SONG, b))
 
     ages = []
     for adult in (False, True):
@@ -82,6 +82,13 @@ def enemy_drop_rule(world, entry):
         tod = True_() if mask == 3 else time_available(mask == 2)
         ages.append((is_adult(b) if adult else is_child(b)) & tod & age_combat(adult))
     gates.append(Or(*ages) if ages else False_())
+
+    # En_Peehat remains loaded at night, but both adult Peahat variants stay
+    # buried and only spawn larvae when struck. Defeating those offspring does
+    # not complete the parent placement's check. Spawn presence is not the
+    # same as being able to expose and defeat its vulnerable root.
+    if entry.actor_id == 0x01D:
+        gates.append(time_available(False))
 
     def grab():
         return Has("Grab / Power Bracelet") if o.shuffle_grab.value else True_()

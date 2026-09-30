@@ -652,7 +652,9 @@ def _time_access(bundle, want_day: bool) -> Rule:
     start_is_day = options.frozen_starting_time.value in (1, 2, 3)
     if start_is_day == want_day:
         return True_()
-    return Has("Flow of Time") & cycle
+    # Sun's Song selects a phase even with the passive clock frozen. Possession
+    # alone is insufficient: can_play_song includes instrument, buttons and notes.
+    return (Has("Flow of Time") & cycle) | can_play_song(Items.SUNS_SONG, bundle)
 
 
 def at_day(bundle: tuple[Regions, "SohWorld"]) -> Rule:
@@ -1160,6 +1162,7 @@ key_to_ring: dict[Items, Items] = {
     Items.TRAINING_GROUND_SMALL_KEY: Items.TRAINING_GROUND_KEY_RING,
     Items.SPIRIT_TEMPLE_SMALL_KEY: Items.SPIRIT_TEMPLE_KEY_RING,
     Items.GANONS_CASTLE_SMALL_KEY: Items.GANONS_CASTLE_KEY_RING,
+    Items.TREASURE_GAME_SMALL_KEY: Items.TREASURE_GAME_KEY_RING,
 }
 
 
@@ -1387,7 +1390,9 @@ def can_ground_jump(bundle: tuple[Regions, "SohWorld"], hasBombFlower: bool = Fa
                 & can_use(Items.BOMB_BAG, bundle))
 
 def can_clear_stalagmite(bundle: tuple[Regions, "SohWorld"]):
-    return can_jump_slash(bundle) | has_explosives(bundle)
+    # Native explicitly accepts Giant's Knife, even though the general sword
+    # helper intentionally omits this breakable weapon.
+    return can_jump_slash(bundle) | has_explosives(bundle) | can_use(Items.GIANTS_KNIFE, bundle)
 
 
 @dataclasses.dataclass

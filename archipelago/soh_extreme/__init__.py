@@ -39,12 +39,13 @@ from ._vendor_oot_soh.LogicHelpers import (
     can_cut_shrubs, can_collect_grass, can_jump_slash, can_jump_slash_except_hammer,
     can_hit_at_range, can_reflect_nuts, is_child, is_adult,
     can_climb, can_swim, can_play_song, can_do_trick, water_timer_at_least, fire_timer_at_least, at_day, at_night,
-    can_reach_zr_raised_ledge, can_break_rocks,
+    can_reach_zr_raised_ledge, can_break_rocks, small_keys,
 )
 from worlds.generic.Rules import add_rule
 from Options import OptionError
 from .Options import SohExtremeOptions, extreme_option_groups
-from .ForkLocations import FORK_LOCATIONS, FORK_LOCATION_NAME_TO_ID
+from .ForkLocations import FORK_LOCATIONS, FORK_LOCATION_NAME_TO_ID, RETIRED_FORK_LOCATION_IDS
+from .PhysicalChestTypes import CHEST_TYPES_BY_AP_ID
 from .EnemyDropLocations import ENEMY_DROP_LOCATIONS, ENEMY_DROP_LOCATION_NAME_TO_ID
 from .NativeRegionMap import FORK_NATIVE_REGIONS
 from .SpeechLocations import SPEECH_LOCATIONS, SPEECH_LOCATION_NAME_TO_ID
@@ -73,78 +74,6 @@ NPC_SPEECH_FALLBACK_BASE = 9650000
 NPC_SPEECH_FALLBACK_COUNT = 0
 NPC_SPEECH_FALLBACK_NAME_TO_ID = {}
 
-
-# Generated from native location_list.cpp EnBox actor params.  These are the
-# exact big-chest identities used by SOH-EXTREME's runtime (types other than
-# SMALL/6/ROOM_CLEAR_SMALL/SWITCH_FLAG_FALL_SMALL).  AP generation uses this
-# same list so progressive Open Chest agrees with the native Check Tracker.
-NATIVE_LARGE_CHEST_NAMES = {
-    'KF KOKIRI SWORD CHEST',
-    'GF CHEST',
-    'GRAVEYARD HOOKSHOT CHEST',
-    'DEKU TREE MAP CHEST',
-    'DEKU TREE COMPASS CHEST',
-    'DEKU TREE SLINGSHOT CHEST',
-    'DEKU TREE MQ MAP CHEST',
-    'DEKU TREE MQ COMPASS CHEST',
-    'DEKU TREE MQ SLINGSHOT CHEST',
-    'DODONGOS CAVERN MAP CHEST',
-    'DODONGOS CAVERN COMPASS CHEST',
-    'DODONGOS CAVERN BOMB BAG CHEST',
-    'DODONGOS CAVERN MQ MAP CHEST',
-    'DODONGOS CAVERN MQ BOMB BAG CHEST',
-    'DODONGOS CAVERN MQ COMPASS CHEST',
-    'JABU JABUS BELLY MAP CHEST',
-    'JABU JABUS BELLY BOOMERANG CHEST',
-    'JABU JABUS BELLY MQ BOOMERANG CHEST',
-    'FOREST TEMPLE MAP CHEST',
-    'FOREST TEMPLE BOSS KEY CHEST',
-    'FOREST TEMPLE BLUE POE CHEST',
-    'FOREST TEMPLE MQ MAP CHEST',
-    'FOREST TEMPLE MQ COMPASS CHEST',
-    'FOREST TEMPLE MQ BOSS KEY CHEST',
-    'FIRE TEMPLE BOSS KEY CHEST',
-    'FIRE TEMPLE MAP CHEST',
-    'FIRE TEMPLE COMPASS CHEST',
-    'FIRE TEMPLE MEGATON HAMMER CHEST',
-    'FIRE TEMPLE MQ MEGATON HAMMER CHEST',
-    'FIRE TEMPLE MQ COMPASS CHEST',
-    'FIRE TEMPLE MQ MAP CHEST',
-    'FIRE TEMPLE MQ BOSS KEY CHEST',
-    'WATER TEMPLE MAP CHEST',
-    'WATER TEMPLE COMPASS CHEST',
-    'WATER TEMPLE BOSS KEY CHEST',
-    'WATER TEMPLE LONGSHOT CHEST',
-    'WATER TEMPLE MQ BOSS KEY CHEST',
-    'WATER TEMPLE MQ COMPASS CHEST',
-    'SPIRIT TEMPLE SILVER GAUNTLETS CHEST',
-    'SPIRIT TEMPLE MIRROR SHIELD CHEST',
-    'SPIRIT TEMPLE COMPASS CHEST',
-    'SPIRIT TEMPLE BOSS KEY CHEST',
-    'SPIRIT TEMPLE MQ MAP CHEST',
-    'SPIRIT TEMPLE MQ BOSS KEY CHEST',
-    'SHADOW TEMPLE MAP CHEST',
-    'SHADOW TEMPLE HOVER BOOTS CHEST',
-    'SHADOW TEMPLE COMPASS CHEST',
-    'SHADOW TEMPLE BOSS KEY CHEST',
-    'SHADOW TEMPLE MQ COMPASS CHEST',
-    'SHADOW TEMPLE MQ HOVER BOOTS CHEST',
-    'SHADOW TEMPLE MQ MAP CHEST',
-    'SHADOW TEMPLE MQ BOSS KEY CHEST',
-    'BOTTOM OF THE WELL COMPASS CHEST',
-    'BOTTOM OF THE WELL LENS OF TRUTH CHEST',
-    'BOTTOM OF THE WELL MAP CHEST',
-    'BOTTOM OF THE WELL MQ MAP CHEST',
-    'BOTTOM OF THE WELL MQ COMPASS CHEST',
-    'ICE CAVERN MAP CHEST',
-    'ICE CAVERN COMPASS CHEST',
-    'ICE CAVERN IRON BOOTS CHEST',
-    'ICE CAVERN MQ IRON BOOTS CHEST',
-    'ICE CAVERN MQ COMPASS CHEST',
-    'GERUDO TRAINING GROUND MAZE PATH FINAL CHEST',
-    'GANONS TOWER BOSS KEY CHEST',
-    'GANONS CASTLE SHADOW TRIAL GOLDEN GAUNTLETS CHEST',
-}
 
 EXTREME_ITEMS = {
     "Roll": 9500000,
@@ -867,8 +796,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         "Silver Rupees": set(SILVER_GROUP_ITEMS),
     }
     location_name_groups = {k: set(v) for k, v in _create_groups(location_data_table).items() if k != "Everywhere"} | {
-        "SOH-EXTREME Fork Locations": set(FORK_LOCATION_NAME_TO_ID),
-        "Wonder Items": {loc.name for loc in FORK_LOCATIONS if loc.family == "wonder"},
+        "SOH-EXTREME Fork Locations": {loc.name for loc in FORK_LOCATIONS if loc.address not in RETIRED_FORK_LOCATION_IDS},
+        "Wonder Items": {loc.name for loc in FORK_LOCATIONS if loc.family == "wonder" and loc.address not in RETIRED_FORK_LOCATION_IDS},
         "Silver Rupee Checks": {loc.name for loc in FORK_LOCATIONS if loc.family == "silver"},
         "NPC Speech Sanity": set(SPEECH_LOCATION_NAME_TO_ID) | set(NpcSpeech.NAME_TO_ID),
         "Enemy Drops": set(ENEMY_DROP_LOCATION_NAME_TO_ID),
@@ -1071,6 +1000,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
 
     def _fork_location_enabled(self, loc) -> bool:
+        if loc.address in RETIRED_FORK_LOCATION_IDS:
+            # New seeds must never place items at the courtyard windows, in any
+            # shuffle mode. UT may only reconstruct an old server's explicit
+            # placement manifest so an update cannot silently hide owed items.
+            return self.using_ut and loc.address in self.passthrough.get("extreme_active_locations", ())
         o = self.options
         if loc.family == "rock": return bool(o.shuffle_rocks.value)
         if loc.family == "boulder": return o.shuffle_boulders.value == 3 or (o.shuffle_boulders.value == 1 and loc.dungeon) or (o.shuffle_boulders.value == 2 and not loc.dungeon)
@@ -2008,11 +1942,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         npc_tags = (LocTag.Shop | LocTag.Merchant | LocTag.Trade_Location |
                     LocTag.Shooting_Minigame | LocTag.House_of_Skulltula_Reward)
 
-        # Large chests use the second Progressive Open Chest level.  Do not infer
-        # this from item/name keywords: use the native EnBox type table exported
-        # above, so AP generation and the in-game native reachability engine agree.
-        large_chest_names = set(NATIVE_LARGE_CHEST_NAMES)
-
         fork_requirements = {}
         fork_any_requirements = {}
         fork_group_requirements = {}
@@ -2754,6 +2683,17 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if location.address is not None
         }
 
+        from .PhysicalInteractionRules import STOCK_INTERACTIONS
+        for check_name, factory in STOCK_INTERACTIONS.items():
+            try:
+                check = self.get_location(str(check_name))
+            except KeyError:
+                continue
+            bundle = native_bundle_for_location(check)
+            if bundle is None:
+                raise OptionError(f"Missing physical interaction region for {check.name}")
+            require_native_existing(check, factory(bundle))
+
         # Mechanical direct-ability audit generated from every native C++
         # LOCATION(...) expression. The table contains only abilities that are
         # mandatory on EVERY native occurrence of that AP check, so true OR
@@ -2836,6 +2776,16 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             silver_rule = native_requirement_rule(silver_item)
             if silver_rule is not None:
                 require_native_existing(silver_location, silver_rule)
+
+        # The Sun Block chest's stick route needs the silver puzzle to unlock
+        # the torch. Din's Fire/fire arrows remain valid independent fire
+        # sources. Reaching the central chamber alone cannot light that torch.
+        sun_chest = locations_by_address.get(314)
+        sun_silver = native_requirement_rule("Spirit Silver: Sun")
+        if sun_chest is not None and sun_silver is not None:
+            bundle = (Regions.SPIRIT_TEMPLE_CENTRAL_CHAMBER, self)
+            fire = can_use(Items.DINS_FIRE, bundle) | can_use(Items.FIRE_ARROW, bundle)
+            require_native_existing(sun_chest, fire | sun_silver)
 
         # Fork-native checks also inherit their exact native-room path. This is
         # critical for sanity checks living behind an internal silver door.
@@ -3364,13 +3314,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 elif rc.startswith("RC_LW_WONDER_") and "SKULL_KIDS_GRASS" in rc:
                     rule = is_child(bundle)
                 elif rc.startswith("RC_MKT_WONDER_DAY_"):
-                    rule = is_child(bundle)
-                    if o.shuffle_flow_of_time.value and o.frozen_starting_time.value == 4:
-                        rule &= Has("Flow of Time")
+                    rule = is_child(bundle) & at_day(bundle)
                 elif rc.startswith("RC_MKT_WONDER_NIGHT_"):
-                    rule = is_child(bundle)
-                    if o.shuffle_flow_of_time.value and o.frozen_starting_time.value in (1, 2, 3):
-                        rule &= Has("Flow of Time")
+                    rule = is_child(bundle) & at_night(bundle)
                 elif rc == "RC_SHADOW_TEMPLE_WONDER_THREE_POTS":
                     rule = can_use(Items.FAIRY_BOW, bundle)
                 elif rc.startswith("RC_TH_WONDER_") and rc != "RC_TH_WONDER_KITCHEN_SOUP":
@@ -3475,28 +3421,48 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if o.shuffle_animal_soul.value and family == "butterfly_fairy":
                 require_animal(location)
 
+            # These checks sit in the crater's hot area. Reaching a broad
+            # DMC region (including its child routes) does not itself satisfy
+            # the native FireTimer >= 8 condition for these placements.
+            if fork_loc.rc.startswith(("RC_DMC_BOULDER_", "RC_DMC_CIRCLE_ROCK_")):
+                require_native_fork(location, fire_timer_at_least(bundle, 8))
+            if fork_loc.rc == "RC_GC_MAZE_ROCK":
+                # The small rock is inside the boulder maze, not on the open
+                # Goron City floor. Grab alone cannot cross the obstruction.
+                require_native_fork(location, blast_or_smash(bundle) | can_use(Items.SILVER_GAUNTLETS, bundle))
+            if fork_loc.rc in ("RC_ICE_CAVERN_HEART_PIECE_ROOM_CHEST_RED_ICE",
+                               "RC_ICE_CAVERN_HEART_PIECE_ROOM_FREESTANDING_RED_ICE",
+                               "RC_ICE_CAVERN_HEART_PIECE_ROOM_LEFT_STALACTITE_1",
+                               "RC_ICE_CAVERN_HEART_PIECE_ROOM_LEFT_STALACTITE_2"):
+                from ._vendor_oot_soh.LogicHelpers import can_clear_stalagmite
+                route = can_clear_stalagmite(bundle)
+                if fork_loc.rc.endswith("_CHEST_RED_ICE"):
+                    route |= is_child(bundle)
+                require_native_fork(location, route)
+
             # These checks are driven by NPC interaction in the native fork.
-            if family in ("beggar", "chest_minigame"):
+            if family == "beggar" or (family == "chest_minigame" and fork_loc.rc.endswith("_SHOPKEEPER")):
                 if o.shuffle_npc_soul.value:
                     require(location, "NPC Soul")
                 if o.shuffle_speak.value:
                     require_speak(location)
 
-            # Treasure Chest Game randomized rewards are still chest opens.
-            if family == "chest_minigame" and o.shuffle_open_chest.value:
-                require(location, "Open Chest")
+            # Each successive room spends another persistent minigame key.
+            # The owner check is payment, not opening a chest or a locked door.
+            if family == "chest_minigame" and fork_loc.rc.rsplit("_", 1)[-1].isdigit():
+                room = int(fork_loc.rc.rsplit("_", 1)[-1])
+                require_native_fork(location, small_keys(Items.TREASURE_GAME_SMALL_KEY, room, bundle))
 
-        # Fork-native checks currently have no stock SoH rule attached.  Add the
-        # time gate that the fork itself enforces for night-only Wonder Items.
-        # In SOH-EXTREME, time is frozen until Flow of Time is collected, so these
-        # locations must not appear in logic while Flow of Time is missing.
+        # A frozen clock can change phase through usable Sun's Song. The normal
+        # region/age routes still apply; the song does not grant region access.
         if o.shuffle_flow_of_time.value:
             # Stock SoH models changing time through synthetic "Day Night Cycle"
-            # event locations. Gate those events behind Flow of Time so all stock
-            # night/day logic also stays frozen until the item is collected.
+            # event locations. Only Flow or a fully playable Sun's Song can
+            # unlock both phases while the seed's clock is frozen.
             for location in self.get_locations():
                 if "Day Night Cycle" in location.name:
-                    require(location, 'Flow of Time')
+                    bundle = native_bundle_for_location(location)
+                    require_native_existing(location, Has("Flow of Time") | can_play_song(Items.SUNS_SONG, bundle))
 
             # The Hyrule Field -> Market Entrance edge owns the child drawbridge
             # requirement. Do not lock every Market check behind Flow: an adult
@@ -3510,7 +3476,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 for location in self.get_locations():
                     upper = location.name.upper()
                     if " NIGHT " in f" {upper} " or "NIGHT BALCONY" in upper:
-                        require(location, 'Flow of Time')
+                        bundle = native_bundle_for_location(location)
+                        require_native_existing(location, Has("Flow of Time") | can_play_song(Items.SUNS_SONG, bundle))
 
         import re
 
@@ -3525,14 +3492,16 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # way the native SOH-EXTREME logic does. Keep LocTags as the primary
             # source, then use conservative object-name fallbacks for checks which
             # are unmistakably the actual object (rather than merely being near it).
-            is_named_chest = "CHEST" in upper_name
             # Pot Soul is a universal physical gate: if the check is a pot in the
             # native game, it cannot be collected before Pot Soul. Do not rely solely
             # on official SoH LocTags because some sanity/location tables omit them.
             is_named_pot = (not upper_name.startswith("EXTREME ") and
                             re.search(r"\bPOTS?\b", upper_name) is not None)
             is_named_crate = re.search(r"(^|\s)(?:SMALL\s+)?CRATE(?:\s|$|\d)", upper_name) is not None
-            is_named_grass = (
+            # Fork checks are classified by actor family above. In particular,
+            # the two KF Wonder Crawl Grass checks are proximity triggers, not
+            # cuttable grass: reaching them as Child through Crawl is enough.
+            is_named_grass = not upper_name.startswith("EXTREME ") and (
                 re.search(r"GRASS\s+\d+$", upper_name) is not None
                 or re.search(r"GRASS\s+MAZE\s+\d+$", upper_name) is not None
             )
@@ -3558,7 +3527,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 or "SHOOTING GALLERY" in upper_name
                 or "BOMBCHU BOWLING" in upper_name
                 or "HORSEBACK ARCHERY" in upper_name
-                or "TREASURE CHEST GAME" in upper_name
+                or ("TREASURE CHEST GAME" in upper_name and
+                    (not o.shuffle_chest_minigame.value or location.address not in CHEST_TYPES_BY_AP_ID))
                 or re.search(r"\b(?:10|20|30|40|50|100) GOLD SKULLTULA REWARD$", upper_name) is not None
             )
             # Avoid treating every "Deku Tree ..." dungeon location as a TreeSanity
@@ -3568,15 +3538,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 and not upper_name.startswith("DEKU TREE ")
             )
 
-            # Chest-opening ability is a hard gameplay gate in the fork. Name
-            # fallback catches Mido's house and other stock checks missed by tags.
-            if o.shuffle_open_chest.value and ((tags & LocTag.Chest) or is_named_chest):
-                normalized_chest_name = location.name.upper().replace("'", "").replace("-", " ")
-                is_large_chest = any(
-                    normalized_chest_name == native_name or normalized_chest_name.endswith(" " + native_name)
-                    for native_name in large_chest_names
-                )
-                count = 2 if o.shuffle_open_chest.value == 2 and is_large_chest else 1
+            # Match the actual EnBox identity and type, including dynamically
+            # spawned minigame chests. A room/NPC name containing "Chest" does
+            # not make that interaction a chest. Renaming checks cannot weaken
+            # the physical requirement for the second progressive ability.
+            chest_type = CHEST_TYPES_BY_AP_ID.get(location.address)
+            if o.shuffle_open_chest.value and chest_type is not None:
+                count = 2 if o.shuffle_open_chest.value == 2 and chest_type not in (5, 6, 7, 8) else 1
                 require(location, 'Open Chest', count)
 
             # Supplement the source-aware helper with native close-pot methods
@@ -3878,7 +3846,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                         require(location, f"Speak {language}")
 
                 if self.options.shuffle_flow_of_time.value:
-                    require(location, "Flow of Time")
+                    bundle = native_bundle_for_location(location)
+                    require_native_existing(location, Has("Flow of Time") | can_play_song(Items.SUNS_SONG, bundle))
 
                 require_native_existing(location, flavor_world_rule)
 
@@ -4544,6 +4513,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         for location in self.get_locations():
             source = location_data_table.get(location.name)
             address = location.address if location.address is not None else (source.loc_id if source else None)
+            # The vanilla minigame branch buys a key from the owner. Shuffled
+            # chests instead use persistent locks; their keys can arrive from
+            # anywhere without requiring the owner or his language.
+            if o.shuffle_chest_minigame.value and (address == 47 or address is not None and 9700553 <= address <= 9700562):
+                continue
             language = NATIVE_EXACT_SPEAK_BY_AP_ID.get(address)
             if language is None or (location.name == "Song from Impa" and o.skip_child_zelda.value):
                 continue
@@ -4626,6 +4600,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             (o.shuffle_flow_of_time, "Flow of Time"),
         ]
         extras.extend(name for enabled, name in toggles if enabled.value)
+
+        # Six persistent locks separate the entrance from the final prize.
+        # The shuffled owner no longer guarantees a key, so the full set must
+        # be in the AP pool even when Skeleton Key is disabled.
+        if o.shuffle_chest_minigame.value:
+            extras.extend([Items.TREASURE_GAME_SMALL_KEY] * 6)
+
 
         if o.shuffle_bean_souls.value:
             extras.extend([

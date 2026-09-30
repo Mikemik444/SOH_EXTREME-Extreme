@@ -241,6 +241,15 @@ SPIRIT_ACCESS = {
    'SpiritEastToSwitch() && (HasItem(RG_CLIMB) || CanUse(RG_LONGSHOT)) && HasItem(RG_POWER_BRACELET)'),
 }
 
+def spirit_shared_access(bundle, target, condition):
+    """Use the native age/key accounting for a stock Spirit check's parent."""
+    class StockParentCompiler(NativeRoomCompiler):
+        def bundle(self, rr):
+            return bundle
+    compiler = StockParentCompiler(bundle[1])
+    return compiler.call('SpiritShared', [target, condition], target)
+
+
 class NativeRoomCompiler:
     def __init__(self, world):
         self.world=world

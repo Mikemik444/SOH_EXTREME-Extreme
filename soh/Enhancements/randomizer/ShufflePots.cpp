@@ -6,6 +6,7 @@
 #include "soh/ObjectExtension/ObjectExtension.h"
 #include "soh/Enhancements/randomizer/randomizer.h"
 #include "soh/Enhancements/randomizer/RCToRandInf.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 extern "C" {
 #include "overlays/actors/ovl_Obj_Tsubo/z_obj_tsubo.h"
@@ -69,16 +70,22 @@ extern "C" void ObjTsubo_RandomizerDraw(Actor* thisx, PlayState* play) {
 
 uint8_t ObjTsubo_RandomizerHoldsItem(ObjTsubo* potActor, PlayState* play) {
     const auto potIdentity = ObjectExtension::GetInstance().Get<CheckIdentity>(&potActor->actor);
-    if (potIdentity == nullptr) {
+    if (potIdentity == nullptr || potIdentity->randomizerCheck == RC_UNKNOWN_CHECK ||
+        potIdentity->randomizerCheck == RC_MAX || potIdentity->randomizerInf == RAND_INF_MAX) {
         return false;
     }
 
     RandomizerCheck rc = potIdentity->randomizerCheck;
+    // The AP slot owns which pots are checks. Inactive/unassigned native pots
+    // must keep their vanilla drops, not spawn an empty randomized dummy.
+    if (Archipelago_IsCurrentSaveFile() && !Archipelago_ShouldHandleCheck(static_cast<int32_t>(rc))) {
+        return false;
+    }
     uint8_t isDungeon = Rando::StaticData::GetLocation(rc)->IsDungeon();
     auto potSetting = RAND_GET_OPTION(RSK_SHUFFLE_POTS);
 
     // Don't pull randomized item if pot isn't randomized or is already checked
-    if (!IS_RANDO || (potSetting.Is(RO_SHUFFLE_POTS_OVERWORLD) && isDungeon) ||
+    if (!IS_RANDO || !potSetting || (potSetting.Is(RO_SHUFFLE_POTS_OVERWORLD) && isDungeon) ||
         (potSetting.Is(RO_SHUFFLE_POTS_DUNGEONS) && !isDungeon) || Flags_GetRandomizerInf(potIdentity->randomizerInf) ||
         potIdentity->randomizerCheck == RC_UNKNOWN_CHECK) {
         return false;
@@ -94,6 +101,10 @@ void ObjTsubo_RandomizerSpawnCollectible(ObjTsubo* potActor, PlayState* play) {
     }
 
     EnItem00* item00 = (EnItem00*)Item_DropCollectible2(play, &potActor->actor.world.pos, ITEM00_SOH_DUMMY);
+    if (item00 == nullptr) {
+        // Actor allocation failure must leave the check pending for a revisit.
+        return;
+    }
     item00->randoInf = potIdentity->randomizerInf;
     item00->itemEntry = Rando::Context::GetInstance()->GetFinalGIEntry(potIdentity->randomizerCheck, true, GI_NONE);
     item00->actor.draw = (ActorFunc)EnItem00_DrawRandomizedItem;

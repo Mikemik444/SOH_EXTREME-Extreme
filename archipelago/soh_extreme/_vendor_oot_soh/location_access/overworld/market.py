@@ -309,8 +309,10 @@ def set_region_rules(world: "SohWorld") -> None:
     # Market Treasure Chest Game
     # Locations
     add_locations(Regions.MARKET_TREASURE_CHEST_GAME, world, [
-        (Locations.MARKET_TREASURE_CHEST_GAME_REWARD, lambda bundle: (has_item(Items.CHILD_WALLET, bundle) &
-                                                                      can_use(Items.LENS_OF_TRUTH, bundle)))
+        (Locations.MARKET_TREASURE_CHEST_GAME_REWARD, lambda bundle:
+            small_keys(Items.TREASURE_GAME_SMALL_KEY, 6, bundle)
+            if getattr(world.options, "shuffle_chest_minigame", False) else
+            (has_item(Items.CHILD_WALLET, bundle) & can_use(Items.LENS_OF_TRUTH, bundle)))
     ])
     # Connections
     connect_regions(Regions.MARKET_TREASURE_CHEST_GAME, world, [

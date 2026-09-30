@@ -705,7 +705,8 @@ void Region::ApplyTimePass() {
     // This is used by the native check tracker/reachability search as well as
     // native randomizer logic.
     auto ctx = Rando::Context::GetInstance();
-    if (ctx->GetOption(RSK_SHUFFLE_FLOW_OF_TIME) && !logic->HasItem(RG_FLOW_OF_TIME)) {
+    if (ctx->GetOption(RSK_SHUFFLE_FLOW_OF_TIME) && !logic->HasItem(RG_FLOW_OF_TIME) &&
+        !logic->CanUse(RG_SUNS_SONG)) {
         return;
     }
 

@@ -13,6 +13,10 @@ class ForkLocationData:
     region: Regions
     dungeon: bool
 
+# Never generate these two courtyard window checks again. Keep their stable
+# identities for existing server placements; do not renumber/reuse their IDs.
+RETIRED_FORK_LOCATION_IDS = frozenset({9700287, 9700288})
+
 FORK_LOCATIONS = (
     ForkLocationData('EXTREME Botw B1 Ladder Silver', 9700000, 'RC_BOTW_B1_LADDER_SILVER', 'silver', Regions.BOTTOM_OF_THE_WELL_ENTRYWAY, True),
     ForkLocationData('EXTREME Botw B2 Ladder Silver', 9700001, 'RC_BOTW_B2_LADDER_SILVER', 'silver', Regions.BOTTOM_OF_THE_WELL_ENTRYWAY, True),

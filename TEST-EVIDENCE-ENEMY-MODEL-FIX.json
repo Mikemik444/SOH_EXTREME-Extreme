@@ -1,0 +1,74 @@
+{
+  "models": {
+    "passed": true,
+    "compile_output": "models.cpp\n",
+    "output": "897 assertions passed\n",
+    "scope": "Compile production enemy display, scout mailbox and collection functions.\n\nEngine allocation/drawing/network services are controlled fakes; this does not\nrender the game. Run from a VS x64 developer command prompt.\n"
+  },
+  "protocol": {
+    "passed": true,
+    "exit_code": 0,
+    "scope": "Actual rebuilt APCpp DLL LocationInfo parser and callback ABI, no socket"
+  },
+  "cmake_patch": {
+    "passed": true,
+    "cases": [
+      "clean pinned source",
+      "idempotent repeat",
+      "incompatible cpp leaves both files intact",
+      "incompatible header leaves both files intact"
+    ],
+    "patched_sha256": [
+      "a10f4dd257c3ca2f70d128576bbe0938c999da8f48df506c0730133e66fce5fb",
+      "1e8f6274a47ee0a681e86c5ac1dd77cc56a918c01698bc78616f4cab7ae63c54"
+    ]
+  },
+  "presentation": {
+    "passed": true,
+    "scope": "Production functions compiled with controlled engine services; no live game",
+    "cases": [
+      "remote major animation",
+      "rock ReportCheck to Jigsaw presentation",
+      "enemy ReportLocation to Jigsaw presentation",
+      "journal reconciliation silent",
+      "AP progression/useful flag subtypes",
+      "filler names",
+      "same-slot receipt ownership",
+      "deduplicated checks",
+      "missing scouts",
+      "water/air/cutscene/pause deferral",
+      "failed give retry",
+      "receipt lifecycle",
+      "message control-character handling",
+      "scrub/shop names and prices",
+      "important and normal pickup text",
+      "song note progress text",
+      "silver puzzle counts and pouches",
+      "old seed native defaults",
+      "explicit seed settings preserved",
+      "invalid settings rejected"
+    ]
+  },
+  "delivery": [
+    {
+      "name": "location_delivery_and_isolation",
+      "passed": true
+    },
+    {
+      "name": "partial_scout_recovery",
+      "passed": true
+    },
+    {
+      "name": "save_snapshot_consistency",
+      "passed": true
+    },
+    {
+      "name": "major_receipt_identity",
+      "passed": true
+    },
+    {
+      "name": "AP save/receipt/enemy integration boundaries",
+      "passed": true
+    }
+  ]
+}

@@ -110,6 +110,11 @@ class SongNoteShuffle(Choice):
     default = 0
 
 class ShuffleFlowOfTime(Toggle):
+    """Freeze normal time progression until Flow of Time is collected.
+
+    Sun's Song can still select day or night when it can be played. Time stays
+    at the selected phase until Flow of Time is found.
+    """
     display_name = "Shuffle Flow of Time"
 
 class FrozenStartingTime(Choice):

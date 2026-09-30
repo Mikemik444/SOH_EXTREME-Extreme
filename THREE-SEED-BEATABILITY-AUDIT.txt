@@ -1,0 +1,22 @@
+THREE-SEED AUDIT - FINAL RULES 0.11.35
+
+A: 28329797861162018978 -- FAIL full multiworld access
+Reached 907/3457 checks; goals: {'4': False, '1': False, '2': False, '3': False}
+
+B: 15869480947154709792 -- PASS
+Reached 3457/3457 checks; goals: {'4': True, '1': True, '2': True, '3': True}
+
+C: 56771124513727284418 -- FAIL full multiworld access
+Reached 2158/3457 checks; goals: {'4': True, '1': False, '2': False, '3': False}
+
+A has the Open Chest / Shovel / Skulltula Soul circular dependency.
+C reaches Link's Triforce goal but stalls the Jigsaw players.
+B completes all four player goals and all checks in this replay.
+
+Regenerate A and C with the fixed APWorld. Updating cannot move their items.
+This supersedes the provisional pass previously reported for C.
+No items were granted and no saves or live server state were changed.
+
+The independent source-condition audit is broader than AP/UT agreement,
+but untranslated source expressions remain explicit coverage limitations.
+No connected in-game playthrough was performed.

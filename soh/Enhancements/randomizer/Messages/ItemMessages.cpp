@@ -145,6 +145,14 @@ void BuildCustomItemMessage(Player* player, CustomMessage& msg) {
     } else {
         rgid = player->getItemId;
     }
+    if (rgid == RG_AP_SONG_NOTE) {
+        const char* description = Archipelago_GetSongNotePickupDescription();
+        msg = CustomMessage(description != nullptr && description[0] != '\0'
+                                ? description : "You found a %gSong Note%w!",
+                            TODO_TRANSLATE, TODO_TRANSLATE, TEXTBOX_TYPE_BLUE);
+        msg.AutoFormat();
+        return;
+    }
     if (rgid == RG_AP_REMOTE_IMPORTANT || rgid == RG_AP_REMOTE_NORMAL) {
         const char* description = Archipelago_GetRemotePickupDescription();
         msg = CustomMessage("You found %g[[1]]%w!", TODO_TRANSLATE, TODO_TRANSLATE, TEXTBOX_TYPE_BLUE);
@@ -169,6 +177,17 @@ void BuildCustomItemMessage(Player* player, CustomMessage& msg) {
     msg.Replace("[[article]]", article);
     msg.Replace("[[color]]", Rando::StaticData::RetrieveItem(static_cast<RandomizerGet>(rgid)).GetColor());
     msg.Replace("[[name]]", name);
+    // Message_StartTextbox runs before Randomizer_Item_Give. Report the
+    // count including this pickup, using the exact puzzle's native counter.
+    const auto silverItem = static_cast<RandomizerGet>(rgid);
+    if (const s8* silver = Randomizer::SilverFieldFromSaveContext(&gSaveContext, silverItem)) {
+        const int total = Randomizer::SilverTotal(silverItem);
+        const bool wallet = OTRGlobals::Instance->gRandoContext->GetOption(RSK_SHUFFLE_SILVER)
+                                .Is(RO_SHUFFLE_SILVER_WALLET);
+        const int collected = wallet ? total : std::clamp(static_cast<int>(*silver) + 1, 0, total);
+        msg = msg + CustomMessage("&Silver Rupees: %y" + std::to_string(collected) + "/" +
+                                 std::to_string(total) + "%w.", TODO_TRANSLATE, TODO_TRANSLATE);
+    }
     if (Rando::StaticData::RetrieveItem(static_cast<RandomizerGet>(rgid)).HasCustomIcon()) {
         msg.AutoFormat(ITEM_CUSTOM);
     } else {

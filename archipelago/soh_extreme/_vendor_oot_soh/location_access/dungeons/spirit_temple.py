@@ -1,5 +1,10 @@
 from ...LogicHelpers import *
 
+def spirit_shared_access(bundle, target, condition):
+    # Region modules are imported while SohRegion itself is being defined.
+    from ....EnemyRoomLogic import spirit_shared_access as native_shared_access
+    return native_shared_access(bundle, target, condition)
+
 if TYPE_CHECKING:
     from ... import SohWorld
 
@@ -8,6 +13,18 @@ class EventLocations(StrEnum):
     SPIRIT_TEMPLE_BEGINNING_NUT_CRATE = "Spirit Temple Nut Crate"
     SPIRIT_TEMPLE_TWINROVA = "Spirit Temple Twinrova"
 
+
+
+def sun_block_chest(bundle):
+    world = bundle[1]
+    mode = getattr(world.options, "shuffle_silver", None)
+    mode = mode.value if mode is not None else 0
+    # Without silver shuffle the reachable room's puzzle supplies the torch;
+    # the shared-access predicate below supplies its age/key/block conditions.
+    silver = Has("Spirit Silver: Sun", 5 if mode == 1 else 1) if mode in (1, 2) else True_()
+    fire = has_fire_source(bundle) | (silver & (can_use(Items.STICKS, bundle) |
+        (can_do_trick(Tricks.SPIRIT_SUN_CHEST, bundle) & can_use(Items.FAIRY_BOW, bundle))))
+    return spirit_shared_access(bundle, "RR_SPIRIT_TEMPLE_SUN_BLOCK_CHEST_LEDGE", fire)
 
 def set_region_rules(world: "SohWorld") -> None:
     # Spirit Temple Entryway
@@ -109,8 +126,7 @@ def set_region_rules(world: "SohWorld") -> None:
     add_locations(Regions.SPIRIT_TEMPLE_CENTRAL_CHAMBER, world, [
         (Locations.SPIRIT_TEMPLE_MAP_CHEST, lambda bundle: ((has_explosives(bundle) | small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 2, bundle)) & (can_use(Items.DINS_FIRE, bundle) | ((can_use(Items.FIRE_ARROW, bundle) | can_do_trick(Tricks.SPIRIT_MAP_CHEST, bundle)) & can_use(Items.FAIRY_BOW, bundle) & can_use(Items.STICKS, bundle)))) | (
             small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 5, bundle) & has_explosives(bundle) & can_use(Items.STICKS, bundle)) | (small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 3, bundle) & (can_use(Items.FIRE_ARROW, bundle) | (can_do_trick(Tricks.SPIRIT_MAP_CHEST, bundle) & can_use(Items.FAIRY_BOW, bundle))) & can_use(Items.SILVER_GAUNTLETS, bundle))),
-        (Locations.SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST, lambda bundle: ((has_explosives(bundle) | small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 2, bundle)) & (can_use(Items.DINS_FIRE, bundle) | ((can_use(Items.FIRE_ARROW, bundle) | can_do_trick(Tricks.SPIRIT_SUN_CHEST, bundle)) & can_use(Items.FAIRY_BOW, bundle) & can_use(Items.STICKS, bundle)))) | (
-            small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 5, bundle) & has_explosives(bundle) & can_use(Items.STICKS, bundle)) | (small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 3, bundle) & (can_use(Items.FIRE_ARROW, bundle) | (can_do_trick(Tricks.SPIRIT_SUN_CHEST, bundle) & can_use(Items.FAIRY_BOW, bundle))) & can_use(Items.SILVER_GAUNTLETS, bundle))),
+        (Locations.SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST, lambda bundle: sun_block_chest(bundle)),
         (Locations.SPIRIT_TEMPLE_STATUE_ROOM_HAND_CHEST, lambda bundle: small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY,
          3, bundle) & can_use(Items.SILVER_GAUNTLETS, bundle) & can_use(Items.ZELDAS_LULLABY, bundle)),
         (Locations.SPIRIT_TEMPLE_STATUE_ROOM_NORTHEAST_CHEST, lambda bundle: small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 3, bundle) & can_use(Items.SILVER_GAUNTLETS, bundle)
@@ -150,8 +166,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Spirit Temple Outdoor Hands
     # Locations
     add_locations(Regions.SPIRIT_TEMPLE_OUTDOOR_HANDS, world, [
-        (Locations.SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST, lambda bundle: (small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 3, bundle)
-         & can_use(Items.LONGSHOT, bundle) & has_explosives(bundle)) | small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY, 5, bundle)),
+        (Locations.SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST, lambda bundle: spirit_shared_access(bundle, "RR_SPIRIT_TEMPLE_OUTER_RIGHT_HAND", True_())),
         (Locations.SPIRIT_TEMPLE_MIRROR_SHIELD_CHEST, lambda bundle: small_keys(Items.SPIRIT_TEMPLE_SMALL_KEY,
          4, bundle) & can_use(Items.SILVER_GAUNTLETS, bundle) & has_explosives(bundle))
     ])
