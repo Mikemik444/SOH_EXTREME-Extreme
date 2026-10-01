@@ -1,0 +1,21 @@
+{
+  "npc_glow": {
+    "passed": true,
+    "assertions": 14520,
+    "identity_rows": 162,
+    "callsite": true,
+    "output": "npc_glow.cpp\n14520 NPC speech glow assertions passed across 162 identity rows\n",
+    "scope": "Compile production NPC glow, identity, receipt and draw bodies.\n\nTests current character identities and old seed fallback behavior, local outbox\nand server-confirmed checks, NPC Soul, save/scene guards and render bounds.\nEngine/network/GPU services are controlled; this is not a live visual playtest.\n"
+  },
+  "speech": {
+    "passed": true,
+    "log": "npc_speech.cpp\nPASS 215 compiled speech assertions\n",
+    "scope": "Compile real NPC lookup, language, first-talk and send bodies with engine adapters."
+  },
+  "enemy_glow": {
+    "passed": true,
+    "species": 51,
+    "output": "enemy_glow.cpp\n2027 enemy glow assertions passed\n",
+    "scope": "Compile production enemy-glow eligibility and draw body with controlled services.\n\nUses the real species/shared/skulltula soul policy and pending-check predicate.\nRender calls are recorded, not executed by a GPU; no visual playtest is implied.\n"
+  }
+}

@@ -119,6 +119,8 @@ set(GBI_UCODE "F3DEX_GBI_2" CACHE STRING "Specify the GBI ucode version" FORCE)
 if (NOT TARGET libultraship)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../libultraship ${CMAKE_BINARY_DIR}/libultraship SYSTEM)
 endif()
+include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeTlutSafety.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeCrashStack.cmake")
 
 set(PROJECT_NAME soh)
 

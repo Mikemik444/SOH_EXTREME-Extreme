@@ -15,6 +15,7 @@
     append_str(buff, len, varValue);
 
 extern "C" PlayState* gPlayState;
+extern "C" void Actor_GetCrashCallback(s16* id, s16* params, uintptr_t* callback);
 
 static std::array<const char*, ACTORCAT_MAX> sCatToStrArray{
     "SWITCH", "BG", "PLAYER", "EXPLOSIVE", "NPC", "ENEMY", "PROP", "ITEMACTION", "MISC", "BOSS", "DOOR", "CHEST",
@@ -65,6 +66,13 @@ static void CrashHandler_WriteActorData(char* buffer, size_t* pos) {
 
 extern "C" void CrashHandler_PrintSohData(char* buffer, size_t* pos) {
     char intCharBuffer[16];
+    s16 callbackId, callbackParams;
+    uintptr_t callback;
+    Actor_GetCrashCallback(&callbackId, &callbackParams, &callback);
+    char callbackLine[144];
+    snprintf(callbackLine, sizeof(callbackLine), "Active actor callback: actor=%d params=%d address=%p",
+             callbackId, callbackParams, reinterpret_cast<void*>(callback));
+    append_line(buffer, pos, callbackLine);
     append_line(buffer, pos, "Build Information:");
     WRITE_VAR_LINE(buffer, pos, "  Game Version: ", (const char*)gBuildVersion);
     WRITE_VAR_LINE(buffer, pos, "  Git Branch: ", (const char*)gGitBranch);

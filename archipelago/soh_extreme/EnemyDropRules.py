@@ -6,10 +6,10 @@ Room traversal and encounter activation are distinct from the enemy kill rule.
 """
 from rule_builder.rules import Has, And, Or, True_, False_
 from Options import OptionError
-from ._vendor_oot_soh.Enums import Regions, Items
+from ._vendor_oot_soh.Enums import Regions, Items, Tricks
 from ._vendor_oot_soh.LogicHelpers import (
     can_use, has_item, has_explosives, is_child, is_adult,
-    has_fire_source_with_torch, can_play_song,
+    has_fire_source_with_torch, can_play_song, can_do_trick,
 )
 from .EnemyRoomLogic import resolve_enemy_region, event_item, ENEMY_ROOM_MAP
 
@@ -45,6 +45,10 @@ def enemy_drop_rule(world, entry):
     def age_combat(adult):
         sword = (can_use(Items.MASTER_SWORD, b) | can_use(Items.BIGGORONS_SWORD, b)) if adult else can_use(Items.KOKIRI_SWORD, b)
         melee = sword | (can_use(Items.MEGATON_HAMMER, b) if adult else can_use(Items.STICKS, b))
+        sticks = can_use(Items.STICKS, b) if not adult else False_()
+        hammer = can_use(Items.MEGATON_HAMMER, b) if adult else False_()
+        sling = can_use(Items.FAIRY_SLINGSHOT, b) if not adult else False_()
+        nuts = can_use(Items.NUTS, b)
         bow = can_use(Items.FAIRY_BOW, b) if adult else False_()
         hook = can_use(Items.HOOKSHOT, b) if adult else False_()
         rang = can_use(Items.BOOMERANG, b) if not adult else False_()
@@ -52,7 +56,24 @@ def enemy_drop_rule(world, entry):
         explosive = has_explosives(b)
         fire = can_use(Items.DINS_FIRE, b) | (can_use(Items.FIRE_ARROW, b) if adult else False_())
         reflect = can_use(Items.HYLIAN_SHIELD, b) if adult else can_use(Items.DEKU_SHIELD, b)
+        # Enemy-specific damage and activation rules, reviewed against the actor
+        # damage tables and native CanKillEnemy. A stunning hit is not a kill.
+        standing_shield = (can_use(Items.HYLIAN_SHIELD, b) | can_use(Items.MIRROR_SHIELD, b)) if adult else reflect
         combat = {
+            "sword": sword,
+            "tektite": melee | sling | bow,
+            "peahat": melee | sling | bow | hook,
+            "shabom": melee | rang | nuts | can_use(Items.DINS_FIRE, b) | (can_use(Items.ICE_ARROW, b) if adult else False_()),
+            "jellyfish": rang | bow | hook,
+            "tailpasaran": rang | sticks,
+            "stinger": sling | bow | hook,
+            "bubble": melee | sling | bow | explosive,
+            "blue_bubble": explosive | hammer | bow | ((sword | sticks | sling) & (nuts | hook | rang | standing_shield)),
+            "armos": explosive | hammer | bow | sticks | (sword if adult else (sword & (nuts | hook | rang))),
+            "dead_hand": sword | (sticks & can_do_trick(Tricks.BOTW_CHILD_DEADHAND, b)),
+            "dead_hand_arm": sword | sticks,
+            "spike": (sword if adult else False_()) | hammer | sticks | hook | bow | explosive | can_use(Items.DINS_FIRE, b),
+            "freezard": (sword if adult else False_()) | hammer | sticks | hook | explosive | fire,
             "contact": True_(), "melee": melee, "ranged": ranged,
             "ranged_or_melee": ranged | melee, "reflect_nuts": reflect,
             "explosive": explosive, "explosive_or_melee": explosive | melee,

@@ -1028,7 +1028,7 @@ class SunlightArrows(DefaultOnToggle):
 class RocsFeather(Toggle):
     """
     Adds Roc's Feather to the item pool. Roc's Feather is a custom item granting the player a jump on demand. 
-    The jump can also be used when already in midair. Roc's Feather is not considered by logic.
+    The jump can also be used when already in midair. Logic includes the adult Graveyard crate ledge jump.
     """
     display_name = "Roc's Feather"
 

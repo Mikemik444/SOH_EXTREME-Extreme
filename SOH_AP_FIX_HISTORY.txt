@@ -1,3 +1,166 @@
+0.11.46 - Uncollected NPC Speech glow (2026-09-30)
+  - A soft cyan glow marks visible NPCs whose active AP first-conversation
+    check has not been collected. Uses the same character and grotto scrub
+    identities as the speech hooks; moving characters keep their checked state.
+  - No glow when Speech Sanity is off, the AP save/session is inactive, the
+    NPC is hidden/destroyed/uninitialized, or shuffled NPC Soul is missing.
+  - Accepting the speech check into the saved local outbox removes the glow
+    immediately, including offline. Server-confirmed and restored checks stay off.
+  - Old reward-based speech checks and persisted generic conversation identities
+    remain supported. Rendering never assigns/reports checks or requests scouts.
+  - The glow is drawn only in the NPC's existing draw pass, uses an existing
+    effect asset and retains no Actor pointers or effects across scene changes.
+  - Cyan speech glow takes precedence over the gold enemy-drop glow on shared
+    actors; normal enemy indicators remain unchanged after speech is collected.
+  - No AP item placements or logic requirements change; no new seed is needed.
+
+0.11.45 - Indoor pot interaction restrictions (2026-09-30)
+  - Kokiri Forest Link/Twins/Know-It-All houses and the Market back-alley
+    house require Pot Soul plus Grab when shuffled: all combat buttons are
+    disabled in these scenes, so weapons and explosives cannot substitute.
+  - Talon's indoor pots allow a usable sword or Grab, but no combat C items.
+  - The Market guardhouse keeps its valid combat methods, excluding Hookshot
+    because this scene disables it. Outdoor and dungeon rules are preserved.
+  - AP generation and Universal Tracker share the corrected interaction rule;
+    location IDs, collected checks and item placements remain unchanged.
+  - Regression tests compare every non-MQ pot scene against engine restriction
+    flags and replay the supplied received inventory, including existing-slot
+    reconstruction and shuffle-disabled alternatives.
+  - This update retains the .44 crash safeguards and soul artwork. It does not
+    identify the original callback-corrupting write or certify old seed layouts.
+
+0.11.44 - Enemy logic, Market crash containment, and soul appearance
+  - Current-area grouping separates shared NPC checks from other checks in
+    their AP region, so a Kakariko NPC no longer labels all Market checks as here.
+  - Corrects the child-only Dodongo's Cavern enemy route: Grab by itself no
+    longer reaches the lobby switch and bypasses the locked Lizalfos route.
+    The normal child route needs combat and the configured Lizalfos Soul;
+    the adult shortcut and explicitly enabled ground-jump trick remain valid.
+  - Market Ruins Redeads now have adult-only spawn masks in AP and native
+    catalogues. Location IDs and already placed items are unchanged.
+  - Enemy damage rules now distinguish stun-only weapons for Tektites,
+    Peahats, Shaboms, Biri/Bari, Tailpasarans, Stingers and Bubbles. Blue
+    Bubbles need a way to remove their flame; Armos needs a valid finishing
+    attack; Dead Hand/arms, Skull Kid, Freezard and Spike use specific weapons.
+  - Native finder now shares the AP daytime Peahat, Composer NPC Soul and
+    Big Octo/Ruto interaction gates. Room routes keep age, souls and abilities.
+  - Both supplied .43 Market crashes had the exact low 32 bits of the native
+    EnButte_Draw address. Narrow containment restores that callback only when
+    the native actor identity/update/destroy match. It preserves NULL and
+    legitimate replacement callbacks. The corrupting write is still unknown.
+  - Crash reports now retain actual fault/caller PCs, module base/RVAs and
+    active actor callback identity, including when matching PDBs are absent.
+  - Animal, category, boss and bean souls have enamel-style, readable icons;
+    native messages use 32px textures and the tracker uses 128px textures.
+  - Enemy tracker portraits use their existing higher-resolution artwork with
+    colored frames; missing souls still use the faded ownership display.
+  - Category and enemy pickups have a modeled beveled rim, gentle motion and
+    a smaller flame; boss and bean souls retain their recognizable 3D models.
+  - The visual refresh preserves soul ownership, item IDs and pickup animations.
+  - New soh.o2r is required alongside the executable for the new artwork.
+
+0.11.43 - LETTER BOTTLE LOGIC AND UNCOLLECTED ENEMY GLOW (2026-09-30)
+- Ruto's Letter stays unavailable as a reusable bottle until the delivery
+  event is reachable as child Link, with NPC Soul and Zora speech when those
+  settings are enabled. The event already owns Zoras Domain access. Added
+  missing interaction gates to AP/UT and the native region event, fixing all
+  downstream bottle uses rather than only individual fish checks.
+- An ordinary usable bottle remains an alternative. Shared Speak, individual
+  Speak Zora and disabled-shuffle behavior stay distinct. Lake Hylia and the
+  waterfall remain alternative routes; adult-only Domain access is insufficient.
+- Pending active AP enemy placements display a pulsing gold glow when drawn.
+  The enemy's actual required soul must be available (including Skulltula Soul).
+  The glow checks collection, not death, and stops when the drop is collected.
+  No halo for inactive/retired/unknown checks or hidden/destroyed actors.
+- Glow rendering uses the existing shared flash resource in the normal actor
+  draw pass, with a balanced matrix stack. No extra actors, retained pointers,
+  replacement enemy draw callbacks or network messages are created for the glow.
+- Release build passed; 624 AP/UT bottle assertions, 1793 native bottle
+  assertions, 2027 glow assertions covering 51 mapped enemy actor types.
+  Fresh generation/replay reaches all 3311 modeled checks and the goal using
+  the saved supplied-settings fixture. This is not a complete physical playtest.
+- Existing seed/save can load, but this corrects reachability and does not move
+  an old seed's items. New generation uses the corrected bottle dependency.
+  Keep game/APWorld/UT versions matched. No live render test was performed.
+
+0.11.42 - BOULDER LIFECYCLE AND INTERRUPTED ITEM OFFERS (2026-09-30)
+- Collected randomized boulders stop displaying reward halos and respect the
+  game's ordinary destruction switches. Silver boulders set their original
+  switch when thrown; only an uncollected shuffled reward bypasses removal
+  on re-entry. Missed drops remain recoverable. Small rocks keep normal reuse.
+- Rock collectibles explicitly carry their native check identity; failed
+  collectible allocation does not dereference a null actor or consume a check.
+- Correct .40's re-offer guard: Player_Update clears interactRangeActor after
+  a missed offer while retaining its item fields. A null source with the exact
+  pending AP entry is now eligible for re-offer on the next safe update.
+  Protect live actor offers, mismatched entries and all existing safety gates.
+  Actual item receipt still commits the receive once; no forced/early grant.
+- The inspected .41 log sent DMT rock checks within 0-1 ms; received packets
+  arrived about 50 ms later. A Slingshot presentation waited over 7 seconds,
+  leaving later receipts queued. This supports an offer/queue stall, not a
+  proven slowdown from the full accumulated item history.
+- Windows Release build and compiled tests passed: 493 boulder lifecycle
+  assertions; 18044 receipt assertions including 4000 consecutive interrupted
+  offers. Both targeted regressions fail with .41 production function bodies.
+  No connected in-game latency measurement or rendered boulder test was run.
+- No placement/logic/ID changes from .41; APWorld is version-only. Keep the
+  current server and save. Update runtime and APWorld/UT together to .42.
+
+0.11.41 - UNUSED ENEMY CHECKS AND LEGACY SEEDS (2026-09-30)
+- Correction to .40: the outdoor Graveyard Keese/Skullwalltula entries are
+  unused because their required objects are missing. Raw actor lists did not
+  establish that these enemies spawned. The earlier map/explanation was wrong.
+- Exclude five Graveyard Keese, two Skullwalltulas, and the unused Lost Woods
+  Octorok from new seeds. Preserve their IDs for explicit old-slot manifests.
+- Old-seed compatibility restores only exact, active, pending placements,
+  including with Enemy Randomizer. Normal souls/combat and collection still
+  apply. No automatic awards or moved items; existing seed can be retained.
+- Keep the .40 TLUT guard; log runtime version/build timestamp at startup.
+  The recorded Crater fault matches the known palette-copy offset. No new
+  live scene-transition reproduction was performed.
+- Release build, 227 missing-object cases, 142 AP/UT compatibility assertions,
+  182 route assertions, resource audit and fresh 3311-check replay passed.
+  These tests do not certify every physical route or exclude other crashes.
+
+0.11.40 - SONG COLORS, PICKUP DELIVERY, TRANSITION CRASH AND GRAVEYARD ROUTES (2026-09-30)
+- All 74 AP notes display their corresponding song's native model/color. The
+  12 note variants are major hold-up items and do not grant full songs early.
+  Note counters and song completion remain tied to the matching actual receipt.
+- Re-offer pending own and foreign major presentations on safe player updates,
+  matching the native item queue. A lost one-frame offer no longer has to wait
+  for the 90-frame retry. Never bypass scene/cutscene/water/death safety or an
+  unrelated actor's item, and never commit before the item-receive callback.
+- Matched two user crashes (Fishing Pond and adult Temple of Time exterior) to
+  Fast::Interpreter::GfxDpLoadTlut's second palette memcpy. The old Windows
+  guard checked only the first 256 bytes of a 512-byte load. Reproduced the
+  access violation with a protected second page. Stage/validate the complete
+  bounded transfer with ReadProcessMemory before publishing either half; also
+  protect short loads, invalid tile/TMEM/length and lower-TMEM fallback.
+  CMake installs the renderer fix on reviewed dependency revisions and checks
+  repeat/incompatible-source behavior. This fixes the identified crash path;
+  other causes of intermittent crashes have not been ruled out.
+- Gate all ten planted-bean events and patch-specific bean use on the matching
+  Bean Soul when shuffled. Graveyard PoH and its crate now share a route:
+  adult planted platform, adult Roc's Feather jump, or usable Longshot, plus
+  crate soul/breaking requirements. Keep the separately enabled Boomerang trick.
+- Windmill song requires adult, Ocarina, and NPC Soul/Hylian speech as enabled.
+  The front door honors its key or Skeleton Key. The alternate Dampe passage
+  requires the actual Dampe interaction and playable Song of Time, not just
+  access to the grave entrance. Native finder and AP/UT rules are updated.
+- The screenshot's scene-0x53 Keese/Skullwalltulas are outdoor Graveyard actors.
+  No Lullaby gate was added there. Scene-0x41 Royal Family's Tomb enemies were
+  verified blocked without a complete playable Lullaby, Ocarina and buttons.
+- Windows Release build passed. Tests: 189 AP/UT route assertions, 3072 native
+  predicates, 189 note-color assertions, 1798 receipt/re-offer assertions,
+  897 enemy-model assertions, 66058 TLUT assertions and expected old-code crash,
+  CMake patch fixtures, presentation and five delivery regression groups.
+  Fresh generation/replay using the user's current YAML reached the goal and
+  all 3319 checks. This is automated evidence, not a complete physical playtest.
+- No item/location IDs changed in .40. Existing seeds can use the runtime and
+  corrected tracker, but new generation is required to place items under the
+  stricter rules. Updating does not prove or repair an old seed's placement.
+  Cumulative prior catalog changes retain their new-seed requirements.
+
 0.11.39 - NATIVE MODELS FOR ENEMY AP PICKUPS (2026-09-30)
 - User requested the actual item model for SOH-EXTREME rewards from enemy drops.
 - Resolve AP-only enemy placements from their scout metadata. Own-slot rewards

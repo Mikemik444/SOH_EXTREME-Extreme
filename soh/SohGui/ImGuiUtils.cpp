@@ -143,6 +143,16 @@ std::map<uint32_t, ItemMapEntry> gregMapping = {
 };
 
 std::map<uint32_t, ItemMapEntry> customItemsMapping = {
+    { RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL, { RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL, "RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL", "RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL, { RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL, "RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL", "RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_DESERT_COLOSSUS_BEAN_SOUL, { RG_DESERT_COLOSSUS_BEAN_SOUL, "RG_DESERT_COLOSSUS_BEAN_SOUL", "RG_DESERT_COLOSSUS_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_GERUDO_VALLEY_BEAN_SOUL, { RG_GERUDO_VALLEY_BEAN_SOUL, "RG_GERUDO_VALLEY_BEAN_SOUL", "RG_GERUDO_VALLEY_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_GRAVEYARD_BEAN_SOUL, { RG_GRAVEYARD_BEAN_SOUL, "RG_GRAVEYARD_BEAN_SOUL", "RG_GRAVEYARD_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_KOKIRI_FOREST_BEAN_SOUL, { RG_KOKIRI_FOREST_BEAN_SOUL, "RG_KOKIRI_FOREST_BEAN_SOUL", "RG_KOKIRI_FOREST_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_LAKE_HYLIA_BEAN_SOUL, { RG_LAKE_HYLIA_BEAN_SOUL, "RG_LAKE_HYLIA_BEAN_SOUL", "RG_LAKE_HYLIA_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_LOST_WOODS_BRIDGE_BEAN_SOUL, { RG_LOST_WOODS_BRIDGE_BEAN_SOUL, "RG_LOST_WOODS_BRIDGE_BEAN_SOUL", "RG_LOST_WOODS_BRIDGE_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_LOST_WOODS_BEAN_SOUL, { RG_LOST_WOODS_BEAN_SOUL, "RG_LOST_WOODS_BEAN_SOUL", "RG_LOST_WOODS_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
+    { RG_ZORAS_RIVER_BEAN_SOUL, { RG_ZORAS_RIVER_BEAN_SOUL, "RG_ZORAS_RIVER_BEAN_SOUL", "RG_ZORAS_RIVER_BEAN_SOUL_Faded", gItemIconMagicBeanTex } },
     { RG_ROLL, { RG_ROLL, "RG_ROLL", "RG_ROLL_Faded", gExtremeRollIconTex } },
     { RG_SHOVEL, { RG_SHOVEL, "RG_SHOVEL", "RG_SHOVEL_Faded", gExtremeShovelIconTex } },
     { RG_TRIFORCE_PIECE, { RG_TRIFORCE_PIECE, "RG_TRIFORCE_PIECE", "RG_TRIFORCE_PIECE_Faded", gTriforcePieceTex } },
@@ -304,8 +314,10 @@ void RegisterImGuiItemIcons() {
     }
 
     for (const auto& entry : customItemsMapping) {
-        gui->LoadGuiTexture(entry.second.name, entry.second.texturePath, "", ImVec4(1, 1, 1, 1));
-        gui->LoadGuiTexture(entry.second.nameFaded, entry.second.texturePath, "", ImVec4(1, 1, 1, 0.3f));
+        const char* soulIcon = SohExtreme_GetSoulGuiIcon(entry.first);
+        const auto& texture = soulIcon != nullptr ? std::string(soulIcon) : entry.second.texturePath;
+        gui->LoadGuiTexture(entry.second.name, texture, "", ImVec4(1, 1, 1, 1));
+        gui->LoadGuiTexture(entry.second.nameFaded, texture, "", ImVec4(1, 1, 1, 0.3f));
     }
 
     for (const auto& entry : jabbernutMapping) {

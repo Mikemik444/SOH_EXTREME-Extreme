@@ -65,7 +65,7 @@ static Actor* sEnemyCallbackSource=NULL;
 static Actor* sEnemyExplicitSpawnSource=NULL;
 int gMapLoading=0;
 '''
-for sig in ['static void Actor_CallWithEnemySpawnSource(', 'static void Actor_HookWithEnemySpawnSource(', 'Actor* Actor_Spawn(ActorContext*', 'Actor* Actor_SpawnAsChild(', 'Actor* MegaSoul_SpawnEnemyChild(', 'Actor* MegaSoul_SpawnEnemy(', 'Actor* Actor_SpawnEntry(ActorContext* actorCtx, ActorEntry* actorEntry, PlayState* play) {']:
+for sig in ['static void Actor_CallWithEnemySpawnSource(', 'static void Actor_HookWithEnemySpawnSource(', 'bool MegaSoul_ShouldRestoreUnusedSceneEnemy(', 'Actor* Actor_Spawn(ActorContext*', 'Actor* Actor_SpawnAsChild(', 'Actor* MegaSoul_SpawnEnemyChild(', 'Actor* MegaSoul_SpawnEnemy(', 'Actor* Actor_SpawnEntry(ActorContext* actorCtx, ActorEntry* actorEntry, PlayState* play) {']:
  code+='\n'+function(engine,sig)
 code+=r'''
 void TestCall(ActorFunc f,Actor* a,PlayState* p){Actor_CallWithEnemySpawnSource(f,a,p);}
@@ -89,9 +89,10 @@ cpp=r'''
 static PlayState play{};PlayState* gPlayState=&play;u32 gSegments[16]{};
 static bool isRando=true,activeSave=true,failAllocation=false,clearRoom=false,vetoEntry=false;
 static int grottoId=-1;static std::set<int64_t> reported,collected;
+static bool locationActive=true,missingObject=false,randomized=false;
 #define IS_RANDO isRando
 static bool Archipelago_IsCurrentSaveActive(){return activeSave;}
-static bool Archipelago_IsLocationActive(int64_t){return true;}
+static bool Archipelago_IsLocationActive(int64_t){return locationActive;}
 static bool Archipelago_IsLocationReported(int64_t id){return reported.count(id);}
 static bool EnemyDefeatWasCollected(size_t index){return collected.count(index);}
 namespace EntranceTracker {static int GetCurrentGrottoId(){return grottoId;}}
@@ -114,8 +115,16 @@ static std::map<const Actor*,s16> indices;
 extern "C" void SetActorListIndex(Actor* a,s16 i){indices[a]=i;}
 extern "C" s16 GetActorListIndex(const Actor* a){auto it=indices.find(a);return it==indices.end()?-1:it->second;}
 '''
-for sig in ['static bool IsMegaPotActor(', 'static bool IsMegaScrubActor(', 'static bool IsGoldSkulltulaActor(', 'static bool IsOrdinarySkulltulaActor(', 'static RandomizerInf EnemySoulInfForActorId(', 'static bool IsStructuralArmosStatue(', 'static bool IsMegaEnemySoulActor(', 'extern "C" bool MegaSoul_IsEnemySpawnSource(', 'static SohExtreme::EnemySpawnKey EnemySpawnKeyFor(', 'static bool EnemyDefeatLocationStillPending(', 'static void AttachEnemyDefeatIdentity(', 'extern "C" int32_t MegaSoul_FindEnemyDefeatSpawn(', 'extern "C" bool MegaSoul_IsEnemyDefeatPlacementPending(', 'extern "C" int32_t MegaSoul_FindEnemyDefeatChild(', 'extern "C" void MegaSoul_CaptureEnemyDefeatIdentityFrom(', 'extern "C" void MegaSoul_ResetEnemyDefeatLife(', 'extern "C" int32_t MegaSoul_GetEnemyDefeatPlacement(', 'extern "C" void MegaSoul_BeginEnemyDefeatLife(', 'extern "C" bool MegaSoul_HasPendingEnemyInRoom(']:
+for sig in ['static bool IsMegaPotActor(', 'static bool IsMegaScrubActor(', 'static bool IsGoldSkulltulaActor(', 'static bool IsOrdinarySkulltulaActor(', 'static RandomizerInf EnemySoulInfForActorId(', 'static bool IsStructuralArmosStatue(', 'static bool IsMegaEnemySoulActor(', 'extern "C" bool MegaSoul_IsEnemySpawnSource(', 'static SohExtreme::EnemySpawnKey EnemySpawnKeyFor(', 'static bool EnemyDefeatLocationStillPending(', 'static void AttachEnemyDefeatIdentity(', 'extern "C" int32_t MegaSoul_FindEnemyDefeatSpawn(', 'extern "C" bool MegaSoul_IsEnemyDefeatPlacementPending(', 'extern "C" bool MegaSoul_IsLegacyUnusedEnemyPending(', 'extern "C" int32_t MegaSoul_FindEnemyDefeatChild(', 'extern "C" void MegaSoul_CaptureEnemyDefeatIdentityFrom(', 'extern "C" void MegaSoul_ResetEnemyDefeatLife(', 'extern "C" int32_t MegaSoul_GetEnemyDefeatPlacement(', 'extern "C" void MegaSoul_BeginEnemyDefeatLife(', 'extern "C" bool MegaSoul_HasPendingEnemyInRoom(']:
  cpp+='\n'+function(mega,sig)
+# Exercise the actual Enemy Randomizer entry hook and its unused-object filter.
+er=(root/'soh/Enhancements/ExtraModes/EnemyRandomizer.cpp').read_text()
+hook=er.split('COND_VB_SHOULD(VB_SPAWN_ACTOR_ENTRY, ENEMY_RANDOMIZER_ENABLED, {',1)[1].split('\n    });',1)[0]
+hook=re.sub(r'        (?:ActorContext|ActorEntry|PlayState|Actor)\*\*? \w+ = va_arg\(args, [^;]+;\n','',hook)
+filter_body=er.split('u32 isMQ = ResourceMgr_IsSceneMasterQuest(play->sceneNum);',1)[1].split('    // Hack to change a pot',1)[0]
+cpp+='\n#define SCENE_GRAVEYARD 83\n#define SCENE_LOST_WOODS 91\n#define SCENE_GERUDOS_FORTRESS 93\n#define LINK_IS_CHILD false\n'
+cpp+='static u8 GetRandomizedEnemy(PlayState* play,s16* actorId,s16*,s16*,s16*,s16*,s16*,s16*,s16* params){'+filter_body+'return 1;}\n'
+cpp+='static void RandomizerEntryHook(bool* should,ActorContext* actorCtx,ActorEntry* actorEntry,PlayState* play,Actor** actor){'+hook+'}\n'
 rows=json.loads((fixtures/'actor_categories.json').read_text())
 cpp+='\nstatic int category(int id){switch(id){\n'+''.join('case %d: return %s;\n'%(e['id'],e['category']) for e in rows)+'default:return ACTORCAT_PROP;}}\n'
 cpp+=r'''
@@ -126,13 +135,16 @@ static void(*spawnHook)(Actor*)=nullptr;
 extern "C" void* TestMalloc(size_t n){if(failAllocation)return nullptr;void* a=std::malloc(n);allocated.push_back(a);return a;}
 extern "C" ActorDBEntry* ActorDB_Retrieve(s16 id){auto& v=db[id];v={true,id,category(id),0,0,0,"fixture",sizeof(Actor),initCallback,nullptr,nullptr,nullptr};return &v;}
 extern "C" void Actor_FreeOverlay(ActorDBEntry*){}
-extern "C" int Object_GetIndex(void*,int){return 0;}
-extern "C" int CVarGetInteger(const char*,int){return 0;}
+extern "C" int Object_GetIndex(void*,int){return missingObject ? -1 : 0;}
+extern "C" int CVarGetInteger(const char*,int){return randomized;}
 extern "C" bool Flags_GetClear(PlayState*,s8){return clearRoom;}
 extern "C" void Actor_AddToCategory(ActorContext* c,Actor* a,int cat){++c->total;a->category=cat;}
 extern "C" void Actor_Init(Actor* a,PlayState* p){a->world=a->home;if(a->init)TestCall(a->init,a,p);}
 extern "C" void GameInteractor_ExecuteOnActorSpawn(void* a){if(spawnHook)spawnHook(static_cast<Actor*>(a));}
-extern "C" bool GameInteractor_Should(int,bool,ActorContext*,ActorEntry*,PlayState*,Actor**){return !vetoEntry;}
+static void RandomizerEntryHook(bool*,ActorContext*,ActorEntry*,PlayState*,Actor**);
+extern "C" bool GameInteractor_Should(int,bool,ActorContext* ac,ActorEntry* ae,PlayState* p,Actor** a){
+ bool should=!vetoEntry;if(randomized)RandomizerEntryHook(&should,ac,ae,p,a);return should;
+}
 static auto& ext=ObjectExtension::GetInstance();
 static int tested=0;
 static void reset(){
@@ -140,7 +152,7 @@ static void reset(){
  allocated.clear();
  ObjectExtension::Values<EnemySourceIdentity>().clear();ObjectExtension::Values<EnemyDefeatIdentity>().clear();
  indices.clear();db.clear();gLiveEnemyPlacements.fill(nullptr);play={};grottoId=-1;reported.clear();collected.clear();
- failAllocation=false;clearRoom=false;vetoEntry=false;initCallback=nullptr;spawnHook=nullptr;assert(TestContextEmpty());
+ failAllocation=false;clearRoom=false;vetoEntry=false;locationActive=true;missingObject=false;randomized=false;activeSave=true;isRando=true;initCallback=nullptr;spawnHook=nullptr;assert(TestContextEmpty());
 }
 static Actor* spawn(const SohExtreme::EnemySpawnKey& k,bool authored=true){
  play.sceneNum=k.scene;play.roomCtx.curRoom.num=static_cast<s8>(k.room);grottoId=k.grotto;
@@ -198,11 +210,11 @@ int main(){
  }
  // Each physical grotto's original actor index: no template-to-template collision.
  int grottos=0;
- for(size_t i=0;i<kEnemyPlacementCount;++i){auto& e=kEnemyDefeatPlacements[i];if(e.grottoId<0)continue;
+ for(size_t i=0;i<kEnemyPlacementCount;++i){auto& e=kEnemyDefeatPlacements[i];if(e.grottoId<0||IsRetiredEnemyPlacement(static_cast<int>(i)))continue;
   reset();EnemySpawnKey k{e.scene,e.room,e.grottoId,e.actorListIndex,e.actorId,e.params,0,0,0};
   Actor* a=spawn(k);assert(a&&MegaSoul_GetEnemyDefeatPlacement(a)==static_cast<int>(i));++grottos;++tested;
  }
- assert(grottos==14);
+ assert(grottos==8);
  // The real four sisters remain supported; no introduction or Meg decoy checks.
  for(int sister=0;sister<4;++sister){
   reset();play.sceneNum=SCENE_FOREST_TEMPLE;
@@ -260,6 +272,46 @@ int main(){
  MegaSoul_ResetEnemyDefeatLife(a);assert(id->placementIndex==placement&&!id->deathObserved&&!id->defeatHandled&&!id->normalDropHandled&&!id->rewardWasAp);assert(collected.count(placement));assert(SameEnemySpawn(original,ext.Get<EnemySourceIdentity>(a)->key));
  // A vetoed entry has a defined null result and restores nested map-loading state.
  reset();ActorEntry entry{};vetoEntry=true;gMapLoading=7;assert(!Actor_SpawnEntry(&play.actorCtx,&entry,&play));assert(gMapLoading==7);gMapLoading=0;
+
+ // Real missing-object room loading, exact legacy identities, and real randomizer hook.
+ int unusedCases=0;
+ for(const auto& e:kEnemySpawnAliases){if(!IsUnusedObjectEnemyPlacement(e.placement))continue;
+  for(bool randomize:{false,true})for(int mode=0;mode<8;++mode){
+   reset();missingObject=true;randomized=randomize;auto k=e.key;
+   play.sceneNum=k.scene;play.roomCtx.curRoom.num=k.room;
+   if(mode==1)activeSave=false;
+   if(mode==2)locationActive=false;
+   if(mode==3)reported.insert(kEnemyDefeatPlacements[e.placement].locationId);
+   if(mode==4)collected.insert(e.placement);
+   if(mode==5)k.actorIndex+=100;
+   if(mode==6)k.x+=1;
+   if(mode==7)isRando=false;
+   ActorEntry ae{};ae.id=k.actorId;ae.params=k.params;
+   ae.pos={s16(k.x),s16(k.y),s16(k.z)};
+   TestSceneIndex(k.actorIndex);
+   assert(MegaSoul_ShouldRestoreUnusedSceneEnemy(&play,ae.id,ae.params,k.x,k.y,k.z)==(mode==0));
+   Actor* restored=Actor_SpawnEntry(&play.actorCtx,&ae,&play);
+   assert((restored!=nullptr)==(mode==0));
+   if(restored){assert(MegaSoul_GetEnemyDefeatPlacement(restored)==e.placement);assert(restored->objBankIndex==0);}
+   // Vetoing hooks leave one-shot scene context to the caller; the real loop resets it.
+   TestSceneIndex(-1);assert(gMapLoading==0&&TestContextEmpty());++unusedCases;
+  }
+ }
+ assert(unusedCases==14*16); // repeated day/night headers share four exact keys
+ // No broad missing-object bypass for ordinary, pending AP enemies.
+ reset();missingObject=true;auto normal=kEnemySpawnAliases[0].key;gMapLoading=1;
+ assert(!spawn(normal));gMapLoading=0;assert(TestContextEmpty());++unusedCases;
+ // Unindexed/scripted copies must never request restoration.
+ reset();auto legacy=kEnemySpawnAliases[0].key;
+ for(const auto& e:kEnemySpawnAliases)if(IsUnusedObjectEnemyPlacement(e.placement)){legacy=e.key;break;}
+ play.sceneNum=legacy.scene;play.roomCtx.curRoom.num=legacy.room;
+ assert(!MegaSoul_ShouldRestoreUnusedSceneEnemy(&play,legacy.actorId,legacy.params,legacy.x,legacy.y,legacy.z));++unusedCases;
+ // A separate spawn veto survives the compatibility exception in Enemy Randomizer.
+ reset();randomized=true;vetoEntry=true;missingObject=true;play.sceneNum=legacy.scene;play.roomCtx.curRoom.num=legacy.room;
+ ActorEntry legacyEntry{};legacyEntry.id=legacy.actorId;legacyEntry.params=legacy.params;
+ legacyEntry.pos={s16(legacy.x),s16(legacy.y),s16(legacy.z)};TestSceneIndex(legacy.actorIndex);
+ assert(!Actor_SpawnEntry(&play.actorCtx,&legacyEntry,&play));TestSceneIndex(-1);++unusedCases;
+ printf("%d missing-object compatibility and rejection cases passed.\n",unusedCases);
  printf("%d positive authored/controller/grotto/sister identities; %zu creator families x %zu receipt slots (%d offspring rejections); raw init/hook births, boss larvae, decoys, forged IDs, descendant helpers, cycles, reset and allocation failures passed.\n",tested,families.size(),kEnemyPlacementCount,rejects);
  reset();
 }

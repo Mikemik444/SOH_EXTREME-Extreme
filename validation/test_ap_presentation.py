@@ -25,6 +25,7 @@ code=r'''
 #define SPDLOG_ERROR(...) ((void)0)
 #define SPDLOG_DEBUG(...) ((void)0)
 #define SPDLOG_WARN(...) ((void)0)
+constexpr int RG_AP_NOTE_ZELDA=110,RG_AP_NOTE_PRELUDE=121;
 constexpr int RG_AP_REMOTE_IMPORTANT=100,RG_AP_REMOTE_NORMAL=101,RG_ICE_TRAP=102,RG_OPEN_CHEST=103,RG_AP_SONG_NOTE=104;
 constexpr int PLAYER_STATE1_IN_ITEM_CS=1,PLAYER_STATE1_GETTING_ITEM=2,PLAYER_STATE1_CARRYING_ACTOR=4,PLAYER_STATE1_IN_WATER=8;
 constexpr int BGCHECKFLAG_GROUND=1,GAMEOVER_INACTIVE=0,TRANS_TRIGGER_OFF=0,ITEM_CUSTOM=999;
@@ -43,7 +44,8 @@ struct Player{int stateFlags1=0;struct{int bgCheckFlags=1;}actor;Entry getItemEn
 struct Play{struct{int state=0;}gameOverCtx;int transitionTrigger=0;}play;Play*gPlayState=&play;
 struct {int health=48;} gSaveContext;
 #define GET_PLAYER(x) (&::player)
-bool busy=false,paused=false,giveAllowed=true;int gives=0;
+bool busy=false,paused=false,giveAllowed=true;Entry gRemotePresentationEntry;
+int gives=0;
 bool Player_InBlockingCsMode(Play*,Player*){return busy;}
 namespace GameInteractor{bool IsGameplayPaused(){return paused;}}
 bool GiveItemEntryWithoutActor(Play*,Entry e){if(!giveAllowed)return false;++gives;player.getItemEntry=e;return true;}

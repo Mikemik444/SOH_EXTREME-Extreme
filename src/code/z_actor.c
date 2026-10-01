@@ -22,20 +22,41 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "soh/Enhancements/randomizer/EnemyDropBridge.h"
+#include "soh/Enhancements/randomizer/ActorDrawRecovery.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 // Consumed by exactly one Actor_Spawn, before nested child spawns.
 static s16 sEnemySceneSpawnIndex = -1;
 static s32 sEnemyPreparedPlacement = -1;
 static Actor* sEnemyCallbackSource = NULL;
 static Actor* sEnemyExplicitSpawnSource = NULL;
+static ActorFunc sActiveActorCallback = NULL;
+static s16 sActiveCallbackActorId = -1;
+static s16 sActiveCallbackActorParams = 0;
+
+// Scalar snapshot: crash reporting need not dereference a possibly damaged actor.
+void Actor_GetCrashCallback(s16* id, s16* params, uintptr_t* callback) {
+    *id = sActiveCallbackActorId;
+    *params = sActiveCallbackActorParams;
+    *callback = (uintptr_t)sActiveActorCallback;
+}
 
 // A nested init/update must restore its caller. This captures raw Actor_Spawn
 // births too, not just Actor_SpawnAsChild. No actor struct/ABI changes required.
 static void Actor_CallWithEnemySpawnSource(ActorFunc callback, Actor* actor, PlayState* play) {
     Actor* previous = sEnemyCallbackSource;
+    ActorFunc previousCallback = sActiveActorCallback;
+    s16 previousId = sActiveCallbackActorId;
+    s16 previousParams = sActiveCallbackActorParams;
     sEnemyCallbackSource = actor;
+    sActiveActorCallback = callback;
+    sActiveCallbackActorId = actor->id;
+    sActiveCallbackActorParams = actor->params;
     callback(actor, play);
     sEnemyCallbackSource = previous;
+    sActiveActorCallback = previousCallback;
+    sActiveCallbackActorId = previousId;
+    sActiveCallbackActorParams = previousParams;
 }
 
 static void Actor_HookWithEnemySpawnSource(void (*callback)(void*), Actor* actor) {
@@ -2775,9 +2796,76 @@ void Actor_FaultPrint(Actor* actor, char* command) {
     FaultDrawer_Printf("ACTOR NAME %08x:%s", actor, name);
 }
 
+static void Actor_DrawEnemyCheckGlow(PlayState* play, Actor* actor) {
+    if (play == NULL || play->state.gfxCtx == NULL || !MegaSoul_ShouldHighlightEnemy(actor)) return;
+
+    // Draw only during this actor's normal render pass: hidden, culled and
+    // destroyed actors never acquire an independent effect or saved Actor*.
+    // The small billboard leaves the enemy's own model and damage tint intact.
+    f32 pulse = Math_SinS((s16)(play->gameplayFrames * 1800));
+    f32 scale = 0.035f + 0.007f * pulse;
+    f32 height = CLAMP(actor->focus.pos.y - actor->world.pos.y, 18.0f, 80.0f);
+    Matrix_Push();
+    Matrix_Translate(actor->world.pos.x, actor->world.pos.y + height, actor->world.pos.z, MTXMODE_NEW);
+    Matrix_Mult(&play->billboardMtxF, MTXMODE_APPLY);
+    Matrix_Scale(scale, scale, scale, MTXMODE_APPLY);
+    Matrix_RotateZ((play->gameplayFrames & 0xFF) * (M_PI / 128.0f), MTXMODE_APPLY);
+
+    OPEN_DISPS(play->state.gfxCtx);
+    Gfx_SetupDL_25Xlu(play->state.gfxCtx);
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetPrimColor(POLY_XLU_DISP++, 0x80, 0x80, 255, 240, 110, (u8)(100.0f + 35.0f * pulse));
+    gDPSetEnvColor(POLY_XLU_DISP++, 180, 90, 0, 255);
+    gSPMatrix(POLY_XLU_DISP++, MATRIX_NEWMTX(play->state.gfxCtx), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+    gSPDisplayList(POLY_XLU_DISP++, gEffFlash1DL);
+    CLOSE_DISPS(play->state.gfxCtx);
+    Matrix_Pop();
+}
+
+static bool Actor_DrawNpcSpeechGlow(PlayState* play, Actor* actor) {
+    if (play == NULL || play->state.gfxCtx == NULL || !Archipelago_ShouldHighlightNpcSpeech(actor)) return false;
+
+    // Only this live actor's normal draw pass owns the effect. No separate
+    // actor/effect is spawned, and no pointer survives a scene transition.
+    // Cyan distinguishes an untalked-to NPC from a gold enemy-drop marker.
+    f32 pulse = Math_SinS((s16)(play->gameplayFrames * 1400));
+    f32 scale = 0.040f + 0.006f * pulse;
+    f32 height = CLAMP(actor->focus.pos.y - actor->world.pos.y, 20.0f, 85.0f);
+    Matrix_Push();
+    Matrix_Translate(actor->world.pos.x, actor->world.pos.y + height, actor->world.pos.z, MTXMODE_NEW);
+    Matrix_Mult(&play->billboardMtxF, MTXMODE_APPLY);
+    Matrix_Scale(scale, scale, scale, MTXMODE_APPLY);
+    Matrix_RotateZ((play->gameplayFrames & 0xFF) * (M_PI / 128.0f), MTXMODE_APPLY);
+
+    OPEN_DISPS(play->state.gfxCtx);
+    Gfx_SetupDL_25Xlu(play->state.gfxCtx);
+    gDPPipeSync(POLY_XLU_DISP++);
+    gDPSetPrimColor(POLY_XLU_DISP++, 0x80, 0x80, 130, 245, 255, (u8)(105.0f + 30.0f * pulse));
+    gDPSetEnvColor(POLY_XLU_DISP++, 20, 100, 180, 255);
+    gSPMatrix(POLY_XLU_DISP++, MATRIX_NEWMTX(play->state.gfxCtx), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+    gSPDisplayList(POLY_XLU_DISP++, gEffFlash1DL);
+    CLOSE_DISPS(play->state.gfxCtx);
+    Matrix_Pop();
+    return true;
+}
+
+static void Actor_RecoverTruncatedButterflyDraw(Actor* actor) {
+    if (actor->id != ACTOR_EN_BUTTE || actor->init != NULL || actor->draw == NULL) return;
+    const ActorDBEntry* entry = ActorDB_Retrieve(actor->id);
+    if (entry == NULL || !entry->valid || actor->update != entry->update || actor->destroy != entry->destroy ||
+        !SohExtreme_IsTruncatedNativeDraw((uintptr_t)actor->draw, (uintptr_t)entry->draw)) return;
+    // Preserve legitimate hidden/dying/replaced callbacks. Only the exact
+    // native EnButte callback with its high half lost is restored.
+    actor->draw = entry->draw;
+    osSyncPrintf("SOH-EXTREME: recovered truncated butterfly draw callback; scene %d, params %d\n",
+                 gPlayState->sceneNum, actor->params);
+}
+
 void Actor_Draw(PlayState* play, Actor* actor) {
     FaultClient faultClient;
     Lights* lights;
+
+    Actor_RecoverTruncatedButterflyDraw(actor);
 
     Fault_AddClient(&faultClient, Actor_FaultPrint, actor, "Actor_draw");
 
@@ -2837,6 +2925,10 @@ void Actor_Draw(PlayState* play, Actor* actor) {
 
     if (actor->shape.shadowDraw != NULL) {
         actor->shape.shadowDraw(actor, lights, play);
+    }
+
+    if (!Actor_DrawNpcSpeechGlow(play, actor)) {
+        Actor_DrawEnemyCheckGlow(play, actor);
     }
 
     CLOSE_DISPS(play->state.gfxCtx);
@@ -3348,6 +3440,14 @@ void Actor_FreeOverlay(ActorDBEntry* dbEntry) {
 //      array to spawn An example of what this fixes, is that it allows hookshot to be used as child
 int gMapLoading = 0;
 
+bool MegaSoul_ShouldRestoreUnusedSceneEnemy(const PlayState* play, int16_t actorId,
+                                            uint16_t params, float x, float y, float z) {
+    if (play == NULL || sEnemySceneSpawnIndex < 0) return false;
+    const s32 placement = MegaSoul_FindEnemyDefeatSpawn(play->sceneNum, play->roomCtx.curRoom.num,
+        sEnemySceneSpawnIndex, actorId, params, x, y, z);
+    return MegaSoul_IsLegacyUnusedEnemyPending(placement);
+}
+
 Actor* Actor_Spawn(ActorContext* actorCtx, PlayState* play, s16 actorId, f32 posX, f32 posY, f32 posZ, s16 rotX,
                    s16 rotY, s16 rotZ, s16 params) {
     Actor* actor;
@@ -3388,7 +3488,12 @@ Actor* Actor_Spawn(ActorContext* actorCtx, PlayState* play, s16 actorId, f32 pos
 
     objBankIndex = Object_GetIndex(&gPlayState->objectCtx, dbEntry->objectId);
 
-    if (objBankIndex < 0 && (!gMapLoading || CVarGetInteger(CVAR_ENHANCEMENT("RandomizedEnemies"), 0))) {
+    // Old AP seeds assigned items to eight unused room entries. Restore only
+    // exact, still-pending entries named by that save's server manifest, using
+    // the same resource-backed object fallback as dynamically spawned actors.
+    // New seeds omit them; ordinary gameplay and soul checks remain unchanged.
+    if (objBankIndex < 0 && (!gMapLoading || CVarGetInteger(CVAR_ENHANCEMENT("RandomizedEnemies"), 0) ||
+                            MegaSoul_IsLegacyUnusedEnemyPending(sourcePlacement))) {
         objBankIndex = 0;
     }
 

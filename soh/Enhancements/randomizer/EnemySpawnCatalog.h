@@ -2,6 +2,11 @@
 #include <cstddef>
 #include <cstdint>
 namespace SohExtreme {
+// Authored entries whose object dependencies are absent in the original scenes.
+// Reserve their old IDs for explicit AP slot-manifest compatibility only.
+inline bool IsUnusedObjectEnemyPlacement(int32_t index) {
+    return index == 552 || (index >= 621 && index <= 627);
+}
 // Retired 0.11.12 Peahat larval slots. Keep the receipt table append-only,
 // but never bind or award these identities, even with stale server slot data.
 inline bool IsEnemyOffspringPlacement(int32_t index) {

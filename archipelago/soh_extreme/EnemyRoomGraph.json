@@ -1249,7 +1249,7 @@
       {
         "target": "RR_DODONGOS_CAVERN_LOBBY_SWITCH",
         "region": "RR_DODONGOS_CAVERN_LOBBY",
-        "condition": "logic->IsAdult || logic->HasItem(RG_POWER_BRACELET) || logic->CanGroundJump(true)",
+        "condition": "logic->IsAdult || logic->CanGroundJump(true)",
         "file": "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp",
         "line": 41
       },

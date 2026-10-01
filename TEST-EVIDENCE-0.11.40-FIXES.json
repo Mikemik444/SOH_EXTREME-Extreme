@@ -1,0 +1,424 @@
+{
+  "models": {
+    "passed": true,
+    "compile_output": "models.cpp\n",
+    "output": "897 assertions passed\n",
+    "scope": "Compile production enemy display, scout mailbox and collection functions.\n\nEngine allocation/drawing/network services are controlled fakes; this does not\nrender the game. Run from a VS x64 developer command prompt.\n"
+  },
+  "colors": {
+    "passed": true,
+    "compile_output": "colors.cpp\n",
+    "output": "189 assertions passed\n",
+    "songs": [
+      {
+        "song": "Zelda's Lullaby",
+        "count": 6,
+        "display": "RG_AP_NOTE_ZELDA",
+        "gid": "GID_SONG_ZELDA"
+      },
+      {
+        "song": "Epona's Song",
+        "count": 6,
+        "display": "RG_AP_NOTE_EPONA",
+        "gid": "GID_SONG_EPONA"
+      },
+      {
+        "song": "Saria's Song",
+        "count": 6,
+        "display": "RG_AP_NOTE_SARIA",
+        "gid": "GID_SONG_SARIA"
+      },
+      {
+        "song": "Sun's Song",
+        "count": 6,
+        "display": "RG_AP_NOTE_SUN",
+        "gid": "GID_SONG_SUN"
+      },
+      {
+        "song": "Song of Time",
+        "count": 6,
+        "display": "RG_AP_NOTE_TIME",
+        "gid": "GID_SONG_TIME"
+      },
+      {
+        "song": "Song of Storms",
+        "count": 6,
+        "display": "RG_AP_NOTE_STORMS",
+        "gid": "GID_SONG_STORM"
+      },
+      {
+        "song": "Minuet of Forest",
+        "count": 6,
+        "display": "RG_AP_NOTE_MINUET",
+        "gid": "GID_SONG_MINUET"
+      },
+      {
+        "song": "Bolero of Fire",
+        "count": 8,
+        "display": "RG_AP_NOTE_BOLERO",
+        "gid": "GID_SONG_BOLERO"
+      },
+      {
+        "song": "Serenade of Water",
+        "count": 5,
+        "display": "RG_AP_NOTE_SERENADE",
+        "gid": "GID_SONG_SERENADE"
+      },
+      {
+        "song": "Requiem of Spirit",
+        "count": 6,
+        "display": "RG_AP_NOTE_REQUIEM",
+        "gid": "GID_SONG_REQUIEM"
+      },
+      {
+        "song": "Nocturne of Shadow",
+        "count": 7,
+        "display": "RG_AP_NOTE_NOCTURNE",
+        "gid": "GID_SONG_NOCTURNE"
+      },
+      {
+        "song": "Prelude of Light",
+        "count": 6,
+        "display": "RG_AP_NOTE_PRELUDE",
+        "gid": "GID_SONG_PRELUDE"
+      }
+    ],
+    "scope": "Check all AP notes against full-song models and exercise native draw commands.\n\nUses real mapping/table/draw code with controlled graphics services; does not\nrender a game frame. Requires the VS x64 compiler on PATH.\n"
+  },
+  "receipts": {
+    "passed": true,
+    "scope": "Compile the complete AP ProcessItem and receipt callback with controlled engine services.\n\nEngine animation completion is driven explicitly. This exercises async/sync\ncallbacks, denied/interrupted gives, progressive receipts, and every song note.\nIt is not a rendered or connected game test.\n",
+    "native_ability_entries": [
+      "RG_ROLL",
+      "RG_POWER_BRACELET",
+      "RG_BRONZE_SCALE",
+      "RG_CLIMB",
+      "RG_CRAWL",
+      "RG_OPEN_CHEST",
+      "RG_SPEAK_DEKU",
+      "RG_SPEAK_GERUDO",
+      "RG_SPEAK_GORON",
+      "RG_SPEAK_HYLIAN",
+      "RG_SPEAK_KOKIRI",
+      "RG_SPEAK_ZORA",
+      "RG_FLOW_OF_TIME",
+      "RG_AP_SONG_NOTE",
+      "RG_SHOVEL",
+      "RG_FISHING_POLE",
+      "RG_ROCS_FEATHER",
+      "RG_OCARINA_A_BUTTON",
+      "RG_OCARINA_C_UP_BUTTON",
+      "RG_OCARINA_C_DOWN_BUTTON",
+      "RG_OCARINA_C_LEFT_BUTTON",
+      "RG_OCARINA_C_RIGHT_BUTTON"
+    ],
+    "soul_entries": [
+      "RG_GOHMA_SOUL",
+      "RG_KING_DODONGO_SOUL",
+      "RG_BARINADE_SOUL",
+      "RG_PHANTOM_GANON_SOUL",
+      "RG_VOLVAGIA_SOUL",
+      "RG_MORPHA_SOUL",
+      "RG_BONGO_BONGO_SOUL",
+      "RG_TWINROVA_SOUL",
+      "RG_GANON_SOUL",
+      "RG_ENEMY_SOUL",
+      "RG_NPC_SOUL",
+      "RG_ANIMAL_SOUL",
+      "RG_POT_SOUL",
+      "RG_CRATE_SOUL",
+      "RG_GRASS_SOUL",
+      "RG_ROCK_SOUL",
+      "RG_TREE_SOUL",
+      "RG_BEEHIVE_SOUL",
+      "RG_SIGN_SOUL",
+      "RG_SKULLTULA_SOUL",
+      "RG_BUSINESS_SCRUB_SOUL",
+      "RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL",
+      "RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL",
+      "RG_DESERT_COLOSSUS_BEAN_SOUL",
+      "RG_GERUDO_VALLEY_BEAN_SOUL",
+      "RG_GRAVEYARD_BEAN_SOUL",
+      "RG_KOKIRI_FOREST_BEAN_SOUL",
+      "RG_LAKE_HYLIA_BEAN_SOUL",
+      "RG_LOST_WOODS_BRIDGE_BEAN_SOUL",
+      "RG_LOST_WOODS_BEAN_SOUL",
+      "RG_ZORAS_RIVER_BEAN_SOUL",
+      "RG_ANIMAL_SOUL_COW",
+      "RG_ANIMAL_SOUL_CUCCO",
+      "RG_ANIMAL_SOUL_DOG",
+      "RG_ANIMAL_SOUL_FISH",
+      "RG_ANIMAL_SOUL_BUG",
+      "RG_ANIMAL_SOUL_BUTTERFLY",
+      "RG_ANIMAL_SOUL_FROG",
+      "RG_ANIMAL_SOUL_HORSE",
+      "RG_ENEMY_SOUL_STALFOS",
+      "RG_ENEMY_SOUL_OCTOROK",
+      "RG_ENEMY_SOUL_WALLMASTER",
+      "RG_ENEMY_SOUL_DODONGO",
+      "RG_ENEMY_SOUL_KEESE",
+      "RG_ENEMY_SOUL_TEKTITE",
+      "RG_ENEMY_SOUL_PEAHAT",
+      "RG_ENEMY_SOUL_LIZALFOS_DINOLFOS",
+      "RG_ENEMY_SOUL_GOHMA_LARVA",
+      "RG_ENEMY_SOUL_SHABOM",
+      "RG_ENEMY_SOUL_BABY_DODONGO",
+      "RG_ENEMY_SOUL_BIRI_BARI",
+      "RG_ENEMY_SOUL_TAILPASARAN",
+      "RG_ENEMY_SOUL_TORCH_SLUG",
+      "RG_ENEMY_SOUL_MOBLIN",
+      "RG_ENEMY_SOUL_ARMOS",
+      "RG_ENEMY_SOUL_DEKU_BABA",
+      "RG_ENEMY_SOUL_DEKU_SCRUB",
+      "RG_ENEMY_SOUL_BUBBLE",
+      "RG_ENEMY_SOUL_BEAMOS",
+      "RG_ENEMY_SOUL_FLOORMASTER",
+      "RG_ENEMY_SOUL_REDEAD_GIBDO",
+      "RG_ENEMY_SOUL_FLARE_DANCER",
+      "RG_ENEMY_SOUL_DEAD_HAND",
+      "RG_ENEMY_SOUL_SHELL_BLADE",
+      "RG_ENEMY_SOUL_LIKE_LIKE",
+      "RG_ENEMY_SOUL_SPIKE",
+      "RG_ENEMY_SOUL_ANUBIS",
+      "RG_ENEMY_SOUL_IRON_KNUCKLE",
+      "RG_ENEMY_SOUL_SKULL_KID",
+      "RG_ENEMY_SOUL_FLYING_POT",
+      "RG_ENEMY_SOUL_FREEZARD",
+      "RG_ENEMY_SOUL_STINGER",
+      "RG_ENEMY_SOUL_WOLFOS",
+      "RG_ENEMY_SOUL_GUAY",
+      "RG_ENEMY_SOUL_JABU_TENTACLE",
+      "RG_ENEMY_SOUL_DARK_LINK",
+      "RG_ENEMY_SOUL_DOOR_TRAP",
+      "RG_ENEMY_SOUL_FLYING_FLOOR_TILE",
+      "RG_ENEMY_SOUL_GERUDO_THIEF",
+      "RG_ENEMY_SOUL_POE_SISTER",
+      "RG_ENEMY_SOUL_POE",
+      "RG_ENEMY_SOUL_LEEVER",
+      "RG_ENEMY_SOUL_STALCHILD",
+      "RG_ENEMY_SOUL_BIG_OCTO"
+    ],
+    "output": "ability_receipts.cpp\n1798 assertions passed\n"
+  },
+  "presentation": {
+    "passed": true,
+    "scope": "Production functions compiled with controlled engine services; no live game",
+    "cases": [
+      "remote major animation",
+      "rock ReportCheck to Jigsaw presentation",
+      "enemy ReportLocation to Jigsaw presentation",
+      "journal reconciliation silent",
+      "AP progression/useful flag subtypes",
+      "filler names",
+      "same-slot receipt ownership",
+      "deduplicated checks",
+      "missing scouts",
+      "water/air/cutscene/pause deferral",
+      "failed give retry",
+      "receipt lifecycle",
+      "message control-character handling",
+      "scrub/shop names and prices",
+      "important and normal pickup text",
+      "song note progress text",
+      "silver puzzle counts and pouches",
+      "old seed native defaults",
+      "explicit seed settings preserved",
+      "invalid settings rejected"
+    ]
+  },
+  "delivery": [
+    {
+      "name": "location_delivery_and_isolation",
+      "passed": true
+    },
+    {
+      "name": "partial_scout_recovery",
+      "passed": true
+    },
+    {
+      "name": "save_snapshot_consistency",
+      "passed": true
+    },
+    {
+      "name": "major_receipt_identity",
+      "passed": true
+    },
+    {
+      "name": "AP save/receipt/enemy integration boundaries",
+      "passed": true
+    }
+  ],
+  "routes": {
+    "passed": true,
+    "assertions": 189,
+    "failures": [],
+    "scope": "Graveyard/Windmill physical routes through fresh AP and real UT evaluation."
+  },
+  "native_routes": {
+    "passed": true,
+    "assertions": 3072,
+    "compile_output": "routes.cpp\n",
+    "output": "3072 assertions passed\n",
+    "scope": "Compile the real native Graveyard and Windmill predicates with controlled inventory."
+  },
+  "tlut": {
+    "passed": true,
+    "before": {
+      "compile_exit": 0,
+      "compile_output": "previous.cpp\n",
+      "exit_code": 3221225477,
+      "output": ""
+    },
+    "after": {
+      "compile_exit": 0,
+      "compile_output": "fixed.cpp\n",
+      "exit_code": 0,
+      "output": "66058 assertions passed; inaccessible second half rejected without partial publication\n"
+    },
+    "scope": "Exercise the production TLUT copy with real Windows protected memory pages."
+  },
+  "cmake_patch": {
+    "passed": true,
+    "cases": [
+      "actual target source-directory layout",
+      "reviewed partial-guard source",
+      "idempotent repeat",
+      "reviewed source before partial guard",
+      "incompatible source rejected unchanged"
+    ]
+  },
+  "generation": {
+    "seed": 9304001,
+    "players": 1,
+    "overrides": {},
+    "passed": true,
+    "harness": "AP 0.6.7 core with normal dependencies",
+    "locations": 3767,
+    "network_locations": 3319,
+    "pool": 3319,
+    "all_state_blocked": [],
+    "resolved_world_options": {
+      "1": {
+        "frozen_starting_time": 3,
+        "boss_key_shuffle": "anywhere",
+        "triforce_hunt": 1
+      }
+    },
+    "final_validation": {
+      "passed": true,
+      "sphere_sizes": [
+        22,
+        4,
+        15,
+        18,
+        176,
+        80,
+        52,
+        5,
+        57,
+        155,
+        51,
+        9,
+        32,
+        79,
+        92,
+        30,
+        31,
+        10,
+        3,
+        7,
+        47,
+        150,
+        56,
+        279,
+        203,
+        254,
+        235,
+        117,
+        179,
+        178,
+        125,
+        102,
+        72,
+        171,
+        176,
+        202,
+        83,
+        10,
+        7,
+        5,
+        42,
+        38,
+        32,
+        14,
+        50,
+        12
+      ],
+      "players": {
+        "1": {
+          "goal_met": true,
+          "full_accessibility": true,
+          "network_checks": 3319,
+          "checked": 3319
+        }
+      }
+    },
+    "sphere_sizes": [
+      22,
+      4,
+      15,
+      18,
+      176,
+      80,
+      52,
+      5,
+      57,
+      155,
+      51,
+      9,
+      32,
+      79,
+      92,
+      30,
+      31,
+      10,
+      3,
+      7,
+      47,
+      150,
+      56,
+      279,
+      203,
+      254,
+      235,
+      117,
+      179,
+      178,
+      125,
+      102,
+      72,
+      171,
+      176,
+      202,
+      83,
+      10,
+      7,
+      5,
+      42,
+      38,
+      32,
+      14,
+      50,
+      12
+    ],
+    "replay_blocked": [],
+    "beatable": true,
+    "physical_rejections": [],
+    "seconds": 21.703
+  },
+  "rebuilt_dll_protocol": {
+    "passed": true,
+    "scope": "Actual rebuilt .40 APCpp DLL LocationInfo parser and callback ABI, no socket",
+    "exit_code": 0
+  }
+}

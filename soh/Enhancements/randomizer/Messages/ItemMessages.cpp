@@ -145,7 +145,7 @@ void BuildCustomItemMessage(Player* player, CustomMessage& msg) {
     } else {
         rgid = player->getItemId;
     }
-    if (rgid == RG_AP_SONG_NOTE) {
+    if (rgid == RG_AP_SONG_NOTE || (rgid >= RG_AP_NOTE_ZELDA && rgid <= RG_AP_NOTE_PRELUDE)) {
         const char* description = Archipelago_GetSongNotePickupDescription();
         msg = CustomMessage(description != nullptr && description[0] != '\0'
                                 ? description : "You found a %gSong Note%w!",

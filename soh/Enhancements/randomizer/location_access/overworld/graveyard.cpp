@@ -19,6 +19,12 @@ static bool CanUseShovel() {
     return !ctx->GetOption(RSK_SHUFFLE_SHOVEL) || logic->HasItem(RG_SHOVEL);
 }
 
+static bool CanReachGraveyardCrate() {
+    return ((logic->IsAdult && (logic->BeanPlanted(LOGIC_PLANT_GRAVEYARD_BEAN) ||
+                               logic->CanUse(RG_ROCS_FEATHER))) ||
+            logic->CanUse(RG_LONGSHOT)) && logic->CanBreakCrates();
+}
+
 void RegionTable_Init_Graveyard() {
     // clang-format off
     areaTable[RR_THE_GRAVEYARD] = Region("The Graveyard", SCENE_GRAVEYARD, {
@@ -29,7 +35,7 @@ void RegionTable_Init_Graveyard() {
         EVENT_ACCESS(LOGIC_SOLD_SPOOKY_MASK,     logic->IsChild && logic->AtDay && logic->HasItem(RG_SPOOKY_MASK) && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_HYLIAN)),
     }, {
         //Locations
-        LOCATION(RC_GRAVEYARD_FREESTANDING_POH,        (((logic->IsAdult && logic->BeanPlanted(LOGIC_PLANT_GRAVEYARD_BEAN)) || logic->CanUse(RG_LONGSHOT)) && logic->CanBreakCrates()) || (ctx->GetTrickOption(RT_GY_POH) && logic->CanUse(RG_BOOMERANG))),
+        LOCATION(RC_GRAVEYARD_FREESTANDING_POH,        CanReachGraveyardCrate() || (ctx->GetTrickOption(RT_GY_POH) && logic->CanUse(RG_BOOMERANG))),
         LOCATION(RC_GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR, logic->HasItem(RG_CHILD_WALLET) && logic->IsChild && logic->AtNight && CanTalkToDampe() && CanUseShovel()), //TODO: This needs to change
         LOCATION(RC_GRAVEYARD_GS_WALL,                 logic->IsChild && logic->HookshotOrBoomerang() && logic->AtNight && logic->CanGetNightTimeGS()),
         LOCATION(RC_GRAVEYARD_GS_BEAN_PATCH,           logic->CanSpawnSoilSkull(RG_GRAVEYARD_BEAN_SOUL) && logic->CanAttack()),
@@ -48,7 +54,7 @@ void RegionTable_Init_Graveyard() {
         LOCATION(RC_GY_GRASS_10,                       logic->CanCollectGrass()),
         LOCATION(RC_GY_GRASS_11,                       logic->CanCollectGrass()),
         LOCATION(RC_GY_GRASS_12,                       logic->CanCollectGrass()),
-        LOCATION(RC_GRAVEYARD_CRATE,                   ((logic->IsAdult && logic->BeanPlanted(LOGIC_PLANT_GRAVEYARD_BEAN)) || logic->CanUse(RG_LONGSHOT)) && logic->CanBreakCrates()),
+        LOCATION(RC_GRAVEYARD_CRATE,                   CanReachGraveyardCrate()),
         LOCATION(RC_GY_ROCK,                           logic->CanBreakRocks()),
         LOCATION(RC_GY_NEAR_HUT_GRAVE_BUTTERFLY_FAIRY, logic->IsChild && logic->AtDay && logic->CanUse(RG_STICKS)),
         LOCATION(RC_GY_ENTRANCE_RECTANGLE_SIGN,        logic->CanRead()),

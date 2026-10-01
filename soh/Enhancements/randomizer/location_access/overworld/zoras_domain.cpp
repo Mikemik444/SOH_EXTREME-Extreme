@@ -12,7 +12,11 @@ void RegionTable_Init_ZorasDomain() {
         EVENT_ACCESS(LOGIC_STICK_ACCESS,         logic->IsChild && logic->CanBreakPots()),
         EVENT_ACCESS(LOGIC_FISH_ACCESS,          logic->IsChild),
         EVENT_ACCESS(LOGIC_KING_ZORA_THAWED,     logic->IsAdult && logic->BlueFire()),
-        EVENT_ACCESS(LOGIC_DELIVER_RUTOS_LETTER, logic->CanUse(RG_RUTOS_LETTER) && logic->IsChild && ctx->GetOption(RSK_ZORAS_FOUNTAIN).IsNot(RO_ZF_OPEN)),
+        // Reaching the child Domain is not enough to empty the letter bottle:
+        // King Zora must exist and Link must be able to talk to him.
+        EVENT_ACCESS(LOGIC_DELIVER_RUTOS_LETTER, logic->CanUse(RG_RUTOS_LETTER) && logic->IsChild && ctx->GetOption(RSK_ZORAS_FOUNTAIN).IsNot(RO_ZF_OPEN) &&
+                                               (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) &&
+                                               (!ctx->GetOption(RSK_SHUFFLE_SPEAK) || logic->HasItem(RG_SPEAK_ZORA))),
     }, {
         //Locations
         LOCATION(RC_ZD_DIVING_MINIGAME,                     logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_ZORA) && logic->IsChild),

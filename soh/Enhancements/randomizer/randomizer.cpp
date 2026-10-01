@@ -1515,6 +1515,18 @@ extern "C" u16 Randomizer_Item_Give(PlayState* play, GetItemEntry giEntry) {
         case RG_AP_REMOTE_IMPORTANT:
         case RG_AP_REMOTE_NORMAL:
         case RG_AP_SONG_NOTE:
+        case RG_AP_NOTE_ZELDA:
+        case RG_AP_NOTE_EPONA:
+        case RG_AP_NOTE_SARIA:
+        case RG_AP_NOTE_SUN:
+        case RG_AP_NOTE_TIME:
+        case RG_AP_NOTE_STORMS:
+        case RG_AP_NOTE_MINUET:
+        case RG_AP_NOTE_BOLERO:
+        case RG_AP_NOTE_SERENADE:
+        case RG_AP_NOTE_REQUIEM:
+        case RG_AP_NOTE_NOCTURNE:
+        case RG_AP_NOTE_PRELUDE:
             // AP notes commit their exact flag in the receive callback.
             // Presentation only: the server gives this item to its actual owner.
             break;

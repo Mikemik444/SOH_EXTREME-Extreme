@@ -10,7 +10,7 @@ from .NpcSpeech import display_region
 from typing import Any
 
 PROTOCOL = "SOHExtremeFinder1"
-VERSION = "0.11.39"
+VERSION = "0.11.46"
 TAG = "SOHExtremeUT"
 MAX_ENTRIES = 20000
 MAX_BYTES = 750000

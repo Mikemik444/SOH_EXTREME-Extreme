@@ -17,6 +17,8 @@ extern "C" {
 // Keep optional NPC conversations available until their AP check is collected.
 struct Actor;
 bool Archipelago_HasPendingNpcConversation(const struct Actor* actor);
+// Uncollected speech check on a visible NPC; suppressed while NPC Soul is locked.
+bool Archipelago_ShouldHighlightNpcSpeech(const struct Actor* actor);
 bool Archipelago_IsAuthenticatedForFileSelect(void);
 // True only for the enabled AP client's current Archipelago save.
 bool Archipelago_IsCurrentSaveActive(void);

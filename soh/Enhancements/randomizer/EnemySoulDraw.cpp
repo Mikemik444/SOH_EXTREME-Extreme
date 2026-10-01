@@ -11,6 +11,8 @@ extern "C" {
 #include "objects/object_gi_fire/object_gi_fire.h"
 }
 
+#include "SoulRelicMesh.inc"
+
 // Each tile is an independent 32x32 RGBA32 texture (4096 bytes).
 // Four safe uploads form one effective 64x64 portrait without ever asking
 // Fast3D/TMEM to treat a 64x64 or 128x128 RGBA32 image as one texture.
@@ -89,8 +91,8 @@ static void DrawSoulFlame(PlayState* play, const SohExtremeSoulVisual& visual) {
                                       0, 0, 1, -8)));
 
     Matrix_Push();
-    Matrix_Translate(0.0f, -70.0f, 0.0f, MTXMODE_APPLY);
-    Matrix_Scale(5.0f, 5.0f, 5.0f, MTXMODE_APPLY);
+    Matrix_Translate(0.0f, -36.0f, -6.0f, MTXMODE_APPLY);
+    Matrix_Scale(2.6f, 2.6f, 2.6f, MTXMODE_APPLY);
     Matrix_ReplaceRotation(&play->billboardMtxF);
 
     gSPMatrix(POLY_XLU_DISP++,
@@ -156,8 +158,43 @@ static void Draw32TextureOnQuad(Gfx*& polyXluDisp, const char* texture, Vtx* qua
     gSP2Triangles(polyXluDisp++, 0, 1, 2, 0, 0, 2, 3, 0);
 }
 
+static void DrawSoulRim(PlayState* play, const SohExtremeSoulVisual& visual) {
+    OPEN_DISPS(play->state.gfxCtx);
+    Gfx_SetupDL_25Opa(play->state.gfxCtx);
+    gDPPipeSync(POLY_OPA_DISP++);
+    gSPGrayscale(POLY_OPA_DISP++, false);
+    gSPClearGeometryMode(POLY_OPA_DISP++, G_LIGHTING | G_CULL_BACK | G_CULL_FRONT | G_FOG |
+                                           G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR);
+    gSPSetGeometryMode(POLY_OPA_DISP++, G_SHADE | G_SHADING_SMOOTH | G_ZBUFFER);
+    gDPSetTextureLUT(POLY_OPA_DISP++, G_TT_NONE);
+    gSPTexture(POLY_OPA_DISP++, 0, 0, 0, G_TX_RENDERTILE, G_OFF);
+    gDPSetCombineLERP(POLY_OPA_DISP++, SHADE, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE,
+                     SHADE, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE);
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, (255 + visual.flameR) / 2,
+                   (255 + visual.flameG) / 2, (255 + visual.flameB) / 2, 255);
+    gSPMatrix(POLY_OPA_DISP++, MATRIX_NEWMTX(play->state.gfxCtx), G_MTX_MODELVIEW | G_MTX_LOAD);
+    constexpr int count = sizeof(sSoulRelicRim) / sizeof(sSoulRelicRim[0]);
+    for (int offset = 0; offset < count; offset += 30) {
+        const int batch = count - offset < 30 ? count - offset : 30;
+        gSPVertex(POLY_OPA_DISP++, reinterpret_cast<uintptr_t>(sSoulRelicRim + offset), batch, 0);
+        for (int i = 0; i < batch; i += 3) {
+            gSP1Triangle(POLY_OPA_DISP++, i, i + 1, i + 2, 0);
+        }
+    }
+    gDPPipeSync(POLY_OPA_DISP++);
+    Gfx_SetupDL_25Opa(play->state.gfxCtx);
+    gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 255, 255);
+    CLOSE_DISPS(play->state.gfxCtx);
+}
+
 static bool DrawSoulPortrait(PlayState* play, const SohExtremeSoulVisual& visual) {
     const auto* tiles = SohExtreme_GetSoulPortraitTiles(visual.item);
+    const auto* emblem = SohExtreme_GetSoulEmblem(visual.item);
+    const char* icon = emblem != nullptr ? emblem->icon : visual.icon;
+
+    const bool haveEmblem = emblem != nullptr && HasResource(emblem->tiles[0]) &&
+                           HasResource(emblem->tiles[1]) && HasResource(emblem->tiles[2]) &&
+                           HasResource(emblem->tiles[3]);
 
     bool haveTiles = tiles != nullptr &&
                      HasResource(tiles->tile0) &&
@@ -165,13 +202,20 @@ static bool DrawSoulPortrait(PlayState* play, const SohExtremeSoulVisual& visual
                      HasResource(tiles->tile2) &&
                      HasResource(tiles->tile3);
 
-    if (!haveTiles && !HasResource(visual.icon)) {
+    if (!haveEmblem && !haveTiles && !HasResource(icon)) {
         return false;
     }
 
     OPEN_DISPS(play->state.gfxCtx);
     Matrix_Push();
     Matrix_ReplaceRotation(&play->billboardMtxF);
+    // Gentle rocking keeps the front readable and shows the modeled bevel.
+    const float phase = (play->state.frames & 0x7FFFu) * 0.035f;
+    Matrix_Translate(0.0f, 1.5f * sinf(phase), 0.0f, MTXMODE_APPLY);
+    Matrix_RotateY(0.16f * sinf(phase * 0.7f), MTXMODE_APPLY);
+    DrawSoulRim(play, visual);
+    Matrix_Translate(0.0f, 0.0f, 5.0f, MTXMODE_APPLY);
+    Matrix_Scale(0.72f, 0.72f, 0.72f, MTXMODE_APPLY);
     gSPMatrix(POLY_XLU_DISP++,
               Matrix_NewMtx(play->state.gfxCtx, (char*)__FILE__, __LINE__),
               G_MTX_MODELVIEW | G_MTX_LOAD);
@@ -179,7 +223,11 @@ static bool DrawSoulPortrait(PlayState* play, const SohExtremeSoulVisual& visual
     Gfx*& polyXluDisp = POLY_XLU_DISP;
     SetupPortraitMaterial(play, polyXluDisp);
 
-    if (haveTiles) {
+    if (haveEmblem) {
+        for (int i = 0; i < 4; ++i) {
+            Draw32TextureOnQuad(polyXluDisp, emblem->tiles[i], sSoulTileQuads[i]);
+        }
+    } else if (haveTiles) {
         // Four independent 32x32 uploads -> effective 64x64 detail.
         // No oversized texture, no source-stride tricks, no TLUT usage.
         Draw32TextureOnQuad(polyXluDisp, tiles->tile0, sSoulTileQuads[0]);
@@ -188,7 +236,7 @@ static bool DrawSoulPortrait(PlayState* play, const SohExtremeSoulVisual& visual
         Draw32TextureOnQuad(polyXluDisp, tiles->tile3, sSoulTileQuads[3]);
     } else {
         // Safe compatibility fallback.
-        Draw32TextureOnQuad(polyXluDisp, visual.icon, sSoulFallbackQuad);
+        Draw32TextureOnQuad(polyXluDisp, icon, sSoulFallbackQuad);
     }
 
     gDPPipeSync(POLY_XLU_DISP++);
@@ -233,8 +281,7 @@ extern "C" void Randomizer_DrawEnemySoul(PlayState* play, GetItemEntry* entry) {
 
         if (visual->kind == SOH_SOUL_BEAN) {
             Randomizer_DrawBeanSprout(play, entry);
-        } else if (visual->kind != SOH_SOUL_PORTRAIT ||
-                   !DrawSoulPortrait(play, *visual)) {
+        } else if (!DrawSoulPortrait(play, *visual)) {
             DrawSoulSkull(play);
         }
     }

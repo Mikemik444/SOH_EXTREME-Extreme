@@ -28,6 +28,7 @@ class ArchipelagoClient {
     const std::string& GetFinderRuntimePath() const;
     int32_t GetFinderNativeCheck(int64_t locationId) const;
     void Update();
+    void ReofferPendingPresentation();
 
     bool IsEnabled() const { return enabled.load(); }
     bool IsAuthenticated() const;
@@ -39,6 +40,8 @@ class ArchipelagoClient {
     void ReportNpcSpeech(int32_t randomizerCheck);
     bool ReportNpcSpeechLocation(int64_t speechLocation);
     bool ReportFallbackNpcSpeech(const struct Actor* actor);
+    // Read-only, game-thread draw query; never reports or reserves a check.
+    bool ShouldHighlightNpcSpeech(const struct Actor* actor) const;
     void LoadFallbackNpcSpeechHashes(const std::vector<uint64_t>& hashes);
     std::vector<uint64_t> GetFallbackNpcSpeechHashes() const;
     void RegisterHooks();

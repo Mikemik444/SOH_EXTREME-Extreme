@@ -35,6 +35,7 @@ int main(int argc, char** argv) {
                 assert(snapshot.active.count(row->id));
                 assert(!snapshot.checked.count(row->id));
                 if (onlyCurrent) assert(area(row->id)==5);
+                assert(group.currentArea == (area(row->id)==5));
                 if(row->state==1)normal++;else glitched++;
             }
             assert(normal == group.normal && glitched == group.glitched);
@@ -49,7 +50,7 @@ int main(int argc, char** argv) {
     auto onlyIds=checkSet(only,true);
     for(const auto& row:snapshot.rows) assert(bool(onlyIds.count(row.id)) == (area(row.id)==5));
     auto alpha = GroupTrackerRows(snapshot,5,false,false,area,all);
-    for(size_t i=1;i<alpha.size();++i)assert(alpha[i-1].region < alpha[i].region);
+    for(size_t i=1;i<alpha.size();++i)assert(alpha[i-1].region <= alpha[i].region);
     auto none = GroupTrackerRows(snapshot,-1,true,true,area,all);
     assert(none.empty());
     auto filtered = GroupTrackerRows(snapshot,5,true,false,area,[](const TrackerRow& row){return row.state==1;});

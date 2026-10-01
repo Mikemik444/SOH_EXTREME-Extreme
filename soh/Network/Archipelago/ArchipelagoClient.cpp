@@ -80,6 +80,8 @@ constexpr int AP_LOCATION_REPORTS_PER_FRAME = 4;
 // transaction completion. Never let that wedge the entire receive queue forever.
 // Retry only after the item/cutscene state has ended and Link is alive.
 uint32_t gAwaitingMajorFrames = 0;
+GetItemEntry gAwaitingMajorEntry{};
+GetItemEntry gRemotePresentationEntry{};
 constexpr uint32_t AP_MAJOR_RECEIVE_VERIFY_TIMEOUT_FRAMES = 90;
 
 
@@ -289,6 +291,8 @@ static bool HasNote(RandomizerInf first, int offset) {
     return Flags_GetRandomizerInf(static_cast<RandomizerInf>(static_cast<int>(first) + offset));
 }
 
+static RandomizerGet GetApSongNoteDisplay(int64_t itemId);
+
 static RandomizerGet MapApItemNameToRandomizerGet(const std::string& itemName) {
     static const std::unordered_map<std::string, RandomizerGet> kItemNameMap = {
 #include "ArchipelagoNameMap.inc"
@@ -299,10 +303,16 @@ static RandomizerGet MapApItemNameToRandomizerGet(const std::string& itemName) {
         return it->second;
     }
 
-    // All 74 SOH-EXTREME Song Notes intentionally share one physical display model.
-    // Their actual reward is still the exact AP note ID handled by ProcessItem().
-    if (itemName.rfind("Song Note", 0) == 0) {
-        return RG_AP_SONG_NOTE;
+    // The AP catalog names notes 01..74. Resolve their owning song rather than
+    // losing that identity in a single shared note model. Reject malformed names
+    // so a valid numeric item ID can still resolve a delayed/missing name.
+    if (itemName.rfind("Song Note ", 0) == 0 && itemName.size() >= 11 && itemName.size() <= 12) {
+        int note = 0;
+        for (size_t i = 10; i < itemName.size(); ++i) {
+            if (itemName[i] < '0' || itemName[i] > '9') return RG_NONE;
+            note = note * 10 + (itemName[i] - '0');
+        }
+        return GetApSongNoteDisplay(AP_FIRST_SONG_NOTE + note - 1);
     }
 
     return RG_NONE;
@@ -343,21 +353,31 @@ static RandomizerGet GetIceTrapDisguise(int64_t apLocation) {
     return display != RG_NONE ? display : RG_PROGRESSIVE_HOOKSHOT;
 }
 
-struct SongNotes { const char* name; int count; int quest; };
+struct SongNotes { const char* name; int count; int quest; RandomizerGet display; };
 static constexpr SongNotes kApSongNotes[] = {
-        {"Zelda's Lullaby", 6, QUEST_SONG_LULLABY},
-        {"Epona's Song", 6, QUEST_SONG_EPONA},
-        {"Saria's Song", 6, QUEST_SONG_SARIA},
-        {"Sun's Song", 6, QUEST_SONG_SUN},
-        {"Song of Time", 6, QUEST_SONG_TIME},
-        {"Song of Storms", 6, QUEST_SONG_STORMS},
-        {"Minuet of Forest", 6, QUEST_SONG_MINUET},
-        {"Bolero of Fire", 8, QUEST_SONG_BOLERO},
-        {"Serenade of Water", 5, QUEST_SONG_SERENADE},
-        {"Requiem of Spirit", 6, QUEST_SONG_REQUIEM},
-        {"Nocturne of Shadow", 7, QUEST_SONG_NOCTURNE},
-        {"Prelude of Light", 6, QUEST_SONG_PRELUDE},
+        {"Zelda's Lullaby", 6, QUEST_SONG_LULLABY, RG_AP_NOTE_ZELDA},
+        {"Epona's Song", 6, QUEST_SONG_EPONA, RG_AP_NOTE_EPONA},
+        {"Saria's Song", 6, QUEST_SONG_SARIA, RG_AP_NOTE_SARIA},
+        {"Sun's Song", 6, QUEST_SONG_SUN, RG_AP_NOTE_SUN},
+        {"Song of Time", 6, QUEST_SONG_TIME, RG_AP_NOTE_TIME},
+        {"Song of Storms", 6, QUEST_SONG_STORMS, RG_AP_NOTE_STORMS},
+        {"Minuet of Forest", 6, QUEST_SONG_MINUET, RG_AP_NOTE_MINUET},
+        {"Bolero of Fire", 8, QUEST_SONG_BOLERO, RG_AP_NOTE_BOLERO},
+        {"Serenade of Water", 5, QUEST_SONG_SERENADE, RG_AP_NOTE_SERENADE},
+        {"Requiem of Spirit", 6, QUEST_SONG_REQUIEM, RG_AP_NOTE_REQUIEM},
+        {"Nocturne of Shadow", 7, QUEST_SONG_NOCTURNE, RG_AP_NOTE_NOCTURNE},
+        {"Prelude of Light", 6, QUEST_SONG_PRELUDE, RG_AP_NOTE_PRELUDE},
     };
+
+static RandomizerGet GetApSongNoteDisplay(int64_t itemId) {
+    if (itemId < AP_FIRST_SONG_NOTE || itemId > AP_LAST_SONG_NOTE) return RG_NONE;
+    int note = static_cast<int>(itemId - AP_FIRST_SONG_NOTE);
+    for (const auto& song : kApSongNotes) {
+        if (note < song.count) return song.display;
+        note -= song.count;
+    }
+    return RG_NONE;
+}
 
 static std::string BuildApSongNotePickupDescription(int64_t itemId) {
     if (itemId < AP_FIRST_SONG_NOTE || itemId > AP_LAST_SONG_NOTE) return {};
@@ -1605,7 +1625,7 @@ int32_t ArchipelagoClient::MapApItemToRandomizerGet(int64_t itemId) const {
         case AP_ITEM_GANONS_CASTLE_MQ_SILVER_SHADOW: randoGet = RG_GANONS_CASTLE_MQ_SILVER_SHADOW; break;
         default:
             if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
-                randoGet = RG_AP_SONG_NOTE; // presentation only; receipt grants the exact note flag
+                randoGet = GetApSongNoteDisplay(itemId); // receipt grants the exact note flag
             }
             break;
     }
@@ -1789,7 +1809,7 @@ void ArchipelagoClient::ApplySlotSettings() {
         settingsSnapshot = slotSettings;
     }
 
-    SPDLOG_INFO("[Archipelago] SOH-EXTREME AP settings runtime 0.8.05 active");
+    SPDLOG_INFO("[Archipelago] SOH-EXTREME AP settings runtime {} active", SohExtreme::kTrackerVersion);
 
     // APWorld sends extreme_soh_cvars using the *native option suffixes*
     // (ShufflePots, ShuffleGrass, PotSoul, etc.).  Do NOT reconstruct the CVar
@@ -2487,6 +2507,7 @@ bool ArchipelagoClient::ProcessRemotePresentation() {
     remotePresentationFrames = 0;
     remotePresentationActive = true;
     auto entry = Rando::StaticData::RetrieveItem(RG_AP_REMOTE_IMPORTANT).GetGIEntry_Copy();
+    gRemotePresentationEntry = entry;
     if (!GiveItemEntryWithoutActor(gPlayState, entry)) {
         remotePresentationActive = false;
         remotePickupDescription.clear();
@@ -2495,6 +2516,36 @@ bool ArchipelagoClient::ProcessRemotePresentation() {
     Notification::Emit({ .prefix = "Archipelago", .message = "found " + itemName + " for",
                          .suffix = recipient, .remainingTime = 5.0f });
     return true;
+}
+
+void ArchipelagoClient::ReofferPendingPresentation() {
+    // GiveItemEntryWithoutActor offers an item; it does not start an animation.
+    // Attacking/rolling can discard that one-frame offer. Like the native item
+    // queue, keep offering after Player_Update until Link accepts it, rather
+    // than blocking every later AP item behind a 90-frame timeout.
+    const bool remotePending = remotePresentationActive && !remotePresentationReceived;
+    if ((!awaitingMajorItemReceipt && !remotePending) || !IsGameplaySessionActive() ||
+        gPlayState == nullptr || gSaveContext.health <= 0 ||
+        gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
+        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF || GameInteractor::IsGameplayPaused()) return;
+    Player* player = GET_PLAYER(gPlayState);
+    if (player == nullptr || Player_InBlockingCsMode(gPlayState, player) ||
+        (player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM |
+                               PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_IN_WATER)) ||
+        !(player->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) return;
+    const auto& entry = awaitingMajorItemReceipt ? gAwaitingMajorEntry : gRemotePresentationEntry;
+    if (player->getItemId != GI_NONE &&
+        ((player->interactRangeActor != nullptr && player->interactRangeActor != &player->actor) ||
+         player->getItemId != entry.getItemId ||
+         player->getItemEntry.modIndex != entry.modIndex ||
+         player->getItemEntry.itemId != entry.itemId ||
+         player->getItemEntry.getItemId != entry.getItemId)) return;
+    // Player_Update clears interactRangeActor after an unaccepted offer while
+    // retaining getItemId/getItemEntry. A null source with our exact entry is
+    // still ours to re-offer; treating it as another actor stalls the whole AP
+    // receive queue until the timeout. Live foreign offers remain protected.
+    // Re-offering cannot grant, commit, pop the receive queue or reset its timer.
+    GiveItemEntryWithoutActor(gPlayState, entry);
 }
 
 std::string ArchipelagoClient::GetRemoteItemDescription(int32_t randomizerCheck) {
@@ -2838,7 +2889,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
             case AP_ITEM_FLOW_OF_TIME: randoGet = RG_FLOW_OF_TIME; break;
             default:
                 if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
-                    randoGet = RG_AP_SONG_NOTE;
+                    randoGet = GetApSongNoteDisplay(itemId);
                     break;
                 }
                 SPDLOG_WARN("[Archipelago] Unknown SOH-EXTREME item id {}", itemId);
@@ -2959,7 +3010,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
     // major item can leave the first session effectively locked in item presentation
     // for minutes. Apply historical rewards directly and silently instead.
     if (historicalNewSaveReplay) {
-        if (randoGet == RG_AP_SONG_NOTE) {
+        if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
             const auto flag = static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + itemId - AP_FIRST_SONG_NOTE);
             Flags_SetRandomizerInf(flag);
             if (!Flags_GetRandomizerInf(flag)) return false;
@@ -3055,6 +3106,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
     // randomizer items. Arm BEFORE the give so synchronous callbacks count too.
     const bool transactionalBaseMajor = true;
     if (transactionalBaseMajor) {
+        gAwaitingMajorEntry = giEntry;
         awaitingMajorItemReceipt = true;
         awaitingMajorSequence = sequence;
         awaitingMajorApItemId = itemId;
@@ -3064,7 +3116,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         gAwaitingMajorFrames = 0;
     }
 
-    if (randoGet == RG_AP_SONG_NOTE) {
+    if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
         songNotePickupDescription = BuildApSongNotePickupDescription(itemId);
     }
 
@@ -3903,6 +3955,56 @@ static int64_t Archipelago_ResolveNpcSpeechLocation(const Actor* actor, int16_t 
 }
 
 
+bool ArchipelagoClient::ShouldHighlightNpcSpeech(const Actor* actor) const {
+    if (!IsGameplaySessionActive() || gPlayState == nullptr || actor == nullptr ||
+        actor->init != nullptr || actor->draw == nullptr || actor->update == nullptr ||
+        !CVarGetInteger(CVAR_RANDOMIZER_SETTING("NpcSpeechSanity"), 0)) return false;
+    if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !Flags_GetRandomizerInf(RAND_INF_NPC_SOUL)) return false;
+
+    // The same immutable character identity as the first-talk hooks, including
+    // moving NPCs, age variants, shopkeepers and the exact grotto scrub.
+    const int64_t conversation = Archipelago_ConversationForActor(actor);
+    if (conversation >= 0 && IsLocationActive(conversation)) {
+        // Pending includes the local outbox, so the glow ends on collection
+        // even offline or before the server acknowledges this conversation.
+        return !IsLocationSubmitted(conversation);
+    }
+
+    // Old seeds used reward-based speech IDs and a persistent generic bank.
+    // Keep this bounded and read-only: no name lookup, scout request, actor
+    // cache, or assignment of a fallback check is performed during drawing.
+    if (!IsLocationActive(AP_EXTREME_SPEECH_FALLBACK_BASE) || !Archipelago_IsManualSpeechActor(actor)) return false;
+    const auto rando = OTRGlobals::Instance->gRandomizer;
+    if (rando != nullptr) {
+        auto* location = rando->GetCheckObjectFromActor(actor->id, gPlayState->sceneNum, actor->params);
+        if (location == nullptr || location->GetRandomizerCheck() == RC_UNKNOWN_CHECK) {
+            location = rando->GetCheckObjectFromActor(actor->id, gPlayState->sceneNum, actor->textId);
+        }
+        if (location != nullptr && location->GetRandomizerCheck() != RC_UNKNOWN_CHECK) {
+            const auto base = rcToApLocation.find(static_cast<int32_t>(location->GetRandomizerCheck()));
+            if (base != rcToApLocation.end()) {
+                const int64_t candidate = AP_EXTREME_SPEECH_BASE + base->second;
+                if (IsLocationActive(candidate)) return !IsLocationSubmitted(candidate);
+                if (IsLocationSubmitted(candidate)) return false;
+            }
+        }
+    }
+    const int64_t legacy = Archipelago_ResolveNpcSpeechLocation(actor, gPlayState->sceneNum);
+    if (legacy >= 0 && IsLocationActive(legacy)) return !IsLocationSubmitted(legacy);
+    if (legacy >= 0 && IsLocationSubmitted(legacy)) return false;
+    const uint64_t identity = Archipelago_NpcSpeechIdentity(actor, gPlayState->sceneNum);
+    if (identity == 0 || fallbackNpcSpeechSeen.find(identity) != fallbackNpcSpeechSeen.end()) return false;
+    for (int64_t i = 0; i < AP_EXTREME_SPEECH_FALLBACK_COUNT; ++i) {
+        const int64_t candidate = AP_EXTREME_SPEECH_FALLBACK_BASE + i;
+        if (IsLocationActive(candidate) && !IsLocationSubmitted(candidate)) return true;
+    }
+    return false;
+}
+
+extern "C" bool Archipelago_ShouldHighlightNpcSpeech(const Actor* actor) {
+    return ArchipelagoClient::GetInstance().ShouldHighlightNpcSpeech(actor);
+}
+
 void ArchipelagoClient::LoadFallbackNpcSpeechHashes(const std::vector<uint64_t>& hashes) {
     fallbackNpcSpeechHashes = hashes;
     fallbackNpcSpeechSeen.clear();
@@ -4044,6 +4146,9 @@ void ArchipelagoClient::RegisterHooks() {
     }
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnGameFrameUpdate>([]() {
         ArchipelagoClient::GetInstance().Update();
+    });
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnPlayerUpdate>([]() {
+        ArchipelagoClient::GetInstance().ReofferPendingPresentation();
     });
 
     // Resolve/apply only the scene being entered. Actor/model hooks can still call
@@ -4203,6 +4308,8 @@ void ArchipelagoClient::RegisterHooks() {
 }
 
 static void InitArchipelagoClient() {
+    SPDLOG_INFO("[Archipelago] SOH-EXTREME runtime {} loaded (built {} {})",
+                SohExtreme::kTrackerVersion, __DATE__, __TIME__);
     auto& client = ArchipelagoClient::GetInstance();
     client.RegisterHooks();
     if (CVarGetInteger(CVAR_REMOTE_ARCHIPELAGO("Enabled"), 0)) {

@@ -1,0 +1,782 @@
+{
+  "origin": {
+    "name": "mixed_C_CPP_production_spawn_origin",
+    "passed": true,
+    "runs": [
+      {
+        "command": [
+          "gcc",
+          "-std=c11",
+          "-O2",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-I",
+          "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme",
+          "-I",
+          "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme\\validation\\fixtures",
+          "-c",
+          "work\\unused-enemy-tests\\origin-test-build\\production_spawn.c",
+          "-o",
+          "work\\unused-enemy-tests\\origin-test-build\\spawn.o"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-I",
+          "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme",
+          "-I",
+          "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme\\validation\\fixtures",
+          "work\\unused-enemy-tests\\origin-test-build\\production_identity.cpp",
+          "work\\unused-enemy-tests\\origin-test-build\\spawn.o",
+          "-o",
+          "work\\unused-enemy-tests\\origin-test-build\\origin"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "work\\unused-enemy-tests\\origin-test-build\\origin"
+        ],
+        "returncode": 0,
+        "stdout": "227 missing-object compatibility and rejection cases passed.\n812 positive authored/controller/grotto/sister identities; 53 creator families x 786 receipt slots (41658 offspring rejections); raw init/hook births, boss larvae, decoys, forged IDs, descendant helpers, cycles, reset and allocation failures passed.\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "logic": {
+    "passed": true,
+    "assertions": 142,
+    "failures": [],
+    "scope": "Unused actor entries: new fill exclusion and old server-manifest UT compatibility."
+  },
+  "graveyard": {
+    "passed": true,
+    "assertions": 182,
+    "failures": [],
+    "scope": "Graveyard/Windmill physical routes through fresh AP and real UT evaluation."
+  },
+  "objects": {
+    "passed": true,
+    "entries": [
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000360",
+        "setup": 2,
+        "index": 2,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -563,
+          75,
+          351
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000360",
+        "setup": 2,
+        "index": 3,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -563,
+          75,
+          709
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000360",
+        "setup": 2,
+        "index": 4,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -276,
+          131,
+          -148
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000360",
+        "setup": 2,
+        "index": 5,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -39,
+          133,
+          150
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000360",
+        "setup": 2,
+        "index": 6,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -25,
+          133,
+          -81
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000360",
+        "setup": 2,
+        "index": 7,
+        "actor": 149,
+        "params": 0,
+        "position": [
+          -686,
+          137,
+          -158
+        ],
+        "required_object": 36,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000360",
+        "setup": 2,
+        "index": 8,
+        "actor": 149,
+        "params": 0,
+        "position": [
+          -38,
+          135,
+          405
+        ],
+        "required_object": 36,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000750",
+        "setup": 3,
+        "index": 2,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -25,
+          133,
+          -81
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000750",
+        "setup": 3,
+        "index": 3,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -39,
+          133,
+          150
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000750",
+        "setup": 3,
+        "index": 4,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -276,
+          131,
+          -148
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000750",
+        "setup": 3,
+        "index": 5,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -563,
+          75,
+          709
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000750",
+        "setup": 3,
+        "index": 6,
+        "actor": 19,
+        "params": 3,
+        "position": [
+          -563,
+          75,
+          351
+        ],
+        "required_object": 13,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000750",
+        "setup": 3,
+        "index": 7,
+        "actor": 149,
+        "params": 0,
+        "position": [
+          -38,
+          135,
+          405
+        ],
+        "required_object": 36,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot02_scene/spot02_room_1Set_000750",
+        "setup": 3,
+        "index": 8,
+        "actor": 149,
+        "params": 0,
+        "position": [
+          -686,
+          137,
+          -158
+        ],
+        "required_object": 36,
+        "room_objects": [
+          161,
+          249,
+          97,
+          99,
+          144,
+          9,
+          162,
+          286,
+          303,
+          110,
+          392,
+          368,
+          72
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot10_scene/spot10_room_3",
+        "setup": 0,
+        "index": 2,
+        "actor": 14,
+        "params": 65280,
+        "position": [
+          2114,
+          -20,
+          -847
+        ],
+        "required_object": 7,
+        "room_objects": [
+          266,
+          360,
+          370,
+          279,
+          305,
+          286,
+          355,
+          392,
+          356,
+          379,
+          36
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot10_scene/spot10_room_3",
+        "setup": 1,
+        "index": 2,
+        "actor": 14,
+        "params": 65280,
+        "position": [
+          2114,
+          -20,
+          -847
+        ],
+        "required_object": 7,
+        "room_objects": [
+          266,
+          360,
+          370,
+          279,
+          305,
+          286,
+          355,
+          392,
+          356,
+          379,
+          36
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot10_scene/spot10_room_3Set_000150",
+        "setup": 2,
+        "index": 2,
+        "actor": 14,
+        "params": 65280,
+        "position": [
+          2114,
+          -20,
+          -847
+        ],
+        "required_object": 7,
+        "room_objects": [
+          252,
+          253,
+          251,
+          317,
+          286,
+          392,
+          296,
+          36,
+          355,
+          197,
+          316,
+          266
+        ],
+        "scene_objects": [],
+        "missing": true
+      },
+      {
+        "resource": "scenes/shared/spot10_scene/spot10_room_3",
+        "setup": 3,
+        "index": 2,
+        "actor": 14,
+        "params": 65280,
+        "position": [
+          2114,
+          -20,
+          -847
+        ],
+        "required_object": 7,
+        "room_objects": [
+          266,
+          360,
+          370,
+          279,
+          305,
+          286,
+          355,
+          392,
+          356,
+          379,
+          36
+        ],
+        "scene_objects": [],
+        "missing": true
+      }
+    ]
+  },
+  "generation": {
+    "seed": 9304101,
+    "players": 1,
+    "overrides": {},
+    "passed": true,
+    "harness": "AP 0.6.7 core with normal dependencies",
+    "locations": 3759,
+    "network_locations": 3311,
+    "pool": 3311,
+    "all_state_blocked": [],
+    "resolved_world_options": {
+      "1": {
+        "frozen_starting_time": 1,
+        "boss_key_shuffle": "anywhere",
+        "triforce_hunt": 1
+      }
+    },
+    "final_validation": {
+      "passed": true,
+      "sphere_sizes": [
+        22,
+        4,
+        16,
+        7,
+        12,
+        9,
+        119,
+        55,
+        61,
+        209,
+        105,
+        119,
+        33,
+        32,
+        37,
+        252,
+        156,
+        144,
+        55,
+        39,
+        85,
+        35,
+        126,
+        79,
+        177,
+        112,
+        147,
+        95,
+        21,
+        29,
+        197,
+        79,
+        90,
+        7,
+        10,
+        3,
+        12,
+        9,
+        4,
+        6,
+        6,
+        22,
+        10,
+        104,
+        34,
+        312,
+        163,
+        97,
+        65,
+        42,
+        5,
+        58,
+        25,
+        7
+      ],
+      "players": {
+        "1": {
+          "goal_met": true,
+          "full_accessibility": true,
+          "network_checks": 3311,
+          "checked": 3311
+        }
+      }
+    },
+    "sphere_sizes": [
+      22,
+      4,
+      16,
+      7,
+      12,
+      9,
+      119,
+      55,
+      61,
+      209,
+      105,
+      119,
+      33,
+      32,
+      37,
+      252,
+      156,
+      144,
+      55,
+      39,
+      85,
+      35,
+      126,
+      79,
+      177,
+      112,
+      147,
+      95,
+      21,
+      29,
+      197,
+      79,
+      90,
+      7,
+      10,
+      3,
+      12,
+      9,
+      4,
+      6,
+      6,
+      22,
+      10,
+      104,
+      34,
+      312,
+      163,
+      97,
+      65,
+      42,
+      5,
+      58,
+      25,
+      7
+    ],
+    "replay_blocked": [],
+    "beatable": true,
+    "physical_rejections": [],
+    "seconds": 32.969
+  },
+  "protocol": {
+    "exit_code": 0,
+    "passed": true,
+    "scope": "Rebuilt APCpp DLL LocationInfo recipient game identity and callback ABI"
+  },
+  "inherited_renderer_validation": {
+    "passed": true,
+    "before": {
+      "compile_exit": 0,
+      "compile_output": "previous.cpp\n",
+      "exit_code": 3221225477,
+      "output": ""
+    },
+    "after": {
+      "compile_exit": 0,
+      "compile_output": "fixed.cpp\n",
+      "exit_code": 0,
+      "output": "66058 assertions passed; inaccessible second half rejected without partial publication\n"
+    },
+    "scope": "Exercise the production TLUT copy with real Windows protected memory pages."
+  },
+  "crash_log_assessment": {
+    "time": "09:54:18.881",
+    "scene": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "room": 1,
+    "exception": "0xc0000005",
+    "relative_to_SetAudioChannels": -592848,
+    "matches_previous_confirmed_tlut_fault": true
+  }
+}

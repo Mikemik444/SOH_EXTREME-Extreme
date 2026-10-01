@@ -20,6 +20,15 @@ class LocalEvents(StrEnum):
     GRAVEYARD_BEAN_PLANTED = "Graveyard Bean Planted"
 
 
+def can_reach_graveyard_crate(bundle):
+    # Bean ownership alone is not a planted platform: the event carries child
+    # access, usable beans and the patch's soul. Longshot and the adult Feather
+    # jump are independent approaches; all still need to break the crate.
+    return ((is_adult(bundle) & (has_item(LocalEvents.GRAVEYARD_BEAN_PLANTED, bundle)
+                                | can_use(Items.ROCS_FEATHER, bundle)))
+            | can_use(Items.LONGSHOT, bundle)) & can_break_crates(bundle)
+
+
 def set_region_rules(world: "SohWorld") -> None:
     # The Graveyard
     # Events
@@ -37,8 +46,7 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Locations
     add_locations(Regions.THE_GRAVEYARD, world, [
-        (Locations.GRAVEYARD_FREESTANDING_POH, lambda bundle: (((is_adult(bundle) & has_item(LocalEvents.GRAVEYARD_BEAN_PLANTED, bundle)) | can_use(
-            Items.LONGSHOT, bundle)) & can_break_crates(bundle)) | (can_do_trick(Tricks.GY_POH, bundle) & can_use(Items.BOOMERANG, bundle))),
+        (Locations.GRAVEYARD_FREESTANDING_POH, lambda bundle: can_reach_graveyard_crate(bundle) | (can_do_trick(Tricks.GY_POH, bundle) & can_use(Items.BOOMERANG, bundle))),
         (Locations.GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR, lambda bundle: has_item(
             Items.CHILD_WALLET, bundle) & is_child(bundle) & at_night(bundle)),
         (Locations.GRAVEYARD_GS_WALL, lambda bundle: is_child(bundle) & hookshot_or_boomerang(
@@ -63,8 +71,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Locations.GRAVEYARD_GRASS_10, lambda bundle: can_collect_grass(bundle)),
         (Locations.GRAVEYARD_GRASS_11, lambda bundle: can_collect_grass(bundle)),
         (Locations.GRAVEYARD_GRASS_12, lambda bundle: can_collect_grass(bundle)),
-        (Locations.GRAVEYARD_FREESTANDING_POH_CRATE, lambda bundle: (is_adult(bundle) & has_item(
-            LocalEvents.GRAVEYARD_BEAN_PLANTED, bundle)) | can_use(Items.LONGSHOT, bundle) & can_break_crates(bundle))
+        (Locations.GRAVEYARD_FREESTANDING_POH_CRATE, lambda bundle: can_reach_graveyard_crate(bundle))
 
     ])
     # Connections
@@ -143,7 +150,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (EventLocations.GRAVEYARD_DAMPES_GRAVE_NUT_POT,
          Events.CAN_FARM_NUTS, lambda bundle: True_()),
         (EventLocations.GRAVEYARD_DAMPES_WINDMILL_ACCESS, Events.DAMPES_WINDMILL_ACCESS,
-         lambda bundle: is_adult(bundle) & can_use(Items.SONG_OF_TIME, bundle))
+         lambda bundle: is_adult(bundle) & can_use(Items.SONG_OF_TIME, bundle) & can_interact_npc(bundle, "Hylian"))
     ])
     # Locations
     add_locations(Regions.GRAVEYARD_DAMPES_GRAVE, world, [
@@ -174,8 +181,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.GRAVEYARD_DAMPES_GRAVE, world, [
         (Regions.THE_GRAVEYARD, lambda bundle: True_()),
-        (Regions.KAK_WINDMILL, lambda bundle: (is_adult(bundle) & can_use(
-            Items.SONG_OF_TIME, bundle)) | (is_child(bundle) & can_ground_jump(bundle)))
+        (Regions.KAK_WINDMILL, lambda bundle: can_interact_npc(bundle, "Hylian") & (
+            (is_adult(bundle) & can_use(Items.SONG_OF_TIME, bundle)) | (is_child(bundle) & can_ground_jump(bundle))))
     ])
 
     # The Graveyard Dampes House

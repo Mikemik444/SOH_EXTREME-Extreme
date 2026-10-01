@@ -19,6 +19,7 @@
 #include "soh/SohGui/SohGui.hpp"
 #include "soh/SohGui/SohMenu.h"
 #include "ShuffleSilver.h"
+#include "EnemySoulIcons.h"
 #include "static_data.h"
 #include "soh/SohGui/UIWidgets.hpp"
 #include "soh/util.h"
@@ -187,16 +188,16 @@ std::vector<ItemTrackerItem> flowOfTimeItems = {
 };
 
 std::vector<ItemTrackerItem> beanSoulItems = {
-    ITEM_TRACKER_RG_CUSTOM(RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL, "DMC", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL, "DMT", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_DESERT_COLOSSUS_BEAN_SOUL, "DC", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_GERUDO_VALLEY_BEAN_SOUL, "GV", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_GRAVEYARD_BEAN_SOUL, "GY", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_KOKIRI_FOREST_BEAN_SOUL, "KF", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_LAKE_HYLIA_BEAN_SOUL, "LH", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_LOST_WOODS_BRIDGE_BEAN_SOUL, "LWB", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_LOST_WOODS_BEAN_SOUL, "LWT", ITEM_BEAN, 0, DrawItem),
-    ITEM_TRACKER_RG_CUSTOM(RG_ZORAS_RIVER_BEAN_SOUL, "ZR", ITEM_BEAN, 0, DrawItem),
+    ITEM_TRACKER_RG(RG_DEATH_MOUNTAIN_CRATER_BEAN_SOUL, "DMC", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_DEATH_MOUNTAIN_TRAIL_BEAN_SOUL, "DMT", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_DESERT_COLOSSUS_BEAN_SOUL, "DC", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_GERUDO_VALLEY_BEAN_SOUL, "GV", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_GRAVEYARD_BEAN_SOUL, "GY", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_KOKIRI_FOREST_BEAN_SOUL, "KF", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_LAKE_HYLIA_BEAN_SOUL, "LH", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_LOST_WOODS_BRIDGE_BEAN_SOUL, "LWB", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_LOST_WOODS_BEAN_SOUL, "LWT", 0, DrawItem),
+    ITEM_TRACKER_RG(RG_ZORAS_RIVER_BEAN_SOUL, "ZR", 0, DrawItem),
 };
 
 std::vector<ItemTrackerItem> bossSoulItems = {
@@ -1469,8 +1470,28 @@ void DrawItem(ItemTrackerItem item) {
 
     ImGui::BeginGroup();
 
-    ImGui::Image(gui->GetTextureByName(hasItem && IsValidSaveFile() ? item.iconName : item.fadedIconName),
-                 ImVec2(iconSize, iconSize), ImVec2(0, 0), ImVec2(1, 1));
+    const auto* soul = item.kind == ITEM_KIND_RG ? SohExtreme_GetSoulVisual(item.id) : nullptr;
+    if (soul != nullptr && soul->kind == SOH_SOUL_PORTRAIT) {
+        // Full-resolution portraits on a consistent dark soul setting. Missing
+        // souls remain faded, including the rim, so ownership stays unambiguous.
+        const bool owned = hasItem && IsValidSaveFile();
+        const auto pos = ImGui::GetCursorScreenPos();
+        const ImVec2 center(pos.x + iconSize / 2, pos.y + iconSize / 2);
+        auto* dl = ImGui::GetWindowDrawList();
+        const int alpha = owned ? 255 : 65;
+        dl->AddNgonFilled(center, iconSize * 0.49f, IM_COL32(8, 17, 29, alpha), 8);
+        dl->AddNgonFilled(center, iconSize * 0.46f,
+                         IM_COL32(soul->flameR, soul->flameG, soul->flameB, alpha), 8);
+        dl->AddNgonFilled(center, iconSize * 0.42f, IM_COL32(15, 30, 44, alpha), 8);
+        const float pad = iconSize * 0.085f;
+        dl->AddImage(gui->GetTextureByName(owned ? item.iconName : item.fadedIconName),
+                     ImVec2(pos.x + pad, pos.y + pad),
+                     ImVec2(pos.x + iconSize - pad, pos.y + iconSize - pad));
+        ImGui::Dummy(ImVec2(iconSize, iconSize));
+    } else {
+        ImGui::Image(gui->GetTextureByName(hasItem && IsValidSaveFile() ? item.iconName : item.fadedIconName),
+                     ImVec2(iconSize, iconSize), ImVec2(0, 0), ImVec2(1, 1));
+    }
 
     DrawItemCount(item, hideMax);
 

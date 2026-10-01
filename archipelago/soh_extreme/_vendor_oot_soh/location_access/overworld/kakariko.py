@@ -310,7 +310,7 @@ def set_region_rules(world: "SohWorld") -> None:
              is_child(bundle) & can_jump_slash_except_hammer(bundle) & can_do_trick(
                  Tricks.KAK_CHILD_WINDMILL_POH, bundle))),
         (Locations.SONG_FROM_WINDMILL,
-         lambda bundle: is_adult(bundle) & has_item(Items.FAIRY_OCARINA, bundle))
+         lambda bundle: is_adult(bundle) & has_item(Items.FAIRY_OCARINA, bundle) & can_interact_npc(bundle, "Hylian"))
     ])
     # Connections
     connect_regions(Regions.KAK_WINDMILL, world, [

@@ -210,6 +210,25 @@ def can_use(item: Items, bundle: tuple[Regions, "SohWorld"]) -> Rule:
         # Boots are never a replacement for Swim in an underwater route.
         rule &= can_swim(bundle)
 
+    if item == Items.MAGIC_BEAN:
+        # Each patch is a separate native actor controlled by its own Bean Soul.
+        # Gate use at the patch, including the planted event and bean fairies.
+        souls = {
+            Regions.DMC_CENTRAL_LOCAL: "Death Mountain Crater Bean Soul",
+            Regions.DEATH_MOUNTAIN_TRAIL: "Death Mountain Trail Bean Soul",
+            Regions.DESERT_COLOSSUS: "Desert Colossus Bean Soul",
+            Regions.GV_UPPER_STREAM: "Gerudo Valley Bean Soul",
+            Regions.THE_GRAVEYARD: "Graveyard Bean Soul",
+            Regions.KOKIRI_FOREST: "Kokiri Forest Bean Soul",
+            Regions.LAKE_HYLIA: "Lake Hylia Bean Soul",
+            Regions.LOST_WOODS: "Lost Woods Bridge Bean Soul",
+            Regions.LW_BEYOND_MIDO: "Lost Woods Bean Soul",
+            Regions.ZORA_RIVER: "Zora's River Bean Soul",
+        }
+        soul = souls.get(bundle[0])
+        if soul is not None:
+            rule &= extreme_requirement(bundle, "shuffle_bean_souls", soul)
+
     if item == Items.FISHING_POLE:
         # Pond access is not permission to start the owner's paid minigame.
         # All pond catches/prizes use this helper, in generation and UT alike.
@@ -269,6 +288,25 @@ def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"],
 
     if item == Items.DISTANT_SCARECROW:
         return scarecrows_song(bundle) & can_use(Items.LONGSHOT, bundle)
+
+    if item == Items.MAGIC_BEAN:
+        # Each patch is a separate native actor controlled by its own Bean Soul.
+        # Gate use at the patch, including the planted event and bean fairies.
+        souls = {
+            Regions.DMC_CENTRAL_LOCAL: "Death Mountain Crater Bean Soul",
+            Regions.DEATH_MOUNTAIN_TRAIL: "Death Mountain Trail Bean Soul",
+            Regions.DESERT_COLOSSUS: "Desert Colossus Bean Soul",
+            Regions.GV_UPPER_STREAM: "Gerudo Valley Bean Soul",
+            Regions.THE_GRAVEYARD: "Graveyard Bean Soul",
+            Regions.KOKIRI_FOREST: "Kokiri Forest Bean Soul",
+            Regions.LAKE_HYLIA: "Lake Hylia Bean Soul",
+            Regions.LOST_WOODS: "Lost Woods Bridge Bean Soul",
+            Regions.LW_BEYOND_MIDO: "Lost Woods Bean Soul",
+            Regions.ZORA_RIVER: "Zora's River Bean Soul",
+        }
+        soul = souls.get(bundle[0])
+        if soul is not None:
+            rule &= extreme_requirement(bundle, "shuffle_bean_souls", soul)
 
     if item == Items.FISHING_POLE:
         return OptionFilter(ShuffleFishingPole, False) | Has(Items.FISHING_POLE)
@@ -708,11 +746,26 @@ def can_get_nighttime_gs(bundle: tuple[Regions, "SohWorld"]) -> Rule:
 
 
 def can_break_pots(bundle: tuple[Regions, "SohWorld"]) -> Rule:
-    """Pot existence plus one usable break/lift method."""
-    return extreme_requirement(bundle, "shuffle_pot_soul", "Pot Soul") & (
-        can_grab(bundle) | can_jump_slash(bundle) | has_explosives(bundle) |
-        can_use_any([Items.BOOMERANG, Items.HOOKSHOT, Items.FAIRY_BOW,
-                     Items.FAIRY_SLINGSHOT], bundle))
+    """Pot existence plus a break/lift method allowed in this scene.
+
+    Possessing a weapon is insufficient in houses that disable its button.
+    These region exceptions match sRestrictionFlags / native ItemUseAllowed;
+    keep them here so both generation and UT use the same interaction rule.
+    """
+    soul = extreme_requirement(bundle, "shuffle_pot_soul", "Pot Soul")
+    if bundle[0] in (Regions.KF_LINKS_HOUSE, Regions.KF_HOUSE_OF_TWINS,
+                     Regions.KF_KNOW_IT_ALL_HOUSE, Regions.MARKET_MAN_IN_GREEN_HOUSE):
+        # B and all combat C items are disabled; only lifting is available.
+        return soul & can_grab(bundle)
+    if bundle[0] == Regions.LLR_TALONS_HOUSE:
+        # Lon Lon Buildings permits the B sword, but no combat C items.
+        return soul & (can_grab(bundle) | can_use_sword(bundle))
+    projectiles = [Items.BOOMERANG, Items.FAIRY_BOW, Items.FAIRY_SLINGSHOT]
+    if bundle[0] != Regions.MARKET_GUARD_HOUSE:
+        # Unlike the houses, the guardhouse allows normal combat except Hookshot.
+        projectiles.append(Items.HOOKSHOT)
+    return soul & (can_grab(bundle) | can_jump_slash(bundle) | has_explosives(bundle) |
+                   can_use_any(projectiles, bundle))
 
 
 def can_break_crates(bundle: tuple[Regions, "SohWorld"]) -> Rule:

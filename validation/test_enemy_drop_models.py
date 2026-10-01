@@ -27,7 +27,8 @@ selectors = '\n'.join(function(ap, s) for s in [
     'int32_t ArchipelagoClient::GetLocationDisplayItem(',
     'void ArchipelagoClient::QueueLocationInfo(',
 ])
-rg = sorted(set(re.findall(r'\bRG_\w+', selectors + names + ids)) - {'RG_NONE'})
+layout = ap[ap.index('struct SongNotes {'):ap.index('static std::string BuildApSongNotePickupDescription(')]
+rg = sorted(set(re.findall(r'\bRG_\w+', selectors + names + ids + layout)) - {'RG_NONE'})
 code = r'''
 #include <cassert>
 #include <cstdint>
@@ -57,7 +58,8 @@ code += r'''
  std::unordered_map<int64_t,ScoutedLocation> scoutedLocations;
 } client;
 '''
-code += selectors + '\n'
+code += 'enum Quests {' + ','.join(sorted(set(re.findall(r'\bQUEST_SONG_\w+', layout)))) + '};\n'
+code += layout + '\n' + selectors + '\n'
 code += r'''
 int32_t Archipelago_GetLocationDisplayItem(int64_t id){return client.GetLocationDisplayItem(id);}
 struct Vec3f{float x=0,y=0,z=0;};

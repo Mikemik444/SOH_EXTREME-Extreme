@@ -46,7 +46,7 @@ from Options import OptionError
 from .Options import SohExtremeOptions, extreme_option_groups
 from .ForkLocations import FORK_LOCATIONS, FORK_LOCATION_NAME_TO_ID, RETIRED_FORK_LOCATION_IDS
 from .PhysicalChestTypes import CHEST_TYPES_BY_AP_ID
-from .EnemyDropLocations import ENEMY_DROP_LOCATIONS, ENEMY_DROP_LOCATION_NAME_TO_ID
+from .EnemyDropLocations import ENEMY_DROP_LOCATIONS, ENEMY_DROP_LOCATION_NAME_TO_ID, ENEMY_UNUSED_OBJECT_IDS
 from .NativeRegionMap import FORK_NATIVE_REGIONS
 from .SpeechLocations import SPEECH_LOCATIONS, SPEECH_LOCATION_NAME_TO_ID
 from . import NpcSpeech
@@ -999,6 +999,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         )
 
 
+    def _enemy_location_enabled(self, loc) -> bool:
+        if loc.address in ENEMY_UNUSED_OBJECT_IDS:
+            return self.using_ut and loc.address in self.passthrough.get("extreme_active_locations", ())
+        return True
+
     def _fork_location_enabled(self, loc) -> bool:
         if loc.address in RETIRED_FORK_LOCATION_IDS:
             # New seeds must never place items at the courtyard windows, in any
@@ -1215,6 +1220,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             enemy_added = 0
             enemy_fallback = 0
             for enemy_drop in ENEMY_DROP_LOCATIONS:
+                if not self._enemy_location_enabled(enemy_drop):
+                    continue
                 from .EnemyRoomLogic import resolve_enemy_region
                 region_member = resolve_enemy_region(enemy_drop.region_token)
                 region = actual_regions.get(str(region_member)) if region_member is not None else None
@@ -1999,6 +2006,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         from .EnemyDropRules import enemy_drop_rule
         if o.shuffle_enemy_drops.value:
             for enemy_drop in ENEMY_DROP_LOCATIONS:
+                if not self._enemy_location_enabled(enemy_drop):
+                    continue
                 try:
                     enemy_location = self.get_location(enemy_drop.name)
                 except KeyError as error:
@@ -3768,6 +3777,16 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if o.shuffle_npc_soul.value:
                 require(event_location, "NPC Soul")
 
+        # The letter bottle becomes usable only after the child King Zora
+        # exchange. Its event already requires child access to Zoras Domain;
+        # it must also require the actor and his language, like a normal check.
+        # Otherwise every HasBottle rule can use the still-sealed letter bottle.
+        if o.zoras_fountain.value != 2:
+            letter_delivery = self.get_location("ZD Deliver Ruto's Letter")
+            require_language(letter_delivery, "Zora")
+            if o.shuffle_npc_soul.value:
+                require(letter_delivery, "NPC Soul")
+
         # Song from Saria is an inherited stock location whose native metadata
         # does not always carry NPC tags into the standalone EXTREME world.
         # Saria must physically exist, and the interaction uses Kokiri speech.
@@ -4036,22 +4055,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         except Exception:
             pass
 
-        # 0.10.8 GRAVEYARD BEAN-PLATFORM CRATE ROUTE
-        # The Freestanding PoH crate is on the adult bean platform. The intended
-        # bean route requires the Graveyard-specific Bean Soul; Longshot remains
-        # the legitimate alternate access route. Generic crate handling below
-        # separately requires Crate Soul and a real break method.
-        try:
-            gy_crate = self.get_location("Graveyard Freestanding PoH Crate")
-            gy_bundle = native_bundle_for_location(gy_crate)
-            if gy_bundle is not None:
-                bean_route = is_adult(gy_bundle) & Has("Graveyard Bean Soul")
-                longshot_route = can_use(Items.LONGSHOT, gy_bundle)
-                require_native_existing(gy_crate, bean_route | longshot_route)
-            else:
-                require_native_existing(gy_crate, Has("Graveyard Bean Soul"))
-        except Exception:
-            pass
+        # Graveyard PoH and its crate share their physical route in graveyard.py.
+        # Its planted-bean event checks the enabled Bean Soul setting. Keeping a
+        # second unconditional soul overlay here used to exclude valid alternate
+        # routes and did not protect the PoH itself.
 
         # These stock checks use cucco handling directly in the native fork.
         # Apply the shuffled interaction abilities as hard requirements there too.

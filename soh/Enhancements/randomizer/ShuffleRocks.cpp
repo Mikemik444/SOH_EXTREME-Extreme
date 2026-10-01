@@ -23,6 +23,7 @@ extern PlayState* gPlayState;
 }
 
 extern void EnItem00_DrawRandomizedItem(EnItem00* enItem00, PlayState* play);
+uint8_t Rock_RandomizerHoldsItem(CheckIdentity rockIdentity, PlayState* play, bool isBoulder);
 
 static bool RockSoulMissing(void) {
     return IS_RANDO && RAND_GET_OPTION(RSK_SHUFFLE_ROCK_SOUL) && !Flags_GetRandomizerInf(RAND_INF_ROCK_SOUL);
@@ -117,8 +118,7 @@ extern "C" void EnIshi_RandomizerDraw(Actor* thisx, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx);
     EndRockSoulTint(play->state.gfxCtx);
 
-    if (rockIdentity != nullptr && rockIdentity->randomizerCheck != RC_MAX &&
-        Flags_GetRandomizerInf(rockIdentity->randomizerInf) == 0) {
+    if (rockIdentity != nullptr && Rock_RandomizerHoldsItem(*rockIdentity, play, (rockActor->actor.params & 1) != 0)) {
         Sparkles(play, &rockActor->actor, !!(rockActor->actor.params & 1), *rockIdentity);
     }
 }
@@ -137,8 +137,7 @@ extern "C" void ObjBombiwa_RandomizerDraw(Actor* thisx, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx);
     EndRockSoulTint(play->state.gfxCtx);
 
-    if (rockIdentity != nullptr && rockIdentity->randomizerCheck != RC_MAX &&
-        Flags_GetRandomizerInf(rockIdentity->randomizerInf) == 0) {
+    if (rockIdentity != nullptr && Rock_RandomizerHoldsItem(*rockIdentity, play, true)) {
         Sparkles(play, &rockActor->actor, true, *rockIdentity);
     }
 }
@@ -158,8 +157,7 @@ extern "C" void ObjHamishi_RandomizerDraw(Actor* thisx, PlayState* play) {
     CLOSE_DISPS(play->state.gfxCtx);
     EndRockSoulTint(play->state.gfxCtx);
 
-    if (rockIdentity != nullptr && rockIdentity->randomizerCheck != RC_MAX &&
-        Flags_GetRandomizerInf(rockIdentity->randomizerInf) == 0) {
+    if (rockIdentity != nullptr && Rock_RandomizerHoldsItem(*rockIdentity, play, true)) {
         Sparkles(play, &rockActor->actor, true, *rockIdentity);
     }
 }
@@ -187,7 +185,9 @@ uint8_t Rock_RandomizerHoldsItem(CheckIdentity rockIdentity, PlayState* play, bo
 
 void Rock_RandomizerSpawnCollectible(Actor* actor, CheckIdentity rockIdentity, PlayState* play) {
     EnItem00* item00 = (EnItem00*)Item_DropCollectible2(play, &actor->world.pos, ITEM00_SOH_DUMMY);
+    if (item00 == nullptr) return; // The unchecked boulder remains recoverable on reload.
     item00->randoInf = rockIdentity.randomizerInf;
+    item00->randoCheck = rockIdentity.randomizerCheck;
     item00->itemEntry = Rando::Context::GetInstance()->GetFinalGIEntry(rockIdentity.randomizerCheck, true, GI_NONE);
     item00->actor.draw = (ActorFunc)EnItem00_DrawRandomizedItem;
     item00->actor.velocity.y = 9.0f;
@@ -261,9 +261,9 @@ static CheckIdentity IdentifyRock(s32 sceneNum, s32 posX, s32 posZ) {
     return rockIdentity;
 }
 
-// A shuffled rock/boulder is a one-time AP check but remains a reusable world
-// resource. This is also called from z_en_ishi.c before it writes the vanilla
-// permanent switch for a lifted large rock.
+// Ignore a boulder's removal switch only while its shuffled item is uncollected.
+// Once collected, the ordinary removal flag takes effect again. Small rocks
+// retain their normal reusable behavior.
 extern "C" s32 Rock_RandomizerShouldRespawn(Actor* actor) {
     if (actor == nullptr || !IS_RANDO) {
         return false;
@@ -281,7 +281,7 @@ extern "C" s32 Rock_RandomizerShouldRespawn(Actor* actor) {
     // home.pos is the immutable spawn identity even after a liftable rock moves.
     auto rockIdentity =
         IdentifyRock(gPlayState->sceneNum, (s16)actor->home.pos.x, (s16)actor->home.pos.z);
-    return Rock_RandomizerIsActiveLocation(rockIdentity, isBoulder);
+    return Rock_RandomizerHoldsItem(rockIdentity, gPlayState, isBoulder);
 }
 
 void EnIshi_RandomizerInit(void* actorRef) {
@@ -347,13 +347,10 @@ void RegisterShuffleRock() {
             auto rockIdentity =
                 IdentifyRock(gPlayState->sceneNum, (s16)rockActor->home.pos.x, (s16)rockActor->home.pos.z);
 
-            if (Rock_RandomizerIsActiveLocation(rockIdentity, true)) {
-                // First break pays the AP check. Later breaks remain normal resource
-                // breaks, but never write the vanilla flag that permanently removes
-                // the shuffled boulder from the scene.
-                if (Rock_RandomizerHoldsItem(rockIdentity, gPlayState, true)) {
-                    Rock_RandomizerSpawnCollectible(rockActor, rockIdentity, gPlayState);
-                }
+            if (Rock_RandomizerHoldsItem(rockIdentity, gPlayState, true)) {
+                // Preserve recovery after an event/previous break removed the
+                // obstacle, but only until the physical reward is collected.
+                Rock_RandomizerSpawnCollectible(rockActor, rockIdentity, gPlayState);
                 *should = false;
             }
         }

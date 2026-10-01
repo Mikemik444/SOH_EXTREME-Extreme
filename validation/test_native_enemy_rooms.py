@@ -43,7 +43,7 @@ cpp=r'''
 #include "soh/Enhancements/randomizer/randomizerEnums.h"
 #include "soh/Enhancements/randomizer/CheckFinderState.h"
 // Only these actor/scene identifiers occur in the extracted finder functions.
-constexpr int ACTOR_EN_TUBO_TRAP=0x11D;
+constexpr int ACTOR_EN_TUBO_TRAP=0x11D, ACTOR_EN_PEEHAT=0x1D, ACTOR_EN_BIGOKUTA=0xC6;
 struct SaveContext{};SaveContext gSaveContext;
 namespace Rando {
 '''+opt+impl+r'''
@@ -94,6 +94,7 @@ int main(){
    bool expected=bool(access&entry.spawnMask);
    // Night-gated actors only activate at night (their normal masks are night-only).
    if(entry.gate==EFG_NIGHT)expected=bool(access&entry.spawnMask&10u);
+   if(entry.actorId==ACTOR_EN_PEEHAT)expected=bool(access&entry.spawnMask&5u);
    // Forest block-top is an explicitly adult-only ledge.
    if(entry.gate==EFG_FOREST_BLOCK_TOP)expected=bool(access&entry.spawnMask&12u);
    ck(IsEnemyDefeatReachable(entry)==expected,"same reachable age/time + local condition");
@@ -124,6 +125,38 @@ int main(){
    ck(EnemyFinderRoomCondition(logic.get(),entry)==expected,"local-room switch truth table");
   }
  }
+
+ // Focused regressions from actor damage/activation behavior (not generic reachability).
+ auto weapons=[&](std::initializer_list<RandomizerGet> owned,bool adult=false){
+  logic->useMask.clear();
+  for(auto item:{RG_KOKIRI_SWORD,RG_MASTER_SWORD,RG_BIGGORON_SWORD,RG_GIANTS_KNIFE,RG_STICKS,
+   RG_MEGATON_HAMMER,RG_FAIRY_SLINGSHOT,RG_FAIRY_BOW,RG_HOOKSHOT,RG_LONGSHOT,RG_BOOMERANG,
+   RG_NUTS,RG_DINS_FIRE,RG_FIRE_ARROWS,RG_ICE_ARROWS,RG_BOMB_BAG,RG_BOMBCHU_5,
+   RG_DEKU_SHIELD,RG_HYLIAN_SHIELD,RG_MIRROR_SHIELD})logic->useMask[item]=0;
+  for(auto item:owned)logic->useMask[item]=15;
+  logic->IsAdult=adult;logic->IsChild=!adult;logic->AtDay=true;logic->AtNight=false;
+ };
+ weapons({RG_BOOMERANG});
+ for(auto kind:{EFC_TEKTITE,EFC_PEAHAT,EFC_STINGER,EFC_BLUE_BUBBLE,EFC_BUBBLE,EFC_SWORD})
+  ck(!EnemyFinderCombatReachable(logic.get(),kind),"stunning boomerang is insufficient");
+ weapons({RG_FAIRY_SLINGSHOT});
+ for(auto kind:{EFC_SHABOM,EFC_JELLYFISH,EFC_TAILPASARAN,EFC_SWORD,EFC_FREEZARD,EFC_SPIKE})
+  ck(!EnemyFinderCombatReachable(logic.get(),kind),"slingshot damage immunity");
+ weapons({RG_KOKIRI_SWORD});
+ for(auto kind:{EFC_ARMOS,EFC_BLUE_BUBBLE,EFC_FREEZARD,EFC_SPIKE})
+  ck(!EnemyFinderCombatReachable(logic.get(),kind),"sword alone insufficient");
+ weapons({RG_KOKIRI_SWORD,RG_NUTS});
+ for(auto kind:{EFC_ARMOS,EFC_BLUE_BUBBLE})ck(EnemyFinderCombatReachable(logic.get(),kind),"stun then sword");
+ weapons({RG_KOKIRI_SWORD,RG_DEKU_SHIELD});ck(EnemyFinderCombatReachable(logic.get(),EFC_BLUE_BUBBLE),"shield extinguishes blue bubble");
+ weapons({RG_MEGATON_HAMMER},true);
+ for(auto kind:{EFC_DEAD_HAND,EFC_DEAD_HAND_ARM,EFC_SWORD})ck(!EnemyFinderCombatReachable(logic.get(),kind),"hammer cannot defeat sword-only encounter");
+ weapons({RG_STICKS});ck(!EnemyFinderCombatReachable(logic.get(),EFC_DEAD_HAND),"Dead Hand sticks require trick");
+ ctx->GetTrickOption(RT_BOTW_CHILD_DEADHAND).Set(1);ck(EnemyFinderCombatReachable(logic.get(),EFC_DEAD_HAND),"explicit Dead Hand trick");
+ ctx->GetTrickOption(RT_BOTW_CHILD_DEADHAND).Set(0);
+ weapons({RG_BOOMERANG});
+ for(auto kind:{EFC_JELLYFISH,EFC_TAILPASARAN,EFC_SHABOM})ck(EnemyFinderCombatReachable(logic.get(),kind),"boomerang valid kill alternative");
+ weapons({RG_MASTER_SWORD},true);
+ for(auto kind:{EFC_FREEZARD,EFC_SPIKE,EFC_SWORD,EFC_DEAD_HAND,EFC_DEAD_HAND_ARM})ck(EnemyFinderCombatReachable(logic.get(),kind),"adult sword valid kill");
  std::printf("entries=%zu checks=%d failures=%d\n",ids.size(),checks,failures);
  return failures?1:0;
 }

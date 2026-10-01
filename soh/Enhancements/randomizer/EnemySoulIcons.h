@@ -4,6 +4,8 @@
 #include "randomizerEnums.h"
 #include "soh_assets.h"
 #include "textures/icon_item_static/icon_item_static.h"
+#include "SoulEmblemAssets.h"
+#include "SoulPortraitHQ.h"
 
 // Resource-name tokens, not decoded pixel pointers. Fast3D needs the resource
 // metadata when these 32x32 RGBA32 portraits are PNG-backed or replaced by mods.
@@ -231,6 +233,17 @@ static inline const SohExtremeSoulVisual* SohExtreme_GetSoulVisual(int item) {
 // progression flag, get-item animation, Archipelago ID, or ownership rule.
 // Enemy portraits are unchanged; beans and bosses retain their existing UI icons.
 static inline const char* SohExtreme_GetEnemySoulIcon(RandomizerGet item) {
+    const auto* emblem = SohExtreme_GetSoulEmblem((int)item);
+    if (emblem != nullptr) return emblem->icon;
     const SohExtremeSoulVisual* visual = SohExtreme_GetSoulVisual((int)item);
     return visual != 0 ? visual->icon : 0;
+}
+
+// ImGui accepts full-resolution resources. Do not use these 128px tokens in a
+// native 32px texture upload (messages, pause menu or get-item display lists).
+static inline const char* SohExtreme_GetSoulGuiIcon(int item) {
+    const auto* emblem = SohExtreme_GetSoulEmblem(item);
+    if (emblem != nullptr) return emblem->gui;
+    if (SohExtreme_GetSoulVisual(item) == nullptr) return nullptr;
+    return SohExtreme_GetHqSoulPortrait(static_cast<RandomizerGet>(item));
 }

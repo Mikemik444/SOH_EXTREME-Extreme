@@ -38,7 +38,7 @@ void RegionTable_Init_DodongosCavern() {
     }, {
         //Exits
         ENTRANCE(RR_DODONGOS_CAVERN_BEGINNING,     true),
-        ENTRANCE(RR_DODONGOS_CAVERN_LOBBY_SWITCH,  logic->IsAdult || logic->HasItem(RG_POWER_BRACELET) || logic->CanGroundJump(true)),
+        ENTRANCE(RR_DODONGOS_CAVERN_LOBBY_SWITCH,  logic->IsAdult || logic->CanGroundJump(true)), // Grab alone cannot give child Link the height to reach this ledge.
         ENTRANCE(RR_DODONGOS_CAVERN_SE_CORRIDOR,   AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->HasItem(RG_GORONS_BRACELET);})),
         ENTRANCE(RR_DODONGOS_CAVERN_STAIRS_LOWER,  logic->Get(LOGIC_DC_STAIRS_ROOM_DOOR)),
         ENTRANCE(RR_DODONGOS_CAVERN_FAR_BRIDGE,    logic->Get(LOGIC_DC_LIFT_PLATFORM)),

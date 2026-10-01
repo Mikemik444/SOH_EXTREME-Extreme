@@ -4,6 +4,7 @@
 #include "macros.h"
 #include "soh/ShipUtils.h"
 #include "soh/Enhancements/randomizer/SeedContext.h"
+#include "soh/Enhancements/randomizer/EnemyDropBridge.h"
 #include "soh/Enhancements/enhancementTypes.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/ObjectExtension/ObjectExtension.h"
@@ -748,6 +749,11 @@ void RegisterEnemyRandomizer() {
         ActorEntry* actorEntry = va_arg(args, ActorEntry*);
         PlayState* play = va_arg(args, PlayState*);
         Actor** actor = va_arg(args, Actor**);
+
+        // Preserve the original identity of an owed check from a legacy AP
+        // seed. Other hooks still run, including normal soul gating on init.
+        if (MegaSoul_ShouldRestoreUnusedSceneEnemy(play, actorEntry->id, actorEntry->params,
+                actorEntry->pos.x, actorEntry->pos.y, actorEntry->pos.z)) return;
 
         s16 actorId = actorEntry->id;
         s16 posX = actorEntry->pos.x;

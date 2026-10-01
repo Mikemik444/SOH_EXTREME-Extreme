@@ -782,6 +782,15 @@ extern "C" bool MegaSoul_IsEnemyDefeatLocationPending(const Actor* actor) {
     return identity != nullptr && EnemyDefeatLocationStillPending(identity->placementIndex, identity->locationId);
 }
 
+extern "C" bool MegaSoul_ShouldHighlightEnemy(const Actor* actor) {
+    if (actor == nullptr || !IS_RANDO || actor->draw == nullptr || actor->update == nullptr) return false;
+    const auto* identity = ObjectExtension::GetInstance().Get<EnemyDefeatIdentity>(actor);
+    if (identity == nullptr || !HasRequiredEnemySoul(actor) || IsSkulltulaSoulLocked(actor)) return false;
+    // Use the exact placement's collected/outbox state, not its death state.
+    // Killing the enemy does not complete its check until the drop is collected.
+    return EnemyDefeatLocationStillPending(identity->placementIndex, identity->locationId);
+}
+
 extern "C" bool MegaSoul_HandlesEnemyLoot(const Actor* actor) {
     return actor != nullptr && IS_RANDO && IsMegaEnemySoulActor(actor) &&
         (RAND_GET_OPTION(RSK_SHUFFLE_ENEMY_DROPS).Get() != 0 || MegaSoul_IsEnemyDefeatLocationPending(actor));
@@ -919,6 +928,9 @@ extern "C" int32_t MegaSoul_FindEnemyDefeatSpawn(int16_t scene, int8_t room, int
 extern "C" bool MegaSoul_IsEnemyDefeatPlacementPending(int32_t index) {
     return index >= 0 && static_cast<size_t>(index) < kEnemyPlacementCount &&
         EnemyDefeatLocationStillPending(index, kEnemyDefeatPlacements[index].locationId);
+}
+extern "C" bool MegaSoul_IsLegacyUnusedEnemyPending(int32_t index) {
+    return SohExtreme::IsUnusedObjectEnemyPlacement(index) && MegaSoul_IsEnemyDefeatPlacementPending(index);
 }
 extern "C" int32_t MegaSoul_FindEnemyDefeatChild(const Actor* source, int16_t actorId,
                                                 uint16_t params, int16_t slot) {

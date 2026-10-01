@@ -15,7 +15,7 @@ native=(r/'soh/Enhancements/randomizer/randomizer.cpp').read_text(encoding='utf-
 logic=(r/'soh/Enhancements/randomizer/logic.cpp').read_text(encoding='utf-8')
 body='\n'.join(function(ap,sig) for sig in ('static std::string BuildApSongNotePickupDescription(',
     'static bool ApplyExtremePersistentApItem(', 'void ArchipelagoClient::RefreshSongNotes(',
-    'void ArchipelagoClient::FinalizeMajorItemReceipt(', 'bool ArchipelagoClient::ProcessItem('))
+    'void ArchipelagoClient::FinalizeMajorItemReceipt(', 'bool ArchipelagoClient::ProcessItem(', 'void ArchipelagoClient::ReofferPendingPresentation('))
 layout=ap[ap.index('struct SongNotes {'):ap.index('static std::string BuildApSongNotePickupDescription(')]
 world_tree=ast.parse((r/'archipelago/soh_extreme/__init__.py').read_text(encoding='utf-8'))
 note_layout=next(ast.literal_eval(n.value) for n in ast.walk(world_tree) if isinstance(n,ast.Assign)
@@ -52,8 +52,11 @@ constexpr int MOD_NONE=0,MOD_RANDOMIZER=1,ITEM_NONE=-1,ITEM_CATEGORY_MAJOR=1,ITE
 constexpr int PLAYER_STATE1_IN_ITEM_CS=1,PLAYER_STATE1_GETTING_ITEM=2,PLAYER_STATE1_CARRYING_ACTOR=4,PLAYER_STATE1_IN_WATER=8;
 constexpr int BGCHECKFLAG_GROUND=1,GAMEOVER_INACTIVE=0,TRANS_TRIGGER_OFF=0,UPG_WALLET=0,QUEST_HEART_PIECE=24,FULL_HEART_HEALTH=16;
 struct GetItemEntry {int itemId=0,modIndex=MOD_RANDOMIZER,getItemId=0;};
-struct Player {int stateFlags1=0;struct {int bgCheckFlags=1;}actor;}player;
+struct Actor{int bgCheckFlags=1;};
+struct Player {int stateFlags1=0;Actor actor;int getItemId=0;GetItemEntry getItemEntry;Actor*interactRangeActor=nullptr;}player;
+constexpr int GI_NONE=0;
 struct Play {struct{int state=0;}gameOverCtx;int transitionTrigger=0;}play,*gPlayState=&play;
+using PlayState=Play;
 struct Save {int health=48,healthCapacity=48,healthAccumulator=0,rupees=0,rupeeAccumulator=0;struct{uint32_t questItems=0;}inventory;struct{int pendingIceTrapCount=0;}ship;}gSaveContext;
 #define GET_PLAYER(x) (&::player)
 bool blocked=false,paused=false,allowGive=true,syncGive=false,allowFlags=true;
@@ -90,6 +93,8 @@ GetItemCategory GetCategory(){return ITEM_CATEGORY_MAJOR;}bool IsMajorItem(){ret
 Item RetrieveItem(RandomizerGet id){return {id};}
 }}
 class ArchipelagoClient {public:
+bool active=true,remotePresentationActive=false,remotePresentationReceived=false;bool IsGameplaySessionActive()const{return active;}
+void ReofferPendingPresentation();
 bool awaitingMajorItemReceipt=false;uint64_t awaitingMajorSequence=0,appliedItemCount=0;
 int64_t awaitingMajorApItemId=0;int awaitingMajorModIndex=0,awaitingMajorItemId=0,awaitingMajorGetItemId=0;
 std::string songNotePickupDescription;
@@ -98,7 +103,7 @@ void SendTrapLink(const char*){}
 void RefreshSongNotes();void FinalizeMajorItemReceipt(int,int,int);
 bool ProcessItem(int64_t,bool,uint64_t);
 }client;
-GetItemEntry scheduled;std::map<int,int> silverCounts;
+GetItemEntry scheduled,gAwaitingMajorEntry,gRemotePresentationEntry;std::map<int,int> silverCounts;
 using u8=uint8_t;
 void GameInteractor_ExecuteOnItemReceiveHooks(GetItemEntry e){client.FinalizeMajorItemReceipt(e.modIndex,e.itemId,e.getItemId);}
 '''+receipt_entry+r'''
@@ -117,6 +122,7 @@ int Randomizer_Item_Give(Play*,GetItemEntry giEntry){
 bool GiveItemEntryWithoutActor(Play* p,GetItemEntry e){
  if(!allowGive)return false;
  ++giveCalls;scheduled=e;
+ player.getItemId=e.getItemId;player.getItemEntry=e;player.interactRangeActor=&player.actor;
  if(syncGive)Randomizer_Item_Give(p,e);
  return true;
 }
@@ -125,6 +131,60 @@ int checks=0;
 #define CK(x) do{++checks;if(!(x)){std::cerr<<"Failed line "<<__LINE__<<": "<<#x<<"\n";return 1;}}while(0)
 void reset(){client={};flags.clear();silverCounts.clear();gSaveContext={};gPlayState=&play;play={};player={};walletLevel=0;blocked=paused=syncGive=false;allowGive=allowFlags=true;giveCalls=grantCalls=commits=vanillaGives=0;gNewSaveReplayTargetCount=0;options[RSK_SHUFFLE_OPEN_CHEST]=RO_OPEN_CHEST_PROGRESSIVE;options[RSK_SHUFFLE_GRAB]=1;options[RSK_SHUFFLE_SWIM]=1;}
 int main(){
+ reset();
+ // A discarded offer is republished on each safe player update, with no grant.
+ CK(client.ProcessItem(AP_FIRST_SONG_NOTE,true,0));
+ for(int frame=0;frame<25;++frame){int before=giveCalls;player.getItemId=GI_NONE;
+  client.ReofferPendingPresentation();CK(giveCalls==before+1&&commits==0&&flags.empty());
+  CK(scheduled.getItemId==RG_AP_NOTE_ZELDA&&client.awaitingMajorItemReceipt);}
+ // Player_Update clears only the interaction pointer after a missed offer.
+ // The retained entry must be re-offered immediately, even before the timeout.
+ for(int frame=0;frame<120;++frame){int before=giveCalls;
+  player.interactRangeActor=nullptr;
+  client.ReofferPendingPresentation();
+  CK(giveCalls==before+1&&player.interactRangeActor==&player.actor);
+  CK(commits==0&&flags.empty()&&client.awaitingMajorItemReceipt);
+ }
+ // A real actor's offer (including an identical item) must never be replaced.
+ for(int mismatch=0;mismatch<5;++mismatch){int before=giveCalls;Actor other;
+  player.getItemId=scheduled.getItemId;player.getItemEntry=scheduled;player.interactRangeActor=nullptr;
+  if(mismatch==0)player.interactRangeActor=&other;
+  if(mismatch==1)++player.getItemId;
+  if(mismatch==2)++player.getItemEntry.modIndex;
+  if(mismatch==3)++player.getItemEntry.itemId;
+  if(mismatch==4)++player.getItemEntry.getItemId;
+  client.ReofferPendingPresentation();CK(giveCalls==before&&commits==0);
+ }
+ player={};
+ // Every independent safety gate still prevents an offer.
+ for(int block=0;block<10;++block){int before=giveCalls;
+  if(block==0)client.active=false;if(block==1)gSaveContext.health=0;
+  if(block==2)play.gameOverCtx.state=1;if(block==3)play.transitionTrigger=1;
+  if(block==4)paused=true;if(block==5)blocked=true;
+  if(block==6)player.stateFlags1=PLAYER_STATE1_IN_ITEM_CS;
+  if(block==7)player.stateFlags1=PLAYER_STATE1_IN_WATER;
+  if(block==8)player.actor.bgCheckFlags=0;
+  Actor other;if(block==9){player.getItemId=9;player.interactRangeActor=&other;}
+  client.ReofferPendingPresentation();CK(giveCalls==before&&commits==0);
+  client.active=true;gSaveContext.health=48;play={};paused=blocked=false;player={};
+ }
+ Randomizer_Item_Give(gPlayState,scheduled);CK(commits==1&&flags.size()==1);
+ int done=giveCalls;client.ReofferPendingPresentation();CK(giveCalls==done);
+ reset();client.remotePresentationActive=true;gRemotePresentationEntry={RG_AP_REMOTE_IMPORTANT,MOD_RANDOMIZER,RG_AP_REMOTE_IMPORTANT};
+ client.ReofferPendingPresentation();CK(giveCalls==1&&commits==0&&scheduled.getItemId==RG_AP_REMOTE_IMPORTANT);
+ player.interactRangeActor=nullptr;client.ReofferPendingPresentation();CK(giveCalls==2&&commits==0);
+ client.remotePresentationReceived=true;client.ReofferPendingPresentation();CK(giveCalls==2);
+ // A growing committed history does not introduce a timeout for later offers.
+ reset();
+ for(uint64_t sequence=0;sequence<4000;++sequence){
+  CK(client.ProcessItem(AP_ITEM_OPEN_CHEST,true,sequence));
+  int before=giveCalls;player.interactRangeActor=nullptr;
+  client.ReofferPendingPresentation();CK(giveCalls==before+1&&commits==sequence);
+  Randomizer_Item_Give(gPlayState,scheduled);
+  CK(commits==sequence+1&&client.appliedItemCount==sequence+1&&!client.awaitingMajorItemReceipt);
+  client.FinalizeMajorItemReceipt(scheduled.modIndex,scheduled.itemId,scheduled.getItemId);
+  CK(commits==sequence+1);
+ }
  reset();
  // Each physical Open Chest receipt advances exactly one tier, on completion.
  CK(client.ProcessItem(AP_ITEM_OPEN_CHEST,true,0));CK(giveCalls==1&&grantCalls==0&&client.awaitingMajorItemReceipt&&flags.empty());
@@ -182,7 +242,7 @@ assert set(soul_cases)==set(soul_entries),set(soul_entries)-set(soul_cases)
 code+=','.join(str(i) for i in ids)+r'''}){reset();CK(client.ProcessItem(id,true,0)&&giveCalls==1);Randomizer_Item_Give(gPlayState,scheduled);CK(commits==1);}
  reset();int offset=0;
  for(const auto& song:kApSongNotes){for(int i=0;i<song.count;++i){const int64_t id=AP_FIRST_SONG_NOTE+offset+i;
- CK(client.ProcessItem(id,true,offset+i));CK(scheduled.getItemId==RG_AP_SONG_NOTE&&client.awaitingMajorItemReceipt);
+ CK(client.ProcessItem(id,true,offset+i));CK(scheduled.getItemId==song.display&&client.awaitingMajorItemReceipt);
  CK(!Flags_GetRandomizerInf(RAND_INF_SONG_NOTE_0+offset+i));
  CK(client.songNotePickupDescription.find(song.name)!=std::string::npos);
  CK(client.songNotePickupDescription.find(std::to_string(i+1)+"/"+std::to_string(song.count))!=std::string::npos);

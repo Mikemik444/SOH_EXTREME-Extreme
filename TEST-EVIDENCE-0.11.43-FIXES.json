@@ -1,0 +1,4204 @@
+{
+  "logic": {
+    "passed": true,
+    "assertions": 624,
+    "tests": [
+      {
+        "test": "fresh real fish targets exist",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) delivery event",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) usable bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) AP ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], [\"Bottle with Ruto's Letter\"]) UT ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh ([], []) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) usable bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) usable bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh no child route to Domain",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh inaccessible King Zora cannot empty letter",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh isolated letter cannot bottle ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "fresh Lake Hylia shortcut can reach delivery without Lullaby",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "fresh Lake Hylia shortcut frees bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "Adult-only access cannot deliver the letter",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "Adult-only letter is not an empty bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(False, []) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(False, []) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(False, ['Speak Hylian']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(False, ['Speak Hylian']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(False, ['Speak']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(False, ['Speak']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(False, ['Speak Zora']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(False, ['Speak Zora']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(True, []) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(True, []) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(True, ['Speak Hylian']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(True, ['Speak Hylian']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(True, ['Speak']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(True, ['Speak']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(True, ['Speak Zora']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=off received=(True, ['Speak Zora']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(False, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(False, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(False, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(False, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(False, ['Speak']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(False, ['Speak']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(False, ['Speak Zora']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(False, ['Speak Zora']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(True, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(True, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(True, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(True, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(True, ['Speak']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(True, ['Speak']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(True, ['Speak Zora']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=on received=(True, ['Speak Zora']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(False, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(False, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(False, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(False, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(False, ['Speak']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(False, ['Speak']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(False, ['Speak Zora']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(False, ['Speak Zora']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(True, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(True, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(True, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(True, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(True, ['Speak']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(True, ['Speak']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(True, ['Speak Zora']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=False speech=individual_languages received=(True, ['Speak Zora']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(False, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(False, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(False, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(False, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(False, ['Speak']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(False, ['Speak']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(False, ['Speak Zora']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(False, ['Speak Zora']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(True, []) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(True, []) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(True, ['Speak Hylian']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(True, ['Speak Hylian']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(True, ['Speak']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(True, ['Speak']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(True, ['Speak Zora']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=off received=(True, ['Speak Zora']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(False, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(False, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(False, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(False, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(False, ['Speak']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(False, ['Speak']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(False, ['Speak Zora']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(False, ['Speak Zora']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(True, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(True, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(True, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(True, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(True, ['Speak']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(True, ['Speak']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(True, ['Speak Zora']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=on received=(True, ['Speak Zora']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(False, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(False, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(False, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(False, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(False, ['Speak']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(False, ['Speak']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(False, ['Speak Zora']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(False, ['Speak Zora']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(True, []) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(True, []) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(True, ['Speak Hylian']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(True, ['Speak Hylian']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(True, ['Speak']) delivery",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(True, ['Speak']) bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(True, ['Speak Zora']) delivery",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "options soul=True speech=individual_languages received=(True, ['Speak Zora']) bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "Slot restores NPC Soul option",
+        "actual": 1,
+        "expected": 1,
+        "passed": true
+      },
+      {
+        "test": "Slot restores individual speech option",
+        "actual": 2,
+        "expected": 2,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed real fish targets exist",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) delivery event",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) usable bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) AP ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], [\"Bottle with Ruto's Letter\"]) UT ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT ZD Fish 1",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT ZD Fish 2",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT ZD Fish 3",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT ZD Fish 4",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT ZD Fish 5",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) AP ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed ([], []) UT ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) usable bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) AP ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], ['Empty Bottle']) UT ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) delivery event",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) usable bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) second usable bottle",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT DMC Upper Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT DMT Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT HF Southeast Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT HF Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT HF Near Market Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT Kak Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT KF Storms Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT LW Near Shortcuts Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 1",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 2",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 3",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 4",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZD Fish 5",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) AP ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) UT ZR Open Grotto Fish",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed no child route to Domain",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed inaccessible King Zora cannot empty letter",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle DMC Upper Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle DMT Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle HF Southeast Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle HF Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle HF Near Market Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle Kak Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle KF Storms Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle LW Near Shortcuts Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed isolated letter cannot bottle ZR Open Grotto Fish",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed Lake Hylia shortcut can reach delivery without Lullaby",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "slot reconstructed Lake Hylia shortcut frees bottle",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      }
+    ],
+    "scope": "Ruto's Letter usability through AP rules and the real Universal Tracker evaluator.\n\nTests the delivery event, downstream bottle use, actual region/age access,\nspeech/soul options and tracker reconstruction from server slot data.\n"
+  },
+  "native": {
+    "passed": true,
+    "output": "letter_native.cpp\n1793 native bottle assertions passed\n",
+    "scope": "Compile native letter-delivery and BottleCount bodies with controlled inventory."
+  },
+  "glow": {
+    "passed": true,
+    "species": 51,
+    "output": "enemy_glow.cpp\n2027 enemy glow assertions passed\n",
+    "scope": "Compile production enemy-glow eligibility and draw body with controlled services.\n\nUses the real species/shared/skulltula soul policy and pending-check predicate.\nRender calls are recorded, not executed by a GPU; no visual playtest is implied.\n"
+  },
+  "models": {
+    "passed": true,
+    "compile_output": "models.cpp\n",
+    "output": "897 assertions passed\n",
+    "scope": "Compile production enemy display, scout mailbox and collection functions.\n\nEngine allocation/drawing/network services are controlled fakes; this does not\nrender the game. Run from a VS x64 developer command prompt.\n"
+  },
+  "generation": {
+    "seed": 9304301,
+    "players": 1,
+    "overrides": {},
+    "passed": true,
+    "harness": "AP 0.6.7 core with normal dependencies",
+    "locations": 3759,
+    "network_locations": 3311,
+    "pool": 3311,
+    "all_state_blocked": [],
+    "resolved_world_options": {
+      "1": {
+        "frozen_starting_time": 1,
+        "boss_key_shuffle": "anywhere",
+        "triforce_hunt": 1
+      }
+    },
+    "final_validation": {
+      "passed": true,
+      "sphere_sizes": [
+        22,
+        15,
+        20,
+        8,
+        17,
+        139,
+        44,
+        27,
+        4,
+        2,
+        6,
+        25,
+        92,
+        135,
+        104,
+        74,
+        79,
+        7,
+        8,
+        254,
+        36,
+        10,
+        49,
+        62,
+        102,
+        57,
+        84,
+        30,
+        3,
+        301,
+        120,
+        100,
+        28,
+        145,
+        147,
+        141,
+        294,
+        166,
+        102,
+        49,
+        59,
+        49,
+        93,
+        43,
+        162,
+        59,
+        50,
+        24,
+        48,
+        23,
+        23,
+        12,
+        6
+      ],
+      "players": {
+        "1": {
+          "goal_met": true,
+          "full_accessibility": true,
+          "network_checks": 3311,
+          "checked": 3311
+        }
+      }
+    },
+    "sphere_sizes": [
+      22,
+      15,
+      20,
+      8,
+      17,
+      139,
+      44,
+      27,
+      4,
+      2,
+      6,
+      25,
+      92,
+      135,
+      104,
+      74,
+      79,
+      7,
+      8,
+      254,
+      36,
+      10,
+      49,
+      62,
+      102,
+      57,
+      84,
+      30,
+      3,
+      301,
+      120,
+      100,
+      28,
+      145,
+      147,
+      141,
+      294,
+      166,
+      102,
+      49,
+      59,
+      49,
+      93,
+      43,
+      162,
+      59,
+      50,
+      24,
+      48,
+      23,
+      23,
+      12,
+      6
+    ],
+    "replay_blocked": [],
+    "beatable": true,
+    "physical_rejections": [],
+    "seconds": 24.454
+  },
+  "protocol": {
+    "exit_code": 0,
+    "passed": true,
+    "output": "test_ap_enemy_model_protocol.cpp\nPASS LocationInfo game identity and callback ABI"
+  },
+  "pre_fix_regression": {
+    "passed": true,
+    "scope": "Matching missing NPC Soul / Zora speech event and bottle assertions.",
+    "cases": [
+      {
+        "before": {
+          "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) second usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "fresh (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) second usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['NPC Soul'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\"]) usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['Speak Zora'], [\"Bottle with Ruto's Letter\", 'Speak Hylian']) usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) delivery event",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) delivery event",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      },
+      {
+        "before": {
+          "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) second usable bottle",
+          "actual": true,
+          "expected": false,
+          "passed": false
+        },
+        "after": {
+          "test": "slot reconstructed (['NPC Soul', 'Speak Zora'], [\"Bottle with Ruto's Letter\", 'Empty Bottle']) second usable bottle",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      }
+    ]
+  }
+}

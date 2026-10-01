@@ -799,8 +799,8 @@ void GetItem_DrawOpa0Xlu1(PlayState* play, s16 drawId) {
 
 void GetItem_DrawGenericMusicNote(PlayState* play, s16 drawId) {
     s32 pad;
-    s16 color_slot = drawId - 120; // 0 = generic
-    s16* colors[7][3] = {
+    s16 color_slot = drawId - GID_SONG_GENERIC; // 0 = generic
+    static const u8 colors[7][3] = {
         { 255, 255, 255 }, // Generic Song (full white)
         { 109, 73, 143 },  // Lullaby
         { 217, 110, 48 },  // Epona
@@ -809,6 +809,8 @@ void GetItem_DrawGenericMusicNote(PlayState* play, s16 drawId) {
         { 98, 177, 211 },  // Time
         { 146, 146, 146 }  // Storms
     };
+
+    if (color_slot < 0 || color_slot >= 7) color_slot = 0;
 
     OPEN_DISPS(play->state.gfxCtx);
 

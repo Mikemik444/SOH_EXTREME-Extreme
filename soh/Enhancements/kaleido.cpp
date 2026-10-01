@@ -4,6 +4,7 @@
 #include <libultraship/bridge/consolevariablebridge.h>
 
 #include "kaleido.h"
+#include "randomizer/EnemySoulIcons.h"
 #include "soh/Enhancements/randomizer/SeedContext.h"
 #include "soh/ShipInit.hpp"
 #include "soh/ShipUtils.h"
@@ -161,14 +162,15 @@ Kaleido::Kaleido() {
         };
         for (int i = RAND_INF_GOHMA_SOUL; i < RAND_INF_GANON_SOUL; i++) {
             mEntries.push_back(std::make_shared<KaleidoEntryIconFlag>(
-                gBossSoulTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, Color_RGBA8{ 255, 255, 255, 255 },
+                SohExtreme_GetEnemySoulIcon(static_cast<RandomizerGet>(RG_GOHMA_SOUL + i - RAND_INF_GOHMA_SOUL)),
+                G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, Color_RGBA8{ 255, 255, 255, 255 },
                 FlagType::FLAG_RANDOMIZER_INF, i, bossSoulNames[i - RAND_INF_GOHMA_SOUL]));
         }
     }
     if (ctx->GetOption(RSK_GANONS_SOUL).IsNot(RO_GANONS_SOUL_STARTWITH)) {
         mEntries.push_back(std::make_shared<KaleidoEntryIconFlag>(
-            gBossSoulTex, G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32, Color_RGBA8{ 255, 255, 255, 255 },
-            FlagType::FLAG_RANDOMIZER_INF, RAND_INF_GANON_SOUL, "Ganon's Soul"));
+            SohExtreme_GetEnemySoulIcon(RG_GANON_SOUL), G_IM_FMT_RGBA, G_IM_SIZ_32b, 32, 32,
+            Color_RGBA8{ 255, 255, 255, 255 }, FlagType::FLAG_RANDOMIZER_INF, RAND_INF_GANON_SOUL, "Ganon's Soul"));
     }
     if (ctx->GetOption(RSK_LOCK_OVERWORLD_DOORS)) {
         int rg = RG_GUARD_HOUSE_KEY;

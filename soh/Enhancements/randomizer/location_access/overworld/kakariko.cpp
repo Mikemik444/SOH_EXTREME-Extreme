@@ -205,7 +205,7 @@ void RegionTable_Init_Kakariko() {
     }, {
         //Locations
         LOCATION(RC_KAK_WINDMILL_FREESTANDING_POH, logic->CanUse(RG_BOOMERANG)),
-        LOCATION(RC_SONG_FROM_WINDMILL,            logic->IsAdult && logic->CanUse(RG_FAIRY_OCARINA)),
+        LOCATION(RC_SONG_FROM_WINDMILL,            logic->IsAdult && logic->CanUse(RG_FAIRY_OCARINA) && (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) && (!ctx->GetOption(RSK_SHUFFLE_SPEAK) || logic->HasItem(RG_SPEAK_HYLIAN))),
     }, {
         //Exits
         ENTRANCE(RR_KAKARIKO_VILLAGE,   true),

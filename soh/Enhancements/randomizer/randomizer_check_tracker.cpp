@@ -88,6 +88,9 @@ enum EnemyFinderCombat : uint8_t {
     EFC_FIRE_OR_MELEE,
     EFC_CONTACT, EFC_FIRE, EFC_BOW, EFC_BOOMERANG_AND_MELEE,
     EFC_SWORD_OR_BOOMERANG,
+    EFC_SWORD, EFC_TEKTITE, EFC_PEAHAT, EFC_SHABOM, EFC_JELLYFISH,
+    EFC_TAILPASARAN, EFC_STINGER, EFC_BUBBLE, EFC_BLUE_BUBBLE,
+    EFC_ARMOS, EFC_DEAD_HAND, EFC_DEAD_HAND_ARM, EFC_SPIKE, EFC_FREEZARD,
 };
 
 enum EnemyFinderGate : uint8_t { EFG_NONE, EFG_AMY, EFG_ANUBIS, EFG_COFFIN, EFG_COMPOSER, EFG_FOREST_BLOCK_TOP, EFG_GRAVE, EFG_MEG, EFG_NIGHT, EFG_PEAHAT_LARVA, EFG_SFM_MOBLIN, EFG_SWIM };
@@ -165,7 +168,31 @@ static bool EnemyFinderCombatReachable(Rando::Logic* enemyLogic, EnemyFinderComb
     const bool melee = EnemyFinderMelee(enemyLogic);
     const bool ranged = EnemyFinderRanged(enemyLogic);
     const bool explosives = enemyLogic->HasExplosives();
+    const bool sword = enemyLogic->CanUse(RG_KOKIRI_SWORD) || enemyLogic->CanUse(RG_MASTER_SWORD) ||
+        enemyLogic->CanUse(RG_BIGGORON_SWORD) || enemyLogic->CanUse(RG_GIANTS_KNIFE);
+    const bool sticks = enemyLogic->CanUse(RG_STICKS), hammer = enemyLogic->CanUse(RG_MEGATON_HAMMER);
+    const bool sling = enemyLogic->CanUse(RG_FAIRY_SLINGSHOT), bow = enemyLogic->CanUse(RG_FAIRY_BOW);
+    const bool hook = enemyLogic->CanUse(RG_HOOKSHOT) || enemyLogic->CanUse(RG_LONGSHOT);
+    const bool rang = enemyLogic->CanUse(RG_BOOMERANG), nuts = enemyLogic->CanUse(RG_NUTS);
+    const bool dins = enemyLogic->CanUse(RG_DINS_FIRE);
+    const bool shield = enemyLogic->CanReflectNuts() || enemyLogic->CanUse(RG_MIRROR_SHIELD);
     switch (combat) {
+        case EFC_SWORD: return sword;
+        case EFC_TEKTITE: return melee || sling || bow;
+        case EFC_PEAHAT: return melee || sling || bow || hook;
+        case EFC_SHABOM: return melee || rang || nuts || dins || enemyLogic->CanUse(RG_ICE_ARROWS);
+        case EFC_JELLYFISH: return rang || bow || hook;
+        case EFC_TAILPASARAN: return rang || sticks;
+        case EFC_STINGER: return sling || bow || hook;
+        case EFC_BUBBLE: return melee || sling || bow || explosives;
+        case EFC_BLUE_BUBBLE: return explosives || hammer || bow ||
+            ((sword || sticks || sling) && (nuts || hook || rang || shield));
+        case EFC_ARMOS: return explosives || hammer || bow || sticks ||
+            (sword && (enemyLogic->IsAdult || nuts || hook || rang));
+        case EFC_DEAD_HAND: return sword || (sticks && Rando::Context::GetInstance()->GetTrickOption(RT_BOTW_CHILD_DEADHAND));
+        case EFC_DEAD_HAND_ARM: return sword || sticks;
+        case EFC_SPIKE: return (enemyLogic->IsAdult && sword) || hammer || sticks || hook || bow || explosives || dins;
+        case EFC_FREEZARD: return (enemyLogic->IsAdult && sword) || hammer || sticks || hook || explosives || dins || enemyLogic->CanUse(RG_FIRE_ARROWS);
         case EFC_CONTACT: return true; // A flying pot can be baited into the floor.
         case EFC_FIRE: return enemyLogic->CanUse(RG_DINS_FIRE) || enemyLogic->CanUse(RG_FIRE_ARROWS);
         case EFC_BOW: return enemyLogic->CanUse(RG_FAIRY_BOW);
@@ -207,7 +234,7 @@ static bool EnemyFinderEncounterGate(Rando::Logic* enemyLogic, const EnemyDefeat
         case EFG_FOREST_BLOCK_TOP: return enemyLogic->IsAdult && enemyLogic->HasItem(RG_CLIMB) &&
             enemyLogic->HasItem(RG_GORONS_BRACELET);
         case EFG_COFFIN: return enemyLogic->HasFireSourceWithTorch() || enemyLogic->CanUse(RG_FAIRY_BOW);
-        case EFG_COMPOSER: return enemyLogic->HasItem(RG_SPEAK_HYLIAN);
+        case EFG_COMPOSER: return enemyLogic->HasItem(RG_NPC_SOUL) && enemyLogic->HasItem(RG_SPEAK_HYLIAN);
         case EFG_GRAVE: return enemyLogic->HasItem(RG_POWER_BRACELET);
         case EFG_PEAHAT_LARVA: return EnemyFinderMelee(enemyLogic);
         case EFG_SWIM: return enemyLogic->HasItem(RG_BRONZE_SCALE);
@@ -235,6 +262,10 @@ static bool IsEnemyDefeatReachable(const EnemyDefeatFinderEntry& entry) {
         enemyLogic->IsChild = i < 2;
         enemyLogic->AtDay = (i & 1) == 0;
         enemyLogic->AtNight = !enemyLogic->AtDay;
+        if (entry.actorId == ACTOR_EN_PEEHAT && !enemyLogic->AtDay) continue;
+        if (entry.actorId == ACTOR_EN_BIGOKUTA &&
+            (!enemyLogic->HasItem(RG_POWER_BRACELET) || !enemyLogic->HasItem(RG_NPC_SOUL) ||
+             !enemyLogic->HasItem(RG_SPEAK_ZORA))) continue;
         if (!EnemyFinderRoomCondition(enemyLogic.get(), entry)) continue;
         if (entry.scene == 0x0C && !enemyLogic->HasItem(RG_GERUDO_MEMBERSHIP_CARD)) continue;
         reachable = EnemyFinderEncounterGate(enemyLogic.get(), entry) &&
@@ -1784,8 +1815,11 @@ static void DrawUniversalFinderMirror() {
         for (const auto& group : groups) {
             // Stable region identity preserves expand/collapse state as item
             // counts change or the current-area groups move to the top.
-            ImGui::PushID(group.region.c_str());
-            const std::string label = (group.currentArea ? "[Current area] " : "") + group.region +
+            ImGui::PushID((group.region + (group.currentArea ? "##current" : "##other")).c_str());
+            const std::string displayRegion = group.currentArea && group.sharedRegion
+                ? RandomizerCheckObjects::GetRCAreaName(here) + " (shared checks from " + group.region + ")"
+                : group.region;
+            const std::string label = (group.currentArea ? "[Current area] " : "") + displayRegion +
                 " (" + std::to_string(group.normal) + " in logic, " + std::to_string(group.glitched) + " glitched)###APRegion";
             if (ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
                 ImGui::Indent();
