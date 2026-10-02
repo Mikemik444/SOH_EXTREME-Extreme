@@ -91,7 +91,8 @@ void RegionTable_Init_ZoraRiver() {
                                                              (logic->CanUse(RG_BOMBCHU_5) || (logic->CanUse(RG_BOMB_BAG) && ctx->GetTrickOption(RT_BOMB_DETONATION)) || (logic->IsAdult && logic->HasItem(RG_POWER_BRACELET)))),
         LOCATION(RC_ZR_UNDERWATER_ROCK_4,                    logic->HasItem(RG_BRONZE_SCALE) &&
                                                              (logic->CanUse(RG_BOMBCHU_5) || (logic->CanUse(RG_BOMB_BAG) && ctx->GetTrickOption(RT_BOMB_DETONATION)) || (logic->IsAdult && logic->HasItem(RG_POWER_BRACELET)))),
-        LOCATION(RC_ZR_NEAR_FREESTANDING_POH_GRASS,          logic->CanUse(RG_BOOMERANG)),
+        // Child-only pillar grass: carrying the Cucco is part of the route even with a Boomerang.
+        LOCATION(RC_ZR_NEAR_FREESTANDING_POH_GRASS,          logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET) && logic->CanCutShrubs()),
         LOCATION(RC_ZR_NEAR_ROCK_CIRCLE_BUTTERFLY_FAIRY,     logic->IsChild && logic->CanUse(RG_STICKS)),
         LOCATION(RC_ZR_WATERFALL_BUTTERFLY_FAIRY,            logic->IsChild && logic->CanUse(RG_STICKS)),
         LOCATION(RC_ZR_SLEEPLESS_WATERFALL_PLAQUE,           logic->CanRead()),
@@ -133,9 +134,11 @@ void RegionTable_Init_ZoraRiver() {
         EVENT_ACCESS(LOGIC_FAIRY_ACCESS, logic->CallGossipFairy()),
     }, {
         //Locations
-        LOCATION(RC_ZR_GS_NEAR_RAISED_GROTTOS,              logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) && logic->CanGetNightTimeGS()),
-        LOCATION(RC_ZR_NEAR_GROTTOS_GOSSIP_STONE_FAIRY,     logic->CallGossipFairy()),
-        LOCATION(RC_ZR_NEAR_GROTTOS_GOSSIP_STONE_FAIRY_BIG, logic->CanUse(RG_SONG_OF_STORMS)),
+        // Broad ladder-region access (including the bean route) is not access
+        // to this ledge. The separate Longshot route from below remains above.
+        LOCATION(RC_ZR_GS_NEAR_RAISED_GROTTOS,              CanReachZrUpperCircle() && logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) && logic->CanGetNightTimeGS()),
+        LOCATION(RC_ZR_NEAR_GROTTOS_GOSSIP_STONE_FAIRY,     CanReachZrUpperCircle() && logic->CallGossipFairy()),
+        LOCATION(RC_ZR_NEAR_GROTTOS_GOSSIP_STONE_FAIRY_BIG, CanReachZrUpperCircle() && logic->CanUse(RG_SONG_OF_STORMS)),
         LOCATION(RC_ZR_UPPER_CIRCLE_BOULDER,                CanReachZrUpperCircle() && logic->BlastOrSmash()),
         LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_1,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
         LOCATION(RC_ZR_UPPER_CIRCLE_ROCK_2,                 CanReachZrUpperCircle() && logic->CanBreakRocks()),
@@ -171,7 +174,7 @@ void RegionTable_Init_ZoraRiver() {
     }, {
         //Locations
         LOCATION(RC_ZR_NEAR_OPEN_GROTTO_FREESTANDING_POH, (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOVER_BOOTS) || (logic->IsAdult && ctx->GetTrickOption(RT_ZR_LOWER))),
-        LOCATION(RC_ZR_NEAR_FREESTANDING_POH_GRASS,       logic->CanCollectGrass()),
+        LOCATION(RC_ZR_NEAR_FREESTANDING_POH_GRASS,       logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET) && logic->CanCutShrubs()),
         // These four Wonder actors are on the pillar route. Child access to
         // this subregion requires the Cucco route (Animal/Cucco Soul when
         // shuffled) plus Grab/Power Bracelet, matching the physical game.

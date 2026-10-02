@@ -230,9 +230,11 @@ void SohMenu::AddMenuEnhancements() {
 
     AddWidget(path, "Better Save Menu", WIDGET_CVAR_CHECKBOX)
         .CVar(CVAR_ENHANCEMENT("BetterSaveMenu"))
-        .Options(CheckboxOptions().Tooltip(
-            "Replaces the authentic save menu with a textbox that asks Yes or No for saving,\n"
-            "then asks if you want to Continue, Reset, or Reset to Spawn."));
+        .Options(CheckboxOptions().DefaultValue(true).Tooltip(
+            "After saving, choose Continue or Return to Spawn.\n"
+            "Return to Spawn uses child Link's spawn as a child and adult Link's spawn as an adult.\n"
+            "Dungeons and Remember Save Location also offer Restart.\n"
+            "Randomized spawn entrances are respected."));
 
     AddWidget(path, "Containers Match Contents", WIDGET_SEPARATOR_TEXT);
     AddWidget(path, "Containers Match Contents", WIDGET_CVAR_CHECKBOX)

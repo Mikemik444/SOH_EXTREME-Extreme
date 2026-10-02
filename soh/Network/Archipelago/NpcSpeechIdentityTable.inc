@@ -58,7 +58,7 @@
     { 10000054LL, 420, -1, 0, 0, -1, -1, 3, false, { 0, 0, 0 } }, // NPC Speech: Happy Mask Shop Guest
     { 10000055LL, 179, 95, 65535, 65282, -1, -1, 3, false, { 0, 0, 0 } }, // NPC Speech: Hyrule Castle Gate Guard
     { 10000058LL, 203, -1, 0, 0, -1, -1, 3, false, { 0, 0, 0 } }, // NPC Speech: Ingo
-    { 10000059LL, 333, -1, 0, 0, -1, -1, 6, false, { 0, 0, 0 } }, // NPC Speech: Kaepora Gaebora
+    { 10000059LL, 333, -1, 0, 0, -1, -1, 3, false, { 0, 0, 0 } }, // NPC Speech: Kaepora Gaebora
     { 10000060LL, 359, -1, 0, 0, -1, -1, 3, false, { 0, 0, 0 } }, // NPC Speech: Kakariko Rooftop Man
     { 10000061LL, 179, 82, 65535, 65285, -1, -1, 3, false, { 0, 0, 0 } }, // NPC Speech: Kakariko Mountain Gate Guard
     { 10000062LL, 376, 82, 65535, 65280, -1, -1, 3, false, { 0, 0, 0 } }, // NPC Speech: Kakariko Entrance Guard

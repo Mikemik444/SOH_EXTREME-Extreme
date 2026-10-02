@@ -1,0 +1,100 @@
+SEED 10112245550148649225 - COMPLETION AUDIT
+2026-10-01
+
+RESULT: Blocked under the corrected configured logic. Do not treat this as a
+clean, normally completable seed. The replay stops at 7 / 30 Triforce Pieces,
+both from a fresh start and from the saved room-progress snapshot.
+
+This is a Triforce Hunt: 60 pieces placed, 30 required. The audit kept every
+original item placement and seed option. It did not grant items to the actual
+room, edit the server/save, or regenerate the seed.
+
+CONFIRMED PROGRESSION LOOP
+1. Climb is at Enemy Defeat: Gerudo Training Ground Room 9 Shell Blade 1
+   (SOH location 9800443).
+2. Normal GTG entry requires adult access, membership card, wallet, NPC Soul,
+   and Speak Gerudo with this seed's settings. No GTG entry trick is enabled.
+3. NPC Soul is at Enemy Defeat: Forest Temple Room 11 Bubble 1 (9800146).
+4. That Bubble is assigned to the TOP of the block-pushing room, whose normal
+   route requires Climb, Grab / Power Bracelet, and the strength upgrade.
+   Bubble 2 in the same scene/room is on the floor; it is a different check.
+Thus Climb is behind NPC Soul, while NPC Soul is behind Climb.
+
+Speak Gerudo is at Luigi's Mansion: Hidden Room Clear Chest. It is not an
+innate ability or available remote pregrant in this audit.
+
+Reaching Lost Woods through Goron City, getting past Mido, or warping with
+Minuet of Forest concerns the OUTSIDE approach. Forest Temple entrance uses
+Hookshot. The additional Climb requirement above is inside the dungeon; an
+entrance route does not by itself reach the upper block-room Bubble.
+
+OTHER CROSS-GAME DEPENDENCIES
+Kingdom Hearts remains locked by SlotLock. Unlock king is in Luigi's Mansion,
+Telephone Room C Shelf. Telephone Room Key is in SOH at Enemy Defeat: Sacred
+Forest Meadow Room 0 Moblin Spawn 6. Luigi's Mansion also cannot reach its
+1F Bathroom Bathtub (the Morph Ball for Super Metroid) yet; the 1F Bathroom
+Key is in Kingdom Hearts at Hollow Bastion Defeat Unknown Ansem's Report 13.
+
+Open Chest is absent at the stall. Its copies are at ZR Fairy Grotto Fairy 6
+and Luigi's Mansion Boolossus Fragment 1. The first uses the corrected raised
+grotto approach; the other requires later mansion access. Cellar Key and
+Guest Room Key are at KF Mido Bottom Right Chest and LW Near Shortcuts Grotto
+Chest respectively. These dependencies cannot be bypassed by merely updating
+the tracker: the old placements stay where generation put them.
+
+SKULL MASK REPORT
+The screenshot's LW Deku Theater Skull Mask entry was another false positive.
+The audience can remain while the prize-giving leader (EnDntJiji) is hidden
+without NPC Soul. Corrected in .51 AP/UT and native location logic. The Skull
+Mask branch starts dialogue automatically, so it needs the leader's soul but
+not Speak Deku. Mask of Truth retains its separate Deku-speech requirement.
+The item in this seed's Skull Mask check is Biggoron's Sword, not NPC Soul.
+
+METHOD AND VALIDATION
+- Original seed was generated with SOH-EXTREME .46; replay used corrected .51.
+- Exact original multidata placements: 4,937 network checks, including all
+  3,311 SOH checks. The current SOH location-ID set matches exactly.
+- Rebuilt current SOH graph using the seed's saved slot data, not today's YAML.
+- Restored Luigi's Mansion doors, spawn, ghost elements, health/options and
+  Super Metroid techniques, difficulty, door colors, boss/area transitions,
+  ROM logic patches, and starting access from their saved slot data.
+- These two remote graphs reproduce EVERY original sphere frontier exactly:
+  108 comparisons over 54 spheres; 990 remote network checks; zero differences.
+- Item delivery occurs only after reachable checks. No remote items or recovery
+  items were pregranted. SlotLock gates remain enforced. KH stays locked, so
+  no KH progression is assumed or used to reach the stalled result.
+- Additional source-derived interaction predicates cover 2,311 SOH locations.
+  These predicates are necessary conditions and have untranslated atoms; they
+  are not a full simulation of actor behavior, collision, or movement.
+- Starting room snapshot: SOH 821 checked, Luigi 296, Metroid 5, SlotLock 4,
+  KH 0. The received-item list matches the exact checked placements.
+- Fresh replay reaches SOH 736, Luigi 298, Metroid 5, SlotLock 4, KH 0.
+- Continuing from the snapshot reaches SOH 827, Luigi 298, Metroid 5,
+  SlotLock 4, KH 0. Both routes stop at seven Triforce Pieces.
+- Skull Mask regression: old code failed; corrected code passes 182 real AP
+  and Universal Tracker assertions, including restored old slot settings.
+
+Read-only recovery experiments also did NOT prove a repair: adding Climb alone
+stopped at 12 pieces; adding NPC Soul alone stopped at 7; both stopped at 13.
+Those experiments use conservative KH certificates if reached, so they are
+not proofs that those hypothetical inventories can never win. They are enough
+to avoid presenting a simple Climb/NPC grant as a verified complete repair.
+No such items have been sent to the room.
+
+This audit finds a rules-level failure; it does not certify every physical
+interaction or test intermittent crashes. A separately validated seed repair
+or a new seed generated with the corrected rules is needed before calling the
+run completable. The .51 tracker fix alone does not repair the old seed.
+
+THE SEVEN REACHED PIECES
+1. Player 2: Morphing Ball
+2. Player 3: Anteroom L Chandelier
+3. Player 3: 1F Hallway Rear Vase R
+4. Player 5: KF Saria's House Top Left Heart
+5. Player 5: EXTREME Dmt Cow Boulder
+6. Player 5: LLR GS Rain Shed
+7. Player 5: Enemy Defeat: Graveyard Room 1 Poe Source 40 Slot 1
+
+INPUT FINGERPRINTS
+Multidata SHA256: e4adafe826bf0bbac2d6040143b31095fb7dc352b7e7c5a0f83f8a1b3ca71dc6
+Saved room snapshot SHA256: 30c9bd9b67ff3f12d45047c7abe2c48cb756296783dece5f8b0c599594f7dc06

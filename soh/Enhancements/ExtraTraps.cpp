@@ -327,13 +327,10 @@ std::vector<AltTrapType> getEnabledAddTraps() {
     return GetEnabledAddTraps(GetEffectiveExtraTrapSettings());
 }
 
-static void RollRandomTrap(uint64_t seed, const ExtraTrapSettings& settings) {
-    uint64_t finalSeed = seed + (IS_RANDO ? static_cast<uint64_t>(Rando::Context::GetInstance()->GetSeed())
-                                          : gSaveContext.ship.stats.fileCreatedAt);
-    uint64_t state;
-    ShipUtils::RandInit(finalSeed, &state);
-
-    roll = ShipUtils::RandomElement(GetEnabledAddTraps(settings), &state);
+static void RollRandomTrap(const ExtraTrapSettings& settings) {
+    // Advance the normal RNG for each delivered trap. Re-seeding from the scene
+    // and item model made queued traps in the same area repeat the same effect.
+    roll = ShipUtils::RandomElement(GetEnabledAddTraps(settings));
     switch (roll) {
         case ADD_ICE_TRAP:
             GameInteractor::RawAction::FreezePlayer();
@@ -373,8 +370,8 @@ static void RollRandomTrap(uint64_t seed, const ExtraTrapSettings& settings) {
             eventTimer = 3;
             teleportRoll =
                 settings.types[ADD_TELEPORT_TRAP] == TELEPORT_TRAP_ADVANCED
-                    ? ShipUtils::RandomElement(advancedTeleportDestinations, &state)
-                    : ShipUtils::RandomElement(simpleTeleportDestinations, &state);
+                    ? ShipUtils::RandomElement(advancedTeleportDestinations)
+                    : ShipUtils::RandomElement(simpleTeleportDestinations);
             break;
         case ADD_MAGIC_TRAP:
             GameInteractor::RawAction::AddOrRemoveMagic(-96);
@@ -456,15 +453,13 @@ void RegisterExtraTraps() {
             return;
         }
 
-        Player* player = GET_PLAYER(gPlayState);
-
         *should = true;
         gSaveContext.ship.pendingIceTrapCount--;
         gSaveContext.ship.stats.count[COUNT_ICE_TRAPS]++;
         GameInteractor_ExecuteOnItemReceiveHooks(ItemTable_RetrieveEntry(MOD_RANDOMIZER, RG_ICE_TRAP));
         const ExtraTrapSettings settings = GetEffectiveExtraTrapSettings();
         if (settings.enabled) {
-            RollRandomTrap(gPlayState->sceneNum + player->getItemEntry.drawItemId, settings);
+            RollRandomTrap(settings);
         } else {
             GameInteractor::RawAction::FreezePlayer();
         }

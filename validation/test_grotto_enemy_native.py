@@ -3,11 +3,11 @@
 Engine allocation/reporting services are controlled adapters, not a live game.
 The fixture independently records the supplied scene's entrance-to-room command.
 """
-import argparse, json, re, runpy, subprocess
+import argparse, json, re, runpy, subprocess, zipfile
 from pathlib import Path
 from run_native_tests import function
 
-p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);p.add_argument('--baseline-source-zip',type=Path);a=p.parse_args()
 r=Path(__file__).resolve().parents[1];out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
 fixture=json.loads((r/'validation/fixtures/grotto_enemy_spawns.json').read_text())
 catalog=runpy.run_path(str(r/'archipelago/soh_extreme/EnemyDropLocations.py'))
@@ -36,6 +36,33 @@ meadow=next(e for e in entries if e.address==9800536)
 ck('outdoor Wolfos belongs before its gate',meadow.region_token=='SFM_ENTRYWAY' and meadow.spawn_mask==3)
 ck('outdoor finder belongs before its gate','RR_SFM_ENTRYWAY,' in next(line for line in finder.splitlines() if '9800536LL' in line))
 s=(r/'soh/Enhancements/randomizer/MegaSouls.cpp').read_text()
+if a.baseline_source_zip:
+    with zipfile.ZipFile(a.baseline_source_zip) as z:s=z.read('soh/Enhancements/randomizer/MegaSouls.cpp').decode()
+# Exercise the actual grotto resolver: the UI tracker ID is unset for vanilla
+# entrances. Earlier tests gave both paths a valid UI ID and missed this bug.
+grotto_source=(r/'soh/Enhancements/randomizer/randomizer_grotto.c').read_text()
+scene_ids={name:int(value,16) for value,name in re.findall(r'/\* 0x([0-9A-Fa-f]+) \*/ DEFINE_SCENE\(\w+, \w+, (SCENE_\w+)',(r/'include/tables/scene_table.h').read_text())}
+load_data=re.findall(r'\.entranceIndex = (ENTR_\w+),\s*\.content = (0x\w+),\s*\.scene = (SCENE_\w+)',loads)
+assert len(load_data)==33
+resolver=r'''
+using s8=int8_t;using s16=int16_t;
+constexpr int NUM_GROTTOS=33,ENTRANCE_GROTTO_LOAD_START=0x700,RESPAWN_MODE_RETURN=0;
+constexpr int RSK_SHUFFLE_GROTTO_ENTRANCES=0,RSK_SHUFFLE_OVERWORLD_SPAWNS=1,RSK_SHUFFLE_WARP_SONGS=2;
+int shuffleMask=0;int8_t grottoId=-1;
+int Randomizer_GetSettingValue(int option){return shuffleMask&(1<<option);}
+struct Respawn {int16_t entranceIndex=0;int8_t data=0;};
+struct {Respawn respawn[1];} gSaveContext;
+struct Entrance {int8_t scene=0;};Entrance gEntranceTable[33];
+struct GrottoLoadInfo {int entranceIndex;int8_t content,scene;};
+const GrottoLoadInfo grottoLoadTable[]={
+'''+''.join(f'{{{i},static_cast<int8_t>({data}),{scene_ids[scene]}}},\n' for i,(_,data,scene) in enumerate(load_data))+r'''};
+'''+function(grotto_source,'s16 Grotto_GetRenamedGrottoIndexFromOriginal(')+'\n'+function(grotto_source,'s8 Grotto_CurrentGrotto()')+r'''
+void selectGrotto(int id,int mode,int trackerId){
+ shuffleMask=mode;grottoId=id;EntranceTracker::grotto=trackerId;
+ gSaveContext.respawn[0].entranceIndex=id;gSaveContext.respawn[0].data=grottoLoadTable[id].content;
+ gEntranceTable[id].scene=grottoLoadTable[id].scene;
+}
+'''
 code=r'''
 #include <cassert>
 #include <cstdio>
@@ -53,7 +80,7 @@ constexpr Placement kEnemyDefeatPlacements[]={
 #include "soh/Enhancements/randomizer/EnemyDefeatPlacements.inc"
 };
 constexpr size_t kEnemyPlacementCount=sizeof(kEnemyDefeatPlacements)/sizeof(Placement);
-'''+function(s,'extern "C" int32_t MegaSoul_FindEnemyDefeatSpawn(')+r'''
+'''+resolver+function(s,'extern "C" int32_t MegaSoul_FindEnemyDefeatSpawn(')+r'''
 struct Vec3f {float x=0,y=0,z=0;};
 struct Actor {int id=431;struct {Vec3f pos;}world;};
 struct EnItem00 {} pickup;
@@ -94,12 +121,13 @@ int main(){
 for row,enemy,e in actual:
     args=[62,e.room,e.actor_index,e.actor_id,e.params,*enemy['position']]
     call=lambda vals:'MegaSoul_FindEnemyDefeatSpawn('+','.join(map(str,vals))+')'
-    code+=f'EntranceTracker::grotto={e.grotto_id};verify({call(args)}=={e.address-9800000});reward({e.address-9800000});\n'
+    code+=f'for(int mode=0;mode<8;++mode){{selectGrotto({e.grotto_id},mode,mode?{e.grotto_id}:-1);verify({call(args)}=={e.address-9800000});reward({e.address-9800000});\n'
+    code+=f'EntranceTracker::grotto=25;verify({call(args)}=={e.address-9800000});\n'
     for pos in (1,2,3,4):
         changed=list(args);changed[pos]+=100
         code+=f'verify({call(changed)}==-1);\n'
-    code+=f'EntranceTracker::grotto=25;verify({call(args)}==-1);\n'
-    code+=f'EntranceTracker::grotto={e.grotto_id};ap=false;verify({call(args)}==-1);ap=true;rando=false;verify({call(args)}==-1);rando=true;\n'
+    code+=f'selectGrotto(25,mode,{e.grotto_id});verify({call(args)}==-1);\n'
+    code+=f'selectGrotto({e.grotto_id},mode,-1);ap=false;verify({call(args)}==-1);ap=true;rando=false;verify({call(args)}==-1);rando=true;}}\n'
 mw=fixture['meadow_wolfos'];args=[mw['scene'],mw['room'],mw['index'],mw['actor_id'],mw['params'],*mw['position']]
 code+=f'verify({call(args)}==536);reward(536);\n'
 for index in (i-9800000 for i in retired):

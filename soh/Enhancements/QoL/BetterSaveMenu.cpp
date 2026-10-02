@@ -14,7 +14,7 @@ extern PlayState* gPlayState;
 }
 
 #define CVAR_BETTERSAVE CVAR_ENHANCEMENT("BetterSaveMenu")
-#define CVAR_BETTERSAVE_DEFAULT 0
+#define CVAR_BETTERSAVE_DEFAULT 1
 #define CVAR_BETTERSAVE_VALUE CVarGetInteger(CVAR_BETTERSAVE, CVAR_BETTERSAVE_DEFAULT)
 static CustomMessage saveMsg = CustomMessage(
     "\x08Would you like to save?&&" + CustomMessage::TWO_WAY_CHOICE() + "%gYes&No%w\x09", TEXTBOX_TYPE_BLUE);
@@ -25,6 +25,15 @@ static CustomMessage continueDungeonMsg =
                   TEXTBOX_TYPE_BLUE);
 
 extern "C" uint8_t Randomizer_GetSettingValue(RandomizerSettingKey randoSettingKey);
+
+static int16_t GetAgeSpawnEntrance() {
+    if (IS_RANDO) {
+        // The randomizer separates adult spawn from Prelude of Light and may
+        // override either age's spawn entrance.
+        return Entrance_OverrideNextIndex(LINK_IS_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_HYRULE_FIELD_10);
+    }
+    return LINK_IS_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_TEMPLE_OF_TIME_WARP_PAD;
+}
 
 bool IsSceneDungeon(int16_t scene) {
     switch (scene) {
@@ -66,6 +75,7 @@ void HandleSaveMenu(bool* should, PlayState* play) {
     switch (pauseCtx->unk_1EC) {
         case 0:
             *should = false;
+            gSaveContext.ship.resetToSpawn = 0;
             Message_StartTextbox(play, TEXT_SAVE_MSG, NULL);
             pauseCtx->unk_1EC = 1;
             break;
@@ -116,15 +126,21 @@ void HandleSaveMenu(bool* should, PlayState* play) {
                         YREG(8) = static_cast<int16_t>(pauseCtx->unk_204);
                         func_800F64E0(0);
                         break;
-                    case 1:
+                    case 1: {
                         // Reset (Dungeon) / Return to Spawn (Overworld)
+                        const bool returnToSpawn = play->msgCtx.textId == TEXT_CONTINUE_OVERWORLD_MSG;
                         Audio_PlaySfxGeneral(NA_SE_SY_PIECE_OF_HEART, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                              &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                         Play_SaveSceneFlags(play);
                         Sram_OpenSave();
+                        // The two-choice prompt explicitly promises the age's
+                        // spawn, even when normal save loading chooses a dungeon
+                        // entrance or Link's House for an adult save.
+                        gSaveContext.ship.resetToSpawn = returnToSpawn;
                         pauseCtx->promptChoice = 0;
                         pauseCtx->unk_1EC = 7;
                         break;
+                    }
                     case 2:
                         // Reset to Spawn (Dungeon)
                         Audio_PlaySfxGeneral(NA_SE_SY_PIECE_OF_HEART, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -165,15 +181,7 @@ void HandleSaveMenu(bool* should, PlayState* play) {
                     gSaveContext.natureAmbienceId = 0xFF;
                     GameInteractor_ExecuteOnLoadGame(gSaveContext.fileNum);
                     if (gSaveContext.ship.resetToSpawn) {
-                        if (LINK_IS_CHILD) {
-                            gSaveContext.entranceIndex =
-                                Entrance_OverrideNextIndex(ENTR_LINKS_HOUSE_CHILD_SPAWN); // Child Overworld Spawn
-                        } else {
-                            // Adult Overworld Spawn. Normally 0x5F4 (ENTR_TEMPLE_OF_TIME_WARP_PAD), but 0x282
-                            // (ENTR_HYRULE_FIELD_10) has been repurposed to differentiate from Prelude which also uses
-                            // 0x5F4
-                            gSaveContext.entranceIndex = Entrance_OverrideNextIndex(ENTR_HYRULE_FIELD_10);
-                        }
+                        gSaveContext.entranceIndex = GetAgeSpawnEntrance();
                         gSaveContext.ship.resetToSpawn = 0;
                     }
                 }

@@ -1,0 +1,2198 @@
+{
+  "old_ap": {
+    "passed": false,
+    "checks": 182,
+    "tests": [
+      {
+        "test": "individual_languages/True/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "individual_languages/True/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "individual_languages/True/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "individual_languages/True/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "individual_languages/True/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "restored shuffled settings/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "restored shuffled settings/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "restored shuffled settings/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "restored shuffled settings/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "on/True/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "on/True/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "on/True/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "on/True/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "off/True/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "off/True/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "off/True/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": false,
+        "passed": false
+      },
+      {
+        "test": "off/True/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/False missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      }
+    ]
+  },
+  "ap": {
+    "passed": true,
+    "checks": 182,
+    "tests": [
+      {
+        "test": "individual_languages/True/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/False/Skull Mask AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/False/Skull Mask UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Skull Mask AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Skull Mask UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/False/True/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/True missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Skull Mask AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Skull Mask UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Skull Mask AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Skull Mask UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/False/True/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "restored shuffled settings missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Skull Mask AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Skull Mask UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Skull Mask AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Skull Mask UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/False/True/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/True missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/True missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Skull Mask AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Skull Mask UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Skull Mask AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Skull Mask UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/False/True/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/False/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/True missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/True missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/False/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "individual_languages/False missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/False/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Mask of Truth AP",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/False/Mask of Truth UT",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "on/False missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "on/False missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/False/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/False/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/False/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Skull Mask region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Skull Mask AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Skull Mask UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Mask of Truth region",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Mask of Truth AP",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False/True/True/Mask of Truth UT",
+        "actual": true,
+        "expected": true,
+        "passed": true
+      },
+      {
+        "test": "off/False missing Shovel Skull Mask",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      },
+      {
+        "test": "off/False missing Shovel Mask of Truth",
+        "actual": false,
+        "expected": false,
+        "passed": true
+      }
+    ]
+  }
+}

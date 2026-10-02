@@ -218,7 +218,8 @@ NATIVE_ENTRANCE_ALTERNATIVES = (
     ('RR_KOKIRI_FOREST', 'RR_KF_BOULDER_LOOP', (('Crawl',),)),
     ('RR_KOKIRI_FOREST', 'RR_KF_LINKS_PORCH', ((),)),
     ('RR_KOKIRI_FOREST', 'RR_KF_OUTSIDE_LOST_WOODS', ((),)),
-    ('RR_LAKE_HYLIA', 'RR_LH_GROTTO', ((),)),
+    # The vendor entrance retains the child-only owl gate. Both ages pull a grave.
+    ('RR_LAKE_HYLIA', 'RR_LH_GROTTO', (('Grab / Power Bracelet',),)),
     ('RR_LAKE_HYLIA', 'RR_LH_OWL_FLIGHT', (('NPC Soul', 'Speak'),)),
     ('RR_SACRED_FOREST_MEADOW', 'RR_SFM_STORMS_GROTTO', (('Shovel',),)),
     ('RR_SFM_ENTRYWAY', 'RR_SFM_WOLFOS_GROTTO', (('Shovel',),)),

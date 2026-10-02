@@ -135,6 +135,12 @@ def enemy_drop_rule(world, entry):
         gates.append(grab())
     elif gate == "swim":
         gates.append(has_item(Items.BRONZE_SCALE, b))
+    elif gate == "gv_lower_current":
+        # The dry ledge is outside these Octoroks' surfacing range. Swim only
+        # reaches the current; Iron Boots provide footing inside that range.
+        # Player_UseItem permits Hookshot/Longshot underwater while grounded,
+        # not Bow. can_use(IRON_BOOTS) retains EXTREME's Swim requirement.
+        gates.append(can_use(Items.IRON_BOOTS, b) & can_use(Items.HOOKSHOT, b))
     elif gate == "night":
         gates.append(time_available(True))
     elif gate not in ("", "anubis", "sfm_moblin", "peahat_larva"):

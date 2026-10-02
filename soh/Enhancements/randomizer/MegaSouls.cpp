@@ -7,7 +7,7 @@
 #include "soh/SaveManager.h"
 #include "soh/ObjectExtension/ActorListIndex.h"
 #include "soh/ObjectExtension/ObjectExtension.h"
-#include "soh/Enhancements/randomizer/randomizer_entrance_tracker.h"
+#include "soh/Enhancements/randomizer/randomizer_grotto.h"
 
 #include <algorithm>
 #include <array>
@@ -669,7 +669,7 @@ static bool IsPoeSisterIntroActor(const Actor* actor) {
 static SohExtreme::EnemySpawnKey EnemySpawnKeyFor(const Actor* actor) {
     const int16_t scene = gPlayState != nullptr ? static_cast<int16_t>(gPlayState->sceneNum) : -1;
     return { scene, actor->room,
-        scene == SCENE_GROTTOS ? static_cast<int16_t>(EntranceTracker::GetCurrentGrottoId()) : static_cast<int16_t>(-1),
+        scene == SCENE_GROTTOS ? static_cast<int16_t>(Grotto_CurrentGrotto()) : static_cast<int16_t>(-1),
         GetActorListIndex(actor), actor->id, static_cast<uint16_t>(actor->params),
         static_cast<int32_t>(actor->home.pos.x), static_cast<int32_t>(actor->home.pos.y),
         static_cast<int32_t>(actor->home.pos.z) };
@@ -832,7 +832,7 @@ static void RecoverEarnedEnemyPickups() {
         if (!earned || gLiveEnemyPickups[i] != nullptr ||
             kEnemyDefeatPlacements[i].scene != gPlayState->sceneNum) continue;
         if (kEnemyDefeatPlacements[i].grottoId >= 0 &&
-            kEnemyDefeatPlacements[i].grottoId != EntranceTracker::GetCurrentGrottoId()) continue;
+            kEnemyDefeatPlacements[i].grottoId != Grotto_CurrentGrotto()) continue;
         if (EnemyDefeatLocationStillPending(static_cast<int32_t>(i), kEnemyDefeatPlacements[i].locationId)) {
             // The original enemy may have permanently cleared a room/switch or the
             // pickup may have fallen into a pit. Respawn only its earned pickup,
@@ -889,7 +889,7 @@ static void AttachEnemyDefeatIdentity(Actor* actor) {
     identity.placementIndex = index;
     identity.scene = gPlayState != nullptr ? static_cast<int16_t>(gPlayState->sceneNum) : -1;
     identity.room = actor->room;
-    identity.grottoId = identity.scene == SCENE_GROTTOS ? static_cast<int8_t>(EntranceTracker::GetCurrentGrottoId()) : -1;
+    identity.grottoId = identity.scene == SCENE_GROTTOS ? static_cast<int8_t>(Grotto_CurrentGrotto()) : -1;
     identity.actorListIndex = GetActorListIndex(actor);
     identity.actorId = actor->id;
     identity.params = static_cast<uint16_t>(actor->params);
@@ -906,7 +906,9 @@ extern "C" int32_t MegaSoul_FindEnemyDefeatSpawn(int16_t scene, int8_t room, int
                                                  int16_t actorId, uint16_t params,
                                                  float x, float y, float z) {
     if (!IS_RANDO || !Archipelago_IsCurrentSaveActive() || actorIndex < 0) return -1;
-    const int16_t grotto = scene == SCENE_GROTTOS ? static_cast<int16_t>(EntranceTracker::GetCurrentGrottoId()) : -1;
+    // The entrance tracker's cached ID is only set by shuffled entrances.
+    // The native resolver also identifies normal entrances from return data.
+    const int16_t grotto = scene == SCENE_GROTTOS ? static_cast<int16_t>(Grotto_CurrentGrotto()) : -1;
     const SohExtreme::EnemySpawnKey key{scene, room, grotto, actorIndex, actorId, params,
         static_cast<int32_t>(x), static_cast<int32_t>(y), static_cast<int32_t>(z)};
     const int32_t exact = SohExtreme::FindExactEnemySpawn(key);
@@ -1044,7 +1046,7 @@ extern "C" bool MegaSoul_IsEnemyDefeatSpawnPending(int16_t scene, int8_t room, i
     if (actorIndex < 0) return false;
     if (scene == SCENE_FOREST_TEMPLE && actorId == ACTOR_EN_PO_SISTERS && !(params & 0x1C00))
         return MegaSoul_IsEnemyDefeatPlacementPending(566 + ((params >> 8) & 3));
-    const int8_t grotto = scene == SCENE_GROTTOS ? static_cast<int8_t>(EntranceTracker::GetCurrentGrottoId()) : -1;
+    const int8_t grotto = scene == SCENE_GROTTOS ? static_cast<int8_t>(Grotto_CurrentGrotto()) : -1;
     for (size_t i = 0; i < kEnemyPlacementCount; ++i) {
         const auto& e = kEnemyDefeatPlacements[i];
         if (!SohExtreme::IsRetiredEnemyPlacement(static_cast<int32_t>(i)) &&

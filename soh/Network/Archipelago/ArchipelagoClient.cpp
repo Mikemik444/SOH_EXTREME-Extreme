@@ -3873,7 +3873,8 @@ static bool Archipelago_HasNpcLanguage(int language) {
         RAND_INF_CAN_SPEAK_HYLIAN, RAND_INF_CAN_SPEAK_KOKIRI, RAND_INF_CAN_SPEAK_ZORA,
     };
     if (language >= 0 && language < 6) return Flags_GetRandomizerInf(flags[language]);
-    // Kaepora Gaebora accepts any learned language, matching ShuffleSpeak.
+    // Reserved for catalogue entries explicitly marked as language "Any".
+    // Kaepora uses the Hylian entry, matching ShuffleSpeak.
     for (const auto flag : flags) if (Flags_GetRandomizerInf(flag)) return true;
     return false;
 }

@@ -2,11 +2,11 @@
 This does not compile or run the whole game; no game assets are needed.
 """
 from pathlib import Path
-import argparse,json,subprocess
+import argparse,json,subprocess,shutil
 from run_native_tests import function
 p=argparse.ArgumentParser();p.add_argument('--source-root',type=Path,required=True);p.add_argument('--report',type=Path,required=True);a=p.parse_args()
 root=a.source_root.resolve();mega=(root/'soh/Enhancements/randomizer/MegaSouls.cpp').read_text()
-build=a.report.parent/'journal-test-build';build.mkdir(parents=True,exist_ok=True)
+build=a.report.resolve().parent/'journal-test-build';build.mkdir(parents=True,exist_ok=True)
 code=r'''
 #include <cassert>
 #include <type_traits>
@@ -32,11 +32,11 @@ static std::set<int64_t> reported,active;
 #define GET_PLAYER(p) (&fixturePlayer)
 #define BGCHECKFLAG_GROUND 1
 static bool Player_InCsMode(PlayState*){return cutscene;}
-namespace EntranceTracker {static int GetCurrentGrottoId(){return grottoId;}}
+static int Grotto_CurrentGrotto(){return grottoId;}
 static bool Archipelago_IsCurrentSaveActive(){return activeSave;}
 static bool Archipelago_IsLocationActive(int64_t id){return active.count(id)!=0;}
 static bool Archipelago_IsLocationReported(int64_t id){return reported.count(id)!=0;}
-static void Archipelago_ReportLocation(int64_t id){++reportCalls;if(acceptReports)reported.insert(id);}
+static void Archipelago_ReconcileLocation(int64_t id){++reportCalls;if(acceptReports)reported.insert(id);}
 struct {int fileNum=0;} gSaveContext;
 struct SaveManager {static SaveManager* Instance;void SaveSection(int file,int section,bool){assert(file<3&&section==17);++saveCalls;}};
 static SaveManager manager;SaveManager* SaveManager::Instance=&manager;
@@ -117,6 +117,8 @@ int main(){
 }
 '''
 f=build/'journal.cpp';f.write_text(code);exe=build/'journal';cmd=['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-I',str(root),str(f),'-o',str(exe)]
+if not shutil.which('g++') and shutil.which('cl'):
+ exe=build/'journal.exe';cmd=['cl','/nologo','/std:c++17','/EHsc','/MD','/O2','/W3','/I',str(root),str(f),'/Fo'+str(build/'journal.obj'),'/Fe'+str(exe)]
 c=subprocess.run(cmd,text=True,capture_output=True);r=subprocess.run([str(exe)],text=True,capture_output=True) if c.returncode==0 else None
-result={'name':'journal_and_pooled_identity','passed':c.returncode==0 and r.returncode==0,'compile_command':cmd,'compile_stderr':c.stderr,'stdout':r.stdout if r else '', 'stderr':r.stderr if r else ''}
+result={'name':'journal_and_pooled_identity','passed':c.returncode==0 and r.returncode==0,'compile_command':cmd,'compile_stdout':c.stdout,'compile_stderr':c.stderr,'stdout':r.stdout if r else '', 'stderr':r.stderr if r else ''}
 a.report.write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2));raise SystemExit(not result['passed'])

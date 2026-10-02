@@ -108,8 +108,9 @@ def set_region_rules(world: "SohWorld") -> None:
          & can_attack(bundle)
          & can_get_nighttime_gs(bundle)),
         (Locations.ZR_GS_NEAR_RAISED_GROTTOS, lambda bundle: is_adult(bundle) &
-         (can_use(Items.HOOKSHOT, bundle)
-          | can_use(Items.BOOMERANG, bundle)) &
+         (can_use(Items.LONGSHOT, bundle)
+          | (can_reach_zr_raised_ledge(bundle) &
+             (can_use(Items.HOOKSHOT, bundle) | can_use(Items.BOOMERANG, bundle)))) &
          can_get_nighttime_gs(bundle)),
         (Locations.ZR_GS_ABOVE_BRIDGE, lambda bundle: is_adult(bundle) &
          can_use(Items.HOOKSHOT, bundle) &
@@ -124,9 +125,9 @@ def set_region_rules(world: "SohWorld") -> None:
          & can_use(Items.MAGIC_BEAN, bundle)
          & can_use(Items.SONG_OF_STORMS, bundle)),
         (Locations.ZR_NEAR_GROTTOS_GOSSIP_STONE_FAIRY,
-         lambda bundle: call_gossip_fairy(bundle)),
+         lambda bundle: can_reach_zr_raised_ledge(bundle) & call_gossip_fairy(bundle)),
         (Locations.ZR_NEAR_GROTTOS_GOSSIP_STONE_BIG_FAIRY,
-         lambda bundle: can_use(Items.SONG_OF_STORMS, bundle)),
+         lambda bundle: can_reach_zr_raised_ledge(bundle) & can_use(Items.SONG_OF_STORMS, bundle)),
         (Locations.ZR_NEAR_DOMAIN_GOSSIP_STONE_FAIRY,
          lambda bundle: call_gossip_fairy(bundle)),
         (Locations.ZR_NEAR_DOMAIN_GOSSIP_STONE_BIG_FAIRY,
@@ -147,12 +148,11 @@ def set_region_rules(world: "SohWorld") -> None:
          (has_item(Items.BRONZE_SCALE, bundle) |
           can_use(Items.IRON_BOOTS, bundle) |
           can_use(Items.BOOMERANG, bundle))),
-        (Locations.ZR_NEAR_FREESTANDING_POH_GRASS,
+    (Locations.ZR_NEAR_FREESTANDING_POH_GRASS,
          lambda bundle: can_collect_grass(bundle)
-            & (is_child(bundle)
-                 | can_use(Items.HOVER_BOOTS, bundle)
-                 | can_do_trick(Tricks.ZR_LOWER, bundle)
-                 | can_use(Items.BOOMERANG, bundle))),
+            & is_child(bundle)
+            & can_grab(bundle)
+            & has_animal_soul(bundle, "Cucco")),
     ])
     # Connections
     connect_regions(Regions.ZORA_RIVER, world, [

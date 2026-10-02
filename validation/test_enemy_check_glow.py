@@ -15,6 +15,9 @@ body='\n'.join(function(source,s) for s in ('static int GetEnemySoulMode(', 'sta
     'static bool IsGoldSkulltulaActor(', 'static bool IsOrdinarySkulltulaActor(', 'static bool HasRequiredEnemySoul(',
     'static bool IsSkulltulaSoulLocked(', 'static bool EnemyDefeatLocationStillPending(',
     'extern "C" bool MegaSoul_ShouldHighlightEnemy('))
+# Keep the real retirement catalog; the flag also permits isolated outbox cases.
+body=body.replace('SohExtreme::IsRetiredEnemyPlacement(placementIndex)',
+    '(retired || SohExtreme::IsRetiredEnemyPlacement(placementIndex))')
 enums=sorted(set(re.findall(r'\b(?:ACTOR|RAND_INF|RSK)_\w+',body)))
 draw=function(actor,'static void Actor_DrawEnemyCheckGlow(')
 actor_draw=function(actor,'void Actor_Draw(PlayState* play, Actor* actor) {')
@@ -26,6 +29,7 @@ code=r'''
 #include <map>
 #include <set>
 #include "soh/Enhancements/randomizer/EnemyDropPolicy.h"
+#include "soh/Enhancements/randomizer/EnemySpawnCatalog.h"
 using RandomizerInf=int;using s16=int16_t;using u8=uint8_t;using f32=float;
 '''+ 'enum Constants{'+','.join(enums)+'};\n'+r'''
 bool rando=true,apSave=true,active=true,reported=false,collected=false,retired=false;
@@ -42,12 +46,11 @@ struct EnemyDefeatIdentity{int32_t placementIndex=0;int64_t locationId=9800000;b
 struct ObjectExtension{std::map<const Actor*,EnemyDefeatIdentity>values;
  static ObjectExtension&GetInstance(){static ObjectExtension e;return e;}
  template<class T>T*Get(const Actor*a){auto it=values.find(a);return it==values.end()?nullptr:&it->second;}};
-constexpr size_t kEnemyPlacementCount=5;
+constexpr size_t kEnemyPlacementCount=9000;
 bool Archipelago_IsCurrentSaveActive(){return apSave;}
 bool Archipelago_IsLocationActive(int64_t){return active;}
 bool Archipelago_IsLocationReported(int64_t){return reported;}
 bool EnemyDefeatWasCollected(size_t){return collected;}
-namespace SohExtreme{bool IsRetiredEnemyPlacement(int32_t){return retired;}}
 '''+body+r'''
 struct GraphicsContext{}gfx;
 struct PlayState{struct{GraphicsContext*gfxCtx=&gfx;}state;uint32_t gameplayFrames=0;int billboardMtxF=0;}play;
@@ -104,7 +107,7 @@ code+=','.join('{'+aid+','+inf+'}' for aid,inf in pairs)+r'''};
  reset();Actor enemy;CK(!MegaSoul_ShouldHighlightEnemy(&enemy));CK(!MegaSoul_ShouldHighlightEnemy(nullptr));
  ObjectExtension::GetInstance().values[&enemy]={};
  auto&identity=ObjectExtension::GetInstance().values[&enemy];
- for(int index:{-1,5,999}){identity.placementIndex=index;CK(!MegaSoul_ShouldHighlightEnemy(&enemy));}
+ for(int index:{-1,9000,99999}){identity.placementIndex=index;CK(!MegaSoul_ShouldHighlightEnemy(&enemy));}
  identity.placementIndex=0;identity.locationId=-1;CK(!MegaSoul_ShouldHighlightEnemy(&enemy));identity.locationId=9800000;
  // Draw guards, balanced matrix/display scopes, pulse limits and unchanged model.
  Actor_DrawEnemyCheckGlow(nullptr,&enemy);CK(halos==0&&stack==0&&disps==0);
@@ -118,6 +121,31 @@ code+=','.join('{'+aid+','+inf+'}' for aid,inf in pairs)+r'''};
  collected=false;options[RSK_SHUFFLE_ENEMY_SOUL]=2;souls.insert(RAND_INF_ENEMY_SOUL_WOLFOS);
  Actor_DrawEnemyCheckGlow(&play,&enemy);CK(halos==before); // wrong enemy soul
  souls.insert(RAND_INF_ENEMY_SOUL_KEESE);Actor_DrawEnemyCheckGlow(&play,&enemy);CK(halos==before+1);
+ // Exact Zora's River source identities, before Octorok init changes params
+ // from 0xFF00 to zero and changes home.y to the surface of the water.
+ int riverSpawns=0;
+ for(const auto& alias:SohExtreme::kEnemySpawnAliases){
+  if(alias.key.scene!=84||alias.key.actorId!=14)continue;
+  ++riverSpawns;reset();enemy.id=ACTOR_EN_OKUTA;enemy.params=0;
+  enemy.focus.pos.y=enemy.world.pos.y+15.0f;
+  int index=SohExtreme::FindExactEnemySpawn(alias.key);CK(index==alias.placement);
+  ObjectExtension::GetInstance().values[&enemy]={index,9800000+index,false};
+  options[RSK_SHUFFLE_ENEMY_SOUL]=2;
+  before=halos;Actor_DrawEnemyCheckGlow(&play,&enemy);CK(halos==before);
+  souls.insert(RAND_INF_ENEMY_SOUL_OCTOROK);
+  for(int frame=0;frame<256;++frame){
+   play.gameplayFrames=frame;before=halos;Actor_DrawEnemyCheckGlow(&play,&enemy);
+   CK(halos==before+1);
+   // Keep the marker clear of the head throughout the floating/breathing
+   // animation; the ordinary 15-unit focus sits inside its opaque model.
+   CK(lastHeight-enemy.world.pos.y>=85.0f&&lastScale>=0.0499f);
+  }
+  enemy.draw=nullptr;before=halos;Actor_DrawEnemyCheckGlow(&play,&enemy);CK(halos==before);
+  enemy.draw=drawCallback;Actor_DrawEnemyCheckGlow(&play,&enemy);CK(halos==before+1);
+  collected=true;before=halos;Actor_DrawEnemyCheckGlow(&play,&enemy);CK(halos==before);
+  collected=false;reported=true;Actor_DrawEnemyCheckGlow(&play,&enemy);CK(halos==before);
+ }
+ CK(riverSpawns==9);
  std::cout<<checks<<" enemy glow assertions passed\n";
 }
 '''

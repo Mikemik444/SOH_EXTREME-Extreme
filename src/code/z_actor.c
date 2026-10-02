@@ -2805,6 +2805,14 @@ static void Actor_DrawEnemyCheckGlow(PlayState* play, Actor* actor) {
     f32 pulse = Math_SinS((s16)(play->gameplayFrames * 1800));
     f32 scale = 0.035f + 0.007f * pulse;
     f32 height = CLAMP(actor->focus.pos.y - actor->world.pos.y, 18.0f, 80.0f);
+    if (actor->id == ACTOR_EN_OKUTA && actor->params == 0) {
+        // Octorok focus is only 15 units above the water, inside its opaque
+        // head. Put the marker above the floating/breathing model so the head
+        // cannot depth-occlude it. Eligibility still requires its soul and an
+        // uncollected placement; submerged actors have no draw callback.
+        height = 90.0f;
+        scale = 0.060f + 0.010f * pulse;
+    }
     Matrix_Push();
     Matrix_Translate(actor->world.pos.x, actor->world.pos.y + height, actor->world.pos.z, MTXMODE_NEW);
     Matrix_Mult(&play->billboardMtxF, MTXMODE_APPLY);

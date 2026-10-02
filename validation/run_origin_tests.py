@@ -4,10 +4,10 @@ service substitutes. Actor categories/constants are extracted from supplied sour
 No game/Windows binary or live Archipelago server is executed.
 """
 from pathlib import Path
-import argparse,json,re,subprocess
+import argparse,json,re,subprocess,shutil
 from run_native_tests import function
 p=argparse.ArgumentParser();p.add_argument('--source-root',type=Path,required=True);p.add_argument('--report',type=Path,required=True);a=p.parse_args()
-root=a.source_root.resolve();v=Path(__file__).parent;build=a.report.parent/'origin-test-build';build.mkdir(parents=True,exist_ok=True)
+root=a.source_root.resolve();v=Path(__file__).resolve().parent;build=a.report.resolve().parent/'origin-test-build';build.mkdir(parents=True,exist_ok=True)
 mega=(root/'soh/Enhancements/randomizer/MegaSouls.cpp').read_text();engine=(root/'src/code/z_actor.c').read_text();fixtures=v/'fixtures'
 header=r'''
 #pragma once
@@ -63,6 +63,8 @@ static s16 sEnemySceneSpawnIndex=-1;
 static s32 sEnemyPreparedPlacement=-1;
 static Actor* sEnemyCallbackSource=NULL;
 static Actor* sEnemyExplicitSpawnSource=NULL;
+static ActorFunc sActiveActorCallback=NULL;
+static s16 sActiveCallbackActorId=-1,sActiveCallbackActorParams=0;
 int gMapLoading=0;
 '''
 for sig in ['static void Actor_CallWithEnemySpawnSource(', 'static void Actor_HookWithEnemySpawnSource(', 'bool MegaSoul_ShouldRestoreUnusedSceneEnemy(', 'Actor* Actor_Spawn(ActorContext*', 'Actor* Actor_SpawnAsChild(', 'Actor* MegaSoul_SpawnEnemyChild(', 'Actor* MegaSoul_SpawnEnemy(', 'Actor* Actor_SpawnEntry(ActorContext* actorCtx, ActorEntry* actorEntry, PlayState* play) {']:
@@ -95,7 +97,7 @@ static bool Archipelago_IsCurrentSaveActive(){return activeSave;}
 static bool Archipelago_IsLocationActive(int64_t){return locationActive;}
 static bool Archipelago_IsLocationReported(int64_t id){return reported.count(id);}
 static bool EnemyDefeatWasCollected(size_t index){return collected.count(index);}
-namespace EntranceTracker {static int GetCurrentGrottoId(){return grottoId;}}
+static int Grotto_CurrentGrotto(){return grottoId;}
 '''
 for sig in ['struct EnemyDefeatPlacement','struct EnemyDefeatIdentity','struct EnemySourceIdentity']:
  cpp+=function(mega,sig)+';\n'
@@ -318,10 +320,16 @@ int main(){
 '''
 (build/'production_identity.cpp').write_text(cpp)
 commands=[['gcc','-std=c11','-O2','-Wall','-Wextra','-Werror','-I',str(root),'-I',str(fixtures),'-c',str(build/'production_spawn.c'),'-o',str(build/'spawn.o')],['g++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-I',str(root),'-I',str(fixtures),str(build/'production_identity.cpp'),str(build/'spawn.o'),'-o',str(build/'origin')]]
+exe=build/'origin'
+if not shutil.which('gcc') and shutil.which('cl'):
+ exe=build/'origin.exe'
+ flags=['cl','/nologo','/MD','/O2','/W3','/I',str(root),'/I',str(fixtures)]
+ commands=[flags+['/std:c11','/c',str(build/'production_spawn.c'),'/Fo'+str(build/'spawn.obj')],
+           flags+['/std:c++20','/Zc:preprocessor','/EHsc',str(build/'production_identity.cpp'),str(build/'spawn.obj'),'/Fo'+str(build/'identity.obj'),'/Fe'+str(exe)]]
 runs=[]
 for cmd in commands:
  c=subprocess.run(cmd,capture_output=True,text=True);runs.append(dict(command=cmd,returncode=c.returncode,stdout=c.stdout,stderr=c.stderr))
  if c.returncode:break
 if all(r['returncode']==0 for r in runs):
- c=subprocess.run([str(build/'origin')],capture_output=True,text=True);runs.append(dict(command=[str(build/'origin')],returncode=c.returncode,stdout=c.stdout,stderr=c.stderr))
+ c=subprocess.run([str(exe)],capture_output=True,text=True);runs.append(dict(command=[str(exe)],returncode=c.returncode,stdout=c.stdout,stderr=c.stderr))
 result={'name':'mixed_C_CPP_production_spawn_origin','passed':len(runs)==3 and all(r['returncode']==0 for r in runs),'runs':runs};a.report.write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2));raise SystemExit(not result['passed'])

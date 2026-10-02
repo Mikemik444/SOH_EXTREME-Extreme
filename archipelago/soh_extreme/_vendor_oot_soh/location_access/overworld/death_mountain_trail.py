@@ -75,6 +75,10 @@ def set_region_rules(world: "SohWorld") -> None:
             & (is_adult(bundle) | has_item(Items.HYLIAN_SHIELD, bundle) | can_use(Items.NAYRUS_LOVE, bundle))),
         (Regions.DODONGOS_CAVERN_ENTRYWAY, lambda bundle: has_explosives(
             bundle) | has_item(Items.GORONS_BRACELET, bundle) | is_adult(bundle)),
+        # The cow grotto is on the rockfall approach, BELOW the summit climb.
+        # Preserve the explosives and rock soul needed to clear that approach
+        # and the covering boulder. The shared grotto rule also requires Shovel.
+        (Regions.DMT_COW_GROTTO, lambda bundle: can_break_rocks(bundle) & has_explosives(bundle)),
         (Regions.DMT_STORMS_GROTTO, lambda bundle: can_open_storms_grotto(bundle))
     ])
 
@@ -104,7 +108,7 @@ def set_region_rules(world: "SohWorld") -> None:
     connect_regions(Regions.DEATH_MOUNTAIN_SUMMIT, world, [
         (Regions.DEATH_MOUNTAIN_TRAIL, lambda bundle: True_()),
         (Regions.DMC_UPPER_LOCAL, lambda bundle: True_()),
-        (Regions.DMT_OWL_FLIGHT, lambda bundle: is_child(bundle)),
+        (Regions.DMT_OWL_FLIGHT, lambda bundle: is_child(bundle) & can_interact_npc(bundle, "Hylian")),
         (Regions.DMT_COW_GROTTO, lambda bundle: blast_or_smash(bundle)),
         (Regions.DMT_GREAT_FAIRY_FOUNTAIN, lambda bundle: blast_or_smash(bundle))
     ])
@@ -140,7 +144,8 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.DMT_COW_GROTTO, world, [
-        (Regions.DEATH_MOUNTAIN_SUMMIT, lambda bundle: True_())
+        # Returning from the hole does not put Link above the climbing wall.
+        (Regions.DEATH_MOUNTAIN_TRAIL, lambda bundle: True_())
     ])
 
     # Death Mountain Trail Storms Grotto

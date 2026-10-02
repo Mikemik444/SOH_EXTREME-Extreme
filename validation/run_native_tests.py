@@ -35,9 +35,13 @@ def main():
     results=[]
     def compile_run(name,source,language):
         compiler=shutil.which('g++' if language=='cpp' else 'gcc')
-        if compiler is None:raise RuntimeError('A GCC-compatible C/C++ compiler is required')
-        src=build/(name+'.'+language);exe=build/name;src.write_text(source)
-        command=[compiler,'-std=c++17' if language=='cpp' else '-std=c11','-O2','-Wall','-Wextra','-Werror','-I',str(root),str(src),'-o',str(exe)]
+        src=build/(name+'.'+language);exe=build/(name+'.exe' if shutil.which('cl') and compiler is None else name);src.write_text(source)
+        if compiler:
+            command=[compiler,'-std=c++17' if language=='cpp' else '-std=c11','-O2','-Wall','-Wextra','-Werror','-I',str(root),str(src),'-o',str(exe)]
+        elif shutil.which('cl'):
+            command=['cl','/nologo','/std:c++17' if language=='cpp' else '/std:c11','/EHsc','/MD','/O2','/W3','/I',str(root),str(src),'/Fo'+str(build/(name+'.obj')),'/Fe'+str(exe)]
+        else:
+            raise RuntimeError('A GCC-compatible compiler or an MSVC developer environment is required')
         c=subprocess.run(command,capture_output=True,text=True)
         r=subprocess.run([str(exe)],capture_output=True,text=True) if c.returncode==0 else None
         passed=c.returncode==0 and r.returncode==0
@@ -144,7 +148,7 @@ static constexpr EnemyDefeatPlacement kEnemyDefeatPlacements[]={
 #include "soh/Enhancements/randomizer/EnemyDefeatPlacements.inc"
 };
 static constexpr size_t kEnemyPlacementCount=sizeof(kEnemyDefeatPlacements)/sizeof(kEnemyDefeatPlacements[0]);
-static bool activeSave,activeLocation,reported,networkAccepts;
+static bool activeSave,activeLocation,reported,submitted,networkAccepts;
 static int reportCalls,grottoId;
 static std::set<size_t> receipts;
 #define IS_RANDO isRando
@@ -153,11 +157,12 @@ static std::set<size_t> receipts;
 #define ACTOR_EN_PO_SISTERS 145
 static Actor* gLiveEnemyPickups[kEnemyPlacementCount]{};
 static void PersistEnemyDefeatJournal() {}
-namespace EntranceTracker {static int GetCurrentGrottoId(){return grottoId;}}
+static int Grotto_CurrentGrotto(){return grottoId;}
 static bool Archipelago_IsCurrentSaveActive(){return activeSave;}
 static bool Archipelago_IsLocationActive(int64_t){return activeLocation;}
 static bool Archipelago_IsLocationReported(int64_t){return reported;}
-static void Archipelago_ReportLocation(int64_t){++reportCalls;if(networkAccepts)reported=true;}
+static bool Archipelago_IsLocationSubmitted(int64_t){return submitted||reported;}
+static void Archipelago_ReportLocation(int64_t){++reportCalls;if(networkAccepts)submitted=true;}
 static bool EnemyDefeatWasCollected(size_t i){return receipts.count(i)>0;}
 static void MarkEnemyDefeatCollected(size_t i){receipts.insert(i);}
 '''
@@ -165,7 +170,7 @@ static void MarkEnemyDefeatCollected(size_t i){receipts.insert(i);}
 int main(){
   Actor actor;
   for(int b=0;b<16;++b){
-    activeSave=b&1;activeLocation=b&2;reported=b&4;networkAccepts=b&8;
+    activeSave=b&1;activeLocation=b&2;reported=b&4;networkAccepts=b&8;submitted=false;
     receipts.clear();reportCalls=0;ObjectExtension::GetInstance().values[&actor]={0,9800000};
     const bool expected=activeSave&&activeLocation&&(reported||networkAccepts);
     assert(MegaSoul_TryCollectEnemyDefeatPickup(&actor)==expected);
@@ -173,7 +178,7 @@ int main(){
     assert((ObjectExtension::GetInstance().Get<EnemyDefeatDropIdentity>(&actor)==nullptr)==expected);
     if(expected)assert(!MegaSoul_TryCollectEnemyDefeatPickup(&actor));
   }
-  activeSave=activeLocation=true;reported=false;networkAccepts=false;receipts.clear();
+  activeSave=activeLocation=true;reported=submitted=false;networkAccepts=false;receipts.clear();
   ObjectExtension::GetInstance().values[&actor]={0,9800000};
   assert(!MegaSoul_TryCollectEnemyDefeatPickup(&actor));
   networkAccepts=true;assert(MegaSoul_TryCollectEnemyDefeatPickup(&actor));
@@ -195,7 +200,7 @@ int main(){
   for(size_t i=0;i<kEnemyPlacementCount;++i){
     const auto& g=kEnemyDefeatPlacements[i];if(g.grottoId<0||g.actorListIndex<0)continue;
     receipts.clear();grottoId=g.grottoId;
-    assert(MegaSoul_IsEnemyDefeatSpawnPending(g.scene,g.room,g.actorListIndex,g.actorId,g.params));
+    assert(MegaSoul_IsEnemyDefeatSpawnPending(g.scene,g.room,g.actorListIndex,g.actorId,g.params)==!SohExtreme::IsRetiredEnemyPlacement(static_cast<int32_t>(i)));
     grottoId=120;assert(!MegaSoul_IsEnemyDefeatSpawnPending(g.scene,g.room,g.actorListIndex,g.actorId,g.params));
   }
   // Stale servers/saves cannot make retired offspring pickups count.
@@ -241,7 +246,7 @@ static constexpr EnemyDefeatPlacement kEnemyDefeatPlacements[]={
 static PlayState play;static PlayState* gPlayState=&play;static bool isRando=true;static int grottoId;
 #define IS_RANDO isRando
 #define SCENE_GROTTOS 0x3e
-namespace EntranceTracker {static int GetCurrentGrottoId(){return grottoId;}}
+static int Grotto_CurrentGrotto(){return grottoId;}
 static bool IsMegaEnemySoulActor(Actor* a){return a->eligible;}
 static bool IsStructuralArmosStatue(Actor* a){return a->statue;}
 static int16_t GetActorListIndex(Actor* a){return static_cast<int16_t>(a->sourceIndex);}

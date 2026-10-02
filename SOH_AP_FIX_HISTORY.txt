@@ -1,3 +1,213 @@
+0.11.55 - Bean-fairy soil requirements and Lost Woods diving (2026-10-01)
+  - The eight child Lost Woods underwater shortcut rupees require Silver
+    Scale rather than Golden Scale in native and AP logic: two physical
+    Progressive Scales with Swim shuffled (first Swim, second deeper diving).
+  - Lost Woods access remains a separate region requirement. The direct
+    Kokiri approach needs Climb; a reachable outside route through Goron City
+    or the Zora River shortcut can substitute. Two scales alone do not assume
+    an escape from a closed forest when Climb and every outside route are absent.
+  - The three Lost Woods bean fairies near Deku Theater now require usable
+    beans at that exact plot, including Lost Woods Bean Soul when shuffled.
+    Possessing beans or the other Lost Woods plot's soul cannot substitute.
+  - Audited all 30 bean fairies across ten plots: child access, beans, the
+    matching soil/Bean Soul, playable Song of Storms, an ocarina and its
+    A/C-Up/C-Down buttons. Individual-notes mode requires all six storm notes.
+    Disabled soul/button shuffles remain innate. Passive Flow of Time is
+    independent of explicitly playing the song to water a planted bean.
+  - 8,364 bean-fairy AP/Universal Tracker assertions cover each missing requirement,
+    wrong-plot souls, both ages, notes and full-song modes, shuffle-off settings
+    and restored slots. Existing IDs and placements are preserved. No live
+    gameplay test performed. Another 3,040 AP/UT assertions cover scale counts,
+    local/outside routes, closed forest, both ages and restored tracker slots;
+    128 compiled native assertions preserve Swim and child-only requirements.
+
+0.11.54 - DMT Cow Grotto below the summit climb (2026-10-01)
+  - AP and Universal Tracker now include the trail-to-cow-grotto route below
+    the summit climbing wall. Shovel, explosives (bombs or usable Bombchus),
+    and Rock / Boulder Soul suffice once Link can reach Death Mountain Trail.
+    Shovel and rock soul remain innate when their shuffles are disabled.
+  - The grotto exit returns to the trail, not the summit. Entering the grotto
+    cannot bypass the summit's Climb requirement. The separate summit approach
+    remains available for players who arrive from above.
+  - The loose rupees and hearts need no Cow Soul, Epona's Song or Climb. The
+    cow, grass and beehive retain their own interaction requirements.
+  - 3,525 AP/Universal Tracker assertions pass for child/adult starts,
+    bombs/Bombchus, missing requirements, shuffle-off modes and restored slots. IDs and
+    existing placements are unchanged. No live gameplay test performed.
+
+0.11.53 - Fishing Pond sign access and paired Ocarina checks (2026-10-01)
+  - Collecting the moat Ocarina of Time pickup completes its separate Song from
+    Ocarina of Time check immediately. AP rewards can arrive without a textbox;
+    the song no longer waits for that textbox or a later unrelated item.
+  - Older AP saves with the moat pickup flag but no song flag recover on a
+    gameplay update. The normal flag/check journal handles reporting, with
+    no duplicate native reward or grant of the actual Song of Time. The AP
+    actor is disarmed so an unrelated textbox cannot trigger a late cutscene.
+    Vanilla and non-AP randomizer cutscene behavior remains unchanged.
+  - Check 9700534 now belongs to the actual Fishing Hole interior. The native
+    FISHING_POND token and AP FISHING_HOLE token are explicitly matched in
+    region creation and route projection. It no longer falls back to Lake Hylia.
+  - With locked overworld doors, the sign inherits Fishing Hole Key or Skeleton
+    Key and the island approach. Sign Soul is still required when shuffled.
+    Unlocked doors need no key; the outdoor Fishing Sign stays outside the lock.
+  - The native game already has the correct interior placement and door rule.
+    AP generation and restored Universal Tracker slots now match it. Reading
+    the sign does not require the fishing rod, Fish Soul or the owner's speech.
+  - 422 AP/UT assertions exercise both ages, missing keys, wrong keys, Skeleton
+    Key, Sign Soul on/off, locked/unlocked doors and restored slot settings.
+    114 compiled native assertions cover the paired pickup, missing textbox,
+    old-save recovery, duplicate prevention and non-AP cutscene behavior.
+    Existing IDs and placements are preserved. No live gameplay test performed.
+
+0.11.52 - Owl perch access and exact Hylian speech (2026-10-01)
+  - Child Lake Hylia grave access requires NPC Soul and Speak Hylian when
+    shuffled so the owl can fly away and unlock the grave's pull switch.
+    Pulling requires Grab; this is not a rock and needs no Rock/Boulder Soul.
+    Adult access bypasses the owl. Grotto contents keep their Shovel and other
+    individual interaction requirements. Scrub Soul applies to the merchants,
+    not the hive merely named after their grotto.
+  - The Death Mountain summit upper exit sign has the same child owl gate.
+    Adult sign access remains independent of NPC Soul and speech. The existing
+    summit approach and Sign Soul still apply.
+  - Both owl flights and the Kaepora first-conversation check require Hylian,
+    matching the runtime speech hook. Shared Speak mode uses Speak; disabled
+    shuffles remain innate. IDs and existing item placements are preserved.
+  - AP/Universal Tracker and compiled native regression tests cover ages,
+    individual/shared/off speech, soul shuffle modes, wrong languages, Grab,
+    Shovel and restored slot settings. No live game playtest was performed.
+
+0.11.51 - Deku Theater leader soul requirement (2026-10-01)
+  - The Skull Mask reward now requires NPC Soul when that shuffle is enabled,
+    matching the hidden prize-giving leader even while the audience is visible.
+  - Native logic also explicitly requires the leader for both theater rewards.
+    Skull Mask keeps its automatic dialogue without a speech requirement;
+    Mask of Truth retains its Deku speech requirement. Shovel/access still apply.
+  - AP and Universal Tracker regressions cover all speech/soul shuffle modes
+    and restored existing slot settings. Native Release build verified.
+    No live game playtest was performed.
+  - Existing placements are unchanged. This corrects reachability; it cannot
+    repair progression cycles already generated into an older seed.
+
+0.11.50 - Gerudo guard gate requirements (2026-10-01)
+  - Gerudo Training Ground's paid gate event now requires NPC Soul and Gerudo
+    speech when shuffled, alongside adult access, membership card and wallet.
+    Shared Speak mode uses Speak; individual-language mode uses Speak Gerudo.
+  - The Haunted Wasteland gate's guard events now have the same NPC/speech
+    requirements. The normal fortress-side route also needs Climb to reach the
+    operator's tower when Climb is shuffled. Reverse arrivals keep their own
+    approach rather than incorrectly requiring the fortress-side ladder.
+  - These are entrance/event rules, so all dependent checks inherit them.
+    The existing enabled GTG ledge clip and arrivals from Desert Colossus keep
+    their separate routes. Disabled soul/speech/Climb shuffles remain innate.
+  - Native guard logic already includes the NPC/speech checks. Regression tests
+    compile the native events and speech helper, and exercise real AP/UT rules
+    with missing items, shuffle modes, age access and existing-slot settings.
+    No live game playtest was performed.
+  - Update SOH and APWorld together to .50. Existing IDs and placements are
+    preserved; new generations use the corrected requirements. Includes .49
+    and all previous fixes plus the complete ROM extractor assets.
+
+0.11.49 - Raised ledge routes and grotto enemy rewards (2026-10-01)
+  - EXTREME Kak Silver Boulder now requires a route onto its ledge: Climb,
+    Hover Boots, or Longshot with its daytime Cucco/Grab route or enabled
+    Visible Collision jumpslash/damage trick. Lifting still requires adult
+    access, Silver Gauntlets and Rock / Boulder Soul when shuffled. The native
+    daytime carry route now also checks Cucco Soul when animal souls are shuffled.
+  - ZR GS Near Raised Grottos with ordinary Hookshot now needs the raised
+    ledge route, including Climb when shuffled. Adult access, Skulltula Soul
+    and nighttime requirements still apply. The native Longshot route from
+    below is preserved; ordinary Hookshot cannot use that route.
+  - ZR Near Grottos Gossip Stone Fairy and Big Fairy both require the raised
+    ledge, plus their playable songs. Child ledge access needs Cucco Soul
+    (or shared Animal Soul) and Grab when shuffled; adult access still needs
+    Climb. Longshot does not bypass the stone's physical approach.
+  - AP generation, existing-slot Universal Tracker and native location rules
+    are updated. IDs 514, 1950 and 1951 and existing placements stay unchanged.
+    These outdoor checks also no longer inherit Shovel from "Grottos" in their
+    names. Actual grotto entrances and contents retain their Shovel requirement.
+  - Tests cover the reported ordinary-Hookshot/no-Climb regression, real age
+    access, Longshot, soul/ability shuffle modes, songs and frozen daytime.
+    No live game playtest was performed.
+  - Grotto enemy identity now uses Grotto_CurrentGrotto rather than the entrance
+    tracker's cache, which stays unset with normal entrances. This fixes the
+    GV Octorok Grotto kill failing to bind check 9800500. The same correction
+    covers other finite grotto enemies and recovery of earned pickups.
+    Reload the grotto and defeat an uncollected enemy again after updating;
+    already collected checks remain collected and repeat kills use normal loot.
+  - Native regressions exercise all eight physical grotto enemy checks with
+    normal entrances, each entrance/spawn/warp shuffle combination, and stale
+    tracker IDs, while retaining exact spawn matching and reward safeguards.
+  - Update SOH and the APWorld together to .49. Existing seeds keep their
+    placements; corrected generation rules apply to new seeds. Includes the
+    previous GV Octorok fix and complete ROM extractor assets.
+
+0.11.48 - Gerudo Valley lower-stream Octorok access (2026-10-01)
+  - Octorok Spawn 3 and Spawn 5 in Gerudo Valley Room 0 now require adult
+    access, Iron Boots and Hookshot/Longshot, plus the required enemy soul
+    when soul shuffle is enabled. The dry ledge is outside surfacing range;
+    swimming and Bow do not provide a usable attack route in the current.
+  - Iron Boots provide footing and allow Hookshot use in the water. Swim
+    remains required when shuffled, matching the game's water-contact rule.
+  - AP generation, Universal Tracker and the native finder use the same
+    encounter restriction. Other Octorok placements retain their rules.
+    Stable check IDs 9800681 and 9800683 and existing placements are preserved.
+  - Regression tests cover missing equipment, soul modes, age access,
+    Longshot, existing slot settings and the unchanged upper-stream checks.
+    The old rules fail the regressions. No live game playtest was performed.
+  - Update both SOH and the APWorld to .48. Existing seeds retain placements;
+    new generations use the corrected requirement. Includes previous fixes
+    and the complete ROM extractor assets.
+
+0.11.47 - Zora's River pillar grass and visible Octorok markers (2026-10-01)
+  - ZR Near Freestanding PoH Grass now requires the child Cucco carrying route:
+    Cucco Soul (or the shared Animal Soul) and Grab when those are shuffled.
+    Swim, upper-river access, Grass/Bush Soul and grass cutting still apply.
+    Adult equipment and Boomerang alone cannot bypass the physical approach.
+  - Both native location entries and AP generation/tracker rules are updated.
+    Stable location ID 2177 and existing placements/receipts are preserved.
+  - The Octorok enemy marker was inside its head at 18 units above its base.
+    Its gold marker is now larger and 90 units above the base while surfaced.
+    Weapons are not required to display it; the required enemy soul and an
+    active, uncollected check still are. Submerged Octoroks remain hidden.
+  - Tests exercise all nine exact ZR Octorok spawn identities, soul/collection
+    gating, draw-state changes, native grass routes and AP/UT inventories.
+    GPU rendering is not live-tested; the user confirmed that the old marker
+    was present but covered by the Octorok body.
+  - Update both SOH and the APWorld to .47. Existing seeds retain their item
+    placements; corrected placement logic applies to newly generated seeds.
+  - Previous save-spawn, additional-trap and crash containment fixes remain,
+    together with the complete ROM extractor assets. No new crash fix.
+
+0.11.46-r3 - Save and return to age spawn (2026-10-01)
+  - Better Save Menu is enabled by default. After a manual pause-menu save,
+    choose Continue or Return to Spawn. Dungeons and Remember Save Location
+    also offer Restart, which retains the normal reload destination.
+  - Return to Spawn explicitly uses the current age's spawn in both the two-
+    and three-choice prompts. Child normally returns to Link's House; adult
+    normally returns to the Temple of Time. Randomized spawns are respected.
+  - Non-randomizer adult returns use the Temple of Time entrance directly,
+    avoiding the adult-spawn alias used only by the randomizer entrance table.
+  - Explicitly disabled Better Save Menu preferences remain disabled; enable
+    it under Enhancements > Quality of Life > Saving if needed.
+  - 15,216 controlled save-menu assertions cover 31 scene categories, both
+    ages, normal/randomizer mode, spawn overrides, remembered save locations,
+    save-before-reload, Continue, decline-save, Restart and transition order.
+    Windows Release build passed. No live game playtest was performed.
+  - .46 APWorld, previous fixes, and the extractor assets are retained.
+
+0.11.46-r2 - Additional Traps UI effect rolls (2026-10-01)
+  - Each delivered trap advances the runtime RNG instead of resetting it from
+    the current scene and pickup model. Same-area traps can now select different
+    enabled UI effects; normal random repeats remain possible.
+  - Teleport traps also choose a fresh destination from the selected simple or
+    advanced destination list. Fishing-pole exclusions remain in effect.
+  - Local effect toggles, the Additional Traps master switch, and the existing
+    AP seed override policy are preserved. The APWorld is unchanged at .46.
+  - The old implementation fails the same-area variation regression; the fixed
+    version passes 146,465 assertions using the real RNG with controlled engine
+    services. Windows Release build passed; no live game playtest was performed.
+  - The runtime ZIP includes the extractor assets folder introduced in .46-r1.
+
 0.11.46 - Uncollected NPC Speech glow (2026-09-30)
   - A soft cyan glow marks visible NPCs whose active AP first-conversation
     check has not been collected. Uses the same character and grotto scrub

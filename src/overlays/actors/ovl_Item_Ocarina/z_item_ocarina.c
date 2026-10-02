@@ -8,6 +8,7 @@
 #include "scenes/overworld/spot00/spot00_scene.h"
 #include "soh/OTRGlobals.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -171,6 +172,12 @@ void ItemOcarina_DoNothing(ItemOcarina* this, PlayState* play) {
 }
 
 void ItemOcarina_StartSoTCutscene(ItemOcarina* this, PlayState* play) {
+    if (IS_RANDO && Archipelago_ShouldHandleCheck(RC_SONG_FROM_OCARINA_OF_TIME)) {
+        // The randomizer flag hook completes AP's paired song check. An
+        // unrelated AP item textbox must not start this cutscene later.
+        this->actionFunc = ItemOcarina_DoNothing;
+        return;
+    }
     if (Actor_TextboxIsClosing(&this->actor, play)) {
         play->csCtx.segment = SEGMENTED_TO_VIRTUAL(gHyruleFieldZeldaSongOfTimeCs);
         gSaveContext.cutsceneTrigger = 1;

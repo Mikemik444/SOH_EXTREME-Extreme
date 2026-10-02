@@ -552,7 +552,7 @@ FORK_LOCATIONS = (
     ForkLocationData('EXTREME Kf Wonder Training 2', 9700531, 'RC_KF_WONDER_TRAINING_2', 'wonder', Regions.KOKIRI_FOREST, False),
     ForkLocationData('EXTREME Kf Wonder Training 3', 9700532, 'RC_KF_WONDER_TRAINING_3', 'wonder', Regions.KOKIRI_FOREST, False),
     ForkLocationData('EXTREME Lh Fishing Island Water Switch Sign', 9700533, 'RC_LH_FISHING_ISLAND_WATER_SWITCH_SIGN', 'sign', Regions.LAKE_HYLIA, False),
-    ForkLocationData('EXTREME Lh Fishing Pond Rectangle Sign', 9700534, 'RC_LH_FISHING_POND_RECTANGLE_SIGN', 'sign', Regions.LAKE_HYLIA, False),
+    ForkLocationData('EXTREME Lh Fishing Pond Rectangle Sign', 9700534, 'RC_LH_FISHING_POND_RECTANGLE_SIGN', 'sign', Regions.LH_FISHING_HOLE, False),
     ForkLocationData('EXTREME Lh Fishing Sign', 9700535, 'RC_LH_FISHING_SIGN', 'sign', Regions.LAKE_HYLIA, False),
     ForkLocationData('EXTREME Lh Island Pedestal', 9700536, 'RC_LH_ISLAND_PEDESTAL', 'sign', Regions.LAKE_HYLIA, False),
     ForkLocationData('EXTREME Lh Lab Rectangle Sign', 9700537, 'RC_LH_LAB_RECTANGLE_SIGN', 'sign', Regions.LAKE_HYLIA, False),

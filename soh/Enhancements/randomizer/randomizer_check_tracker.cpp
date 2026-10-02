@@ -93,7 +93,7 @@ enum EnemyFinderCombat : uint8_t {
     EFC_ARMOS, EFC_DEAD_HAND, EFC_DEAD_HAND_ARM, EFC_SPIKE, EFC_FREEZARD,
 };
 
-enum EnemyFinderGate : uint8_t { EFG_NONE, EFG_AMY, EFG_ANUBIS, EFG_COFFIN, EFG_COMPOSER, EFG_FOREST_BLOCK_TOP, EFG_GRAVE, EFG_MEG, EFG_NIGHT, EFG_PEAHAT_LARVA, EFG_SFM_MOBLIN, EFG_SWIM };
+enum EnemyFinderGate : uint8_t { EFG_NONE, EFG_AMY, EFG_ANUBIS, EFG_COFFIN, EFG_COMPOSER, EFG_FOREST_BLOCK_TOP, EFG_GRAVE, EFG_MEG, EFG_NIGHT, EFG_PEAHAT_LARVA, EFG_SFM_MOBLIN, EFG_SWIM, EFG_GV_LOWER_CURRENT };
 
 struct EnemyDefeatFinderEntry {
     int64_t locationId;
@@ -238,6 +238,10 @@ static bool EnemyFinderEncounterGate(Rando::Logic* enemyLogic, const EnemyDefeat
         case EFG_GRAVE: return enemyLogic->HasItem(RG_POWER_BRACELET);
         case EFG_PEAHAT_LARVA: return EnemyFinderMelee(enemyLogic);
         case EFG_SWIM: return enemyLogic->HasItem(RG_BRONZE_SCALE);
+        // Lower-stream Octoroks must be approached in the current. Boots
+        // provide footing; Hookshot/Longshot remains usable underwater.
+        case EFG_GV_LOWER_CURRENT: return enemyLogic->CanUse(RG_IRON_BOOTS) &&
+                                         enemyLogic->CanUse(RG_HOOKSHOT);
         case EFG_NIGHT: return enemyLogic->AtNight;
         default: return true; // Other gates inherit their precise parent region/combat rule.
     }

@@ -134,15 +134,8 @@ void RegisterShuffleSpeak() {
                     }
                     break;
                 case ACTOR_EN_OWL:
-                    if (!Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_DEKU) &&
-                        !Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_GERUDO) &&
-                        !Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_GORON) &&
-                        !Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_HYLIAN) &&
-                        !Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_KOKIRI) &&
-                        !Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_ZORA)) {
-                        *should = false;
-                    }
-                    return;
+                    inf = RAND_INF_CAN_SPEAK_HYLIAN;
+                    break;
             }
             if (inf != RAND_INF_MAX && !Flags_GetRandomizerInf(inf)) {
                 *should = false;

@@ -38,7 +38,7 @@ from ._vendor_oot_soh.LogicHelpers import (
     can_use, can_use_any, has_item, has_explosives, blast_or_smash, blue_fire,
     can_cut_shrubs, can_collect_grass, can_jump_slash, can_jump_slash_except_hammer,
     can_hit_at_range, can_reflect_nuts, is_child, is_adult,
-    can_climb, can_swim, can_play_song, can_do_trick, water_timer_at_least, fire_timer_at_least, at_day, at_night,
+    can_climb, can_swim, can_play_song, can_do_trick, take_damage, water_timer_at_least, fire_timer_at_least, at_day, at_night,
     can_reach_zr_raised_ledge, can_break_rocks, small_keys,
 )
 from worlds.generic.Rules import add_rule
@@ -1085,6 +1085,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # Malon's Egg can be disabled while her speech check remains enabled.
             # The native gate is the child castle grounds, never the Menu root.
             "HC_GATE": "HYRULE_CASTLE_GROUNDS",
+            # The pond is the locked fishing interior, not the outdoor lake.
+            "LH_FISHING_POND": "LH_FISHING_HOLE",
         }
 
         def resolve_native_region(rr_token: str):
@@ -2336,6 +2338,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "THE_LOST_WOODS": "LOST_WOODS",
             "KF_OUTSIDE_LOST_WOODS": None,
             "KF_LINKS_PORCH": None,
+            "LH_FISHING_POND": "LH_FISHING_HOLE",
         }
         region_member_names = {region.name: region for region in Regions}
         # The native enemy graph is already explicitly compiled. The older
@@ -3406,6 +3409,15 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             elif fork_loc.rc == "RC_ZF_UNDERGROUND_BOULDER":
                 require_native_fork(location, can_use(Items.SILVER_GAUNTLETS, bundle)
                                     & blast_or_smash(bundle))
+            elif fork_loc.rc == "RC_KAK_SILVER_BOULDER":
+                # The broad village parent does not reach the boulder's ledge.
+                # Match the native ladder/hover/Longshot alternatives, including
+                # the daytime Cucco carry or explicitly enabled collision trick.
+                longshot_approach = (at_day(bundle) & grab_rule() & animal_rule("Cucco")) | (
+                    can_do_trick(Tricks.VISIBLE_COLLISION, bundle)
+                    & can_jump_slash(bundle) & take_damage(bundle))
+                require_native_fork(location, climb_rule() | can_use(Items.HOVER_BOOTS, bundle)
+                                    | (can_use(Items.LONGSHOT, bundle) & longshot_approach))
             elif fork_loc.rc == "RC_MARKET_TREASURE_CHEST_GAME_SHOPKEEPER":
                 require_native_fork(location, has_item(Items.CHILD_WALLET, bundle))
             elif family == "beggar":
@@ -4109,7 +4121,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 require_speak(location)
             if o.shuffle_npc_soul.value and (" SHOP ITEM " in lname or "BAZAAR ITEM " in lname or "POTION SHOP ITEM " in lname):
                 require(location, "NPC Soul")
-            if o.shuffle_business_scrub_soul.value and "DEKU SCRUB" in lname:
+            # A hive inside a "Deku Scrub Grotto" is still a hive. Only actual
+            # merchants inherit Scrub Soul, not every check sharing their room.
+            source = location_data_table.get(location.name)
+            if (o.shuffle_business_scrub_soul.value and source is not None and
+                    source.tags is not None and source.tags & LocTag.Scrub):
                 require(location, "Scrub Soul")
 
         # Bomb/rock-hidden grottos keep their physical blocker in SOH-EXTREME.
@@ -4124,7 +4140,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 "RR_DMT_COW_GROTTO", "RR_GV_OCTOROK_GROTTO", "RR_HF_COW_GROTTO",
                 "RR_HF_FAIRY_GROTTO", "RR_HF_INSIDE_FENCE_GROTTO", "RR_HF_NEAR_KAK_GROTTO",
                 "RR_HF_NEAR_MARKET_GROTTO", "RR_HF_SOUTHEAST_GROTTO", "RR_HF_TEKTITE_GROTTO",
-                "RR_KAK_REDEAD_GROTTO", "RR_LH_GROTTO", "RR_LW_NEAR_SHORTCUTS_GROTTO",
+                "RR_KAK_REDEAD_GROTTO", "RR_LW_NEAR_SHORTCUTS_GROTTO",
                 "RR_LW_SCRUBS_GROTTO", "RR_SFM_WOLFOS_GROTTO", "RR_ZR_FAIRY_GROTTO",
             }
             rock_blocked_grotto_regions = {
@@ -4154,7 +4170,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     add_resolved_rule(entrance, Has("Shovel"), register_indirects=True)
 
             for location in self.get_locations():
-                if "GROTTO" in location.name.upper():
+                # These three actors are on the outdoor raised ledge beside
+                # the grottos. Their names do not make them grotto contents.
+                if "GROTTO" in location.name.upper() and location.address not in (514, 1950, 1951):
                     require(location, "Shovel")
 
         # Freestanding pickups physically covered by a rock/boulder must not be
@@ -4411,6 +4429,19 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # other parts of the ladder subregion, not this ledge. is_adult checks
         # actual adult reachability, so owning adult equipment is no bypass.
         zr_upper_circle = can_reach_zr_raised_ledge(zr_bundle)
+        # The stone and short-range Skulltula route use this same ledge.
+        # The native Longshot branch can collect the Skulltula from below;
+        # it does not provide access to either fairy at the stone.
+        for zr_name, route in (
+            ("ZR GS Near Raised Grottos", zr_upper_circle | can_use(Items.LONGSHOT, zr_bundle)),
+            ("ZR Near Grottos Gossip Stone Fairy", zr_upper_circle),
+            ("ZR Near Grottos Gossip Stone Big Fairy", zr_upper_circle),
+        ):
+            try:
+                zr_raised_location = self.get_location(zr_name)
+            except KeyError:
+                continue  # This location's shuffle can be disabled.
+            require_native_existing(zr_raised_location, route)
         for zr_loc in FORK_LOCATIONS:
             if zr_loc.rc.startswith("RC_ZR_UPPER_CIRCLE_") and self._fork_location_enabled(zr_loc):
                 require_native_fork(self.get_location(zr_loc.name), zr_upper_circle)
@@ -4480,13 +4511,15 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             pass
 
         # ZR Near Freestanding PoH Grass is a Child-only grass actor.  It needs
-        # the upper-river route, basic Swim, Grass/Bush Soul when shuffled, and
-        # an actual shrub-breaking method.  The previous broad ZR parent allowed
-        # this check to leak into logic with only one piece of the route.
+        # the upper-river route, basic Swim, and a carried Cucco to reach the
+        # pillar, plus Grass/Bush Soul and an actual shrub-breaking method.
+        # Reaching the river or owning a Boomerang does not reach the pillar.
         zr_poh_grass_rule = (
             is_child(zr_bundle)
             & zr_basic_swim
             & zr_upper_child_entry
+            & grab_rule()
+            & animal_rule("Cucco")
             & can_cut_shrubs(zr_bundle)
         )
         try:
@@ -4536,6 +4569,17 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 require(location, "NPC Soul")
             native_npc_interactions[location.name] = language
         self._extreme_native_interactions = native_npc_interactions
+
+        # The summit owl perches at (-42, -4409), directly over the upper exit
+        # sign (-40, -4410). Child must dismiss it; adult has no owl here.
+        # Preserve the sign's existing summit approach and Sign Soul rules.
+        from ._vendor_oot_soh.LogicHelpers import can_interact_npc
+        owl_sign = next((loc for loc in self.get_locations()
+                         if loc.name == "EXTREME Dmt Upper Exit Arrow Sign"), None)
+        if owl_sign is not None:
+            owl_bundle = (Regions.DEATH_MOUNTAIN_SUMMIT, self)
+            require_native_existing(owl_sign, is_adult(owl_bundle) | (
+                is_child(owl_bundle) & can_interact_npc(owl_bundle, "Hylian")))
 
         # Install fork-native rules once, after every soul/ability/time gate has
         # been accumulated.  This fixes the broad-location logic leak where one

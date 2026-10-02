@@ -45,14 +45,14 @@ void RegionTable_Init_LostWoods() {
         LOCATION(RC_LW_TARGET_IN_WOODS,                 logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)),
         LOCATION(RC_LW_GS_BEAN_PATCH_NEAR_BRIDGE,       logic->CanSpawnSoilSkull(RG_LOST_WOODS_BRIDGE_BEAN_SOUL) && logic->CanAttack()),
         //RANDOTODO handle collecting some of these as you leave the shortcut from the other side
-        LOCATION(RC_LW_SHORTCUT_RUPEE_1,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_GOLDEN_SCALE)),
-        LOCATION(RC_LW_SHORTCUT_RUPEE_2,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_GOLDEN_SCALE)),
-        LOCATION(RC_LW_SHORTCUT_RUPEE_3,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_GOLDEN_SCALE)),
-        LOCATION(RC_LW_SHORTCUT_RUPEE_4,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_GOLDEN_SCALE)),
-        LOCATION(RC_LW_SHORTCUT_RUPEE_5,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_GOLDEN_SCALE)),
-        LOCATION(RC_LW_SHORTCUT_RUPEE_6,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_GOLDEN_SCALE)),
-        LOCATION(RC_LW_SHORTCUT_RUPEE_7,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_GOLDEN_SCALE)),
-        LOCATION(RC_LW_SHORTCUT_RUPEE_8,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_GOLDEN_SCALE)),
+        LOCATION(RC_LW_SHORTCUT_RUPEE_1,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SILVER_SCALE)),
+        LOCATION(RC_LW_SHORTCUT_RUPEE_2,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SILVER_SCALE)),
+        LOCATION(RC_LW_SHORTCUT_RUPEE_3,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SILVER_SCALE)),
+        LOCATION(RC_LW_SHORTCUT_RUPEE_4,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SILVER_SCALE)),
+        LOCATION(RC_LW_SHORTCUT_RUPEE_5,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SILVER_SCALE)),
+        LOCATION(RC_LW_SHORTCUT_RUPEE_6,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SILVER_SCALE)),
+        LOCATION(RC_LW_SHORTCUT_RUPEE_7,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SILVER_SCALE)),
+        LOCATION(RC_LW_SHORTCUT_RUPEE_8,                logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SILVER_SCALE)),
         LOCATION(RC_LW_BEAN_SPROUT_NEAR_BRIDGE_FAIRY_1, logic->IsChild && logic->BeanPlanted(LOGIC_PLANT_LOST_WOODS_BRIDGE_BEAN) && logic->CanUse(RG_SONG_OF_STORMS)),
         LOCATION(RC_LW_BEAN_SPROUT_NEAR_BRIDGE_FAIRY_2, logic->IsChild && logic->BeanPlanted(LOGIC_PLANT_LOST_WOODS_BRIDGE_BEAN) && logic->CanUse(RG_SONG_OF_STORMS)),
         LOCATION(RC_LW_BEAN_SPROUT_NEAR_BRIDGE_FAIRY_3, logic->IsChild && logic->BeanPlanted(LOGIC_PLANT_LOST_WOODS_BRIDGE_BEAN) && logic->CanUse(RG_SONG_OF_STORMS)),
@@ -143,8 +143,10 @@ void RegionTable_Init_LostWoods() {
 
     areaTable[RR_DEKU_THEATER] = Region("Deku Theater", SCENE_GROTTOS, {}, {
         //Locations
-        LOCATION(RC_DEKU_THEATER_SKULL_MASK,    logic->CanUse(RG_SKULL_MASK)),
-        LOCATION(RC_DEKU_THEATER_MASK_OF_TRUTH, logic->CanUse(RG_MASK_OF_TRUTH) && logic->HasItem(RG_SPEAK_DEKU)),
+        // Both rewards come from EnDntJiji, hidden by NPC Soul. Skull Mask
+        // starts his textbox automatically; Mask of Truth needs Deku speech.
+        LOCATION(RC_DEKU_THEATER_SKULL_MASK,    logic->CanUse(RG_SKULL_MASK) && (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL))),
+        LOCATION(RC_DEKU_THEATER_MASK_OF_TRUTH, logic->CanUse(RG_MASK_OF_TRUTH) && logic->HasItem(RG_SPEAK_DEKU) && (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL))),
         LOCATION(RC_LW_THEATER_RECTANGLE_SIGN,  (!ctx->GetOption(RSK_SHUFFLE_SHOVEL) || logic->HasItem(RG_SHOVEL)) && logic->CanRead()),
     }, {
         //Exits

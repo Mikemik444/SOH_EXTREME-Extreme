@@ -307,7 +307,24 @@ void CheckTriggers() {
     }
 }
 
+static void CompleteArchipelagoOcarinaSong() {
+    // The moat pickup earns both checks. AP's first reward may be remote or
+    // have no textbox, so waiting for its textbox to close can strand the song.
+    // This is a source-location flag, not ownership of an Ocarina/song item.
+    if (Flags_GetEventChkInf(EVENTCHKINF_OBTAINED_OCARINA_OF_TIME) &&
+        !Flags_GetEventChkInf(EVENTCHKINF_LEARNED_SONG_OF_TIME) &&
+        Archipelago_ShouldHandleCheck(RC_SONG_FROM_OCARINA_OF_TIME)) {
+        // Use the normal flag/check journal path. AP still owns the reward;
+        // setting this event must not teach Link the actual Song of Time.
+        Flags_SetEventChkInf(EVENTCHKINF_LEARNED_SONG_OF_TIME);
+    }
+}
+
 void RandomizerOnFlagSetHandler(int16_t flagType, int16_t flag) {
+    if (flagType == FLAG_EVENT_CHECK_INF && flag == EVENTCHKINF_OBTAINED_OCARINA_OF_TIME) {
+        CompleteArchipelagoOcarinaSong();
+    }
+
     // Consume adult trade items
     if (RAND_GET_OPTION(RSK_SHUFFLE_ADULT_TRADE).Get() && flagType == FLAG_RANDOMIZER_INF) {
         switch (flag) {
@@ -2777,6 +2794,10 @@ std::unordered_map<s32, SpecialRespawnInfo> swimSpecialRespawnInfo = {
 f32 triforcePieceScale;
 
 void RandomizerOnPlayerUpdateHandler() {
+    // Recover an older save that already collected the moat pickup without
+    // completing the song event. Run in gameplay, not during scene teardown.
+    CompleteArchipelagoOcarinaSong();
+
     // Swim is required for all water contact in EXTREME. Iron Boots do not
     // bypass the ability; retain the existing safe entrance/Water Temple reset.
     if ((GET_PLAYER(gPlayState)->stateFlags1 & PLAYER_STATE1_IN_WATER) && !Flags_GetRandomizerInf(RAND_INF_CAN_SWIM) &&

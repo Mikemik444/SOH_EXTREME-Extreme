@@ -1,0 +1,39 @@
+{
+  "seed": "10112245550148649225",
+  "generated_version": "0.11.46",
+  "rules_version": "0.11.51",
+  "goal_reached": false,
+  "pieces": 7,
+  "counts": {
+    "3": 298,
+    "5": 827,
+    "2": 5,
+    "4": 4
+  },
+  "saved_check_counts": {
+    "5": 821,
+    "3": 296,
+    "4": 4,
+    "2": 5
+  },
+  "locked_slots_at_stall": [
+    "king"
+  ],
+  "multidata_sha256": "e4adafe826bf0bbac2d6040143b31095fb7dc352b7e7c5a0f83f8a1b3ca71dc6",
+  "save_sha256": "30c9bd9b67ff3f12d45047c7abe2c48cb756296783dece5f8b0c599594f7dc06",
+  "physical_constraint_count": 2311,
+  "remote_pregrants": 0,
+  "recovery_items": 0,
+  "required_pieces": 30,
+  "original_remote_frontiers_compared": 108,
+  "remote_frontier_differences": 0,
+  "fresh_counts": {
+    "5": 736,
+    "3": 298,
+    "4": 4,
+    "2": 5
+  },
+  "soh_network_locations": 3311,
+  "total_network_locations": 4937,
+  "physical_rejections": 0
+}

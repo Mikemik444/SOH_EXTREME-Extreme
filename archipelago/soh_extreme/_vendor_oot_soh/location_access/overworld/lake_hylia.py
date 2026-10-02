@@ -157,7 +157,7 @@ def set_region_rules(world: "SohWorld") -> None:
     connect_regions(Regions.LAKE_HYLIA, world, [
         (Regions.HYRULE_FIELD, lambda bundle: can_climb(bundle) | can_use(Items.EPONA, bundle)),
         (Regions.LH_FROM_SHORTCUT, lambda bundle: can_swim(bundle)),
-        (Regions.LH_OWL_FLIGHT, lambda bundle: is_child(bundle)),
+        (Regions.LH_OWL_FLIGHT, lambda bundle: is_child(bundle) & can_interact_npc(bundle, "Hylian")),
         (Regions.LH_FISHING_ISLAND, lambda bundle: ((is_child(bundle)
                                                      | has_item(Events.WATER_TEMPLE_COMPLETED, bundle))
                                                     & has_item(Items.BRONZE_SCALE, bundle))
@@ -167,7 +167,10 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.LH_LAB, lambda bundle: can_open_overworld_door(
             Items.HYLIA_LAB_KEY, bundle)),
         (Regions.LH_FROM_WATER_TEMPLE, lambda bundle: can_swim(bundle)),
-        (Regions.LH_GROTTO, lambda bundle: True_()),
+        # Bg_Haka's grave cannot be pulled by a child until the perched owl
+        # sets switch 0x23. Adults bypass that switch, but still need Grab.
+        (Regions.LH_GROTTO, lambda bundle: can_grab(bundle) & (
+            is_adult(bundle) | (is_child(bundle) & can_interact_npc(bundle, "Hylian")))),
     ])
 
     # LH from Shortcut

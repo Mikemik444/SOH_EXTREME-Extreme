@@ -16,7 +16,7 @@ namespace SohExtreme {
 constexpr size_t kTrackerMaxEntries = 20000;
 constexpr size_t kTrackerMaxBytes = 750000;
 constexpr const char* kTrackerProtocol = "SOHExtremeFinder1";
-constexpr const char* kTrackerVersion = "0.11.46";
+constexpr const char* kTrackerVersion = "0.11.55";
 struct TrackerRow {
     int64_t id = 0;
     uint8_t state = 0; // 1 normal; 2 UT's separate glitched state
@@ -131,7 +131,7 @@ class TrackerMirrorState {
     uint64_t NextRequest() { return ++request_; }
     const std::string& Nonce() const { return nonce_; }
     bool Accept(TrackerSnapshot candidate, uint32_t slot, double now, std::string& error) {
-        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.46 on both sides."; return false; }
+        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.55 on both sides."; return false; }
         if (nonce_.empty() || candidate.nonce != nonce_ || candidate.slot != slot ||
             candidate.request == 0 || candidate.request > request_) { error = "Wrong tracker session."; return false; }
         if (!producer_.empty() && producer_ != candidate.producer && now - lastReceive_ <= 10.0) {
