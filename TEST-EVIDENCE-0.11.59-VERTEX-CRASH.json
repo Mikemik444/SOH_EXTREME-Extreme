@@ -1,0 +1,63 @@
+{
+  "native": {
+    "passed": true,
+    "baseline": {
+      "compile_exit": 0,
+      "compile_output": "baseline.cpp\n",
+      "exit_code": 3221225477,
+      "output": ""
+    },
+    "fixed": {
+      "compile_exit": 0,
+      "compile_output": "fixed.cpp\n",
+      "exit_code": 0,
+      "output": "185922 assertions passed; protected-page fault blocked; valid next frames preserved\n"
+    },
+    "scope": "Compile actual MODIFYVTX, dispatch, frame execution and guards with engine adapters.\n\nVertex-load/triangle shader bodies are outside this harness; their real preambles\nare exercised before a sentinel. No live assets or GPU rendering are simulated.\n",
+    "limitations": [
+      "Does not identify the original malformed-command producer.",
+      "No live game/GPU playtest."
+    ]
+  },
+  "patch": {
+    "passed": true,
+    "cases": [
+      "reviewed baseline",
+      "idempotent repeat",
+      "missing late anchor rejected unchanged",
+      "duplicate anchor rejected unchanged",
+      "altered installed guard rejected unchanged"
+    ]
+  },
+  "crash": {
+    "log_runtime": "0.11.55",
+    "date": "2026-10-02",
+    "time": "17:11:17",
+    "scene": "Jabu-Jabu",
+    "room": 2,
+    "received_items": 611,
+    "exception": "0xC0000005",
+    "preceding_error": "Unhandled OP code 0x4, ucode 4",
+    "fault_rva": "0x125FFF8",
+    "symbol": "Fast::Interpreter::GfxSpModifyVertex + 0x58",
+    "register_rdx": "0x4DFF",
+    "vertex_index": 19967,
+    "normal_vertex_capacity": 64,
+    "resolved_stack": [
+      "GfxSpModifyVertex",
+      "gfx_modify_vtx_handler_f3dex2",
+      "gfx_step",
+      "Interpreter::Run",
+      "Fast3dWindow::DrawAndRunGraphicsCommands",
+      "RunCommands",
+      "Graph_ProcessGfxCommands",
+      "RunFrame"
+    ],
+    "old_executable_sha256": "0adcaa0eb99ccd5075712ab859a109809665d180456abc110a1d0984e60c531e",
+    "conclusions": [
+      "Invalid vertex write is demonstrated; out-of-memory and item-count threshold are not established.",
+      "Original malformed-command producer has not been identified."
+    ]
+  },
+  "renderer_sha256": "cc74c867ad7bdb1f61208edc4fe5eaa44797494da4ecfe901655dd904830e4dc"
+}

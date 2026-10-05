@@ -849,7 +849,12 @@ ShopItemIdentity Randomizer::IdentifyShopItem(s32 sceneNum, u8 slotIndex) {
         RandomizerGet randoGet = Rando::Context::GetInstance()
                                      ->GetItemLocation(shopItemIdentity.identity.randomizerCheck)
                                      ->GetPlacedRandomizerGet();
-        if (randomizerGetToEnGirlShopItem.find(randoGet) != randomizerGetToEnGirlShopItem.end()) {
+        // An active AP shelf must keep the one-time check callbacks even if
+        // scouts are pending and its temporary native placement is shop stock.
+        // Otherwise a shield slot can retain CanBuy_Shield after its model changes.
+        if (Archipelago_ShouldHandleCheck(static_cast<int32_t>(shopItemIdentity.identity.randomizerCheck))) {
+            shopItemIdentity.enGirlAShopItem = SI_RANDOMIZED_ITEM;
+        } else if (randomizerGetToEnGirlShopItem.find(randoGet) != randomizerGetToEnGirlShopItem.end()) {
             shopItemIdentity.enGirlAShopItem = randomizerGetToEnGirlShopItem[randoGet];
         }
 

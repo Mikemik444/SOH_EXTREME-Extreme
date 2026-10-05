@@ -1,3 +1,88 @@
+0.11.59 - Malformed graphics frame and vertex bounds protection (2026-10-02)
+  - The 17:11 Jabu-Jabu crash in the supplied log resolves against the saved
+    .55 symbols to GfxSpModifyVertex. The register value is vertex index
+    0x4DFF (19,967), beyond the 64 normal vertex slots. An unknown opcode
+    was logged immediately beforehand. This is an access violation, not
+    evidence that receipt history exhausted memory.
+  - Release builds now validate vertex load ranges, vertex modifications,
+    triangle indices and conditional-branch vertex indices before access.
+    Rectangle rendering retains its four reserved scratch vertices. Range
+    validation handles unsigned underflow/overflow and null load sources.
+  - Unknown opcodes, invalid microcode and rejected vertex operations stop
+    the affected frame. No subsequent commands from that frame are executed.
+    Valid queued geometry is flushed before restoring the normal framebuffer;
+    display-list state is cleared and the next frame starts normally.
+  - Diagnostics record raw command words, microcode and bounded caller
+    addresses. Repeated errors are rate limited, with no accumulating queue.
+    Unrelated exceptions are not swallowed. The malformed-command producer
+    is still unidentified; this protects the demonstrated failure path.
+  - A controlled protected-page test reproduces the old access violation.
+    185,922 assertions pass for the new guard and actual frame/dispatch code.
+    Build-time patch tests cover idempotence and atomic rejection of changed
+    or ambiguous source. Windows Release build is verified separately.
+    No live game/GPU playtest. Existing saves, IDs and placements are unchanged.
+
+0.11.58 - Bottom of the Well Crawl and AP shop purchases (2026-10-02)
+  - The AP entryway-to-perimeter route now requires child access and Crawl,
+    before passing the corridor spider. The reverse route also requires the
+    return ladder's Climb, matching native entrance/corridor logic.
+  - All six EXTREME Botw Boulder checks are anchored in the basement rather
+    than the entryway before the crawlspace. Rock / Boulder Soul and a usable
+    breaking method remain required. Entering the basement does not add Climb.
+  - Replaced the stock checks' name-prefix Crawl workaround with the actual
+    entrance gate, so checks and events inherit the route regardless of name.
+    Private enemy and silver room routes retain their native Crawl conditions.
+  - AP-owned shop shelves use one-time check callbacks even while waiting for
+    scouts, when their temporary native placement might still be a shield.
+    Local item obtainability cannot reject an AP purchase based on a duplicate,
+    missing bottle/upgrade, remote model or trap disguise. Rupee cost and the
+    shelf's purchased flag remain enforced. Native shop restrictions remain.
+  - AP still supports 0-7 randomized items per shop. Ship's local eighth-item
+    setting cannot create a server check in an existing seven-item AP seed.
+    No extra check or replacement placement is invented by this update.
+  - 60,612 real AP/Universal Tracker assertions pass; old .57 fails 608.
+    182,402 compiled shop assertions pass; old .57 fails 15,680. Existing price
+    and payment regressions pass. Windows Release build verified separately.
+    IDs and placements are preserved. No live game playtest was performed.
+
+0.11.57 - Deku Tree talking-scrub door requirements (2026-10-01)
+  - The vanilla 2F middle-room doors now require the hint scrub's own enemy
+    soul and Deku speech, in addition to nut reflection or usable Hammer.
+    All Slingshot-room checks inherit this route in AP and native logic.
+    The private enemy-room graph uses the same corrected gate.
+  - The boss-door scrub puzzle uses the same soul/speech prerequisites and
+    keeps its reflection requirement. All five hint-scrub defeat checks
+    require completing the conversation before their drops are reported.
+  - En_Hintnuts becomes a BG actor after surrender and can auto-accept talk.
+    Both paths now honor Speak Deku; previously the NPC-only speech filter
+    skipped them. Ordinary mandatory NPC dialogue behavior is unchanged.
+  - Individual mode requires Deku Scrub Soul; shared mode uses Enemy Soul.
+    Speak mode uses Speak or Speak Deku as configured. Disabled shuffles
+    are innate. Merchant Scrub Soul and NPC Soul are not substituted or
+    added: these hint scrubs remain enemy-soul actors.
+  - Actual owned shields, child/adult weapon use, Climb and Open Chest remain
+    separate requirements. IDs, save data and existing placements are unchanged.
+    AP/UT and compiled native regression tests cover the missing requirements,
+    shared/off settings, restored slots and forced dialogue. No live playtest.
+
+0.11.56 - Zora River heart approach and rock obstruction (2026-10-01)
+  - ZR Near Domain Freestanding PoH now requires reaching the upper path before
+    using Boomerang, Cucco or the adult collection alternatives. The normal
+    approach needs Climb plus swimming or a usable Cucco for child. The adult
+    grown-bean approach remains valid after an actual child planting visit.
+  - AP's front river obstruction now matches the native game: Rock / Boulder
+    Soul plus a working rock-breaking action, or the deeper diving alternate.
+    With Swim shuffled, the latter needs two physical Progressive Scales.
+    The reverse crossing uses the same rule; explosives alone cannot cross
+    soul-locked rocks. Disabled shuffles keep their capabilities innate.
+  - GV Waterfall Freestanding PoH was verified without changing its rules:
+    child Cucco Soul + Grab can glide from the bridge into the alcove; the
+    other route needs Swim + Climb. Boomerang alone does not reach the alcove.
+  - AP/UT regression coverage includes missing capabilities, both ages,
+    individual/shared/disabled souls, shuffle-off options and restored slots.
+    Compiled native checks also preserve ladder tricks and adult bean routes.
+    Existing IDs and placements are preserved. No live gameplay test performed.
+
 0.11.55 - Bean-fairy soil requirements and Lost Woods diving (2026-10-01)
   - The eight child Lost Woods underwater shortcut rupees require Silver
     Scale rather than Golden Scale in native and AP logic: two physical

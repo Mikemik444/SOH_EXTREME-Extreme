@@ -803,6 +803,19 @@ def can_reflect_nuts(bundle: tuple[Regions, "SohWorld"]) -> Rule:
     return can_use(Items.DEKU_SHIELD, bundle) | (is_adult(bundle) & has_item(Items.HYLIAN_SHIELD, bundle))
 
 
+def can_talk_hint_scrub(bundle) -> Rule:
+    """Deku Tree's enemy scrub must surrender and finish its conversation.
+
+    En_Hintnuts uses the enemy Deku Scrub Soul and becomes a BG actor while
+    talking. It does not use merchant Scrub Soul or NPC Soul.
+    """
+    rule = has_extreme_enemy_soul(bundle, Enemies.MAD_SCRUB)
+    mode = bundle[1].options.shuffle_speak.value
+    if mode:
+        rule &= Has("Speak" if mode == 1 else "Speak Deku")
+    return rule
+
+
 def has_fire_source_with_torch(bundle: tuple[Regions, "SohWorld"]) -> Rule:
     """Check if Link has a fire source that can be used with a torch."""
     return has_fire_source(bundle) | can_use(Items.STICKS, bundle)

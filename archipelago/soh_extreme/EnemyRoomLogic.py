@@ -175,6 +175,7 @@ SIMPLE_HELPERS = {
  'CanBreakPots':'can_break_pots','CanBreakSmallCrates':'can_break_small_crates',
  'CanBreakMudWalls':'can_break_mud_walls','CanHitEyeTargets':'can_hit_eye_targets',
  'CanReflectNuts':'can_reflect_nuts','HasFireSource':'has_fire_source',
+ 'CanTalkDekuTreeScrub':'can_talk_hint_scrub',
  'HasFireSourceWithTorch':'has_fire_source_with_torch','CanClearStalagmite':'can_clear_stalagmite',
  'CanUseProjectile':'can_use_projectile','CallGossipFairy':'call_gossip_fairy',
  'CanDetonateUprightBombFlower':'can_detonate_upright_bomb_flower','ScarecrowsSong':'scarecrows_song',

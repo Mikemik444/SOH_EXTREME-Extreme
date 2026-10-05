@@ -4007,20 +4007,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 if direct_fish or direct_cow or direct_frog:
                     require_animal(location)
 
-        # The Near Domain PoH has multiple physical collection routes in the fork.
-        # Child's normal route is the cucco route (Grab + Animal Soul when those
-        # systems are shuffled), while Boomerang/Hovers bypass the cucco.
-        cucco_group = []
-        if o.shuffle_grab.value:
-            cucco_group.append(('Grab / Power Bracelet', 1))
-        if o.shuffle_animal_soul.value:
-            cucco_group.append((('Animal Soul' if o.shuffle_animal_soul.value == 1 else 'Cucco Soul'), 1))
-        if cucco_group:
-            require_alternatives('ZR Near Domain Freestanding PoH', (
-                tuple(cucco_group),
-                (('Boomerang', 1),),
-                (('Hover Boots', 1),),
-            ))
+        # ZR Near Domain PoH keeps its complete age-aware approach and pickup
+        # alternatives together in zoras_river.py. Boomerang/Hovers only bypass
+        # the final Cucco jump, and cannot bypass the upper-path approach.
 
         # Region-access sanity for stock freestanding PoHs whose inherited
         # logic treats child Grab as sufficient. In SOH-EXTREME those child routes
@@ -4209,11 +4198,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             )
             for location in self.get_locations():
                 if location.name.startswith(kokiri_boulder_loop_prefixes):
-                    require(location, "Crawl")
-
-            # Native SOH-EXTREME uses Crawl to enter Bottom of the Well.
-            for location in self.get_locations():
-                if location.name.startswith("Bottom of the Well "):
                     require(location, "Crawl")
 
         # Dampe race / grave audit.

@@ -23,8 +23,10 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.BOTTOM_OF_THE_WELL_ENTRYWAY, world, [
         # Technically involves an fake wall, but passing it lensless is intended in vanilla and it is well telegraphed
+        # The native entryway is before the crawlspace and corridor spider.
+        # Gate the region so every check/event beyond it inherits Crawl.
         (Regions.BOTTOM_OF_THE_WELL_PERIMETER, lambda bundle: is_child(
-            bundle) & can_pass_enemy(bundle, Enemies.BIG_SKULLTULA)),
+            bundle) & can_crawl(bundle) & can_pass_enemy(bundle, Enemies.BIG_SKULLTULA)),
         # [Regions.BOTTOM_OF_THE_WELL_MQ_PERIMETER, lambda bundle: is_child(bundle),
         (Regions.KAK_WELL, lambda bundle: True_())
     ])
@@ -57,7 +59,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.BOTTOM_OF_THE_WELL_PERIMETER, world, [
         (Regions.BOTTOM_OF_THE_WELL_ENTRYWAY, lambda bundle: is_child(
-            bundle) & can_pass_enemy(bundle, Enemies.BIG_SKULLTULA)),
+            bundle) & can_crawl(bundle) & can_climb(bundle)
+         & can_pass_enemy(bundle, Enemies.BIG_SKULLTULA)),
         (Regions.BOTTOM_OF_THE_WELL_BEHIND_FAKE_WALLS, lambda bundle: can_do_trick(
             Tricks.LENS_BOTW, bundle) | can_use(Items.LENS_OF_TRUTH, bundle)),
         (Regions.BOTTOM_OF_THE_WELL_SOUTHWEST_ROOM, lambda bundle: can_do_trick(

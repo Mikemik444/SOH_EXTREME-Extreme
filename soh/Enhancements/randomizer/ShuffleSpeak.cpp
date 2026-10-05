@@ -26,6 +26,15 @@ void RegisterShuffleSpeak() {
 
     COND_VB_SHOULD(VB_SPEAK, shouldRegister, {
         Actor* talkActor = GET_PLAYER(gPlayState)->talkActor;
+        // Hint scrubs become ACTORCAT_BG after surrender and auto-accept when
+        // touched. Both paths still need Deku speech; NPC-only filtering below
+        // used to let this required conversation bypass the language shuffle.
+        if (talkActor != NULL && talkActor->id == ACTOR_EN_HINTNUTS) {
+            if (!Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_DEKU)) {
+                *should = false;
+            }
+            return;
+        }
         if (talkActor != NULL && talkActor->category == ACTORCAT_NPC &&
             !(talkActor->flags & ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED)) {
             RandomizerInf inf = RAND_INF_MAX;

@@ -20,6 +20,22 @@ class LocalEvents(StrEnum):
     ZR_BEAN_PLANTED = "ZR Bean Planted"
 
 
+def can_collect_near_domain_heart(bundle):
+    """Boomerang replaces the final jump, not the climb to its throwing spot.
+
+    The grown bean is a separate adult approach. Its event requires actual
+    child access with beans and the matching soil soul when shuffled.
+    """
+    # Keep each entire route in one age branch. Once both ages are available,
+    # adult bean access must not combine with child's Boomerang or Cucco.
+    cucco = can_grab(bundle) & has_animal_soul(bundle, "Cucco")
+    child = (is_child(bundle) & can_climb(bundle) & (can_swim(bundle) | cucco)
+             & (cucco | can_use(Items.BOOMERANG, bundle)))
+    adult = (is_adult(bundle) & (can_climb(bundle) | has_item(LocalEvents.ZR_BEAN_PLANTED, bundle))
+             & (can_use(Items.HOVER_BOOTS, bundle) | can_do_trick(Tricks.ZR_UPPER, bundle)))
+    return child | adult
+
+
 def set_region_rules(world: "SohWorld") -> None:
     # ZR Front
     # Events
@@ -51,8 +67,11 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.ZR_FRONT, world, [
-        (Regions.ZORA_RIVER, lambda bundle: is_adult(
-            bundle) | blast_or_smash(bundle)),
+        # Match the native obstruction: explosives alone cannot act on
+        # soul-locked rocks. Deep diving is an alternate route around it.
+        (Regions.ZORA_RIVER, lambda bundle: is_adult(bundle)
+         | has_item(Items.SILVER_SCALE, bundle) | can_break_rocks(bundle)
+         | can_use(Items.HOVER_BOOTS, bundle)),
         (Regions.HYRULE_FIELD, lambda bundle: True_())
     ])
 
@@ -98,12 +117,7 @@ def set_region_rules(world: "SohWorld") -> None:
          can_use(Items.HOVER_BOOTS, bundle)
          | (is_adult(bundle)
              & can_do_trick(Tricks.ZR_LOWER, bundle))),
-        (Locations.ZR_NEAR_DOMAIN_FREESTANDING_POH, lambda bundle:
-         (is_child(bundle) & can_grab(bundle) & has_animal_soul(bundle, "Cucco")) |
-         can_use(Items.BOOMERANG, bundle) |
-         can_use(Items.HOVER_BOOTS, bundle)
-         | (is_adult(bundle)
-             & can_do_trick(Tricks.ZR_UPPER, bundle))),
+        (Locations.ZR_NEAR_DOMAIN_FREESTANDING_POH, can_collect_near_domain_heart),
         (Locations.ZR_GS_LADDER, lambda bundle: is_child(bundle)
          & can_attack(bundle)
          & can_get_nighttime_gs(bundle)),
@@ -156,7 +170,9 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.ZORA_RIVER, world, [
-        (Regions.ZR_FRONT, lambda bundle: True_()),
+        (Regions.ZR_FRONT, lambda bundle: is_adult(bundle)
+         | has_item(Items.SILVER_SCALE, bundle) | can_break_rocks(bundle)
+         | can_use(Items.HOVER_BOOTS, bundle)),
         (Regions.ZR_OPEN_GROTTO, lambda bundle: can_reach_zr_raised_ledge(bundle)),
         (Regions.ZR_FAIRY_GROTTO, lambda bundle:
          can_reach_zr_raised_ledge(bundle) & can_break_rocks(bundle)),

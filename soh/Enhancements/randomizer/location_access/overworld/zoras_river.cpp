@@ -3,6 +3,16 @@
 
 using namespace Rando;
 
+// Approach to the upper river path. A projectile can collect the PoH only
+// after reaching its throwing position; it cannot replace this ladder route.
+static bool CanReachZrUpperPath() {
+    return ((logic->IsAdult || logic->HasItem(RG_BRONZE_SCALE) ||
+             (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) &&
+              logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOVER_BOOTS)) &&
+            logic->CanClimbLadder()) ||
+           (logic->IsAdult && logic->BeanPlanted(LOGIC_PLANT_ZORAS_RIVER_BEAN));
+}
+
 // Reaching the river/ladder subregion does not by itself reach this high ledge,
 // which holds the circle of rocks and the Open/Fairy grotto entrances.
 // Child needs a live Cucco and Grab; Adult can make the crossing. Both routes
@@ -61,7 +71,7 @@ void RegionTable_Init_ZoraRiver() {
         LOCATION(RC_ZR_FROGS_SUNS_SONG,                      logic->IsChild && logic->CanUse(RG_SUNS_SONG)),
         LOCATION(RC_ZR_FROGS_SONG_OF_TIME,                   logic->IsChild && logic->CanUse(RG_SONG_OF_TIME)),
         LOCATION(RC_ZR_NEAR_OPEN_GROTTO_FREESTANDING_POH,    (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOVER_BOOTS) || (logic->IsAdult && ctx->GetTrickOption(RT_ZR_LOWER))),
-        LOCATION(RC_ZR_NEAR_DOMAIN_FREESTANDING_POH,         (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_BOOMERANG) || logic->CanUse(RG_HOVER_BOOTS) || (logic->IsAdult && ctx->GetTrickOption(RT_ZR_UPPER))),
+        LOCATION(RC_ZR_NEAR_DOMAIN_FREESTANDING_POH,         CanReachZrUpperPath() && ((logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_BOOMERANG) || logic->CanUse(RG_HOVER_BOOTS) || (logic->IsAdult && ctx->GetTrickOption(RT_ZR_UPPER)))),
         LOCATION(RC_ZR_GS_LADDER,                            logic->IsChild && logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_SHORT_JUMPSLASH) && logic->CanGetNightTimeGS()),
         LOCATION(RC_ZR_GS_NEAR_RAISED_GROTTOS,               logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT) && logic->CanGetNightTimeGS()),
         LOCATION(RC_ZR_GS_ABOVE_BRIDGE,                      logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_HOOKSHOT) && logic->CanGetNightTimeGS()),
@@ -121,7 +131,7 @@ void RegionTable_Init_ZoraRiver() {
         // can enter from the normal upper route, but the child-only Wonder checks
         // below still require child age.
         ENTRANCE(RR_ZR_FRONT,            logic->IsAdult || logic->HasItem(RG_SILVER_SCALE) || logic->CanBreakRocks() || logic->CanUse(RG_HOVER_BOOTS)),
-        ENTRANCE(RR_ZR_ATOP_LADDER,      ((logic->IsAdult || logic->HasItem(RG_BRONZE_SCALE) || (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOVER_BOOTS)) && logic->CanClimbLadder()) || (logic->IsAdult && logic->BeanPlanted(LOGIC_PLANT_ZORAS_RIVER_BEAN))),
+        ENTRANCE(RR_ZR_ATOP_LADDER,      CanReachZrUpperPath()),
         ENTRANCE(RR_ZR_PILLAR,           (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOVER_BOOTS) || (logic->IsAdult && (ctx->GetTrickOption(RT_ZR_LOWER) || logic->BunnyHood()))),
         ENTRANCE(RR_ZR_FROM_SHORTCUT,    logic->HasItem(RG_SILVER_SCALE) || logic->CanUse(RG_IRON_BOOTS)),
         ENTRANCE(RR_ZR_STORMS_GROTTO,    logic->CanOpenStormsGrotto()),

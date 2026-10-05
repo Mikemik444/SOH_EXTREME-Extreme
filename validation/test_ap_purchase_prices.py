@@ -115,6 +115,7 @@ ShopItemIdentity Randomizer_IdentifyShopItem(int,int rc){
 }
 GetItemEntry Randomizer_GetItemFromKnownCheckWithoutObtainabilityCheck(int,int){return {};}
 int Randomizer_GetItemObtainabilityFromRandomizerCheck(int){return 0;}
+bool Archipelago_ShouldHandleCheck(int){return true;}
 '''
 for sig in ('s32 EnGirlA_CanBuy_Randomizer(', 'void EnGirlA_ItemGive_Randomizer('):
     code += re.sub(r'\bthis\b', 'self', function(girl[girl.rindex(sig):], sig))

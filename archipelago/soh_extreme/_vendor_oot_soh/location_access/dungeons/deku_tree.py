@@ -89,10 +89,10 @@ def set_region_rules(world: "SohWorld") -> None:
     # Deku F2 middle room
     # Connections
     connect_regions(Regions.DEKU_TREE_2F_MIDDLE_ROOM, world, [
-        (Regions.DEKU_TREE_LOBBY_2F, lambda bundle: can_reflect_nuts(
-            bundle) | can_use(Items.MEGATON_HAMMER, bundle)),
-        (Regions.DEKU_TREE_SLINGSHOT_ROOM, lambda bundle: can_reflect_nuts(
-            bundle) | can_use(Items.MEGATON_HAMMER, bundle))
+        (Regions.DEKU_TREE_LOBBY_2F, lambda bundle: can_talk_hint_scrub(bundle) &
+         (can_reflect_nuts(bundle) | can_use(Items.MEGATON_HAMMER, bundle))),
+        (Regions.DEKU_TREE_SLINGSHOT_ROOM, lambda bundle: can_talk_hint_scrub(bundle) &
+         (can_reflect_nuts(bundle) | can_use(Items.MEGATON_HAMMER, bundle)))
     ])
 
     # Deku slingshot room
@@ -301,7 +301,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.DEKU_TREE_OUTSIDE_BOSS_ROOM, world, [
         (Regions.DEKU_TREE_BASEMENT_UPPER, lambda bundle: has_item(Items.BRONZE_SCALE, bundle) | can_use(Items.HOOKSHOT, bundle)),
-        (Regions.DEKU_TREE_BOSS_ENTRYWAY, lambda bundle: can_reflect_nuts(bundle))
+        (Regions.DEKU_TREE_BOSS_ENTRYWAY, lambda bundle:
+         can_talk_hint_scrub(bundle) & can_reflect_nuts(bundle))
     ])
 
     # Skipping master quest for now

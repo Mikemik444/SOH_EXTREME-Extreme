@@ -9,7 +9,7 @@ from Options import OptionError
 from ._vendor_oot_soh.Enums import Regions, Items, Tricks
 from ._vendor_oot_soh.LogicHelpers import (
     can_use, has_item, has_explosives, is_child, is_adult,
-    has_fire_source_with_torch, can_play_song, can_do_trick,
+    has_fire_source_with_torch, can_play_song, can_do_trick, can_talk_hint_scrub,
 )
 from .EnemyRoomLogic import resolve_enemy_region, event_item, ENEMY_ROOM_MAP
 
@@ -37,6 +37,8 @@ def enemy_drop_rule(world, entry):
         gates.append(Has(entry.soul_item))
     if entry.soul_item == "Flying Pot Soul" and o.shuffle_pot_soul.value:
         gates.append(Has("Pot Soul"))
+    if entry.actor_id == 0x192:  # En_Hintnuts: defeat fires after the conversation.
+        gates.append(can_talk_hint_scrub(b))
     if entry.grotto_id >= 0 and o.shuffle_shovel.value:
         gates.append(Has("Shovel"))
 

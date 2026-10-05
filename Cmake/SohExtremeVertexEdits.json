@@ -1,0 +1,40 @@
+[
+  {
+    "before": "void Interpreter::GfxSpVertex(size_t n_vertices, size_t dest_index, const F3DVtx* vertices) {\n    for (size_t i = 0; i < n_vertices; i++, dest_index++) {",
+    "after": "@FRAGMENT@\nvoid Interpreter::GfxSpVertex(size_t n_vertices, size_t dest_index, const F3DVtx* vertices) {\n    SohExtremeCheckVertexLoad(dest_index, n_vertices, vertices);\n    for (size_t i = 0; i < n_vertices; i++, dest_index++) {",
+    "fragment": "SohExtremeVertexGuard.cpp.inc"
+  },
+  {
+    "before": "void Interpreter::GfxSpModifyVertex(uint16_t vtx_idx, uint8_t where, uint32_t val) {\n    SUPPORT_CHECK(where == G_MWO_POINT_ST);",
+    "after": "void Interpreter::GfxSpModifyVertex(uint16_t vtx_idx, uint8_t where, uint32_t val) {\n    SohExtremeCheckVertexRange(vtx_idx, 1, MAX_VERTICES);\n    if (where != G_MWO_POINT_ST) {\n        throw SohExtremeInvalidGfx{ \"unsupported vertex modification\", vtx_idx, where };\n    }"
+  },
+  {
+    "before": "void Interpreter::GfxSpTri1(uint8_t vtx1_idx, uint8_t vtx2_idx, uint8_t vtx3_idx, bool is_rect) {\n    struct LoadedVertex* v1 =",
+    "after": "void Interpreter::GfxSpTri1(uint8_t vtx1_idx, uint8_t vtx2_idx, uint8_t vtx3_idx, bool is_rect) {\n    const size_t capacity = is_rect ? MAX_VERTICES + 4 : MAX_VERTICES;\n    SohExtremeCheckVertexRange(vtx1_idx, 1, capacity);\n    SohExtremeCheckVertexRange(vtx2_idx, 1, capacity);\n    SohExtremeCheckVertexRange(vtx3_idx, 1, capacity);\n    struct LoadedVertex* v1 ="
+  },
+  {
+    "before": "    uint8_t vbidx = (uint8_t)((*cmd0)->words.w0 & 0x00000FFF);",
+    "after": "    const uint16_t vbidx = static_cast<uint16_t>((*cmd0)->words.w0 & 0x00000FFF);\n    SohExtremeCheckVertexRange(vbidx, 1, MAX_VERTICES);"
+  },
+  {
+    "before": "    if (opcode == F3DEX2_G_LOAD_UCODE) {\n        gfx_set_ucode_handler((UcodeHandlers)(cmd->words.w0 & 0xFFFFFF));",
+    "after": "    if (opcode == F3DEX2_G_LOAD_UCODE) {\n        const auto ucode = cmd->words.w0 & 0xFFFFFF;\n        if (ucode >= ucode_handlers.size()) {\n            throw SohExtremeInvalidGfx{ \"invalid microcode\", static_cast<size_t>(ucode), 0 };\n        }\n        gfx_set_ucode_handler((UcodeHandlers)ucode);"
+  },
+  {
+    "before": "            SPDLOG_CRITICAL(\"Unhandled OP code: 0x{:X}, for loaded ucode: {}\", (uint8_t)opcode,\n                            (uint32_t)ucode_handler_index);\n        }\n    } else {\n        SPDLOG_CRITICAL(\"Unhandled OP code: 0x{:X}, invalid ucode: {}\", (uint8_t)opcode, (uint32_t)ucode_handler_index);\n    }\n\n    ++cmd;",
+    "after": "            throw SohExtremeInvalidGfx{ \"unknown opcode\", static_cast<uint8_t>(opcode),\n                                        static_cast<size_t>(ucode_handler_index) };\n        }\n    } else {\n        throw SohExtremeInvalidGfx{ \"invalid microcode\", static_cast<size_t>(ucode_handler_index),\n                                    static_cast<uint8_t>(opcode) };\n    }\n\n    ++cmd;"
+  },
+  {
+    "before": "void Interpreter::SpReset() {",
+    "after": "@FRAGMENT@\nvoid Interpreter::SpReset() {",
+    "fragment": "SohExtremeGfxStep.cpp.inc"
+  },
+  {
+    "before": "    auto dbg = mGfxDebugger;\n    g_exec_stack.start((F3DGfx*)commands);",
+    "after": "    auto dbg = mGfxDebugger;\n    const auto frameUcode = ucode_handler_index;\n    g_exec_stack.start((F3DGfx*)commands);"
+  },
+  {
+    "before": "        gfx_step();\n    }\n\n    Flush();",
+    "after": "        if (!SohExtremeGfxStep()) {\n            // Finish valid queued geometry on its original target before\n            // restoring the normal framebuffer. The next Run starts clean.\n            Flush();\n            if (mFbActive) {\n                mFbActive = 0;\n                mRapi->StartDrawToFramebuffer(mRendersToFb ? mGameFb : 0, 1);\n            }\n            gfx_set_ucode_handler(frameUcode);\n            break;\n        }\n    }\n\n    Flush();"
+  }
+]

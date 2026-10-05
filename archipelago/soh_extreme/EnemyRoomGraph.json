@@ -750,14 +750,14 @@
       {
         "target": "RR_DEKU_TREE_LOBBY_2F",
         "region": "RR_DEKU_TREE_2F_MIDDLE_ROOM",
-        "condition": "AnyAgeTime([]{return logic->CanReflectNuts() || logic->CanUse(RG_MEGATON_HAMMER);})",
+        "condition": "AnyAgeTime([]{return CanTalkDekuTreeScrub() && (logic->CanReflectNuts() || logic->CanUse(RG_MEGATON_HAMMER));})",
         "file": "soh/Enhancements/randomizer/location_access/dungeons/deku_tree.cpp",
         "line": 68
       },
       {
         "target": "RR_DEKU_TREE_SLINGSHOT_ROOM",
         "region": "RR_DEKU_TREE_2F_MIDDLE_ROOM",
-        "condition": "AnyAgeTime([]{return logic->CanReflectNuts() || logic->CanUse(RG_MEGATON_HAMMER);})",
+        "condition": "AnyAgeTime([]{return CanTalkDekuTreeScrub() && (logic->CanReflectNuts() || logic->CanUse(RG_MEGATON_HAMMER));})",
         "file": "soh/Enhancements/randomizer/location_access/dungeons/deku_tree.cpp",
         "line": 69
       }
@@ -1109,7 +1109,7 @@
       {
         "target": "RR_DEKU_TREE_BOSS_ENTRYWAY",
         "region": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
-        "condition": "AnyAgeTime([]{return logic->CanReflectNuts();})",
+        "condition": "AnyAgeTime([]{return CanTalkDekuTreeScrub() && logic->CanReflectNuts();})",
         "file": "soh/Enhancements/randomizer/location_access/dungeons/deku_tree.cpp",
         "line": 218
       }

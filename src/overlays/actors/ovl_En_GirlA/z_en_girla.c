@@ -9,6 +9,7 @@
 
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 #include "soh/OTRGlobals.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include <assert.h>
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
@@ -867,22 +868,25 @@ s32 EnGirlA_CanBuy_Randomizer(PlayState* play, EnGirlA* this) {
     // Keep the payment callback's cached price in sync with the price checked
     // here, including AP prices received after the shelf actor was initialized.
     this->basePrice = shopItemIdentity.itemPrice;
-    GetItemEntry getItemEntry = Randomizer_GetItemFromKnownCheckWithoutObtainabilityCheck(
-        shopItemIdentity.identity.randomizerCheck, shopItemIdentity.ogItemId);
-    ItemObtainability itemObtainability =
-        Randomizer_GetItemObtainabilityFromRandomizerCheck(shopItemIdentity.identity.randomizerCheck);
-
-    if (itemObtainability == CANT_OBTAIN_NEED_EMPTY_BOTTLE) {
-        return CANBUY_RESULT_NEED_BOTTLE;
-    }
-
-    if (itemObtainability == CANT_OBTAIN_NEED_UPGRADE) {
-        return CANBUY_RESULT_CANT_GET_NOW_5;
-    }
-
-    if (Flags_GetRandomizerInf(shopItemIdentity.identity.randomizerInf) ||
-        itemObtainability == CANT_OBTAIN_ALREADY_HAVE || itemObtainability == CANT_OBTAIN_MISC) {
+    if (Flags_GetRandomizerInf(shopItemIdentity.identity.randomizerInf)) {
         return CANBUY_RESULT_CANT_GET_NOW;
+    }
+
+    // An AP shelf purchases a location check. Its model may be a duplicate,
+    // remote reward or trap disguise; local inventory cannot veto the purchase.
+    // Native randomized shelves still use their ordinary obtainability rules.
+    if (!Archipelago_ShouldHandleCheck(shopItemIdentity.identity.randomizerCheck)) {
+        ItemObtainability itemObtainability =
+            Randomizer_GetItemObtainabilityFromRandomizerCheck(shopItemIdentity.identity.randomizerCheck);
+        if (itemObtainability == CANT_OBTAIN_NEED_EMPTY_BOTTLE) {
+            return CANBUY_RESULT_NEED_BOTTLE;
+        }
+        if (itemObtainability == CANT_OBTAIN_NEED_UPGRADE) {
+            return CANBUY_RESULT_CANT_GET_NOW_5;
+        }
+        if (itemObtainability == CANT_OBTAIN_ALREADY_HAVE || itemObtainability == CANT_OBTAIN_MISC) {
+            return CANBUY_RESULT_CANT_GET_NOW;
+        }
     }
 
     if (gSaveContext.rupees < shopItemIdentity.itemPrice) {

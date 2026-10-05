@@ -4,6 +4,17 @@
 
 using namespace Rando;
 
+// Hint scrubs are enemies, even though clearing their doors requires talking.
+// Their surrender uses Deku Scrub Soul (or shared Enemy Soul), not the merchant
+// Scrub Soul/NPC Soul. Check the language flag directly to preserve that split.
+static bool CanTalkDekuTreeScrub() {
+    const int soulMode = ctx->GetOption(RSK_SHUFFLE_ENEMY_SOUL).Get();
+    return (soulMode == 0 ||
+            (soulMode == 1 && logic->HasItem(RG_ENEMY_SOUL)) ||
+            (soulMode == 2 && logic->HasItem(RG_ENEMY_SOUL_DEKU_SCRUB))) &&
+           (!ctx->GetOption(RSK_SHUFFLE_SPEAK).Get() || logic->CheckRandoInf(RAND_INF_CAN_SPEAK_DEKU));
+}
+
 void RegionTable_Init_DekuTree() {
     // clang-format off
     // Vanilla/MQ Decider
@@ -65,8 +76,8 @@ void RegionTable_Init_DekuTree() {
 
     areaTable[RR_DEKU_TREE_2F_MIDDLE_ROOM] = Region("Deku Tree 2F Middle Room", SCENE_DEKU_TREE, {}, {}, {
         //Exits
-        ENTRANCE(RR_DEKU_TREE_LOBBY_2F,       AnyAgeTime([]{return logic->CanReflectNuts() || logic->CanUse(RG_MEGATON_HAMMER);})),
-        ENTRANCE(RR_DEKU_TREE_SLINGSHOT_ROOM, AnyAgeTime([]{return logic->CanReflectNuts() || logic->CanUse(RG_MEGATON_HAMMER);})),
+        ENTRANCE(RR_DEKU_TREE_LOBBY_2F,       AnyAgeTime([]{return CanTalkDekuTreeScrub() && (logic->CanReflectNuts() || logic->CanUse(RG_MEGATON_HAMMER));})),
+        ENTRANCE(RR_DEKU_TREE_SLINGSHOT_ROOM, AnyAgeTime([]{return CanTalkDekuTreeScrub() && (logic->CanReflectNuts() || logic->CanUse(RG_MEGATON_HAMMER));})),
     });
 
     areaTable[RR_DEKU_TREE_SLINGSHOT_ROOM] = Region("Deku Tree Slingshot Room", SCENE_DEKU_TREE, {}, {
@@ -215,7 +226,7 @@ void RegionTable_Init_DekuTree() {
     }, {
         //Exits
         ENTRANCE(RR_DEKU_TREE_BASEMENT_UPPER, logic->HasItem(RG_CLIMB) && (logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOOKSHOT))),
-        ENTRANCE(RR_DEKU_TREE_BOSS_ENTRYWAY,  AnyAgeTime([]{return logic->CanReflectNuts();})),
+        ENTRANCE(RR_DEKU_TREE_BOSS_ENTRYWAY,  AnyAgeTime([]{return CanTalkDekuTreeScrub() && logic->CanReflectNuts();})),
     });
 
 #pragma endregion
@@ -492,7 +503,7 @@ void RegionTable_Init_DekuTree() {
     }, {
         //Exits
         ENTRANCE(RR_DEKU_TREE_MQ_BASEMENT_LEDGE, logic->HasItem(RG_CLIMB) && (logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOOKSHOT))),
-        ENTRANCE(RR_DEKU_TREE_BOSS_ENTRYWAY,     AnyAgeTime([]{return logic->CanReflectNuts();})),
+        ENTRANCE(RR_DEKU_TREE_BOSS_ENTRYWAY,     AnyAgeTime([]{return CanTalkDekuTreeScrub() && logic->CanReflectNuts();})),
     });
 
 #pragma endregion

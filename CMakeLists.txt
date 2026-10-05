@@ -120,6 +120,7 @@ if (NOT TARGET libultraship)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../libultraship ${CMAKE_BINARY_DIR}/libultraship SYSTEM)
 endif()
 include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeTlutSafety.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeVertexSafety.cmake")
 include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeCrashStack.cmake")
 
 set(PROJECT_NAME soh)
