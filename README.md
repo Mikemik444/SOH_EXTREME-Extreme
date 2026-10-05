@@ -4,6 +4,11 @@
 
 This repository contains the game client and related code for the SOH-EXTREME experience.
 
+# Mostly Codded by AI and human - The AI used was ChatGPT to sort and organize and make the code readable + some logic i didnt know how to find
+# AI site: https://chatgpt.com
+
+# Unofficial SOH - as stated on the soh discord we can make unofficial builds, but they wont have support for those, only this github
+# will have support, if you find issues i will try to fix right away but you just need to report it
 ---
 
 ## Main Goals
@@ -13,10 +18,12 @@ SOH-EXTREME is built around four big goals:
 1. **Native Archipelago support** for SOH-EXTREME as its own game/client behavior.
 2. **Much deeper shuffle logic** than stock SoH / OoT randomizers.
 3. **New progression systems** such as souls, abilities, notes, and special access items.
-4. **A strong in-game tracker/UI experience** so the player can actually understand what the seed expects.
+4. **A strong in-game tracker/UI experience** Which if you select show available checks will immulate universal tracker.
 
 ---
-
+##Current issues
+-----------------
+1. **Randomized not working with new features as it just exits after some time, so you must stick with archipelago.**
 ## Core Client Features
 
 ### Native Archipelago Client Behavior
@@ -85,8 +92,8 @@ SOH-EXTREME supports multiple soul categories, including:
 - **Business Scrub Soul**
 - **Boss Souls**
 - **Bean Souls**
-- Individual enemy-specific souls
-- Individual animal-specific souls
+- **Individual enemy-specific souls**
+- **Individual animal-specific souls**
 
 ### Soul Visibility / Spawn Behavior
 
@@ -156,7 +163,7 @@ SOH-EXTREME adds or expands many check categories beyond a standard OoT randomiz
 Examples include:
 
 - Pots
-n- Crates
+- Crates
 - Grass / bushes
 - Rocks / boulders
 - Trees
