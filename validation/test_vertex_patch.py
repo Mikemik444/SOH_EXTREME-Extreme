@@ -6,6 +6,7 @@ import subprocess
 
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--baseline', type=Path, required=True)
+p.add_argument('--upgrade-baseline', type=Path)
 p.add_argument('--cmake', required=True)
 p.add_argument('--output', type=Path, required=True)
 a = p.parse_args()
@@ -30,6 +31,14 @@ fixed = cpp.read_bytes()
 second = configure()
 assert second.returncode == 0 and cpp.read_bytes() == fixed, second.stdout + second.stderr
 cases = ['reviewed baseline', 'idempotent repeat']
+if a.upgrade_baseline:
+    cpp.write_text(a.upgrade_baseline.read_text(encoding='utf-8'), encoding='utf-8')
+    upgraded = configure()
+    assert upgraded.returncode == 0 and cpp.read_bytes() == fixed, upgraded.stdout + upgraded.stderr
+    cases.append('upgrade from installed earlier guard matches clean patch')
+    repeated = configure()
+    assert repeated.returncode == 0 and cpp.read_bytes() == fixed
+    cases.append('idempotent upgrade repeat')
 for name, bad in [
     ('missing late anchor', baseline.replace('        gfx_step();\n    }\n\n    Flush();', '        changed_step();')),
     ('duplicate anchor', baseline + '\nvoid Interpreter::SpReset() {\n}\n'),

@@ -25,6 +25,12 @@ class LocalEvents(StrEnum):
     JABU_JABUS_BELLY_LOWERED_PATH_ACTIVATED = "Jabu Jabu Belly Lowered Path Activated"
 
 
+def can_carry_ruto(bundle) -> Rule:
+    # Carrying her to the switches is a progression action, not just an NPC
+    # check. Gate the rescued event so every room it unlocks inherits this.
+    return can_grab(bundle) & can_interact_npc(bundle, "Zora")
+
+
 def set_region_rules(world: "SohWorld") -> None:
     # Jabu Jabu's Belly Entryway
     # Connections
@@ -72,8 +78,8 @@ def set_region_rules(world: "SohWorld") -> None:
             LocalEvents.JABU_JABUS_BELLY_EAST_TENTACLE_DEFEATED, bundle)),
         (Regions.JABU_JABUS_BELLY_BIGOCTO_LEDGE, lambda bundle: has_item(
             LocalEvents.JABU_JABUS_BELLY_NORTH_TENTACLE_DEFEATED, bundle)),
-        (Regions.JABU_JABUS_BELLY_NEAR_BOSS_ROOM, lambda bundle: has_item(LocalEvents.JABU_JABUS_BELLY_LOWERED_PATH_ACTIVATED,
-         bundle) | (can_do_trick(Tricks.JABU_BOSS_HOVER, bundle) & can_use(Items.HOVER_BOOTS, bundle)))
+        (Regions.JABU_JABUS_BELLY_NEAR_BOSS_ROOM, lambda bundle: can_grab(bundle) & (has_item(LocalEvents.JABU_JABUS_BELLY_LOWERED_PATH_ACTIVATED,
+         bundle) | (can_do_trick(Tricks.JABU_BOSS_HOVER, bundle) & can_use(Items.HOVER_BOOTS, bundle))))
     ])
 
     # Jabu Jabu's GS Water Switch Room Region
@@ -86,7 +92,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Events
     add_events(Regions.JABU_JABUS_BELLY_B1_NORTH, world, [
         (EventLocations.JABU_JABUS_BELLY_RUTO_IN_1F, LocalEvents.JABU_JABUS_BELLY_RUTO_IN_1F_RESCUED,
-         lambda bundle: is_adult(bundle) | has_item(Items.BRONZE_SCALE, bundle)),
+         lambda bundle: can_carry_ruto(bundle) & (is_adult(bundle) | has_item(Items.BRONZE_SCALE, bundle))),
         (EventLocations.JABU_JABUS_BELLY_B1_NORTH_FAIRY_POT, Events.CAN_ACCESS_FAIRIES, lambda bundle: can_use(
             Items.BOOMERANG, bundle) | (can_use(Items.HOVER_BOOTS, bundle) & can_kill_enemy(bundle, Enemies.OCTOROK)))
     ])

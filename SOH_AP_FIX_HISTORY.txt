@@ -1,3 +1,28 @@
+0.11.60 - Jabu-Jabu Ruto requirements and graphics segment bounds (2026-10-03)
+  - AP's Ruto-rescued event now requires Grab / Power Bracelet and interacting
+    with Ruto (NPC Soul and shared Speak or Speak Zora when shuffled). This
+    gates the Boomerang room, tentacle sequence, Big Octo and later checks.
+    Native room logic already included the carrying and speaking requirements.
+  - The AP route to the pre-boss room explicitly requires Grab for the weighted
+    switch, including its hover shortcut, matching the existing native route.
+    Initial accessible rooms are not blanket gated. Disabled shuffles stay
+    innate; the first physical Strength Upgrade still grants shuffled Grab.
+  - The new .59 crash at 14:20 in Jabu-Jabu room 10 resolves to SegAddr: a
+    malformed 64-bit graphics address indexed outside the 16-entry segment
+    table before the vertex guards could execute. Segment reads now validate
+    the full-width index, binding and offset addition before memory access.
+    Both microcode segment writers validate index and alignment too.
+  - Invalid segment commands use the existing rejected-frame recovery and
+    bounded diagnostics. Native aligned pointers and interpolation slots keep
+    their normal behavior. The original malformed-command producer remains
+    unidentified; this guards the demonstrated additional failure path.
+  - Protected-page regression reproduces the old segment access violation;
+    263,050 segment assertions and all 185,922 earlier vertex assertions pass.
+    All 1,682 AP/UT inventory assertions pass; old .59 fails 104. Seven
+    build-patch cases pass, including upgrades from the earlier .59 guard.
+    Packaging results are included with the release.
+    No live game playtest. Existing location IDs and placements are preserved.
+
 0.11.59 - Malformed graphics frame and vertex bounds protection (2026-10-02)
   - The 17:11 Jabu-Jabu crash in the supplied log resolves against the saved
     .55 symbols to GfxSpModifyVertex. The register value is vertex index

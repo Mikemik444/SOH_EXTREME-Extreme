@@ -2,6 +2,7 @@ include_guard(GLOBAL)
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_LIST_DIR}/SohExtremeVertexEdits.json"
     "${CMAKE_CURRENT_LIST_DIR}/SohExtremeVertexGuard.cpp.inc"
+    "${CMAKE_CURRENT_LIST_DIR}/SohExtremeSegmentGuard.cpp.inc"
     "${CMAKE_CURRENT_LIST_DIR}/SohExtremeGfxStep.cpp.inc")
 function(soh_extreme_vertex_safety source_dir)
     file(LOCK "${source_dir}/.soh-extreme-vertex.lock" GUARD FUNCTION TIMEOUT 120)
