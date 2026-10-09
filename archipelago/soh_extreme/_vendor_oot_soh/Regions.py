@@ -92,17 +92,17 @@ class SohRegion(Region):
         super().__init__(name, player, multiworld, hint)
 
     def can_reach(self, state) -> bool:
-        if state._soh_stale[self.player]:
-            stored_age = state._soh_age[self.player]
+        if state._soh_extreme_stale[self.player]:
+            stored_age = state._soh_extreme_age[self.player]
             state._soh_extreme_update_age_reachable_regions(self.player)
-            state._soh_age[self.player] = stored_age
+            state._soh_extreme_age[self.player] = stored_age
 
-        if state._soh_age[self.player] == Ages.CHILD:
-            return self in state._soh_child_reachable_regions[self.player]
-        elif state._soh_age[self.player] == Ages.ADULT:
-            return self in state._soh_adult_reachable_regions[self.player]
+        if state._soh_extreme_age[self.player] == Ages.CHILD:
+            return self in state._soh_extreme_child_reachable_regions[self.player]
+        elif state._soh_extreme_age[self.player] == Ages.ADULT:
+            return self in state._soh_extreme_adult_reachable_regions[self.player]
         else:
-            return self in state._soh_child_reachable_regions[self.player] or self in state._soh_adult_reachable_regions[self.player]
+            return self in state._soh_extreme_child_reachable_regions[self.player] or self in state._soh_extreme_adult_reachable_regions[self.player]
 
 
 def create_regions_and_locations(world: "SohWorld") -> None:

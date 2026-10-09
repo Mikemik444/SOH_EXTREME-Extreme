@@ -557,7 +557,7 @@ class GVUpperStreamDropHealth(Rule, game="SOH-EXTREME"):
         force_recalculate: ClassVar[bool] = True
 
         def _evaluate(self, state) -> bool:
-            return state.soh_heart_count.get(self.player, 0) >= 2
+            return state._soh_extreme_heart_count.get(self.player, 0) >= 2
 
         def explain_str(self, state=None) -> str:
             return "2+ Hearts (survive Gerudo Valley drop)"
@@ -594,39 +594,41 @@ class SohExtremeLogicState(LogicMixin):
     package initializer.  That also means we cannot rely on stock SoH mixins to
     create the age-reachability and heart-count state used by LogicHelpers.
     Keep the state here so the standalone APWorld is genuinely self-contained.
+    All fields must use the _soh_extreme_ namespace: the regular SoH APWorld
+    unconditionally replaces its own _soh_* and soh_heart_count dictionaries.
+    Both games can be installed and loaded in either order, even for a solo seed.
     """
     def init_mixin(self, parent):
         players = list(parent.get_game_players("SOH-EXTREME") + parent.get_game_groups("SOH-EXTREME"))
 
-        # Be additive instead of assuming another SoH mixin has already run.
-        # This fixes standalone generation where these attributes do not exist at
-        # all, while also avoiding clobbering another world's entries if present.
-        if not hasattr(self, "_soh_stale"):
-            self._soh_stale = {}
-        if not hasattr(self, "_soh_child_reachable_regions"):
-            self._soh_child_reachable_regions = {}
-        if not hasattr(self, "_soh_adult_reachable_regions"):
-            self._soh_adult_reachable_regions = {}
-        if not hasattr(self, "_soh_child_blocked_regions"):
-            self._soh_child_blocked_regions = {}
-        if not hasattr(self, "_soh_adult_blocked_regions"):
-            self._soh_adult_blocked_regions = {}
-        if not hasattr(self, "_soh_age"):
-            self._soh_age = {}
-        if not hasattr(self, "soh_piece_of_heart_count"):
-            self.soh_piece_of_heart_count = {}
-        if not hasattr(self, "soh_heart_count"):
-            self.soh_heart_count = {}
+        # Initialize our private state without relying on the regular SoH mixins
+        # or sharing their dictionaries. Never alias these back to stock fields.
+        if not hasattr(self, "_soh_extreme_stale"):
+            self._soh_extreme_stale = {}
+        if not hasattr(self, "_soh_extreme_child_reachable_regions"):
+            self._soh_extreme_child_reachable_regions = {}
+        if not hasattr(self, "_soh_extreme_adult_reachable_regions"):
+            self._soh_extreme_adult_reachable_regions = {}
+        if not hasattr(self, "_soh_extreme_child_blocked_regions"):
+            self._soh_extreme_child_blocked_regions = {}
+        if not hasattr(self, "_soh_extreme_adult_blocked_regions"):
+            self._soh_extreme_adult_blocked_regions = {}
+        if not hasattr(self, "_soh_extreme_age"):
+            self._soh_extreme_age = {}
+        if not hasattr(self, "_soh_extreme_piece_of_heart_count"):
+            self._soh_extreme_piece_of_heart_count = {}
+        if not hasattr(self, "_soh_extreme_heart_count"):
+            self._soh_extreme_heart_count = {}
 
         for player in players:
-            self._soh_stale[player] = True
-            self._soh_child_reachable_regions[player] = set()
-            self._soh_adult_reachable_regions[player] = set()
-            self._soh_child_blocked_regions[player] = set()
-            self._soh_adult_blocked_regions[player] = set()
-            self._soh_age[player] = Ages.null
-            self.soh_piece_of_heart_count[player] = 0
-            self.soh_heart_count[player] = parent.worlds[player].options.starting_hearts.value
+            self._soh_extreme_stale[player] = True
+            self._soh_extreme_child_reachable_regions[player] = set()
+            self._soh_extreme_adult_reachable_regions[player] = set()
+            self._soh_extreme_child_blocked_regions[player] = set()
+            self._soh_extreme_adult_blocked_regions[player] = set()
+            self._soh_extreme_age[player] = Ages.null
+            self._soh_extreme_piece_of_heart_count[player] = 0
+            self._soh_extreme_heart_count[player] = parent.worlds[player].options.starting_hearts.value
 
         # Tracks virtual stock-song progression created by collecting every
         # individual note for a song.  The stock SoH access rules still ask for
@@ -645,22 +647,22 @@ class SohExtremeLogicState(LogicMixin):
     def copy_mixin(self, new_state):
         # Copy the stock-compatible state that SOH-EXTREME owns in standalone
         # mode.  CollectionState.copy() is heavily used during fill simulation.
-        new_state._soh_stale = self._soh_stale.copy()
-        new_state._soh_child_reachable_regions = {
-            player: regions.copy() for player, regions in self._soh_child_reachable_regions.items()
+        new_state._soh_extreme_stale = self._soh_extreme_stale.copy()
+        new_state._soh_extreme_child_reachable_regions = {
+            player: regions.copy() for player, regions in self._soh_extreme_child_reachable_regions.items()
         }
-        new_state._soh_adult_reachable_regions = {
-            player: regions.copy() for player, regions in self._soh_adult_reachable_regions.items()
+        new_state._soh_extreme_adult_reachable_regions = {
+            player: regions.copy() for player, regions in self._soh_extreme_adult_reachable_regions.items()
         }
-        new_state._soh_child_blocked_regions = {
-            player: regions.copy() for player, regions in self._soh_child_blocked_regions.items()
+        new_state._soh_extreme_child_blocked_regions = {
+            player: regions.copy() for player, regions in self._soh_extreme_child_blocked_regions.items()
         }
-        new_state._soh_adult_blocked_regions = {
-            player: regions.copy() for player, regions in self._soh_adult_blocked_regions.items()
+        new_state._soh_extreme_adult_blocked_regions = {
+            player: regions.copy() for player, regions in self._soh_extreme_adult_blocked_regions.items()
         }
-        new_state._soh_age = self._soh_age.copy()
-        new_state.soh_piece_of_heart_count = self.soh_piece_of_heart_count.copy()
-        new_state.soh_heart_count = self.soh_heart_count.copy()
+        new_state._soh_extreme_age = self._soh_extreme_age.copy()
+        new_state._soh_extreme_piece_of_heart_count = self._soh_extreme_piece_of_heart_count.copy()
+        new_state._soh_extreme_heart_count = self._soh_extreme_heart_count.copy()
 
         new_state._soh_extreme_virtual_songs = {
             player: songs.copy() for player, songs in self._soh_extreme_virtual_songs.items()
@@ -673,11 +675,11 @@ class SohExtremeLogicState(LogicMixin):
         return new_state
 
     def _soh_extreme_invalidate(self, player):
-        self._soh_child_reachable_regions[player] = set()
-        self._soh_adult_reachable_regions[player] = set()
-        self._soh_child_blocked_regions[player] = set()
-        self._soh_adult_blocked_regions[player] = set()
-        self._soh_stale[player] = True
+        self._soh_extreme_child_reachable_regions[player] = set()
+        self._soh_extreme_adult_reachable_regions[player] = set()
+        self._soh_extreme_child_blocked_regions[player] = set()
+        self._soh_extreme_adult_blocked_regions[player] = set()
+        self._soh_extreme_stale[player] = True
 
     def _soh_extreme_update_age_reachable_regions(self, player):
         """Vendored equivalent of stock SoH RegionAgeAccess.SohAgeLogic.
@@ -685,17 +687,17 @@ class SohExtremeLogicState(LogicMixin):
         Kept here so standalone SOH-EXTREME does not need to register the stock
         Ship of Harkinian AutoWorld/mixin just to evaluate IsChild/IsAdult rules.
         """
-        self._soh_stale[player] = False
+        self._soh_extreme_stale[player] = False
         for age in (Ages.CHILD, Ages.ADULT):
-            self._soh_age[player] = age
+            self._soh_extreme_age[player] = age
             start = self.multiworld.get_region(Regions.ROOT, player)
 
             if age == Ages.CHILD:
-                reachable = self._soh_child_reachable_regions[player]
-                blocked = self._soh_child_blocked_regions[player]
+                reachable = self._soh_extreme_child_reachable_regions[player]
+                blocked = self._soh_extreme_child_blocked_regions[player]
             else:
-                reachable = self._soh_adult_reachable_regions[player]
-                blocked = self._soh_adult_blocked_regions[player]
+                reachable = self._soh_extreme_adult_reachable_regions[player]
+                blocked = self._soh_extreme_adult_blocked_regions[player]
 
             queue = deque(blocked)
             if start not in reachable:
@@ -717,18 +719,18 @@ class SohExtremeLogicState(LogicMixin):
                     queue.extend(new_region.exits)
                     self.path[new_region] = (new_region.name, self.path.get(connection, None))
 
-        self._soh_age[player] = Ages.null
+        self._soh_extreme_age[player] = Ages.null
 
     def _soh_extreme_can_reach_as_age(self, region, age, player):
         # Match the stock SoH recursion guard.  Region rules themselves may ask
         # for an age while the breadth-first search is already evaluating one.
-        if self._soh_age[player] == Ages.null:
-            self._soh_age[player] = age
+        if self._soh_extreme_age[player] == Ages.null:
+            self._soh_extreme_age[player] = age
             try:
                 return self.multiworld.get_region(region.value, player).can_reach(self)
             finally:
-                self._soh_age[player] = Ages.null
-        return self._soh_age[player] == age
+                self._soh_extreme_age[player] = Ages.null
+        return self._soh_extreme_age[player] == age
 
 class SohExtremeWebWorld(WebWorld):
     theme = "ice"
@@ -1750,7 +1752,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # stock song item had been collected.
             virtual.add(song_name)
             state.collect(self.create_item(song_name, create_as_event=True), True)
-            state._soh_stale[self.player] = True
+            state._soh_extreme_stale[self.player] = True
             return True
 
         if not complete and song_name in virtual:
@@ -1758,7 +1760,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # depending on the stock song are invalidated during fill simulation.
             virtual.remove(song_name)
             state.remove(self.create_item(song_name, create_as_event=True))
-            state._soh_stale[self.player] = True
+            state._soh_extreme_stale[self.player] = True
             return True
 
         return False
@@ -1775,7 +1777,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if not state._soh_extreme_virtual_swim.setdefault(self.player, False):
                 state._soh_extreme_virtual_swim[self.player] = True
                 state.collect(self.create_item("Swim", create_as_event=True), True)
-                state._soh_stale[self.player] = True
+                state._soh_extreme_stale[self.player] = True
             # Fall through: the physical scale must ALSO be counted normally.
 
         # Native SOH-EXTREME uses the first physical Strength Upgrade as the
@@ -1786,18 +1788,18 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if not virtual:
                 state._soh_extreme_virtual_grab[self.player] = True
                 state.collect(self.create_item("Grab / Power Bracelet", create_as_event=True), True)
-                state._soh_stale[self.player] = True
+                state._soh_extreme_stale[self.player] = True
                 return True
 
         changed = super().collect(state, item)
-        state._soh_stale[self.player] = True
+        state._soh_extreme_stale[self.player] = True
         if item.name == str(Items.HEART_CONTAINER):
-            state.soh_heart_count[self.player] += 1
+            state._soh_extreme_heart_count[self.player] += 1
         if item.name in (str(Items.PIECE_OF_HEART), str(Items.PIECE_OF_HEART_WINNER)):
-            state.soh_piece_of_heart_count[self.player] += 1
-            if state.soh_piece_of_heart_count[self.player] == 4:
-                state.soh_piece_of_heart_count[self.player] = 0
-                state.soh_heart_count[self.player] += 1
+            state._soh_extreme_piece_of_heart_count[self.player] += 1
+            if state._soh_extreme_piece_of_heart_count[self.player] == 4:
+                state._soh_extreme_piece_of_heart_count[self.player] = 0
+                state._soh_extreme_heart_count[self.player] += 1
         if self.options.song_note_shuffle.value and item.name.startswith("Song Note "):
             changed = self._refresh_virtual_song_for_note(state, item.name) or changed
         return changed
@@ -1831,16 +1833,16 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         changed = super().remove(state, item)
         if not changed:
             return False
-        # Clearing only _soh_stale left previously reachable child/adult
+        # Clearing only _soh_extreme_stale left previously reachable child/adult
         # regions accessible after an ability, song, or button was removed.
         state._soh_extreme_invalidate(self.player)
         if item.name == str(Items.HEART_CONTAINER):
-            state.soh_heart_count[self.player] -= 1
+            state._soh_extreme_heart_count[self.player] -= 1
         if item.name in (str(Items.PIECE_OF_HEART), str(Items.PIECE_OF_HEART_WINNER)):
-            state.soh_piece_of_heart_count[self.player] -= 1
-            if state.soh_piece_of_heart_count[self.player] == -1:
-                state.soh_piece_of_heart_count[self.player] = 3
-                state.soh_heart_count[self.player] -= 1
+            state._soh_extreme_piece_of_heart_count[self.player] -= 1
+            if state._soh_extreme_piece_of_heart_count[self.player] == -1:
+                state._soh_extreme_piece_of_heart_count[self.player] = 3
+                state._soh_extreme_heart_count[self.player] -= 1
         if self.options.song_note_shuffle.value and item.name.startswith("Song Note "):
             changed = self._refresh_virtual_song_for_note(state, item.name) or changed
         return changed

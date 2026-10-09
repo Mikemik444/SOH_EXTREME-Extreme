@@ -1337,7 +1337,7 @@ class HeartsAtLeast(Rule, game="SOH-EXTREME"):
         player: int
         amount: int
         def _evaluate(self, state: CollectionState) -> bool:
-            return state.soh_heart_count[self.player] >= self.amount # type: ignore
+            return state._soh_extreme_heart_count[self.player] >= self.amount # type: ignore
         
         def item_dependencies(self) -> dict[str, set[int]]:
             return {str(item_id): {id(self)} for item_id in (Items.HEART_CONTAINER, Items.PIECE_OF_HEART, Items.PIECE_OF_HEART_WINNER)}
@@ -1506,18 +1506,18 @@ class CanWinTriforceHunt(Rule, game="SOH-EXTREME"):
 
 class SohHeartState(LogicMixin):
     # tracking how many hearts the player has instead of checking the collection state every time
-    soh_piece_of_heart_count: Counter[int]
-    soh_heart_count: Counter[int]
+    _soh_extreme_piece_of_heart_count: Counter[int]
+    _soh_extreme_heart_count: Counter[int]
 
     def init_mixin(self, parent: MultiWorld):
         soh_players = list(parent.get_game_players(
-            "Ship of Harkinian") + parent.get_game_groups("Ship of Harkinian"))
-        self.soh_piece_of_heart_count = Counter()
-        self.soh_heart_count = Counter({player: cast("SohWorld", parent.worlds[player]).options.starting_hearts.value for player in soh_players})
+            "SOH-EXTREME") + parent.get_game_groups("SOH-EXTREME"))
+        self._soh_extreme_piece_of_heart_count = Counter()
+        self._soh_extreme_heart_count = Counter({player: cast("SohWorld", parent.worlds[player]).options.starting_hearts.value for player in soh_players})
 
     def copy_mixin(self, ret: CollectionState) -> CollectionState:
-        ret.soh_piece_of_heart_count = Counter(self.soh_piece_of_heart_count)  # type: ignore # noqa
-        ret.soh_heart_count = Counter(self.soh_heart_count)  # type: ignore # noqa
+        ret._soh_extreme_piece_of_heart_count = Counter(self._soh_extreme_piece_of_heart_count)  # type: ignore # noqa
+        ret._soh_extreme_heart_count = Counter(self._soh_extreme_heart_count)  # type: ignore # noqa
         return ret
 
 

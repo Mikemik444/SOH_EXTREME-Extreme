@@ -49,11 +49,11 @@ for label,removed in scenarios.items():
         # Location evaluation supplies the age to rules; inspect both branches
         # explicitly to catch child-only actors borrowing an adult inventory.
         for age in (Ages.CHILD,Ages.ADULT):
-            previous=state._soh_age[1];state._soh_age[1]=age
+            previous=state._soh_extreme_age[1];state._soh_extreme_age[1]=age
             try:
                 ck('entry Wolfos age '+str(age),by_id[9800536].access_rule(state),age==Ages.CHILD)
                 for address in (9800505,9800506):ck('grotto Wolfos age '+str(age)+' '+str(address),by_id[address].access_rule(state))
-            finally:state._soh_age[1]=previous
+            finally:state._soh_extreme_age[1]=previous
 
 report=dict(passed=all(t['passed'] for t in tests),tests=len(tests),checks=tests,scope=__doc__)
 a.report.write_text(json.dumps(report,indent=2),encoding='utf-8')

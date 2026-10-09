@@ -49,7 +49,7 @@ for age in (Ages.CHILD,Ages.ADULT):
    s=CollectionState(m)
    for it in m.precollected_items[1]:s.remove(it)
    for item in items+(['Pot Soul'] if soul else []):s.collect(w.create_item(item),True)
-   s._soh_age[1]=age
+   s._soh_extreme_age[1]=age
    for l in locations:ck(f'physical {age}/{soul}/{name} '+l.name,l.access_rule(s),soul and usable)
 report=dict(passed=all(c['passed'] for c in checks),count=len(checks),native_pots=len(pots),checks=checks,
  scope='Source catalog identity and real AP CollectionState/location rules plus UT slot-data reconstruction; not live gameplay.')

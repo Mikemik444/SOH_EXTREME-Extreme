@@ -47,18 +47,18 @@ for phase,clock in (('dawn',0x4555),('day',0x8000),('dusk',0xB555),('night',0x00
         if label=='flow missing':
             # Shared helpers also gate NPCs, Market wonders, castle entry and GS.
             for age in (Ages.CHILD,Ages.ADULT):
-                previous=s._soh_age[1];s._soh_age[1]=age
+                previous=s._soh_extreme_age[1];s._soh_extreme_age[1]=age
                 try:
                     b=(Regions.LON_LON_RANCH,w)
                     ck(phase+' day helper '+str(age),at_day(b).resolve(w)(s),True)
                     ck(phase+' night helper '+str(age),at_night(b).resolve(w)(s),True)
-                finally:s._soh_age[1]=previous
+                finally:s._soh_extreme_age[1]=previous
         if label=='time unlocked':
             # The Ranch Guay placements are child-night only, even with time free.
-            previous=s._soh_age[1];s._soh_age[1]=Ages.ADULT
+            previous=s._soh_extreme_age[1];s._soh_extreme_age[1]=Ages.ADULT
             try:
                 for l in guays:ck(phase+' adult cannot borrow child Guay '+l.name,l.access_rule(s),False)
-            finally:s._soh_age[1]=previous
+            finally:s._soh_extreme_age[1]=previous
 
 report=dict(scope=__doc__,passed=all(c['passed'] for c in checks),assertions=len(checks),
             failures=sum(not c['passed'] for c in checks),checks=checks)

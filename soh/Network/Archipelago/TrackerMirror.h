@@ -17,6 +17,8 @@ namespace SohExtreme {
 constexpr size_t kTrackerMaxEntries = 20000;
 constexpr size_t kTrackerMaxBytes = 750000;
 constexpr const char* kTrackerProtocol = "SOHExtremeFinder1";
+// Release metadata only. Display compatibility is defined by the wire format,
+// not by matching client/APWorld release labels (including future releases).
 constexpr const char* kTrackerVersion = SOH_EXTREME_VERSION;
 struct TrackerRow {
     int64_t id = 0;
@@ -132,7 +134,8 @@ class TrackerMirrorState {
     uint64_t NextRequest() { return ++request_; }
     const std::string& Nonce() const { return nonce_; }
     bool Accept(TrackerSnapshot candidate, uint32_t slot, double now, std::string& error) {
-        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use " SOH_EXTREME_VERSION " on both sides."; return false; }
+        // DecodeTrackerSnapshot has already validated the supported wire format.
+        // Never gate display on candidate.version; it is diagnostic metadata.
         if (nonce_.empty() || candidate.nonce != nonce_ || candidate.slot != slot ||
             candidate.request == 0 || candidate.request > request_) { error = "Wrong tracker session."; return false; }
         if (!producer_.empty() && producer_ != candidate.producer && now - lastReceive_ <= 10.0) {

@@ -30,10 +30,10 @@ for phase in ('dawn','day','dusk','night'):
             ck(f'{phase}/{shuffled}/{label}/AP/{loc.name}',loc.can_reach(state),expected)
             ck(f'{phase}/{shuffled}/{label}/UT/{loc.name}',loc.name in result.in_logic_locations,expected)
         # All seven placements exist only in child layouts.
-        before=state._soh_age[1];state._soh_age[1]=Ages.ADULT
+        before=state._soh_extreme_age[1];state._soh_extreme_age[1]=Ages.ADULT
         try:
             for loc in locs:ck(f'{phase}/{shuffled}/{label}/adult/{loc.name}',loc.access_rule(state),False)
-        finally:state._soh_age[1]=before
+        finally:state._soh_extreme_age[1]=before
 result=dict(passed=all(t['passed'] for t in tests),assertions=len(tests),tests=tests)
 a.report.write_text(json.dumps(result,indent=2));print('PASS' if result['passed'] else 'FAIL',len(tests))
 for t in tests:

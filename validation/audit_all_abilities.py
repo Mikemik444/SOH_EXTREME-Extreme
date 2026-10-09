@@ -52,16 +52,16 @@ for label,removed in scenarios:
         if direct and npc and npc['routes']:
             # Independent necessary condition: the actual age-specific graph
             # must reach a physical NPC route, regardless of its own rule.
-            previous=s._soh_age[1]
+            previous=s._soh_extreme_age[1]
             route_reachable=False
             try:
                 for route in npc['routes']:
                     ages=(Ages.CHILD,Ages.ADULT) if route['age']=='either' else (Ages.CHILD,) if route['age']=='child' else (Ages.ADULT,)
                     for age in ages:
-                        s._soh_age[1]=age
+                        s._soh_extreme_age[1]=age
                         route_reachable |= w.get_region(str(Regions[route['region']])).can_reach(s)
             finally:
-                s._soh_age[1]=previous
+                s._soh_extreme_age[1]=previous
             if not route_reachable:
                 failures.append(dict(scenario=label,id=i,name=l.name,error='NPC reachable without a physical route'))
         if not removed and not direct:failures.append(dict(scenario=label,id=i,name=l.name,error='blocked with complete inventory'))

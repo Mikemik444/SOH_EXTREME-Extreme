@@ -1,4 +1,13 @@
 1.6.0 - SOH-EXTREME About information and matching release versions (2026-10-08)
+  - 2026-10-09 hotfix: isolate EXTREME age/reachability and health state from
+    the regular Ship of Harkinian APWorld. Installing both must not cause
+    KeyError during item-plando/event sweeps or reset either game's health.
+    This is an APWorld-only fix; release version remains 1.6.0.
+  - Check Finder accepts compatible tracker snapshots from any release label,
+    including older and future releases. Version bumps alone must never block
+    display. Protocol decoding, save/session identity, location manifests,
+    item counts, shield inventory and stale-data checks remain enforced.
+    About now identifies the bundled APWorld version as recommended.
   - Client release, APWorld manifests and the automatic tracker now use 1.6.0.
     The client About panel shows both matching versions and the fork's GitHub.
   - Local builds populate their actual Git branch/commit. Source archives show

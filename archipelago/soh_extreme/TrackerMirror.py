@@ -10,6 +10,9 @@ from .NpcSpeech import display_region
 from typing import Any
 
 PROTOCOL = "SOHExtremeFinder1"
+# Release metadata for diagnostics; never require equal releases for display.
+# Keep the wire format stable across release bumps; change its identifier only
+# when the data layout changes and provide an explicit compatible decoder.
 VERSION = "1.6.0"
 TAG = "SOHExtremeUT"
 MAX_ENTRIES = 20000

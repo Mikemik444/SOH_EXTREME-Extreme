@@ -53,7 +53,7 @@ for mode in ('individual_animals','all_animals_as_1','off'):
                     # Isolated action helper: supply its renewable-ammo event.
                     # Without it, capacity alone is not usable stick ammo.
                     s.collect(next(l.item for l in w.get_locations() if l.item and l.item.name==Events.CAN_FARM_STICKS),True)
-                s._soh_age[1]=age
+                s._soh_extreme_age[1]=age
                 b=(Regions.GERUDO_VALLEY,w)
                 ck(f'{mode}/{age}/{soul}/{name} large crate helper',can_break_crates(b).resolve(w)(s),soul and large)
                 ck(f'{mode}/{age}/{soul}/{name} small crate helper',can_break_small_crates(b).resolve(w)(s),soul and small)

@@ -47,12 +47,12 @@ for phase in ('day','night'):
             ck(prefix+'/'+label+'/AP/'+loc.name,loc.can_reach(state),expected)
             ck(prefix+'/'+label+'/UT/'+loc.name,loc.name in result.in_logic_locations,expected)
         for age in (Ages.CHILD,Ages.ADULT):
-            previous=state._soh_age[1];state._soh_age[1]=age
+            previous=state._soh_extreme_age[1];state._soh_extreme_age[1]=age
             try:
                 bundle=(Regions.HYRULE_FIELD,w)
                 ck(prefix+'/'+label+'/day/'+str(age),at_day(bundle).resolve(w)(state),can_switch or phase=='day')
                 ck(prefix+'/'+label+'/night/'+str(age),at_night(bundle).resolve(w)(state),can_switch or phase=='night')
-            finally:state._soh_age[1]=previous
+            finally:state._soh_extreme_age[1]=previous
 result=dict(scope=__doc__,passed=all(t['passed'] for t in tests),assertions=len(tests),tests=tests)
 a.report.write_text(json.dumps(result,indent=2));print('PASS' if result['passed'] else 'FAIL',len(tests))
 for t in tests:

@@ -80,7 +80,8 @@ int main(int argc,char** argv){
  ck(store.Current(valid.slot,valid.received,valid.active,valid.checked,111,status)==nullptr,"expired snapshot hidden");
  ck(!store.Accept(valid,valid.slot,101,status),"duplicate revision rejected");
  auto bad=valid;bad.revision=2;bad.version="0.11.18";
- ck(!store.Accept(bad,valid.slot,101,status),"version mismatch rejected");
+ TrackerMirrorState otherRelease;otherRelease.Reset(valid.nonce);otherRelease.NextRequest();
+ ck(otherRelease.Accept(bad,valid.slot,101,status),"compatible older release accepted");
  bad=valid;bad.revision=2;bad.nonce=std::string(32,'e');
  ck(!store.Accept(bad,valid.slot,101,status),"nonce mismatch rejected");
  bad=valid;bad.revision=2;bad.slot++;

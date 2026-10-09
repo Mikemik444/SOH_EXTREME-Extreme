@@ -47,9 +47,9 @@ def remove_all(s,w,names):
     return s
 
 def eval_rule(rule,w,state,age=Ages.CHILD):
-    old=state._soh_age[w.player];state._soh_age[w.player]=age
+    old=state._soh_extreme_age[w.player];state._soh_extreme_age[w.player]=age
     try:return rule.resolve(w)(state)
-    finally:state._soh_age[w.player]=old
+    finally:state._soh_extreme_age[w.player]=old
 
 try:
     if args.group=='capabilities':
@@ -178,8 +178,8 @@ try:
             edge=next(e for e in w.get_region('Hyrule Field').exits if e.connected_region.name=='Market Entrance')
             f=snapshot(mw,w,{'Flow of Time'})
             for age in (Ages.CHILD,Ages.ADULT):
-                old=f._soh_age[1];f._soh_age[1]=age
-                actual=edge.access_rule(f);f._soh_age[1]=old
+                old=f._soh_extreme_age[1];f._soh_extreme_age[1]=age
+                actual=edge.access_rule(f);f._soh_extreme_age[1]=old
                 check(start+' drawbridge '+str(age),actual,start=='day' or age==Ages.ADULT)
             # Ordinary indoor GS are not time-of-day gates.
             check(start+' no universal Flow requirement on Deku lobby GS',w.get_location('Deku Tree GS Basement Back Room').can_reach(f))

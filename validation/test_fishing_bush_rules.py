@@ -71,7 +71,7 @@ try:
    if fish:ns+=['Animal Soul' if w.options.shuffle_animal_soul.value==1 else 'Fish Soul']
    if rod:ns+=['Fishing Pole']
    if wallet:ns+=['Progressive Wallet']
-   s=bare(m,w,ns);s._soh_age[w.player]=age
+   s=bare(m,w,ns);s._soh_extreme_age[w.player]=age
    expected=(npc or not w.options.shuffle_npc_soul.value) and (talk or not w.options.shuffle_speak.value) and (fish or not w.options.shuffle_animal_soul.value) and (rod or not w.options.shuffle_fishing_pole.value) and (wallet or not w.options.shuffle_childs_wallet.value)
    ck(f'rod action {age} NPC={npc} talk={talk} fish={fish} rod={rod} wallet={wallet}',r(s),expected)
  if w.options.shuffle_speak.value==2:

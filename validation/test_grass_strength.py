@@ -46,7 +46,7 @@ for shuffled in (False, True):
                 for item in m.precollected_items[1]: s.remove(item)
                 if soul: s.collect(w.create_item('Grass / Bush Soul'), True)
                 for _ in range(copies): s.collect(w.create_item('Strength Upgrade'), True)
-                s._soh_age[1] = age
+                s._soh_extreme_age[1] = age
                 ck(f'helper grab={shuffled} age={age} soul={soul} strength={copies}',
                    can_collect_grass(bundle).resolve(w)(s), soul and copies >= (2 if shuffled else 1))
                 ck(f'rocks keep basic Grab gate {shuffled}/{age}/{soul}/{copies}',
@@ -82,7 +82,7 @@ for shuffled in (False, True):
     s = CollectionState(m)
     for name in ['Grass / Bush Soul'] + ['Strength Upgrade']*(2 if shuffled else 1):
         s.collect(w.create_item(name), True)
-    s._soh_age[1] = Ages.CHILD
+    s._soh_extreme_age[1] = Ages.CHILD
     rule = can_collect_grass(bundle).resolve(w)
     ck(f'grass before strength removal {shuffled}', rule(s), True)
     s.remove(w.create_item('Strength Upgrade'))

@@ -22,11 +22,11 @@ evaluate=tracker(w,a.ut_core);tests=[]
 def ck(name,value,expected=True):
     tests.append(dict(test=name,actual=value,expected=expected,passed=value==expected))
 def in_region(state,token,age):
-    previous=state._soh_age[1]
+    previous=state._soh_extreme_age[1]
     try:
-        state._soh_age[1]=age
+        state._soh_extreme_age[1]=age
         return w.get_region(str(Regions[token])).can_reach(state)
-    finally: state._soh_age[1]=previous
+    finally: state._soh_extreme_age[1]=previous
 def has_route(state,entry):
     return any(in_region(state,route['region'],age)
         for route in entry['routes']

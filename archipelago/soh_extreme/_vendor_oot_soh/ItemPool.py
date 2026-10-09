@@ -300,7 +300,7 @@ def create_item_pool(world: "SohWorld") -> None:
     elif world.options.item_pool == "minimal":
         max_hearts = 3
 
-    starting_hearts: int = world.multiworld.state.soh_heart_count[world.player]
+    starting_hearts: int = world.multiworld.state._soh_extreme_heart_count[world.player]
     if starting_hearts < max_hearts:
         items_to_create[Items.PIECE_OF_HEART_WINNER] = 1
         items_to_create[Items.PIECE_OF_HEART] = 3
@@ -501,7 +501,7 @@ def create_item_pool(world: "SohWorld") -> None:
     # If you start with enough hearts to do everything and tricks aren't enabled make the rest of them useful
     if not (world.options.enable_all_tricks or str(Tricks.FEWER_TUNIC_REQUIREMENTS) in world.options.tricks_in_logic.value):
         min_hearts_needed: int = 3
-        if world.multiworld.state.soh_heart_count[world.player] >= min_hearts_needed:
+        if world.multiworld.state._soh_extreme_heart_count[world.player] >= min_hearts_needed:
             items_to_create[Items.PIECE_OF_HEART] -= create_special_progression_item(world, Items.PIECE_OF_HEART, ItemClassification.useful, items_to_create[Items.PIECE_OF_HEART])
             items_to_create[Items.PIECE_OF_HEART_WINNER] -= create_special_progression_item(world, Items.PIECE_OF_HEART_WINNER, ItemClassification.useful, items_to_create[Items.PIECE_OF_HEART_WINNER])
             items_to_create[Items.HEART_CONTAINER] -= create_special_progression_item(world, Items.HEART_CONTAINER, ItemClassification.useful, items_to_create[Items.HEART_CONTAINER])

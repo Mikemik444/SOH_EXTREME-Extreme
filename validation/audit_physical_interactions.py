@@ -87,13 +87,13 @@ def build_constraints(w,root):
  return rules,unknown,skipped
 
 def allows_interaction(w,state,entry):
- rule,region,row=entry;loc=w.get_location(row['name']);old=state._soh_age[w.player]
+ rule,region,row=entry;loc=w.get_location(row['name']);old=state._soh_extreme_age[w.player]
  try:
   for age in (Ages.CHILD,Ages.ADULT):
-   state._soh_age[w.player]=age
+   state._soh_extreme_age[w.player]=age
    if loc.parent_region.can_reach(state) and rule(state):return True
   return False
- finally:state._soh_age[w.player]=old
+ finally:state._soh_extreme_age[w.player]=old
 
 def main():
  p=argparse.ArgumentParser(parents=[BOOTSTRAP]);p.add_argument('--source-root',type=Path,required=True);p.add_argument('--report',type=Path,required=True)

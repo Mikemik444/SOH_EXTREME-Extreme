@@ -89,7 +89,7 @@ for scene, regions in sorted(scenes.items()):
                     for it in m.precollected_items[1]: s.remove(it)
                     for n in inventory + (['Pot Soul'] if soul else []): s.collect(w.create_item(n), True)
                     s.prog_items[1][Events.CAN_FARM_STICKS] = 1
-                    s._soh_age[1] = age
+                    s._soh_extreme_age[1] = age
                     usable = kind == 'grab' or (kind == 'sword' and not (f1 & 0x30)) or (
                         kind in ('combat', 'hookshot') and not (f3 & 3) and
                         (kind != 'hookshot' or not (f2 & 0x30)))

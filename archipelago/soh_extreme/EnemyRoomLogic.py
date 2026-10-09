@@ -222,12 +222,12 @@ class NativeAsAge(Rule, game="SOH-EXTREME"):
         adult: bool
         force_recalculate: ClassVar[bool] = True
         def _evaluate(self,state):
-            old=state._soh_age[self.player]
+            old=state._soh_extreme_age[self.player]
             try:
-                state._soh_age[self.player]=Ages.ADULT if self.adult else Ages.CHILD
+                state._soh_extreme_age[self.player]=Ages.ADULT if self.adult else Ages.CHILD
                 return self.inner(state)
             finally:
-                state._soh_age[self.player]=old
+                state._soh_extreme_age[self.player]=old
         def item_dependencies(self): return self.inner.item_dependencies()
         def region_dependencies(self): return self.inner.region_dependencies()
         def explain_str(self,state=None): return "Native Spirit shared-key alternate-age requirement"

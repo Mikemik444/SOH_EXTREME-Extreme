@@ -274,7 +274,7 @@ void SohMenu::AddMenuSettings() {
     AddWidget(path, "About", WIDGET_SEPARATOR_TEXT);
     AddWidget(path, "SOH-EXTREME", WIDGET_TEXT);
     AddWidget(path, "Client version: " SOH_EXTREME_VERSION, WIDGET_TEXT);
-    AddWidget(path, "Matching APWorld: " SOH_EXTREME_VERSION, WIDGET_TEXT);
+    AddWidget(path, "Recommended APWorld: " SOH_EXTREME_VERSION, WIDGET_TEXT);
     AddWidget(path, "Based on Ship of Harkinian", WIDGET_TEXT);
     AddWidget(path, "Open SOH-EXTREME GitHub", WIDGET_BUTTON)
         .RaceDisable(false)

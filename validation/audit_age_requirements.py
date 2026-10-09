@@ -22,9 +22,9 @@ if __name__=='__main__':
   if row['kind'] not in ('stock','fork') or not defs:continue
   ages=set.intersection(*(mandatory(d['condition']) for d in defs))
   for age in ages:
-   s._soh_age[w.player]=Ages.ADULT if age=='logic->IsChild' else Ages.CHILD
+   s._soh_extreme_age[w.player]=Ages.ADULT if age=='logic->IsChild' else Ages.CHILD
    loc=w.get_location(row['name']);got=Location.can_reach(loc,s)
-   tests.append(dict(id=row['id'],name=loc.name,native_age=age,test_age=str(s._soh_age[w.player]),passed=not got,source=defs))
+   tests.append(dict(id=row['id'],name=loc.name,native_age=age,test_age=str(s._soh_extreme_age[w.player]),passed=not got,source=defs))
  out=dict(scope=__doc__,assertions=len(tests),failures=sum(not r['passed'] for r in tests),tests=tests)
  a.report.write_text(json.dumps(out,indent=2));print({k:v for k,v in out.items() if k!='tests'})
  for r in tests:

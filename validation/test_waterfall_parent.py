@@ -14,7 +14,7 @@ ck('stable network ID',loc.address,9700247)
 s=m.get_all_state(False)
 ck('all inventory reaches adult pickup from child start',loc.can_reach(s),True)
 for age in (Ages.CHILD,Ages.ADULT):
-    copy=s.copy();copy._soh_age[1]=age
+    copy=s.copy();copy._soh_extreme_age[1]=age
     ck('pickup age '+str(age),loc.access_rule(copy),age==Ages.ADULT)
 copy=s.copy();copy.remove(w.create_item('Climb'))
 ck('Climb is still required',loc.can_reach(copy),False)

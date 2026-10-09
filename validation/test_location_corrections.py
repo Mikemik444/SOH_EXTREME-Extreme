@@ -48,7 +48,7 @@ try:
    for soul,grab,sword in itertools.product((False,True),repeat=3):
     items=(['Grass / Bush Soul'] if soul else [])+(['Grab / Power Bracelet'] if grab else [])
     if sword:items+=['Kokiri Sword' if age==Ages.CHILD else 'Master Sword']
-    s=bare(m,w,items);s._soh_age[1]=age
+    s=bare(m,w,items);s._soh_extreme_age[1]=age
     ck(f'grass soul={soul} Grab={grab} sword={sword} age={age}',r(s),soul and(grab or sword))
   for missing in (['Grab / Power Bracelet'],['Kokiri Sword','Master Sword',"Biggoron's Sword","Giant's Knife",'Boomerang','Megaton Hammer','Progressive Bomb Bag','Bombchu Bag']):
    s=without(full,w,missing)
@@ -91,7 +91,7 @@ try:
   fork_by_rc={f.rc:f for f in FORK_LOCATIONS}
   for rc,age in FORK_LOCATION_AGES.items():
    f=fork_by_rc[rc];l=w.get_location(f.name)
-   s=full.copy();s._soh_age[1]=Ages.ADULT if age=='child' else Ages.CHILD
+   s=full.copy();s._soh_extreme_age[1]=Ages.ADULT if age=='child' else Ages.CHILD
    ck(f.name+' wrong age cannot collect',Location.can_reach(l,s),False)
   coverage['fork_age_gates']=len(FORK_LOCATION_AGES)
  elif a.group=='lacs':
