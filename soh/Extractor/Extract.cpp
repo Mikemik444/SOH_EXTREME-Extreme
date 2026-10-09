@@ -673,7 +673,7 @@ bool Extractor::CallTorch(std::string installPath, std::string exportdir, std::a
         converted.close();
         if (!converted) { mLastError = "Could not write temporary normal OoT data."; return false; }
         versionDir = "ntsc_1-0";
-        SPDLOG_INFO("Verified PAL Master Quest conversion to normal OoT; extracting normal dungeon assets");
+        SPDLOG_INFO("Verified Master Quest conversion to normal OoT; extracting normal dungeon assets");
     }
     *totalExtract = SohTorch::CountAssetFiles(srcDir + "/" + versionDir);
     *extractCount = 0;

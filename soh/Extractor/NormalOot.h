@@ -20,6 +20,10 @@ inline bool NormalizeRom(std::vector<uint8_t>& data, std::string& error) {
         error = "Unrecognized N64 ROM byte order.";
         return false;
     }
+    // Match Extractor::ValidateAndFixRom: some MQ debug dumps carry a patched
+    // US region byte. Only repair the private working copy, never the input file.
+    if (data.size() >= 64 && data[16] == 0x91 && data[17] == 0x7d &&
+        data[18] == 0x18 && data[19] == 0xf6) data[0x3e] = 'P';
     return true;
 }
 
@@ -40,18 +44,23 @@ inline bool ReadFile(const std::filesystem::path& path, std::vector<uint8_t>& da
     return true;
 }
 
-// The reference pair is verified by build_normal_oot_patch.py and by extraction
-// parity tests. Do not guess a patch for another regional/debug MQ revision.
+// Each reference pair is verified by byte-for-byte native conversion tests.
+// The BPS source checksum distinguishes dumps sharing the same header CRC.
 inline bool ConvertMasterQuest(std::span<const uint8_t> source, const std::filesystem::path& assets,
                                std::vector<uint8_t>& output, std::string& error) {
-    if (source.size() < 20 || source[16] != 0x1d || source[17] != 0x41 ||
-        source[18] != 0x36 || source[19] != 0xf3) {
-        error = "Normal-layout conversion currently supports PAL GameCube Master Quest. "
+    const char* patchName = nullptr;
+    if (source.size() >= 20) {
+        const auto header = ReadLe32(source, 16);
+        if (header == 0xf336411d) patchName = "normal-oot/pal-mq-to-ntsc10.bps";
+        if (header == 0xf6187d91) patchName = "normal-oot/mq-debug-to-ntsc10.bps";
+    }
+    if (patchName == nullptr) {
+        error = "Normal-layout conversion supports PAL GameCube Master Quest and the verified 64 MB MQ Debug dump. "
                 "This MQ revision needs its own verified conversion data.";
         return false;
     }
     std::vector<uint8_t> patch;
-    if (!ReadFile(assets / "normal-oot/pal-mq-to-ntsc10.bps", patch, 64 * 1024 * 1024, error)) return false;
+    if (!ReadFile(assets / patchName, patch, 64 * 1024 * 1024, error)) return false;
     std::vector<uint8_t> converted;
     if (!ApplyBps(source, patch, converted, error, 32 * 1024 * 1024)) return false;
     if (converted.size() != 32 * 1024 * 1024 || converted[16] != 0xec || converted[17] != 0x70 ||

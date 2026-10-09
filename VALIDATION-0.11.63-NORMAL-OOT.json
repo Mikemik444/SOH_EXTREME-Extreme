@@ -1,0 +1,489 @@
+{
+  "version": "0.11.63",
+  "github_base_commit": "11f45cf3340959e999064d4811cea61b1e188bad",
+  "full_game_build_completed": true,
+  "live_game_playtested": false,
+  "torch_extraction_parity_verified": false,
+  "extraction_test_limitation": "Windows denied weakly_canonical metadata access",
+  "source_patch_forward_reverse_verified": true,
+  "source_sha256": {
+    "CMakeLists.txt": "0434b752cc69cb54d987164500862cf0ba4d54b1471aa1914073575ca7a72ceb",
+    "Cmake/SohExtremeAPCppIdentity.cmake": "5aabff4e971c1bec9aafe74441138473ca364fb2caf17e9fda41ef860b8e4889",
+    "SOH_AP_FIX_HISTORY.txt": "aca8c337c565fca394cf8ed18c54f835185f6c1fa3e4929e182ae8c1fee8922e",
+    "archipelago/archipelago.json": "14783429147180a547043b85ffd33b0a85a0fe271410c007a77fe1767064dc1a",
+    "archipelago/soh_extreme/TrackerMirror.py": "fcaeb85cabba54f4af0100e172e7f9f7226a39921949a0914bda0faf5b6d1297",
+    "archipelago/soh_extreme/archipelago.json": "14783429147180a547043b85ffd33b0a85a0fe271410c007a77fe1767064dc1a",
+    "assets/yml/normal-oot/mq-debug-to-ntsc10.bps": "55ce79074f4ce9186276f7d11b15d54dc9356aca1eb365fd109047946127fb6d",
+    "assets/yml/normal-oot/mq-debug-to-ntsc10.json": "6ce397c421b04d547e5081e8ccd1c5ebc04bdbd18de1402107de3d25e7039a6a",
+    "assets/yml/normal-oot/pal-mq-to-ntsc10.bps": "c63ce29d8974913cbe8829e73e1617c145bf78f3727a0965f3e117fffbe095ff",
+    "assets/yml/normal-oot/pal-mq-to-ntsc10.json": "d4c1f4863ea4ad78abfccb038096b7ec545b088fdae9b45a4434d353d77d9eaf",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "34e23517887f09c7cbc6b05b384538b61f4cdf9ef512f4822a2c42760a1dbbc0",
+    "soh/Extractor/BpsPatch.h": "fc4fdc8d2d45b2666b05faa0d69be468803a6e3e347b1d17e6d17de20e9c9316",
+    "soh/Extractor/Extract.cpp": "46d3222570b34ebf6c85a7ee7b0bc7fe66867dd2ca38e71f92725b3d3109cbc0",
+    "soh/Extractor/Extract.h": "8af86fc4a62853b716ad1e613abf7993a96c9655566da0c2f41e3f99b81da881",
+    "soh/Extractor/NormalOot.h": "4b110225a098c5f33c6af4b8cf9262e0aeb1c971cf93dc26e9fd4f58764b4dea",
+    "soh/Extractor/TorchExtract.cpp": "458dcd115d1d01406ef9edfdbe7ec5efb5431b91a8c8d05d66b3bf7da511c3a1",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "42d80400e657e9917df80629079e1c74c1637f171e002a918a7f9bd9bfbf6295",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "59672be178c8a99aa9209e95e272e621515a8148f39a667f182c96f9ba690686",
+    "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h": "e44d756bd3ad080469e76fd063a79b8e65e70ea07adce2462ec1b90b670689b3",
+    "soh/Network/Archipelago/SaveConnectionIdentity.h": "68f748b8b1fec735d60060e8918300332cb486229d254a1152d0117a8393fad4",
+    "soh/Network/Archipelago/TrackerMirror.h": "560443fbfdc39ea4e1d6917e2a54d6721e922ebe13322a4553e2ccf967b1a7cc",
+    "soh/Network/Archipelago/TrackerWorker.cpp": "a56530601d67a42c2cc18354afe5f9c7e70152c18ed7a02e114e6eb8df39af9d",
+    "soh/OTRGlobals.cpp": "f636ace1aca35abe4b181ee805fb7d6299c27b8080f28cec3addeb4bd509eba3",
+    "soh/SaveManager.cpp": "281ba6a729a8927d88c7c62bd6e07a525ce4c9ce30d6ab458ab72838f1980f4a",
+    "soh/SohGui/SohMenuNetwork.cpp": "25e49939d34e5fe9970b44cbf3469f0a98a15b0f62fd1171d712002c1b27a166",
+    "tools/build_normal_oot_patch.py": "a9639926a18c4545afcb9ddec7f743ba1626db0bbc6ebaf1326c73bb83d112b0",
+    "validation/test_ap_connection_protocol.cpp": "0846c588709003bd218bd1f0001b56513fc269986fff7d38982f45a6fe5ce7de",
+    "validation/test_ap_connection_protocol.py": "dc004cf2e722a24ecc44d2326dd84de27d5f4fb972c9cc94eb699d3669e4dd32",
+    "validation/test_ap_delivery_audit.py": "8724345970ee7ffaee8ea33e87f2df30262172629f259a629de6a70b017d43fc",
+    "validation/test_ap_identity_patch.py": "ee6d4d1b99c2ea5ef5da2143d0541a9fe926791b778cb0222f60651bba590b34",
+    "validation/test_normal_oot.cpp": "d5f3df274dc2893c3da9dda929f85f8f736015f45f1b9f57f3e86cbbf3b8660f",
+    "validation/test_normal_oot.py": "9efbdc21ce27f53d7b9331021acb0351ccb21fc2ffd2e5acc737bf96a0e402d6",
+    "validation/test_save_reconnect.py": "72a967f89b5037b151272519972ca17e702912e26075f935f00c9a25690d12fd"
+  },
+  "runtime_sha256": {
+    "soh.exe": "36bda3954ec234311e2b3637649cd0cc2c6cff5d0de794a1dc21bd246c4547dc",
+    "APCpp.dll": "657904f12789d202e74e1ae5be6e8bb13626298e33f8ddb650b75b707cb92c0b",
+    "soh.o2r": "e34ec65e941ba960f34d5d4ea389fba546d98245a7c9ddc08193241ad6ca58b1",
+    "soh_extreme.apworld": "1764e663585305f8c46838c8a8df0cc3b77e9334e2a915df99ca1c0cf4be2f39"
+  },
+  "extractor_files": 20357,
+  "conversion_assets_in_both_build_folders_verified": true,
+  "asset_verification": {
+    "passed": true,
+    "assets": 20357,
+    "conversion_assets_verified": true,
+    "matching_dll_copied": true,
+    "base_assets": "Unchanged; verified in 0.11.62. Release packaging verifies the complete ZIP independently.",
+    "destinations": [
+      "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\build-fixed\\soh\\assets",
+      "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme\\x64\\Release\\assets"
+    ]
+  },
+  "apworld_source_parity": true,
+  "build": {
+    "post_build_assets": "Copied and verified separately",
+    "compiler_override": "/Z7 /MP2",
+    "exit_code": 0
+  },
+  "tests": {
+    "conversion": {
+      "passed": true,
+      "cases": [
+        {
+          "name": "all-commands",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "overlap",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "target-backward",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "empty",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "source-read-oob",
+          "passed": true,
+          "message": "Conversion reads beyond the source ROM."
+        },
+        {
+          "name": "source-copy-oob",
+          "passed": true,
+          "message": "Conversion reads beyond the source ROM."
+        },
+        {
+          "name": "source-copy-before",
+          "passed": true,
+          "message": "Conversion reads before the input."
+        },
+        {
+          "name": "target-unwritten",
+          "passed": true,
+          "message": "Conversion refers to unwritten output."
+        },
+        {
+          "name": "target-copy-before",
+          "passed": true,
+          "message": "Conversion reads before the input."
+        },
+        {
+          "name": "literal-truncated",
+          "passed": true,
+          "message": "Truncated conversion data."
+        },
+        {
+          "name": "output-overrun",
+          "passed": true,
+          "message": "Conversion exceeds output size."
+        },
+        {
+          "name": "output-short",
+          "passed": true,
+          "message": "Normal-layout conversion output verification failed."
+        },
+        {
+          "name": "output-crc",
+          "passed": true,
+          "message": "Normal-layout conversion output verification failed."
+        },
+        {
+          "name": "wrong-source-size",
+          "passed": true,
+          "message": "Invalid normal-layout conversion patch sizes."
+        },
+        {
+          "name": "too-large-output",
+          "passed": true,
+          "message": "Invalid normal-layout conversion patch sizes."
+        },
+        {
+          "name": "command-overflow",
+          "passed": true,
+          "message": "Invalid conversion command."
+        },
+        {
+          "name": "offset-overflow",
+          "passed": true,
+          "message": "Invalid conversion offset."
+        },
+        {
+          "name": "unterminated-command",
+          "passed": true,
+          "message": "Invalid conversion command."
+        },
+        {
+          "name": "valid",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "bad-patch-crc",
+          "passed": true,
+          "message": "Normal-layout conversion patch checksum failed."
+        },
+        {
+          "name": "short-header",
+          "passed": true,
+          "message": "Invalid normal-layout conversion patch header."
+        },
+        {
+          "name": "wrong-source-crc",
+          "passed": true,
+          "message": "This ROM does not match the normal-layout conversion patch."
+        },
+        {
+          "name": "mq-normal",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "normal-unchanged",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "z64-conversion",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "v64-conversion",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "n64-conversion",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "debug-us-header-repair",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "other-debug-dump-rejected",
+          "passed": true,
+          "message": "This ROM does not match the normal-layout conversion patch."
+        },
+        {
+          "name": "missing-patch",
+          "passed": true,
+          "message": "Cannot read mq-debug-to-ntsc10.bps. Check the assets folder."
+        },
+        {
+          "name": "wrong-revision",
+          "passed": true,
+          "message": "Normal-layout conversion supports PAL GameCube Master Quest and the verified 64 MB MQ Debug dump. This MQ revision needs its own verified conversion data."
+        },
+        {
+          "name": "corrupt-source",
+          "passed": true,
+          "message": "This ROM does not match the normal-layout conversion patch."
+        },
+        {
+          "name": "bad-byte-order",
+          "passed": true,
+          "message": "Unrecognized N64 ROM byte order."
+        },
+        {
+          "name": "bad-rom-size",
+          "passed": true,
+          "message": "Invalid ROM size."
+        }
+      ],
+      "source_sha256": {
+        "Legend of Zelda, The - Ocarina of Time - Master Quest (USA) (Debug Edition).n64": "554d5bd122889a5fe51a84355124f24a134a5050c49fab37468d2165de2917e6",
+        "Legend of Zelda, The - Ocarina of Time (USA).z64": "c916ab315fbe82a22169bff13d6b866e9fddc907461eb6b0a227b82acdf5b506"
+      },
+      "converted_sha1": "ad69c91157f6705e8ab06c79fe08aad47bb57ba7",
+      "originals_unchanged": true,
+      "canonical_source_sha1": "cfecfdc58d650e71a200c81f033de4e6d617a9f6",
+      "patch_sha256": "55ce79074f4ce9186276f7d11b15d54dc9356aca1eb365fd109047946127fb6d",
+      "production_handoff": {
+        "passed": true,
+        "output": "PASS production ROM validation and CallTorch: header repair, corrupt input rejection, normal/MQ handoff, missing patch, failure/exception cleanup, wrong archive rejection\n",
+        "scope": "Actual CallTorch and Mkdtemp with controlled Torch service; no asset extraction"
+      }
+    },
+    "retail_mq": {
+      "passed": true,
+      "cases": [
+        {
+          "name": "all-commands",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "overlap",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "target-backward",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "empty",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "source-read-oob",
+          "passed": true,
+          "message": "Conversion reads beyond the source ROM."
+        },
+        {
+          "name": "source-copy-oob",
+          "passed": true,
+          "message": "Conversion reads beyond the source ROM."
+        },
+        {
+          "name": "source-copy-before",
+          "passed": true,
+          "message": "Conversion reads before the input."
+        },
+        {
+          "name": "target-unwritten",
+          "passed": true,
+          "message": "Conversion refers to unwritten output."
+        },
+        {
+          "name": "target-copy-before",
+          "passed": true,
+          "message": "Conversion reads before the input."
+        },
+        {
+          "name": "literal-truncated",
+          "passed": true,
+          "message": "Truncated conversion data."
+        },
+        {
+          "name": "output-overrun",
+          "passed": true,
+          "message": "Conversion exceeds output size."
+        },
+        {
+          "name": "output-short",
+          "passed": true,
+          "message": "Normal-layout conversion output verification failed."
+        },
+        {
+          "name": "output-crc",
+          "passed": true,
+          "message": "Normal-layout conversion output verification failed."
+        },
+        {
+          "name": "wrong-source-size",
+          "passed": true,
+          "message": "Invalid normal-layout conversion patch sizes."
+        },
+        {
+          "name": "too-large-output",
+          "passed": true,
+          "message": "Invalid normal-layout conversion patch sizes."
+        },
+        {
+          "name": "command-overflow",
+          "passed": true,
+          "message": "Invalid conversion command."
+        },
+        {
+          "name": "offset-overflow",
+          "passed": true,
+          "message": "Invalid conversion offset."
+        },
+        {
+          "name": "unterminated-command",
+          "passed": true,
+          "message": "Invalid conversion command."
+        },
+        {
+          "name": "valid",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "bad-patch-crc",
+          "passed": true,
+          "message": "Normal-layout conversion patch checksum failed."
+        },
+        {
+          "name": "short-header",
+          "passed": true,
+          "message": "Invalid normal-layout conversion patch header."
+        },
+        {
+          "name": "wrong-source-crc",
+          "passed": true,
+          "message": "This ROM does not match the normal-layout conversion patch."
+        },
+        {
+          "name": "mq-normal",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "normal-unchanged",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "z64-conversion",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "v64-conversion",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "n64-conversion",
+          "passed": true,
+          "message": ""
+        },
+        {
+          "name": "missing-patch",
+          "passed": true,
+          "message": "Cannot read pal-mq-to-ntsc10.bps. Check the assets folder."
+        },
+        {
+          "name": "wrong-revision",
+          "passed": true,
+          "message": "Normal-layout conversion supports PAL GameCube Master Quest and the verified 64 MB MQ Debug dump. This MQ revision needs its own verified conversion data."
+        },
+        {
+          "name": "corrupt-source",
+          "passed": true,
+          "message": "This ROM does not match the normal-layout conversion patch."
+        },
+        {
+          "name": "bad-byte-order",
+          "passed": true,
+          "message": "Unrecognized N64 ROM byte order."
+        },
+        {
+          "name": "bad-rom-size",
+          "passed": true,
+          "message": "Invalid ROM size."
+        }
+      ],
+      "source_sha256": {
+        "Legend of Zelda, The - Ocarina of Time - Master Quest (E) [!].z64": "ed392a890d5fab1c4d6863c69a40df6ca966f568160f2b2a9a73e5d02a6e93c2",
+        "Legend of Zelda, The - Ocarina of Time (USA).z64": "c916ab315fbe82a22169bff13d6b866e9fddc907461eb6b0a227b82acdf5b506"
+      },
+      "converted_sha1": "ad69c91157f6705e8ab06c79fe08aad47bb57ba7",
+      "originals_unchanged": true,
+      "canonical_source_sha1": "f46239439f59a2a594ef83cf68ef65043b1bffe2",
+      "patch_sha256": "c63ce29d8974913cbe8829e73e1617c145bf78f3727a0965f3e117fffbe095ff",
+      "production_handoff": {
+        "passed": true,
+        "output": "PASS production ROM validation and CallTorch: header repair, corrupt input rejection, normal/MQ handoff, missing patch, failure/exception cleanup, wrong archive rejection\n",
+        "scope": "Actual CallTorch and Mkdtemp with controlled Torch service; no asset extraction"
+      }
+    },
+    "reconnect": {
+      "passed": true,
+      "build_exit": 0,
+      "test_exit": 0,
+      "output": "47 production reconnect assertions passed\n",
+      "scope": "Production functions with controlled engine/network services; no live gameplay test."
+    },
+    "delivery": [
+      {
+        "name": "location_delivery_and_isolation",
+        "passed": true
+      },
+      {
+        "name": "partial_scout_recovery",
+        "passed": true
+      },
+      {
+        "name": "save_snapshot_consistency",
+        "passed": true
+      },
+      {
+        "name": "major_receipt_identity",
+        "passed": true
+      },
+      {
+        "name": "AP save/receipt/enemy integration boundaries",
+        "passed": true
+      }
+    ],
+    "cmake_patch": {
+      "passed": true,
+      "cases": [
+        "normal",
+        "idempotent",
+        "missing-late-anchor",
+        "legacy-upgrade",
+        "legacy-after-hints",
+        "duplicate-legacy",
+        "duplicate-anchor",
+        "modified-patch"
+      ]
+    },
+    "apcpp_parser": {
+      "passed": true,
+      "build_exit": 0,
+      "test_exit": 0,
+      "output": "PASS APCpp identity: RoomInfo/refusal gating, stable player name, team/slot, callback ordering, spoofed slot_data exclusion, reconnect\n",
+      "apcpp_sha256": "657904f12789d202e74e1ae5be6e8bb13626298e33f8ddb650b75b707cb92c0b",
+      "parser_sha256": "7047015660f83ae9972df4671992baedd434169baaccef2efa1737eb0d82f48f",
+      "scope": "Real APCpp packet parser; no socket, server, or live game connection.",
+      "binary_unchanged_from_verified_062": true
+    }
+  }
+}

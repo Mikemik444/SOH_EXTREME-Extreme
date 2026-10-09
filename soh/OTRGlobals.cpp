@@ -636,7 +636,7 @@ void OTRGlobals::RunExtract(int argc, char* argv[]) {
                         if (!ootO2RExists) {
                             SohGui::RegisterPopup(
                                 "Normal OoT assets needed",
-                                "Prepare normal OoT assets now? Select a supported normal OoT ROM or PAL Master Quest ROM. "
+                                "Prepare normal OoT assets now? Select a supported normal OoT, PAL Master Quest, or MQ Debug ROM. "
                                 "Either will create the normal dungeon layouts used by SOH-EXTREME.", "Yes", "No",
                                 [&]() { promptStep = PS_LOCAL; }, [&]() { exit(0); });
                         } else {

@@ -15,14 +15,19 @@ def normalize(data):
     if data[:4] == bytes.fromhex('37804012'):
         b = bytearray(data)
         b[0::2], b[1::2] = data[1::2], data[0::2]
-        return bytes(b)
-    if data[:4] == bytes.fromhex('40123780'):
+        data = bytes(b)
+    elif data[:4] == bytes.fromhex('40123780'):
         b = bytearray(data)
         for i in range(4):
             b[i::4] = data[3-i::4]
-        return bytes(b)
+        data = bytes(b)
     if data[:4] != bytes.fromhex('80371240'):
         raise ValueError('Not a recognized N64 ROM byte order')
+    # Match the game's pre-extraction repair of the MQ debug region header.
+    if len(data) >= 64 and data[16:20] == bytes.fromhex('917d18f6'):
+        b = bytearray(data)
+        b[0x3e] = ord('P')
+        data = bytes(b)
     return data
 
 
@@ -85,13 +90,20 @@ if __name__ == '__main__':
     p.add_argument('--output', type=Path, required=True)
     a = p.parse_args()
     source, target = normalize(a.source.read_bytes()), normalize(a.target.read_bytes())
-    # This conversion is deliberately tied to the reference pair validated here.
-    assert hashlib.sha1(source).hexdigest() == 'f46239439f59a2a594ef83cf68ef65043b1bffe2'
-    assert hashlib.sha1(target).hexdigest() == 'ad69c91157f6705e8ab06c79fe08aad47bb57ba7'
+    # Only generate conversions for exact, verified reference pairs.
+    references = {
+        'f46239439f59a2a594ef83cf68ef65043b1bffe2': 'PAL GameCube Master Quest',
+        'cfecfdc58d650e71a200c81f033de4e6d617a9f6': 'Master Quest Debug 64 MB (region repaired)',
+    }
+    source_hash = hashlib.sha1(source).hexdigest()
+    if source_hash not in references:
+        p.error('Source ROM does not match a verified Master Quest reference')
+    if hashlib.sha1(target).hexdigest() != 'ad69c91157f6705e8ab06c79fe08aad47bb57ba7':
+        p.error('Target ROM does not match the normal NTSC-US 1.0 reference')
     patch = create_patch(source, target)
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_bytes(patch)
-    report = {'format': 'BPS1', 'source': 'PAL GameCube Master Quest', 'target': 'NTSC-US 1.0',
+    report = {'format': 'BPS1', 'source': references[source_hash], 'target': 'NTSC-US 1.0',
               'source_sha1': hashlib.sha1(source).hexdigest(), 'target_sha1': hashlib.sha1(target).hexdigest(),
               'patch_sha256': hashlib.sha256(patch).hexdigest(), 'patch_bytes': len(patch)}
     a.output.with_suffix('.json').write_text(json.dumps(report, indent=2) + '\n')

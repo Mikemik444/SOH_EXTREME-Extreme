@@ -1,3 +1,14 @@
+0.11.63 - Normal OoT assets from the supplied MQ Debug ROM (2026-10-08)
+  - Adds a verified conversion for the 64 MB MQ Debug dump, including the
+    byte-swapped file named Master Quest (USA) (Debug Edition).n64. The existing
+    region-header repair is applied before source checksum validation.
+  - Both supported MQ references convert byte-for-byte to the same normal
+    NTSC-US 1.0 data, then use the normal extractor and normal AP dungeon layouts.
+    Original input files remain untouched; corrupted or different dumps fail.
+  - Includes the PAL MQ conversion and all 0.11.62 saved-game reconnect fixes.
+    Install the complete assets folder and matching game/APWorld 0.11.63.
+    Existing generated seeds and saves do not need regeneration.
+
 0.11.62 - Normal OoT assets from PAL Master Quest (2026-10-08)
   - Startup accepts supported normal OoT ROMs or the verified PAL GameCube MQ
     ROM. MQ is converted in a private temporary directory before Torch extracts
