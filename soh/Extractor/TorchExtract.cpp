@@ -34,6 +34,13 @@ size_t CountAssetFiles(const std::string& ymlDir) {
 std::string Extract(const std::string& romPath, const std::string& srcDir, const std::string& destDir,
                     const std::string& portVersion, std::atomic<size_t>* progress) {
     std::string archiveName;
+    // Torch temporarily raises the global level to critical. Restore it even
+    // when extraction throws so failures and subsequent game logs stay visible.
+    const auto previousLevel = spdlog::get_level();
+    struct RestoreLogLevel {
+        spdlog::level::level_enum level;
+        ~RestoreLogLevel() { spdlog::set_level(level); }
+    } restoreLogLevel{previousLevel};
 
     try {
         // Companion::Instance is a raw global with no getter; factories dereference it.
@@ -57,10 +64,12 @@ std::string Extract(const std::string& romPath, const std::string& srcDir, const
         companion.reset();
         Companion::Instance = nullptr;
     } catch (const std::exception& e) {
+        spdlog::set_level(previousLevel);
         SPDLOG_ERROR("Torch extraction failed: {}", e.what());
         Companion::Instance = nullptr;
         return "";
     } catch (...) {
+        spdlog::set_level(previousLevel);
         SPDLOG_ERROR("Torch extraction failed with an unknown exception");
         Companion::Instance = nullptr;
         return "";
@@ -70,6 +79,7 @@ std::string Extract(const std::string& romPath, const std::string& srcDir, const
     // archive is really there rather than trusting the run.
     std::error_code ec;
     if (archiveName.empty() || !fs::exists(fs::path(destDir) / archiveName, ec)) {
+        spdlog::set_level(previousLevel);
         SPDLOG_ERROR("Torch produced no archive in {}", destDir);
         return "";
     }

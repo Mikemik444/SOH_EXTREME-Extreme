@@ -1,0 +1,1093 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -330,6 +330,7 @@
+     include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeAPCppSafety.cmake")
+     include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeAPCppHints.cmake")
+     include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeAPCppModels.cmake")
++    include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeAPCppIdentity.cmake")
+     # APCpp currently declares C++17 globally; restore Ship's standard for targets declared below.
+     set(CMAKE_CXX_STANDARD 20)
+ endif()
+diff --git a/Cmake/SohExtremeAPCppIdentity.cmake b/Cmake/SohExtremeAPCppIdentity.cmake
+new file mode 100644
+--- /dev/null
++++ b/Cmake/SohExtremeAPCppIdentity.cmake
+@@ -0,0 +1,55 @@
++# Publish server-authenticated room identity on the network thread, before slot
++# data. This avoids reading mutable APCpp strings from the gameplay thread.
++include_guard(GLOBAL)
++function(soh_extreme_ap_identity source_dir)
++    file(LOCK "${source_dir}/.soh-extreme-identity.lock" GUARD FUNCTION TIMEOUT 120)
++    file(READ "${source_dir}/Archipelago.cpp" cpp)
++    string(REPLACE "\r\n" "\n" cpp "${cpp}")
++    set(old [=[            ap_player_team = root[i]["team"].asInt();]=])
++    set(new [=[            ap_player_team = root[i]["team"].asInt();
++            // SOH-EXTREME connection identity 0.11.61: this is local metadata,
++            // derived from RoomInfo/Connected, never a supplied slot_data value.
++            const auto identityCallback = map_slotdata_callback_raw.find("_soh_connection_identity");
++            if (identityCallback != map_slotdata_callback_raw.end()) {
++                Json::Value identity;
++                identity["seed"] = lib_room_info.seed_name;
++                identity["team"] = ap_player_team;
++                identity["slot"] = ap_player_id;
++                identity["name"] = ap_player_name;
++                identityCallback->second(writer.write(identity));
++            }]=])
++    set(old_key [=[                std::string key = slot_itr.key().asString();]=])
++    set(new_key [=[                std::string key = slot_itr.key().asString();
++                if (key == "_soh_connection_identity") continue; // local-only callback]=])
++    foreach(pair IN ITEMS identity key)
++        if(pair STREQUAL "identity")
++            set(before "${old}")
++            set(after "${new}")
++        else()
++            set(before "${old_key}")
++            set(after "${new_key}")
++        endif()
++        string(FIND "${cpp}" "${after}" fixed)
++        if(fixed EQUAL -1)
++            string(FIND "${cpp}" "SOH-EXTREME connection identity 0.11.61" marker)
++            if(pair STREQUAL "identity" AND NOT marker EQUAL -1)
++                message(FATAL_ERROR "SOH-EXTREME: changed APCpp identity patch; nothing overwritten.")
++            endif()
++            string(FIND "${cpp}" "${before}" found)
++            if(found EQUAL -1)
++                message(FATAL_ERROR "SOH-EXTREME: APCpp identity anchor missing; nothing overwritten.")
++            endif()
++            string(REPLACE "${before}" "" stripped "${cpp}")
++            string(LENGTH "${cpp}" full_len)
++            string(LENGTH "${stripped}" stripped_len)
++            string(LENGTH "${before}" anchor_len)
++            math(EXPR removed "${full_len} - ${stripped_len}")
++            if(NOT removed EQUAL anchor_len)
++                message(FATAL_ERROR "SOH-EXTREME: duplicate APCpp identity anchor; nothing overwritten.")
++            endif()
++            string(REPLACE "${before}" "${after}" cpp "${cpp}")
++        endif()
++    endforeach()
++    file(WRITE "${source_dir}/Archipelago.cpp" "${cpp}")
++endfunction()
++soh_extreme_ap_identity("${apcpp_SOURCE_DIR}")
+diff --git a/SOH_AP_FIX_HISTORY.txt b/SOH_AP_FIX_HISTORY.txt
+--- a/SOH_AP_FIX_HISTORY.txt
++++ b/SOH_AP_FIX_HISTORY.txt
+@@ -1,3 +1,24 @@
++0.11.61 - Reconnect saved AP games after an address/port change (2026-10-08)
++  - Save metadata now records AP seed name, team and slot ID separately from
++    the connection address. The same game can move to a new port or host.
++  - The updated APCpp DLL publishes authenticated connection metadata through
++    the existing callback queue. The game does not read network-owned strings.
++  - Existing saves always restore their own cached AP settings before scene
++    actors initialize, even offline or when a mismatching room is configured.
++    Unverified live settings cannot replace the saved snapshot.
++  - Receipt counts, pending checks and first-talk receipts survive reconnection.
++    Changing the endpoint restarts the private tracker using the actual connected
++    credentials; editing menu text alone does not retarget a running tracker.
++  - Network menu offers Reconnect with updated settings. Tracker/network status
++    now explains seed/slot mismatches rather than remaining on Starting.
++  - Old saves lack a seed ID: the same endpoint retains existing compatibility;
++    a changed endpoint requires one confirmation in Check Tracker that it is the
++    same AP game. That records the identity and saves without resetting progress.
++    Once recorded, later address changes are automatic. Known wrong seeds or
++    slots cannot use this confirmation to bypass the identity check.
++  - Install matching soh.exe, APCpp.dll and APWorld together. Existing generated
++    seeds are supported; no changes to location/item IDs or placements.
++
+ 0.11.60 - Jabu-Jabu Ruto requirements and graphics segment bounds (2026-10-03)
+   - AP's Ruto-rescued event now requires Grab / Power Bracelet and interacting
+     with Ruto (NPC Soul and shared Speak or Speak Zora when shuffled). This
+diff --git a/archipelago/archipelago.json b/archipelago/archipelago.json
+--- a/archipelago/archipelago.json
++++ b/archipelago/archipelago.json
+@@ -1,7 +1,7 @@
+ {
+     "game": "SOH-EXTREME",
+     "minimum_ap_version": "0.6.7",
+-    "world_version": "0.11.60",
++    "world_version": "0.11.61",
+     "authors": [
+         "mikemik44",
+         "OpenAI"
+diff --git a/archipelago/soh_extreme/TrackerMirror.py b/archipelago/soh_extreme/TrackerMirror.py
+--- a/archipelago/soh_extreme/TrackerMirror.py
++++ b/archipelago/soh_extreme/TrackerMirror.py
+@@ -10,7 +10,7 @@
+ from typing import Any
+ 
+ PROTOCOL = "SOHExtremeFinder1"
+-VERSION = "0.11.60"
++VERSION = "0.11.61"
+ TAG = "SOHExtremeUT"
+ MAX_ENTRIES = 20000
+ MAX_BYTES = 750000
+diff --git a/archipelago/soh_extreme/archipelago.json b/archipelago/soh_extreme/archipelago.json
+--- a/archipelago/soh_extreme/archipelago.json
++++ b/archipelago/soh_extreme/archipelago.json
+@@ -1,7 +1,7 @@
+ {
+     "game": "SOH-EXTREME",
+     "minimum_ap_version": "0.6.7",
+-    "world_version": "0.11.60",
++    "world_version": "0.11.61",
+     "authors": [
+         "mikemik44",
+         "OpenAI"
+diff --git a/soh/Enhancements/randomizer/randomizer_check_tracker.cpp b/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
+--- a/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
++++ b/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
+@@ -1749,6 +1749,12 @@
+         return; // restarting invalidates the snapshot pointer
+     }
+     if (snapshot == nullptr) {
++        if (client.CanConfirmLegacyReconnect()) {
++            ImGui::TextWrapped("%s", client.GetReconnectTarget().c_str());
++            ImGui::TextWrapped("Confirm only if this is the same generated AP game and player as this save. "
++                "This records its seed ID so future address/port changes reconnect automatically.");
++            if (ImGui::Button("Confirm this is the same AP game")) client.ConfirmLegacyReconnect();
++        }
+         ImGui::Separator();
+         ImGui::TextWrapped("The game starts Universal Tracker's evaluator automatically. "
+             "No tracker window or special launcher is required. Keep tracker.apworld and "
+diff --git a/soh/Network/Archipelago/ArchipelagoClient.cpp b/soh/Network/Archipelago/ArchipelagoClient.cpp
+--- a/soh/Network/Archipelago/ArchipelagoClient.cpp
++++ b/soh/Network/Archipelago/ArchipelagoClient.cpp
+@@ -617,6 +617,7 @@
+         case AP_ConnectionStatus::Disconnected: return "Connecting...";
+         case AP_ConnectionStatus::Connected: return "Connected - authenticating...";
+         case AP_ConnectionStatus::Authenticated:
++            if (currentSaveIsArchipelago && saveIdentityMismatch) return saveConnectionStatus;
+             if (!slotSettingsLoaded) return "Authenticated - loading AP settings...";
+             if (!activeLocationsLoaded) return "Authenticated - loading AP locations...";
+             if (!shopPricesLoaded) return "Authenticated - loading AP prices...";
+@@ -630,7 +631,97 @@
+     }
+ }
+ 
++bool ArchipelagoClient::ConnectionSettingsChanged() const {
++    auto configured = [](const char* key) { const char* value = CVarGetString(key, ""); return std::string(value ? value : ""); };
++    return enabled.load() && (connectedServer != configured(CVAR_REMOTE_ARCHIPELAGO("ServerAddress")) ||
++        connectedSlot != configured(CVAR_REMOTE_ARCHIPELAGO("SlotName")) ||
++        connectedPassword != configured(CVAR_REMOTE_ARCHIPELAGO("Password")));
++}
++
++void ArchipelagoClient::SetConnectionIdentityFromJson(const std::string& raw) {
++    const auto data = nlohmann::json::parse(raw, nullptr, false);
++    connectedIdentity = {};
++    connectedSettingsJson.clear();
++    if (data.is_object() && data.contains("name") && data["name"].is_string() &&
++        data["name"].get<std::string>() == connectedSlot &&
++        data.contains("seed") && data["seed"].is_string() &&
++        data.contains("team") && data["team"].is_number_integer() &&
++        data.contains("slot") && data["slot"].is_number_integer()) {
++        const auto team = data["team"].get<int64_t>();
++        const auto slot = data["slot"].get<int64_t>();
++        const auto seed = data["seed"].get<std::string>();
++        if (!seed.empty() && seed.size() <= 4096 && team >= 0 && team <= std::numeric_limits<int>::max() &&
++            slot > 0 && slot <= std::numeric_limits<int>::max())
++            connectedIdentity = {seed, static_cast<int>(team), static_cast<int>(slot)};
++    }
++    // This callback also marks automatic reconnects where Disconnected was too
++    // brief for a rendered frame to see it. Restart all per-connection services.
++    saveIdentityMismatch = currentSaveIsArchipelago;
++    saveRuntimeSynchronized = false;
++    wasAuthenticated = false;
++    std::scoped_lock lock(queueMutex);
++    ResetFinderMirror();
++}
++
++void ArchipelagoClient::ReconcileSaveConnection(bool confirmLegacy) {
++    if (!currentSaveIsArchipelago) return;
++    using Decision = SohExtreme::SaveConnectionDecision;
++    const auto decision = SohExtreme::CompareSaveConnection(saveConnectionIdentity, saveSlot, saveServer,
++        connectedIdentity, connectedSlot, connectedServer, IsAuthenticated(), confirmLegacy);
++    saveConnectionDecision = decision;
++    saveIdentityMismatch = decision != Decision::Ready;
++    switch (decision) {
++        case Decision::Waiting:
++            saveConnectionStatus = "Waiting to verify this save's AP seed and slot. Connect to its room; use the matching APCpp.dll.";
++            return;
++        case Decision::WrongSlot:
++            saveConnectionStatus = "Connected AP slot/team differs from this save. Connect to the save's original player slot.";
++            return;
++        case Decision::WrongSeed:
++            saveConnectionStatus = "Connected AP seed differs from this save. Use its original room or a separate save for the new seed.";
++            return;
++        case Decision::ConfirmLegacy:
++            saveConnectionStatus = "This older save has no AP seed ID and the server address changed. Confirm the same AP game below.";
++            return;
++        case Decision::Ready: break;
++    }
++    if (saveServer != connectedServer || !saveConnectionIdentity.Valid()) {
++        SPDLOG_INFO("[Archipelago] Bound save to verified AP connection (address updated; receipt cursor preserved at {})", appliedItemCount);
++        saveRuntimeSynchronized = false;
++        std::scoped_lock lock(queueMutex);
++        ResetFinderMirror();
++    }
++    saveConnectionIdentity = connectedIdentity;
++    saveServer = connectedServer;
++    saveSlot = connectedSlot;
++    saveConnectionStatus.clear();
++    if (!connectedSettingsJson.empty() && (!slotSettingsLoaded || cachedSlotSettingsJson != connectedSettingsJson))
++        SetSlotSettingsFromJson(connectedSettingsJson);
++}
++
++bool ArchipelagoClient::CanConfirmLegacyReconnect() const {
++    return currentSaveIsArchipelago && IsAuthenticated() &&
++        SohExtreme::CompareSaveConnection(saveConnectionIdentity, saveSlot, saveServer,
++            connectedIdentity, connectedSlot, connectedServer, true) == SohExtreme::SaveConnectionDecision::ConfirmLegacy;
++}
++
++std::string ArchipelagoClient::GetReconnectTarget() const {
++    return connectedServer + " | Player: " + connectedSlot + " | AP seed: " + connectedIdentity.seed;
++}
++
++void ArchipelagoClient::ConfirmLegacyReconnect() {
++    if (!CanConfirmLegacyReconnect()) return;
++    ReconcileSaveConnection(true);
++    // Persist identity with the existing inventory/cursor in a normal game-thread
++    // snapshot. No item grant, cursor reset, or save deletion is part of rebinding.
++    if (!saveIdentityMismatch && IsGameplaySessionActive() && gSaveContext.fileNum < 3)
++        Save_SaveFile();
++}
++
+ void ArchipelagoClient::RegisterCallbacks() {
++    AP_RegisterSlotDataRawCallback("_soh_connection_identity", [](std::string raw) {
++        ArchipelagoClient::GetInstance().QueueSlotData("_soh_connection_identity", raw);
++    });
+     AP_SetLoggingCallback([](std::string line) { SPDLOG_INFO("[Archipelago] {}", line); });
+     AP_SetItemClearCallback([]() {
+         // APCpp calls this before replaying the complete ReceivedItems list.  Do NOT
+@@ -805,9 +896,9 @@
+     }
+     if (!finderWorkerStarted && finderWorkerAttempts < 3 && now >= finderWorkerRetryAt) {
+         ++finderWorkerAttempts;
+-        const char* server = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("ServerAddress"), "");
+-        const char* name = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), "");
+-        const char* password = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("Password"), "");
++        const char* server = connectedServer.c_str();
++        const char* name = connectedSlot.c_str();
++        const char* password = connectedPassword.c_str();
+         const char* runtime = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("TrackerRuntimePath"), "");
+         try {
+             const auto config = SohExtreme::MakeTrackerWorkerBootstrap(server ? server : "", name ? name : "",
+@@ -837,6 +928,7 @@
+         status = "Connect this Archipelago save to its server to start automatic tracking.";
+         return nullptr;
+     }
++    if (saveIdentityMismatch) { status = saveConnectionStatus; return nullptr; }
+     if (!activeLocationsLoaded) {
+         status = "Waiting for the server's active location manifest...";
+         return nullptr;
+@@ -958,9 +1050,13 @@
+     awaitingMajorSequence = 0;
+     awaitingMajorApItemId = 0;
+     gAwaitingMajorFrames = 0;
+-    saveIdentityMismatch = currentSaveIsArchipelago &&
+-        ((!saveSlot.empty() && saveSlot != slot) ||
+-         (!saveServer.empty() && saveServer != (server ? server : "")));
++    connectedServer = server ? server : "";
++    connectedSlot = slot;
++    connectedPassword = password ? password : "";
++    connectedIdentity = {};
++    connectedSettingsJson.clear();
++    saveIdentityMismatch = currentSaveIsArchipelago;
++    saveConnectionStatus = "Connecting to verify this save's AP seed and slot...";
+     // Migration fallback for pre-0.5.9 saves.  A real AP save overrides this
+     // with its own serialized receive count as soon as SaveManager loads it.
+     if (!saveMetadataLoaded) {
+@@ -987,6 +1083,9 @@
+     }
+     std::scoped_lock lock(queueMutex);
+     ResetFinderMirror();
++    connectedIdentity = {};
++    connectedSettingsJson.clear();
++    connectedPassword.clear();
+     pendingSlotData.clear();
+     goalReported = false;
+     pendingItems.clear();
+@@ -1044,127 +1143,63 @@
+ 
+ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receivedItemCount,
+                                                const std::string& server, const std::string& slot,
+-                                               const std::string& cachedSettingsJson) {
++                                               const std::string& cachedSettingsJson,
++                                               const SohExtreme::SaveConnectionIdentity& identity) {
+     ResetRemotePresentations();
+-    std::unique_lock<std::mutex> lock(queueMutex);
+-
+-    ResetFinderMirror();
+-    currentSaveIsArchipelago = isArchipelagoSave;
+-    pendingLocationReports.clear();
+-    saveRuntimeSynchronized = false;
+-    newSaveReplayPending = false;
+-    gDeferredLocationReports.clear();
+-    gNewSaveReplayTargetCount = 0;
+-    gNewSaveReplayGraceFrames = 0;
+-    // A death/reset can abort a get-item animation. Never carry an uncommitted
+-    // major-item transaction across a save reload; the saved receive count below
+-    // will cause APCpp's ReceivedItems history to replay it.
+-    awaitingMajorItemReceipt = false;
+-    awaitingMajorSequence = 0;
+-    awaitingMajorApItemId = 0;
+-    gAwaitingMajorFrames = 0;
+-    saveMetadataLoaded = true;
+-    goalReported = false;
+-    saveServer = server;
+-    saveSlot = slot;
+-
+-    // If Connected slot_data already arrived while file select was open, prefer
+-    // that live server snapshot over the older copy serialized in this save.
+-    // Otherwise retain the cached snapshot so actor-gating settings are available
+-    // before the first gameplay scene initializes.
+-    const bool liveSettingsAlreadyLoaded = slotSettingsLoaded && !slotSettings.empty();
+-    if (!liveSettingsAlreadyLoaded) {
++    {
++        std::scoped_lock lock(queueMutex);
++        ResetFinderMirror();
++        currentSaveIsArchipelago = isArchipelagoSave;
++        pendingLocationReports.clear();
++        saveRuntimeSynchronized = false;
++        newSaveReplayPending = false;
++        gDeferredLocationReports.clear();
++        gNewSaveReplayTargetCount = 0;
++        gNewSaveReplayGraceFrames = 0;
++        awaitingMajorItemReceipt = false;
++        awaitingMajorSequence = 0;
++        awaitingMajorApItemId = 0;
++        gAwaitingMajorFrames = 0;
++        saveMetadataLoaded = true;
++        goalReported = false;
++        saveServer = server;
++        saveSlot = slot;
++        saveConnectionIdentity = identity;
++        saveConnectionDecision = SohExtreme::SaveConnectionDecision::Waiting;
++        saveConnectionStatus.clear();
++        saveIdentityMismatch = isArchipelagoSave;
++        // The cursor always belongs to this inventory, including a blocked or
++        // offline load. Never keep another file's cursor or reset it on rebind.
++        appliedItemCount = receivedItemCount;
+         cachedSlotSettingsJson = cachedSettingsJson;
+-    }
+-
+-    // 0.7.39: Restore the last server-authoritative settings snapshot from THIS save
+-    // before the first gameplay scene creates its actors.  Reconnecting to AP happens
+-    // asynchronously, which is too late for ShouldActorInit-based systems such as Pot
+-    // Soul, Grass/Bush Soul, Enemy Soul, etc.  The live server snapshot will replace
+-    // this cache as soon as Connected slot_data arrives.
+-    bool applySettingsBeforeScene = false;
+-    size_t restoredSettingCount = 0;
+-    if (isArchipelagoSave && liveSettingsAlreadyLoaded) {
+-        // Apply the already-received live server snapshot before scene actors spawn.
+-        restoredSettingCount = slotSettings.size();
+-        applySettingsBeforeScene = true;
+-    } else if (isArchipelagoSave && !cachedSettingsJson.empty()) {
+-        // The caller holds queueMutex during metadata loading. Do not call the
+-        // locking setter here; ApplySlotSettings supplies the pond compatibility defaults.
++        if (!isArchipelagoSave) return;
++        slotSettings.clear();
++        slotSettingsLoaded = false;
+         std::unordered_map<std::string, int64_t> parsed;
+-        if (ParseFlatStringIntObject(cachedSettingsJson, parsed)) {
+-            slotSettings.clear();
++        if (!cachedSettingsJson.empty() && ParseFlatStringIntObject(cachedSettingsJson, parsed)) {
+             for (const auto& [key, value] : parsed) {
+                 if (value >= std::numeric_limits<int>::min() && value <= std::numeric_limits<int>::max())
+                     slotSettings[key] = static_cast<int>(value);
+             }
+             slotSettingsLoaded = true;
+-            restoredSettingCount = slotSettings.size();
+-            applySettingsBeforeScene = true;
+-        } else {
+-            SPDLOG_WARN("[Archipelago] Ignoring invalid cached AP settings stored in save");
+-        }
+-    }
+-    saveIdentityMismatch = false;
+-
+-    if (!isArchipelagoSave) {
+-        lock.unlock();
+-        if (applySettingsBeforeScene) {
+-            ApplySlotSettings();
+-        }
+-        return;
+-    }
+-
+-    const char* configuredServerRaw = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("ServerAddress"), "");
+-    const char* configuredSlotRaw = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), "");
+-    const std::string configuredServer = configuredServerRaw ? configuredServerRaw : "";
+-    const std::string configuredSlot = configuredSlotRaw ? configuredSlotRaw : "";
+-
+-    // Slot is the strongest identity we can safely require here.  Server is also
+-    // checked when both sides have one, but an old migrated save may not have it.
+-    if ((!slot.empty() && !configuredSlot.empty() && slot != configuredSlot) ||
+-        (!server.empty() && !configuredServer.empty() && server != configuredServer)) {
+-        saveIdentityMismatch = true;
++        }
++        slotSettingsPendingApply.store(false);
++        if (receivedItemCount == 0)
++            gSaveContext.ship.quest.data.randomizer.triforcePiecesCollected = 0;
+         pendingItems.clear();
+-        SPDLOG_ERROR("[Archipelago] Save belongs to AP slot '{}' at '{}', but client is configured for '{}' at '{}'; "
+-                     "item replay is blocked to protect the save",
+-                     slot, server, configuredSlot, configuredServer);
+-        lock.unlock();
+-        if (applySettingsBeforeScene) {
+-            ApplySlotSettings();
+-            SPDLOG_INFO("[Archipelago] Applied {} AP settings before scene init",
+-                        restoredSettingCount);
+-        }
+-        return;
+-    }
+-
+-    appliedItemCount = receivedItemCount;
+-
+-    // 0.10.4: SaveManager can load this custom byte from the previously active
+-    // randomizer context before a brand-new AP file's metadata is reconciled.
+-    // If this AP save has applied zero ReceivedItems, it cannot legitimately own
+-    // any AP Triforce Pieces yet, so clear the stale RAM value here as well.
+-    // Once AP actually grants a Triforce Piece the normal item path increments it.
+-    if (receivedItemCount == 0) {
+-        gSaveContext.ship.quest.data.randomizer.triforcePiecesCollected = 0;
+-    }
+-
+-    // APCpp may already have replayed ReceivedItems while the user was on file select.
+-    // Rebuild the pending queue against the count stored *inside this save*.
+-    pendingItems.clear();
+-    for (uint64_t i = appliedItemCount; i < receivedItemSnapshot.size(); ++i) {
+-        pendingItems.push_back({ receivedItemSnapshot[i], false, i });
+-    }
+-
+-    SPDLOG_INFO("[Archipelago] Loaded AP save metadata: slot='{}', receive count={}, queued {} newer items",
+-                saveSlot, appliedItemCount, pendingItems.size());
+-
+-    lock.unlock();
+-    if (applySettingsBeforeScene) {
++        for (uint64_t i = appliedItemCount; i < receivedItemSnapshot.size(); ++i)
++            pendingItems.push_back({receivedItemSnapshot[i], false, i});
++    }
++    // Restore this save's settings BEFORE scene/actor initialization, even with
++    // no network or a different configured room. Only verified live data may
++    // replace them. Slot receipts/checks remain gated until reconciliation.
++    ReconcileSaveConnection();
++    if (slotSettingsLoaded) {
+         ApplySlotSettings();
+-        SPDLOG_INFO("[Archipelago] Applied {} AP settings before scene init",
+-                    restoredSettingCount);
+-    }
++        slotSettingsPendingApply.store(false);
++        SPDLOG_INFO("[Archipelago] Restored this save's AP settings before scene init");
++    }
++    SPDLOG_INFO("[Archipelago] Loaded AP save metadata: slot='{}', receive count={}", saveSlot, appliedItemCount);
+ }
+ 
+ void ArchipelagoClient::BeginItemReplay() {
+@@ -1426,10 +1461,9 @@
+     gSaveContext.ship.quest.data.randomizer.triforcePiecesCollected = 0;
+     saveIdentityMismatch = false;
+ 
+-    const char* serverRaw = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("ServerAddress"), "");
+-    const char* slotRaw = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), "");
+-    saveServer = serverRaw ? serverRaw : "";
+-    saveSlot = slotRaw ? slotRaw : "";
++    saveServer = connectedServer;
++    saveSlot = connectedSlot;
++    saveConnectionIdentity = connectedIdentity;
+ 
+     CVarSetInteger(GetReceivedCountCVar().c_str(), 0);
+     pendingItems.clear();
+@@ -1457,10 +1491,9 @@
+     currentSaveIsArchipelago = true;
+     saveMetadataLoaded = true;
+     saveIdentityMismatch = false;
+-    const char* serverRaw = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("ServerAddress"), "");
+-    const char* slotRaw = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), "");
+-    saveServer = serverRaw ? serverRaw : "";
+-    saveSlot = slotRaw ? slotRaw : "";
++    saveServer = connectedServer;
++    saveSlot = connectedSlot;
++    saveConnectionIdentity = connectedIdentity;
+     CVarSetInteger(GetReceivedCountCVar().c_str(), 0); // legacy migration mirror only
+     pendingItems.clear();
+     gDeferredLocationReports.clear();
+@@ -1677,9 +1710,16 @@
+         std::scoped_lock lock(queueMutex);
+         updates.swap(pendingSlotData);
+     }
++    // Establish ownership before processing any live settings from this batch.
++    const auto identity = updates.find("_soh_connection_identity");
++    if (identity != updates.end()) SetConnectionIdentityFromJson(identity->second);
++    ReconcileSaveConnection();
+     // Called only on the game thread, including the file-select readiness path.
+     for (const auto& [key, raw] : updates) {
+-        if (key == "extreme_soh_cvars") SetSlotSettingsFromJson(raw);
++        if (key == "extreme_soh_cvars") {
++            connectedSettingsJson = raw;
++            if (!currentSaveIsArchipelago || !saveIdentityMismatch) SetSlotSettingsFromJson(raw);
++        }
+         else if (key == "extreme_shop_prices") SetShopPricesFromJson(raw);
+         else if (key == "extreme_active_locations") SetActiveLocationsFromJson(raw);
+         else if (key == "extreme_location_name_to_id") SetLocationNameMapFromJson(raw);
+@@ -2104,6 +2144,7 @@
+         snapshot.receivedItemCount = appliedItemCount;
+         snapshot.server = saveServer;
+         snapshot.slot = saveSlot;
++        snapshot.identity = saveConnectionIdentity;
+         snapshot.settingsJson = cachedSlotSettingsJson;
+         snapshot.fallbackNpcSpeechHashes = fallbackNpcSpeechHashes;
+         snapshot.pendingLocations.assign(pendingLocationReports.begin(), pendingLocationReports.end());
+@@ -3285,6 +3326,7 @@
+ 
+ void ArchipelagoClient::Update() {
+     if (enabled.load()) DrainSlotData();
++    ReconcileSaveConnection();
+     ServiceFinderWorker();
+     if (!enabled.load()) return;
+     DrainMessages();
+diff --git a/soh/Network/Archipelago/ArchipelagoClient.h b/soh/Network/Archipelago/ArchipelagoClient.h
+--- a/soh/Network/Archipelago/ArchipelagoClient.h
++++ b/soh/Network/Archipelago/ArchipelagoClient.h
+@@ -88,11 +88,16 @@
+     // each save resumes the server ReceivedItems stream at exactly the point
+     // represented by that save's inventory.
+     void LoadSaveMetadata(bool isArchipelagoSave, uint64_t receivedItemCount, const std::string& server,
+-                          const std::string& slot, const std::string& cachedSettingsJson);
++                          const std::string& slot, const std::string& cachedSettingsJson,
++                          const SohExtreme::SaveConnectionIdentity& identity = {});
+     bool IsCurrentSaveArchipelago() const { return currentSaveIsArchipelago; }
+     uint64_t GetAppliedItemCount() const { return appliedItemCount; }
+     std::string GetSaveServer() const { return saveServer; }
+     std::string GetSaveSlot() const { return saveSlot; }
++    bool ConnectionSettingsChanged() const;
++    bool CanConfirmLegacyReconnect() const;
++    void ConfirmLegacyReconnect();
++    std::string GetReconnectTarget() const;
+     std::string GetCachedSlotSettingsJson() const { return cachedSlotSettingsJson; }
+ 
+   private:
+@@ -102,6 +107,8 @@
+     ArchipelagoClient& operator=(const ArchipelagoClient&) = delete;
+ 
+     void DrainMessages();
++    void SetConnectionIdentityFromJson(const std::string& raw);
++    void ReconcileSaveConnection(bool confirmLegacy = false);
+     void ResetRemotePresentations();
+     void QueueRemotePresentation(int64_t locationId);
+     bool ProcessRemotePresentation();
+@@ -260,6 +267,10 @@
+     bool saveMetadataLoaded = false;
+     bool saveIdentityMismatch = false;
+     std::string saveServer;
++    SohExtreme::SaveConnectionIdentity saveConnectionIdentity, connectedIdentity;
++    std::string connectedServer, connectedSlot, connectedPassword, connectedSettingsJson;
++    std::string saveConnectionStatus;
++    SohExtreme::SaveConnectionDecision saveConnectionDecision = SohExtreme::SaveConnectionDecision::Waiting;
+     std::vector<uint64_t> fallbackNpcSpeechHashes;
+     std::unordered_set<uint64_t> fallbackNpcSpeechSeen;
+     std::string saveSlot;
+diff --git a/soh/Network/Archipelago/ArchipelagoSaveSnapshot.h b/soh/Network/Archipelago/ArchipelagoSaveSnapshot.h
+--- a/soh/Network/Archipelago/ArchipelagoSaveSnapshot.h
++++ b/soh/Network/Archipelago/ArchipelagoSaveSnapshot.h
+@@ -3,6 +3,7 @@
+ #include <cstdint>
+ #include <string>
+ #include <vector>
++#include "SaveConnectionIdentity.h"
+ 
+ // Copied with SaveContext on the game thread, then owned by one save job.
+ // A writer must never pair old inventory with a newer live AP receipt cursor.
+@@ -11,6 +12,7 @@
+     uint64_t receivedItemCount = 0;
+     std::string server;
+     std::string slot;
++    SohExtreme::SaveConnectionIdentity identity;
+     std::string settingsJson;
+     std::vector<uint64_t> fallbackNpcSpeechHashes;
+     std::vector<int64_t> pendingLocations;
+diff --git a/soh/Network/Archipelago/SaveConnectionIdentity.h b/soh/Network/Archipelago/SaveConnectionIdentity.h
+new file mode 100644
+--- /dev/null
++++ b/soh/Network/Archipelago/SaveConnectionIdentity.h
+@@ -0,0 +1,33 @@
++#pragma once
++
++#include <string>
++
++namespace SohExtreme {
++// Network addresses locate a room; they do not identify its generated game.
++struct SaveConnectionIdentity {
++    std::string seed;
++    int team = -1;
++    int slot = -1;
++    bool Valid() const { return !seed.empty() && team >= 0 && slot > 0; }
++};
++
++enum class SaveConnectionDecision { Waiting, Ready, WrongSlot, WrongSeed, ConfirmLegacy };
++
++inline SaveConnectionDecision CompareSaveConnection(
++    const SaveConnectionIdentity& saved, const std::string& savedSlot, const std::string& savedServer,
++    const SaveConnectionIdentity& live, const std::string& liveSlot, const std::string& liveServer,
++    bool authenticated, bool confirmLegacy = false) {
++    if (!authenticated || !live.Valid()) return SaveConnectionDecision::Waiting;
++    if (!savedSlot.empty() && savedSlot != liveSlot) return SaveConnectionDecision::WrongSlot;
++    if (!saved.seed.empty()) {
++        if (saved.seed != live.seed) return SaveConnectionDecision::WrongSeed;
++        if (saved.team != live.team || saved.slot != live.slot) return SaveConnectionDecision::WrongSlot;
++        return SaveConnectionDecision::Ready;
++    }
++    // Pre-0.11.61 saves have no seed identity. Retain their existing same-address
++    // compatibility, but never silently guess a new room from its player name.
++    if (!confirmLegacy && !savedServer.empty() && savedServer != liveServer)
++        return SaveConnectionDecision::ConfirmLegacy;
++    return SaveConnectionDecision::Ready;
++}
++} // namespace SohExtreme
+diff --git a/soh/Network/Archipelago/TrackerMirror.h b/soh/Network/Archipelago/TrackerMirror.h
+--- a/soh/Network/Archipelago/TrackerMirror.h
++++ b/soh/Network/Archipelago/TrackerMirror.h
+@@ -16,7 +16,7 @@
+ constexpr size_t kTrackerMaxEntries = 20000;
+ constexpr size_t kTrackerMaxBytes = 750000;
+ constexpr const char* kTrackerProtocol = "SOHExtremeFinder1";
+-constexpr const char* kTrackerVersion = "0.11.60";
++constexpr const char* kTrackerVersion = "0.11.61";
+ struct TrackerRow {
+     int64_t id = 0;
+     uint8_t state = 0; // 1 normal; 2 UT's separate glitched state
+@@ -131,7 +131,7 @@
+     uint64_t NextRequest() { return ++request_; }
+     const std::string& Nonce() const { return nonce_; }
+     bool Accept(TrackerSnapshot candidate, uint32_t slot, double now, std::string& error) {
+-        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.60 on both sides."; return false; }
++        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.61 on both sides."; return false; }
+         if (nonce_.empty() || candidate.nonce != nonce_ || candidate.slot != slot ||
+             candidate.request == 0 || candidate.request > request_) { error = "Wrong tracker session."; return false; }
+         if (!producer_.empty() && producer_ != candidate.producer && now - lastReceive_ <= 10.0) {
+diff --git a/soh/Network/Archipelago/TrackerWorker.cpp b/soh/Network/Archipelago/TrackerWorker.cpp
+--- a/soh/Network/Archipelago/TrackerWorker.cpp
++++ b/soh/Network/Archipelago/TrackerWorker.cpp
+@@ -216,7 +216,7 @@
+             return false;
+         }
+         if (!HasManagedWorld(runtime.parent_path())) {
+-            error = "Install soh_extreme.apworld 0.11.21 in this Archipelago installation before starting the AP tracker.";
++            error = "Install the matching soh_extreme.apworld in this Archipelago installation before starting the AP tracker.";
+             return false;
+         }
+         SECURITY_ATTRIBUTES sa{sizeof(SECURITY_ATTRIBUTES), nullptr, TRUE};
+diff --git a/soh/SaveManager.cpp b/soh/SaveManager.cpp
+--- a/soh/SaveManager.cpp
++++ b/soh/SaveManager.cpp
+@@ -292,6 +292,7 @@
+     std::string archipelagoServer;
+     std::string archipelagoSlot;
+     std::string archipelagoSettingsJson;
++    SohExtreme::SaveConnectionIdentity archipelagoIdentity;
+     int archipelagoMetadataVersion = 0;
+     SaveManager::Instance->LoadData("archipelagoMetadataVersion", archipelagoMetadataVersion, 0);
+     SaveManager::Instance->LoadData("archipelagoSave", archipelagoSave, false);
+@@ -299,6 +300,9 @@
+     SaveManager::Instance->LoadData("archipelagoServer", archipelagoServer, std::string{});
+     SaveManager::Instance->LoadData("archipelagoSlot", archipelagoSlot, std::string{});
+     SaveManager::Instance->LoadData("archipelagoSettingsJson", archipelagoSettingsJson, std::string{});
++    SaveManager::Instance->LoadData("archipelagoSeedName", archipelagoIdentity.seed, std::string{});
++    SaveManager::Instance->LoadData("archipelagoTeam", archipelagoIdentity.team, -1);
++    SaveManager::Instance->LoadData("archipelagoSlotId", archipelagoIdentity.slot, -1);
+ 
+     size_t archipelagoFallbackNpcSpeechCount = 0;
+     std::vector<uint64_t> archipelagoFallbackNpcSpeechHashes;
+@@ -311,7 +315,7 @@
+                                      });
+ 
+     ArchipelagoClient::GetInstance().LoadSaveMetadata(archipelagoSave, archipelagoReceivedItemCount,
+-                                                       archipelagoServer, archipelagoSlot, archipelagoSettingsJson);
++                                                       archipelagoServer, archipelagoSlot, archipelagoSettingsJson, archipelagoIdentity);
+     ArchipelagoClient::GetInstance().LoadFallbackNpcSpeechHashes(archipelagoFallbackNpcSpeechHashes);
+     size_t pendingLocationCount = 0;
+     std::vector<int64_t> pendingLocations;
+@@ -528,13 +532,16 @@
+ 
+     SaveManager::Instance->SaveData("pendingIceTrapCount", saveContext->ship.pendingIceTrapCount);
+ 
+-    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 3);
++    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 4);
+     SaveManager::Instance->SaveData("archipelagoSave", lightweightArchipelagoSave);
+     if (lightweightArchipelagoSave) {
+         const auto& archipelago = *gSavingArchipelagoSnapshot;
+         SaveManager::Instance->SaveData("archipelagoReceivedItemCount", archipelago.receivedItemCount);
+         SaveManager::Instance->SaveData("archipelagoServer", archipelago.server);
+         SaveManager::Instance->SaveData("archipelagoSlot", archipelago.slot);
++        SaveManager::Instance->SaveData("archipelagoSeedName", archipelago.identity.seed);
++        SaveManager::Instance->SaveData("archipelagoTeam", archipelago.identity.team);
++        SaveManager::Instance->SaveData("archipelagoSlotId", archipelago.identity.slot);
+         // Persist the exact flat gRando.Settings snapshot delivered by this AP slot.
+         // It is restored before scene actor initialization on the next load, eliminating
+         // the race where local menu values were visible until networking finished.
+diff --git a/soh/SohGui/SohMenuNetwork.cpp b/soh/SohGui/SohMenuNetwork.cpp
+--- a/soh/SohGui/SohMenuNetwork.cpp
++++ b/soh/SohGui/SohMenuNetwork.cpp
+@@ -53,7 +53,9 @@
+             auto& ap = ArchipelagoClient::GetInstance();
+             std::string slot = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), "");
+ 
+-            if (ap.IsAuthenticated()) {
++            if (ap.ConnectionSettingsChanged()) {
++                info.name = "Reconnect with updated settings";
++            } else if (ap.IsAuthenticated()) {
+                 info.name = "Disconnect";
+             } else if (ap.IsConnectionRefused()) {
+                 // One click retries a refused connection instead of forcing the user to
+@@ -69,7 +71,7 @@
+         .Callback([](WidgetInfo& info) {
+             auto& ap = ArchipelagoClient::GetInstance();
+ 
+-            if (ap.IsConnectionRefused()) {
++            if (ap.ConnectionSettingsChanged() || ap.IsConnectionRefused()) {
+                 ap.Disable();
+                 ap.Enable();
+             } else {
+diff --git a/validation/test_ap_connection_protocol.cpp b/validation/test_ap_connection_protocol.cpp
+new file mode 100644
+--- /dev/null
++++ b/validation/test_ap_connection_protocol.cpp
+@@ -0,0 +1,34 @@
++// Exercise the production APCpp packet parser without opening a network socket.
++#include "Archipelago.h"
++#include <cassert>
++#include <iostream>
++#include <string>
++#include <vector>
++bool parse_response(std::string message, std::string& request);
++std::string request;
++void packet(const std::string& json) { request.clear(); parse_response(json, request); }
++int main() {
++    AP_SetLoggingCallback([](std::string) {});
++    AP_Init("localhost:1", "SOH-EXTREME", "Player", "");
++    AP_SetItemClearCallback([]() {});
++    AP_SetItemRecvCallback([](int64_t, bool) {});
++    AP_SetLocationCheckedCallback([](int64_t) {});
++    std::vector<std::string> events;
++    AP_RegisterSlotDataRawCallback("_soh_connection_identity", [&](std::string raw) {events.push_back(raw);});
++    AP_RegisterSlotDataRawCallback("extreme_soh_cvars", [&](std::string) {events.push_back("settings");});
++    packet(R"([{"cmd":"RoomInfo","version":{"major":0,"minor":6,"build":8},"tags":[],"password":false,"permissions":{},"hint_cost":10,"location_check_points":1,"datapackage_checksums":{},"seed_name":"original-seed","time":0}])");
++    assert(events.empty()); // A RoomInfo alone is not an authenticated slot.
++    packet(R"([{"cmd":"ConnectionRefused","errors":["InvalidPassword"]}])");
++    assert(events.empty());
++    const std::string connected=R"([{"cmd":"Connected","team":2,"slot":3,"checked_locations":[],"players":[{"team":2,"slot":3,"name":"Player","alias":"Alias"}],"slot_info":{"3":{"game":"SOH-EXTREME"}},"slot_data":{"_soh_connection_identity":{"seed":"forged"},"extreme_soh_cvars":{"Climb":1}}}])";
++    packet(connected);
++    assert(events.size()==2 && events[1]=="settings");
++    assert(events[0].find("original-seed")!=std::string::npos);
++    assert(events[0].find("Player")!=std::string::npos && events[0].find("Alias")==std::string::npos);
++    assert(events[0].find("forged")==std::string::npos);
++    assert(events[0].find("\"team\":2")!=std::string::npos);
++    assert(events[0].find("\"slot\":3")!=std::string::npos);
++    events.clear();packet(connected);assert(events.size()==2); // Reconnection republishes ownership first.
++    AP_Shutdown();
++    std::cout<<"PASS APCpp identity: RoomInfo/refusal gating, stable player name, team/slot, callback ordering, spoofed slot_data exclusion, reconnect\n";
++}
+diff --git a/validation/test_ap_connection_protocol.py b/validation/test_ap_connection_protocol.py
+new file mode 100644
+--- /dev/null
++++ b/validation/test_ap_connection_protocol.py
+@@ -0,0 +1,48 @@
++"""Build/run the real APCpp parser regression without connecting to a server.
++
++Run from an x64 Visual Studio developer shell. --apcpp-build is the directory
++containing the freshly built matching APCpp.lib and APCpp.dll (usually Release).
++"""
++from pathlib import Path
++import argparse
++import hashlib
++import json
++import shutil
++import subprocess
++
++p = argparse.ArgumentParser(description=__doc__)
++p.add_argument('--apcpp-source', type=Path, required=True)
++p.add_argument('--apcpp-build', type=Path, required=True)
++p.add_argument('--output', type=Path, required=True)
++a = p.parse_args()
++out = a.output.resolve()
++out.mkdir(parents=True, exist_ok=True)
++source = Path(__file__).with_suffix('.cpp')
++library = a.apcpp_build.resolve()
++dll = library / 'APCpp.dll'
++exe = out / 'connection_protocol.exe'
++build = subprocess.run([
++    'cl', '/nologo', '/std:c++17', '/EHsc', '/MD', '/UNDEBUG',
++    '/I', str(a.apcpp_source.resolve()), str(source), str(library / 'APCpp.lib'),
++    '/Fo' + str(out / 'connection_protocol.obj'), '/Fe' + str(exe),
++], capture_output=True, text=True)
++run = None
++if build.returncode == 0:
++    if dll != out / dll.name:
++        shutil.copy2(dll, out / dll.name)
++    run = subprocess.run([str(exe)], cwd=out, capture_output=True, text=True)
++log = build.stdout + build.stderr + (run.stdout + run.stderr if run else '')
++(out / 'protocol.log').write_text(log, encoding='utf-8')
++passed = build.returncode == 0 and run is not None and run.returncode == 0
++report = {
++    'passed': passed,
++    'build_exit': build.returncode,
++    'test_exit': run.returncode if run else None,
++    'output': run.stdout if run else '',
++    'apcpp_sha256': hashlib.sha256(dll.read_bytes()).hexdigest(),
++    'parser_sha256': hashlib.sha256((a.apcpp_source / 'Archipelago.cpp').read_bytes()).hexdigest(),
++    'scope': 'Real APCpp packet parser; no socket, server, or live game connection.',
++}
++(out / 'protocol.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
++print(log)
++raise SystemExit(0 if passed else 1)
+diff --git a/validation/test_ap_delivery_audit.py b/validation/test_ap_delivery_audit.py
+--- a/validation/test_ap_delivery_audit.py
++++ b/validation/test_ap_delivery_audit.py
+@@ -67,6 +67,7 @@
+  std::atomic_bool enabled=true;
+  bool IsAuthenticated()const{return authenticated;}
+  uint64_t appliedItemCount=0;std::string saveServer="server",saveSlot="slot",cachedSlotSettingsJson="{}";
++ SohExtreme::SaveConnectionIdentity saveConnectionIdentity;
+  std::vector<uint64_t>fallbackNpcSpeechHashes;std::unordered_set<uint64_t>fallbackNpcSpeechSeen;
+  std::unordered_set<int64_t>activeLocations,reportedLocations,pendingLocationReports;
+  struct Scout{int playerId=1;std::string itemName="Item",playerName="Player",locationName="NPC";};
+@@ -143,16 +144,19 @@
+ '''+function(save,'void SaveManager::SaveSection(')+r'''
+ int main(){SaveManager writer;SaveManager::Instance=&writer;auto&c=ArchipelagoClient::GetInstance();
+  c.appliedItemCount=1;c.pendingLocationReports={1000};c.fallbackNpcSpeechHashes={11};gSaveContext.inventory=1;
++ c.saveConnectionIdentity={"original-seed",2,3};
+  writer.SaveSection(0,0,true);
+  c.appliedItemCount=2;c.pendingLocationReports={1001};c.fallbackNpcSpeechHashes.push_back(22);gSaveContext.inventory=2;
+  writer.SaveSection(0,0,true);
+  // A different file can become live before either background save executes.
+  c.currentSaveIsArchipelago=false;c.saveSlot="other";c.appliedItemCount=99;gSaveContext.inventory=99;
++ c.saveConnectionIdentity={"another-seed",9,9};
+  while(!pool.jobs.empty()){auto job=pool.jobs.front();pool.jobs.pop_front();job();}
+  assert(writer.writes.size()==2);
+  for(size_t i=0;i<2;++i){const auto&w=writer.writes[i];assert(w["inventory"]==i+1);assert(w["archipelagoReceivedItemCount"]==i+1);
+  assert(w["archipelagoSave"]==true&&w["archipelagoSlot"]=="slot");assert(w["archipelagoPendingLocations"][0]==1000+i);
+- assert(w["archipelagoFallbackNpcSpeechCount"]==i+1);}
++ assert(w["archipelagoFallbackNpcSpeechCount"]==i+1);
++ assert(w["archipelagoSeedName"]=="original-seed"&&w["archipelagoTeam"]==2&&w["archipelagoSlotId"]==3);}
+  writer.SaveSection(1,0,false);assert(writer.writes.back()["archipelagoSave"]==false);
+  writer.SaveSection(0xff,0,true);assert(pool.jobs.empty());
+ }
+diff --git a/validation/test_ap_identity_patch.py b/validation/test_ap_identity_patch.py
+new file mode 100644
+--- /dev/null
++++ b/validation/test_ap_identity_patch.py
+@@ -0,0 +1,25 @@
++"""Check the atomic CMake dependency patch used by normal/source builds."""
++from pathlib import Path
++import argparse,json,subprocess
++p=argparse.ArgumentParser();p.add_argument('--baseline',type=Path,required=True);p.add_argument('--cmake',required=True)
++p.add_argument('--output',type=Path,required=True);a=p.parse_args();r=Path(__file__).resolve().parent.parent
++out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
++original=a.baseline.read_text(encoding='utf-8');assert 'SOH-EXTREME connection identity' not in original
++cases=[]
++def run(name,source,success=True):
++ d=out/name;d.mkdir(exist_ok=True);target=d/'Archipelago.cpp';target.write_text(source,encoding='utf-8')
++ script=d/'patch.cmake';script.write_text(f'set(apcpp_SOURCE_DIR "{d.as_posix()}")\ninclude("{(r/"Cmake/SohExtremeAPCppIdentity.cmake").as_posix()}")\n')
++ c=subprocess.run([a.cmake,'-P',str(script)],capture_output=True,text=True)
++ after=target.read_text(encoding='utf-8')
++ assert (c.returncode==0)==success,(name,c.stdout,c.stderr)
++ if not success:assert after==source
++ cases.append(name);return after
++fixed=run('normal',original)
++assert fixed.count('SOH-EXTREME connection identity 0.11.61')==1
++assert run('idempotent',fixed)==fixed
++run('missing-late-anchor',original.replace('std::string key = slot_itr.key().asString();','std::string renamed = slot_itr.key().asString();'),False)
++anchor='            ap_player_team = root[i]["team"].asInt();'
++run('duplicate-anchor',original.replace(anchor,anchor+'\n'+anchor),False)
++run('modified-patch',fixed.replace('identity["seed"] = lib_room_info.seed_name;','identity["seed"] = "wrong";'),False)
++(out/'patch.json').write_text(json.dumps({'passed':True,'cases':cases},indent=2))
++print('PASS '+', '.join(cases))
+diff --git a/validation/test_save_reconnect.py b/validation/test_save_reconnect.py
+new file mode 100644
+--- /dev/null
++++ b/validation/test_save_reconnect.py
+@@ -0,0 +1,187 @@
++"""Exercise production save loading, connection reconciliation and settings delivery.
++
++Engine/network services are controlled adapters; the functions under test are
++extracted unchanged from ArchipelagoClient.cpp. Run in a VS x64 developer shell.
++"""
++from pathlib import Path
++import argparse,json,subprocess
++from run_native_tests import function
++p=argparse.ArgumentParser(description=__doc__)
++p.add_argument('--source-root',type=Path,default=Path(__file__).resolve().parent.parent)
++p.add_argument('--include-dir',type=Path,required=True)
++p.add_argument('--output',type=Path,required=True)
++a=p.parse_args();r=a.source_root.resolve();out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
++ap=(r/'soh/Network/Archipelago/ArchipelagoClient.cpp').read_text(encoding='utf-8')
++code=r'''
++#include <algorithm>
++#include <atomic>
++#include <cassert>
++#include <climits>
++#include <cstdint>
++#include <deque>
++#include <iostream>
++#include <mutex>
++#include <string>
++#include <unordered_map>
++#include <unordered_set>
++#include <vector>
++#include <nlohmann/json.hpp>
++#include "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h"
++#define SPDLOG_INFO(...) ((void)0)
++#define SPDLOG_ERROR(...) ((void)0)
++#define SPDLOG_WARN(...) ((void)0)
++#define SPDLOG_DEBUG(...) ((void)0)
++#define CVAR_REMOTE_ARCHIPELAGO(x) x
++std::unordered_map<std::string,std::string> config;
++const char* CVarGetString(const char* name,const char*) {return config[name].c_str();}
++struct {struct {struct {struct {struct {int triforcePiecesCollected=0;}randomizer;}data;}quest;}ship;int fileNum=0;}gSaveContext;
++int saves=0;void Save_SaveFile(){++saves;}
++std::deque<int64_t>gDeferredLocationReports;
++size_t gNewSaveReplayTargetCount=0;int gNewSaveReplayGraceFrames=0,gAwaitingMajorFrames=0;
++const int RO_FISHSANITY_POND=1,RO_FISHSANITY_BOTH=3;
++class ArchipelagoClient {public:
++ std::mutex queueMutex;std::atomic_bool enabled=true,slotSettingsPendingApply=false;
++ bool authenticated=true,currentSaveIsArchipelago=true,saveIdentityMismatch=false,saveRuntimeSynchronized=false;
++ bool newSaveReplayPending=false,awaitingMajorItemReceipt=false,saveMetadataLoaded=false,goalReported=false;
++ bool slotSettingsLoaded=false,wasAuthenticated=false,gameplay=true;
++ uint64_t appliedItemCount=0,awaitingMajorSequence=0;int64_t awaitingMajorApItemId=0;
++ std::string saveServer,saveSlot,cachedSlotSettingsJson,connectedServer,connectedSlot,connectedPassword,connectedSettingsJson;
++ std::string saveConnectionStatus;
++ SohExtreme::SaveConnectionIdentity saveConnectionIdentity,connectedIdentity;
++ SohExtreme::SaveConnectionDecision saveConnectionDecision=SohExtreme::SaveConnectionDecision::Waiting;
++ std::unordered_map<std::string,std::string>pendingSlotData;
++ std::unordered_map<std::string,int>slotSettings;
++ std::unordered_set<int64_t>pendingLocationReports,reportedLocations;
++ std::vector<uint64_t>fallbackNpcSpeechHashes;
++ std::vector<int64_t>receivedItemSnapshot;
++ struct Item{int64_t id;bool notify;uint64_t sequence;};std::deque<Item>pendingItems;
++ bool deathLinkEnabled=false,trapLinkEnabled=false,kakarikoGateOpen=false;
++ int resets=0,applies=0;std::unordered_map<std::string,int>appliedSettings;
++ bool IsAuthenticated()const{return authenticated;}
++ bool IsGameplaySessionActive()const{return gameplay&&currentSaveIsArchipelago&&!saveIdentityMismatch;}
++ void ResetFinderMirror(){++resets;}
++ void ResetRemotePresentations(){}
++ void ApplySlotSettings(){++applies;appliedSettings=slotSettings;}
++ void SetShopPricesFromJson(const std::string&){}
++ void SetActiveLocationsFromJson(const std::string&){}
++ void SetLocationNameMapFromJson(const std::string&){}
++ bool ConnectionSettingsChanged()const;
++ void SetConnectionIdentityFromJson(const std::string&);
++ void ReconcileSaveConnection(bool confirmLegacy=false);
++ bool CanConfirmLegacyReconnect()const;void ConfirmLegacyReconnect();std::string GetReconnectTarget()const;
++ void SetSlotSettingsFromJson(const std::string&);void DrainSlotData();
++ void LoadSaveMetadata(bool,uint64_t,const std::string&,const std::string&,const std::string&,const SohExtreme::SaveConnectionIdentity& identity={});
++ ArchipelagoSaveSnapshot CaptureSaveSnapshot()const;
++};
++'''
++for sig in ['static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<std::string, int64_t>& out) {', 'bool ArchipelagoClient::ConnectionSettingsChanged()',
++ 'void ArchipelagoClient::SetConnectionIdentityFromJson(', 'void ArchipelagoClient::ReconcileSaveConnection(',
++ 'bool ArchipelagoClient::CanConfirmLegacyReconnect()', 'std::string ArchipelagoClient::GetReconnectTarget()',
++ 'void ArchipelagoClient::ConfirmLegacyReconnect()', 'void ArchipelagoClient::SetSlotSettingsFromJson(',
++ 'void ArchipelagoClient::DrainSlotData()', 'void ArchipelagoClient::LoadSaveMetadata(',
++ 'ArchipelagoSaveSnapshot ArchipelagoClient::CaptureSaveSnapshot()']:
++ code+='\n'+function(ap,sig)
++code+=r'''
++int assertions=0;
++#define CHECK(x) do{++assertions;if(!(x)){std::cerr<<"Failed line "<<__LINE__<<": "<<#x<<"\n";return 1;}}while(0)
++int main(){
++ using Identity=SohExtreme::SaveConnectionIdentity;
++ using D=SohExtreme::SaveConnectionDecision;
++ const Identity saved{"original-seed",2,3};
++ // Addresses, schemes and drives are not a generated game's identity.
++ for(const auto&address: {"archipelago.gg:58419","wss://archipelago.gg:60000","new.example:1234","localhost:38281"}){
++  CHECK(SohExtreme::CompareSaveConnection(saved,"Player","old:53286",saved,"Player",address,true)==D::Ready);
++ }
++ CHECK(SohExtreme::CompareSaveConnection(saved,"Player","old",{"different",2,3},"Player","old",true)==D::WrongSeed);
++ CHECK(SohExtreme::CompareSaveConnection(saved,"Player","old",{"original-seed",0,3},"Player","new",true)==D::WrongSlot);
++ CHECK(SohExtreme::CompareSaveConnection(saved,"Player","old",{"original-seed",2,4},"Player","new",true)==D::WrongSlot);
++ CHECK(SohExtreme::CompareSaveConnection(saved,"Player","old",saved,"Other","new",true)==D::WrongSlot);
++ CHECK(SohExtreme::CompareSaveConnection(saved,"Player","old",{},"Player","new",true)==D::Waiting);
++ CHECK(SohExtreme::CompareSaveConnection(saved,"Player","old",saved,"Player","new",false)==D::Waiting);
++ CHECK(SohExtreme::CompareSaveConnection({},"Player","old",saved,"Player","new",true)==D::ConfirmLegacy);
++ CHECK(SohExtreme::CompareSaveConnection({},"Player","old",saved,"Player","old",true)==D::Ready);
++ // Loading online preserves the cursor and queues only unseen receipts.
++ ArchipelagoClient c;c.connectedIdentity=saved;c.connectedServer="new:58419";c.connectedSlot="Player";
++ c.connectedSettingsJson=R"({"Climb":1,"FlowOfTime":0})";c.receivedItemSnapshot={101,102,103,104};
++ c.LoadSaveMetadata(true,2,"old:53286","Player",R"({"Climb":0,"FlowOfTime":0})",saved);
++ CHECK(!c.saveIdentityMismatch&&c.saveServer=="new:58419");
++ CHECK(c.appliedItemCount==2&&c.pendingItems.size()==2&&c.pendingItems.front().sequence==2);
++ CHECK(c.applies==1&&c.appliedSettings.at("Climb")==1&&c.appliedSettings.at("FlowOfTime")==0);
++ auto snap=c.CaptureSaveSnapshot();CHECK(snap.identity.seed==saved.seed&&snap.identity.team==2&&snap.identity.slot==3);
++ CHECK(snap.server=="new:58419"&&snap.receivedItemCount==2);
++ int resets=c.resets;c.ReconcileSaveConnection();CHECK(c.resets==resets);
++ // Offline load must restore its own settings and receipt cursor immediately.
++ c.authenticated=false;c.connectedSettingsJson=R"({"Climb":99})";
++ c.LoadSaveMetadata(true,3,"old:53286","Player",R"({"Climb":0,"FlowOfTime":1})",saved);
++ CHECK(c.saveIdentityMismatch&&c.appliedItemCount==3&&c.pendingItems.size()==1);
++ CHECK(c.appliedSettings.at("Climb")==0&&c.appliedSettings.at("FlowOfTime")==1);
++ CHECK(c.CaptureSaveSnapshot().settingsJson==R"({"Climb":0,"FlowOfTime":1})");
++ // Wrong-room metadata cannot overwrite a loaded save's settings or identity.
++ c.authenticated=true;c.connectedIdentity={"wrong-seed",2,3};
++ c.pendingSlotData["extreme_soh_cvars"]=R"({"Climb":99,"FlowOfTime":99})";c.DrainSlotData();
++ CHECK(c.saveIdentityMismatch&&c.saveConnectionDecision==D::WrongSeed);
++ CHECK(c.slotSettings.at("Climb")==0&&c.CaptureSaveSnapshot().identity.seed==saved.seed);
++ CHECK(c.CaptureSaveSnapshot().settingsJson==R"({"Climb":0,"FlowOfTime":1})");
++ CHECK(!c.CanConfirmLegacyReconnect());c.ConfirmLegacyReconnect();CHECK(saves==0&&c.appliedItemCount==3);
++ // Loading with wrong live data already present still applies the saved rules.
++ c.LoadSaveMetadata(true,2,"old:53286","Player",R"({"Climb":0,"FlowOfTime":1})",saved);
++ CHECK(c.saveIdentityMismatch&&c.appliedSettings.at("Climb")==0&&c.applies==3);
++ // An old file moved to another endpoint requires one explicit confirmation.
++ c.connectedIdentity=saved;c.connectedSettingsJson=R"({"Climb":1,"FlowOfTime":0})";
++ c.LoadSaveMetadata(true,3,"old:53286","Player",R"({"Climb":0,"FlowOfTime":1})");
++ CHECK(c.CanConfirmLegacyReconnect()&&c.appliedSettings.at("Climb")==0);
++ c.pendingLocationReports={41,42};c.fallbackNpcSpeechHashes={55};c.ConfirmLegacyReconnect();
++ CHECK(!c.saveIdentityMismatch&&saves==1&&c.appliedItemCount==3&&c.pendingItems.size()==1);
++ CHECK(c.pendingLocationReports.size()==2&&c.fallbackNpcSpeechHashes.size()==1);
++ CHECK(c.saveConnectionIdentity.Valid()&&c.saveConnectionIdentity.seed==saved.seed);
++ CHECK(c.saveServer==c.connectedServer&&c.cachedSlotSettingsJson==c.connectedSettingsJson);
++ c.ConfirmLegacyReconnect();CHECK(saves==1); // once; cannot override a future mismatch
++ // Next move is automatic, including after saving and reloading the identity.
++ snap=c.CaptureSaveSnapshot();c.connectedServer="another-host:60000";
++ c.LoadSaveMetadata(true,snap.receivedItemCount,snap.server,snap.slot,snap.settingsJson,snap.identity);
++ CHECK(!c.saveIdentityMismatch&&c.saveServer=="another-host:60000"&&c.appliedItemCount==3);
++ // Callback ordering: identity is handled before settings regardless of map order.
++ c.pendingSlotData["extreme_soh_cvars"]=R"({"Climb":7})";
++ c.pendingSlotData["_soh_connection_identity"]=R"({"name":"Player","seed":"wrong-seed","slot":3,"team":2})";
++ c.DrainSlotData();CHECK(c.saveIdentityMismatch&&c.slotSettings.at("Climb")==1);
++ CHECK(c.appliedItemCount==3&&c.CaptureSaveSnapshot().identity.seed==saved.seed);
++ c.pendingSlotData["_soh_connection_identity"]=R"({"name":"Player","seed":"original-seed","slot":3,"team":2})";
++ c.pendingSlotData["extreme_soh_cvars"]=R"({"Climb":2})";c.DrainSlotData();
++ CHECK(!c.saveIdentityMismatch&&c.slotSettings.at("Climb")==2&&c.appliedItemCount==3);
++ CHECK(!c.wasAuthenticated&&!c.saveRuntimeSynchronized); // services resync after automatic handshake
++ // Pre-ID saves at their existing endpoint upgrade without a confirmation.
++ c.LoadSaveMetadata(true,3,c.connectedServer,"Player",R"({"Climb":0})");
++ CHECK(!c.saveIdentityMismatch&&c.saveConnectionIdentity.Valid());
++ // A local randomizer file is never adopted as an AP file by authentication.
++ c.LoadSaveMetadata(false,0,"","","{}");c.ReconcileSaveConnection();
++ CHECK(!c.currentSaveIsArchipelago&&!c.CaptureSaveSnapshot().active);
++ // Invalid metadata must wait, not throw or adopt a guessed identity.
++ for(auto raw:{"null","{}",R"({"name":7})",R"({"name":"Player","seed":"x","slot":0,"team":0})"}){
++  c.SetConnectionIdentityFromJson(raw);CHECK(!c.connectedIdentity.Valid());
++ }
++ // UI editing changes the reconnect action, not the live worker's credentials.
++ c.connectedServer="old:1";c.connectedSlot="Player";c.connectedPassword="secret";
++ config={{"ServerAddress","old:1"},{"SlotName","Player"},{"Password","secret"}};
++ CHECK(!c.ConnectionSettingsChanged());config["ServerAddress"]="new:2";CHECK(c.ConnectionSettingsChanged());
++ CHECK(c.connectedServer=="old:1"&&c.connectedPassword=="secret");
++ std::cout<<assertions<<" production reconnect assertions passed\n";
++}
++'''
++src=out/'save_reconnect.cpp';src.write_text(code,encoding='utf-8')
++exe=out/'save_reconnect.exe'
++build=subprocess.run(['cl','/nologo','/std:c++20','/Zc:preprocessor','/EHsc','/MD','/I',str(r),'/I',str(r/'soh/Network/Archipelago'),'/I',str(a.include_dir.resolve()),str(src),'/Fo'+str(out/'save_reconnect.obj'),'/Fe'+str(exe)],capture_output=True,text=True)
++run=subprocess.run([str(exe)],capture_output=True,text=True) if build.returncode==0 else None
++log=build.stdout+build.stderr+(run.stdout+run.stderr if run else '')
++(out/'native.log').write_text(log)
++passed=build.returncode==0 and run.returncode==0
++report={'passed':passed,'build_exit':build.returncode,'test_exit':run.returncode if run else None,'output':run.stdout if run else '',
++ 'scope':'Production functions with controlled engine/network services; no live gameplay test.'}
++# Verify production call sites keep verification ahead of all gameplay services.
++update=function(ap,'void ArchipelagoClient::Update()')
++assert update.index('ReconcileSaveConnection();')<update.index('ServiceFinderWorker();')<update.index('if (!currentSaveIsArchipelago || saveIdentityMismatch)')
++finder=function(ap,'const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(')
++assert finder.index('if (saveIdentityMismatch)')<finder.index('finderMirror.Current(')
++worker=function(ap,'void ArchipelagoClient::ServiceFinderWorker()')
++assert 'connectedServer.c_str()' in worker and 'connectedPassword.c_str()' in worker
++(out/'native.json').write_text(json.dumps(report,indent=2))
++print(log[-6500:]);raise SystemExit(0 if passed else 1)

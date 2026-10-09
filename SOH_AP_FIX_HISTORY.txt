@@ -1,3 +1,37 @@
+0.11.62 - Normal OoT assets from PAL Master Quest (2026-10-08)
+  - Startup accepts supported normal OoT ROMs or the verified PAL GameCube MQ
+    ROM. MQ is converted in a private temporary directory before Torch extracts
+    normal layouts to oot.o2r; the player's source ROM is never modified.
+  - The conversion validates source, patch and output checksums. Torch then
+    independently checks the complete normal ROM SHA-1 before extraction.
+    Other MQ revisions need separate verified conversion data and report an error.
+  - An MQ-only installation now requests normal asset preparation at startup.
+    Existing oot-mq.o2r files are retained. AP saves always use normal layouts;
+    ordinary non-AP saves retain their own dungeon selection.
+  - Includes 0.11.61 saved-game reconnection changes. The APCpp identity patch
+    now preserves the hint patch's anchor so repeated CMake configuration works.
+
+0.11.61 - Reconnect saved AP games after an address/port change (2026-10-08)
+  - Save metadata now records AP seed name, team and slot ID separately from
+    the connection address. The same game can move to a new port or host.
+  - The updated APCpp DLL publishes authenticated connection metadata through
+    the existing callback queue. The game does not read network-owned strings.
+  - Existing saves always restore their own cached AP settings before scene
+    actors initialize, even offline or when a mismatching room is configured.
+    Unverified live settings cannot replace the saved snapshot.
+  - Receipt counts, pending checks and first-talk receipts survive reconnection.
+    Changing the endpoint restarts the private tracker using the actual connected
+    credentials; editing menu text alone does not retarget a running tracker.
+  - Network menu offers Reconnect with updated settings. Tracker/network status
+    now explains seed/slot mismatches rather than remaining on Starting.
+  - Old saves lack a seed ID: the same endpoint retains existing compatibility;
+    a changed endpoint requires one confirmation in Check Tracker that it is the
+    same AP game. That records the identity and saves without resetting progress.
+    Once recorded, later address changes are automatic. Known wrong seeds or
+    slots cannot use this confirmation to bypass the identity check.
+  - Install matching soh.exe, APCpp.dll and APWorld together. Existing generated
+    seeds are supported; no changes to location/item IDs or placements.
+
 0.11.60 - Jabu-Jabu Ruto requirements and graphics segment bounds (2026-10-03)
   - AP's Ruto-rescued event now requires Grab / Power Bracelet and interacting
     with Ruto (NPC Soul and shared Speak or Speak Zora when shuffled). This

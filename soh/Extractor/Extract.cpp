@@ -6,6 +6,7 @@
 #endif
 #include "Extract.h"
 #include "TorchExtract.h"
+#include "NormalOot.h"
 #include "portable-file-dialogs.h"
 #include "spdlog/spdlog.h"
 #include <ship/utils/binarytools/BitConverter.h>
@@ -52,6 +53,7 @@
 #include <filesystem>
 #include <unordered_map>
 #include <string>
+#include <stdexcept>
 
 extern "C" uint32_t CRC32C(unsigned char* data, size_t dataSize);
 
@@ -625,26 +627,24 @@ const char* Extractor::GetTorchVersionDir() const {
 }
 
 std::string Extractor::Mkdtemp() {
-    std::string temp_dir = std::filesystem::temp_directory_path().string();
-
-    // create 6 random alphanumeric characters
+    const auto tempRoot = std::filesystem::temp_directory_path();
     static const char charset[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-    char randchr[7];
-    for (int i = 0; i < 6; i++) {
-        randchr[i] = charset[ShipUtils::Random(0, sizeof(charset))];
+    for (int attempt = 0; attempt < 32; ++attempt) {
+        std::string name = "extractor-";
+        for (int i = 0; i < 12; ++i) name += charset[ShipUtils::Random(0, sizeof(charset)-2)];
+        const auto path = tempRoot / name;
+        // Only use a directory created by this run; never reuse or delete a
+        // pre-existing extraction directory after a random-name collision.
+        if (std::filesystem::create_directory(path)) return path.string();
     }
-    randchr[6] = '\0';
-
-    std::string tmppath = temp_dir + "/extractor-" + randchr;
-    std::filesystem::create_directory(tmppath);
-    return tmppath;
+    throw std::runtime_error("Could not create a private extraction directory.");
 }
 
 static void MessageboxWorker();
 
 bool Extractor::CallTorch(std::string installPath, std::string exportdir, std::atomic<size_t>* extractCount,
                           std::atomic<size_t>* totalExtract) {
+    mLastError.clear();
     char portVersion[18]; // 5 digits for int16_max (x3) + separators + terminator
     snprintf(portVersion, 18, "%d.%d.%d", gBuildVersionMajor, gBuildVersionMinor, gBuildVersionPatch);
 
@@ -653,13 +653,35 @@ bool Extractor::CallTorch(std::string installPath, std::string exportdir, std::a
     exportdir = std::filesystem::absolute(exportdir).string();
     // Work this out in the temporary folder
     std::string tempdir = Mkdtemp();
+    struct TempCleanup {
+        std::filesystem::path path;
+        ~TempCleanup() { std::error_code ec; std::filesystem::remove_all(path, ec); }
+    } cleanup{tempdir};
 
-    *totalExtract = SohTorch::CountAssetFiles(srcDir + "/" + GetTorchVersionDir());
+    const char* versionDir = GetTorchVersionDir();
+    if (IsMasterQuest()) {
+        std::vector<uint8_t> normalRom;
+        if (!SohRom::ConvertMasterQuest({mRomData.get(), mCurRomSize}, srcDir, normalRom, mLastError)) {
+            SPDLOG_ERROR("Normal OoT conversion failed: {}", mLastError);
+            return false;
+        }
+        // The supplied ROM remains untouched. Torch consumes the verified
+        // normal ROM in this run's private directory, which is then removed.
+        romPath = tempdir + "/normal-oot.z64";
+        std::ofstream converted(romPath, std::ios::binary);
+        converted.write(reinterpret_cast<const char*>(normalRom.data()), normalRom.size());
+        converted.close();
+        if (!converted) { mLastError = "Could not write temporary normal OoT data."; return false; }
+        versionDir = "ntsc_1-0";
+        SPDLOG_INFO("Verified PAL Master Quest conversion to normal OoT; extracting normal dungeon assets");
+    }
+    *totalExtract = SohTorch::CountAssetFiles(srcDir + "/" + versionDir);
     *extractCount = 0;
 
-    // config.yml decides whether this is oot.o2r or oot-mq.o2r.
+    // Torch independently verifies the ROM hash and selects the normal recipe.
     std::string archiveName = SohTorch::Extract(romPath, srcDir, tempdir, portVersion, extractCount);
-    bool success = !archiveName.empty();
+    bool success = archiveName == GetOutputArchiveName();
+    if (!success) mLastError = "Normal OoT asset extraction failed. Check the ROM and assets folder.";
 
     std::error_code ec;
     if (success) {
@@ -667,11 +689,10 @@ bool Extractor::CallTorch(std::string installPath, std::string exportdir, std::a
                               std::filesystem::copy_options::overwrite_existing, ec);
         if (ec) {
             SPDLOG_ERROR("Failed to copy {} to {}: {}", archiveName, exportdir, ec.message());
+            mLastError = "Could not install normal OoT assets: " + ec.message();
             success = false;
         }
     }
-
-    std::filesystem::remove_all(tempdir, ec);
 
     return success;
 }

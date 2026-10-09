@@ -1749,6 +1749,12 @@ static void DrawUniversalFinderMirror() {
         return; // restarting invalidates the snapshot pointer
     }
     if (snapshot == nullptr) {
+        if (client.CanConfirmLegacyReconnect()) {
+            ImGui::TextWrapped("%s", client.GetReconnectTarget().c_str());
+            ImGui::TextWrapped("Confirm only if this is the same generated AP game and player as this save. "
+                "This records its seed ID so future address/port changes reconnect automatically.");
+            if (ImGui::Button("Confirm this is the same AP game")) client.ConfirmLegacyReconnect();
+        }
         ImGui::Separator();
         ImGui::TextWrapped("The game starts Universal Tracker's evaluator automatically. "
             "No tracker window or special launcher is required. Keep tracker.apworld and "

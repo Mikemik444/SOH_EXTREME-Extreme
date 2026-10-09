@@ -343,7 +343,6 @@ typedef enum PromptSteps {
     PS_FILE_CHECK,
     PS_LOCAL,
     PS_FIRST,
-    PS_SECOND,
     PS_DUPE,
     PS_WAIT,
     PS_NONE,
@@ -426,7 +425,6 @@ void OTRGlobals::RunExtract(int argc, char* argv[]) {
     }
     Extractor extract;
     PromptSteps promptStep = PS_FILE_CHECK;
-    bool generatedIsMQ = false;
     std::atomic<size_t> extractCount = 0, totalExtract = 0;
 
     std::string installPath = std::filesystem::absolute(Ship::Context::GetAppBundlePath()).string();
@@ -587,10 +585,7 @@ void OTRGlobals::RunExtract(int argc, char* argv[]) {
                     SohGui::RegisterPopup(
                         "Run Ship of Harkinian", "All files have been processed. Run SoH?", "Yes", "No",
                         [&]() {
-                            if (!std::filesystem::exists(Ship::Context::GetAppDirectoryPath(appShortName) +
-                                                         "/oot.o2r") &&
-                                !std::filesystem::exists(Ship::Context::GetAppDirectoryPath(appShortName) +
-                                                         "/oot-mq.o2r")) {
+                            if (!std::filesystem::exists(Ship::Context::LocateFileAcrossAppDirs("oot.o2r", appShortName))) {
                                 extractStep = ES_EXTRACT;
                                 promptStep = PS_FILE_CHECK;
                             } else {
@@ -605,7 +600,7 @@ void OTRGlobals::RunExtract(int argc, char* argv[]) {
                 extract = Extractor();
                 if (extract.RunFileStandalone(file)) {
                     bool doExtract = true;
-                    std::string archive = (extract.IsMasterQuest() ? "oot-mq.o2r" : "oot.o2r");
+                    std::string archive = extract.GetOutputArchiveName();
                     if (std::filesystem::exists(Ship::Context::GetAppDirectoryPath(appShortName) + "/" + archive)) {
                         std::string msg = "Archive for current ROM, " + archive + ", already exists.\nExtract again?";
                         SohGui::RegisterPopup("Confirm Re-extract", msg.c_str(), "Yes", "No", [&]() {
@@ -636,13 +631,13 @@ void OTRGlobals::RunExtract(int argc, char* argv[]) {
                 switch (promptStep) {
                     case PS_FILE_CHECK: {
                         const bool ootO2RExists =
-                            std::filesystem::exists(
-                                Ship::Context::LocateFileAcrossAppDirs("oot-mq.o2r", appShortName)) ||
                             std::filesystem::exists(Ship::Context::LocateFileAcrossAppDirs("oot.o2r", appShortName));
 
                         if (!ootO2RExists) {
                             SohGui::RegisterPopup(
-                                "No O2R Files", "No O2R files found. Generate one now?", "Yes", "No",
+                                "Normal OoT assets needed",
+                                "Prepare normal OoT assets now? Select a supported normal OoT ROM or PAL Master Quest ROM. "
+                                "Either will create the normal dungeon layouts used by SOH-EXTREME.", "Yes", "No",
                                 [&]() { promptStep = PS_LOCAL; }, [&]() { exit(0); });
                         } else {
                             extractStep = ES_VERIFY;
@@ -676,31 +671,10 @@ void OTRGlobals::RunExtract(int argc, char* argv[]) {
                         extractionTask = threadPool->submit_task([&]() -> void {
                             extract.CallTorch(installPath, Ship::Context::GetAppDirectoryPath(appShortName),
                                               &extractCount, &totalExtract);
-                            generatedIsMQ = extract.IsMasterQuest();
-                            promptStep = PS_SECOND;
+                            extractStep = ES_VERIFY;
                             extractCount = 0;
                             totalExtract = 0;
                         });
-                        continue;
-                    }
-                    case PS_SECOND: {
-                        SohGui::RegisterPopup(
-                            "Extraction Complete", "ROM Extracted. Extract another?", "Yes", "No",
-                            [&]() {
-                                if (!extract.ManuallySearchForRomMatchingType(generatedIsMQ ? RomSearchMode::Vanilla
-                                                                                            : RomSearchMode::MQ)) {
-                                    extractStep = ES_VERIFY;
-                                } else {
-                                    extractionTask = threadPool->submit_task([&]() -> void {
-                                        extract.CallTorch(installPath, Ship::Context::GetAppDirectoryPath(appShortName),
-                                                          &extractCount, &totalExtract);
-                                        extractStep = ES_VERIFY;
-                                        extractCount = 0;
-                                        totalExtract = 0;
-                                    });
-                                }
-                            },
-                            [&]() { extractStep = ES_VERIFY; });
                         continue;
                     }
                     default:
@@ -710,7 +684,6 @@ void OTRGlobals::RunExtract(int argc, char* argv[]) {
             }
             case ES_VERIFY: {
                 const bool ootO2RExists =
-                    std::filesystem::exists(Ship::Context::LocateFileAcrossAppDirs("oot-mq.o2r", appShortName)) ||
                     std::filesystem::exists(Ship::Context::LocateFileAcrossAppDirs("oot.o2r", appShortName));
 
                 if (!ootO2RExists) {
@@ -748,6 +721,12 @@ void OTRGlobals::RunExtract(int argc, char* argv[]) {
             if (status == std::future_status::ready) {
                 try {
                     extractionTask->get();
+                    if (!extract.GetLastError().empty()) {
+                        args.clear();
+                        extractStep = ES_EXTRACT;
+                        promptStep = PS_FILE_CHECK;
+                        SohGui::RegisterPopup("Normal OoT extraction failed", extract.GetLastError());
+                    }
                 } catch (const std::exception& e) {
                     SohGui::RegisterPopup("Extraction Crashed", e.what(), "Close", "", []() { exit(1); });
                 }

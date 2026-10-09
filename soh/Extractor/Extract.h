@@ -29,6 +29,7 @@ class Extractor {
     std::unique_ptr<unsigned char[]> mRomData = std::make_unique<unsigned char[]>(MB64);
     std::string mCurrentRomPath;
     std::string mSearchPath;
+    std::string mLastError;
     size_t mCurRomSize = 0;
 
     bool GetRomPathFromBox();
@@ -56,6 +57,9 @@ class Extractor {
     static int ShowYesNoBox(const char* title, const char* text);
     static void ShowErrorBox(const char* title, const char* text);
     bool IsMasterQuest() const;
+    // Both supported ROM inputs now produce normal OoT assets for AP.
+    const char* GetOutputArchiveName() const { return "oot.o2r"; }
+    const std::string& GetLastError() const { return mLastError; }
     bool ManuallySearchForRomMatchingType(RomSearchMode searchMode);
 
     void SetSearchPath(const std::string& path);

@@ -88,11 +88,16 @@ class ArchipelagoClient {
     // each save resumes the server ReceivedItems stream at exactly the point
     // represented by that save's inventory.
     void LoadSaveMetadata(bool isArchipelagoSave, uint64_t receivedItemCount, const std::string& server,
-                          const std::string& slot, const std::string& cachedSettingsJson);
+                          const std::string& slot, const std::string& cachedSettingsJson,
+                          const SohExtreme::SaveConnectionIdentity& identity = {});
     bool IsCurrentSaveArchipelago() const { return currentSaveIsArchipelago; }
     uint64_t GetAppliedItemCount() const { return appliedItemCount; }
     std::string GetSaveServer() const { return saveServer; }
     std::string GetSaveSlot() const { return saveSlot; }
+    bool ConnectionSettingsChanged() const;
+    bool CanConfirmLegacyReconnect() const;
+    void ConfirmLegacyReconnect();
+    std::string GetReconnectTarget() const;
     std::string GetCachedSlotSettingsJson() const { return cachedSlotSettingsJson; }
 
   private:
@@ -102,6 +107,8 @@ class ArchipelagoClient {
     ArchipelagoClient& operator=(const ArchipelagoClient&) = delete;
 
     void DrainMessages();
+    void SetConnectionIdentityFromJson(const std::string& raw);
+    void ReconcileSaveConnection(bool confirmLegacy = false);
     void ResetRemotePresentations();
     void QueueRemotePresentation(int64_t locationId);
     bool ProcessRemotePresentation();
@@ -260,6 +267,10 @@ class ArchipelagoClient {
     bool saveMetadataLoaded = false;
     bool saveIdentityMismatch = false;
     std::string saveServer;
+    SohExtreme::SaveConnectionIdentity saveConnectionIdentity, connectedIdentity;
+    std::string connectedServer, connectedSlot, connectedPassword, connectedSettingsJson;
+    std::string saveConnectionStatus;
+    SohExtreme::SaveConnectionDecision saveConnectionDecision = SohExtreme::SaveConnectionDecision::Waiting;
     std::vector<uint64_t> fallbackNpcSpeechHashes;
     std::unordered_set<uint64_t> fallbackNpcSpeechSeen;
     std::string saveSlot;

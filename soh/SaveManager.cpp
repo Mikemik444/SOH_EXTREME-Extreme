@@ -292,6 +292,7 @@ void SaveManager::LoadRandomizer() {
     std::string archipelagoServer;
     std::string archipelagoSlot;
     std::string archipelagoSettingsJson;
+    SohExtreme::SaveConnectionIdentity archipelagoIdentity;
     int archipelagoMetadataVersion = 0;
     SaveManager::Instance->LoadData("archipelagoMetadataVersion", archipelagoMetadataVersion, 0);
     SaveManager::Instance->LoadData("archipelagoSave", archipelagoSave, false);
@@ -299,6 +300,9 @@ void SaveManager::LoadRandomizer() {
     SaveManager::Instance->LoadData("archipelagoServer", archipelagoServer, std::string{});
     SaveManager::Instance->LoadData("archipelagoSlot", archipelagoSlot, std::string{});
     SaveManager::Instance->LoadData("archipelagoSettingsJson", archipelagoSettingsJson, std::string{});
+    SaveManager::Instance->LoadData("archipelagoSeedName", archipelagoIdentity.seed, std::string{});
+    SaveManager::Instance->LoadData("archipelagoTeam", archipelagoIdentity.team, -1);
+    SaveManager::Instance->LoadData("archipelagoSlotId", archipelagoIdentity.slot, -1);
 
     size_t archipelagoFallbackNpcSpeechCount = 0;
     std::vector<uint64_t> archipelagoFallbackNpcSpeechHashes;
@@ -311,7 +315,7 @@ void SaveManager::LoadRandomizer() {
                                      });
 
     ArchipelagoClient::GetInstance().LoadSaveMetadata(archipelagoSave, archipelagoReceivedItemCount,
-                                                       archipelagoServer, archipelagoSlot, archipelagoSettingsJson);
+                                                       archipelagoServer, archipelagoSlot, archipelagoSettingsJson, archipelagoIdentity);
     ArchipelagoClient::GetInstance().LoadFallbackNpcSpeechHashes(archipelagoFallbackNpcSpeechHashes);
     size_t pendingLocationCount = 0;
     std::vector<int64_t> pendingLocations;
@@ -333,7 +337,10 @@ void SaveManager::LoadRandomizer() {
     SaveManager::Instance->LoadArray("masterQuestDungeons", mqDungeonCount, [&](size_t i) {
         size_t dungeonId;
         SaveManager::Instance->LoadData("", dungeonId);
-        randoContext->GetDungeon(dungeonId)->SetMQ();
+        // AP locations and rules use normal layouts regardless of the input ROM.
+        if (!archipelagoSave) {
+            randoContext->GetDungeon(dungeonId)->SetMQ();
+        }
     });
 
     randoContext->GetTrials()->SkipAll();
@@ -528,13 +535,16 @@ void SaveManager::SaveRandomizer(SaveContext* saveContext, int sectionID, bool f
 
     SaveManager::Instance->SaveData("pendingIceTrapCount", saveContext->ship.pendingIceTrapCount);
 
-    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 3);
+    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 4);
     SaveManager::Instance->SaveData("archipelagoSave", lightweightArchipelagoSave);
     if (lightweightArchipelagoSave) {
         const auto& archipelago = *gSavingArchipelagoSnapshot;
         SaveManager::Instance->SaveData("archipelagoReceivedItemCount", archipelago.receivedItemCount);
         SaveManager::Instance->SaveData("archipelagoServer", archipelago.server);
         SaveManager::Instance->SaveData("archipelagoSlot", archipelago.slot);
+        SaveManager::Instance->SaveData("archipelagoSeedName", archipelago.identity.seed);
+        SaveManager::Instance->SaveData("archipelagoTeam", archipelago.identity.team);
+        SaveManager::Instance->SaveData("archipelagoSlotId", archipelago.identity.slot);
         // Persist the exact flat gRando.Settings snapshot delivered by this AP slot.
         // It is restored before scene actor initialization on the next load, eliminating
         // the race where local menu values were visible until networking finished.
@@ -781,6 +791,10 @@ void SaveManager::StartupCheckAndInitMeta(int fileNum) {
             // dungeons, in which case we don't actually require a vanilla OTR.
             fileMetaInfo[fileNum].requiresOriginal = randoBlock["masterQuestDungeonCount"] < 12;
             fileMetaInfo[fileNum].archipelagoSave = randoBlock.value("archipelagoSave", false);
+            if (fileMetaInfo[fileNum].archipelagoSave) {
+                fileMetaInfo[fileNum].requiresOriginal = true;
+                fileMetaInfo[fileNum].requiresMasterQuest = false;
+            }
             const std::string apSlot = randoBlock.value("archipelagoSlot", std::string{});
             SohUtils::CopyStringToCharArray(fileMetaInfo[fileNum].archipelagoSlot, apSlot,
                                             ARRAY_COUNT(fileMetaInfo[fileNum].archipelagoSlot));
@@ -852,6 +866,10 @@ void SaveManager::InitMeta(int fileNum) {
     // in which case we don't actually require a vanilla OTR.
     fileMetaInfo[fileNum].requiresOriginal =
         !IS_MASTER_QUEST && (!IS_RANDO || randoContext->GetDungeons()->CountMQ() < 12);
+    if (fileMetaInfo[fileNum].archipelagoSave) {
+        fileMetaInfo[fileNum].requiresOriginal = true;
+        fileMetaInfo[fileNum].requiresMasterQuest = false;
+    }
 
     fileMetaInfo[fileNum].buildVersionMajor = gSaveContext.ship.stats.buildVersionMajor;
     fileMetaInfo[fileNum].buildVersionMinor = gSaveContext.ship.stats.buildVersionMinor;

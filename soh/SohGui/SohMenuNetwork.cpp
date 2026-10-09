@@ -53,7 +53,9 @@ void SohMenu::AddMenuNetwork() {
             auto& ap = ArchipelagoClient::GetInstance();
             std::string slot = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("SlotName"), "");
 
-            if (ap.IsAuthenticated()) {
+            if (ap.ConnectionSettingsChanged()) {
+                info.name = "Reconnect with updated settings";
+            } else if (ap.IsAuthenticated()) {
                 info.name = "Disconnect";
             } else if (ap.IsConnectionRefused()) {
                 // One click retries a refused connection instead of forcing the user to
@@ -69,7 +71,7 @@ void SohMenu::AddMenuNetwork() {
         .Callback([](WidgetInfo& info) {
             auto& ap = ArchipelagoClient::GetInstance();
 
-            if (ap.IsConnectionRefused()) {
+            if (ap.ConnectionSettingsChanged() || ap.IsConnectionRefused()) {
                 ap.Disable();
                 ap.Enable();
             } else {

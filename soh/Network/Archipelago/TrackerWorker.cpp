@@ -216,7 +216,7 @@ bool TrackerWorker::Start(const std::string& runtimeHint, const std::string& boo
             return false;
         }
         if (!HasManagedWorld(runtime.parent_path())) {
-            error = "Install soh_extreme.apworld 0.11.21 in this Archipelago installation before starting the AP tracker.";
+            error = "Install the matching soh_extreme.apworld in this Archipelago installation before starting the AP tracker.";
             return false;
         }
         SECURITY_ATTRIBUTES sa{sizeof(SECURITY_ATTRIBUTES), nullptr, TRUE};

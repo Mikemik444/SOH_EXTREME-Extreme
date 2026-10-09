@@ -1,0 +1,104 @@
+{
+  "version": "0.11.61",
+  "github_base_commit": "11f45cf3340959e999064d4811cea61b1e188bad",
+  "source_patch_verified": true,
+  "full_game_build_completed": false,
+  "live_game_playtested": false,
+  "blocked_reason": "Windows access denied reading E:/test/vcpkg dependencies after renewed permission.",
+  "apworld_source_parity": true,
+  "apworld_sha256": "9e37693db2542cf7b404942bf7635bcc2ef1d1e7101d626070e483c0ecf55093",
+  "source_sha256": {
+    "CMakeLists.txt": "0434b752cc69cb54d987164500862cf0ba4d54b1471aa1914073575ca7a72ceb",
+    "Cmake/SohExtremeAPCppIdentity.cmake": "410db8e9978024137c8fe1c3599f39bf4a2a5ecc8d0f63cf352ef06072bb8f96",
+    "SOH_AP_FIX_HISTORY.txt": "4d1616236c5f572126f5f5b8c7ef9160ff4887d8191af9827ee789383e86cd2f",
+    "archipelago/archipelago.json": "2bd42f619fd8d159aae571f5b3a7d7b35429e13c261cc901d0f9dc2b43c43343",
+    "archipelago/soh_extreme/TrackerMirror.py": "26f7de1c508feb5e2a7b43b037020ffceca84fb2cf777a1c82d9084982a8c809",
+    "archipelago/soh_extreme/archipelago.json": "2bd42f619fd8d159aae571f5b3a7d7b35429e13c261cc901d0f9dc2b43c43343",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "34e23517887f09c7cbc6b05b384538b61f4cdf9ef512f4822a2c42760a1dbbc0",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "9594742aedff2184b371e4bcfb22eafb488ce1b1d06d2b959c30a102d43f7fd3",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "59672be178c8a99aa9209e95e272e621515a8148f39a667f182c96f9ba690686",
+    "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h": "e44d756bd3ad080469e76fd063a79b8e65e70ea07adce2462ec1b90b670689b3",
+    "soh/Network/Archipelago/SaveConnectionIdentity.h": "68f748b8b1fec735d60060e8918300332cb486229d254a1152d0117a8393fad4",
+    "soh/Network/Archipelago/TrackerMirror.h": "7699aa5687529822be71a7db9f8a9d2bd0bbba7f7c47cd6b981ce70d6da0e395",
+    "soh/Network/Archipelago/TrackerWorker.cpp": "a56530601d67a42c2cc18354afe5f9c7e70152c18ed7a02e114e6eb8df39af9d",
+    "soh/SaveManager.cpp": "4af420c5f19d62c844b1fd118aec39fc6b9ec227d8a27441149a571d9096309c",
+    "soh/SohGui/SohMenuNetwork.cpp": "25e49939d34e5fe9970b44cbf3469f0a98a15b0f62fd1171d712002c1b27a166",
+    "validation/test_ap_connection_protocol.cpp": "0846c588709003bd218bd1f0001b56513fc269986fff7d38982f45a6fe5ce7de",
+    "validation/test_ap_connection_protocol.py": "dc004cf2e722a24ecc44d2326dd84de27d5f4fb972c9cc94eb699d3669e4dd32",
+    "validation/test_ap_delivery_audit.py": "8724345970ee7ffaee8ea33e87f2df30262172629f259a629de6a70b017d43fc",
+    "validation/test_ap_identity_patch.py": "c6f5f2d09f4f2e9d140e3e32b192a28781c7f5c5d428fff3140f10ceead2c4dc",
+    "validation/test_save_reconnect.py": "72a967f89b5037b151272519972ca17e702912e26075f935f00c9a25690d12fd"
+  },
+  "baseline_sha256": {
+    "CMakeLists.txt": "ea4bd360cebd01d968176f0e64dd28e5ed65c9ae0c6a15e1425b530494c0bd1b",
+    "Cmake/SohExtremeAPCppIdentity.cmake": null,
+    "SOH_AP_FIX_HISTORY.txt": "24e724dab9c36cdb9c90c75eb25acd49ff5b9c0700372d896c20fcf16d0823af",
+    "archipelago/archipelago.json": "4c94e8d0b93f60b9d3cedb979ffce40747cb75552c768bdf1b55b17e4d806a15",
+    "archipelago/soh_extreme/TrackerMirror.py": "77543f820fbebf9bee780193a0e3ef459b757da5ae88778782f5af3f6433de28",
+    "archipelago/soh_extreme/archipelago.json": "4c94e8d0b93f60b9d3cedb979ffce40747cb75552c768bdf1b55b17e4d806a15",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "dd3f862a6f7c92742222d0b03f12f1ff0f1d228e4be0b70b37bf8716c119ddf3",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "b2e7e9ca634c59b4c7f30f0288e30229ae2263dbdc13390024abbd8b2b5455a2",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "7a2ede5d546ce643e5418ca773ac9fa5c9defc07b23bbd624a52c9b191b3c2d9",
+    "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h": "c86c60a0570467b26019b191a8a25791cb55eb971a120d18b0700cd05fec1ffb",
+    "soh/Network/Archipelago/SaveConnectionIdentity.h": null,
+    "soh/Network/Archipelago/TrackerMirror.h": "404fcd8639d42df61277b486c705a53ff8155cdfd62a4c0fdb48fb1708773338",
+    "soh/Network/Archipelago/TrackerWorker.cpp": "5bd547b8bb7aabadae87bb54f34a2258475498474cab84b811cbe601ff6c995b",
+    "soh/SaveManager.cpp": "5a40543405ee68982a4eca21ced689dec3fbc56685ac1817650255371186e020",
+    "soh/SohGui/SohMenuNetwork.cpp": "e6fa39bddca0266f5a7a4283564bcce75bae3ee03ae33c9f96513d664b417379",
+    "validation/test_ap_connection_protocol.cpp": null,
+    "validation/test_ap_connection_protocol.py": null,
+    "validation/test_ap_delivery_audit.py": "0515304b1b456aa6b9072d0087dfb12cbf6208d7a50e75e981870cc27f420ee3",
+    "validation/test_ap_identity_patch.py": null,
+    "validation/test_save_reconnect.py": null
+  },
+  "tests": {
+    "reconnect": {
+      "passed": true,
+      "build_exit": 0,
+      "test_exit": 0,
+      "output": "47 production reconnect assertions passed\n",
+      "scope": "Production functions with controlled engine/network services; no live gameplay test."
+    },
+    "delivery_and_snapshot": [
+      {
+        "name": "location_delivery_and_isolation",
+        "passed": true
+      },
+      {
+        "name": "partial_scout_recovery",
+        "passed": true
+      },
+      {
+        "name": "save_snapshot_consistency",
+        "passed": true
+      },
+      {
+        "name": "major_receipt_identity",
+        "passed": true
+      },
+      {
+        "name": "AP save/receipt/enemy integration boundaries",
+        "passed": true
+      }
+    ],
+    "dependency_patch": {
+      "passed": true,
+      "cases": [
+        "normal",
+        "idempotent",
+        "missing-late-anchor",
+        "duplicate-anchor",
+        "modified-patch"
+      ]
+    },
+    "actual_apcpp_parser": {
+      "passed": true,
+      "build_exit": 0,
+      "test_exit": 0,
+      "output": "PASS APCpp identity: RoomInfo/refusal gating, stable player name, team/slot, callback ordering, spoofed slot_data exclusion, reconnect\n",
+      "apcpp_sha256": "e01e631d1f3ed24dc57c32a16f2e8911d73daf5061e79ad5d39b57acf8962504",
+      "parser_sha256": "08e7719dcd6d78af6f86ceec3e0f887c8d0d15b9d05feec21125f4420d0b647a",
+      "scope": "Real APCpp packet parser; no socket, server, or live game connection."
+    }
+  }
+}

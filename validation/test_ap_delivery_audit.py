@@ -67,6 +67,7 @@ class ArchipelagoClient {public:
  std::atomic_bool enabled=true;
  bool IsAuthenticated()const{return authenticated;}
  uint64_t appliedItemCount=0;std::string saveServer="server",saveSlot="slot",cachedSlotSettingsJson="{}";
+ SohExtreme::SaveConnectionIdentity saveConnectionIdentity;
  std::vector<uint64_t>fallbackNpcSpeechHashes;std::unordered_set<uint64_t>fallbackNpcSpeechSeen;
  std::unordered_set<int64_t>activeLocations,reportedLocations,pendingLocationReports;
  struct Scout{int playerId=1;std::string itemName="Item",playerName="Player",locationName="NPC";};
@@ -143,16 +144,19 @@ class SaveManager{public:static SaveManager*Instance;int sectionIndex=10;Pool*sm
 '''+function(save,'void SaveManager::SaveSection(')+r'''
 int main(){SaveManager writer;SaveManager::Instance=&writer;auto&c=ArchipelagoClient::GetInstance();
  c.appliedItemCount=1;c.pendingLocationReports={1000};c.fallbackNpcSpeechHashes={11};gSaveContext.inventory=1;
+ c.saveConnectionIdentity={"original-seed",2,3};
  writer.SaveSection(0,0,true);
  c.appliedItemCount=2;c.pendingLocationReports={1001};c.fallbackNpcSpeechHashes.push_back(22);gSaveContext.inventory=2;
  writer.SaveSection(0,0,true);
  // A different file can become live before either background save executes.
  c.currentSaveIsArchipelago=false;c.saveSlot="other";c.appliedItemCount=99;gSaveContext.inventory=99;
+ c.saveConnectionIdentity={"another-seed",9,9};
  while(!pool.jobs.empty()){auto job=pool.jobs.front();pool.jobs.pop_front();job();}
  assert(writer.writes.size()==2);
  for(size_t i=0;i<2;++i){const auto&w=writer.writes[i];assert(w["inventory"]==i+1);assert(w["archipelagoReceivedItemCount"]==i+1);
  assert(w["archipelagoSave"]==true&&w["archipelagoSlot"]=="slot");assert(w["archipelagoPendingLocations"][0]==1000+i);
- assert(w["archipelagoFallbackNpcSpeechCount"]==i+1);}
+ assert(w["archipelagoFallbackNpcSpeechCount"]==i+1);
+ assert(w["archipelagoSeedName"]=="original-seed"&&w["archipelagoTeam"]==2&&w["archipelagoSlotId"]==3);}
  writer.SaveSection(1,0,false);assert(writer.writes.back()["archipelagoSave"]==false);
  writer.SaveSection(0xff,0,true);assert(pool.jobs.empty());
 }
