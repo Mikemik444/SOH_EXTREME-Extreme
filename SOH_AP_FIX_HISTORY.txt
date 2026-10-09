@@ -1,3 +1,12 @@
+1.6.0 - SOH-EXTREME About information and matching release versions (2026-10-08)
+  - Client release, APWorld manifests and the automatic tracker now use 1.6.0.
+    The client About panel shows both matching versions and the fork's GitHub.
+  - Local builds populate their actual Git branch/commit. Source archives show
+    explicit fallback labels; ROM revision is identified as ROM assets.
+  - The public release number is independent of the upstream save/asset format
+    version, preserving existing saves and extracted oot.o2r archives.
+  - Includes all 0.11.63 changes, including normal OoT from retail/debug MQ ROMs.
+
 0.11.63 - Normal OoT assets from the supplied MQ Debug ROM (2026-10-08)
   - Adds a verified conversion for the 64 MB MQ Debug dump, including the
     byte-swapped file named Master Quest (USA) (Debug Edition).n64. The existing

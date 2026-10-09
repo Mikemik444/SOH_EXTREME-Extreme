@@ -128,6 +128,7 @@ set(PROJECT_NAME soh)
 ################################################################################
 # Sources
 ################################################################################
+include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeBuildInfo.cmake")
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/src/boot/build.c.in ${CMAKE_CURRENT_SOURCE_DIR}/src/boot/build.c @ONLY)
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/properties.h.in ${CMAKE_CURRENT_SOURCE_DIR}/properties.h @ONLY)
 

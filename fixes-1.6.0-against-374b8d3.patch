@@ -1,0 +1,343 @@
+diff --git a/APWORLD_SOURCE_SYNC_REPORT.json b/APWORLD_SOURCE_SYNC_REPORT.json
+index 0a5055b..aadab25 100644
+--- a/APWORLD_SOURCE_SYNC_REPORT.json
++++ b/APWORLD_SOURCE_SYNC_REPORT.json
+@@ -1,10 +1,10 @@
+ {
+-    "version":  "0.11.29",
+-    "canonical_source":  "E:\\test\\bb\\archipelago",
+-    "output":  "E:\\test\\bb\\soh_extreme.apworld",
+-    "installed":  "C:\\ProgramData\\Archipelago\\custom_worlds\\soh_extreme.apworld",
+-    "files":  102,
+-    "source_archive_parity":  true,
+-    "sha256":  "a97f13430fdcfd61942e9a43e032e97554e2ec7e4d06e1983a8be8ab6b7ec6b7",
+-    "checked_utc":  "2026-09-29T23:15:54.3429406Z"
++  "version": "1.6.0",
++  "canonical_source": "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme\\archipelago",
++  "output": "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme\\soh_extreme.apworld",
++  "installed": "",
++  "files": 104,
++  "source_archive_parity": true,
++  "sha256": "8340fa3c7e6d617222ffafbd547ed2c553495e1811e8ae8e313266f2ed8d8974",
++  "checked_utc": "2026-10-09T04:38:50.4368013Z"
+ }
+\ No newline at end of file
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8f72a93..76544c1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -128,6 +128,7 @@ set(PROJECT_NAME soh)
+ ################################################################################
+ # Sources
+ ################################################################################
++include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeBuildInfo.cmake")
+ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/src/boot/build.c.in ${CMAKE_CURRENT_SOURCE_DIR}/src/boot/build.c @ONLY)
+ configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/properties.h.in ${CMAKE_CURRENT_SOURCE_DIR}/properties.h @ONLY)
+ 
+diff --git a/Cmake/SohExtremeBuildInfo.cmake b/Cmake/SohExtremeBuildInfo.cmake
+new file mode 100644
+index 0000000..4dcc6ca
+--- /dev/null
++++ b/Cmake/SohExtremeBuildInfo.cmake
+@@ -0,0 +1,48 @@
++# Populate local builds as well as CI builds, without changing save/asset versions.
++find_package(Git QUIET)
++if(GIT_FOUND)
++    execute_process(COMMAND "${GIT_EXECUTABLE}" rev-parse --show-toplevel
++        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
++        OUTPUT_VARIABLE _soh_git_root OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
++    cmake_path(NORMAL_PATH _soh_git_root)
++    cmake_path(NORMAL_PATH CMAKE_CURRENT_SOURCE_DIR OUTPUT_VARIABLE _soh_source_root)
++    # A source archive inside some other repository must not inherit its metadata.
++    if(_soh_git_root STREQUAL _soh_source_root)
++        foreach(_soh_field IN ITEMS BRANCH COMMIT_HASH COMMIT_TAG)
++            if(NOT CMAKE_PROJECT_GIT_${_soh_field})
++                if(_soh_field STREQUAL "BRANCH")
++                    set(_soh_args rev-parse --abbrev-ref HEAD)
++                elseif(_soh_field STREQUAL "COMMIT_HASH")
++                    set(_soh_args rev-parse --short=12 HEAD)
++                else()
++                    set(_soh_args describe --tags --exact-match HEAD)
++                endif()
++                execute_process(COMMAND "${GIT_EXECUTABLE}" ${_soh_args}
++                    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
++                    OUTPUT_VARIABLE CMAKE_PROJECT_GIT_${_soh_field}
++                    OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
++                if(_soh_field STREQUAL "COMMIT_HASH" AND CMAKE_PROJECT_GIT_COMMIT_HASH)
++                    execute_process(COMMAND "${GIT_EXECUTABLE}" status --porcelain --untracked-files=normal
++                        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
++                        OUTPUT_VARIABLE _soh_changes ERROR_QUIET)
++                    if(_soh_changes)
++                        string(APPEND CMAKE_PROJECT_GIT_COMMIT_HASH " (modified)")
++                    endif()
++                endif()
++            endif()
++        endforeach()
++    endif()
++endif()
++if(NOT CMAKE_PROJECT_GIT_BRANCH)
++    set(CMAKE_PROJECT_GIT_BRANCH "Source archive")
++endif()
++if(NOT CMAKE_PROJECT_GIT_COMMIT_HASH)
++    set(CMAKE_PROJECT_GIT_COMMIT_HASH "Not recorded")
++endif()
++# Escape metadata before it is substituted into C string literals.
++foreach(_soh_field IN ITEMS BRANCH COMMIT_HASH COMMIT_TAG)
++    string(REPLACE "\\" "\\\\" CMAKE_PROJECT_GIT_${_soh_field} "${CMAKE_PROJECT_GIT_${_soh_field}}")
++    string(REPLACE "\"" "\\\"" CMAKE_PROJECT_GIT_${_soh_field} "${CMAKE_PROJECT_GIT_${_soh_field}}")
++    string(REPLACE "\n" "\\n" CMAKE_PROJECT_GIT_${_soh_field} "${CMAKE_PROJECT_GIT_${_soh_field}}")
++    string(REPLACE "\r" "\\r" CMAKE_PROJECT_GIT_${_soh_field} "${CMAKE_PROJECT_GIT_${_soh_field}}")
++endforeach()
+diff --git a/SOH_AP_FIX_HISTORY.txt b/SOH_AP_FIX_HISTORY.txt
+index 4378572..c7634ef 100644
+--- a/SOH_AP_FIX_HISTORY.txt
++++ b/SOH_AP_FIX_HISTORY.txt
+@@ -1,3 +1,12 @@
++1.6.0 - SOH-EXTREME About information and matching release versions (2026-10-08)
++  - Client release, APWorld manifests and the automatic tracker now use 1.6.0.
++    The client About panel shows both matching versions and the fork's GitHub.
++  - Local builds populate their actual Git branch/commit. Source archives show
++    explicit fallback labels; ROM revision is identified as ROM assets.
++  - The public release number is independent of the upstream save/asset format
++    version, preserving existing saves and extracted oot.o2r archives.
++  - Includes all 0.11.63 changes, including normal OoT from retail/debug MQ ROMs.
++
+ 0.11.63 - Normal OoT assets from the supplied MQ Debug ROM (2026-10-08)
+   - Adds a verified conversion for the 64 MB MQ Debug dump, including the
+     byte-swapped file named Master Quest (USA) (Debug Edition).n64. The existing
+diff --git a/archipelago/archipelago.json b/archipelago/archipelago.json
+index 7c5ccb5..e8850f2 100644
+--- a/archipelago/archipelago.json
++++ b/archipelago/archipelago.json
+@@ -1,7 +1,7 @@
+ {
+     "game": "SOH-EXTREME",
+     "minimum_ap_version": "0.6.7",
+-    "world_version": "0.11.63",
++    "world_version": "1.6.0",
+     "authors": [
+         "mikemik44",
+         "OpenAI"
+diff --git a/archipelago/soh_extreme/TrackerMirror.py b/archipelago/soh_extreme/TrackerMirror.py
+index e0bae1e..9028241 100644
+--- a/archipelago/soh_extreme/TrackerMirror.py
++++ b/archipelago/soh_extreme/TrackerMirror.py
+@@ -10,7 +10,7 @@ from .NpcSpeech import display_region
+ from typing import Any
+ 
+ PROTOCOL = "SOHExtremeFinder1"
+-VERSION = "0.11.63"
++VERSION = "1.6.0"
+ TAG = "SOHExtremeUT"
+ MAX_ENTRIES = 20000
+ MAX_BYTES = 750000
+diff --git a/archipelago/soh_extreme/archipelago.json b/archipelago/soh_extreme/archipelago.json
+index 7c5ccb5..e8850f2 100644
+--- a/archipelago/soh_extreme/archipelago.json
++++ b/archipelago/soh_extreme/archipelago.json
+@@ -1,7 +1,7 @@
+ {
+     "game": "SOH-EXTREME",
+     "minimum_ap_version": "0.6.7",
+-    "world_version": "0.11.63",
++    "world_version": "1.6.0",
+     "authors": [
+         "mikemik44",
+         "OpenAI"
+diff --git a/soh/Network/Archipelago/TrackerMirror.h b/soh/Network/Archipelago/TrackerMirror.h
+index bfd56ec..31a02d8 100644
+--- a/soh/Network/Archipelago/TrackerMirror.h
++++ b/soh/Network/Archipelago/TrackerMirror.h
+@@ -1,4 +1,5 @@
+ #pragma once
++#include "../../SohExtremeVersion.h"
+ // Read-only Universal Tracker snapshots. No game types, items, or receipt writes.
+ // Bounds and session checks apply before a snapshot can replace displayed data.
+ #include <algorithm>
+@@ -16,7 +17,7 @@ namespace SohExtreme {
+ constexpr size_t kTrackerMaxEntries = 20000;
+ constexpr size_t kTrackerMaxBytes = 750000;
+ constexpr const char* kTrackerProtocol = "SOHExtremeFinder1";
+-constexpr const char* kTrackerVersion = "0.11.63";
++constexpr const char* kTrackerVersion = SOH_EXTREME_VERSION;
+ struct TrackerRow {
+     int64_t id = 0;
+     uint8_t state = 0; // 1 normal; 2 UT's separate glitched state
+@@ -131,7 +132,7 @@ class TrackerMirrorState {
+     uint64_t NextRequest() { return ++request_; }
+     const std::string& Nonce() const { return nonce_; }
+     bool Accept(TrackerSnapshot candidate, uint32_t slot, double now, std::string& error) {
+-        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use 0.11.63 on both sides."; return false; }
++        if (candidate.version != kTrackerVersion) { error = "Tracker version mismatch; use " SOH_EXTREME_VERSION " on both sides."; return false; }
+         if (nonce_.empty() || candidate.nonce != nonce_ || candidate.slot != slot ||
+             candidate.request == 0 || candidate.request > request_) { error = "Wrong tracker session."; return false; }
+         if (!producer_.empty() && producer_ != candidate.producer && now - lastReceive_ <= 10.0) {
+diff --git a/soh/SohExtremeVersion.h b/soh/SohExtremeVersion.h
+new file mode 100644
+index 0000000..f95c954
+--- /dev/null
++++ b/soh/SohExtremeVersion.h
+@@ -0,0 +1,5 @@
++#pragma once
++
++// Public release version. The upstream save/asset format version is independent.
++#define SOH_EXTREME_VERSION "1.6.0"
++#define SOH_EXTREME_REPOSITORY_URL "https://github.com/Mikemik444/SOH_EXTREME-Extreme"
+diff --git a/soh/SohGui/SohMenuSettings.cpp b/soh/SohGui/SohMenuSettings.cpp
+index 53b051d..0366dbd 100644
+--- a/soh/SohGui/SohMenuSettings.cpp
++++ b/soh/SohGui/SohMenuSettings.cpp
+@@ -5,6 +5,7 @@
+ #include "soh/OTRGlobals.h"
+ #include <soh/GameVersions.h>
+ #include "soh/ResourceManagerHelpers.h"
++#include "soh/SohExtremeVersion.h"
+ #include "UIWidgets.hpp"
+ #include <ship/controller/controldeck/ControlDeck.h>
+ 
+@@ -271,15 +272,18 @@ void SohMenu::AddMenuSettings() {
+     path.column = SECTION_COLUMN_2;
+ 
+     AddWidget(path, "About", WIDGET_SEPARATOR_TEXT);
+-    AddWidget(path, "Ship Of Harkinian", WIDGET_TEXT);
+-    if (gGitCommitTag[0] != 0) {
+-        AddWidget(path, gBuildVersion, WIDGET_TEXT);
+-    } else {
+-        AddWidget(path, ("Branch: " + std::string(gGitBranch)), WIDGET_TEXT);
+-        AddWidget(path, ("Commit: " + std::string(gGitCommitHash)), WIDGET_TEXT);
+-    }
++    AddWidget(path, "SOH-EXTREME", WIDGET_TEXT);
++    AddWidget(path, "Client version: " SOH_EXTREME_VERSION, WIDGET_TEXT);
++    AddWidget(path, "Matching APWorld: " SOH_EXTREME_VERSION, WIDGET_TEXT);
++    AddWidget(path, "Based on Ship of Harkinian", WIDGET_TEXT);
++    AddWidget(path, "Open SOH-EXTREME GitHub", WIDGET_BUTTON)
++        .RaceDisable(false)
++        .Callback([](WidgetInfo&) { SDL_OpenURL(SOH_EXTREME_REPOSITORY_URL); })
++        .Options(ButtonOptions().Tooltip(SOH_EXTREME_REPOSITORY_URL));
++    AddWidget(path, "Branch: " + std::string(gGitBranch[0] ? gGitBranch : "Source archive"), WIDGET_TEXT);
++    AddWidget(path, "Commit: " + std::string(gGitCommitHash[0] ? gGitCommitHash : "Not recorded"), WIDGET_TEXT);
+     for (uint32_t i = 0; i < ResourceMgr_GetNumGameVersions(); i++) {
+-        AddWidget(path, GetGameVersionString(i), WIDGET_TEXT);
++        AddWidget(path, "ROM assets: " + std::string(GetGameVersionString(i)), WIDGET_TEXT);
+     }
+ 
+     // Audio Settings
+diff --git a/src/boot/build.c.in b/src/boot/build.c.in
+index 4467d04..3a3f39a 100644
+--- a/src/boot/build.c.in
++++ b/src/boot/build.c.in
+@@ -1,6 +1,8 @@
+ #include <libultraship/libultra.h>
++#include "soh/SohExtremeVersion.h"
+ 
+-const char gBuildVersion[] = "@PROJECT_BUILD_NAME@ (@CMAKE_PROJECT_VERSION_MAJOR@.@CMAKE_PROJECT_VERSION_MINOR@.@CMAKE_PROJECT_VERSION_PATCH@)";
++const char gBuildVersion[] = "SOH-EXTREME " SOH_EXTREME_VERSION;
++// These numbers identify the upstream save and asset format, not the fork release.
+ const u16 gBuildVersionMajor = @CMAKE_PROJECT_VERSION_MAJOR@;
+ const u16 gBuildVersionMinor = @CMAKE_PROJECT_VERSION_MINOR@;
+ const u16 gBuildVersionPatch = @CMAKE_PROJECT_VERSION_PATCH@;
+diff --git a/tools/build_standalone_apworld.ps1 b/tools/build_standalone_apworld.ps1
+index 1b10d7f..5ad189f 100644
+--- a/tools/build_standalone_apworld.ps1
++++ b/tools/build_standalone_apworld.ps1
+@@ -178,11 +178,13 @@ function Assert-ManifestsAndTracker {
+         throw "C++ tracker header is missing: $HeaderPath"
+     }
+     $CppTracker = [IO.File]::ReadAllText($HeaderPath)
++    $ReleaseHeader = [IO.File]::ReadAllText((Join-Path $Root 'soh\SohExtremeVersion.h'))
+ 
+     $PyMatch = [regex]::Match($PythonTracker, '(?m)^VERSION\s*=\s*"([0-9.]+)"')
+-    $CppMatch = [regex]::Match($CppTracker, 'kTrackerVersion\s*=\s*"([0-9.]+)"')
++    $CppMatch = [regex]::Match($ReleaseHeader, '(?m)^#define\s+SOH_EXTREME_VERSION\s+"([0-9.]+)"')
+ 
+-    if (-not $PyMatch.Success -or -not $CppMatch.Success) {
++    if (-not $PyMatch.Success -or -not $CppMatch.Success -or
++        $CppTracker -notmatch 'kTrackerVersion\s*=\s*SOH_EXTREME_VERSION\s*;') {
+         throw 'Could not read the SOH-EXTREME tracker version from Python/C++.'
+     }
+ 
+diff --git a/validation/test_release_version.py b/validation/test_release_version.py
+new file mode 100644
+index 0000000..0c4954d
+--- /dev/null
++++ b/validation/test_release_version.py
+@@ -0,0 +1,79 @@
++"""Verify release/protocol agreement and preserve existing save/archive compatibility.
++
++Run in a Visual Studio x64 developer shell after configuring the game with CMake.
++"""
++from pathlib import Path
++import argparse, ast, json, re, subprocess
++
++p=argparse.ArgumentParser(description=__doc__)
++p.add_argument('--output',type=Path,required=True)
++p.add_argument('--cmake',default='cmake')
++a=p.parse_args();r=Path(__file__).resolve().parents[1]
++out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
++release=re.search(r'#define SOH_EXTREME_VERSION "([0-9.]+)"',(r/'soh/SohExtremeVersion.h').read_text())[1]
++for name in ['archipelago/archipelago.json','archipelago/soh_extreme/archipelago.json']:
++    assert json.loads((r/name).read_text())['world_version']==release
++
++# Exercise the actual Python serializer. Its region-label dependency is unrelated
++# to serialization and is not needed for these supplied rows.
++tree=ast.parse((r/'archipelago/soh_extreme/TrackerMirror.py').read_text())
++tree.body=[node for node in tree.body if not (isinstance(node,ast.ImportFrom) and node.module=='NpcSpeech')]
++ns={};exec(compile(tree,'TrackerMirror.py','exec'),ns)
++assert ns['VERSION']==release
++payload=ns['encode_snapshot'](nonce='1'*32,request=1,revision=1,slot=1,
++    received=3,active={100,101,102},checked={102},rows=[
++        {'id':100,'state':1,'name':'Reachable check','region':'Kokiri Forest'},
++        {'id':101,'state':2,'name':'Glitched check','region':'Lake Hylia'}],producer='release-test')
++(out/'snapshot.b64').write_text(payload)
++
++stubs=out/'stubs/libultraship';stubs.mkdir(parents=True,exist_ok=True)
++(stubs/'libultra.h').write_text('typedef unsigned short u16;\n')
++cpp=r'''#include <cassert>
++#include <fstream>
++#include <iostream>
++#include <iterator>
++#include "soh/Network/Archipelago/TrackerMirror.h"
++#include "src/boot/build.c"
++int main(int argc,char**argv) {
++    assert(argc==2);
++    assert(std::string(gBuildVersion)=="SOH-EXTREME " SOH_EXTREME_VERSION);
++    // Rebranding must not invalidate the existing 9.2.3 assets or save format.
++    assert(gBuildVersionMajor==9 && gBuildVersionMinor==2 && gBuildVersionPatch==3);
++    assert(gGitBranch[0] && gGitCommitHash[0]);
++    std::ifstream input(argv[1]);std::string payload((std::istreambuf_iterator<char>(input)),{});
++    auto snapshot=SohExtreme::DecodeTrackerSnapshot(payload);
++    assert(snapshot.version==SOH_EXTREME_VERSION);
++    SohExtreme::TrackerMirrorState mirror;mirror.Reset(std::string(32,'1'));mirror.NextRequest();
++    std::string error;assert(mirror.Accept(snapshot,1,10,error));
++    auto current=mirror.Current(1,3,{100,101,102},{102},11,error);
++    assert(current && current->rows.size()==2 && current->rows[0].state==1 && current->rows[1].state==2);
++    snapshot.version="0.11.63";snapshot.revision++;
++    assert(!mirror.Accept(snapshot,1,12,error));
++    assert(error=="Tracker version mismatch; use " SOH_EXTREME_VERSION " on both sides.");
++    std::cout<<gBuildVersion<<": Python snapshot accepted; old version rejected; save/asset format preserved\n";
++}
++'''
++source=out/'release.cpp';source.write_text(cpp)
++exe=out/'release.exe'
++build=subprocess.run(['cl','/nologo','/std:c++20','/EHsc','/MT','/O2','/I'+str(r),'/I'+str(out/'stubs'),
++    str(source),'/Fo'+str(out/'release.obj'),'/Fe'+str(exe)],capture_output=True,text=True)
++(out/'compile.log').write_text(build.stdout+build.stderr)
++assert build.returncode==0,build.stdout+build.stderr
++run=subprocess.run([str(exe),str(out/'snapshot.b64')],capture_output=True,text=True)
++assert run.returncode==0,run.stdout+run.stderr
++
++# Source archives inside another checkout must not display that parent's commit.
++archive=out/'source-archive';archive.mkdir(exist_ok=True)
++script=out/'metadata.cmake'
++script.write_text(f'''set(CMAKE_CURRENT_SOURCE_DIR "{archive.as_posix()}")
++include("{(r/'Cmake/SohExtremeBuildInfo.cmake').as_posix()}")
++if(NOT CMAKE_PROJECT_GIT_BRANCH STREQUAL "Source archive" OR NOT CMAKE_PROJECT_GIT_COMMIT_HASH STREQUAL "Not recorded")
++    message(FATAL_ERROR "Source archive inherited unrelated Git metadata")
++endif()
++''')
++meta=subprocess.run([a.cmake,'-P',str(script)],capture_output=True,text=True)
++assert meta.returncode==0,meta.stdout+meta.stderr
++(out/'release-version.json').write_text(json.dumps({'passed':True,'version':release,
++    'native_protocol':run.stdout.strip(),'archive_format':'9.2.3',
++    'source_archive_fallback_verified':True},indent=2))
++print(run.stdout.strip());print('PASS manifest agreement and source-archive metadata fallback')

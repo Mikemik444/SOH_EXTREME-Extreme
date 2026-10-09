@@ -1,6 +1,8 @@
 #include <libultraship/libultra.h>
+#include "soh/SohExtremeVersion.h"
 
-const char gBuildVersion[] = "@PROJECT_BUILD_NAME@ (@CMAKE_PROJECT_VERSION_MAJOR@.@CMAKE_PROJECT_VERSION_MINOR@.@CMAKE_PROJECT_VERSION_PATCH@)";
+const char gBuildVersion[] = "SOH-EXTREME " SOH_EXTREME_VERSION;
+// These numbers identify the upstream save and asset format, not the fork release.
 const u16 gBuildVersionMajor = @CMAKE_PROJECT_VERSION_MAJOR@;
 const u16 gBuildVersionMinor = @CMAKE_PROJECT_VERSION_MINOR@;
 const u16 gBuildVersionPatch = @CMAKE_PROJECT_VERSION_PATCH@;

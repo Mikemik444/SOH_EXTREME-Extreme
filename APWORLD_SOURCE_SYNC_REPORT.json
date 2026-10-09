@@ -1,10 +1,10 @@
 {
-    "version":  "0.11.29",
-    "canonical_source":  "E:\\test\\bb\\archipelago",
-    "output":  "E:\\test\\bb\\soh_extreme.apworld",
-    "installed":  "C:\\ProgramData\\Archipelago\\custom_worlds\\soh_extreme.apworld",
-    "files":  102,
-    "source_archive_parity":  true,
-    "sha256":  "a97f13430fdcfd61942e9a43e032e97554e2ec7e4d06e1983a8be8ab6b7ec6b7",
-    "checked_utc":  "2026-09-29T23:15:54.3429406Z"
+  "version": "1.6.0",
+  "canonical_source": "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme\\archipelago",
+  "output": "C:\\Users\\mmmm4\\Documents\\Codex\\2026-09-29\\https-github-com-mikemik444-soh-extreme\\work\\SOH_EXTREME-Extreme\\soh_extreme.apworld",
+  "installed": "",
+  "files": 104,
+  "source_archive_parity": true,
+  "sha256": "8340fa3c7e6d617222ffafbd547ed2c553495e1811e8ae8e313266f2ed8d8974",
+  "checked_utc": "2026-10-09T04:38:50.4368013Z"
 }

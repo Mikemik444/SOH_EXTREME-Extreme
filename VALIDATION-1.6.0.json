@@ -1,0 +1,66 @@
+{
+  "version": "1.6.0",
+  "github_source_base": "374b8d3b9bafb63aa8aa2704809ef4302b4f7316",
+  "build": {
+    "compiler_override": "/Z7 /MP2",
+    "exit_code": 0,
+    "post_build_assets": "Existing verified 0.11.63 assets are unchanged"
+  },
+  "native": {
+    "passed": true,
+    "version": "1.6.0",
+    "native_protocol": "SOH-EXTREME 1.6.0: Python snapshot accepted; old version rejected; save/asset format preserved",
+    "archive_format": "9.2.3",
+    "source_archive_fallback_verified": true
+  },
+  "protocol": {
+    "passed": true,
+    "build_exit": 0,
+    "test_exit": 0,
+    "output": "PASS APCpp identity: RoomInfo/refusal gating, stable player name, team/slot, callback ordering, spoofed slot_data exclusion, reconnect\n",
+    "apcpp_sha256": "84390528f52c07f6cb6e8c7b677b6d6e34861141c07e24e31668e39ac92ae33d",
+    "parser_sha256": "7047015660f83ae9972df4671992baedd434169baaccef2efa1737eb0d82f48f",
+    "scope": "Real APCpp packet parser; no socket, server, or live game connection."
+  },
+  "source_patch_forward_reverse_verified": true,
+  "source_files": [
+    "APWORLD_SOURCE_SYNC_REPORT.json",
+    "CMakeLists.txt",
+    "Cmake/SohExtremeBuildInfo.cmake",
+    "SOH_AP_FIX_HISTORY.txt",
+    "archipelago/archipelago.json",
+    "archipelago/soh_extreme/TrackerMirror.py",
+    "archipelago/soh_extreme/archipelago.json",
+    "soh/Network/Archipelago/TrackerMirror.h",
+    "soh/SohExtremeVersion.h",
+    "soh/SohGui/SohMenuSettings.cpp",
+    "src/boot/build.c.in",
+    "tools/build_standalone_apworld.ps1",
+    "validation/test_release_version.py"
+  ],
+  "ui_visually_tested": false,
+  "source_sha256": {
+    "APWORLD_SOURCE_SYNC_REPORT.json": "53e58ac0b34aa188f33259494d0d98fa292cdc6109c1cd40743a2498ffefd2d9",
+    "CMakeLists.txt": "8898a6ff16d7eacdffb7506709a4271f2c658453f2d57d4261401f8625a93848",
+    "Cmake/SohExtremeBuildInfo.cmake": "2faf7a80d4ac6423d4f00b78e66fc3dfc5d5ef4519815338e7f0da14ca43916d",
+    "SOH_AP_FIX_HISTORY.txt": "4bdc62e9811b759b1d74e83175a4702dbaa727aeeeb7ed0599bc7a38c93b77e2",
+    "archipelago/archipelago.json": "e284b13bbe5ed59a7e0961737980726e2084cad4f9cef8f2649a6301973626e0",
+    "archipelago/soh_extreme/TrackerMirror.py": "8cd1b9117958a76028f90bc02d896f991dd41f979d5aff9ea4d067e16536118c",
+    "archipelago/soh_extreme/archipelago.json": "e284b13bbe5ed59a7e0961737980726e2084cad4f9cef8f2649a6301973626e0",
+    "soh/Network/Archipelago/TrackerMirror.h": "77cab5ce21f21821fd6acc5de2c7dcc2640d3a2750a2858ee02e05c2c35d4341",
+    "soh/SohExtremeVersion.h": "17200427d54c38b20797530bdadd3aeb4f48578d41cfc45cfce35abc23dbebd4",
+    "soh/SohGui/SohMenuSettings.cpp": "c6fd93ede18e4e3f1756fda5922679cb1bded608216926002f48474f823dc62a",
+    "src/boot/build.c.in": "2357caaaedbbc809daad02f534f629885218180c0a27f60ec0fea732fc5ae29a",
+    "tools/build_standalone_apworld.ps1": "bc2c40f1824dee62eee0af0e4249e9fb74c48e2416d454b3d0be810c83ed5f92",
+    "validation/test_release_version.py": "cc2754b12e6e2036a9ba753d1e1923b1420cefb029f57d6cd6733854ab9e48fb"
+  },
+  "runtime_sha256": {
+    "soh.exe": "30ee82c90122ae464ecb3e1d885ba07a2740f2e7f0d7b040ad8d910b5e68b1ee",
+    "APCpp.dll": "84390528f52c07f6cb6e8c7b677b6d6e34861141c07e24e31668e39ac92ae33d",
+    "soh.o2r": "e34ec65e941ba960f34d5d4ea389fba546d98245a7c9ddc08193241ad6ca58b1",
+    "soh_extreme.apworld": "8340fa3c7e6d617222ffafbd547ed2c553495e1811e8ae8e313266f2ed8d8974"
+  },
+  "apworld_source_parity": true,
+  "extractor_files": 20357,
+  "assets_unchanged_from": "0.11.63"
+}

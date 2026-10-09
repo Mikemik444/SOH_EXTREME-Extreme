@@ -5,6 +5,7 @@
 #include "soh/OTRGlobals.h"
 #include <soh/GameVersions.h>
 #include "soh/ResourceManagerHelpers.h"
+#include "soh/SohExtremeVersion.h"
 #include "UIWidgets.hpp"
 #include <ship/controller/controldeck/ControlDeck.h>
 
@@ -271,15 +272,18 @@ void SohMenu::AddMenuSettings() {
     path.column = SECTION_COLUMN_2;
 
     AddWidget(path, "About", WIDGET_SEPARATOR_TEXT);
-    AddWidget(path, "Ship Of Harkinian", WIDGET_TEXT);
-    if (gGitCommitTag[0] != 0) {
-        AddWidget(path, gBuildVersion, WIDGET_TEXT);
-    } else {
-        AddWidget(path, ("Branch: " + std::string(gGitBranch)), WIDGET_TEXT);
-        AddWidget(path, ("Commit: " + std::string(gGitCommitHash)), WIDGET_TEXT);
-    }
+    AddWidget(path, "SOH-EXTREME", WIDGET_TEXT);
+    AddWidget(path, "Client version: " SOH_EXTREME_VERSION, WIDGET_TEXT);
+    AddWidget(path, "Matching APWorld: " SOH_EXTREME_VERSION, WIDGET_TEXT);
+    AddWidget(path, "Based on Ship of Harkinian", WIDGET_TEXT);
+    AddWidget(path, "Open SOH-EXTREME GitHub", WIDGET_BUTTON)
+        .RaceDisable(false)
+        .Callback([](WidgetInfo&) { SDL_OpenURL(SOH_EXTREME_REPOSITORY_URL); })
+        .Options(ButtonOptions().Tooltip(SOH_EXTREME_REPOSITORY_URL));
+    AddWidget(path, "Branch: " + std::string(gGitBranch[0] ? gGitBranch : "Source archive"), WIDGET_TEXT);
+    AddWidget(path, "Commit: " + std::string(gGitCommitHash[0] ? gGitCommitHash : "Not recorded"), WIDGET_TEXT);
     for (uint32_t i = 0; i < ResourceMgr_GetNumGameVersions(); i++) {
-        AddWidget(path, GetGameVersionString(i), WIDGET_TEXT);
+        AddWidget(path, "ROM assets: " + std::string(GetGameVersionString(i)), WIDGET_TEXT);
     }
 
     // Audio Settings

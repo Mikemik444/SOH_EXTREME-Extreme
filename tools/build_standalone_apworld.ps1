@@ -178,11 +178,13 @@ function Assert-ManifestsAndTracker {
         throw "C++ tracker header is missing: $HeaderPath"
     }
     $CppTracker = [IO.File]::ReadAllText($HeaderPath)
+    $ReleaseHeader = [IO.File]::ReadAllText((Join-Path $Root 'soh\SohExtremeVersion.h'))
 
     $PyMatch = [regex]::Match($PythonTracker, '(?m)^VERSION\s*=\s*"([0-9.]+)"')
-    $CppMatch = [regex]::Match($CppTracker, 'kTrackerVersion\s*=\s*"([0-9.]+)"')
+    $CppMatch = [regex]::Match($ReleaseHeader, '(?m)^#define\s+SOH_EXTREME_VERSION\s+"([0-9.]+)"')
 
-    if (-not $PyMatch.Success -or -not $CppMatch.Success) {
+    if (-not $PyMatch.Success -or -not $CppMatch.Success -or
+        $CppTracker -notmatch 'kTrackerVersion\s*=\s*SOH_EXTREME_VERSION\s*;') {
         throw 'Could not read the SOH-EXTREME tracker version from Python/C++.'
     }
 
