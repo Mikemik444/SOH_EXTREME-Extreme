@@ -65,8 +65,8 @@ void RegionTable_Init_DodongosCavern() {
     }, {
         //Exits
         ENTRANCE(RR_DODONGOS_CAVERN_LOBBY,               true),
-        //Shield seems to be in logic to drop a pot on their head as they hit you to blow up the wall
-        ENTRANCE(RR_DODONGOS_CAVERN_SE_ROOM,             AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->CanAttack() || (logic->TakeDamage() && logic->CanShield() && logic->HasItem(RG_POWER_BRACELET));})),
+        // Open the wall directly or kill a spawned Baby Dodongo for its explosion.
+        ENTRANCE(RR_DODONGOS_CAVERN_SE_ROOM,             AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->CanDetonateBabyDodongo();})),
         // Adult can reach the lower Lizalfos room directly. Child needs the
         // shuffled Grab / Power Bracelet interaction to cross this approach.
         ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS,

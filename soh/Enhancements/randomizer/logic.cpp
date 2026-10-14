@@ -1472,6 +1472,23 @@ bool Logic::CanBreakMudWalls() {
     return BlastOrSmash() || (ctx->GetTrickOption(RT_BLUE_FIRE_MUD_WALLS) && BlueFire());
 }
 
+bool Logic::CanDetonateBabyDodongo() {
+    const int soulMode = ctx->GetOption(RSK_SHUFFLE_ENEMY_SOUL).Get();
+    if ((soulMode == 1 && !HasItem(RG_ENEMY_SOUL)) ||
+        (soulMode == 2 && !HasItem(RG_ENEMY_SOUL_BABY_DODONGO))) {
+        return false;
+    }
+
+    // En_Dodojr uses damage-table preset 4: boomerang and hookshot kill it,
+    // but Deku Nuts and Din's Fire do not. Its death explosion opens the wall.
+    const bool weapon = CanJumpslash() || HasExplosives() || CanUse(RG_FAIRY_SLINGSHOT) ||
+                        CanUse(RG_FAIRY_BOW) || CanUse(RG_BOOMERANG) || CanUse(RG_HOOKSHOT);
+    // The SE corridor also has pots: shield while taking a hit to drop one.
+    const bool pot = (!ctx->GetOption(RSK_SHUFFLE_POT_SOUL) || HasItem(RG_POT_SOUL)) &&
+                     HasItem(RG_POWER_BRACELET) && TakeDamage() && CanShield();
+    return weapon || pot;
+}
+
 bool Logic::CanGetDekuBabaSticks() {
     return CanUseSword() || CanUse(RG_BOOMERANG);
 }

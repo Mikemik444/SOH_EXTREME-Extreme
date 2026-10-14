@@ -1351,7 +1351,7 @@
       {
         "target": "RR_DODONGOS_CAVERN_SE_ROOM",
         "region": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
-        "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->CanAttack() || (logic->TakeDamage() && logic->CanShield() && logic->HasItem(RG_POWER_BRACELET));})",
+        "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->CanDetonateBabyDodongo();})",
         "file": "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp",
         "line": 69
       },

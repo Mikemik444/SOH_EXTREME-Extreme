@@ -3852,6 +3852,9 @@
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\3drando\starting_inventory.hpp">
       <Filter>soh\Enhancements\randomizer\3drando</Filter>
     </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\ActorDrawRecovery.h">
+      <Filter>soh\Enhancements\randomizer</Filter>
+    </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\BombchuRefillPolicy.h">
       <Filter>soh\Enhancements\randomizer</Filter>
     </ClInclude>
@@ -3898,6 +3901,9 @@
       <Filter>soh\Enhancements\randomizer</Filter>
     </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\ShuffleTradeItems.h">
+      <Filter>soh\Enhancements\randomizer</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\SoulEmblemAssets.h">
       <Filter>soh\Enhancements\randomizer</Filter>
     </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Enhancements\randomizer\SoulPortraitHQ.h">
@@ -4068,7 +4074,13 @@
     <ClInclude Include="E:\test\bb\soh\Enhancements\timesplits\TimeSplits.h">
       <Filter>soh\Enhancements\timesplits</Filter>
     </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\Extractor\BpsPatch.h">
+      <Filter>soh\Extractor</Filter>
+    </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Extractor\Extract.h">
+      <Filter>soh\Extractor</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\Extractor\NormalOot.h">
       <Filter>soh\Extractor</Filter>
     </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Extractor\TorchExtract.h">
@@ -4101,10 +4113,16 @@
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\NpcSpeechIdentity.h">
       <Filter>soh\Network\Archipelago</Filter>
     </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\Network\Archipelago\SaveConnectionIdentity.h">
+      <Filter>soh\Network\Archipelago</Filter>
+    </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\TrackerMirror.h">
       <Filter>soh\Network\Archipelago</Filter>
     </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\TrackerRegions.h">
+      <Filter>soh\Network\Archipelago</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\Network\Archipelago\TrackerScenes.h">
       <Filter>soh\Network\Archipelago</Filter>
     </ClInclude>
     <ClInclude Include="E:\test\bb\soh\Network\Archipelago\TrackerWorker.h">
@@ -4153,6 +4171,9 @@
       <Filter>soh</Filter>
     </ClInclude>
     <ClInclude Include="E:\test\bb\soh\ShipUtils.h">
+      <Filter>soh</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\test\bb\soh\SohExtremeVersion.h">
       <Filter>soh</Filter>
     </ClInclude>
     <ClInclude Include="E:\test\bb\soh\SohGui\BackendTypes.h">

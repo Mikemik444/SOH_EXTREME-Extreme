@@ -49,7 +49,17 @@ E:/test/bb/CMake/DefaultCXX.cmake
 E:/test/bb/CMake/Utils.cmake
 E:/test/bb/CMakeLists.txt
 E:/test/bb/Cmake/SohExtremeAPCppHints.cmake
+E:/test/bb/Cmake/SohExtremeAPCppIdentity.cmake
+E:/test/bb/Cmake/SohExtremeAPCppModels.cmake
 E:/test/bb/Cmake/SohExtremeAPCppSafety.cmake
+E:/test/bb/Cmake/SohExtremeBuildInfo.cmake
+E:/test/bb/Cmake/SohExtremeCrashStack.cmake
+E:/test/bb/Cmake/SohExtremeGfxStep.cpp.inc
+E:/test/bb/Cmake/SohExtremeSegmentGuard.cpp.inc
+E:/test/bb/Cmake/SohExtremeTlutSafety.cmake
+E:/test/bb/Cmake/SohExtremeVertexEdits.json
+E:/test/bb/Cmake/SohExtremeVertexGuard.cpp.inc
+E:/test/bb/Cmake/SohExtremeVertexSafety.cmake
 E:/test/bb/build-vs/CMakeFiles/4.1.0-rc4/CMakeCCompiler.cmake
 E:/test/bb/build-vs/CMakeFiles/4.1.0-rc4/CMakeCXXCompiler.cmake
 E:/test/bb/build-vs/CMakeFiles/4.1.0-rc4/CMakeRCCompiler.cmake

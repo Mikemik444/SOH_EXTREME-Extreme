@@ -579,6 +579,19 @@ def can_break_mud_walls(bundle: tuple[Regions, "SohWorld"]) -> Rule:
     return blast_or_smash(bundle) | (can_do_trick(Tricks.BLUE_FIRE_MUD_WALLS, bundle) & blue_fire(bundle))
 
 
+def can_detonate_baby_dodongo(bundle: tuple[Regions, "SohWorld"]) -> Rule:
+    """Use a Baby Dodongo's death explosion at the DC southeast corridor wall."""
+    mode = bundle[1].options.shuffle_enemy_soul.value
+    soul = Has("Enemy Soul" if mode == 1 else "Baby Dodongo Soul") if mode else True_()
+    # Damage-table preset 4 permits these weapons, but not Nuts or Din's Fire.
+    weapon = can_jump_slash(bundle) | has_explosives(bundle) | can_use_any(
+        [Items.FAIRY_SLINGSHOT, Items.FAIRY_BOW, Items.BOOMERANG, Items.HOOKSHOT], bundle)
+    pot = (extreme_requirement(bundle, "shuffle_pot_soul", "Pot Soul")
+           & extreme_requirement(bundle, "shuffle_grab", "Grab / Power Bracelet")
+           & take_damage(bundle) & can_shield(bundle))
+    return soul & (weapon | pot)
+
+
 def can_get_deku_baba_sticks(bundle: tuple[Regions, "SohWorld"]) -> Rule:
     return can_use_sword(bundle) | can_use(Items.BOOMERANG, bundle)
 

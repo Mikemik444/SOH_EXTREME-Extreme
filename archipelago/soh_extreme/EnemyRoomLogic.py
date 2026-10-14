@@ -166,6 +166,7 @@ KEYS = {
  'SCENE_GERUDO_TRAINING_GROUND':'TRAINING_GROUND_SMALL_KEY', 'SCENE_INSIDE_GANONS_CASTLE':'GANONS_CASTLE_SMALL_KEY',
 }
 SIMPLE_HELPERS = {
+ 'CanDetonateBabyDodongo':'can_detonate_baby_dodongo',
  'CanInteractWithSkullKid':'can_interact_skull_kid',
  'HasExplosives':'has_explosives','BlastOrSmash':'blast_or_smash','BlueFire':'blue_fire',
  'CanJumpslash':'can_jump_slash','CanJumpslashExceptHammer':'can_jump_slash_except_hammer',

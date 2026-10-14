@@ -12,7 +12,9 @@
 #include "randomizer_check_tracker.h"
 #include "CheckFinderState.h"
 #include "soh/Network/Archipelago/ArchipelagoClient.h"
-#include "soh/Network/Archipelago/TrackerRegions.h"
+#include "soh/Network/Archipelago/TrackerScenes.h"
+#include "soh/util.h"
+#include "randomizer_grotto.h"
 
 extern "C" bool Archipelago_ShouldHandleCheck(int32_t randomizerCheck);
 extern "C" bool Archipelago_IsCheckMappedActive(int32_t randomizerCheck);
@@ -91,6 +93,7 @@ enum EnemyFinderCombat : uint8_t {
     EFC_SWORD, EFC_TEKTITE, EFC_PEAHAT, EFC_SHABOM, EFC_JELLYFISH,
     EFC_TAILPASARAN, EFC_STINGER, EFC_BUBBLE, EFC_BLUE_BUBBLE,
     EFC_ARMOS, EFC_DEAD_HAND, EFC_DEAD_HAND_ARM, EFC_SPIKE, EFC_FREEZARD,
+    EFC_BABY_DODONGO,
 };
 
 enum EnemyFinderGate : uint8_t { EFG_NONE, EFG_AMY, EFG_ANUBIS, EFG_COFFIN, EFG_COMPOSER, EFG_FOREST_BLOCK_TOP, EFG_GRAVE, EFG_MEG, EFG_NIGHT, EFG_PEAHAT_LARVA, EFG_SFM_MOBLIN, EFG_SWIM, EFG_GV_LOWER_CURRENT };
@@ -201,6 +204,7 @@ static bool EnemyFinderCombatReachable(Rando::Logic* enemyLogic, EnemyFinderComb
             return enemyLogic->CanUse(RG_KOKIRI_SWORD) || enemyLogic->CanUse(RG_MASTER_SWORD) ||
                    enemyLogic->CanUse(RG_BIGGORON_SWORD) || enemyLogic->CanUse(RG_GIANTS_KNIFE) ||
                    enemyLogic->CanUse(RG_BOOMERANG);
+        case EFC_BABY_DODONGO: return melee || ranged || explosives;
         case EFC_MELEE: return melee;
         case EFC_RANGED: return ranged;
         case EFC_REFLECT_NUTS: return enemyLogic->CanReflectNuts();
@@ -1710,31 +1714,95 @@ void SetAreaSpoiled(RandomizerCheckArea rcArea) {
 
 void InternalRecalculateAvailableChecks(RandomizerRegion startingRegion, RandoAgeTime startingAgeTime);
 
-static RandomizerCheckArea FinderRowArea(int64_t id, const ArchipelagoClient& client) {
-    struct ConversationArea { int64_t location; RandomizerCheckArea area; };
-    static const ConversationArea conversationAreas[] = {
-#include "soh/Network/Archipelago/NpcSpeechAreas.inc"
-    };
-    auto conversationArea = RCAREA_INVALID;
-    for (const auto& entry : conversationAreas) {
-        if (entry.location != id) continue;
-        if (entry.area == GetCheckArea()) return entry.area;
-        if (conversationArea == RCAREA_INVALID) conversationArea = entry.area;
+static SohExtreme::TrackerScene FinderScene(int scene, RandomizerCheckArea area, int grotto = -1) {
+    if (scene < 0 || scene >= SCENE_ID_MAX) return {};
+    // Native shop lookup reserves the test-scene ID for Kakariko's bazaar.
+    // Its physical scene is still SCENE_BAZAAR (see GetCheckFromActor).
+    if (scene == SCENE_TEST01) {
+        scene = SCENE_BAZAAR;
+        area = RCAREA_KAKARIKO_VILLAGE;
     }
-    if (conversationArea != RCAREA_INVALID) return conversationArea;
+    SohExtreme::TrackerScene result{ scene, 0, SohUtils::GetSceneName(scene) };
+    if (scene == SCENE_GROTTOS || scene == SCENE_FAIRYS_FOUNTAIN) {
+        // Grotto IDs identify destinations even with shuffled entrances. Area
+        // alone cannot distinguish two different grottos in Hyrule Field.
+        result.instance = grotto >= 0 && grotto < GROTTO_OFFSET_MAX ? grotto + 1 : -1;
+        if (result.instance >= 0) {
+            const auto* entrance = EntranceTracker::GetEntranceData(ENTRANCE_GROTTO_EXIT_START + grotto);
+            if (entrance != nullptr) result.name = entrance->source;
+        }
+    } else if (scene == SCENE_BAZAAR || scene == SCENE_SHOOTING_GALLERY ||
+               scene == SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC || scene == SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS) {
+        result.instance = area >= RCAREA_KOKIRI_FOREST && area < RCAREA_INVALID ? static_cast<int>(area) + 1 : -1;
+        if (result.instance >= 0) result.name = RandomizerCheckObjects::GetRCAreaName(area) + " - " + result.name;
+    }
+    return result;
+}
 
+static SohExtreme::TrackerScene FinderNativeScene(RandomizerCheck rc) {
+    const auto* location = Rando::StaticData::GetLocation(rc);
+    if (location == nullptr) return {};
+    struct SceneOverride { RandomizerCheck check; int scene; int grotto; };
+    static const std::map<RandomizerCheck, SceneOverride> overrides = [] {
+        const SceneOverride entries[] = {
+#include "soh/Network/Archipelago/FinderSceneOverrides.inc"
+        };
+        std::map<RandomizerCheck, SceneOverride> result;
+        for (const auto& entry : entries) result.emplace(entry.check, entry);
+        return result;
+    }();
+    const auto entry = overrides.find(rc);
+    if (entry != overrides.end()) return FinderScene(entry->second.scene, location->GetArea(), entry->second.grotto);
+    return FinderScene(location->GetScene(), location->GetArea());
+}
+
+static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClient& client,
+                                               const SohExtreme::TrackerScene& current, int age, int time) {
+    struct ConversationScene {
+        int64_t location;
+        RandomizerCheck check;
+        int scene;
+        RandomizerCheckArea area;
+        int grotto;
+        int age;
+        int time;
+    };
+    static const std::map<int64_t, std::vector<ConversationScene>> conversations = [] {
+        const ConversationScene entries[] = {
+#include "soh/Network/Archipelago/NpcSpeechScenes.inc"
+        };
+        std::map<int64_t, std::vector<ConversationScene>> result;
+        for (const auto& entry : entries) result[entry.location].push_back(entry);
+        return result;
+    }();
+    const auto conversation = conversations.find(id);
+    if (conversation != conversations.end()) {
+        SohExtreme::TrackerScene best;
+        int bestPriority = -1;
+        for (const auto& route : conversation->second) {
+            const auto scene = route.check != RC_UNKNOWN_CHECK ? FinderNativeScene(route.check)
+                : FinderScene(route.scene, route.area, route.grotto);
+            const int priority = SohExtreme::TrackerSceneRoutePriority(scene, current, route.age, route.time, age, time);
+            if (priority > bestPriority) {
+                best = scene;
+                bestPriority = priority;
+            }
+        }
+        return best;
+    }
     const auto rc = client.GetFinderNativeCheck(id);
-    if (rc > static_cast<int32_t>(RC_UNKNOWN_CHECK)) {
-        const auto* location = Rando::StaticData::GetLocation(static_cast<RandomizerCheck>(rc));
-        if (location != nullptr) return location->GetArea();
-    }
+    if (rc > static_cast<int32_t>(RC_UNKNOWN_CHECK)) return FinderNativeScene(static_cast<RandomizerCheck>(rc));
     for (const auto& entry : kNpcSpeechFinderEntries) {
-        if (entry.locationId == id) return GetNpcSpeechArea(entry);
+        if (entry.locationId == id) return FinderNativeScene(static_cast<RandomizerCheck>(entry.rc));
     }
-    for (const auto& entry : kEnemyDefeatFinderEntries) {
-        if (entry.locationId == id) return entry.area;
-    }
-    return RCAREA_INVALID;
+    static const std::map<int64_t, const EnemyDefeatFinderEntry*> enemies = [] {
+        std::map<int64_t, const EnemyDefeatFinderEntry*> result;
+        for (const auto& entry : kEnemyDefeatFinderEntries) result.emplace(entry.locationId, &entry);
+        return result;
+    }();
+    const auto enemy = enemies.find(id);
+    if (enemy != enemies.end()) return FinderScene(enemy->second->scene, enemy->second->area, enemy->second->grottoId);
+    return {};
 }
 
 static void DrawUniversalFinderMirror() {
@@ -1794,43 +1862,41 @@ static void DrawUniversalFinderMirror() {
             static_cast<unsigned long long>(snapshot->received),
             static_cast<unsigned long long>(client.GetAppliedItemCount()));
     }
-    // ID-to-area mapping is used ONLY to sort/highlight the player's scene area.
+    // ID-to-scene mapping is used ONLY for display, never for reachability.
     // Missing mapping does not hide a check or change its logical availability.
-    const bool areaMappingsReady = client.PrepareCheckFinderMappings();
-    const auto here = GetCheckArea();
-    const int current = here >= RCAREA_KOKIRI_FOREST && here < RCAREA_INVALID ? static_cast<int>(here) : -1;
-    if (current >= 0)
-        ImGui::Text("Current area: %s", RandomizerCheckObjects::GetRCAreaName(here).c_str());
+    const bool sceneMappingsReady = client.PrepareCheckFinderMappings();
+    const int scene = gPlayState != nullptr ? gPlayState->sceneNum : -1;
+    const bool grottoScene = scene == SCENE_GROTTOS || scene == SCENE_FAIRYS_FOUNTAIN;
+    const auto current = FinderScene(scene, gPlayState != nullptr ? GetCheckArea() : RCAREA_INVALID,
+                                    grottoScene ? Grotto_CurrentGrotto() : -1);
+    if (current.scene >= 0) ImGui::Text("Current scene: %s", current.name.c_str());
     static bool currentFirst = true;
     static bool onlyCurrent = false;
     static ImGuiTextFilter filter;
-    ImGui::Checkbox("Current area first", &currentFirst);
+    ImGui::Checkbox("Current scene first", &currentFirst);
     ImGui::SameLine();
-    ImGui::Checkbox("Only current area", &onlyCurrent);
-    filter.Draw("Search region/check");
-    if (onlyCurrent && !areaMappingsReady)
-        ImGui::TextWrapped("Area labels are synchronizing; showing all regions until the mapping is ready.");
-    const auto groups = SohExtreme::GroupTrackerRows(*snapshot, current, currentFirst, onlyCurrent && areaMappingsReady,
+    ImGui::Checkbox("Only current scene", &onlyCurrent);
+    filter.Draw("Search scene/region/check");
+    if (onlyCurrent && !sceneMappingsReady)
+        ImGui::TextWrapped("Scene labels are synchronizing; showing all scenes until the mapping is ready.");
+    const auto groups = SohExtreme::GroupTrackerRowsByScene(*snapshot, current, currentFirst, onlyCurrent && sceneMappingsReady,
         [&](int64_t id) {
-            const auto area = FinderRowArea(id, client);
-            return area == RCAREA_INVALID ? -1 : static_cast<int>(area);
-        }, [&](const SohExtreme::TrackerRow& row) {
+            return FinderRowScene(id, client, current, LINK_IS_ADULT ? 1 : 0, IS_NIGHT ? 1 : 0);
+        }, [&](const SohExtreme::TrackerRow& row, const SohExtreme::TrackerScene& rowScene) {
             if (!IsFinderRowEnabled(row.id)) return false;
-            const std::string text = row.region + " | " + row.name;
+            const std::string text = rowScene.name + " | " + row.region + " | " + row.name;
             return filter.PassFilter(text.c_str());
         });
     ImGui::Separator();
     if (ImGui::BeginChild("SOHExtremeUTRegions", ImVec2(0, 0), false)) {
         if (groups.empty()) ImGui::TextUnformatted("No remaining in-logic checks match this view.");
         for (const auto& group : groups) {
-            // Stable region identity preserves expand/collapse state as item
-            // counts change or the current-area groups move to the top.
-            ImGui::PushID((group.region + (group.currentArea ? "##current" : "##other")).c_str());
-            const std::string displayRegion = group.currentArea && group.sharedRegion
-                ? RandomizerCheckObjects::GetRCAreaName(here) + " (shared checks from " + group.region + ")"
-                : group.region;
-            const std::string label = (group.currentArea ? "[Current area] " : "") + displayRegion +
-                " (" + std::to_string(group.normal) + " in logic, " + std::to_string(group.glitched) + " glitched)###APRegion";
+            // Scene/instance identity stays stable when counts or the player's
+            // location change, preserving the user's expand/collapse choices.
+            ImGui::PushID(group.scene.scene);
+            ImGui::PushID(group.scene.instance);
+            const std::string label = (group.currentScene ? "[Current scene] " : "") + group.scene.name +
+                " (" + std::to_string(group.normal) + " in logic, " + std::to_string(group.glitched) + " glitched)###APScene";
             if (ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
                 ImGui::Indent();
                 for (const auto* row : group.rows) {
@@ -1845,6 +1911,7 @@ static void DrawUniversalFinderMirror() {
                 }
                 ImGui::Unindent();
             }
+            ImGui::PopID();
             ImGui::PopID();
         }
     }

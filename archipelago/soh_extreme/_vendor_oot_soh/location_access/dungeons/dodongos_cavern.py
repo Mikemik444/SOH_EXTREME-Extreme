@@ -103,8 +103,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.DODONGOS_CAVERN_SE_CORRIDOR, world, [
         (Regions.DODONGOS_CAVERN_LOBBY, lambda bundle: True_()),
-        (Regions.DODONGOS_CAVERN_SE_ROOM, lambda bundle: can_break_mud_walls(bundle) | can_attack(bundle) | (
-            take_damage(bundle) & can_shield(bundle))),
+        (Regions.DODONGOS_CAVERN_SE_ROOM,
+         lambda bundle: can_break_mud_walls(bundle) | can_detonate_baby_dodongo(bundle)),
         (Regions.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, lambda bundle: True_()),
     ])
 

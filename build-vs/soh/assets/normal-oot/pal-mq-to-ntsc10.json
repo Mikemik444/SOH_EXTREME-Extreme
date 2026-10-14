@@ -1,0 +1,9 @@
+{
+  "format": "BPS1",
+  "source": "PAL GameCube Master Quest",
+  "target": "NTSC-US 1.0",
+  "source_sha1": "f46239439f59a2a594ef83cf68ef65043b1bffe2",
+  "target_sha1": "ad69c91157f6705e8ab06c79fe08aad47bb57ba7",
+  "patch_sha256": "c63ce29d8974913cbe8829e73e1617c145bf78f3727a0965f3e117fffbe095ff",
+  "patch_bytes": 8481801
+}

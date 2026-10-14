@@ -137,6 +137,7 @@ int main(){
   logic->IsAdult=adult;logic->IsChild=!adult;logic->AtDay=true;logic->AtNight=false;
  };
  weapons({RG_BOOMERANG});
+ ck(EnemyFinderCombatReachable(logic.get(),EFC_BABY_DODONGO),"Baby Dodongo boomerang damage");
  for(auto kind:{EFC_TEKTITE,EFC_PEAHAT,EFC_STINGER,EFC_BLUE_BUBBLE,EFC_BUBBLE,EFC_SWORD})
   ck(!EnemyFinderCombatReachable(logic.get(),kind),"stunning boomerang is insufficient");
  weapons({RG_FAIRY_SLINGSHOT});
@@ -156,14 +157,28 @@ int main(){
  weapons({RG_BOOMERANG});
  for(auto kind:{EFC_JELLYFISH,EFC_TAILPASARAN,EFC_SHABOM})ck(EnemyFinderCombatReachable(logic.get(),kind),"boomerang valid kill alternative");
  weapons({RG_MASTER_SWORD},true);
+ ck(EnemyFinderCombatReachable(logic.get(),EFC_BABY_DODONGO),"Baby Dodongo adult sword");
  for(auto kind:{EFC_FREEZARD,EFC_SPIKE,EFC_SWORD,EFC_DEAD_HAND,EFC_DEAD_HAND_ARM})ck(EnemyFinderCombatReachable(logic.get(),kind),"adult sword valid kill");
+ for(auto item:{RG_KOKIRI_SWORD,RG_STICKS,RG_FAIRY_SLINGSHOT,RG_BOOMERANG,
+                RG_MASTER_SWORD,RG_MEGATON_HAMMER,RG_FAIRY_BOW,RG_HOOKSHOT,
+                RG_LONGSHOT,RG_BOMB_BAG,RG_BOMBCHU_5}) {
+  weapons({item});
+  ck(EnemyFinderCombatReachable(logic.get(),EFC_BABY_DODONGO),"Baby Dodongo damage-table kill");
+ }
+ for(auto item:{RG_NUTS,RG_DINS_FIRE,RG_DEKU_SHIELD}) {
+  weapons({item});
+  ck(!EnemyFinderCombatReachable(logic.get(),EFC_BABY_DODONGO),"Baby Dodongo nonlethal attack");
+ }
  std::printf("entries=%zu checks=%d failures=%d\n",ids.size(),checks,failures);
  return failures?1:0;
 }
 '''
 cpp=cpp.replace('RandomizerLogicFlag','LogicVal')
-source=out/'enemy_rooms.cpp';source.write_text(cpp);exe=out/'enemy_rooms'
-cmd=[shutil.which(a.compiler) or a.compiler,'-std=c++20','-O1','-Werror=return-type','-I',str(root),str(source),'-o',str(exe)]
+source=out/'enemy_rooms.cpp';source.write_text(cpp);exe=out/'enemy_rooms.exe'
+if Path(a.compiler).stem.lower() == 'cl':
+ cmd=[a.compiler,'/nologo','/EHsc','/std:c++20','/Zc:preprocessor','/I'+str(root),str(source),'/Fo'+str(out/'enemy_rooms.obj'),'/Fe'+str(exe)]
+else:
+ cmd=[shutil.which(a.compiler) or a.compiler,'-std=c++20','-O1','-Werror=return-type','-I',str(root),str(source),'-o',str(exe)]
 c=subprocess.run(cmd,text=True,capture_output=True,timeout=45)
 r=subprocess.run([str(exe)],text=True,capture_output=True,timeout=30) if c.returncode==0 else None
 report={'scope':__doc__,'compiler':a.compiler,'command':cmd,'compile_exit':c.returncode,'compile_stdout':c.stdout,'compile_stderr':c.stderr,'run_exit':None if r is None else r.returncode,'stdout':'' if r is None else r.stdout,'stderr':'' if r is None else r.stderr,'passed':c.returncode==0 and r.returncode==0}

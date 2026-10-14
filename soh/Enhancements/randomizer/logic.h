@@ -56,6 +56,7 @@ class Logic {
                        uint8_t quantity = 1);
     bool CanGetEnemyDrop(RandomizerEnemy enemy, EnemyDistance distance = ED_CLOSE, bool aboveLink = false);
     bool CanBreakMudWalls();
+    bool CanDetonateBabyDodongo();
     bool CanGetDekuBabaSticks();
     bool CanGetDekuBabaNuts();
     bool CanHitEyeTargets();

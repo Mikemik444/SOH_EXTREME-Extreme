@@ -76,6 +76,7 @@ def enemy_drop_rule(world, entry):
             "dead_hand_arm": sword | sticks,
             "spike": (sword if adult else False_()) | hammer | sticks | hook | bow | explosive | can_use(Items.DINS_FIRE, b),
             "freezard": (sword if adult else False_()) | hammer | sticks | hook | explosive | fire,
+            "baby_dodongo": melee | ranged | explosive,
             "contact": True_(), "melee": melee, "ranged": ranged,
             "ranged_or_melee": ranged | melee, "reflect_nuts": reflect,
             "explosive": explosive, "explosive_or_melee": explosive | melee,

@@ -1,0 +1,9 @@
+{
+  "format": "BPS1",
+  "source": "Master Quest Debug 64 MB (region repaired)",
+  "target": "NTSC-US 1.0",
+  "source_sha1": "cfecfdc58d650e71a200c81f033de4e6d617a9f6",
+  "target_sha1": "ad69c91157f6705e8ab06c79fe08aad47bb57ba7",
+  "patch_sha256": "55ce79074f4ce9186276f7d11b15d54dc9356aca1eb365fd109047946127fb6d",
+  "patch_bytes": 23621847
+}
