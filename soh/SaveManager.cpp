@@ -11,8 +11,14 @@
 #include "ResourceManagerHelpers.h"
 #include "soh/SohGui/SohGui.hpp"
 #include "soh/Network/Archipelago/ArchipelagoClient.h"
+#include "soh/Network/Archipelago/SaveBuildVersion.h"
 
 static thread_local const ArchipelagoSaveSnapshot* gSavingArchipelagoSnapshot = nullptr;
+
+static bool IsArchipelagoSaveBlock(const nlohmann::json& block) {
+    const nlohmann::json::json_pointer marker("/sections/randomizer/data/archipelagoSave");
+    return block.contains(marker) && block.at(marker).is_boolean() && block.at(marker).get<bool>();
+}
 
 extern "C" {
 #include "z64.h"
@@ -674,10 +680,15 @@ void SaveManager::StartupCheckAndInitMeta(int fileNum) {
 
     nlohmann::json& sections = metaSaveBlock["sections"];
     if (sections.contains("randomizer")) {
+        const bool isArchipelagoSave = IsArchipelagoSaveBlock(metaSaveBlock);
         // Old vanilla saves had a randomizer section from shared save block, so having section doesn't make a file
         // rando. Newer saves say so with fileType; older ones we infer by inspecting randomizer section.
         bool isRandoFile;
-        if (metaSaveBlock.contains("fileType")) {
+        if (isArchipelagoSave) {
+            // Lightweight AP saves intentionally omit native placement data.
+            // Their explicit AP marker also identifies older files without fileType.
+            isRandoFile = true;
+        } else if (metaSaveBlock.contains("fileType")) {
             isRandoFile = metaSaveBlock["fileType"] != FILE_TYPE_SAVE_VANILLA;
         } else {
             nlohmann::json& randoData = sections["randomizer"]["data"];
@@ -705,8 +716,11 @@ void SaveManager::StartupCheckAndInitMeta(int fileNum) {
             s16 major = statsBlock.value("buildVersionMajor", 0);
             s16 minor = statsBlock.value("buildVersionMinor", 0);
             s16 patch = statsBlock.value("buildVersionPatch", 0);
-            // block loading outdated rando save
-            if (!(major == gBuildVersionMajor && minor == gBuildVersionMinor && patch == gBuildVersionPatch)) {
+            // AP restores its placements/settings from the verified server slot.
+            // A release mismatch must not rename its save or prevent tracking.
+            // Section-format compatibility is still checked by LoadFile.
+            if (!isArchipelagoSave &&
+                !(major == gBuildVersionMajor && minor == gBuildVersionMinor && patch == gBuildVersionPatch)) {
                 std::string newFileName =
                     Ship::Context::GetPathRelativeToAppDirectory("Save") +
                     ("/file" + std::to_string(fileNum + 1) + "-" + std::to_string(GetUnixTimestamp()) + ".bak");
@@ -1510,6 +1524,8 @@ void SaveManager::SaveGlobal() {
 
 void SaveManager::LoadFile(int fileNum) {
     saveMtx.lock();
+    bool refreshArchipelagoBuild = false;
+    bool loadedKnownSections = true;
     SPDLOG_INFO("Load File - fileNum: {}", fileNum);
     std::filesystem::path fileName = GetFileName(fileNum);
     assert(std::filesystem::exists(fileName));
@@ -1525,7 +1541,8 @@ void SaveManager::LoadFile(int fileNum) {
             SPDLOG_ERROR("Save at {} contains no version", fileName.string());
             assert(false);
         }
-        if (saveBlock.contains("fileType") && saveBlock["fileType"] == FILE_TYPE_SAVE_RANDO) {
+        if ((saveBlock.contains("fileType") && saveBlock["fileType"] == FILE_TYPE_SAVE_RANDO) ||
+            IsArchipelagoSaveBlock(saveBlock)) {
             gSaveContext.ship.quest.id = QUEST_RANDOMIZER;
         }
         switch (saveBlock["version"].get<int>()) {
@@ -1545,6 +1562,7 @@ void SaveManager::LoadFile(int fileNum) {
                     }
                     SectionLoadHandler& handler = sectionLoadHandlers[sectionName];
                     if (!handler.contains(sectionVersion)) {
+                        loadedKnownSections = false;
                         // A section that has a loader without a handler for the specific version means that the user
                         // has a mod at an earlier version than the save has. In this case, the user probably wants to
                         // load the save. Report the error so that the user can rectify the error.
@@ -1562,14 +1580,20 @@ void SaveManager::LoadFile(int fileNum) {
                 }
                 break;
             default:
+                loadedKnownSections = false;
                 SPDLOG_ERROR("Unrecognized save version {} in {}", saveBlock["version"].get<int>(),
                              GetFileName(fileNum).string());
                 assert(false);
                 break;
         }
+        if (loadedKnownSections && IS_RANDO && ArchipelagoClient::GetInstance().IsCurrentSaveArchipelago()) {
+            refreshArchipelagoBuild = SohExtreme::UpdateSaveBuildVersion(gSaveContext.ship.stats,
+                reinterpret_cast<const char*>(gBuildVersion), gBuildVersionMajor, gBuildVersionMinor, gBuildVersionPatch);
+        }
         InitMeta(fileNum);
         GameInteractor::Instance->ExecuteHooks<GameInteractor::OnLoadFile>(fileNum);
     } catch ([[maybe_unused]] const std::exception& e) {
+        refreshArchipelagoBuild = false;
         input.close();
         std::string newFileName =
             Ship::Context::GetPathRelativeToAppDirectory("Save") +
@@ -1586,6 +1610,11 @@ void SaveManager::LoadFile(int fileNum) {
                                                              "The file has been renamed to prevent further issues.");
     }
     saveMtx.unlock();
+    if (refreshArchipelagoBuild) {
+        // Persist the new release label through the existing atomic save writer.
+        // Only stats are rewritten; the AP identity, item cursor and checks stay intact.
+        SaveSection(fileNum, SECTION_ID_STATS, true);
+    }
 }
 
 void SaveManager::ThreadPoolWait() {

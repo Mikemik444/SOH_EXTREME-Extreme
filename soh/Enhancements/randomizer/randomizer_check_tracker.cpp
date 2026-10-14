@@ -1836,20 +1836,34 @@ static void DrawUniversalFinderMirror() {
         ImGui::Separator();
         ImGui::TextWrapped("The game starts Universal Tracker's evaluator automatically. "
             "No tracker window or special launcher is required. Keep tracker.apworld and "
-            "the matching soh_extreme.apworld in your Archipelago installation.");
+            "a SOH-EXTREME APWorld with in-game Check Finder support in your Archipelago installation. "
+            "Game and APWorld release numbers do not need to match.");
         if (ImGui::CollapsingHeader("Archipelago runtime location")) {
             static char path[2048] = {};
             static bool initialized = false;
             if (!initialized) {
                 const char* configured = CVarGetString(CVAR_REMOTE_ARCHIPELAGO("TrackerRuntimePath"), "");
-                std::snprintf(path, sizeof(path), "%s", configured ? configured : "");
+                const std::string detected = configured && *configured ? configured :
+                    (!client.GetFinderRuntimePath().empty() ? client.GetFinderRuntimePath() :
+                                                             SohExtreme::TrackerWorker::DetectRuntimePath());
+                std::snprintf(path, sizeof(path), "%s", detected.c_str());
                 initialized = true;
             }
-            ImGui::TextWrapped("Normally detected automatically. For a portable/custom installation, "
+            ImGui::TextWrapped("The detected Archipelago launcher is filled in automatically. For a portable/custom installation, "
                 "enter its full folder or ArchipelagoLauncherDebug.exe path. Leave blank for automatic detection.");
             ImGui::InputText("Runtime path", path, sizeof(path));
             if (ImGui::Button("Use path and retry")) {
                 CVarSetString(CVAR_REMOTE_ARCHIPELAGO("TrackerRuntimePath"), path);
+                Ship::Context::GetRawInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
+                client.RestartFinderWorker();
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Auto-detect and retry")) {
+                // Keep automatic mode enabled so a moved/reinstalled launcher
+                // is discovered next time instead of pinning today's path.
+                CVarSetString(CVAR_REMOTE_ARCHIPELAGO("TrackerRuntimePath"), "");
+                const std::string detected = SohExtreme::TrackerWorker::DetectRuntimePath();
+                std::snprintf(path, sizeof(path), "%s", detected.c_str());
                 Ship::Context::GetRawInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
                 client.RestartFinderWorker();
             }

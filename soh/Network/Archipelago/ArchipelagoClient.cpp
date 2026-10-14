@@ -1,6 +1,7 @@
 ﻿#include "ArchipelagoClient.h"
 #include "NpcSpeechIdentity.h"
 #include "TrackerWorkerConfig.h"
+#include "soh/Enhancements/GameplayDeliverySafety.h"
 
 static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<std::string, int64_t>& out);
 
@@ -2504,8 +2505,7 @@ bool ArchipelagoClient::ProcessRemotePresentation() {
         Player* player = GET_PLAYER(gPlayState);
         if (player == nullptr) return true;
         ++remotePresentationFrames;
-        const bool busy = Player_InBlockingCsMode(gPlayState, player) ||
-            (player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM));
+        const bool busy = !SohExtreme::CanReceiveGameplayReward(gPlayState);
         if (busy) return true;
         if (!remotePresentationReceived && remotePresentationFrames < 90) return true;
         if (remotePresentationReceived && !remotePresentations.empty()) remotePresentations.pop_front();
@@ -2521,6 +2521,7 @@ bool ArchipelagoClient::ProcessRemotePresentation() {
         // animation. A burst of remote checks must not delay our progression.
         if (!pendingItems.empty()) return false;
     }
+    if (!SohExtreme::CanReceiveGameplayReward(gPlayState)) return false;
     const auto scout = scoutedLocations.find(remotePresentations.front());
     if (scout == scoutedLocations.end()) return false; // Metadata can arrive later; receiving still runs.
     const auto& item = scout->second;
@@ -2536,14 +2537,7 @@ bool ArchipelagoClient::ProcessRemotePresentation() {
         remotePresentations.pop_front();
         return false;
     }
-    if (gPlayState == nullptr || gSaveContext.health <= 0 ||
-        gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
-        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF || GameInteractor::IsGameplayPaused()) return false;
-    Player* player = GET_PLAYER(gPlayState);
-    if (player == nullptr || Player_InBlockingCsMode(gPlayState, player) ||
-        (player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM |
-                                PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_IN_WATER)) ||
-        !(player->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) return false;
+    if (!SohExtreme::IsPlayerOnDryGround(GET_PLAYER(gPlayState))) return false;
     remotePickupDescription = ApMessageName(itemName) + " for " + ApMessageName(recipient);
     remotePresentationReceived = false;
     remotePresentationFrames = 0;
@@ -2567,14 +2561,9 @@ void ArchipelagoClient::ReofferPendingPresentation() {
     // than blocking every later AP item behind a 90-frame timeout.
     const bool remotePending = remotePresentationActive && !remotePresentationReceived;
     if ((!awaitingMajorItemReceipt && !remotePending) || !IsGameplaySessionActive() ||
-        gPlayState == nullptr || gSaveContext.health <= 0 ||
-        gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
-        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF || GameInteractor::IsGameplayPaused()) return;
+        !SohExtreme::CanReceiveGameplayReward(gPlayState)) return;
     Player* player = GET_PLAYER(gPlayState);
-    if (player == nullptr || Player_InBlockingCsMode(gPlayState, player) ||
-        (player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM |
-                               PLAYER_STATE1_CARRYING_ACTOR | PLAYER_STATE1_IN_WATER)) ||
-        !(player->actor.bgCheckFlags & BGCHECKFLAG_GROUND)) return;
+    if (!SohExtreme::IsPlayerOnDryGround(player)) return;
     const auto& entry = awaitingMajorItemReceipt ? gAwaitingMajorEntry : gRemotePresentationEntry;
     if (player->getItemId != GI_NONE &&
         ((player->interactRangeActor != nullptr && player->interactRangeActor != &player->actor) ||
@@ -2785,18 +2774,11 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         return false;
     }
 
-    // Keep the receive cursor and reward untouched during death, scene changes,
-    // and pause. In particular a Heart Piece must not revive a dying AP player.
-    if (gSaveContext.health <= 0 || gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
-        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF || GameInteractor::IsGameplayPaused()) {
-        return false;
-    }
-
+    // Leave both the reward and receipt cursor queued until transitions,
+    // cutscenes and other blocking animations have completely finished.
+    // This also covers filler, traps and historical new-save reconstruction.
+    if (!SohExtreme::CanReceiveGameplayReward(gPlayState)) return false;
     Player* player = GET_PLAYER(gPlayState);
-    if (player == nullptr || Player_InBlockingCsMode(gPlayState, player) ||
-        (player->stateFlags1 & (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM | PLAYER_STATE1_CARRYING_ACTOR))) {
-        return false;
-    }
 
     const bool historicalNewSaveReplay =
         gNewSaveReplayTargetCount != 0 && sequence < gNewSaveReplayTargetCount;
@@ -3134,9 +3116,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
     // airborne. Some SoH get-item paths can begin in water without completing the
     // matching receive lifecycle cleanly. Leave the AP item at the queue front and
     // retry once Link is safely standing on land.
-    const bool playerInWater = (player->stateFlags1 & PLAYER_STATE1_IN_WATER) != 0;
-    const bool playerGrounded = (player->actor.bgCheckFlags & BGCHECKFLAG_GROUND) != 0;
-    if (playerInWater || !playerGrounded) {
+    if (!SohExtreme::IsPlayerOnDryGround(player)) {
         SPDLOG_DEBUG("[Archipelago] Deferring important item {} until Link is grounded on land", itemId);
         return false;
     }
@@ -3489,10 +3469,7 @@ void ArchipelagoClient::Update() {
 
         Player* majorPlayer = GET_PLAYER(gPlayState);
         if (majorPlayer != nullptr && gSaveContext.health > 0) {
-            const bool stillInMajorReceive =
-                Player_InBlockingCsMode(gPlayState, majorPlayer) ||
-                (majorPlayer->stateFlags1 &
-                 (PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_GETTING_ITEM | PLAYER_STATE1_CARRYING_ACTOR));
+            const bool stillInMajorReceive = !SohExtreme::CanReceiveGameplayReward(gPlayState);
 
             // Never infer a receipt from unrelated inventory changes. If the
             // engine did not report this item, retry after its presentation ends.

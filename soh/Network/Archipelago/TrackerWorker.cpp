@@ -116,6 +116,28 @@ void AddCandidate(std::vector<std::filesystem::path>& out, const std::wstring& p
     out.push_back(p / L"ArchipelagoLauncherDebug.exe");
     out.push_back(p / L"ArchipelagoLauncher.exe");
 }
+void AddDriveCandidates(std::vector<std::filesystem::path>& out, const std::filesystem::path& root) {
+    // Portable installs have no registry entry. Check common locations on every
+    // local drive without recursively scanning disks on the game's UI thread.
+    for (const auto* folder : {L"Archipelago", L"Games\\Archipelago", L"Programs\\Archipelago",
+                               L"Applications\\Archipelago", L"ProgramData\\Archipelago",
+                               L"Program Files\\Archipelago", L"Program Files (x86)\\Archipelago"}) {
+        AddCandidate(out, (root / folder).wstring());
+    }
+}
+void AddPathCandidates(std::vector<std::filesystem::path>& out) {
+    const auto searchPath = Env(L"PATH");
+    if (!searchPath.empty()) {
+        for (const auto* name : {L"ArchipelagoLauncherDebug.exe", L"ArchipelagoLauncher.exe"}) {
+            std::wstring found(32768, L'\0');
+            const DWORD length = SearchPathW(searchPath.c_str(), name, nullptr,
+                                         static_cast<DWORD>(found.size()), found.data(), nullptr);
+            if (length && length < found.size()) {
+                found.resize(length); AddCandidate(out, found);
+            }
+        }
+    }
+}
 bool HasManagedWorld(const std::filesystem::path& directory) {
     // A missing/old world must not fall through the AP Launcher to its GUI.
     // ZIP central-directory filenames are uncompressed, so presence of the
@@ -127,7 +149,10 @@ bool HasManagedWorld(const std::filesystem::path& directory) {
         std::filesystem::directory_iterator it(base, error), end;
         for (; !error && it != end; it.increment(error)) {
             const auto path = it->path();
-            if (path.extension() != L".apworld" || path.filename().wstring().find(L"soh_extreme") == std::wstring::npos) continue;
+            // APWorld filenames can be renamed or contain any release label.
+            // Detect the worker module inside the archive, never its filename
+            // or the game/APWorld version number.
+            if (path.extension() != L".apworld") continue;
             std::ifstream file(path, std::ios::binary);
             if (!file) continue;
             file.seekg(0, std::ios::end);
@@ -146,7 +171,7 @@ std::filesystem::path FindRuntime(const std::string& hint) {
     std::vector<std::filesystem::path> candidates;
     AddCandidate(candidates, Wide(hint));
     // An explicitly selected path takes priority and never silently selects a
-    // different installation when invalid (a version mix-up is worse than an error).
+    // different installation when invalid (its installed worlds may differ).
     if (hint.empty()) {
         AddCandidate(candidates, Env(L"SOH_EXTREME_AP_PATH"));
         for (const HKEY root : {HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE}) {
@@ -182,6 +207,15 @@ std::filesystem::path FindRuntime(const std::string& hint) {
             AddCandidate(candidates, (std::filesystem::path(local) / L"Programs" / L"Archipelago").wstring());
             AddCandidate(candidates, (std::filesystem::path(local) / L"Archipelago").wstring());
         }
+        AddPathCandidates(candidates);
+        const DWORD drives = GetLogicalDrives();
+        for (unsigned int index = 0; index < 26; ++index) {
+            if (!(drives & (DWORD(1) << index))) continue;
+            std::wstring root = L"A:\\";
+            root[0] += static_cast<wchar_t>(index);
+            const UINT type = GetDriveTypeW(root.c_str());
+            if (type == DRIVE_FIXED || type == DRIVE_REMOVABLE) AddDriveCandidates(candidates, root);
+        }
         std::wstring exe(32768, L'\0');
         const DWORD len = GetModuleFileNameW(nullptr, exe.data(), static_cast<DWORD>(exe.size()));
         if (len && len < exe.size()) {
@@ -203,6 +237,18 @@ std::string WinError(const char* step) {
 } // namespace
 #endif
 
+std::string TrackerWorker::DetectRuntimePath() {
+#if defined(_WIN32)
+    try {
+        return Utf8(FindRuntime("").wstring());
+    } catch (const std::exception&) {
+        return {};
+    }
+#else
+    return {};
+#endif
+}
+
 bool TrackerWorker::Start(const std::string& runtimeHint, const std::string& bootstrapJson, std::string& error) {
     Stop();
     if (bootstrapJson.empty() || bootstrapJson.size() > 16000 || bootstrapJson.find('\n') != std::string::npos) {
@@ -216,7 +262,8 @@ bool TrackerWorker::Start(const std::string& runtimeHint, const std::string& boo
             return false;
         }
         if (!HasManagedWorld(runtime.parent_path())) {
-            error = "Install the matching soh_extreme.apworld in this Archipelago installation before starting the AP tracker.";
+            error = "Install a SOH-EXTREME APWorld with in-game Check Finder support in this Archipelago installation. "
+                    "Its release number does not need to match the game.";
             return false;
         }
         SECURITY_ATTRIBUTES sa{sizeof(SECURITY_ATTRIBUTES), nullptr, TRUE};

@@ -116,9 +116,15 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(GBI_UCODE "F3DEX_GBI_2" CACHE STRING "Specify the GBI ucode version" FORCE)
 
+# OTR mods use MPQ/StormLib. Enable the archive backend before configuring
+# libultraship, including build directories that cached its default OFF value.
+# Its PUBLIC compile definition also enables OTR discovery in the mod menu.
+set(INCLUDE_MPQ_SUPPORT ON CACHE BOOL "Enable StormLib and MPQ archive support" FORCE)
+
 if (NOT TARGET libultraship)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../libultraship ${CMAKE_BINARY_DIR}/libultraship SYSTEM)
 endif()
+target_compile_definitions(libultraship PUBLIC INCLUDE_MPQ_SUPPORT)
 include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeTlutSafety.cmake")
 include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeVertexSafety.cmake")
 include("${CMAKE_CURRENT_SOURCE_DIR}/Cmake/SohExtremeCrashStack.cmake")

@@ -15,6 +15,8 @@ class TrackerWorker {
     bool IsRunning(std::string& error);
     void Stop();
     const std::string& RuntimePath() const;
+    // Resolve the default launcher without starting a process or saving an override.
+    static std::string DetectRuntimePath();
   private:
     struct Impl;
     std::unique_ptr<Impl> impl;

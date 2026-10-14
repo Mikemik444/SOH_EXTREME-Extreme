@@ -6,6 +6,7 @@
 #include "soh/Network/Archipelago/ArchipelagoC.h"
 
 #include <array>
+#include "soh/Enhancements/GameplayDeliverySafety.h"
 
 extern "C" {
 #include "variables.h"
@@ -403,7 +404,11 @@ static void OnPlayerUpdate() {
     if (statusTimer == 0) {
         GameInteractor::State::MovementSpeedMultiplier = 1.0f;
     }
-    if (eventTimer == 0) {
+    // A trap rolled on land may still be waiting when Link jumps into water
+    // or a cutscene starts. Pause only its pending event; running status effects
+    // must still expire so the speed multiplier cannot get stuck.
+    const bool canTriggerEvent = SohExtreme::CanTriggerGameplayTrap(gPlayState);
+    if (eventTimer == 0 && canTriggerEvent) {
         switch (roll) {
             case ADD_KNOCK_TRAP:
                 GameInteractor::RawAction::KnockbackPlayer(1);
@@ -435,7 +440,7 @@ static void OnPlayerUpdate() {
     if (statusTimer >= 0) {
         statusTimer--;
     }
-    if (eventTimer >= 0) {
+    if (eventTimer >= 0 && canTriggerEvent) {
         eventTimer--;
     }
 }
@@ -453,6 +458,13 @@ void RegisterExtraTraps() {
             return;
         }
 
+        // Keep the queue/count intact while unsafe. Do not short-circuit the
+        // native item handler until a trap actually fires; that would clear a
+        // different actor's pending item offer. Preserve an already rolled
+        // delayed event instead of replacing it with the next queued trap.
+        if (eventTimer >= 0 || !SohExtreme::CanTriggerGameplayTrap(gPlayState)) {
+            return;
+        }
         *should = true;
         gSaveContext.ship.pendingIceTrapCount--;
         gSaveContext.ship.stats.count[COUNT_ICE_TRAPS]++;
