@@ -30,6 +30,8 @@ struct TrackerSnapshot {
     std::string nonce, producer, version;
     uint32_t slot = 0, manualCount = 0, ignoredCount = 0;
     uint32_t liveShields = 0xffffffffu; // 1 Deku, 2 Hylian; sentinel for standalone UT
+    uint32_t liveTime = 0xffffffffu; // optional TIME extension: 0 day, 1 night
+    uint32_t liveClock = 0xffffffffu, liveTimeFlags = 0; // CLCK: raw clock and Dampe-all-night flag
     uint64_t request = 0, revision = 0, received = 0;
     std::set<int64_t> active, checked;
     std::vector<TrackerRow> rows;
@@ -121,10 +123,28 @@ inline TrackerSnapshot DecodeTrackerSnapshot(const std::string& encoded) {
             !seen.insert(row.id).second || row.name.empty()) throw std::invalid_argument("Invalid tracker row");
         result.rows.push_back(std::move(row));
     }
+    if (data.size() - pos >= 8) {
+        const auto tag = integer(4);
+        if (tag != 0x454d4954u) throw std::invalid_argument("Unknown tracker extension");
+        result.liveTime = static_cast<uint32_t>(integer(4));
+        if (result.liveTime > 1) throw std::invalid_argument("Invalid tracker time phase");
+    }
+    if (data.size() - pos == 12 && integer(4) == 0x4b434c43u) {
+        result.liveClock = static_cast<uint32_t>(integer(4));
+        result.liveTimeFlags = static_cast<uint32_t>(integer(4));
+        if (result.liveClock > 0xffffu || result.liveTimeFlags > 1)
+            throw std::invalid_argument("Invalid tracker clock state");
+    }
     if (pos != data.size()) throw std::invalid_argument("Trailing tracker data");
     return result;
 }
 
+inline uint32_t TrackerClockWindow(uint32_t clock) {
+    // Accept ordinary clock motion within a window; invalidate on a rule boundary.
+    return (clock >= 0x4555 && clock < 0x5000 ? 1u : 0u) |
+           (clock > 0xC000 && clock < 0xE000 ? 2u : 0u) |
+           (clock <= 0x3555 || clock > 0xD556 ? 4u : 0u);
+}
 class TrackerMirrorState {
   public:
     void Reset(const std::string& nonce) {
@@ -150,7 +170,8 @@ class TrackerMirrorState {
     }
     const TrackerSnapshot* Current(uint32_t slot, uint64_t received, const std::set<int64_t>& active,
                                    const std::set<int64_t>& checked, double now, std::string& status,
-                                   uint32_t liveShields = 0xffffffffu) const {
+                                   uint32_t liveShields = 0xffffffffu, uint32_t liveTime = 0xffffffffu,
+                                   uint32_t liveClock = 0xffffffffu, uint32_t liveTimeFlags = 0) const {
         if (!hasSnapshot_) { status = "Starting the automatic AP tracker..."; return nullptr; }
         if (now - lastReceive_ > 10.0) { status = "Tracker snapshot expired; waiting for a live update."; return nullptr; }
         if (snapshot_.slot != slot || snapshot_.active != active) { status = "Tracker location manifest differs from this slot."; return nullptr; }
@@ -159,6 +180,14 @@ class TrackerMirrorState {
         }
         if (snapshot_.liveShields != liveShields) {
             status = "Synchronizing Link's shield inventory with the AP tracker..."; return nullptr;
+        }
+        if (snapshot_.liveTime != 0xffffffffu && snapshot_.liveTime != liveTime) {
+            status = "Synchronizing the current day/night phase with the AP tracker..."; return nullptr;
+        }
+        if (snapshot_.liveClock != 0xffffffffu &&
+            (liveClock == 0xffffffffu || TrackerClockWindow(snapshot_.liveClock) != TrackerClockWindow(liveClock) ||
+             snapshot_.liveTimeFlags != liveTimeFlags)) {
+            status = "Synchronizing time-sensitive checks with the AP tracker..."; return nullptr;
         }
         status = "Automatic AP tracker - Universal Tracker rules, using Link's owned shields.";
         return &snapshot_;

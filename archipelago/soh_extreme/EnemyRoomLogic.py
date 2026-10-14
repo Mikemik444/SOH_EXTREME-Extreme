@@ -373,9 +373,10 @@ class NativeRoomCompiler:
             if dist<=EnemyDistance.BOOMERANG:rule |= H.can_use(Items.BOOMERANG,b)
             if dist<=EnemyDistance.SHORT_JUMPSLASH:rule |= H.can_use(Items.MEGATON_HAMMER,b)
             return rule
-        if name in ('CanKillEnemy','CanPassEnemy','CanAvoidEnemy'):
+        if name in ('HasEnemySoul','CanKillEnemy','CanPassEnemy','CanAvoidEnemy'):
             enemy=a[0][3:]
             if enemy=='WALLTULA':enemy='BIG_SKULLTULA'
+            if name=='HasEnemySoul':return H.has_extreme_enemy_soul(b,Enemies[enemy])
             more=list(a[1:])
             if more:more[0]=EnemyDistance[more[0][3:]]
             if name=='CanKillEnemy':return H.can_kill_enemy(b,Enemies[enemy],*more)

@@ -157,7 +157,7 @@ void RegionTable_Init_GerudoTrainingGround() {
     }, {
         //Exits
         ENTRANCE(RR_GERUDO_TRAINING_GROUND_EYE_STATUE_LOWER,      logic->CanUse(RG_MEGATON_HAMMER) && logic->CanUse(RG_FAIRY_BOW)),
-        ENTRANCE(RR_GERUDO_TRAINING_GROUND_LAVA_ROOM_UPPER_LEDGE, true),
+        ENTRANCE(RR_GERUDO_TRAINING_GROUND_LAVA_ROOM_UPPER_LEDGE, AnyAgeTime([]{return logic->CanKillEnemy(RE_TORCH_SLUG) && logic->CanKillEnemy(RE_FIRE_KEESE);})),
     });
 
     areaTable[RR_GERUDO_TRAINING_GROUND_LAVA_ROOM] = Region("Gerudo Training Ground Lava Room", SCENE_GERUDO_TRAINING_GROUND, {

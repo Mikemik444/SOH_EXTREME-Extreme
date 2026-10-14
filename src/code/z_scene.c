@@ -1,3 +1,4 @@
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "global.h"
 #include "vt.h"
 #include "soh/ActorDB.h"
@@ -352,7 +353,7 @@ void Scene_CommandSkyboxDisables(PlayState* play, SceneCmd* cmd) {
 }
 
 void Scene_CommandTimeSettings(PlayState* play, SceneCmd* cmd) {
-    if ((cmd->timeSettings.hour != 0xFF) && (cmd->timeSettings.min != 0xFF)) {
+    if (!Archipelago_ShouldFreezeTime() && (cmd->timeSettings.hour != 0xFF) && (cmd->timeSettings.min != 0xFF)) {
         gSaveContext.skyboxTime = gSaveContext.dayTime =
             ((cmd->timeSettings.hour + (cmd->timeSettings.min / 60.0f)) * 60.0f) / ((f32)(24 * 60) / 0x10000);
     }

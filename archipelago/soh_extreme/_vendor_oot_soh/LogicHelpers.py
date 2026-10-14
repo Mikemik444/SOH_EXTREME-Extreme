@@ -691,6 +691,28 @@ def is_child(bundle: tuple[Regions, "SohWorld"]):
 def is_adult(bundle: tuple[Regions, "SohWorld"]):
     return IsAdult(bundle[0])
 
+@dataclasses.dataclass
+class FrozenTimePhase(Rule, game="SOH-EXTREME"):
+    """Use the save's current phase in the managed tracker, the seed phase in generation."""
+    want_day: bool
+
+    def _instantiate(self, world):
+        return self.Resolved(want_day=self.want_day, player=world.player, caching_enabled=False)
+
+    class Resolved(Rule.Resolved):
+        want_day: bool
+        force_recalculate = True
+
+        def _evaluate(self, state):
+            world = state.multiworld.worlds[self.player]
+            phase = getattr(world, '_extreme_live_time', None)
+            is_day = (phase == 0) if phase is not None else world.options.frozen_starting_time.value in (1, 2, 3)
+            return is_day == self.want_day
+
+        def __str__(self):
+            return 'Current frozen daytime' if self.want_day else 'Current frozen nighttime'
+
+
 def _time_access(bundle, want_day: bool) -> Rule:
     cycle = ((is_child(bundle) & has_item(Events.CHILD_CAN_PASS_TIME, bundle))
              | (is_adult(bundle) & has_item(Events.ADULT_CAN_PASS_TIME, bundle)))
@@ -700,12 +722,9 @@ def _time_access(bundle, want_day: bool) -> Rule:
         return cycle
     # Random is resolved once by generate_early and restored from slot data.
     # Dusk (0xB555) is still daytime: the engine sets night after 0xC000.
-    start_is_day = options.frozen_starting_time.value in (1, 2, 3)
-    if start_is_day == want_day:
-        return True_()
     # Sun's Song selects a phase even with the passive clock frozen. Possession
     # alone is insufficient: can_play_song includes instrument, buttons and notes.
-    return (Has("Flow of Time") & cycle) | can_play_song(Items.SUNS_SONG, bundle)
+    return FrozenTimePhase(want_day) | (Has("Flow of Time") & cycle) | can_play_song(Items.SUNS_SONG, bundle)
 
 
 def at_day(bundle: tuple[Regions, "SohWorld"]) -> Rule:
@@ -714,6 +733,44 @@ def at_day(bundle: tuple[Regions, "SohWorld"]) -> Rule:
 
 def at_night(bundle: tuple[Regions, "SohWorld"]) -> Rule:
     return _time_access(bundle, False)
+
+
+@dataclasses.dataclass
+class FrozenClockWindow(Rule, game="SOH-EXTREME"):
+    """Exact actor clock windows when passive time is frozen."""
+    window: str
+
+    def _instantiate(self, world):
+        return self.Resolved(window=self.window, player=world.player, caching_enabled=False)
+
+    class Resolved(Rule.Resolved):
+        window: str
+        force_recalculate = True
+
+        def _evaluate(self, state):
+            world = state.multiworld.worlds[self.player]
+            clock = getattr(world, '_extreme_live_clock', None)
+            if clock is None:
+                clock = {1: 0x4555, 2: 0x8000, 3: 0xB555, 4: 0}.get(world.options.frozen_starting_time.value, 0x4555)
+            if self.window == 'dawn':
+                return 0x4555 <= clock < 0x5000
+            if self.window == 'dampe':
+                if getattr(world, '_extreme_live_time_flags', 0) & 1:
+                    return clock > 0xC000 or clock < 0x4555
+                return 0xC000 < clock < 0xE000
+            if self.window == 'running_man_rest':
+                return clock <= 0x3555 or clock > 0xD556
+            raise ValueError('Unknown clock window: ' + self.window)
+
+
+def at_clock_window(bundle, window: str) -> Rule:
+    cycle = ((is_child(bundle) & has_item(Events.CHILD_CAN_PASS_TIME, bundle))
+             | (is_adult(bundle) & has_item(Events.ADULT_CAN_PASS_TIME, bundle)))
+    if not bundle[1].options.shuffle_flow_of_time.value:
+        return cycle
+    # Sun's Song can select dawn/evening outdoors or midnight in a static-time
+    # overworld scene. The caller still owns its age, region and interaction gates.
+    return FrozenClockWindow(window) | (Has('Flow of Time') & cycle) | can_play_song(Items.SUNS_SONG, bundle)
 
 
 def starting_age(bundle: tuple[Regions, "SohWorld"]) -> Rule:

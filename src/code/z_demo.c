@@ -1,3 +1,4 @@
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "global.h"
 #include "z64camera.h"
 
@@ -334,7 +335,7 @@ void func_80064824(PlayState* play, CutsceneContext* csCtx, CsCmdBase* cmd) {
         case 18:
             play->envCtx.unk_EE[0] = 0;
             play->envCtx.gloomySkyMode = 2;
-            if (gSaveContext.dayTime < 0x4AAB) {
+            if (!Archipelago_ShouldFreezeTime() && gSaveContext.dayTime < 0x4AAB) {
                 gSaveContext.dayTime += 30;
             }
             if (play->envCtx.unk_EE[1] == 0) {
@@ -367,9 +368,11 @@ void func_80064824(PlayState* play, CutsceneContext* csCtx, CsCmdBase* cmd) {
             play->roomCtx.curRoom.segment = NULL;
             break;
         case 25:
-            gSaveContext.dayTime += 30;
-            if ((gSaveContext.dayTime) > 0xCAAA) {
-                gSaveContext.dayTime = 0xCAAA;
+            if (!Archipelago_ShouldFreezeTime()) {
+                gSaveContext.dayTime += 30;
+                if (gSaveContext.dayTime > 0xCAAA) {
+                    gSaveContext.dayTime = 0xCAAA;
+                }
             }
             break;
         case 26:
@@ -417,9 +420,15 @@ void func_80064824(PlayState* play, CutsceneContext* csCtx, CsCmdBase* cmd) {
             Sfx_PlaySfxCentered2(NA_SE_EV_SAND_STORM - SFX_FLAG);
             break;
         case 33:
-            gSaveContext.sunsSongState = SUNSSONG_START;
+            // A story cutscene is not the player performing Sun's Song.
+            if (!Archipelago_ShouldFreezeTime()) {
+                gSaveContext.sunsSongState = SUNSSONG_START;
+            }
             break;
         case 34:
+            if (Archipelago_ShouldFreezeTime()) {
+                break;
+            }
             if (IS_DAY) {
                 gSaveContext.dayTime -= gTimeSpeed;
             } else {
@@ -482,7 +491,7 @@ void func_80065134(PlayState* play, CutsceneContext* csCtx, CsCmdDayTime* cmd) {
     s16 temp1;
     s16 temp2;
 
-    if (csCtx->frames == cmd->startFrame) {
+    if (!Archipelago_ShouldFreezeTime() && csCtx->frames == cmd->startFrame) {
         temp1 = (cmd->hour * 60.0f) / (360.0f / 0x4000);
         temp2 = (cmd->minute + 1) / (360.0f / 0x4000);
 
@@ -1314,8 +1323,10 @@ void Cutscene_Command_Terminator(PlayState* play, CutsceneContext* csCtx, CsCmdB
                 gSaveContext.nextTransitionType = TRANS_TYPE_FADE_BLACK;
                 break;
             case 119:
-                gSaveContext.dayTime = 0x8000;
-                gSaveContext.skyboxTime = 0x8000;
+                if (!Archipelago_ShouldFreezeTime()) {
+                    gSaveContext.dayTime = 0x8000;
+                    gSaveContext.skyboxTime = 0x8000;
+                }
                 play->nextEntranceIndex = ENTR_CASTLE_COURTYARD_ZELDA_1;
                 play->transitionTrigger = TRANS_TRIGGER_START;
                 play->transitionType = TRANS_TYPE_FADE_WHITE;

@@ -103,12 +103,9 @@ void RegionTable_Init_DodongosCavern() {
         LOCATION(RC_DODONGOS_CAVERN_LOWER_LIZALFOS_HEART, true),
     }, {
         //Exits
-        // Child must clear this lock-in fight before traversing onward. Adult
-        // can physically bypass the lower-floor encounter. Keep that bypass on
-        // the room exits only; enemy checks inside the room still use their own
-        // reach + soul + kill + drop logic.
-        ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, logic->IsAdult || logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)),
-        ENTRANCE(RR_DODONGOS_CAVERN_DODONGO_ROOM,        logic->IsAdult || logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)),
+        // The encounter's switch bars both exits for both ages.
+        ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)),
+        ENTRANCE(RR_DODONGOS_CAVERN_DODONGO_ROOM,        logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)),
     });
 
     areaTable[RR_DODONGOS_CAVERN_DODONGO_ROOM] = Region("Dodongos Cavern Dodongo Room", SCENE_DODONGOS_CAVERN, {}, {
@@ -163,7 +160,8 @@ void RegionTable_Init_DodongosCavern() {
         LOCATION(RC_DODONGOS_CAVERN_COMPASS_CHEST, logic->CanOpenLargeChest()),
     }, {
         //Exits
-        ENTRANCE(RR_DODONGOS_CAVERN_STAIRS_LOWER, logic->CanUse(RG_MASTER_SWORD) || logic->CanUse(RG_BIGGORON_SWORD) || logic->CanUse(RG_MEGATON_HAMMER) || logic->HasExplosives() || logic->HasItem(RG_GORONS_BRACELET)),
+        // The room's bomb flowers are a valid weapon, but cannot replace the soul.
+        ENTRANCE(RR_DODONGOS_CAVERN_STAIRS_LOWER, logic->CanKillEnemy(RE_ARMOS) || (logic->HasEnemySoul(RE_ARMOS) && logic->HasItem(RG_GORONS_BRACELET))),
     });
 
     areaTable[RR_DODONGOS_CAVERN_ARMOS_ROOM] = Region("Dodongos Cavern Armos Room", SCENE_DODONGOS_CAVERN, {}, {}, {

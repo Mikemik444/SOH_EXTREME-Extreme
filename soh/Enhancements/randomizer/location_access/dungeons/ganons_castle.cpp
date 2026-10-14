@@ -208,7 +208,7 @@ void RegionTable_Init_GanonsCastle() {
     }, {
         //Exits
         ENTRANCE(RR_GANONS_CASTLE_MAIN,                   true),
-        ENTRANCE(RR_GANONS_CASTLE_WATER_TRIAL_BLOCK_ROOM, logic->BlueFire()),
+        ENTRANCE(RR_GANONS_CASTLE_WATER_TRIAL_BLOCK_ROOM, logic->BlueFire() && AnyAgeTime([]{return logic->CanKillEnemy(RE_FREEZARD);})),
     });
 
     areaTable[RR_GANONS_CASTLE_WATER_TRIAL_BLOCK_ROOM] = Region("Ganon's Castle Water Trial Block Room", SCENE_INSIDE_GANONS_CASTLE, {

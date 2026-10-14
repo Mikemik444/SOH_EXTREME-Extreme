@@ -1758,6 +1758,28 @@ static SohExtreme::TrackerScene FinderNativeScene(RandomizerCheck rc) {
 
 static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClient& client,
                                                const SohExtreme::TrackerScene& current, int age, int time) {
+    struct CrossingScene { int64_t location; int scene; RandomizerCheckArea area; int grotto; };
+    static const std::map<int64_t, CrossingScene> crossings=[] {
+        const CrossingScene entries[] = {
+#include "soh/Network/Archipelago/SceneTransitionScenes.inc"
+        };
+        std::map<int64_t, CrossingScene> result;
+        for (const auto& entry:entries) result.emplace(entry.location,entry);
+        return result;
+    }();
+    const auto crossing=crossings.find(id);
+    if (crossing!=crossings.end()) {
+        const auto& route=crossing->second;
+        int scene=route.scene;
+        if (scene==SCENE_MARKET_DAY) scene=age==1 ? SCENE_MARKET_RUINS : (time==1 ? SCENE_MARKET_NIGHT : scene);
+        if (scene==SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY) scene=age==1 ? SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS :
+            (time==1 ? SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT : scene);
+        if (scene==SCENE_MARKET_ENTRANCE_DAY) scene=age==1 ? SCENE_MARKET_ENTRANCE_RUINS : (time==1 ? SCENE_MARKET_ENTRANCE_NIGHT : scene);
+        if (scene==SCENE_BACK_ALLEY_DAY && time==1) scene=SCENE_BACK_ALLEY_NIGHT;
+        if (scene==SCENE_CASTLE_COURTYARD_GUARDS_DAY && time==1) scene=SCENE_CASTLE_COURTYARD_GUARDS_NIGHT;
+        if (scene==SCENE_OUTSIDE_GANONS_CASTLE && age==0) scene=SCENE_HYRULE_CASTLE;
+        return FinderScene(scene,route.area,route.grotto);
+    }
     // These four permanent identities move individually from prison to tent.
     // Fast mode starts with 1/2/3 rescued; consult the actual rescue flags so
     // an empty cell never takes priority over the carpenter's current scene.

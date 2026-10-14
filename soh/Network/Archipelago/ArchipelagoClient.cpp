@@ -1,5 +1,6 @@
 ﻿#include "ArchipelagoClient.h"
 #include "NpcSpeechIdentity.h"
+#include "SceneTransitionChecks.h"
 #include "TrackerWorkerConfig.h"
 #include "soh/Enhancements/GameplayDeliverySafety.h"
 
@@ -70,6 +71,7 @@ constexpr int64_t AP_EXTREME_SPEECH_FALLBACK_COUNT = 512;
 // needs to be serialized: saved RandomizerCheck state and ReceivedItems replay
 // are the durable sources of truth.
 std::deque<int64_t> gDeferredLocationReports;
+SohExtreme::CrossingJournal gCrossingJournal;
 uint64_t gNewSaveReplayTargetCount = 0;
 int gNewSaveReplayGraceFrames = 0;
 
@@ -953,6 +955,9 @@ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::str
     // main-thread path and require the reply to match this exact equipment.
     const uint32_t liveShields = (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_DEKU) ? 1u : 0u) |
                                 (CHECK_OWNED_EQUIP(EQUIP_TYPE_SHIELD, EQUIP_INV_SHIELD_HYLIAN) ? 2u : 0u);
+    const uint32_t liveTime = gSaveContext.nightFlag ? 1u : 0u;
+    const uint32_t liveClock = gSaveContext.dayTime;
+    const uint32_t liveTimeFlags = CVarGetInteger(CVAR_ENHANCEMENT("DampeAllNight"), 0) ? 1u : 0u;
     if (!payload.empty() && payloadNonce == finderMirror.Nonce()) {
         try {
             finderMirror.Accept(SohExtreme::DecodeTrackerSnapshot(payload), slot, now, finderMirrorError);
@@ -967,13 +972,16 @@ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::str
         bounce.tags = &tags;
         bounce.data = "{\"soh_extreme_tracker\":\"SOHExtremeFinder1\",\"kind\":\"request\",\"slot\":" +
             std::to_string(slot) + ",\"nonce\":\"" + finderMirror.Nonce() + "\",\"request\":" +
-            std::to_string(request) + ",\"live_shields\":" + std::to_string(liveShields) + "}";
+            std::to_string(request) + ",\"live_shields\":" + std::to_string(liveShields) +
+            ",\"live_time\":" + std::to_string(liveTime) + ",\"live_clock\":" + std::to_string(liveClock) +
+            ",\"live_time_flags\":" + std::to_string(liveTimeFlags) + "}";
         AP_SendBounce(bounce);
         finderNextRequest = now + 2.0;
     }
     std::set<int64_t> checked;
     for (const auto id : reportedLocations) if (active.count(id)) checked.insert(id);
-    const auto* result = finderMirror.Current(slot, received, active, checked, now, status, liveShields);
+    const auto* result = finderMirror.Current(slot, received, active, checked, now, status, liveShields, liveTime,
+                                            liveClock, liveTimeFlags);
     if (!result && !finderWorkerError.empty()) status = finderWorkerError;
     else if (!result && !finderMirrorError.empty()) status += " " + finderMirrorError;
     return result;
@@ -1150,6 +1158,7 @@ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receiv
                                                const std::string& cachedSettingsJson,
                                                const SohExtreme::SaveConnectionIdentity& identity) {
     ResetRemotePresentations();
+    gCrossingJournal.Reset();
     {
         std::scoped_lock lock(queueMutex);
         ResetFinderMirror();
@@ -1850,6 +1859,10 @@ void ArchipelagoClient::ApplySlotSettings() {
             slotSettings.try_emplace("FishsanityPondCount", pond ? 17 : 0);
             slotSettings.try_emplace("FishsanityAgeSplit", pond ? 1 : 0);
         }
+        // Legacy slots have no traversal locations. Do not inherit this flag
+        // from the previously connected save's AP-only CVars.
+        slotSettings.try_emplace("SceneTransitionChecks", 0);
+        slotSettings.try_emplace("SceneTransitionCatalogVersion", 0);
         settingsSnapshot = slotSettings;
     }
 
@@ -1880,7 +1893,7 @@ void ArchipelagoClient::ApplySlotSettings() {
         }
 
         // AP keys are the final component of the native CVar, e.g.
-        // gRandoSettings.ShufflePots -> ShufflePots.
+        // gRandomizer.ShufflePots -> ShufflePots in the current build.
         const size_t dot = nativeCVar.find_last_of('.');
         const std::string nativeKey = dot == std::string::npos ? nativeCVar : nativeCVar.substr(dot + 1);
         auto it = settingsSnapshot.find(nativeKey);
@@ -1908,9 +1921,15 @@ void ArchipelagoClient::ApplySlotSettings() {
         if (consumedKeys.contains(key)) {
             continue;
         }
-        const std::string fallbackCVar = std::string("gRandoSettings.") + key;
+        // AP-only flags have no native Option entry. Their writer must use
+        // the same build-defined prefix as CVAR_RANDOMIZER_SETTING readers.
+        const std::string fallbackCVar = std::string(CVAR_RANDOMIZER_SETTING("")) + key;
         CVarSetInteger(fallbackCVar.c_str(), value);
     }
+
+    SPDLOG_INFO("[Archipelago] Scene transition checks: {} (catalog {})",
+                CVarGetInteger(CVAR_RANDOMIZER_SETTING("SceneTransitionChecks"), 0) != 0,
+                CVarGetInteger(CVAR_RANDOMIZER_SETTING("SceneTransitionCatalogVersion"), 0));
 
     // Callbacks may change visibility/availability, then copy the now-correct native
     // menu indices into the live Context used by RAND_GET_OPTION.
@@ -4174,6 +4193,59 @@ bool ArchipelagoClient::ReportNpcSpeechLocation(int64_t speechLocation) {
     return true;
 }
 
+bool ArchipelagoClient::HasSceneTransitionChecks() const {
+    return currentSaveIsArchipelago && CVarGetInteger(CVAR_RANDOMIZER_SETTING("SceneTransitionChecks"), 0) != 0;
+}
+
+void ArchipelagoClient::ReportTransition(int64_t location) {
+    if (!location || !HasSceneTransitionChecks() || !IsGameplaySessionActive() ||
+        !IsLocationActive(location) || IsLocationSubmitted(location)) return;
+    // The existing saved outbox supplies deduplication and reconnect retry.
+    // Item presentations still wait for GameplayDeliverySafety after the fade.
+    SendLocation(location, true);
+    if (IsLocationSubmitted(location)) CheckTracker::RecalculateAvailableChecks();
+}
+
+void ArchipelagoClient::CaptureSceneTransition() {
+    AdvanceDoorTransition();
+    if (!HasSceneTransitionChecks() || !IsGameplaySessionActive() || !gPlayState ||
+        gSaveContext.health <= 0 || gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
+        gSaveContext.gameMode != GAMEMODE_NORMAL) {
+        gCrossingJournal.Reset();
+        return;
+    }
+    const auto& back=gSaveContext.respawn[RESPAWN_MODE_RETURN];
+    const int returnScene=back.entranceIndex>=0 && back.entranceIndex<ENTR_MAX
+        ? gEntranceTable[back.entranceIndex].scene : -1;
+    const auto* crossing=SohExtreme::FindSceneCrossing(gPlayState->sceneNum,
+        gPlayState->nextEntranceIndex,gSaveContext.respawnFlag,back.data,returnScene);
+    gCrossingJournal.BeginScene(crossing && IsLocationActive(crossing->location) ? crossing : nullptr);
+}
+
+void ArchipelagoClient::CompleteSceneTransition(int16_t scene) {
+    ReportTransition(gCrossingJournal.Arrive(scene));
+}
+
+void ArchipelagoClient::BeginDoorTransition(int door, int fromRoom, int toRoom, const Actor* actor, int side) {
+    if (!HasSceneTransitionChecks() || !IsGameplaySessionActive() || !actor || !gPlayState) return;
+    const auto* crossing=SohExtreme::FindDoorCrossing(gPlayState->sceneNum,door,fromRoom,toRoom,
+                                                    actor->world.pos.x,actor->world.pos.z,side);
+    const Player* player=GET_PLAYER(gPlayState);
+    if (!player) return;
+    gCrossingJournal.BeginDoor(crossing && IsLocationActive(crossing->location) ? crossing : nullptr,
+        player->actor.world.pos.x,player->actor.world.pos.z,
+        Math_SinS(actor->shape.rot.y),Math_CosS(actor->shape.rot.y));
+}
+
+void ArchipelagoClient::AdvanceDoorTransition() {
+    if (!IsGameplaySessionActive() || !gPlayState) { gCrossingJournal.Reset(); return; }
+    const Player* player=GET_PLAYER(gPlayState);
+    if (!player) return;
+    ReportTransition(gCrossingJournal.AdvanceDoor(gPlayState->sceneNum,gPlayState->roomCtx.curRoom.num,
+        player->actor.world.pos.x,player->actor.world.pos.z,
+        gSaveContext.health>0 && gPlayState->gameOverCtx.state==GAMEOVER_INACTIVE));
+}
+
 void ArchipelagoClient::SendLocation(int64_t locationId, bool notifyRemote) {
     if (!IsGameplaySessionActive()) return;
     if (!activeLocationsLoaded) return;
@@ -4216,6 +4288,7 @@ void ArchipelagoClient::RegisterHooks() {
         ArchipelagoClient::GetInstance().Update();
     });
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnPlayerUpdate>([]() {
+        ArchipelagoClient::GetInstance().AdvanceDoorTransition();
         ArchipelagoClient::GetInstance().ReofferPendingPresentation();
     });
 
@@ -4224,6 +4297,7 @@ void ArchipelagoClient::RegisterHooks() {
     // one small batch before normal gameplay starts.
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnSceneInit>([](int16_t sceneNum) {
         auto& client = ArchipelagoClient::GetInstance();
+        client.CompleteSceneTransition(sceneNum);
         if (client.IsGameplaySessionActive() && client.IsCurrentSaveArchipelago()) {
             client.RefreshPlacementsForScene(sceneNum);
         }
@@ -4460,6 +4534,16 @@ extern "C" void Archipelago_ReportCheck(int32_t randomizerCheck) {
 extern "C" void Archipelago_ReportLocation(int64_t locationId) {
     // Physical AP-only pickup, including enemy defeat rewards.
     ArchipelagoClient::GetInstance().SendLocation(locationId, true);
+}
+
+extern "C" bool Archipelago_HasSceneTransitionChecks(void) {
+    return ArchipelagoClient::GetInstance().HasSceneTransitionChecks();
+}
+extern "C" void Archipelago_CaptureSceneTransition(void) {
+    ArchipelagoClient::GetInstance().CaptureSceneTransition();
+}
+extern "C" void Archipelago_BeginDoorTransition(int door, int fromRoom, int toRoom, const Actor* actor, int side) {
+    ArchipelagoClient::GetInstance().BeginDoorTransition(door,fromRoom,toRoom,actor,side);
 }
 
 extern "C" void Archipelago_ReconcileLocation(int64_t locationId) {

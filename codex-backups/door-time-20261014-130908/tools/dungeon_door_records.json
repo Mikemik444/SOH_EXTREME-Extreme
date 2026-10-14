@@ -1,0 +1,2942 @@
+[
+  {
+    "scene": 0,
+    "index": 0,
+    "room_a": 0,
+    "room_b": 1,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -455,
+      400,
+      455
+    ],
+    "rot": -8192
+  },
+  {
+    "scene": 0,
+    "index": 1,
+    "room_a": 5,
+    "room_b": 6,
+    "actor": 46,
+    "params": 131,
+    "pos": [
+      -1535,
+      -760,
+      1070
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 0,
+    "index": 2,
+    "room_a": 3,
+    "room_b": 4,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -75,
+      -880,
+      580
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 0,
+    "index": 3,
+    "room_a": 8,
+    "room_b": 7,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -2420,
+      -760,
+      -453
+    ],
+    "rot": 8192
+  },
+  {
+    "scene": 0,
+    "index": 4,
+    "room_a": 11,
+    "room_b": 9,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -896,
+      -1880,
+      -964
+    ],
+    "rot": 4187
+  },
+  {
+    "scene": 0,
+    "index": 5,
+    "room_a": 2,
+    "room_b": 1,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -936,
+      400,
+      936
+    ],
+    "rot": 24576
+  },
+  {
+    "scene": 0,
+    "index": 6,
+    "room_a": 0,
+    "room_b": 10,
+    "actor": 46,
+    "params": 188,
+    "pos": [
+      -560,
+      800,
+      0
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 0,
+    "index": 7,
+    "room_a": 7,
+    "room_b": 6,
+    "actor": 46,
+    "params": 131,
+    "pos": [
+      -1855,
+      -760,
+      770
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 0,
+    "index": 8,
+    "room_a": 5,
+    "room_b": 4,
+    "actor": 46,
+    "params": 132,
+    "pos": [
+      -335,
+      -880,
+      960
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 1,
+    "index": 7,
+    "room_a": 7,
+    "room_b": 0,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      0,
+      76,
+      -1970
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 1,
+    "index": 8,
+    "room_a": 4,
+    "room_b": 3,
+    "actor": 46,
+    "params": 133,
+    "pos": [
+      2787,
+      100,
+      -2432
+    ],
+    "rot": 10923
+  },
+  {
+    "scene": 1,
+    "index": 9,
+    "room_a": 1,
+    "room_b": 3,
+    "actor": 46,
+    "params": 133,
+    "pos": [
+      3560,
+      100,
+      -1276
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 1,
+    "index": 10,
+    "room_a": 10,
+    "room_b": 3,
+    "actor": 46,
+    "params": 134,
+    "pos": [
+      4339,
+      531,
+      -600
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 1,
+    "index": 11,
+    "room_a": 12,
+    "room_b": 3,
+    "actor": 46,
+    "params": 134,
+    "pos": [
+      3780,
+      531,
+      -920
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 1,
+    "index": 12,
+    "room_a": 1,
+    "room_b": 11,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      2560,
+      0,
+      120
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 1,
+    "index": 13,
+    "room_a": 8,
+    "room_b": 14,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      1473,
+      76,
+      -4229
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 1,
+    "index": 14,
+    "room_a": 4,
+    "room_b": 13,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      2433,
+      100,
+      -2894
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 1,
+    "index": 15,
+    "room_a": 2,
+    "room_b": 15,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -1960,
+      0,
+      -740
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 1,
+    "index": 16,
+    "room_a": 9,
+    "room_b": 6,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      1840,
+      411,
+      -1480
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 1,
+    "index": 17,
+    "room_a": 2,
+    "room_b": 5,
+    "actor": 46,
+    "params": 162,
+    "pos": [
+      -1960,
+      531,
+      -732
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 1,
+    "index": 18,
+    "room_a": 0,
+    "room_b": 5,
+    "actor": 46,
+    "params": 162,
+    "pos": [
+      -1548,
+      531,
+      -320
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 1,
+    "index": 20,
+    "room_a": 16,
+    "room_b": 7,
+    "actor": 46,
+    "params": 160,
+    "pos": [
+      -360,
+      16,
+      -2784
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 1,
+    "index": 21,
+    "room_a": 2,
+    "room_b": 0,
+    "actor": 46,
+    "params": 153,
+    "pos": [
+      -840,
+      0,
+      -1520
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 1,
+    "index": 22,
+    "room_a": 0,
+    "room_b": 4,
+    "actor": 46,
+    "params": 161,
+    "pos": [
+      1460,
+      80,
+      -920
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 2,
+    "index": 0,
+    "room_a": 15,
+    "room_b": 5,
+    "actor": 46,
+    "params": 189,
+    "pos": [
+      1360,
+      -240,
+      -2119
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 2,
+    "index": 1,
+    "room_a": 1,
+    "room_b": 0,
+    "actor": 46,
+    "params": 187,
+    "pos": [
+      0,
+      -240,
+      -1127
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 2,
+    "index": 2,
+    "room_a": 2,
+    "room_b": 1,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      0,
+      -260,
+      -2443
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 2,
+    "index": 3,
+    "room_a": 6,
+    "room_b": 4,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -1360,
+      160,
+      -2284
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 2,
+    "index": 4,
+    "room_a": 7,
+    "room_b": 2,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      0,
+      -260,
+      -3983
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 2,
+    "index": 5,
+    "room_a": 7,
+    "room_b": 12,
+    "actor": 46,
+    "params": 158,
+    "pos": [
+      -660,
+      -260,
+      -5183
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 2,
+    "index": 6,
+    "room_a": 7,
+    "room_b": 8,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      0,
+      -260,
+      -5303
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 2,
+    "index": 7,
+    "room_a": 7,
+    "room_b": 11,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      660,
+      -260,
+      -5183
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 2,
+    "index": 8,
+    "room_a": 4,
+    "room_b": 1,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -620,
+      160,
+      -1703
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 2,
+    "index": 9,
+    "room_a": 5,
+    "room_b": 1,
+    "actor": 46,
+    "params": 186,
+    "pos": [
+      620,
+      -240,
+      -1703
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 2,
+    "index": 10,
+    "room_a": 10,
+    "room_b": 7,
+    "actor": 46,
+    "params": 184,
+    "pos": [
+      -1060,
+      -260,
+      -4683
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 2,
+    "index": 11,
+    "room_a": 9,
+    "room_b": 7,
+    "actor": 46,
+    "params": 156,
+    "pos": [
+      1060,
+      -260,
+      -4683
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 2,
+    "index": 12,
+    "room_a": 14,
+    "room_b": 3,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      460,
+      -1033,
+      -3223
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 2,
+    "index": 13,
+    "room_a": 3,
+    "room_b": 13,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -581,
+      -1033,
+      -2742
+    ],
+    "rot": -8920
+  },
+  {
+    "scene": 2,
+    "index": 14,
+    "room_a": 1,
+    "room_b": 14,
+    "actor": 46,
+    "params": 188,
+    "pos": [
+      313,
+      -1153,
+      -1703
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 2,
+    "index": 21,
+    "room_a": 3,
+    "room_b": 6,
+    "actor": 46,
+    "params": 159,
+    "pos": [
+      -1001,
+      -935,
+      -3343
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 3,
+    "index": 0,
+    "room_a": 1,
+    "room_b": 0,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      119,
+      359,
+      60
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 3,
+    "index": 1,
+    "room_a": 4,
+    "room_b": 2,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      119,
+      467,
+      -2516
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 3,
+    "index": 2,
+    "room_a": 11,
+    "room_b": 5,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -1367,
+      383,
+      -1440
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 3,
+    "index": 3,
+    "room_a": 15,
+    "room_b": 7,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      1663,
+      523,
+      -2876
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 3,
+    "index": 4,
+    "room_a": 11,
+    "room_b": 8,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -1502,
+      523,
+      -1864
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 3,
+    "index": 5,
+    "room_a": 20,
+    "room_b": 13,
+    "actor": 46,
+    "params": 704,
+    "pos": [
+      1654,
+      1228,
+      -3320
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 3,
+    "index": 6,
+    "room_a": 13,
+    "room_b": 6,
+    "actor": 46,
+    "params": 149,
+    "pos": [
+      499,
+      827,
+      -3320
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 3,
+    "index": 7,
+    "room_a": 12,
+    "room_b": 6,
+    "actor": 46,
+    "params": 149,
+    "pos": [
+      -381,
+      827,
+      -3320
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 3,
+    "index": 8,
+    "room_a": 4,
+    "room_b": 6,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      119,
+      467,
+      -3010
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 3,
+    "index": 9,
+    "room_a": 8,
+    "room_b": 10,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -121,
+      800,
+      -2810
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 3,
+    "index": 10,
+    "room_a": 7,
+    "room_b": 10,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      359,
+      800,
+      -2810
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 3,
+    "index": 11,
+    "room_a": 8,
+    "room_b": 21,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -1643,
+      523,
+      -2794
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 3,
+    "index": 12,
+    "room_a": 8,
+    "room_b": 18,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -1745,
+      523,
+      -2046
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 3,
+    "index": 13,
+    "room_a": 3,
+    "room_b": 16,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      1605,
+      463,
+      -1440
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 3,
+    "index": 14,
+    "room_a": 5,
+    "room_b": 2,
+    "actor": 9,
+    "params": 129,
+    "pos": [
+      -761,
+      383,
+      -1440
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 3,
+    "index": 15,
+    "room_a": 8,
+    "room_b": 2,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -669,
+      243,
+      -2228
+    ],
+    "rot": 8192
+  },
+  {
+    "scene": 3,
+    "index": 16,
+    "room_a": 7,
+    "room_b": 2,
+    "actor": 46,
+    "params": 165,
+    "pos": [
+      907,
+      243,
+      -2228
+    ],
+    "rot": -8010
+  },
+  {
+    "scene": 3,
+    "index": 17,
+    "room_a": 3,
+    "room_b": 2,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      999,
+      463,
+      -1440
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 3,
+    "index": 23,
+    "room_a": 2,
+    "room_b": 1,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      119,
+      383,
+      -580
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 3,
+    "index": 24,
+    "room_a": 16,
+    "room_b": 15,
+    "actor": 46,
+    "params": 171,
+    "pos": [
+      1991,
+      403,
+      -1820
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 3,
+    "index": 25,
+    "room_a": 19,
+    "room_b": 11,
+    "actor": 46,
+    "params": 706,
+    "pos": [
+      -1761,
+      1228,
+      -1820
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 3,
+    "index": 26,
+    "room_a": 19,
+    "room_b": 12,
+    "actor": 46,
+    "params": 707,
+    "pos": [
+      -1416,
+      1228,
+      -3320
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 3,
+    "index": 27,
+    "room_a": 14,
+    "room_b": 20,
+    "actor": 46,
+    "params": 708,
+    "pos": [
+      1999,
+      1228,
+      -1820
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 3,
+    "index": 28,
+    "room_a": 22,
+    "room_b": 17,
+    "actor": 46,
+    "params": 340,
+    "pos": [
+      119,
+      -779,
+      -2813
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 5,
+    "room_a": 9,
+    "room_b": 16,
+    "actor": 9,
+    "params": 159,
+    "pos": [
+      340,
+      2940,
+      190
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 4,
+    "index": 6,
+    "room_a": 4,
+    "room_b": 21,
+    "actor": 9,
+    "params": 152,
+    "pos": [
+      3070,
+      2060,
+      0
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 4,
+    "index": 7,
+    "room_a": 10,
+    "room_b": 9,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -560,
+      2940,
+      190
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 4,
+    "index": 8,
+    "room_a": 10,
+    "room_b": 11,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -1780,
+      2800,
+      -330
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 9,
+    "room_a": 11,
+    "room_b": 10,
+    "actor": 9,
+    "params": 153,
+    "pos": [
+      -1780,
+      2800,
+      330
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 10,
+    "room_a": 13,
+    "room_b": 12,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -2370,
+      4400,
+      20
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 4,
+    "index": 11,
+    "room_a": 12,
+    "room_b": 24,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -2698,
+      4000,
+      159
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 4,
+    "index": 12,
+    "room_a": 19,
+    "room_b": 1,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      1560,
+      240,
+      -1520
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 13,
+    "room_a": 20,
+    "room_b": 1,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      1560,
+      100,
+      -1560
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 14,
+    "room_a": 21,
+    "room_b": 1,
+    "actor": 9,
+    "params": 158,
+    "pos": [
+      2700,
+      200,
+      0
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 4,
+    "index": 15,
+    "room_a": 22,
+    "room_b": 1,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      1560,
+      200,
+      1580
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 4,
+    "index": 16,
+    "room_a": 2,
+    "room_b": 0,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -420,
+      200,
+      0
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 4,
+    "index": 17,
+    "room_a": 17,
+    "room_b": 0,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -280,
+      0,
+      140
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 18,
+    "room_a": 23,
+    "room_b": 5,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      1780,
+      2800,
+      -1500
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 19,
+    "room_a": 16,
+    "room_b": 6,
+    "actor": 9,
+    "params": 154,
+    "pos": [
+      1580,
+      2800,
+      330
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 4,
+    "index": 20,
+    "room_a": 16,
+    "room_b": 6,
+    "actor": 46,
+    "params": 188,
+    "pos": [
+      1230,
+      2800,
+      60
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 4,
+    "index": 21,
+    "room_a": 6,
+    "room_b": 5,
+    "actor": 9,
+    "params": 155,
+    "pos": [
+      1550,
+      2800,
+      -330
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 4,
+    "index": 22,
+    "room_a": 7,
+    "room_b": 5,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      1580,
+      4000,
+      -590
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 4,
+    "index": 23,
+    "room_a": 7,
+    "room_b": 8,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      1580,
+      4400,
+      -590
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 24,
+    "room_a": 11,
+    "room_b": 10,
+    "actor": 46,
+    "params": 187,
+    "pos": [
+      -1450,
+      2980,
+      0
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 4,
+    "index": 25,
+    "room_a": 17,
+    "room_b": 3,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -280,
+      0,
+      -900
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 4,
+    "index": 26,
+    "room_a": 10,
+    "room_b": 24,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -2669,
+      2840,
+      -151
+    ],
+    "rot": -8192
+  },
+  {
+    "scene": 4,
+    "index": 27,
+    "room_a": 5,
+    "room_b": 4,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      2580,
+      2800,
+      0
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 4,
+    "index": 28,
+    "room_a": 16,
+    "room_b": 5,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      1460,
+      2940,
+      -630
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 4,
+    "index": 29,
+    "room_a": 18,
+    "room_b": 3,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      0,
+      0,
+      -1240
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 4,
+    "index": 30,
+    "room_a": 10,
+    "room_b": 14,
+    "actor": 46,
+    "params": 189,
+    "pos": [
+      -1188,
+      3680,
+      -197
+    ],
+    "rot": -24394
+  },
+  {
+    "scene": 4,
+    "index": 31,
+    "room_a": 14,
+    "room_b": 13,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -2322,
+      4180,
+      -765
+    ],
+    "rot": -8192
+  },
+  {
+    "scene": 4,
+    "index": 32,
+    "room_a": 18,
+    "room_b": 15,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      238,
+      0,
+      -876
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 33,
+    "room_a": 25,
+    "room_b": 10,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -1058,
+      2800,
+      -906
+    ],
+    "rot": -8192
+  },
+  {
+    "scene": 4,
+    "index": 34,
+    "room_a": 15,
+    "room_b": 0,
+    "actor": 9,
+    "params": 151,
+    "pos": [
+      280,
+      0,
+      140
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 4,
+    "index": 35,
+    "room_a": 26,
+    "room_b": 2,
+    "actor": 46,
+    "params": 340,
+    "pos": [
+      -1560,
+      200,
+      0
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 4,
+    "index": 36,
+    "room_a": 1,
+    "room_b": 0,
+    "actor": 9,
+    "params": 157,
+    "pos": [
+      420,
+      200,
+      0
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 5,
+    "index": 8,
+    "room_a": 5,
+    "room_b": 0,
+    "actor": 9,
+    "params": 133,
+    "pos": [
+      -840,
+      780,
+      -180
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 5,
+    "index": 9,
+    "room_a": 12,
+    "room_b": 0,
+    "actor": 9,
+    "params": 129,
+    "pos": [
+      -180,
+      0,
+      -1790
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 5,
+    "index": 10,
+    "room_a": 6,
+    "room_b": 5,
+    "actor": 9,
+    "params": 130,
+    "pos": [
+      -2800,
+      760,
+      -180
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 5,
+    "index": 11,
+    "room_a": 14,
+    "room_b": 12,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -180,
+      0,
+      -3170
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 5,
+    "index": 12,
+    "room_a": 14,
+    "room_b": 15,
+    "actor": 46,
+    "params": 190,
+    "pos": [
+      -680,
+      120,
+      -3670
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 5,
+    "index": 13,
+    "room_a": 17,
+    "room_b": 19,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      1170,
+      780,
+      180
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 5,
+    "index": 14,
+    "room_a": 1,
+    "room_b": 0,
+    "actor": 9,
+    "params": 134,
+    "pos": [
+      -180,
+      80,
+      20
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 5,
+    "index": 15,
+    "room_a": 1,
+    "room_b": 0,
+    "actor": 46,
+    "params": 185,
+    "pos": [
+      -180,
+      460,
+      -380
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 5,
+    "index": 16,
+    "room_a": 11,
+    "room_b": 0,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -180,
+      820,
+      -1240
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 5,
+    "index": 17,
+    "room_a": 10,
+    "room_b": 0,
+    "actor": 9,
+    "params": 149,
+    "pos": [
+      -840,
+      460,
+      -180
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 5,
+    "index": 18,
+    "room_a": 6,
+    "room_b": 13,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -3120,
+      1060,
+      -1660
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 5,
+    "index": 19,
+    "room_a": 7,
+    "room_b": 13,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -3120,
+      1060,
+      -3700
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 5,
+    "index": 20,
+    "room_a": 9,
+    "room_b": 8,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -1140,
+      60,
+      -1730
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 5,
+    "index": 21,
+    "room_a": 16,
+    "room_b": 12,
+    "actor": 9,
+    "params": 137,
+    "pos": [
+      -1280,
+      108,
+      -2690
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 5,
+    "index": 22,
+    "room_a": 12,
+    "room_b": 15,
+    "actor": 46,
+    "params": 190,
+    "pos": [
+      -880,
+      120,
+      -2690
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 5,
+    "index": 23,
+    "room_a": 18,
+    "room_b": 17,
+    "actor": 46,
+    "params": 184,
+    "pos": [
+      1170,
+      0,
+      180
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 5,
+    "index": 24,
+    "room_a": 10,
+    "room_b": 0,
+    "actor": 46,
+    "params": 191,
+    "pos": [
+      -840,
+      860,
+      290
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 5,
+    "index": 25,
+    "room_a": 22,
+    "room_b": 11,
+    "actor": 46,
+    "params": 340,
+    "pos": [
+      -180,
+      1030,
+      -2060
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 6,
+    "index": 0,
+    "room_a": 24,
+    "room_b": 25,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      320,
+      1733,
+      -830
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 6,
+    "index": 1,
+    "room_a": 26,
+    "room_b": 25,
+    "actor": 46,
+    "params": 147,
+    "pos": [
+      -200,
+      1733,
+      -830
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 6,
+    "index": 2,
+    "room_a": 5,
+    "room_b": 15,
+    "actor": 46,
+    "params": 143,
+    "pos": [
+      780,
+      480,
+      -850
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 6,
+    "index": 3,
+    "room_a": 15,
+    "room_b": 0,
+    "actor": 46,
+    "params": 717,
+    "pos": [
+      1060,
+      0,
+      -586
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 6,
+    "index": 4,
+    "room_a": 13,
+    "room_b": 0,
+    "actor": 46,
+    "params": 142,
+    "pos": [
+      1372,
+      30,
+      -559
+    ],
+    "rot": -10923
+  },
+  {
+    "scene": 6,
+    "index": 5,
+    "room_a": 14,
+    "room_b": 0,
+    "actor": 46,
+    "params": 142,
+    "pos": [
+      748,
+      30,
+      -559
+    ],
+    "rot": 10923
+  },
+  {
+    "scene": 6,
+    "index": 6,
+    "room_a": 11,
+    "room_b": 20,
+    "actor": 46,
+    "params": 90,
+    "pos": [
+      1320,
+      1003,
+      1474
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 6,
+    "index": 7,
+    "room_a": 11,
+    "room_b": 10,
+    "actor": 46,
+    "params": 89,
+    "pos": [
+      -1060,
+      1003,
+      1474
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 6,
+    "index": 8,
+    "room_a": 9,
+    "room_b": 8,
+    "actor": 46,
+    "params": 164,
+    "pos": [
+      -1700,
+      843,
+      470
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 6,
+    "index": 9,
+    "room_a": 4,
+    "room_b": 1,
+    "actor": 46,
+    "params": 734,
+    "pos": [
+      -1060,
+      40,
+      -1110
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 6,
+    "index": 10,
+    "room_a": 3,
+    "room_b": 1,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -1372,
+      30,
+      -559
+    ],
+    "rot": 10923
+  },
+  {
+    "scene": 6,
+    "index": 11,
+    "room_a": 2,
+    "room_b": 1,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -748,
+      30,
+      -559
+    ],
+    "rot": -10923
+  },
+  {
+    "scene": 6,
+    "index": 12,
+    "room_a": 22,
+    "room_b": 24,
+    "actor": 46,
+    "params": 181,
+    "pos": [
+      680,
+      1633,
+      -910
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 6,
+    "index": 13,
+    "room_a": 24,
+    "room_b": 23,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      680,
+      1543,
+      -447
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 6,
+    "index": 14,
+    "room_a": 23,
+    "room_b": 17,
+    "actor": 46,
+    "params": 732,
+    "pos": [
+      1060,
+      843,
+      150
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 6,
+    "index": 15,
+    "room_a": 21,
+    "room_b": 18,
+    "actor": 46,
+    "params": 150,
+    "pos": [
+      1890,
+      843,
+      -410
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 6,
+    "index": 16,
+    "room_a": 19,
+    "room_b": 20,
+    "actor": 46,
+    "params": 90,
+    "pos": [
+      1960,
+      1003,
+      1174
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 6,
+    "index": 17,
+    "room_a": 19,
+    "room_b": 18,
+    "actor": 46,
+    "params": 175,
+    "pos": [
+      1960,
+      843,
+      470
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 6,
+    "index": 18,
+    "room_a": 18,
+    "room_b": 17,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      1700,
+      843,
+      150
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 6,
+    "index": 19,
+    "room_a": 16,
+    "room_b": 17,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      1060,
+      843,
+      -210
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 6,
+    "index": 20,
+    "room_a": 16,
+    "room_b": 5,
+    "actor": 46,
+    "params": 731,
+    "pos": [
+      700,
+      813,
+      -570
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 6,
+    "index": 21,
+    "room_a": 10,
+    "room_b": 9,
+    "actor": 46,
+    "params": 725,
+    "pos": [
+      -1700,
+      1003,
+      1174
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 6,
+    "index": 22,
+    "room_a": 7,
+    "room_b": 8,
+    "actor": 46,
+    "params": 164,
+    "pos": [
+      -940,
+      843,
+      -210
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 6,
+    "index": 23,
+    "room_a": 6,
+    "room_b": 5,
+    "actor": 46,
+    "params": 135,
+    "pos": [
+      60,
+      413,
+      -650
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 6,
+    "index": 24,
+    "room_a": 5,
+    "room_b": 4,
+    "actor": 46,
+    "params": 163,
+    "pos": [
+      -660,
+      480,
+      -850
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 6,
+    "index": 25,
+    "room_a": 7,
+    "room_b": 5,
+    "actor": 46,
+    "params": 136,
+    "pos": [
+      -580,
+      813,
+      -570
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 6,
+    "index": 26,
+    "room_a": 3,
+    "room_b": 27,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -1435,
+      30,
+      -1327
+    ],
+    "rot": 24576
+  },
+  {
+    "scene": 6,
+    "index": 27,
+    "room_a": 2,
+    "room_b": 27,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -819,
+      30,
+      -1462
+    ],
+    "rot": -24758
+  },
+  {
+    "scene": 6,
+    "index": 28,
+    "room_a": 12,
+    "room_b": 13,
+    "actor": 46,
+    "params": 130,
+    "pos": [
+      1569,
+      -130,
+      -1603
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 6,
+    "index": 30,
+    "room_a": 28,
+    "room_b": 5,
+    "actor": 46,
+    "params": 340,
+    "pos": [
+      60,
+      1007,
+      -1814
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 7,
+    "index": 0,
+    "room_a": 0,
+    "room_b": 4,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -2054,
+      -63,
+      -405
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 7,
+    "index": 1,
+    "room_a": 0,
+    "room_b": 1,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -794,
+      -63,
+      -685
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 7,
+    "index": 2,
+    "room_a": 2,
+    "room_b": 0,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -94,
+      -63,
+      -185
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 7,
+    "index": 3,
+    "room_a": 3,
+    "room_b": 21,
+    "actor": 9,
+    "params": 153,
+    "pos": [
+      -2742,
+      -1363,
+      -236
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 7,
+    "index": 4,
+    "room_a": 8,
+    "room_b": 5,
+    "actor": 9,
+    "params": 150,
+    "pos": [
+      3839,
+      -543,
+      55
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 7,
+    "index": 5,
+    "room_a": 6,
+    "room_b": 5,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      3358,
+      -543,
+      -426
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 7,
+    "index": 6,
+    "room_a": 5,
+    "room_b": 7,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      3358,
+      -543,
+      536
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 7,
+    "index": 7,
+    "room_a": 16,
+    "room_b": 9,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      4678,
+      -1143,
+      2555
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 7,
+    "index": 8,
+    "room_a": 11,
+    "room_b": 9,
+    "actor": 9,
+    "params": 151,
+    "pos": [
+      2478,
+      -1343,
+      1474
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 7,
+    "index": 9,
+    "room_a": 18,
+    "room_b": 11,
+    "actor": 9,
+    "params": 152,
+    "pos": [
+      2478,
+      -1203,
+      794
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 7,
+    "index": 10,
+    "room_a": 14,
+    "room_b": 11,
+    "actor": 46,
+    "params": 456,
+    "pos": [
+      1978,
+      -1343,
+      1084
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 7,
+    "index": 11,
+    "room_a": 15,
+    "room_b": 12,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -5031,
+      -1363,
+      -1586
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 7,
+    "index": 12,
+    "room_a": 15,
+    "room_b": 13,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -4306,
+      -1363,
+      -2311
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 7,
+    "index": 13,
+    "room_a": 15,
+    "room_b": 17,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -4306,
+      -1363,
+      -862
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 7,
+    "index": 14,
+    "room_a": 21,
+    "room_b": 15,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -3582,
+      -1363,
+      -1586
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 7,
+    "index": 15,
+    "room_a": 18,
+    "room_b": 20,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      4388,
+      -1363,
+      -646
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 7,
+    "index": 16,
+    "room_a": 18,
+    "room_b": 19,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      4728,
+      -1363,
+      -126
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 7,
+    "index": 17,
+    "room_a": 21,
+    "room_b": 20,
+    "actor": 9,
+    "params": 149,
+    "pos": [
+      4388,
+      -1363,
+      -1406
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 7,
+    "index": 21,
+    "room_a": 22,
+    "room_b": 3,
+    "actor": 46,
+    "params": 340,
+    "pos": [
+      -2742,
+      -1363,
+      844
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 8,
+    "index": 0,
+    "room_a": 0,
+    "room_b": 1,
+    "actor": 46,
+    "params": 479,
+    "pos": [
+      -890,
+      0,
+      -100
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 8,
+    "index": 1,
+    "room_a": 3,
+    "room_b": 0,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      870,
+      0,
+      -860
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 8,
+    "index": 2,
+    "room_a": 3,
+    "room_b": 0,
+    "actor": 9,
+    "params": 155,
+    "pos": [
+      1140,
+      0,
+      -1420
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 8,
+    "index": 3,
+    "room_a": 5,
+    "room_b": 0,
+    "actor": 9,
+    "params": 157,
+    "pos": [
+      450,
+      0,
+      -900
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 8,
+    "index": 4,
+    "room_a": 6,
+    "room_b": 0,
+    "actor": 9,
+    "params": 156,
+    "pos": [
+      -410,
+      0,
+      -900
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 8,
+    "index": 5,
+    "room_a": 0,
+    "room_b": 2,
+    "actor": 9,
+    "params": 63,
+    "pos": [
+      -1570,
+      0,
+      -740
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 8,
+    "index": 6,
+    "room_a": 0,
+    "room_b": 4,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      900,
+      -20,
+      210
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 9,
+    "index": 10,
+    "room_a": 7,
+    "room_b": 10,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -866,
+      80,
+      1216
+    ],
+    "rot": 8374
+  },
+  {
+    "scene": 9,
+    "index": 11,
+    "room_a": 6,
+    "room_b": 7,
+    "actor": 46,
+    "params": 84,
+    "pos": [
+      -1340,
+      280,
+      729
+    ],
+    "rot": 8192
+  },
+  {
+    "scene": 10,
+    "index": 0,
+    "room_a": 3,
+    "room_b": 2,
+    "actor": 46,
+    "params": 138,
+    "pos": [
+      0,
+      300,
+      506
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 10,
+    "index": 1,
+    "room_a": 5,
+    "room_b": 4,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -506,
+      560,
+      0
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 10,
+    "index": 2,
+    "room_a": 1,
+    "room_b": 0,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      506,
+      40,
+      0
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 10,
+    "index": 3,
+    "room_a": 7,
+    "room_b": 0,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      -400,
+      0,
+      0
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 10,
+    "index": 4,
+    "room_a": 1,
+    "room_b": 2,
+    "actor": 46,
+    "params": 138,
+    "pos": [
+      0,
+      260,
+      -400
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 10,
+    "index": 5,
+    "room_a": 3,
+    "room_b": 4,
+    "actor": 46,
+    "params": 127,
+    "pos": [
+      400,
+      520,
+      0
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 10,
+    "index": 6,
+    "room_a": 8,
+    "room_b": 5,
+    "actor": 46,
+    "params": 340,
+    "pos": [
+      0,
+      800,
+      500
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 10,
+    "index": 7,
+    "room_a": 6,
+    "room_b": 8,
+    "actor": 46,
+    "params": 340,
+    "pos": [
+      500,
+      800,
+      0
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 10,
+    "index": 8,
+    "room_a": 9,
+    "room_b": 6,
+    "actor": 46,
+    "params": 340,
+    "pos": [
+      0,
+      1520,
+      500
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 11,
+    "index": 1,
+    "room_a": 2,
+    "room_b": 1,
+    "actor": 46,
+    "params": 159,
+    "pos": [
+      -1580,
+      -80,
+      -620
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 11,
+    "index": 2,
+    "room_a": 3,
+    "room_b": 2,
+    "actor": 46,
+    "params": 156,
+    "pos": [
+      -1579,
+      160,
+      -2167
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 11,
+    "index": 3,
+    "room_a": 10,
+    "room_b": 3,
+    "actor": 46,
+    "params": 143,
+    "pos": [
+      -1577,
+      159,
+      -3497
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 11,
+    "index": 4,
+    "room_a": 8,
+    "room_b": 0,
+    "actor": 46,
+    "params": 37,
+    "pos": [
+      -60,
+      -80,
+      -1100
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 11,
+    "index": 5,
+    "room_a": 0,
+    "room_b": 7,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      860,
+      -80,
+      -180
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 11,
+    "index": 6,
+    "room_a": 1,
+    "room_b": 0,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -980,
+      -80,
+      -180
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 11,
+    "index": 7,
+    "room_a": 3,
+    "room_b": 4,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -777,
+      239,
+      -2747
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 11,
+    "index": 8,
+    "room_a": 4,
+    "room_b": 5,
+    "actor": 46,
+    "params": 153,
+    "pos": [
+      823,
+      -81,
+      -2748
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 11,
+    "index": 9,
+    "room_a": 6,
+    "room_b": 5,
+    "actor": 46,
+    "params": 78,
+    "pos": [
+      1443,
+      -81,
+      -2408
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 11,
+    "index": 10,
+    "room_a": 9,
+    "room_b": 6,
+    "actor": 46,
+    "params": 140,
+    "pos": [
+      1922,
+      -240,
+      -1464
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 11,
+    "index": 11,
+    "room_a": 6,
+    "room_b": 7,
+    "actor": 46,
+    "params": 158,
+    "pos": [
+      1480,
+      -79,
+      -600
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 11,
+    "index": 12,
+    "room_a": 8,
+    "room_b": 4,
+    "actor": 46,
+    "params": 149,
+    "pos": [
+      -78,
+      239,
+      -2060
+    ],
+    "rot": -32768
+  },
+  {
+    "scene": 13,
+    "index": 2,
+    "room_a": 1,
+    "room_b": 0,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      0,
+      150,
+      593
+    ],
+    "rot": 0
+  },
+  {
+    "scene": 13,
+    "index": 4,
+    "room_a": 3,
+    "room_b": 2,
+    "actor": 46,
+    "params": 114,
+    "pos": [
+      2352,
+      -250,
+      -840
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 13,
+    "index": 5,
+    "room_a": 10,
+    "room_b": 8,
+    "actor": 46,
+    "params": 146,
+    "pos": [
+      -2919,
+      -240,
+      -840
+    ],
+    "rot": 16384
+  },
+  {
+    "scene": 13,
+    "index": 6,
+    "room_a": 6,
+    "room_b": 5,
+    "actor": 46,
+    "params": 144,
+    "pos": [
+      1159,
+      110,
+      1167
+    ],
+    "rot": -27307
+  },
+  {
+    "scene": 13,
+    "index": 7,
+    "room_a": 7,
+    "room_b": 6,
+    "actor": 46,
+    "params": 142,
+    "pos": [
+      1779,
+      110,
+      2241
+    ],
+    "rot": -27307
+  },
+  {
+    "scene": 13,
+    "index": 8,
+    "room_a": 1,
+    "room_b": 5,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      616,
+      150,
+      227
+    ],
+    "rot": 5461
+  },
+  {
+    "scene": 13,
+    "index": 9,
+    "room_a": 2,
+    "room_b": 1,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      1232,
+      -240,
+      -840
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 13,
+    "index": 10,
+    "room_a": 1,
+    "room_b": 9,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -1319,
+      -240,
+      -840
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 13,
+    "index": 11,
+    "room_a": 1,
+    "room_b": 14,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -616,
+      150,
+      -1907
+    ],
+    "rot": -27307
+  },
+  {
+    "scene": 13,
+    "index": 12,
+    "room_a": 12,
+    "room_b": 1,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      616,
+      150,
+      -1907
+    ],
+    "rot": -5461
+  },
+  {
+    "scene": 13,
+    "index": 13,
+    "room_a": 4,
+    "room_b": 3,
+    "actor": 46,
+    "params": 156,
+    "pos": [
+      3492,
+      -240,
+      -840
+    ],
+    "rot": -16384
+  },
+  {
+    "scene": 13,
+    "index": 14,
+    "room_a": 13,
+    "room_b": 12,
+    "actor": 46,
+    "params": 155,
+    "pos": [
+      2116,
+      210,
+      -4505
+    ],
+    "rot": -5461
+  },
+  {
+    "scene": 13,
+    "index": 15,
+    "room_a": 15,
+    "room_b": 14,
+    "actor": 46,
+    "params": 137,
+    "pos": [
+      -1952,
+      153,
+      -3861
+    ],
+    "rot": 5461
+  },
+  {
+    "scene": 13,
+    "index": 16,
+    "room_a": 1,
+    "room_b": 17,
+    "actor": 46,
+    "params": 63,
+    "pos": [
+      -616,
+      150,
+      227
+    ],
+    "rot": -5461
+  },
+  {
+    "scene": 13,
+    "index": 17,
+    "room_a": 18,
+    "room_b": 17,
+    "actor": 46,
+    "params": 139,
+    "pos": [
+      -1253,
+      150,
+      691
+    ],
+    "rot": 10923
+  },
+  {
+    "scene": 13,
+    "index": 18,
+    "room_a": 19,
+    "room_b": 18,
+    "actor": 46,
+    "params": 153,
+    "pos": [
+      -1296,
+      150,
+      1405
+    ],
+    "rot": 27307
+  },
+  {
+    "scene": 13,
+    "index": 19,
+    "room_a": 8,
+    "room_b": 9,
+    "actor": 46,
+    "params": 733,
+    "pos": [
+      -2257,
+      -240,
+      -840
+    ],
+    "rot": 16384
+  }
+]

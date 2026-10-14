@@ -1,4 +1,5 @@
 #include "global.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "vt.h"
 
 #include <string.h>
@@ -897,6 +898,7 @@ void Play_Update(PlayState* play) {
 
                             if (gSaveContext.gameMode != GAMEMODE_FILE_SELECT) {
                                 SET_NEXT_GAMESTATE(&play->state, Play_Init, PlayState);
+                                Archipelago_CaptureSceneTransition();
                                 gSaveContext.entranceIndex = play->nextEntranceIndex;
 
                                 if (gSaveContext.minigameState == 1) {
@@ -951,6 +953,7 @@ void Play_Update(PlayState* play) {
                     if (sTransitionFillTimer >= 20) {
                         play->state.running = false;
                         SET_NEXT_GAMESTATE(&play->state, Play_Init, PlayState);
+                        Archipelago_CaptureSceneTransition();
                         gSaveContext.entranceIndex = play->nextEntranceIndex;
                         play->transitionTrigger = TRANS_TRIGGER_OFF;
                         play->transitionMode = TRANS_MODE_OFF;
@@ -993,6 +996,7 @@ void Play_Update(PlayState* play) {
                     if (play->transitionTrigger != TRANS_TRIGGER_END) {
                         play->state.running = 0;
                         SET_NEXT_GAMESTATE(&play->state, Play_Init, PlayState);
+                        Archipelago_CaptureSceneTransition();
                         gSaveContext.entranceIndex = play->nextEntranceIndex;
                         play->transitionTrigger = TRANS_TRIGGER_OFF;
                         play->transitionMode = TRANS_MODE_OFF;
@@ -1040,6 +1044,7 @@ void Play_Update(PlayState* play) {
                         if (play->envCtx.sandstormEnvA == 255) {
                             play->state.running = false;
                             SET_NEXT_GAMESTATE(&play->state, Play_Init, PlayState);
+                            Archipelago_CaptureSceneTransition();
                             gSaveContext.entranceIndex = play->nextEntranceIndex;
                             play->transitionTrigger = TRANS_TRIGGER_OFF;
                             play->transitionMode = TRANS_MODE_OFF;
@@ -1692,7 +1697,7 @@ void Play_Main(GameState* thisx) {
 
     PLAY_LOG(4587);
 
-    if (CVarGetInteger(CVAR_CHEAT("TimeSync"), 0)) {
+    if (CVarGetInteger(CVAR_CHEAT("TimeSync"), 0) && !Archipelago_ShouldFreezeTime()) {
         const int maxRealDaySeconds = 86400;
         const int maxInGameDayTicks = 65536;
 

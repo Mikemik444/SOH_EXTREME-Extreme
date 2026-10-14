@@ -5466,6 +5466,10 @@ s32 Player_ActionHandler_1(Player* this, PlayState* play) {
                                 .sides[(doorDirection > 0) ? 0 : 1]
                                 .room;
 
+                if (frontRoom >= 0) {
+                    Archipelago_BeginDoorTransition(GET_TRANSITION_ACTOR_INDEX(doorActor),
+                        play->roomCtx.curRoom.num, frontRoom, doorActor, (doorDirection > 0) ? 1 : 0);
+                }
                 if ((frontRoom >= 0) && (frontRoom != play->roomCtx.curRoom.num)) {
                     Room_RequestNewRoom(play, &play->roomCtx, frontRoom);
                 }

@@ -86,6 +86,17 @@ class ShuffleShovel(Toggle):
 class ShuffleBeanSouls(Toggle):
     """Shuffle the ten native per-area Bean Souls."""
     display_name = "Shuffle Bean Souls"
+class SceneTransitionChecks(Toggle):
+    """First use of each directed scene entrance/exit and dungeon room door is a check.
+
+    Entering and leaving are separate checks; one-way passages have only one.
+    Repeat visits do not award more
+    checks. Save loads, deaths, void-outs, and ordinary logical region changes
+    do not count. Requires a new seed and the matching native client.
+    """
+    display_name = "Scene Transition Checks"
+    default = 0
+
 class NpcSpeechSanity(Toggle):
     """The first conversation with each catalogued NPC is an Archipelago check.
     Later conversations behave normally. Moving characters and transformed
@@ -254,6 +265,7 @@ class SohExtremeOptions(SohOptions):
     shuffle_business_scrub_soul: ShuffleBusinessScrubSoul
     shuffle_shovel: ShuffleShovel
     shuffle_bean_souls: ShuffleBeanSouls
+    scene_transition_checks: SceneTransitionChecks
     npc_speech_sanity: NpcSpeechSanity
     song_note_shuffle: SongNoteShuffle
     shuffle_flow_of_time: ShuffleFlowOfTime
@@ -289,7 +301,7 @@ extreme_option_groups = list(_base_option_groups) + [
         ShuffleSignSoul, ShuffleSkulltulaSoul, ShuffleBusinessScrubSoul, ShuffleShovel, ShuffleBeanSouls,
     ]),
     OptionGroup("SOH-EXTREME World Features", [
-        ShuffleEnemyDrops, NpcSpeechSanity, SongNoteShuffle, ShuffleFlowOfTime, FrozenStartingTime, TimeSpeedAfterUnlock,
+        ShuffleEnemyDrops, SceneTransitionChecks, NpcSpeechSanity, SongNoteShuffle, ShuffleFlowOfTime, FrozenStartingTime, TimeSpeedAfterUnlock,
     ]),
     OptionGroup("SOH-EXTREME Traps & Links", [
         DeathLink, TrapLink, ExtremeTrapPool, ExtremeIceTraps, ExtremeFireTraps, ExtremeSlowTraps,

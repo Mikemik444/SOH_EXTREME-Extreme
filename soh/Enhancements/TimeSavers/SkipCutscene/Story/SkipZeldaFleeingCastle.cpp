@@ -1,3 +1,4 @@
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/ShipInit.hpp"
 
@@ -53,7 +54,9 @@ void RegisterSkipZeldaFleeingCastle() {
     COND_VB_SHOULD(VB_PLAY_TRANSITION_CS, CVarGetInteger(CVAR_ENHANCEMENT("TimeSavers.SkipCutscene.Story"), IS_RANDO), {
         if (gSaveContext.entranceIndex == ENTR_HYRULE_FIELD_PAST_BRIDGE_SPAWN && gSaveContext.cutsceneIndex == 0xFFF1) {
             // Normally set in the cutscene
-            gSaveContext.dayTime = gSaveContext.skyboxTime = 0x4AAA;
+            if (!Archipelago_ShouldFreezeTime()) {
+                gSaveContext.dayTime = gSaveContext.skyboxTime = 0x4AAA;
+            }
 
             gSaveContext.cutsceneIndex = 0;
             *should = false;

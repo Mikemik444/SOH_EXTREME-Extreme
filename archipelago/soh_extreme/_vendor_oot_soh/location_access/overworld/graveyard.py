@@ -48,7 +48,7 @@ def set_region_rules(world: "SohWorld") -> None:
     add_locations(Regions.THE_GRAVEYARD, world, [
         (Locations.GRAVEYARD_FREESTANDING_POH, lambda bundle: can_reach_graveyard_crate(bundle) | (can_do_trick(Tricks.GY_POH, bundle) & can_use(Items.BOOMERANG, bundle))),
         (Locations.GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR, lambda bundle: has_item(
-            Items.CHILD_WALLET, bundle) & is_child(bundle) & at_night(bundle)),
+            Items.CHILD_WALLET, bundle) & is_child(bundle) & at_clock_window(bundle, 'dampe')),
         (Locations.GRAVEYARD_GS_WALL, lambda bundle: is_child(bundle) & hookshot_or_boomerang(
             bundle) & at_night(bundle) & can_get_nighttime_gs(bundle)),
         (Locations.GRAVEYARD_GS_BEAN_PATCH,
@@ -83,7 +83,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.GRAVEYARD_HEART_PIECE_GRAVE,
          lambda bundle: can_grab(bundle) & (is_adult(bundle) | at_night(bundle))),
         (Regions.GRAVEYARD_DAMPES_GRAVE, lambda bundle: can_grab(bundle) & is_adult(bundle)),
-        (Regions.GRAVEYARD_DAMPES_HOUSE, lambda bundle: is_adult(bundle)
+        (Regions.GRAVEYARD_DAMPES_HOUSE, lambda bundle: (is_adult(bundle) | at_clock_window(bundle, 'dampe'))
          & can_open_overworld_door(Items.DAMPES_HUT_KEY, bundle)),
         (Regions.KAKARIKO_VILLAGE, lambda bundle: True_()),
         (Regions.GRAVEYARD_WARP_PAD_REGION, lambda bundle: False_())

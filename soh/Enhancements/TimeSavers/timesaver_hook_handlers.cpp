@@ -1,4 +1,5 @@
 #include <spdlog/spdlog.h>
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 #include "soh/Enhancements/enhancementTypes.h"
@@ -163,7 +164,9 @@ void TimeSaverOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_li
                     !Flags_GetEventChkInf(EVENTCHKINF_LEARNED_REQUIEM_OF_SPIRIT)) {
                     Flags_SetEventChkInf(EVENTCHKINF_LEARNED_REQUIEM_OF_SPIRIT);
                     // Normally happens in the cutscene
-                    gSaveContext.dayTime = gSaveContext.skyboxTime = 0xAC60;
+                    if (!Archipelago_ShouldFreezeTime()) {
+                        gSaveContext.dayTime = gSaveContext.skyboxTime = 0xAC60;
+                    }
                     if (GameInteractor_Should(VB_GIVE_ITEM_SONG, true, ITEM_SONG_REQUIEM)) {
                         Item_Give(gPlayState, ITEM_SONG_REQUIEM);
                     }
@@ -194,7 +197,9 @@ void TimeSaverOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_li
                     !Flags_GetEventChkInf(EVENTCHKINF_RETURNED_TO_TEMPLE_OF_TIME_WITH_ALL_MEDALLIONS)) {
                     Flags_SetEventChkInf(EVENTCHKINF_RETURNED_TO_TEMPLE_OF_TIME_WITH_ALL_MEDALLIONS);
                     if (!IS_RANDO) {
-                        gSaveContext.dayTime = gSaveContext.skyboxTime = 0x2aaa;
+                        if (!Archipelago_ShouldFreezeTime()) {
+                            gSaveContext.dayTime = gSaveContext.skyboxTime = 0x2aaa;
+                        }
                     }
                     if (GameInteractor_Should(VB_GIVE_ITEM_LIGHT_ARROW, true)) {
                         Item_Give(gPlayState, ITEM_ARROW_LIGHT);
@@ -204,7 +209,8 @@ void TimeSaverOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_li
             }
 
             if (gSaveContext.entranceIndex == ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_0) {
-                if (CVarGetInteger(CVAR_ENHANCEMENT("TimeSavers.SkipTowerEscape"), false) || IS_BOSS_RUSH) {
+                if ((CVarGetInteger(CVAR_ENHANCEMENT("TimeSavers.SkipTowerEscape"), false) &&
+                     !Archipelago_HasSceneTransitionChecks()) || IS_BOSS_RUSH) {
                     Flags_SetEventChkInf(EVENTCHKINF_WATCHED_GANONS_CASTLE_COLLAPSE_CAUGHT_BY_GERUDO);
                     gSaveContext.entranceIndex = ENTR_GANON_BOSS_0;
                     *should = false;
@@ -212,7 +218,8 @@ void TimeSaverOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_li
             }
 
             if (gSaveContext.entranceIndex == ENTR_CASTLE_COURTYARD_GUARDS_DAY_0) {
-                if (CVarGetInteger(CVAR_ENHANCEMENT("TimeSavers.SkipChildStealth"), false)) {
+                if (CVarGetInteger(CVAR_ENHANCEMENT("TimeSavers.SkipChildStealth"), false) &&
+                    !Archipelago_HasSceneTransitionChecks()) {
                     gSaveContext.entranceIndex = ENTR_CASTLE_COURTYARD_ZELDA_0;
                     *should = false;
                 }
@@ -538,7 +545,9 @@ void TimeSaverOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_li
                     Flags_SetEventChkInf(EVENTCHKINF_SHEIK_SPAWNED_AT_MASTER_SWORD_PEDESTAL);
                     Flags_SetEventChkInf(EVENTCHKINF_TIME_TRAVELED_TO_ADULT);
                     if (!IS_RANDO) {
-                        gSaveContext.dayTime = gSaveContext.skyboxTime = 0x8000;
+                        if (!Archipelago_ShouldFreezeTime()) {
+                            gSaveContext.dayTime = gSaveContext.skyboxTime = 0x8000;
+                        }
                     }
                     if (GameInteractor_Should(VB_GIVE_ITEM_LIGHT_MEDALLION, true)) {
                         Item_Give(gPlayState, ITEM_MEDALLION_LIGHT);
@@ -654,7 +663,9 @@ void TimeSaverOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_li
                                 } else {
                                     gPlayState->nextEntranceIndex = ENTR_HYRULE_FIELD_17;
                                 }
-                                gSaveContext.dayTime = gSaveContext.skyboxTime = 0x8000;
+                                if (!Archipelago_ShouldFreezeTime()) {
+                                    gSaveContext.dayTime = gSaveContext.skyboxTime = 0x8000;
+                                }
                                 gPlayState->transitionType = TRANS_TYPE_FADE_WHITE;
                                 gPlayState->transitionTrigger = TRANS_TRIGGER_START;
                                 gSaveContext.nextTransitionType = 2;

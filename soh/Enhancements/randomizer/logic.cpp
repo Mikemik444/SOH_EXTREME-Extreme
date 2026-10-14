@@ -901,8 +901,7 @@ static RandomizerGet EnemySoulItemForLogicEnemy(RandomizerEnemy enemy) {
 
 // RANDOTODO quantity is a placeholder for proper ammo use calculation logic. in time will want updating to account for
 // ammo capacity
-bool Logic::CanKillEnemy(RandomizerEnemy enemy, EnemyDistance distance, bool wallOrFloor, uint8_t quantity, bool timer,
-                         bool inWater) {
+bool Logic::HasEnemySoul(RandomizerEnemy enemy) {
     if ((enemy == RE_GOLD_SKULLTULA || enemy == RE_BIG_SKULLTULA || enemy == RE_WALLTULA) && ctx->GetOption(RSK_SHUFFLE_SKULLTULA_SOUL) && !HasItem(RG_SKULLTULA_SOUL)) {
         return false;
     }
@@ -918,6 +917,14 @@ bool Logic::CanKillEnemy(RandomizerEnemy enemy, EnemyDistance distance, bool wal
                 return false;
             }
         }
+    }
+    return true;
+}
+
+bool Logic::CanKillEnemy(RandomizerEnemy enemy, EnemyDistance distance, bool wallOrFloor, uint8_t quantity, bool timer,
+                         bool inWater) {
+    if (!HasEnemySoul(enemy)) {
+        return false;
     }
     bool killed = false;
     switch (enemy) {

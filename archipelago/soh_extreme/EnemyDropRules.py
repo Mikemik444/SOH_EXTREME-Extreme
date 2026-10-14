@@ -9,7 +9,7 @@ from Options import OptionError
 from ._vendor_oot_soh.Enums import Regions, Items, Tricks
 from ._vendor_oot_soh.LogicHelpers import (
     can_use, has_item, has_explosives, is_child, is_adult,
-    has_fire_source_with_torch, can_play_song, can_do_trick, can_talk_hint_scrub,
+    has_fire_source_with_torch, can_play_song, can_do_trick, can_talk_hint_scrub, at_day, at_night,
 )
 from .EnemyRoomLogic import resolve_enemy_region, event_item, ENEMY_ROOM_MAP
 
@@ -94,9 +94,8 @@ def enemy_drop_rule(world, entry):
     def time_available(night):
         if not o.shuffle_flow_of_time.value:
             return True_()
-        # Dusk freezes at 0xB555, before the engine's >0xC000 night boundary.
-        starts_night = o.frozen_starting_time.value == 4
-        return True_() if starts_night == night else (Has("Flow of Time") | can_play_song(Items.SUNS_SONG, b))
+        # Use the same current-save phase and usable-song rules as NPCs and doors.
+        return at_night(b) if night else at_day(b)
 
     ages = []
     for adult in (False, True):

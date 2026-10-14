@@ -29,7 +29,9 @@ def _integer(value: Any, low: int, high: int) -> int:
 def encode_snapshot(*, nonce: str, request: int, revision: int, slot: int,
                     producer: str, received: int, active: set[int], checked: set[int],
                     rows: list[dict], manual_count: int = 0, ignored_count: int = 0,
-                    version: str = VERSION, live_shields: int | None = None) -> str:
+                    version: str = VERSION, live_shields: int | None = None,
+                    live_time: int | None = None, live_clock: int | None = None,
+                    live_time_flags: int = 0) -> str:
     if not nonce or len(nonce) > 64 or not producer or len(producer) > 64:
         raise ValueError("Invalid tracker session identity")
     if len(active) > MAX_ENTRIES or len(rows) > MAX_ENTRIES or not checked <= active:
@@ -58,6 +60,13 @@ def encode_snapshot(*, nonce: str, request: int, revision: int, slot: int,
         seen.add(i);u64(i)
         out.append(_integer(row['state'],1,2))
         text(row['name']);text(row['region'])
+    # Append only for a client that requested this extension. Older clients
+    # continue receiving the original wire layout, independent of release labels.
+    if live_time is not None:
+        out.extend(b'TIME');u32(_integer(live_time, 0, 1))
+    if live_clock is not None:
+        if live_time is None:raise ValueError("Clock extension needs a phase")
+        out.extend(b'CLCK');u32(_integer(live_clock, 0, 0xffff));u32(_integer(live_time_flags, 0, 1))
     if len(out)>MAX_BYTES:raise ValueError("Tracker snapshot too large")
     return base64.b64encode(out).decode('ascii')
 

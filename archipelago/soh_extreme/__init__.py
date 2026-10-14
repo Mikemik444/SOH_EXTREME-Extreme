@@ -49,7 +49,7 @@ from .PhysicalChestTypes import CHEST_TYPES_BY_AP_ID
 from .EnemyDropLocations import ENEMY_DROP_LOCATIONS, ENEMY_DROP_LOCATION_NAME_TO_ID, ENEMY_UNUSED_OBJECT_IDS
 from .NativeRegionMap import FORK_NATIVE_REGIONS
 from .SpeechLocations import SPEECH_LOCATIONS, SPEECH_LOCATION_NAME_TO_ID
-from . import NpcSpeech
+from . import NpcSpeech, SceneTransitions
 from .NativeLogic import (
     NATIVE_REGION_EDGES, NATIVE_CUSTOM_ENTRANCES, NATIVE_CUSTOM_LOCATIONS,
     NATIVE_CUSTOM_EVENTS, NATIVE_LOCATION_METADATA_RULES, NATIVE_UNMAPPED_LOCATION_RULES,
@@ -789,7 +789,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
     item_name_to_id = dict(item_table) | EXTREME_ITEMS
     location_name_to_id = (dict(location_table) | FORK_LOCATION_NAME_TO_ID |
-                           SPEECH_LOCATION_NAME_TO_ID | NpcSpeech.NAME_TO_ID | NPC_SPEECH_FALLBACK_NAME_TO_ID |
+                           SPEECH_LOCATION_NAME_TO_ID | NpcSpeech.NAME_TO_ID | SceneTransitions.NAME_TO_ID | NPC_SPEECH_FALLBACK_NAME_TO_ID |
                            ENEMY_DROP_LOCATION_NAME_TO_ID)
     item_name_groups = {k: set(v) for k, v in _create_groups(item_data_table).items() if k != "Everything"} | {
         "Extreme Abilities": {"Roll", "Grab / Power Bracelet", "Climb", "Crawl", "Speak", "Open Chest", "Shovel", "Flow of Time"},
@@ -801,6 +801,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         "SOH-EXTREME Fork Locations": {loc.name for loc in FORK_LOCATIONS if loc.address not in RETIRED_FORK_LOCATION_IDS},
         "Wonder Items": {loc.name for loc in FORK_LOCATIONS if loc.family == "wonder" and loc.address not in RETIRED_FORK_LOCATION_IDS},
         "Silver Rupee Checks": {loc.name for loc in FORK_LOCATIONS if loc.family == "silver"},
+        "Scene Transitions": set(SceneTransitions.NAME_TO_ID),
         "NPC Speech Sanity": set(SPEECH_LOCATION_NAME_TO_ID) | set(NpcSpeech.NAME_TO_ID),
         "Enemy Drops": set(ENEMY_DROP_LOCATION_NAME_TO_ID),
     }
@@ -1043,7 +1044,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         if self.using_ut:
             fill_shop_items(self)
 
-        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2):
+        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value:
             from .EnemyRoomLogic import create_enemy_room_graph
             create_enemy_room_graph(self)
 
@@ -1195,6 +1196,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 "SOH-EXTREME added %d generic flavor-NPC placeholder checks (exact-only mode)",
                 fallback_added,
             )
+
+        SceneTransitions.create_locations(self)
 
         self._npc_conversations = {}
         if self.options.npc_speech_sanity.value and NpcSpeech.identity_version(self) == 2:
@@ -1577,7 +1580,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         return result
 
     def pre_fill(self) -> None:
-        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2):
+        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value:
             from .EnemyRoomLogic import prune_optional_native_actions
             prune_optional_native_actions(self)
         # Tracker regeneration restores the original shop events in create_regions.
@@ -1924,7 +1927,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
     # They mirror the fork's central MegaSoulAllowsLocation()/interaction gates.
     def set_rules(self) -> None:
         generate_prices(self)
-        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2):
+        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value:
             from .SilverRoomLogic import install_silver_routes
             install_silver_routes(self)
             # Trial selection and UT slot-data restoration happen in create_items.
@@ -3496,16 +3499,14 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # requirement. Do not lock every Market check behind Flow: an adult
             # route or a child already inside a night Market remains legitimate.
 
-            # Conversely, a frozen DAWN/DAY/DUSK start must not satisfy explicitly
-            # night-only checks until time is unlocked.  The stock day/night-cycle
-            # events cover most of these; these name fallbacks cover fork/native
-            # checks that bypass those helper events.
-            if o.frozen_starting_time.value in (1, 2, 3):
-                for location in self.get_locations():
-                    upper = location.name.upper()
-                    if " NIGHT " in f" {upper} " or "NIGHT BALCONY" in upper:
-                        bundle = native_bundle_for_location(location)
-                        require_native_existing(location, Has("Flow of Time") | can_play_song(Items.SUNS_SONG, bundle))
+            # Explicit night checks use the save's current phase. Do not match
+            # synthetic "Day Night Cycle" events: requiring night to unlock the
+            # ability to wait for night would create a circular dependency.
+            for location in self.get_locations():
+                upper = location.name.upper()
+                if location.address is not None and (" NIGHT " in f" {upper} " or "NIGHT BALCONY" in upper):
+                    bundle = native_bundle_for_location(location)
+                    require_native_existing(location, at_night(bundle))
 
         import re
 
@@ -4619,6 +4620,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             sheik = self.get_location(sheik_name)
             add_resolved_rule(sheik, can_interact_npc((sheik.parent_region, self), "Hylian"))
 
+        SceneTransitions.install_rules(self)
+
     def create_items(self) -> None:
         self._create_stock_item_pool()
 
@@ -5013,6 +5016,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "shop_vanilla_items": self.shop_vanilla_items,
             "apworld_version": self.apworld_version,
             "enemy_room_logic_version": "0.11.18",
+            "scene_transition_catalog_version": SceneTransitions.CATALOG_VERSION,
             "enemy_room_disabled_actions": list(getattr(self, "_extreme_room_disabled_actions", [])),
             "enemy_spawn_policy": "placed_and_non_enemy_scripted_encounters",
             "static_hints": static_hints,
@@ -5085,6 +5089,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         cv("MedallionLockedTrials", data["medallion_locked_trials"])
 
         # Goal / songs / core item shuffles.
+        cv("SceneTransitionChecks", int(bool(data["scene_transition_checks"])))
+        cv("SceneTransitionCatalogVersion", SceneTransitions.CATALOG_VERSION)
         cv("TriforceHuntTotalPieces", data["triforce_hunt_pieces_total"] if data["triforce_hunt"] else 0)
         # Native SoH decides both the Triforce pickup message and the tracker
         # required-count display from the normal WinCon settings.  AP Triforce

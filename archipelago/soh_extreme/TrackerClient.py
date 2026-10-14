@@ -30,6 +30,9 @@ def make_context_class(base):
             self._mirror_sender = None
             self._mirror_last_request_time = 0.0
             self._mirror_live_shields = None
+            self._mirror_live_time = None
+            self._mirror_live_clock = None
+            self._mirror_live_time_flags = 0
             super().__init__(*args, **kwargs)
 
         def make_gui(self):
@@ -44,6 +47,9 @@ def make_context_class(base):
                 self._mirror_last_signature=None
                 self._mirror_packet=None
                 self._mirror_live_shields=None
+                self._mirror_live_time=None
+                self._mirror_live_clock=None
+                self._mirror_live_time_flags=0
             super().on_package(cmd,args)
             if cmd != 'Bounced' or self.game != 'SOH-EXTREME':return
             data=args.get('data')
@@ -54,6 +60,12 @@ def make_context_class(base):
             if self._managed_nonce is not None and nonce != self._managed_nonce:return
             if type(request) is not int or not 0 < request <= 0xffffffffffffffff:return
             shields=data.get('live_shields')
+            phase=data.get('live_time')
+            clock=data.get('live_clock')
+            time_flags=data.get('live_time_flags',0)
+            if clock is not None and (type(clock) is not int or not 0 <= clock <= 0xffff or phase is None):return
+            if type(time_flags) is not int or time_flags not in (0,1):return
+            if phase is not None and (type(phase) is not int or phase not in (0,1)):return
             if self._managed_nonce is not None and (type(shields) is not int or not 0 <= shields <= 3):return
             now=time.monotonic()
             if now-self._mirror_last_request_time < 0.1:return
@@ -64,6 +76,9 @@ def make_context_class(base):
             # Only the game-owned worker accepts live equipment. Standalone UT
             # continues to show generation logic, including planned purchases.
             self._mirror_live_shields=shields if self._managed_nonce is not None else None
+            self._mirror_live_time=phase if self._managed_nonce is not None else None
+            self._mirror_live_clock=clock if self._managed_nonce is not None else None
+            self._mirror_live_time_flags=time_flags if self._managed_nonce is not None else 0
             # Re-evaluate using UT itself on a game request. This also handles
             # snapshots requested before the first ReceivedItems update.
             self.updateTracker()
@@ -74,6 +89,9 @@ def make_context_class(base):
                 # UT builds a fresh CollectionState on every update, so removing
                 # a shield also removes routes/events previously opened by it.
                 world._extreme_live_shields=self._mirror_live_shields
+                world._extreme_live_time=self._mirror_live_time
+                world._extreme_live_clock=self._mirror_live_clock
+                world._extreme_live_time_flags=self._mirror_live_time_flags
             result=super().updateTracker()
             self._mirror_last_state=result
             if self._mirror_subscription and getattr(result,'state',None) is not None:
@@ -96,7 +114,8 @@ def make_context_class(base):
                     active=active,checked=checked,rows=rows,
                     manual_count=len(self.tracker_core.manual_items),
                     ignored_count=len(self.tracker_core.ignored_locations),
-                    live_shields=self._mirror_live_shields)
+                    live_shields=self._mirror_live_shields,live_time=self._mirror_live_time,
+                    live_clock=self._mirror_live_clock,live_time_flags=self._mirror_live_time_flags)
             except (ValueError,KeyError,AttributeError,TypeError):
                 logging.getLogger('Client').exception('SOH-EXTREME tracker mirror rejected an invalid snapshot')
                 return
@@ -118,8 +137,15 @@ def make_context_class(base):
         async def disconnect(self, allow_autoreconnect=False):
             self._mirror_subscription=None
             self._mirror_live_shields=None
+            self._mirror_live_time=None
+            self._mirror_live_clock=None
+            self._mirror_live_time_flags=0
             world=self.tracker_core.get_current_world()
             if world is not None:world._extreme_live_shields=None
+            if world is not None:
+                world._extreme_live_time=None
+                world._extreme_live_clock=None
+                world._extreme_live_time_flags=0
             self._mirror_packet=None
             self._mirror_last_state=None
             if self._mirror_sender is not None and not self._mirror_sender.done():

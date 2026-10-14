@@ -1,0 +1,5828 @@
+[
+  {
+    "id": 11000000,
+    "name": "Scene Transition: KF Outside Deku Tree -> Deku Tree Entrance",
+    "index": "ENTR_DEKU_TREE_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "KF_OUTSIDE_DEKU_TREE",
+    "target": "DEKU_TREE_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      0
+    ],
+    "source_scene": 85,
+    "target_scene": 0,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_DEKU_TREE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000004,
+    "name": "Scene Transition: Death Mountain Trail Outside Dodongo's Cavern -> Dodongo's Cavern Entrance",
+    "index": "ENTR_DODONGOS_CAVERN_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "DEATH_MOUNTAIN_TRAIL",
+    "target": "DODONGOS_CAVERN_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      4
+    ],
+    "source_scene": 96,
+    "target_scene": 1,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "target_scene_token": "SCENE_DODONGOS_CAVERN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000008,
+    "name": "Scene Transition: GF Outside Training Ground -> Gerudo Training Ground Entrance",
+    "index": "ENTR_GERUDO_TRAINING_GROUND_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "GF_TO_GTG",
+    "target": "GERUDO_TRAINING_GROUND_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      8
+    ],
+    "source_scene": 93,
+    "target_scene": 11,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_GERUDO_TRAINING_GROUND",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000012,
+    "name": "Scene Transition: Forest Temple Boss Door -> Phantom Ganon",
+    "index": "ENTR_FOREST_TEMPLE_BOSS_ENTRANCE",
+    "kind": "AdultBoss",
+    "source": "FOREST_TEMPLE_BOSS_ENTRYWAY",
+    "target": "FOREST_TEMPLE_BOSS_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      12
+    ],
+    "source_scene": 3,
+    "target_scene": 20,
+    "source_scene_token": "SCENE_FOREST_TEMPLE",
+    "target_scene_token": "SCENE_FOREST_TEMPLE_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000016,
+    "name": "Scene Transition: Lake Hylia Outside Temple -> Water Temple Entrance",
+    "index": "ENTR_WATER_TEMPLE_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "LH_FROM_WATER_TEMPLE",
+    "target": "WATER_TEMPLE_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      16
+    ],
+    "source_scene": 87,
+    "target_scene": 5,
+    "source_scene_token": "SCENE_LAKE_HYLIA",
+    "target_scene_token": "SCENE_WATER_TEMPLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000040,
+    "name": "Scene Transition: Zora's Fountain Outside Jabu Jabu -> Jabu Jabu's Belly Entrance",
+    "index": "ENTR_JABU_JABU_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "ZORAS_FOUNTAIN",
+    "target": "JABU_JABUS_BELLY_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      40
+    ],
+    "source_scene": 89,
+    "target_scene": 2,
+    "source_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "target_scene_token": "SCENE_JABU_JABU",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000045,
+    "name": "Scene Transition: GY Royal Family's Tomb Entry -> Royal Family's Tomb",
+    "index": "ENTR_ROYAL_FAMILYS_TOMB_0",
+    "kind": "GrottoGrave",
+    "source": "THE_GRAVEYARD",
+    "target": "GRAVEYARD_COMPOSERS_GRAVE",
+    "mode": "entrance",
+    "entrances": [
+      45
+    ],
+    "source_scene": 83,
+    "target_scene": 65,
+    "source_scene_token": "SCENE_GRAVEYARD",
+    "target_scene_token": "SCENE_ROYAL_FAMILYS_TOMB",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000051,
+    "name": "Scene Transition: Market South Exit -> Market Entrance North Exit",
+    "index": "ENTR_MARKET_ENTRANCE_NORTH_EXIT",
+    "kind": "Overworld",
+    "source": "MARKET",
+    "target": "MARKET_ENTRANCE",
+    "mode": "entrance",
+    "entrances": [
+      51
+    ],
+    "source_scene": 32,
+    "target_scene": 27,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_MARKET_ENTRANCE_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000055,
+    "name": "Scene Transition: Graveyard Outside Temple -> Shadow Temple Entrance",
+    "index": "ENTR_SHADOW_TEMPLE_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "GRAVEYARD_WARP_PAD_REGION",
+    "target": "SHADOW_TEMPLE_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      55
+    ],
+    "source_scene": 83,
+    "target_scene": 7,
+    "source_scene_token": "SCENE_GRAVEYARD",
+    "target_scene_token": "SCENE_SHADOW_TEMPLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000059,
+    "name": "Scene Transition: Kak Shooting Gallery Entry -> Kak Shooting Gallery",
+    "index": "ENTR_SHOOTING_GALLERY_0",
+    "kind": "Interior",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "KAK_SHOOTING_GALLERY",
+    "mode": "entrance",
+    "entrances": [
+      59
+    ],
+    "source_scene": 82,
+    "target_scene": 66,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_SHOOTING_GALLERY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000067,
+    "name": "Scene Transition: LH Lab Entry -> LH Lab",
+    "index": "ENTR_LAKESIDE_LABORATORY_0",
+    "kind": "Interior",
+    "source": "LAKE_HYLIA",
+    "target": "LH_LAB",
+    "mode": "entrance",
+    "entrances": [
+      67
+    ],
+    "source_scene": 87,
+    "target_scene": 56,
+    "source_scene_token": "SCENE_LAKE_HYLIA",
+    "target_scene_token": "SCENE_LAKESIDE_LABORATORY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000075,
+    "name": "Scene Transition: GY Near-Hut Grave Entry -> Shield Grave",
+    "index": "ENTR_GRAVE_WITH_FAIRYS_FOUNTAIN_0",
+    "kind": "GrottoGrave",
+    "source": "THE_GRAVEYARD",
+    "target": "GRAVEYARD_SHIELD_GRAVE",
+    "mode": "entrance",
+    "entrances": [
+      75
+    ],
+    "source_scene": 83,
+    "target_scene": 64,
+    "source_scene_token": "SCENE_GRAVEYARD",
+    "target_scene_token": "SCENE_GRAVE_WITH_FAIRYS_FOUNTAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000079,
+    "name": "Scene Transition: LLR Talon's House Entry -> Talon's House",
+    "index": "ENTR_LON_LON_BUILDINGS_TALONS_HOUSE",
+    "kind": "Interior",
+    "source": "LON_LON_RANCH",
+    "target": "LLR_TALONS_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      79
+    ],
+    "source_scene": 99,
+    "target_scene": 76,
+    "source_scene_token": "SCENE_LON_LON_RANCH",
+    "target_scene_token": "SCENE_LON_LON_BUILDINGS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000083,
+    "name": "Scene Transition: ToT Courtyard Temple Entry -> Temple of Time Entrance",
+    "index": "ENTR_TEMPLE_OF_TIME_ENTRANCE",
+    "kind": "SpecialInterior",
+    "source": "TOT_ENTRANCE",
+    "target": "TEMPLE_OF_TIME",
+    "mode": "entrance",
+    "entrances": [
+      83
+    ],
+    "source_scene": 35,
+    "target_scene": 67,
+    "source_scene_token": "SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY",
+    "target_scene_token": "SCENE_TEMPLE_OF_TIME",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000099,
+    "name": "Scene Transition: MK Treasure Chest Game Entry -> Treasure Chest Game",
+    "index": "ENTR_TREASURE_BOX_SHOP_0",
+    "kind": "Interior",
+    "source": "MARKET",
+    "target": "MARKET_TREASURE_CHEST_GAME",
+    "mode": "entrance",
+    "entrances": [
+      99
+    ],
+    "source_scene": 32,
+    "target_scene": 16,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_TREASURE_BOX_SHOP",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000103,
+    "name": "Scene Transition: Man-in-Green's House -> MK Man-in-Green House Entry",
+    "index": "ENTR_BACK_ALLEY_DAY_OUTSIDE_MAN_IN_GREEN_HOUSE",
+    "kind": "Interior",
+    "source": "MARKET_MAN_IN_GREEN_HOUSE",
+    "target": "MARKET_BACK_ALLEY",
+    "mode": "entrance",
+    "entrances": [
+      103
+    ],
+    "source_scene": 43,
+    "target_scene": 30,
+    "source_scene_token": "SCENE_BACK_ALLEY_HOUSE",
+    "target_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000114,
+    "name": "Scene Transition: Kak Granny's Potion Shop Entry -> Granny's Potion Shop",
+    "index": "ENTR_POTION_SHOP_GRANNY_0",
+    "kind": "Interior",
+    "source": "KAK_BACKYARD",
+    "target": "KAK_GRANNYS_POTION_SHOP",
+    "mode": "entrance",
+    "entrances": [
+      114
+    ],
+    "source_scene": 82,
+    "target_scene": 78,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_POTION_SHOP_GRANNY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000122,
+    "name": "Scene Transition: Hyrule Castle drain -> Castle Courtyard guards",
+    "index": "ENTR_CASTLE_COURTYARD_GUARDS_DAY_0",
+    "kind": "Interior",
+    "source": "HC_DRAIN_LEDGE",
+    "target": "HC_GARDEN",
+    "mode": "entrance",
+    "entrances": [
+      122
+    ],
+    "source_scene": 95,
+    "target_scene": 69,
+    "source_scene_token": "SCENE_HYRULE_CASTLE",
+    "target_scene_token": "SCENE_CASTLE_COURTYARD_GUARDS_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000126,
+    "name": "Scene Transition: MK Entrance Guard House Entry -> Guard House",
+    "index": "ENTR_MARKET_GUARD_HOUSE_0",
+    "kind": "Interior",
+    "source": "MARKET_ENTRANCE",
+    "target": "MARKET_GUARD_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      126
+    ],
+    "source_scene": 27,
+    "target_scene": 77,
+    "source_scene_token": "SCENE_MARKET_ENTRANCE_DAY",
+    "target_scene_token": "SCENE_MARKET_GUARD_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000130,
+    "name": "Scene Transition: Colossus Outside Temple -> Spirit Temple Entrance",
+    "index": "ENTR_SPIRIT_TEMPLE_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "DESERT_COLOSSUS",
+    "target": "SPIRIT_TEMPLE_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      130
+    ],
+    "source_scene": 92,
+    "target_scene": 6,
+    "source_scene_token": "SCENE_DESERT_COLOSSUS",
+    "target_scene_token": "SCENE_SPIRIT_TEMPLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000136,
+    "name": "Scene Transition: Zora's Fountain Outside Ice Cavern -> Ice Cavern Entrance",
+    "index": "ENTR_ICE_CAVERN_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "ZF_LEDGE",
+    "target": "ICE_CAVERN_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      136
+    ],
+    "source_scene": 89,
+    "target_scene": 9,
+    "source_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "target_scene_token": "SCENE_ICE_CAVERN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000141,
+    "name": "Scene Transition: Spirit Temple Boss Door -> Twinrova",
+    "index": "ENTR_SPIRIT_TEMPLE_BOSS_ENTRANCE",
+    "kind": "AdultBoss",
+    "source": "SPIRIT_TEMPLE_BOSS_ENTRYWAY",
+    "target": "SPIRIT_TEMPLE_BOSS_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      141
+    ],
+    "source_scene": 6,
+    "target_scene": 23,
+    "source_scene_token": "SCENE_SPIRIT_TEMPLE",
+    "target_scene_token": "SCENE_SPIRIT_TEMPLE_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000152,
+    "name": "Scene Transition: Kakariko Outside the Well -> Bottom of the Well Entrance",
+    "index": "ENTR_BOTTOM_OF_THE_WELL_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "KAK_WELL",
+    "target": "BOTTOM_OF_THE_WELL_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      152
+    ],
+    "source_scene": 82,
+    "target_scene": 8,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_BOTTOM_OF_THE_WELL",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000156,
+    "name": "Scene Transition: KF House of Twins Entry -> House of Twins",
+    "index": "ENTR_TWINS_HOUSE_0",
+    "kind": "Interior",
+    "source": "KOKIRI_FOREST",
+    "target": "KF_HOUSE_OF_TWINS",
+    "mode": "entrance",
+    "entrances": [
+      156
+    ],
+    "source_scene": 85,
+    "target_scene": 39,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_TWINS_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000173,
+    "name": "Scene Transition: Market -> Market Back Alley (0)",
+    "index": "ENTR_BACK_ALLEY_DAY_0",
+    "kind": "Interior",
+    "source": "MARKET",
+    "target": "MARKET_BACK_ALLEY",
+    "mode": "entrance",
+    "entrances": [
+      173
+    ],
+    "source_scene": 32,
+    "target_scene": 30,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000177,
+    "name": "Scene Transition: Market Entrance North Exit -> Market South Exit",
+    "index": "ENTR_MARKET_SOUTH_EXIT",
+    "kind": "Overworld",
+    "source": "MARKET_ENTRANCE",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      177
+    ],
+    "source_scene": 27,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_MARKET_ENTRANCE_DAY",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000183,
+    "name": "Scene Transition: Kak Bazaar Entry -> Kak Bazaar",
+    "index": "ENTR_BAZAAR_0",
+    "kind": "Interior",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "KAK_BAZAAR",
+    "mode": "entrance",
+    "entrances": [
+      183
+    ],
+    "source_scene": 82,
+    "target_scene": 44,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_BAZAAR",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000193,
+    "name": "Scene Transition: KF Shop Entry -> Kokiri Shop",
+    "index": "ENTR_KOKIRI_SHOP_0",
+    "kind": "Interior",
+    "source": "KOKIRI_FOREST",
+    "target": "KF_KOKIRI_SHOP",
+    "mode": "entrance",
+    "entrances": [
+      193
+    ],
+    "source_scene": 85,
+    "target_scene": 45,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_KOKIRI_SHOP",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000197,
+    "name": "Scene Transition: King Dodongo -> Dodongo's Cavern Boss Door",
+    "index": "ENTR_DODONGOS_CAVERN_BOSS_DOOR",
+    "kind": "ChildBoss",
+    "source": "DODONGOS_CAVERN_BOSS_ROOM",
+    "target": "DODONGOS_CAVERN_BOSS_EXIT",
+    "mode": "entrance",
+    "entrances": [
+      197
+    ],
+    "source_scene": 18,
+    "target_scene": 1,
+    "source_scene_token": "SCENE_DODONGOS_CAVERN_BOSS",
+    "target_scene_token": "SCENE_DODONGOS_CAVERN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000201,
+    "name": "Scene Transition: KF Know-It-All House Entry -> Know-It-All House",
+    "index": "ENTR_KNOW_IT_ALL_BROS_HOUSE_0",
+    "kind": "Interior",
+    "source": "KOKIRI_FOREST",
+    "target": "KF_KNOW_IT_ALL_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      201
+    ],
+    "source_scene": 85,
+    "target_scene": 38,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_KNOW_IT_ALL_BROS_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000219,
+    "name": "Scene Transition: Hyrule Field Stairs Exit -> Kakariko Front Gate",
+    "index": "ENTR_KAKARIKO_VILLAGE_FRONT_GATE",
+    "kind": "Overworld",
+    "source": "HYRULE_FIELD",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      219
+    ],
+    "source_scene": 81,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000228,
+    "name": "Scene Transition: Kakariko Southeast Exit -> Graveyard Entrance",
+    "index": "ENTR_GRAVEYARD_ENTRANCE",
+    "kind": "Overworld",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "THE_GRAVEYARD",
+    "mode": "entrance",
+    "entrances": [
+      228
+    ],
+    "source_scene": 82,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000234,
+    "name": "Scene Transition: Hyrule Field River Exit -> Zora's River Lower Exit",
+    "index": "ENTR_ZORAS_RIVER_WEST_EXIT",
+    "kind": "Overworld",
+    "source": "HYRULE_FIELD",
+    "target": "ZR_FRONT",
+    "mode": "entrance",
+    "entrances": [
+      234
+    ],
+    "source_scene": 81,
+    "target_scene": 84,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_ZORAS_RIVER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000252,
+    "name": "Scene Transition: Lost Woods North Exit -> Sacred Forest Meadow South Exit",
+    "index": "ENTR_SACRED_FOREST_MEADOW_SOUTH_EXIT",
+    "kind": "Overworld",
+    "source": "LW_BEYOND_MIDO",
+    "target": "SFM_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      252
+    ],
+    "source_scene": 91,
+    "target_scene": 86,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000258,
+    "name": "Scene Transition: Hyrule Field Fence Exit -> Lake Hylia North Exit",
+    "index": "ENTR_LAKE_HYLIA_NORTH_EXIT",
+    "kind": "Overworld",
+    "source": "HYRULE_FIELD",
+    "target": "LAKE_HYLIA",
+    "mode": "entrance",
+    "entrances": [
+      258
+    ],
+    "source_scene": 81,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000264,
+    "name": "Scene Transition: Zora's River Waterfall Exit -> Zora's Domain Entrance",
+    "index": "ENTR_ZORAS_DOMAIN_ENTRANCE",
+    "kind": "Overworld",
+    "source": "ZR_BEHIND_WATERFALL",
+    "target": "ZORAS_DOMAIN",
+    "mode": "entrance",
+    "entrances": [
+      264
+    ],
+    "source_scene": 84,
+    "target_scene": 88,
+    "source_scene_token": "SCENE_ZORAS_RIVER",
+    "target_scene_token": "SCENE_ZORAS_DOMAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000270,
+    "name": "Scene Transition: Barinade Blue Warp -> Jabu Jabu's Belly Blue Warp",
+    "index": "ENTR_ZORAS_FOUNTAIN_JABU_JABU_BLUE_WARP",
+    "kind": "BlueWarp",
+    "source": "JABU_JABUS_BELLY_BOSS_ROOM",
+    "target": "ZORAS_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      270
+    ],
+    "source_scene": 19,
+    "target_scene": 89,
+    "source_scene_token": "SCENE_JABU_JABU_BOSS",
+    "target_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000279,
+    "name": "Scene Transition: Hyrule Field Rocky Path -> Gerudo Valley East Exit",
+    "index": "ENTR_GERUDO_VALLEY_EAST_EXIT",
+    "kind": "Overworld",
+    "source": "HYRULE_FIELD",
+    "target": "GERUDO_VALLEY",
+    "mode": "entrance",
+    "entrances": [
+      279
+    ],
+    "source_scene": 81,
+    "target_scene": 90,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_GERUDO_VALLEY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000286,
+    "name": "Scene Transition: Kokiri Forest Upper Exit -> Lost Woods South Exit",
+    "index": "ENTR_LOST_WOODS_SOUTH_EXIT",
+    "kind": "Overworld",
+    "source": "KOKIRI_FOREST",
+    "target": "LOST_WOODS",
+    "mode": "entrance",
+    "entrances": [
+      286
+    ],
+    "source_scene": 85,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000291,
+    "name": "Scene Transition: Haunted Wasteland West Exit -> Desert Colossus East Exit",
+    "index": "ENTR_DESERT_COLOSSUS_EAST_EXIT",
+    "kind": "Overworld",
+    "source": "WASTELAND_NEAR_COLOSSUS",
+    "target": "DESERT_COLOSSUS",
+    "mode": "entrance",
+    "entrances": [
+      291
+    ],
+    "source_scene": 94,
+    "target_scene": 92,
+    "source_scene_token": "SCENE_HAUNTED_WASTELAND",
+    "target_scene_token": "SCENE_DESERT_COLOSSUS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000297,
+    "name": "Scene Transition: Gerudo Valley West Exit -> Gerudo Fortress East Exit",
+    "index": "ENTR_GERUDOS_FORTRESS_EAST_EXIT",
+    "kind": "Overworld",
+    "source": "GV_FORTRESS_SIDE",
+    "target": "GERUDO_FORTRESS_OUTSKIRTS",
+    "mode": "entrance",
+    "entrances": [
+      297
+    ],
+    "source_scene": 90,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_GERUDO_VALLEY",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000304,
+    "name": "Scene Transition: Gerudo Fortress Gate Exit -> Haunted Wasteland East Exit",
+    "index": "ENTR_HAUNTED_WASTELAND_EAST_EXIT",
+    "kind": "Overworld",
+    "source": "GF_OUTSIDE_GATE",
+    "target": "WASTELAND_NEAR_FORTRESS",
+    "mode": "entrance",
+    "entrances": [
+      304
+    ],
+    "source_scene": 93,
+    "target_scene": 94,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_HAUNTED_WASTELAND",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000308,
+    "name": "Scene Transition: Ganons Tower Collapse Exterior -> Ganons Tower Collapse Interior (entrance 2)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_1",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      308
+    ],
+    "source_scene": 26,
+    "target_scene": 14,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000312,
+    "name": "Scene Transition: Market Castle Exit -> Castle Grounds South Exit",
+    "index": "ENTR_CASTLE_GROUNDS_SOUTH_EXIT",
+    "kind": "Overworld",
+    "source": "MARKET",
+    "target": "CASTLE_GROUNDS",
+    "mode": "entrance",
+    "entrances": [
+      312
+    ],
+    "source_scene": 32,
+    "target_scene": 95,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_HYRULE_CASTLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000317,
+    "name": "Scene Transition: Kakariko Guard Gate Exit -> Death Mountain Trail Bottom Exit",
+    "index": "ENTR_DEATH_MOUNTAIN_TRAIL_BOTTOM_EXIT",
+    "kind": "Overworld",
+    "source": "KAK_BEHIND_GATE",
+    "target": "DEATH_MOUNTAIN_TRAIL",
+    "mode": "entrance",
+    "entrances": [
+      317
+    ],
+    "source_scene": 82,
+    "target_scene": 96,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000327,
+    "name": "Scene Transition: Death Mountain Trail Top Exit -> Death Mountain Crater Upper Exit",
+    "index": "ENTR_DEATH_MOUNTAIN_CRATER_UPPER_EXIT",
+    "kind": "Overworld",
+    "source": "DEATH_MOUNTAIN_SUMMIT",
+    "target": "DMC_UPPER_LOCAL",
+    "mode": "entrance",
+    "entrances": [
+      327
+    ],
+    "source_scene": 96,
+    "target_scene": 97,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000333,
+    "name": "Scene Transition: Death Mountain Trail Middle Exit -> Goron City Upper Exit",
+    "index": "ENTR_GORON_CITY_UPPER_EXIT",
+    "kind": "Overworld",
+    "source": "DEATH_MOUNTAIN_TRAIL",
+    "target": "GORON_CITY",
+    "mode": "entrance",
+    "entrances": [
+      333
+    ],
+    "source_scene": 96,
+    "target_scene": 98,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "target_scene_token": "SCENE_GORON_CITY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000343,
+    "name": "Scene Transition: Hyrule Field Center Exit -> Lon Lon Ranch Entrance",
+    "index": "ENTR_LON_LON_RANCH_ENTRANCE",
+    "kind": "Overworld",
+    "source": "HYRULE_FIELD",
+    "target": "LON_LON_RANCH",
+    "mode": "entrance",
+    "entrances": [
+      343
+    ],
+    "source_scene": 81,
+    "target_scene": 99,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_LON_LON_RANCH",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000357,
+    "name": "Scene Transition: Death Mountain Crater Outside Temple -> Fire Temple Entrance",
+    "index": "ENTR_FIRE_TEMPLE_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "DMC_CENTRAL_LOCAL",
+    "target": "FIRE_TEMPLE_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      357
+    ],
+    "source_scene": 97,
+    "target_scene": 4,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "target_scene_token": "SCENE_FIRE_TEMPLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000361,
+    "name": "Scene Transition: Sacred Forest Meadow Outside Forest Temple -> Forest Temple Entrance",
+    "index": "ENTR_FOREST_TEMPLE_ENTRANCE",
+    "kind": "Dungeon",
+    "source": "SACRED_FOREST_MEADOW",
+    "target": "FOREST_TEMPLE_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      361
+    ],
+    "source_scene": 86,
+    "target_scene": 3,
+    "source_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "target_scene_token": "SCENE_FOREST_TEMPLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000365,
+    "name": "Scene Transition: MK Shooting Gallery Entry -> MK Shooting Gallery",
+    "index": "ENTR_SHOOTING_GALLERY_1",
+    "kind": "Interior",
+    "source": "MARKET",
+    "target": "MARKET_SHOOTING_GALLERY",
+    "mode": "entrance",
+    "entrances": [
+      365
+    ],
+    "source_scene": 32,
+    "target_scene": 66,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_SHOOTING_GALLERY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000369,
+    "name": "Scene Transition: Market Temple Exit -> ToT Courtyard Gossip Stones Exit",
+    "index": "ENTR_TEMPLE_OF_TIME_EXTERIOR_DAY_GOSSIP_STONE_EXIT",
+    "kind": "Overworld",
+    "source": "MARKET",
+    "target": "TOT_ENTRANCE",
+    "mode": "entrance",
+    "entrances": [
+      369
+    ],
+    "source_scene": 32,
+    "target_scene": 35,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000377,
+    "name": "Scene Transition: Ganons Tower Collapse Exterior -> Ganons Tower Collapse Interior (entrance 1)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_0",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      377
+    ],
+    "source_scene": 26,
+    "target_scene": 14,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000381,
+    "name": "Scene Transition: Kakariko Front Gate -> Hyrule Field Stairs Exit",
+    "index": "ENTR_HYRULE_FIELD_STAIRS_EXIT",
+    "kind": "Overworld",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      381
+    ],
+    "source_scene": 82,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000385,
+    "name": "Scene Transition: Zora's River Lower Exit -> Hyrule Field River Exit",
+    "index": "ENTR_HYRULE_FIELD_RIVER_EXIT",
+    "kind": "Overworld",
+    "source": "ZR_FRONT",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      385
+    ],
+    "source_scene": 84,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_ZORAS_RIVER",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000389,
+    "name": "Scene Transition: Lost Woods Bridge West Exit -> Hyrule Field Wooded Exit",
+    "index": "ENTR_HYRULE_FIELD_WOODED_EXIT",
+    "kind": "Overworld",
+    "source": "LW_BRIDGE",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      389
+    ],
+    "source_scene": 91,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000393,
+    "name": "Scene Transition: Lake Hylia North Exit -> Hyrule Field Fence Exit",
+    "index": "ENTR_HYRULE_FIELD_FENCE_EXIT",
+    "kind": "Overworld",
+    "source": "LAKE_HYLIA",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      393
+    ],
+    "source_scene": 87,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_LAKE_HYLIA",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000397,
+    "name": "Scene Transition: Gerudo Valley East Exit -> Hyrule Field Rocky Path",
+    "index": "ENTR_HYRULE_FIELD_ROCKY_PATH",
+    "kind": "Overworld",
+    "source": "GERUDO_VALLEY",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      397
+    ],
+    "source_scene": 90,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GERUDO_VALLEY",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000401,
+    "name": "Scene Transition: Death Mountain Trail Bottom Exit -> Kakariko Guard Gate Exit",
+    "index": "ENTR_KAKARIKO_VILLAGE_GUARD_GATE",
+    "kind": "Overworld",
+    "source": "DEATH_MOUNTAIN_TRAIL",
+    "target": "KAK_BEHIND_GATE",
+    "mode": "entrance",
+    "entrances": [
+      401
+    ],
+    "source_scene": 96,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000405,
+    "name": "Scene Transition: Graveyard Entrance -> Kakariko Southeast Exit",
+    "index": "ENTR_KAKARIKO_VILLAGE_SOUTHEAST_EXIT",
+    "kind": "Overworld",
+    "source": "THE_GRAVEYARD",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      405
+    ],
+    "source_scene": 83,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_GRAVEYARD",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000413,
+    "name": "Scene Transition: Zora's Domain Entrance -> Zora's River Waterfall Exit",
+    "index": "ENTR_ZORAS_RIVER_WATERFALL_EXIT",
+    "kind": "Overworld",
+    "source": "ZORAS_DOMAIN",
+    "target": "ZR_BEHIND_WATERFALL",
+    "mode": "entrance",
+    "entrances": [
+      413
+    ],
+    "source_scene": 88,
+    "target_scene": 84,
+    "source_scene_token": "SCENE_ZORAS_DOMAIN",
+    "target_scene_token": "SCENE_ZORAS_RIVER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000417,
+    "name": "Scene Transition: Zora's Fountain Tunnel Exit -> Zora's Domain Behind King Zora",
+    "index": "ENTR_ZORAS_DOMAIN_KING_ZORA_EXIT",
+    "kind": "Overworld",
+    "source": "ZORAS_FOUNTAIN",
+    "target": "ZD_BEHIND_KING_ZORA",
+    "mode": "entrance",
+    "entrances": [
+      417
+    ],
+    "source_scene": 89,
+    "target_scene": 88,
+    "source_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "target_scene_token": "SCENE_ZORAS_DOMAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000425,
+    "name": "Scene Transition: Sacred Forest Meadow South Exit -> Lost Woods North Exit",
+    "index": "ENTR_LOST_WOODS_NORTH_EXIT",
+    "kind": "Overworld",
+    "source": "SFM_ENTRYWAY",
+    "target": "LW_BEYOND_MIDO",
+    "mode": "entrance",
+    "entrances": [
+      425
+    ],
+    "source_scene": 86,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000437,
+    "name": "Scene Transition: Ganons Tower Collapse Exterior -> Ganons Tower Collapse Interior (entrance 3)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_2",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      437
+    ],
+    "source_scene": 26,
+    "target_scene": 14,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000441,
+    "name": "Scene Transition: Goron City Upper Exit -> Death Mountain Trail Middle Exit",
+    "index": "ENTR_DEATH_MOUNTAIN_TRAIL_GC_EXIT",
+    "kind": "Overworld",
+    "source": "GORON_CITY",
+    "target": "DEATH_MOUNTAIN_TRAIL",
+    "mode": "entrance",
+    "entrances": [
+      441
+    ],
+    "source_scene": 98,
+    "target_scene": 96,
+    "source_scene_token": "SCENE_GORON_CITY",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000445,
+    "name": "Scene Transition: Death Mountain Crater Upper Exit -> Death Mountain Trail Top Exit",
+    "index": "ENTR_DEATH_MOUNTAIN_TRAIL_SUMMIT_EXIT",
+    "kind": "Overworld",
+    "source": "DMC_UPPER_NEARBY",
+    "target": "DEATH_MOUNTAIN_SUMMIT",
+    "mode": "entrance",
+    "entrances": [
+      445
+    ],
+    "source_scene": 97,
+    "target_scene": 96,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000449,
+    "name": "Scene Transition: Death Mountain Crater Bridge Exit -> Goron City Darunia's Room Backdoor",
+    "index": "ENTR_GORON_CITY_DARUNIA_ROOM_EXIT",
+    "kind": "Overworld",
+    "source": "DMC_LOWER_NEARBY",
+    "target": "GC_DARUNIAS_CHAMBER",
+    "mode": "entrance",
+    "entrances": [
+      449
+    ],
+    "source_scene": 97,
+    "target_scene": 98,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "target_scene_token": "SCENE_GORON_CITY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000457,
+    "name": "Scene Transition: Ganons Tower Collapse Interior -> Ganons Tower Collapse Exterior (entrance 6)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_5",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      457
+    ],
+    "source_scene": 14,
+    "target_scene": 26,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000461,
+    "name": "Scene Transition: MK Shooting Gallery -> MK Shooting Gallery Entry",
+    "index": "ENTR_MARKET_DAY_OUTSIDE_SHOOTING_GALLERY",
+    "kind": "Interior",
+    "source": "MARKET_SHOOTING_GALLERY",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      461
+    ],
+    "source_scene": 66,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_SHOOTING_GALLERY",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000465,
+    "name": "Scene Transition: Mask Shop -> MK Mask Shop Entry",
+    "index": "ENTR_MARKET_DAY_OUTSIDE_HAPPY_MASK_SHOP",
+    "kind": "Interior",
+    "source": "MARKET_MASK_SHOP",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      465
+    ],
+    "source_scene": 51,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_HAPPY_MASK_SHOP",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000469,
+    "name": "Scene Transition: Treasure Chest Game -> MK Treasure Chest Game Entry",
+    "index": "ENTR_MARKET_DAY_OUTSIDE_TREASURE_BOX_SHOP",
+    "kind": "Interior",
+    "source": "MARKET_TREASURE_CHEST_GAME",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      469
+    ],
+    "source_scene": 16,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_TREASURE_BOX_SHOP",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000473,
+    "name": "Scene Transition: Hyrule Field -> Zora River (water exit)",
+    "index": "ENTR_ZORAS_RIVER_3",
+    "kind": "Overworld",
+    "source": "HYRULE_FIELD",
+    "target": "ZR_FRONT",
+    "mode": "entrance",
+    "entrances": [
+      473
+    ],
+    "source_scene": 81,
+    "target_scene": 84,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_ZORAS_RIVER",
+    "grotto": -1,
+    "content": -1,
+    "gate": "swim"
+  },
+  {
+    "id": 11000477,
+    "name": "Scene Transition: Lost Woods Underwater Shortcut -> Zora's River Underwater Shortcut",
+    "index": "ENTR_ZORAS_RIVER_UNDERWATER_SHORTCUT",
+    "kind": "Overworld",
+    "source": "LOST_WOODS",
+    "target": "ZR_FROM_SHORTCUT",
+    "mode": "entrance",
+    "entrances": [
+      477
+    ],
+    "source_scene": 91,
+    "target_scene": 84,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_ZORAS_RIVER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000481,
+    "name": "Scene Transition: Spirit Temple Entrance -> Colossus Outside Temple",
+    "index": "ENTR_DESERT_COLOSSUS_OUTSIDE_TEMPLE",
+    "kind": "Dungeon",
+    "source": "SPIRIT_TEMPLE_ENTRYWAY",
+    "target": "DESERT_COLOSSUS_OUTSIDE_TEMPLE",
+    "mode": "entrance",
+    "entrances": [
+      481
+    ],
+    "source_scene": 6,
+    "target_scene": 92,
+    "source_scene_token": "SCENE_SPIRIT_TEMPLE",
+    "target_scene_token": "SCENE_DESERT_COLOSSUS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000485,
+    "name": "Scene Transition: Spirit Temple Right Hand Exit -> Spirit Temple Outer Right Hand",
+    "index": "ENTR_DESERT_COLOSSUS_2",
+    "kind": "Dungeon",
+    "source": "RR_SPIRIT_TEMPLE_RIGHT_HAND_EXIT",
+    "target": "RR_SPIRIT_TEMPLE_OUTER_RIGHT_HAND",
+    "mode": "entrance",
+    "entrances": [
+      485
+    ],
+    "source_scene": 6,
+    "target_scene": 92,
+    "source_scene_token": "SCENE_SPIRIT_TEMPLE",
+    "target_scene_token": "SCENE_DESERT_COLOSSUS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000489,
+    "name": "Scene Transition: Spirit Temple Left Hand Exit -> Spirit Temple Outer Left Hand",
+    "index": "ENTR_DESERT_COLOSSUS_3",
+    "kind": "Dungeon",
+    "source": "RR_SPIRIT_TEMPLE_LEFT_HAND_EXIT",
+    "target": "RR_SPIRIT_TEMPLE_OUTER_LEFT_HAND",
+    "mode": "entrance",
+    "entrances": [
+      489
+    ],
+    "source_scene": 6,
+    "target_scene": 92,
+    "source_scene_token": "SCENE_SPIRIT_TEMPLE",
+    "target_scene_token": "SCENE_DESERT_COLOSSUS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000497,
+    "name": "Scene Transition: Requiem of Spirit -> Desert Colossus Warp Pad",
+    "index": "ENTR_DESERT_COLOSSUS_WARP_PAD",
+    "kind": "WarpSong",
+    "source": "REQUIEM_OF_SPIRIT_WARP",
+    "target": "DESERT_COLOSSUS",
+    "mode": "entrance",
+    "entrances": [
+      497
+    ],
+    "source_scene": -1,
+    "target_scene": 92,
+    "source_scene_token": "SCENE_ID_MAX",
+    "target_scene_token": "SCENE_DESERT_COLOSSUS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000505,
+    "name": "Scene Transition: Lon Lon Ranch Entrance -> Hyrule Field Center Exit",
+    "index": "ENTR_HYRULE_FIELD_CENTER_EXIT",
+    "kind": "Overworld",
+    "source": "LON_LON_RANCH",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      505
+    ],
+    "source_scene": 99,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_LON_LON_RANCH",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000509,
+    "name": "Scene Transition: Market Entrance South Exit -> Hyrule Field Drawbridge Exit",
+    "index": "ENTR_HYRULE_FIELD_ON_BRIDGE_SPAWN",
+    "kind": "Overworld",
+    "source": "MARKET_ENTRANCE",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      509
+    ],
+    "source_scene": 27,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_MARKET_ENTRANCE_DAY",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000513,
+    "name": "Scene Transition: Kak Bazaar -> Kak Bazaar Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_BAZAAR",
+    "kind": "Interior",
+    "source": "KAK_BAZAAR",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      513
+    ],
+    "source_scene": 44,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_BAZAAR",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000517,
+    "name": "Scene Transition: Shadow Temple Entrance -> Graveyard Outside Temple",
+    "index": "ENTR_GRAVEYARD_OUTSIDE_TEMPLE",
+    "kind": "Dungeon",
+    "source": "SHADOW_TEMPLE_ENTRYWAY",
+    "target": "GRAVEYARD_WARP_PAD_REGION",
+    "mode": "entrance",
+    "entrances": [
+      517
+    ],
+    "source_scene": 7,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_SHADOW_TEMPLE",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000521,
+    "name": "Scene Transition: Deku Tree Entrance -> KF Outside Deku Tree",
+    "index": "ENTR_KOKIRI_FOREST_OUTSIDE_DEKU_TREE",
+    "kind": "Dungeon",
+    "source": "DEKU_TREE_ENTRYWAY",
+    "target": "KF_OUTSIDE_DEKU_TREE",
+    "mode": "entrance",
+    "entrances": [
+      521
+    ],
+    "source_scene": 0,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_DEKU_TREE",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000525,
+    "name": "Scene Transition: Lost Woods Bridge East Exit -> Kokiri Forest Lower Exit",
+    "index": "ENTR_KOKIRI_FOREST_LOWER_EXIT",
+    "kind": "Overworld",
+    "source": "LW_BRIDGE",
+    "target": "KOKIRI_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      525
+    ],
+    "source_scene": 91,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000529,
+    "name": "Scene Transition: Link's House -> KF Link's House Entry",
+    "index": "ENTR_KOKIRI_FOREST_OUTSIDE_LINKS_HOUSE",
+    "kind": "SpecialInterior",
+    "source": "KF_LINKS_HOUSE",
+    "target": "KOKIRI_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      529
+    ],
+    "source_scene": 52,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_LINKS_HOUSE",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000533,
+    "name": "Scene Transition: Forest Temple Entrance -> Sacred Forest Meadow Outside Forest Temple",
+    "index": "ENTR_SACRED_FOREST_MEADOW_OUTSIDE_TEMPLE",
+    "kind": "Dungeon",
+    "source": "FOREST_TEMPLE_ENTRYWAY",
+    "target": "SACRED_FOREST_MEADOW",
+    "mode": "entrance",
+    "entrances": [
+      533
+    ],
+    "source_scene": 3,
+    "target_scene": 86,
+    "source_scene_token": "SCENE_FOREST_TEMPLE",
+    "target_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000537,
+    "name": "Scene Transition: Gerudo Valley River Exit -> Lake Hylia River Exit",
+    "index": "ENTR_LAKE_HYLIA_RIVER_EXIT",
+    "kind": "Overworld",
+    "source": "GV_LOWER_STREAM",
+    "target": "LAKE_HYLIA",
+    "mode": "entrance",
+    "entrances": [
+      537
+    ],
+    "source_scene": 90,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_GERUDO_VALLEY",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000541,
+    "name": "Scene Transition: Water Temple Entrance -> Lake Hylia Outside Temple",
+    "index": "ENTR_LAKE_HYLIA_OUTSIDE_TEMPLE",
+    "kind": "Dungeon",
+    "source": "WATER_TEMPLE_ENTRYWAY",
+    "target": "LH_FROM_WATER_TEMPLE",
+    "mode": "entrance",
+    "entrances": [
+      541
+    ],
+    "source_scene": 5,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_WATER_TEMPLE",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000545,
+    "name": "Scene Transition: Jabu Jabu's Belly Entrance -> Zora's Fountain Outside Jabu Jabu",
+    "index": "ENTR_ZORAS_FOUNTAIN_OUTSIDE_JABU_JABU",
+    "kind": "Dungeon",
+    "source": "JABU_JABUS_BELLY_ENTRYWAY",
+    "target": "ZORAS_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      545
+    ],
+    "source_scene": 2,
+    "target_scene": 89,
+    "source_scene_token": "SCENE_JABU_JABU",
+    "target_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000549,
+    "name": "Scene Transition: Zora's Domain Behind King Zora -> Zora's Fountain Tunnel Exit",
+    "index": "ENTR_ZORAS_FOUNTAIN_TUNNEL_EXIT",
+    "kind": "Overworld",
+    "source": "ZD_BEHIND_KING_ZORA",
+    "target": "ZORAS_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      549
+    ],
+    "source_scene": 88,
+    "target_scene": 89,
+    "source_scene_token": "SCENE_ZORAS_DOMAIN",
+    "target_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000557,
+    "name": "Scene Transition: Gerudo Fortress East Exit -> Gerudo Valley West Exit",
+    "index": "ENTR_GERUDO_VALLEY_WEST_EXIT",
+    "kind": "Overworld",
+    "source": "GERUDO_FORTRESS_OUTSKIRTS",
+    "target": "GV_FORTRESS_SIDE",
+    "mode": "entrance",
+    "entrances": [
+      557
+    ],
+    "source_scene": 93,
+    "target_scene": 90,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_GERUDO_VALLEY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000561,
+    "name": "Scene Transition: TH 1 Torch Cell Turn -> GF Outskirts",
+    "index": "ENTR_GERUDOS_FORTRESS_1",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_1_TORCH_CELL",
+    "target": "GERUDO_FORTRESS_OUTSKIRTS",
+    "mode": "entrance",
+    "entrances": [
+      561
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000565,
+    "name": "Scene Transition: TH 1 Torch Cell -> GF Near Grotto North",
+    "index": "ENTR_GERUDOS_FORTRESS_2",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_1_TORCH_CELL",
+    "target": "GF_NEAR_GROTTO",
+    "mode": "entrance",
+    "entrances": [
+      565
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000569,
+    "name": "Scene Transition: TH Kitchen Corridor Lower -> GF Near Grotto East",
+    "index": "ENTR_GERUDOS_FORTRESS_3",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_KITCHEN_CORRIDOR",
+    "target": "GF_NEAR_GROTTO",
+    "mode": "entrance",
+    "entrances": [
+      569
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000573,
+    "name": "Scene Transition: Inside Ganon's Castle Entrance -> OGC Rainbow Bridge Exit",
+    "index": "ENTR_CASTLE_GROUNDS_RAINBOW_BRIDGE_EXIT",
+    "kind": "GanonDungeon",
+    "source": "GANONS_CASTLE_ENTRYWAY",
+    "target": "CASTLE_GROUNDS_FROM_GANONS_CASTLE",
+    "mode": "entrance",
+    "entrances": [
+      573
+    ],
+    "source_scene": 13,
+    "target_scene": 95,
+    "source_scene_token": "SCENE_INSIDE_GANONS_CASTLE",
+    "target_scene_token": "SCENE_HYRULE_CASTLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000578,
+    "name": "Scene Transition: Dodongo's Cavern Entrance -> Death Mountain Trail Outside Dodongo's Cavern",
+    "index": "ENTR_DEATH_MOUNTAIN_TRAIL_OUTSIDE_DODONGOS_CAVERN",
+    "kind": "Dungeon",
+    "source": "DODONGOS_CAVERN_ENTRYWAY",
+    "target": "DEATH_MOUNTAIN_TRAIL",
+    "mode": "entrance",
+    "entrances": [
+      578
+    ],
+    "source_scene": 1,
+    "target_scene": 96,
+    "source_scene_token": "SCENE_DODONGOS_CAVERN",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000582,
+    "name": "Scene Transition: Goron City Darunia's Room Backdoor -> Death Mountain Crater Bridge Exit",
+    "index": "ENTR_DEATH_MOUNTAIN_CRATER_GC_EXIT",
+    "kind": "Overworld",
+    "source": "GC_DARUNIAS_CHAMBER",
+    "target": "DMC_LOWER_LOCAL",
+    "mode": "entrance",
+    "entrances": [
+      582
+    ],
+    "source_scene": 98,
+    "target_scene": 97,
+    "source_scene_token": "SCENE_GORON_CITY",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000586,
+    "name": "Scene Transition: Fire Temple Entrance -> Death Mountain Crater Outside Temple",
+    "index": "ENTR_DEATH_MOUNTAIN_CRATER_OUTSIDE_TEMPLE",
+    "kind": "Dungeon",
+    "source": "FIRE_TEMPLE_ENTRYWAY",
+    "target": "DMC_CENTRAL_LOCAL",
+    "mode": "entrance",
+    "entrances": [
+      586
+    ],
+    "source_scene": 4,
+    "target_scene": 97,
+    "source_scene_token": "SCENE_FIRE_TEMPLE",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000594,
+    "name": "Scene Transition: Gohma -> Deku Tree Boss Door",
+    "index": "ENTR_DEKU_TREE_BOSS_DOOR",
+    "kind": "ChildBoss",
+    "source": "DEKU_TREE_BOSS_ROOM",
+    "target": "DEKU_TREE_BOSS_EXIT",
+    "mode": "entrance",
+    "entrances": [
+      594
+    ],
+    "source_scene": 17,
+    "target_scene": 0,
+    "source_scene_token": "SCENE_DEKU_TREE_BOSS",
+    "target_scene_token": "SCENE_DEKU_TREE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000598,
+    "name": "Scene Transition: Ganons Tower Collapse Exterior -> Ganons Tower Collapse Interior (entrance 4)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_3",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      598
+    ],
+    "source_scene": 26,
+    "target_scene": 14,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000602,
+    "name": "Scene Transition: Castle Grounds South Exit -> Market Castle Exit",
+    "index": "ENTR_MARKET_DAY_CASTLE_EXIT",
+    "kind": "Overworld",
+    "source": "CASTLE_GROUNDS",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      602
+    ],
+    "source_scene": 100,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_OUTSIDE_GANONS_CASTLE",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000606,
+    "name": "Scene Transition: ToT Courtyard Gossip Stones Exit -> Market Temple Exit",
+    "index": "ENTR_MARKET_DAY_TEMPLE_EXIT",
+    "kind": "Overworld",
+    "source": "TOT_ENTRANCE",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      606
+    ],
+    "source_scene": 35,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000610,
+    "name": "Scene Transition: Market Back Alley -> Market (3)",
+    "index": "ENTR_MARKET_DAY_3",
+    "kind": "Interior",
+    "source": "MARKET_BACK_ALLEY",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      610
+    ],
+    "source_scene": 30,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000614,
+    "name": "Scene Transition: Kokiri Shop -> KF Shop Entry",
+    "index": "ENTR_KOKIRI_FOREST_OUTSIDE_SHOP",
+    "kind": "Interior",
+    "source": "KF_KOKIRI_SHOP",
+    "target": "KOKIRI_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      614
+    ],
+    "source_scene": 45,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_KOKIRI_SHOP",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000618,
+    "name": "Scene Transition: Know-It-All House -> KF Know-It-All House Entry",
+    "index": "ENTR_KOKIRI_FOREST_OUTSIDE_KNOW_IT_ALL_HOUSE",
+    "kind": "Interior",
+    "source": "KF_KNOW_IT_ALL_HOUSE",
+    "target": "KOKIRI_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      618
+    ],
+    "source_scene": 38,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_KNOW_IT_ALL_BROS_HOUSE",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000622,
+    "name": "Scene Transition: Guard House -> MK Entrance Guard House Entry",
+    "index": "ENTR_MARKET_ENTRANCE_OUTSIDE_GUARD_HOUSE",
+    "kind": "Interior",
+    "source": "MARKET_GUARD_HOUSE",
+    "target": "MARKET_ENTRANCE",
+    "mode": "entrance",
+    "entrances": [
+      622
+    ],
+    "source_scene": 77,
+    "target_scene": 27,
+    "source_scene_token": "SCENE_MARKET_GUARD_HOUSE",
+    "target_scene_token": "SCENE_MARKET_ENTRANCE_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000626,
+    "name": "Scene Transition: KF Link's House Entry -> Link's House",
+    "index": "ENTR_LINKS_HOUSE_1",
+    "kind": "SpecialInterior",
+    "source": "KOKIRI_FOREST",
+    "target": "KF_LINKS_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      626
+    ],
+    "source_scene": 85,
+    "target_scene": 52,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_LINKS_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000630,
+    "name": "Scene Transition: Hyrule Field Drawbridge Exit -> Market Entrance South Exit",
+    "index": "ENTR_MARKET_ENTRANCE_NEAR_GUARD_EXIT",
+    "kind": "Overworld",
+    "source": "HYRULE_FIELD",
+    "target": "MARKET_ENTRANCE",
+    "mode": "entrance",
+    "entrances": [
+      630
+    ],
+    "source_scene": 81,
+    "target_scene": 27,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_MARKET_ENTRANCE_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000638,
+    "name": "Scene Transition: LH Owl Flight -> Hyrule Field Owl Drop",
+    "index": "ENTR_HYRULE_FIELD_OWL_DROP",
+    "kind": "OwlDrop",
+    "source": "LH_OWL_FLIGHT",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      638
+    ],
+    "source_scene": 87,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_LAKE_HYLIA",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000646,
+    "name": "Scene Transition: Lost Woods South Exit -> Kokiri Forest Upper Exit",
+    "index": "ENTR_KOKIRI_FOREST_UPPER_EXIT",
+    "kind": "Overworld",
+    "source": "LW_FOREST_EXIT",
+    "target": "KOKIRI_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      646
+    ],
+    "source_scene": 91,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000650,
+    "name": "Scene Transition: Lon Lon Ranch -> Hyrule Field (west fence)",
+    "index": "ENTR_HYRULE_FIELD_11",
+    "kind": "Overworld",
+    "source": "LON_LON_RANCH",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      650
+    ],
+    "source_scene": 99,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_LON_LON_RANCH",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1,
+    "gate": "horse"
+  },
+  {
+    "id": 11000654,
+    "name": "Scene Transition: Lon Lon Ranch -> Hyrule Field (north fence)",
+    "index": "ENTR_HYRULE_FIELD_12",
+    "kind": "Overworld",
+    "source": "LON_LON_RANCH",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      654
+    ],
+    "source_scene": 99,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_LON_LON_RANCH",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1,
+    "gate": "horse"
+  },
+  {
+    "id": 11000658,
+    "name": "Scene Transition: Lon Lon Ranch -> Hyrule Field (east fence)",
+    "index": "ENTR_HYRULE_FIELD_13",
+    "kind": "Overworld",
+    "source": "LON_LON_RANCH",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      658
+    ],
+    "source_scene": 99,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_LON_LON_RANCH",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1,
+    "gate": "horse"
+  },
+  {
+    "id": 11000662,
+    "name": "Scene Transition: Zelda Courtyard -> Castle Courtyard guards",
+    "index": "ENTR_CASTLE_COURTYARD_GUARDS_DAY_1",
+    "kind": "Interior",
+    "source": "HC_GARDEN",
+    "target": "HC_GARDEN",
+    "mode": "entrance",
+    "entrances": [
+      662
+    ],
+    "source_scene": 74,
+    "target_scene": 69,
+    "source_scene_token": "SCENE_CASTLE_COURTYARD_ZELDA",
+    "target_scene_token": "SCENE_CASTLE_COURTYARD_GUARDS_DAY",
+    "grotto": -1,
+    "content": -1,
+    "traversal_rule": "day"
+  },
+  {
+    "id": 11000666,
+    "name": "Scene Transition: Market -> Market Back Alley (1)",
+    "index": "ENTR_BACK_ALLEY_DAY_1",
+    "kind": "Interior",
+    "source": "MARKET",
+    "target": "MARKET_BACK_ALLEY",
+    "mode": "entrance",
+    "entrances": [
+      666
+    ],
+    "source_scene": 32,
+    "target_scene": 30,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000670,
+    "name": "Scene Transition: Market Back Alley -> Market (4)",
+    "index": "ENTR_MARKET_DAY_4",
+    "kind": "Interior",
+    "source": "MARKET_BACK_ALLEY",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      670
+    ],
+    "source_scene": 30,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000674,
+    "name": "Scene Transition: MK Potion Shop -> MK Potion Shop Entry",
+    "index": "ENTR_MARKET_DAY_OUTSIDE_POTION_SHOP",
+    "kind": "Interior",
+    "source": "MARKET_POTION_SHOP",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      674
+    ],
+    "source_scene": 49,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_POTION_SHOP_MARKET",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000678,
+    "name": "Scene Transition: Bottom of the Well Entrance -> Kakariko Outside the Well",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_BOTTOM_OF_THE_WELL",
+    "kind": "Dungeon",
+    "source": "BOTTOM_OF_THE_WELL_ENTRYWAY",
+    "target": "KAK_WELL",
+    "mode": "entrance",
+    "entrances": [
+      678
+    ],
+    "source_scene": 8,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_BOTTOM_OF_THE_WELL",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000682,
+    "name": "Scene Transition: TH Kitchen Corridor Upper -> GF Above GTG",
+    "index": "ENTR_GERUDOS_FORTRESS_4",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_KITCHEN_CORRIDOR",
+    "target": "GF_ABOVE_GTG",
+    "mode": "entrance",
+    "entrances": [
+      682
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000698,
+    "name": "Scene Transition: TH Steep Slope Cell -> GF Near Grotto",
+    "index": "ENTR_GERUDOS_FORTRESS_5",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_STEEP_SLOPE_CELL",
+    "target": "GF_NEAR_GROTTO",
+    "mode": "entrance",
+    "entrances": [
+      698
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000702,
+    "name": "Scene Transition: TH Steep Slope Cell Two Ramps -> GF Bottom of Lower Vines",
+    "index": "ENTR_GERUDOS_FORTRESS_6",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_STEEP_SLOPE_CELL",
+    "target": "GF_BOTTOM_OF_LOWER_VINES",
+    "mode": "entrance",
+    "entrances": [
+      702
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000706,
+    "name": "Scene Transition: TH Double Cell Lower -> GF Above GTG Directly",
+    "index": "ENTR_GERUDOS_FORTRESS_7",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_DOUBLE_CELL",
+    "target": "GF_ABOVE_GTG",
+    "mode": "entrance",
+    "entrances": [
+      706
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000710,
+    "name": "Scene Transition: TH Double Cell Upper -> GF Top of Lower Vines Across",
+    "index": "ENTR_GERUDOS_FORTRESS_8",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_DOUBLE_CELL",
+    "target": "GF_TOP_OF_LOWER_VINES",
+    "mode": "entrance",
+    "entrances": [
+      710
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000722,
+    "name": "Scene Transition: TH Kitchen By Corridor -> GF Top of Lower Vines Near",
+    "index": "ENTR_GERUDOS_FORTRESS_9",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_KITCHEN_TOP",
+    "target": "GF_TOP_OF_LOWER_VINES",
+    "mode": "entrance",
+    "entrances": [
+      722
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000726,
+    "name": "Scene Transition: TH Kitchen Opposite Corridor -> GF Near GS",
+    "index": "ENTR_GERUDOS_FORTRESS_10",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_KITCHEN_TOP",
+    "target": "GF_NEAR_GS",
+    "mode": "entrance",
+    "entrances": [
+      726
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000730,
+    "name": "Scene Transition: TH Break Room -> GF Below Chest",
+    "index": "ENTR_GERUDOS_FORTRESS_11",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_BREAK_ROOM",
+    "target": "GF_BELOW_CHEST",
+    "mode": "entrance",
+    "entrances": [
+      730
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000734,
+    "name": "Scene Transition: TH Break Room Corridor -> GF Above Jail",
+    "index": "ENTR_GERUDOS_FORTRESS_12",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_BREAK_ROOM_CORRIDOR",
+    "target": "GF_ABOVE_JAIL",
+    "mode": "entrance",
+    "entrances": [
+      734
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000761,
+    "name": "Scene Transition: LLR Stables Entry -> LLR Stables",
+    "index": "ENTR_STABLE_0",
+    "kind": "Interior",
+    "source": "LON_LON_RANCH",
+    "target": "LLR_STABLES",
+    "mode": "entrance",
+    "entrances": [
+      761
+    ],
+    "source_scene": 99,
+    "target_scene": 54,
+    "source_scene_token": "SCENE_LON_LON_RANCH",
+    "target_scene_token": "SCENE_STABLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000765,
+    "name": "Scene Transition: Kak Boss House Entry -> Carpenter Boss House",
+    "index": "ENTR_KAKARIKO_CENTER_GUEST_HOUSE_0",
+    "kind": "Interior",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "KAK_CARPENTER_BOSS_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      765
+    ],
+    "source_scene": 82,
+    "target_scene": 42,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_KAKARIKO_CENTER_GUEST_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000769,
+    "name": "Scene Transition: Jabu Jabu's Belly Boss Door -> Barinade",
+    "index": "ENTR_JABU_JABU_BOSS_ENTRANCE",
+    "kind": "ChildBoss",
+    "source": "JABU_JABUS_BELLY_BOSS_ENTRYWAY",
+    "target": "JABU_JABUS_BELLY_BOSS_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      769
+    ],
+    "source_scene": 2,
+    "target_scene": 19,
+    "source_scene_token": "SCENE_JABU_JABU",
+    "target_scene_token": "SCENE_JABU_JABU_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000773,
+    "name": "Scene Transition: Fire Temple Boss Door -> Volvagia",
+    "index": "ENTR_FIRE_TEMPLE_BOSS_ENTRANCE",
+    "kind": "AdultBoss",
+    "source": "FIRE_TEMPLE_BOSS_ENTRYWAY",
+    "target": "FIRE_TEMPLE_BOSS_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      773
+    ],
+    "source_scene": 4,
+    "target_scene": 21,
+    "source_scene_token": "SCENE_FIRE_TEMPLE",
+    "target_scene_token": "SCENE_FIRE_TEMPLE_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000777,
+    "name": "Scene Transition: Fishing Pond -> LH Fishing Pond Entry",
+    "index": "ENTR_LAKE_HYLIA_OUTSIDE_FISHING_POND",
+    "kind": "Interior",
+    "source": "LH_FISHING_HOLE",
+    "target": "LH_FISHING_ISLAND",
+    "mode": "entrance",
+    "entrances": [
+      777
+    ],
+    "source_scene": 73,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_FISHING_POND",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000781,
+    "name": "Scene Transition: GY Dampe's Hut Entry -> Dampe's Hut",
+    "index": "ENTR_GRAVEKEEPERS_HUT_0",
+    "kind": "Interior",
+    "source": "THE_GRAVEYARD",
+    "target": "GRAVEYARD_DAMPES_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      781
+    ],
+    "source_scene": 83,
+    "target_scene": 58,
+    "source_scene_token": "SCENE_GRAVEYARD",
+    "target_scene_token": "SCENE_GRAVEKEEPERS_HUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000785,
+    "name": "Scene Transition: Zora River -> Hyrule Field (water exit)",
+    "index": "ENTR_HYRULE_FIELD_14",
+    "kind": "Overworld",
+    "source": "ZR_FRONT",
+    "target": "HYRULE_FIELD",
+    "mode": "entrance",
+    "entrances": [
+      785
+    ],
+    "source_scene": 84,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_ZORAS_RIVER",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": -1,
+    "content": -1,
+    "gate": "swim"
+  },
+  {
+    "id": 11000789,
+    "name": "Scene Transition: DMT Great Fairy Entry -> DMT Great Fairy Fountain",
+    "index": "ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_DMT",
+    "kind": "Interior",
+    "source": "DEATH_MOUNTAIN_SUMMIT",
+    "target": "DMT_GREAT_FAIRY_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      789
+    ],
+    "source_scene": 96,
+    "target_scene": 59,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "target_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000796,
+    "name": "Scene Transition: GY Near-Tomb Grave Entry -> Heart Piece Grave",
+    "index": "ENTR_REDEAD_GRAVE_0",
+    "kind": "GrottoGrave",
+    "source": "THE_GRAVEYARD",
+    "target": "GRAVEYARD_HEART_PIECE_GRAVE",
+    "mode": "entrance",
+    "entrances": [
+      796
+    ],
+    "source_scene": 83,
+    "target_scene": 63,
+    "source_scene_token": "SCENE_GRAVEYARD",
+    "target_scene_token": "SCENE_REDEAD_GRAVE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000808,
+    "name": "Scene Transition: Lake Hylia Underwater Shortcut -> Zora's Domain Underwater Shortcut",
+    "index": "ENTR_ZORAS_DOMAIN_UNDERWATER_SHORTCUT",
+    "kind": "Overworld",
+    "source": "LH_FROM_SHORTCUT",
+    "target": "ZORAS_DOMAIN",
+    "mode": "entrance",
+    "entrances": [
+      808
+    ],
+    "source_scene": 87,
+    "target_scene": 88,
+    "source_scene_token": "SCENE_LAKE_HYLIA",
+    "target_scene_token": "SCENE_ZORAS_DOMAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000812,
+    "name": "Scene Transition: Ganons Tower Collapse Interior -> Ganons Tower Collapse Exterior (entrance 3)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_2",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      812
+    ],
+    "source_scene": 14,
+    "target_scene": 26,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000816,
+    "name": "Scene Transition: Ganons Tower Collapse Interior -> Ganons Tower Collapse Exterior (entrance 4)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_3",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      816
+    ],
+    "source_scene": 14,
+    "target_scene": 26,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000820,
+    "name": "Scene Transition: Ganons Tower Collapse Interior -> Ganons Tower Collapse Exterior (entrance 5)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_4",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      820
+    ],
+    "source_scene": 14,
+    "target_scene": 26,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000828,
+    "name": "Scene Transition: House of Twins -> KF House of Twins Entry",
+    "index": "ENTR_KOKIRI_FOREST_OUTSIDE_TWINS_HOUSE",
+    "kind": "Interior",
+    "source": "KF_HOUSE_OF_TWINS",
+    "target": "KOKIRI_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      828
+    ],
+    "source_scene": 39,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_TWINS_HOUSE",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000832,
+    "name": "Scene Transition: HC Great Fairy Fountain -> HC Boulder Crawlspace",
+    "index": "ENTR_CASTLE_GROUNDS_GREAT_FAIRY_EXIT",
+    "kind": "Interior",
+    "source": "HC_GREAT_FAIRY_FOUNTAIN",
+    "target": "HC_PAST_GATE",
+    "mode": "entrance",
+    "entrances": [
+      832
+    ],
+    "source_scene": 61,
+    "target_scene": 95,
+    "source_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS",
+    "target_scene_token": "SCENE_HYRULE_CASTLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000837,
+    "name": "Scene Transition: Impa's House Front -> Kak Impa's House Front Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_IMPAS_HOUSE_FRONT",
+    "kind": "Interior",
+    "source": "KAK_IMPAS_HOUSE",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      837
+    ],
+    "source_scene": 55,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_IMPAS_HOUSE",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000841,
+    "name": "Scene Transition: Carpenter Boss House -> Kak Boss House Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_CENTER_GUEST_HOUSE",
+    "kind": "Interior",
+    "source": "KAK_CARPENTER_BOSS_HOUSE",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      841
+    ],
+    "source_scene": 42,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_KAKARIKO_CENTER_GUEST_HOUSE",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000845,
+    "name": "Scene Transition: Granny's Potion Shop -> Kak Granny's Potion Shop Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_SHOP_GRANNY",
+    "kind": "Interior",
+    "source": "KAK_GRANNYS_POTION_SHOP",
+    "target": "KAK_BACKYARD",
+    "mode": "entrance",
+    "entrances": [
+      845
+    ],
+    "source_scene": 78,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_POTION_SHOP_GRANNY",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000849,
+    "name": "Scene Transition: Windmill -> Kak Windmill Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_WINDMILL",
+    "kind": "SpecialInterior",
+    "source": "KAK_WINDMILL",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      849
+    ],
+    "source_scene": 72,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_WINDMILL_AND_DAMPES_GRAVE",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000853,
+    "name": "Scene Transition: Dampe's Hut -> GY Dampe's Hut Entry",
+    "index": "ENTR_GRAVEYARD_OUTSIDE_DAMPES_HUT",
+    "kind": "Interior",
+    "source": "GRAVEYARD_DAMPES_HOUSE",
+    "target": "THE_GRAVEYARD",
+    "mode": "entrance",
+    "entrances": [
+      853
+    ],
+    "source_scene": 58,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_GRAVEKEEPERS_HUT",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000857,
+    "name": "Scene Transition: Dampe's Grave -> GY Near-Ledge Grave Entry",
+    "index": "ENTR_GRAVEYARD_DAMPES_GRAVE_EXIT",
+    "kind": "GrottoGrave",
+    "source": "GRAVEYARD_DAMPES_GRAVE",
+    "target": "THE_GRAVEYARD",
+    "mode": "entrance",
+    "entrances": [
+      857
+    ],
+    "source_scene": 72,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_WINDMILL_AND_DAMPES_GRAVE",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000861,
+    "name": "Scene Transition: Shield Grave -> GY Near-Hut Grave Entry",
+    "index": "ENTR_GRAVEYARD_SHIELD_GRAVE_EXIT",
+    "kind": "GrottoGrave",
+    "source": "GRAVEYARD_SHIELD_GRAVE",
+    "target": "THE_GRAVEYARD",
+    "mode": "entrance",
+    "entrances": [
+      861
+    ],
+    "source_scene": 64,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_GRAVE_WITH_FAIRYS_FOUNTAIN",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000865,
+    "name": "Scene Transition: Heart Piece Grave -> GY Near-Tomb Grave Entry",
+    "index": "ENTR_GRAVEYARD_HEART_PIECE_GRAVE_EXIT",
+    "kind": "GrottoGrave",
+    "source": "GRAVEYARD_HEART_PIECE_GRAVE",
+    "target": "THE_GRAVEYARD",
+    "mode": "entrance",
+    "entrances": [
+      865
+    ],
+    "source_scene": 63,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_REDEAD_GRAVE",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000869,
+    "name": "Scene Transition: Desert Colossus East Exit -> Haunted Wasteland West Exit",
+    "index": "ENTR_HAUNTED_WASTELAND_WEST_EXIT",
+    "kind": "Overworld",
+    "source": "DESERT_COLOSSUS",
+    "target": "WASTELAND_NEAR_COLOSSUS",
+    "mode": "entrance",
+    "entrances": [
+      869
+    ],
+    "source_scene": 92,
+    "target_scene": 94,
+    "source_scene_token": "SCENE_DESERT_COLOSSUS",
+    "target_scene_token": "SCENE_HAUNTED_WASTELAND",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000881,
+    "name": "Scene Transition: ZF Great Fairy Entry -> ZF Great Fairy Fountain",
+    "index": "ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_FARORES_ZF",
+    "kind": "Interior",
+    "source": "ZORAS_FOUNTAIN",
+    "target": "ZF_GREAT_FAIRY_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      881
+    ],
+    "source_scene": 89,
+    "target_scene": 61,
+    "source_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "target_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000888,
+    "name": "Scene Transition: Talon's House -> LLR Talon's House Entry",
+    "index": "ENTR_LON_LON_RANCH_OUTSIDE_TALONS_HOUSE",
+    "kind": "Interior",
+    "source": "LLR_TALONS_HOUSE",
+    "target": "LON_LON_RANCH",
+    "mode": "entrance",
+    "entrances": [
+      888
+    ],
+    "source_scene": 76,
+    "target_scene": 99,
+    "source_scene_token": "SCENE_LON_LON_BUILDINGS",
+    "target_scene_token": "SCENE_LON_LON_RANCH",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000892,
+    "name": "Scene Transition: GC Shop Entry -> Goron Shop",
+    "index": "ENTR_GORON_SHOP_0",
+    "kind": "Interior",
+    "source": "GORON_CITY",
+    "target": "GC_SHOP",
+    "mode": "entrance",
+    "entrances": [
+      892
+    ],
+    "source_scene": 98,
+    "target_scene": 46,
+    "source_scene_token": "SCENE_GORON_CITY",
+    "target_scene_token": "SCENE_GORON_SHOP",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000896,
+    "name": "Scene Transition: ZD Shop Entry -> Zora Shop",
+    "index": "ENTR_ZORA_SHOP_0",
+    "kind": "Interior",
+    "source": "ZORAS_DOMAIN",
+    "target": "ZD_SHOP",
+    "mode": "entrance",
+    "entrances": [
+      896
+    ],
+    "source_scene": 88,
+    "target_scene": 47,
+    "source_scene_token": "SCENE_ZORAS_DOMAIN",
+    "target_scene_token": "SCENE_ZORA_SHOP",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000900,
+    "name": "Scene Transition: Kak Potion Shop Front Entry -> Kak Potion Shop Front",
+    "index": "ENTR_POTION_SHOP_KAKARIKO_FRONT",
+    "kind": "SpecialInterior",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "KAK_POTION_SHOP_FRONT",
+    "mode": "entrance",
+    "entrances": [
+      900
+    ],
+    "source_scene": 82,
+    "target_scene": 48,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_POTION_SHOP_KAKARIKO",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000904,
+    "name": "Scene Transition: MK Potion Shop Entry -> MK Potion Shop",
+    "index": "ENTR_POTION_SHOP_MARKET_0",
+    "kind": "Interior",
+    "source": "MARKET",
+    "target": "MARKET_POTION_SHOP",
+    "mode": "entrance",
+    "entrances": [
+      904
+    ],
+    "source_scene": 32,
+    "target_scene": 49,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_POTION_SHOP_MARKET",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000908,
+    "name": "Scene Transition: Market Dog Lady House -> Market Back Alley (4)",
+    "index": "ENTR_BACK_ALLEY_DAY_4",
+    "kind": "Interior",
+    "source": "MARKET_DOG_LADY_HOUSE",
+    "target": "MARKET_BACK_ALLEY",
+    "mode": "entrance",
+    "entrances": [
+      908
+    ],
+    "source_scene": 53,
+    "target_scene": 30,
+    "source_scene_token": "SCENE_DOG_LADY_HOUSE",
+    "target_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000916,
+    "name": "Scene Transition: ZF Great Fairy Fountain -> ZF Great Fairy Entry",
+    "index": "ENTR_ZORAS_FOUNTAIN_OUTSIDE_GREAT_FAIRY",
+    "kind": "Interior",
+    "source": "ZF_GREAT_FAIRY_FOUNTAIN",
+    "target": "ZORAS_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      916
+    ],
+    "source_scene": 61,
+    "target_scene": 89,
+    "source_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS",
+    "target_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000920,
+    "name": "Scene Transition: Market Back Alley -> Market Dog Lady House (0)",
+    "index": "ENTR_DOG_LADY_HOUSE_0",
+    "kind": "Interior",
+    "source": "MARKET_BACK_ALLEY",
+    "target": "MARKET_DOG_LADY_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      920
+    ],
+    "source_scene": 30,
+    "target_scene": 53,
+    "source_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "target_scene_token": "SCENE_DOG_LADY_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000924,
+    "name": "Scene Transition: Kak Impa's House Front Entry -> Impa's House Front",
+    "index": "ENTR_IMPAS_HOUSE_FRONT",
+    "kind": "Interior",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "KAK_IMPAS_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      924
+    ],
+    "source_scene": 82,
+    "target_scene": 55,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_IMPAS_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000928,
+    "name": "Scene Transition: GV Carpenters' Tent Entry -> Carpenters' Tent",
+    "index": "ENTR_CARPENTERS_TENT_0",
+    "kind": "Interior",
+    "source": "GV_FORTRESS_SIDE",
+    "target": "GV_CARPENTER_TENT",
+    "mode": "entrance",
+    "entrances": [
+      928
+    ],
+    "source_scene": 90,
+    "target_scene": 57,
+    "source_scene_token": "SCENE_GERUDO_VALLEY",
+    "target_scene_token": "SCENE_CARPENTERS_TENT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000932,
+    "name": "Scene Transition: TH Dead End Cell -> GF Below GS",
+    "index": "ENTR_GERUDOS_FORTRESS_13",
+    "kind": "ThievesHideout",
+    "source": "THIEVES_HIDEOUT_DEAD_END_CELL",
+    "target": "GF_BELOW_GS",
+    "mode": "entrance",
+    "entrances": [
+      932
+    ],
+    "source_scene": 12,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000936,
+    "name": "Scene Transition: Gerudo Training Ground Entrance -> GF Outside Training Ground",
+    "index": "ENTR_GERUDOS_FORTRESS_OUTSIDE_GERUDO_TRAINING_GROUND",
+    "kind": "Dungeon",
+    "source": "GERUDO_TRAINING_GROUND_ENTRYWAY",
+    "target": "GF_EXITING_GTG",
+    "mode": "entrance",
+    "entrances": [
+      936
+    ],
+    "source_scene": 11,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_GERUDO_TRAINING_GROUND",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000940,
+    "name": "Scene Transition: Haunted Wasteland East Exit -> Gerudo Fortress Gate Exit",
+    "index": "ENTR_GERUDOS_FORTRESS_GATE_EXIT",
+    "kind": "Overworld",
+    "source": "WASTELAND_NEAR_FORTRESS",
+    "target": "GF_OUTSIDE_GATE",
+    "mode": "entrance",
+    "entrances": [
+      940
+    ],
+    "source_scene": 94,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_HAUNTED_WASTELAND",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000952,
+    "name": "Scene Transition: MK Bazaar -> MK Bazaar Entry",
+    "index": "ENTR_MARKET_DAY_OUTSIDE_BAZAAR",
+    "kind": "Interior",
+    "source": "MARKET_BAZAAR",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      952
+    ],
+    "source_scene": 44,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_BAZAAR",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000956,
+    "name": "Scene Transition: Bombchu Bowling -> MK Bombchu Bowling Entry",
+    "index": "ENTR_MARKET_DAY_OUTSIDE_BOMBCHU_BOWLING",
+    "kind": "Interior",
+    "source": "MARKET_BOMBCHU_BOWLING",
+    "target": "MARKET",
+    "mode": "entrance",
+    "entrances": [
+      956
+    ],
+    "source_scene": 75,
+    "target_scene": 32,
+    "source_scene_token": "SCENE_BOMBCHU_BOWLING_ALLEY",
+    "target_scene_token": "SCENE_MARKET_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000960,
+    "name": "Scene Transition: Bombchu Shop -> MK Bombchu Shop Entry",
+    "index": "ENTR_BACK_ALLEY_DAY_OUTSIDE_BOMBCHU_SHOP",
+    "kind": "Interior",
+    "source": "MARKET_BOMBCHU_SHOP",
+    "target": "MARKET_BACK_ALLEY",
+    "mode": "entrance",
+    "entrances": [
+      960
+    ],
+    "source_scene": 50,
+    "target_scene": 30,
+    "source_scene_token": "SCENE_BOMBCHU_SHOP",
+    "target_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000964,
+    "name": "Scene Transition: Zora Shop -> ZD Shop Entry",
+    "index": "ENTR_ZORAS_DOMAIN_OUTSIDE_SHOP",
+    "kind": "Interior",
+    "source": "ZD_SHOP",
+    "target": "ZORAS_DOMAIN",
+    "mode": "entrance",
+    "entrances": [
+      964
+    ],
+    "source_scene": 47,
+    "target_scene": 88,
+    "source_scene_token": "SCENE_ZORA_SHOP",
+    "target_scene_token": "SCENE_ZORAS_DOMAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000972,
+    "name": "Scene Transition: LH Lab -> LH Lab Entry",
+    "index": "ENTR_LAKE_HYLIA_OUTSIDE_LAB",
+    "kind": "Interior",
+    "source": "LH_LAB",
+    "target": "LAKE_HYLIA",
+    "mode": "entrance",
+    "entrances": [
+      972
+    ],
+    "source_scene": 56,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_LAKESIDE_LABORATORY",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000976,
+    "name": "Scene Transition: Carpenters' Tent -> GV Carpenters' Tent Entry",
+    "index": "ENTR_GERUDO_VALLEY_OUTSIDE_TENT",
+    "kind": "Interior",
+    "source": "GV_CARPENTER_TENT",
+    "target": "GV_FORTRESS_SIDE",
+    "mode": "entrance",
+    "entrances": [
+      976
+    ],
+    "source_scene": 57,
+    "target_scene": 90,
+    "source_scene_token": "SCENE_CARPENTERS_TENT",
+    "target_scene_token": "SCENE_GERUDO_VALLEY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000980,
+    "name": "Scene Transition: Ice Cavern Entrance -> Zora's Fountain Outside Ice Cavern",
+    "index": "ENTR_ZORAS_FOUNTAIN_OUTSIDE_ICE_CAVERN",
+    "kind": "Dungeon",
+    "source": "ICE_CAVERN_ENTRYWAY",
+    "target": "ZF_LEDGE",
+    "mode": "entrance",
+    "entrances": [
+      980
+    ],
+    "source_scene": 9,
+    "target_scene": 89,
+    "source_scene_token": "SCENE_ICE_CAVERN",
+    "target_scene_token": "SCENE_ZORAS_FOUNTAIN",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11000988,
+    "name": "Scene Transition: Ganons Tower Collapse Exterior -> Ganons Tower Collapse Interior (entrance 5)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_4",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      988
+    ],
+    "source_scene": 26,
+    "target_scene": 14,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000992,
+    "name": "Scene Transition: Ganons Tower Collapse Exterior -> Ganons Tower Collapse Interior (entrance 6)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_5",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      992
+    ],
+    "source_scene": 26,
+    "target_scene": 14,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2)",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11000996,
+    "name": "Scene Transition: Ganons Tower Collapse Exterior -> Ganons Tower Collapse Interior (entrance 7)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_6",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      996
+    ],
+    "source_scene": 26,
+    "target_scene": 14,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2)",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11001000,
+    "name": "Scene Transition: OGC Great Fairy Fountain -> OGC Behind Pillar",
+    "index": "ENTR_POTION_SHOP_KAKARIKO_1",
+    "kind": "Interior",
+    "source": "OGC_GREAT_FAIRY_FOUNTAIN",
+    "target": "CASTLE_GROUNDS",
+    "mode": "entrance",
+    "entrances": [
+      1000
+    ],
+    "source_scene": 59,
+    "target_scene": 100,
+    "source_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC",
+    "target_scene_token": "SCENE_OUTSIDE_GANONS_CASTLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001004,
+    "name": "Scene Transition: Kak Potion Shop Back Entry -> Kak Potion Shop Back",
+    "index": "ENTR_POTION_SHOP_KAKARIKO_BACK",
+    "kind": "SpecialInterior",
+    "source": "KAK_BACKYARD",
+    "target": "KAK_POTION_SHOP_BACK",
+    "mode": "entrance",
+    "entrances": [
+      1004
+    ],
+    "source_scene": 82,
+    "target_scene": 48,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_POTION_SHOP_KAKARIKO",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001008,
+    "name": "Scene Transition: Spirit Temple Outer Right Hand -> Spirit Temple Right Hand Exit",
+    "index": "ENTR_SPIRIT_TEMPLE_2",
+    "kind": "Dungeon",
+    "source": "RR_SPIRIT_TEMPLE_OUTER_RIGHT_HAND",
+    "target": "RR_SPIRIT_TEMPLE_RIGHT_HAND_EXIT",
+    "mode": "entrance",
+    "entrances": [
+      1008
+    ],
+    "source_scene": 92,
+    "target_scene": 6,
+    "source_scene_token": "SCENE_DESERT_COLOSSUS",
+    "target_scene_token": "SCENE_SPIRIT_TEMPLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001012,
+    "name": "Scene Transition: Spirit Temple Outer Left Hand -> Spirit Temple Left Hand Exit",
+    "index": "ENTR_SPIRIT_TEMPLE_3",
+    "kind": "Dungeon",
+    "source": "RR_SPIRIT_TEMPLE_OUTER_LEFT_HAND",
+    "target": "RR_SPIRIT_TEMPLE_LEFT_HAND_EXIT",
+    "mode": "entrance",
+    "entrances": [
+      1012
+    ],
+    "source_scene": 92,
+    "target_scene": 6,
+    "source_scene_token": "SCENE_DESERT_COLOSSUS",
+    "target_scene_token": "SCENE_SPIRIT_TEMPLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001020,
+    "name": "Scene Transition: Goron Shop -> GC Shop Entry",
+    "index": "ENTR_GORON_CITY_OUTSIDE_SHOP",
+    "kind": "Interior",
+    "source": "GC_SHOP",
+    "target": "GORON_CITY",
+    "mode": "entrance",
+    "entrances": [
+      1020
+    ],
+    "source_scene": 46,
+    "target_scene": 98,
+    "source_scene_token": "SCENE_GORON_SHOP",
+    "target_scene_token": "SCENE_GORON_CITY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001024,
+    "name": "Scene Transition: Castle Courtyard guards -> Zelda Courtyard",
+    "index": "ENTR_CASTLE_COURTYARD_ZELDA_0",
+    "kind": "Interior",
+    "source": "HC_GARDEN",
+    "target": "HC_GARDEN",
+    "mode": "entrance",
+    "entrances": [
+      1024
+    ],
+    "source_scene": 69,
+    "target_scene": 74,
+    "source_scene_token": "SCENE_CASTLE_COURTYARD_GUARDS_DAY",
+    "target_scene_token": "SCENE_CASTLE_COURTYARD_ZELDA",
+    "grotto": -1,
+    "content": -1,
+    "traversal_rule": "day"
+  },
+  {
+    "id": 11001035,
+    "name": "Scene Transition: Dodongo's Cavern Boss Door -> King Dodongo",
+    "index": "ENTR_DODONGOS_CAVERN_BOSS_ENTRANCE",
+    "kind": "ChildBoss",
+    "source": "DODONGOS_CAVERN_BOSS_ENTRYWAY",
+    "target": "DODONGOS_CAVERN_BOSS_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      1035
+    ],
+    "source_scene": 1,
+    "target_scene": 18,
+    "source_scene_token": "SCENE_DODONGOS_CAVERN",
+    "target_scene_token": "SCENE_DODONGOS_CAVERN_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001039,
+    "name": "Scene Transition: Deku Tree Boss Door -> Gohma",
+    "index": "ENTR_DEKU_TREE_BOSS_ENTRANCE",
+    "kind": "ChildBoss",
+    "source": "DEKU_TREE_BOSS_ENTRYWAY",
+    "target": "DEKU_TREE_BOSS_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      1039
+    ],
+    "source_scene": 0,
+    "target_scene": 17,
+    "source_scene_token": "SCENE_DEKU_TREE",
+    "target_scene_token": "SCENE_DEKU_TREE_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001043,
+    "name": "Scene Transition: Shadow Temple Boss Door -> Bongo-Bongo",
+    "index": "ENTR_SHADOW_TEMPLE_BOSS_ENTRANCE",
+    "kind": "AdultBoss",
+    "source": "SHADOW_TEMPLE_BOSS_ENTRYWAY",
+    "target": "SHADOW_TEMPLE_BOSS_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      1043
+    ],
+    "source_scene": 7,
+    "target_scene": 24,
+    "source_scene_token": "SCENE_SHADOW_TEMPLE",
+    "target_scene_token": "SCENE_SHADOW_TEMPLE_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001047,
+    "name": "Scene Transition: Water Temple Boss Door -> Morpha",
+    "index": "ENTR_WATER_TEMPLE_BOSS_ENTRANCE",
+    "kind": "AdultBoss",
+    "source": "WATER_TEMPLE_BOSS_ENTRYWAY",
+    "target": "WATER_TEMPLE_BOSS_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      1047
+    ],
+    "source_scene": 5,
+    "target_scene": 22,
+    "source_scene_token": "SCENE_WATER_TEMPLE",
+    "target_scene_token": "SCENE_WATER_TEMPLE_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001051,
+    "name": "Scene Transition: Inside Ganon's Castle -> Ganon's Tower Entrance",
+    "index": "ENTR_GANONS_TOWER_0",
+    "kind": "GanonTower",
+    "source": "GANONS_TOWER_ENTRYWAY",
+    "target": "GANONS_TOWER_FLOOR_1",
+    "mode": "entrance",
+    "entrances": [
+      1051
+    ],
+    "source_scene": 13,
+    "target_scene": 10,
+    "source_scene_token": "SCENE_INSIDE_GANONS_CASTLE",
+    "target_scene_token": "SCENE_GANONS_TOWER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001055,
+    "name": "Scene Transition: Ganon's Tower Before Ganondorf's Lair -> Ganondorf's Lair",
+    "index": "ENTR_GANONDORF_BOSS_0",
+    "kind": "Dungeon",
+    "source": "GANONS_TOWER_BEFORE_GANONDORFS_LAIR",
+    "target": "GANONDORFS_LAIR",
+    "mode": "entrance",
+    "entrances": [
+      1055
+    ],
+    "source_scene": 10,
+    "target_scene": 25,
+    "source_scene_token": "SCENE_GANONS_TOWER",
+    "target_scene_token": "SCENE_GANONDORF_BOSS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001071,
+    "name": "Scene Transition: LLR Stables -> LLR Stables Entry",
+    "index": "ENTR_LON_LON_RANCH_OUTSIDE_STABLES",
+    "kind": "Interior",
+    "source": "LLR_STABLES",
+    "target": "LON_LON_RANCH",
+    "mode": "entrance",
+    "entrances": [
+      1071
+    ],
+    "source_scene": 54,
+    "target_scene": 99,
+    "source_scene_token": "SCENE_STABLE",
+    "target_scene_token": "SCENE_LON_LON_RANCH",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001075,
+    "name": "Scene Transition: KF Mido's House Entry -> Mido's House",
+    "index": "ENTR_MIDOS_HOUSE_0",
+    "kind": "Interior",
+    "source": "KOKIRI_FOREST",
+    "target": "KF_MIDOS_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      1075
+    ],
+    "source_scene": 85,
+    "target_scene": 40,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_MIDOS_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001079,
+    "name": "Scene Transition: KF Saria's House Entry -> Saria's House",
+    "index": "ENTR_SARIAS_HOUSE_0",
+    "kind": "Interior",
+    "source": "KOKIRI_FOREST",
+    "target": "KF_SARIAS_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      1079
+    ],
+    "source_scene": 85,
+    "target_scene": 41,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_SARIAS_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001083,
+    "name": "Scene Transition: MK Man-in-Green House Entry -> Man-in-Green's House",
+    "index": "ENTR_BACK_ALLEY_MAN_IN_GREEN_HOUSE",
+    "kind": "Interior",
+    "source": "MARKET_BACK_ALLEY",
+    "target": "MARKET_MAN_IN_GREEN_HOUSE",
+    "mode": "entrance",
+    "entrances": [
+      1083
+    ],
+    "source_scene": 30,
+    "target_scene": 43,
+    "source_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "target_scene_token": "SCENE_BACK_ALLEY_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001087,
+    "name": "Scene Transition: Ganondorf's Lair -> Castle escape",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_0",
+    "kind": "Dungeon",
+    "source": "GANONDORFS_LAIR",
+    "target": "GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      1087
+    ],
+    "source_scene": 25,
+    "target_scene": 26,
+    "source_scene_token": "SCENE_GANONDORF_BOSS",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11001091,
+    "name": "Scene Transition: Mido's House -> KF Mido's House Entry",
+    "index": "ENTR_KOKIRI_FOREST_OUTSIDE_MIDOS_HOUSE",
+    "kind": "Interior",
+    "source": "KF_MIDOS_HOUSE",
+    "target": "KOKIRI_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      1091
+    ],
+    "source_scene": 40,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_MIDOS_HOUSE",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001095,
+    "name": "Scene Transition: Saria's House -> KF Saria's House Entry",
+    "index": "ENTR_KOKIRI_FOREST_OUTSIDE_SARIAS_HOUSE",
+    "kind": "Interior",
+    "source": "KF_SARIAS_HOUSE",
+    "target": "KOKIRI_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      1095
+    ],
+    "source_scene": 41,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_SARIAS_HOUSE",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001099,
+    "name": "Scene Transition: Kak Potion Shop Front -> Kak Potion Shop Front Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_POTION_SHOP_FRONT",
+    "kind": "SpecialInterior",
+    "source": "KAK_POTION_SHOP_FRONT",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      1099
+    ],
+    "source_scene": 48,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_POTION_SHOP_KAKARIKO",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001103,
+    "name": "Scene Transition: GY Near-Ledge Grave Entry -> Dampe's Grave",
+    "index": "ENTR_WINDMILL_AND_DAMPES_GRAVE_GRAVE",
+    "kind": "GrottoGrave",
+    "source": "THE_GRAVEYARD",
+    "target": "GRAVEYARD_DAMPES_GRAVE",
+    "mode": "entrance",
+    "entrances": [
+      1103
+    ],
+    "source_scene": 83,
+    "target_scene": 72,
+    "source_scene_token": "SCENE_GRAVEYARD",
+    "target_scene_token": "SCENE_WINDMILL_AND_DAMPES_GRAVE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001107,
+    "name": "Scene Transition: Kak Windmill Entry -> Windmill",
+    "index": "ENTR_WINDMILL_AND_DAMPES_GRAVE_WINDMILL",
+    "kind": "SpecialInterior",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "KAK_WINDMILL",
+    "mode": "entrance",
+    "entrances": [
+      1107
+    ],
+    "source_scene": 82,
+    "target_scene": 72,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_WINDMILL_AND_DAMPES_GRAVE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001111,
+    "name": "Scene Transition: Gohma Blue Warp -> Deku Tree Blue Warp",
+    "index": "ENTR_KOKIRI_FOREST_DEKU_TREE_BLUE_WARP",
+    "kind": "BlueWarp",
+    "source": "DEKU_TREE_BOSS_ROOM",
+    "target": "KF_OUTSIDE_DEKU_TREE",
+    "mode": "entrance",
+    "entrances": [
+      1111
+    ],
+    "source_scene": 17,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_DEKU_TREE_BOSS",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001115,
+    "name": "Scene Transition: DMT Great Fairy Fountain -> DMT Great Fairy Entry",
+    "index": "ENTR_DEATH_MOUNTAIN_TRAIL_GREAT_FAIRY_EXIT",
+    "kind": "Interior",
+    "source": "DMT_GREAT_FAIRY_FOUNTAIN",
+    "target": "DEATH_MOUNTAIN_SUMMIT",
+    "mode": "entrance",
+    "entrances": [
+      1115
+    ],
+    "source_scene": 59,
+    "target_scene": 96,
+    "source_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001119,
+    "name": "Scene Transition: LH Fishing Pond Entry -> Fishing Pond",
+    "index": "ENTR_FISHING_POND_0",
+    "kind": "Interior",
+    "source": "LH_FISHING_ISLAND",
+    "target": "LH_FISHING_HOLE",
+    "mode": "entrance",
+    "entrances": [
+      1119
+    ],
+    "source_scene": 87,
+    "target_scene": 73,
+    "source_scene_token": "SCENE_LAKE_HYLIA",
+    "target_scene_token": "SCENE_FISHING_POND",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001123,
+    "name": "Scene Transition: Kak Shooting Gallery -> Kak Shooting Gallery Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_SHOOTING_GALLERY",
+    "kind": "Interior",
+    "source": "KAK_SHOOTING_GALLERY",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      1123
+    ],
+    "source_scene": 66,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_SHOOTING_GALLERY",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001127,
+    "name": "Scene Transition: OGC Rainbow Bridge Exit -> Inside Ganon's Castle Entrance",
+    "index": "ENTR_INSIDE_GANONS_CASTLE_ENTRANCE",
+    "kind": "GanonDungeon",
+    "source": "GANONS_CASTLE_LEDGE",
+    "target": "GANONS_CASTLE_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      1127
+    ],
+    "source_scene": 100,
+    "target_scene": 13,
+    "source_scene_token": "SCENE_OUTSIDE_GANONS_CASTLE",
+    "target_scene_token": "SCENE_INSIDE_GANONS_CASTLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001138,
+    "name": "Scene Transition: Temple of Time Entrance -> ToT Courtyard Temple Entry",
+    "index": "ENTR_TEMPLE_OF_TIME_EXTERIOR_DAY_OUTSIDE_TEMPLE",
+    "kind": "SpecialInterior",
+    "source": "TEMPLE_OF_TIME",
+    "target": "TOT_ENTRANCE",
+    "mode": "entrance",
+    "entrances": [
+      1138
+    ],
+    "source_scene": 67,
+    "target_scene": 35,
+    "source_scene_token": "SCENE_TEMPLE_OF_TIME",
+    "target_scene_token": "SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001146,
+    "name": "Scene Transition: King Dodongo Blue Warp -> Dodongo's Cavern Blue Warp",
+    "index": "ENTR_DEATH_MOUNTAIN_TRAIL_DODONGO_BLUE_WARP",
+    "kind": "BlueWarp",
+    "source": "DODONGOS_CAVERN_BOSS_ROOM",
+    "target": "DEATH_MOUNTAIN_TRAIL",
+    "mode": "entrance",
+    "entrances": [
+      1146
+    ],
+    "source_scene": 18,
+    "target_scene": 96,
+    "source_scene_token": "SCENE_DODONGOS_CAVERN_BOSS",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001154,
+    "name": "Scene Transition: DMC Great Fairy Fountain -> DMC Great Fairy Entry",
+    "index": "ENTR_DEATH_MOUNTAIN_CRATER_GREAT_FAIRY_EXIT",
+    "kind": "Interior",
+    "source": "DMC_GREAT_FAIRY_FOUNTAIN",
+    "target": "DMC_LOWER_LOCAL",
+    "mode": "entrance",
+    "entrances": [
+      1154
+    ],
+    "source_scene": 59,
+    "target_scene": 97,
+    "source_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001158,
+    "name": "Scene Transition: GF Outskirts -> TH 1 Torch Cell Turn",
+    "index": "ENTR_THIEVES_HIDEOUT_0",
+    "kind": "ThievesHideout",
+    "source": "GERUDO_FORTRESS_OUTSKIRTS",
+    "target": "THIEVES_HIDEOUT_1_TORCH_CELL",
+    "mode": "entrance",
+    "entrances": [
+      1158
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001162,
+    "name": "Scene Transition: GF Near Grotto North -> TH 1 Torch Cell",
+    "index": "ENTR_THIEVES_HIDEOUT_1",
+    "kind": "ThievesHideout",
+    "source": "GF_NEAR_GROTTO",
+    "target": "THIEVES_HIDEOUT_1_TORCH_CELL",
+    "mode": "entrance",
+    "entrances": [
+      1162
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001166,
+    "name": "Scene Transition: GF Near Grotto East -> TH Kitchen Corridor Lower",
+    "index": "ENTR_THIEVES_HIDEOUT_2",
+    "kind": "ThievesHideout",
+    "source": "GF_NEAR_GROTTO",
+    "target": "THIEVES_HIDEOUT_KITCHEN_CORRIDOR",
+    "mode": "entrance",
+    "entrances": [
+      1166
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001170,
+    "name": "Scene Transition: GF Above GTG -> TH Kitchen Corridor Upper",
+    "index": "ENTR_THIEVES_HIDEOUT_3",
+    "kind": "ThievesHideout",
+    "source": "GF_ABOVE_GTG",
+    "target": "THIEVES_HIDEOUT_KITCHEN_CORRIDOR",
+    "mode": "entrance",
+    "entrances": [
+      1170
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001174,
+    "name": "Scene Transition: GF Near Grotto -> TH Steep Slope Cell",
+    "index": "ENTR_THIEVES_HIDEOUT_4",
+    "kind": "ThievesHideout",
+    "source": "GF_NEAR_GROTTO",
+    "target": "THIEVES_HIDEOUT_STEEP_SLOPE_CELL",
+    "mode": "entrance",
+    "entrances": [
+      1174
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001178,
+    "name": "Scene Transition: GF Bottom of Lower Vines -> TH Steep Slope Cell Two Ramps",
+    "index": "ENTR_THIEVES_HIDEOUT_5",
+    "kind": "ThievesHideout",
+    "source": "GF_BOTTOM_OF_LOWER_VINES",
+    "target": "THIEVES_HIDEOUT_STEEP_SLOPE_CELL",
+    "mode": "entrance",
+    "entrances": [
+      1178
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001182,
+    "name": "Scene Transition: GF Above GTG Directly -> TH Double Cell Lower",
+    "index": "ENTR_THIEVES_HIDEOUT_6",
+    "kind": "ThievesHideout",
+    "source": "GF_ABOVE_GTG",
+    "target": "THIEVES_HIDEOUT_DOUBLE_CELL",
+    "mode": "entrance",
+    "entrances": [
+      1182
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001186,
+    "name": "Scene Transition: GF Top of Lower Vines Across -> TH Double Cell Upper",
+    "index": "ENTR_THIEVES_HIDEOUT_7",
+    "kind": "ThievesHideout",
+    "source": "GF_TOP_OF_LOWER_VINES",
+    "target": "THIEVES_HIDEOUT_DOUBLE_CELL",
+    "mode": "entrance",
+    "entrances": [
+      1186
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001190,
+    "name": "Scene Transition: GF Top of Lower Vines Near -> TH Kitchen By Corridor",
+    "index": "ENTR_THIEVES_HIDEOUT_8",
+    "kind": "ThievesHideout",
+    "source": "GF_TOP_OF_LOWER_VINES",
+    "target": "THIEVES_HIDEOUT_KITCHEN_TOP",
+    "mode": "entrance",
+    "entrances": [
+      1190
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001194,
+    "name": "Scene Transition: GF Near GS -> TH Kitchen Opposite Corridor",
+    "index": "ENTR_THIEVES_HIDEOUT_9",
+    "kind": "ThievesHideout",
+    "source": "GF_NEAR_GS",
+    "target": "THIEVES_HIDEOUT_KITCHEN_TOP",
+    "mode": "entrance",
+    "entrances": [
+      1194
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001198,
+    "name": "Scene Transition: GF Below Chest -> TH Break Room",
+    "index": "ENTR_THIEVES_HIDEOUT_10",
+    "kind": "ThievesHideout",
+    "source": "GF_BELOW_CHEST",
+    "target": "THIEVES_HIDEOUT_BREAK_ROOM",
+    "mode": "entrance",
+    "entrances": [
+      1198
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001202,
+    "name": "Scene Transition: GF Above Jail -> TH Break Room Corridor",
+    "index": "ENTR_THIEVES_HIDEOUT_11",
+    "kind": "ThievesHideout",
+    "source": "GF_ABOVE_JAIL",
+    "target": "THIEVES_HIDEOUT_BREAK_ROOM_CORRIDOR",
+    "mode": "entrance",
+    "entrances": [
+      1202
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001206,
+    "name": "Scene Transition: Inside Ganons Castle Collapse -> Ganons Tower Collapse Interior (entrance 8)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_7",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      1206
+    ],
+    "source_scene": 15,
+    "target_scene": 14,
+    "source_scene_token": "SCENE_INSIDE_GANONS_CASTLE_COLLAPSE",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2)",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11001210,
+    "name": "Scene Transition: Ganons Tower Collapse Interior -> Ganons Tower Collapse Exterior (entrance 2)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_1",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      1210
+    ],
+    "source_scene": 14,
+    "target_scene": 26,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "true",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11001214,
+    "name": "Scene Transition: DMC Great Fairy Entry -> DMC Great Fairy Fountain",
+    "index": "ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_DMC",
+    "kind": "Interior",
+    "source": "DMC_LOWER_NEARBY",
+    "target": "DMC_GREAT_FAIRY_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      1214
+    ],
+    "source_scene": 97,
+    "target_scene": 59,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "target_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001218,
+    "name": "Scene Transition: OGC Behind Pillar -> OGC Great Fairy Fountain",
+    "index": "ENTR_GREAT_FAIRYS_FOUNTAIN_MAGIC_OGC_DD",
+    "kind": "Interior",
+    "source": "GANONS_CASTLE_GROUNDS",
+    "target": "OGC_GREAT_FAIRY_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      1218
+    ],
+    "source_scene": 100,
+    "target_scene": 59,
+    "source_scene_token": "SCENE_OUTSIDE_GANONS_CASTLE",
+    "target_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001238,
+    "name": "Scene Transition: Goron City Tunnel Shortcut -> Lost Woods Tunnel Shortcut",
+    "index": "ENTR_LOST_WOODS_TUNNEL_SHORTCUT",
+    "kind": "Overworld",
+    "source": "GC_WOODS_WARP",
+    "target": "LOST_WOODS",
+    "mode": "entrance",
+    "entrances": [
+      1238
+    ],
+    "source_scene": 98,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_GORON_CITY",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001242,
+    "name": "Scene Transition: Zora's River Underwater Shortcut -> Lost Woods Underwater Shortcut",
+    "index": "ENTR_LOST_WOODS_UNDERWATER_SHORTCUT",
+    "kind": "Overworld",
+    "source": "ZR_FROM_SHORTCUT",
+    "target": "LOST_WOODS",
+    "mode": "entrance",
+    "entrances": [
+      1242
+    ],
+    "source_scene": 84,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_ZORAS_RIVER",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001246,
+    "name": "Scene Transition: Hyrule Field Wooded Exit -> Lost Woods Bridge West Exit",
+    "index": "ENTR_LOST_WOODS_BRIDGE_WEST_EXIT",
+    "kind": "Overworld",
+    "source": "HYRULE_FIELD",
+    "target": "LW_BRIDGE",
+    "mode": "entrance",
+    "entrances": [
+      1246
+    ],
+    "source_scene": 81,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001250,
+    "name": "Scene Transition: Lost Woods Tunnel Shortcut -> Goron City Tunnel Shortcut",
+    "index": "ENTR_GORON_CITY_TUNNEL_SHORTCUT",
+    "kind": "Overworld",
+    "source": "LOST_WOODS",
+    "target": "GC_WOODS_WARP",
+    "mode": "entrance",
+    "entrances": [
+      1250
+    ],
+    "source_scene": 91,
+    "target_scene": 98,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_GORON_CITY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001262,
+    "name": "Scene Transition: House of Skulltula -> Kak Skulltula House Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_SKULKLTULA_HOUSE",
+    "kind": "Interior",
+    "source": "KAK_HOUSE_OF_SKULLTULA",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "entrance",
+    "entrances": [
+      1262
+    ],
+    "source_scene": 80,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_HOUSE_OF_SKULLTULA",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001270,
+    "name": "Scene Transition: Bolero of Fire -> DMC Warp Pad",
+    "index": "ENTR_DEATH_MOUNTAIN_CRATER_WARP_PAD",
+    "kind": "WarpSong",
+    "source": "BOLERO_OF_FIRE_WARP",
+    "target": "DMC_CENTRAL_LOCAL",
+    "mode": "entrance",
+    "entrances": [
+      1270
+    ],
+    "source_scene": -1,
+    "target_scene": 97,
+    "source_scene_token": "SCENE_ID_MAX",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001279,
+    "name": "Scene Transition: Kak Potion Shop Back -> Kak Potion Shop Back Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_POTION_SHOP_BACK",
+    "kind": "SpecialInterior",
+    "source": "KAK_POTION_SHOP_BACK",
+    "target": "KAK_BACKYARD",
+    "mode": "entrance",
+    "entrances": [
+      1279
+    ],
+    "source_scene": 48,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_POTION_SHOP_KAKARIKO",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001287,
+    "name": "Scene Transition: MK Bombchu Bowling Entry -> Bombchu Bowling",
+    "index": "ENTR_BOMBCHU_BOWLING_ALLEY_0",
+    "kind": "Interior",
+    "source": "MARKET",
+    "target": "MARKET_BOMBCHU_BOWLING",
+    "mode": "entrance",
+    "entrances": [
+      1287
+    ],
+    "source_scene": 32,
+    "target_scene": 75,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_BOMBCHU_BOWLING_ALLEY",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001291,
+    "name": "Scene Transition: Royal Family's Tomb -> GY Royal Family's Tomb Entry",
+    "index": "ENTR_GRAVEYARD_ROYAL_TOMB_EXIT",
+    "kind": "GrottoGrave",
+    "source": "GRAVEYARD_COMPOSERS_GRAVE",
+    "target": "THE_GRAVEYARD",
+    "mode": "entrance",
+    "entrances": [
+      1291
+    ],
+    "source_scene": 65,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_ROYAL_FAMILYS_TOMB",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001303,
+    "name": "Scene Transition: Inside Ganons Castle Collapse -> Ganon Boss (entrance 1)",
+    "index": "ENTR_GANON_BOSS_0",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      1303
+    ],
+    "source_scene": 15,
+    "target_scene": 79,
+    "source_scene_token": "SCENE_INSIDE_GANONS_CASTLE_COLLAPSE",
+    "target_scene_token": "SCENE_GANON_BOSS",
+    "grotto": -1,
+    "content": -1,
+    "condition": "CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2)",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11001308,
+    "name": "Scene Transition: Ganons Tower Collapse Interior -> Ganons Tower Collapse Exterior (entrance 7)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_6",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      1308
+    ],
+    "source_scene": 14,
+    "target_scene": 26,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2)",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11001316,
+    "name": "Scene Transition: Ganons Tower Collapse Interior -> Ganons Tower Collapse Exterior (entrance 8)",
+    "index": "ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_7",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      1316
+    ],
+    "source_scene": 14,
+    "target_scene": 26,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "target_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR",
+    "grotto": -1,
+    "content": -1,
+    "condition": "CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2)",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11001320,
+    "name": "Scene Transition: MK Bombchu Shop Entry -> Bombchu Shop",
+    "index": "ENTR_BOMBCHU_SHOP_1",
+    "kind": "Interior",
+    "source": "MARKET_BACK_ALLEY",
+    "target": "MARKET_BOMBCHU_SHOP",
+    "mode": "entrance",
+    "entrances": [
+      1320
+    ],
+    "source_scene": 30,
+    "target_scene": 50,
+    "source_scene_token": "SCENE_BACK_ALLEY_DAY",
+    "target_scene_token": "SCENE_BOMBCHU_SHOP",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001324,
+    "name": "Scene Transition: MK Bazaar Entry -> MK Bazaar",
+    "index": "ENTR_BAZAAR_1",
+    "kind": "Interior",
+    "source": "MARKET",
+    "target": "MARKET_BAZAAR",
+    "mode": "entrance",
+    "entrances": [
+      1324
+    ],
+    "source_scene": 32,
+    "target_scene": 44,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_BAZAAR",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001328,
+    "name": "Scene Transition: MK Mask Shop Entry -> Mask Shop",
+    "index": "ENTR_HAPPY_MASK_SHOP_0",
+    "kind": "Interior",
+    "source": "MARKET",
+    "target": "MARKET_MASK_SHOP",
+    "mode": "entrance",
+    "entrances": [
+      1328
+    ],
+    "source_scene": 32,
+    "target_scene": 51,
+    "source_scene_token": "SCENE_MARKET_DAY",
+    "target_scene_token": "SCENE_HAPPY_MASK_SHOP",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001332,
+    "name": "Scene Transition: Ganon's Tower Entrance -> Inside Ganon's Castle",
+    "index": "ENTR_INSIDE_GANONS_CASTLE_1",
+    "kind": "GanonTower",
+    "source": "GANONS_TOWER_FLOOR_1",
+    "target": "GANONS_TOWER_ENTRYWAY",
+    "mode": "entrance",
+    "entrances": [
+      1332
+    ],
+    "source_scene": 10,
+    "target_scene": 13,
+    "source_scene_token": "SCENE_GANONS_TOWER",
+    "target_scene_token": "SCENE_INSIDE_GANONS_CASTLE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001360,
+    "name": "Scene Transition: Kak Skulltula House Entry -> House of Skulltula",
+    "index": "ENTR_HOUSE_OF_SKULLTULA_0",
+    "kind": "Interior",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "KAK_HOUSE_OF_SKULLTULA",
+    "mode": "entrance",
+    "entrances": [
+      1360
+    ],
+    "source_scene": 82,
+    "target_scene": 80,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_HOUSE_OF_SKULLTULA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001364,
+    "name": "Scene Transition: DMT Owl Flight -> Kakariko Village Owl Drop",
+    "index": "ENTR_KAKARIKO_VILLAGE_OWL_DROP",
+    "kind": "OwlDrop",
+    "source": "DMT_OWL_FLIGHT",
+    "target": "KAK_IMPAS_ROOFTOP",
+    "mode": "entrance",
+    "entrances": [
+      1364
+    ],
+    "source_scene": 96,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001376,
+    "name": "Scene Transition: Zora's Domain Underwater Shortcut -> Lake Hylia Underwater Shortcut",
+    "index": "ENTR_LAKE_HYLIA_UNDERWATER_SHORTCUT",
+    "kind": "Overworld",
+    "source": "ZORAS_DOMAIN",
+    "target": "LH_FROM_SHORTCUT",
+    "mode": "entrance",
+    "entrances": [
+      1376
+    ],
+    "source_scene": 88,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_ZORAS_DOMAIN",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001380,
+    "name": "Scene Transition: Volvagia Blue Warp -> Fire Temple Blue Warp",
+    "index": "ENTR_DEATH_MOUNTAIN_CRATER_FIRE_TEMPLE_BLUE_WARP",
+    "kind": "BlueWarp",
+    "source": "FIRE_TEMPLE_BOSS_ROOM",
+    "target": "DMC_CENTRAL_LOCAL",
+    "mode": "entrance",
+    "entrances": [
+      1380
+    ],
+    "source_scene": 21,
+    "target_scene": 97,
+    "source_scene_token": "SCENE_FIRE_TEMPLE_BOSS",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001384,
+    "name": "Scene Transition: Nocturne of Shadow -> Graveyard Warp Pad",
+    "index": "ENTR_GRAVEYARD_WARP_PAD",
+    "kind": "WarpSong",
+    "source": "NOCTURNE_OF_SHADOW_WARP",
+    "target": "GRAVEYARD_WARP_PAD_REGION",
+    "mode": "entrance",
+    "entrances": [
+      1384
+    ],
+    "source_scene": -1,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_ID_MAX",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001388,
+    "name": "Scene Transition: Ganons Tower Collapse Interior -> Inside Ganons Castle Collapse (entrance 1)",
+    "index": "ENTR_INSIDE_GANONS_CASTLE_COLLAPSE_0",
+    "kind": "Dungeon",
+    "source": "RR_GANONS_CASTLE_ESCAPE",
+    "target": "RR_GANONS_CASTLE_ESCAPE",
+    "mode": "entrance",
+    "entrances": [
+      1388
+    ],
+    "source_scene": 14,
+    "target_scene": 15,
+    "source_scene_token": "SCENE_GANONS_TOWER_COLLAPSE_INTERIOR",
+    "target_scene_token": "SCENE_INSIDE_GANONS_CASTLE_COLLAPSE",
+    "grotto": -1,
+    "content": -1,
+    "condition": "CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2)",
+    "requires_final_ganon_key": true
+  },
+  {
+    "id": 11001392,
+    "name": "Scene Transition: GF Below GS -> TH Dead End Cell",
+    "index": "ENTR_THIEVES_HIDEOUT_12",
+    "kind": "ThievesHideout",
+    "source": "GF_BELOW_GS",
+    "target": "THIEVES_HIDEOUT_DEAD_END_CELL",
+    "mode": "entrance",
+    "entrances": [
+      1392
+    ],
+    "source_scene": 93,
+    "target_scene": 12,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_THIEVES_HIDEOUT",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001400,
+    "name": "Scene Transition: HC Boulder Crawlspace -> HC Great Fairy Fountain",
+    "index": "ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_DINS_HC",
+    "kind": "Interior",
+    "source": "HC_PAST_GATE",
+    "target": "HC_GREAT_FAIRY_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      1400
+    ],
+    "source_scene": 95,
+    "target_scene": 61,
+    "source_scene_token": "SCENE_HYRULE_CASTLE",
+    "target_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001404,
+    "name": "Scene Transition: Colossus Great Fairy Fountain -> Colossus Great Fairy Entry",
+    "index": "ENTR_DESERT_COLOSSUS_GREAT_FAIRY_EXIT",
+    "kind": "Interior",
+    "source": "COLOSSUS_GREAT_FAIRY_FOUNTAIN",
+    "target": "DESERT_COLOSSUS",
+    "mode": "entrance",
+    "entrances": [
+      1404
+    ],
+    "source_scene": 61,
+    "target_scene": 92,
+    "source_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS",
+    "target_scene_token": "SCENE_DESERT_COLOSSUS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001408,
+    "name": "Scene Transition: Bongo-Bongo Blue Warp -> Shadow Temple Blue Warp",
+    "index": "ENTR_GRAVEYARD_SHADOW_TEMPLE_BLUE_WARP",
+    "kind": "BlueWarp",
+    "source": "SHADOW_TEMPLE_BOSS_ROOM",
+    "target": "GRAVEYARD_WARP_PAD_REGION",
+    "mode": "entrance",
+    "entrances": [
+      1408
+    ],
+    "source_scene": 24,
+    "target_scene": 83,
+    "source_scene_token": "SCENE_SHADOW_TEMPLE_BOSS",
+    "target_scene_token": "SCENE_GRAVEYARD",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001416,
+    "name": "Scene Transition: Colossus Great Fairy Entry -> Colossus Great Fairy Fountain",
+    "index": "ENTR_GREAT_FAIRYS_FOUNTAIN_SPELLS_NAYRUS_COLOSSUS",
+    "kind": "Interior",
+    "source": "DESERT_COLOSSUS",
+    "target": "COLOSSUS_GREAT_FAIRY_FOUNTAIN",
+    "mode": "entrance",
+    "entrances": [
+      1416
+    ],
+    "source_scene": 92,
+    "target_scene": 61,
+    "source_scene_token": "SCENE_DESERT_COLOSSUS",
+    "target_scene_token": "SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001480,
+    "name": "Scene Transition: Kak Impa's House Back Entry -> Impa's House Back",
+    "index": "ENTR_IMPAS_HOUSE_BACK",
+    "kind": "Interior",
+    "source": "KAK_IMPAS_LEDGE",
+    "target": "KAK_IMPAS_HOUSE_BACK",
+    "mode": "entrance",
+    "entrances": [
+      1480
+    ],
+    "source_scene": 82,
+    "target_scene": 55,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_IMPAS_HOUSE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001488,
+    "name": "Scene Transition: LLR Tower Entry -> LLR Tower",
+    "index": "ENTR_LON_LON_BUILDINGS_TOWER",
+    "kind": "Interior",
+    "source": "LON_LON_RANCH",
+    "target": "LLR_TOWER",
+    "mode": "entrance",
+    "entrances": [
+      1488
+    ],
+    "source_scene": 99,
+    "target_scene": 76,
+    "source_scene_token": "SCENE_LON_LON_RANCH",
+    "target_scene_token": "SCENE_LON_LON_BUILDINGS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001492,
+    "name": "Scene Transition: LLR Tower -> LLR Tower Entry",
+    "index": "ENTR_LON_LON_RANCH_OUTSIDE_TOWER",
+    "kind": "Interior",
+    "source": "LLR_TOWER",
+    "target": "LON_LON_RANCH",
+    "mode": "entrance",
+    "entrances": [
+      1492
+    ],
+    "source_scene": 76,
+    "target_scene": 99,
+    "source_scene_token": "SCENE_LON_LON_BUILDINGS",
+    "target_scene_token": "SCENE_LON_LON_RANCH",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001500,
+    "name": "Scene Transition: Impa's House Back -> Kak Impa's House Back Entry",
+    "index": "ENTR_KAKARIKO_VILLAGE_OUTSIDE_IMPAS_HOUSE_BACK",
+    "kind": "Interior",
+    "source": "KAK_IMPAS_HOUSE_BACK",
+    "target": "KAK_IMPAS_LEDGE",
+    "mode": "entrance",
+    "entrances": [
+      1500
+    ],
+    "source_scene": 55,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_IMPAS_HOUSE",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001504,
+    "name": "Scene Transition: Kokiri Forest Lower Exit -> Lost Woods Bridge East Exit",
+    "index": "ENTR_LOST_WOODS_BRIDGE_EAST_EXIT",
+    "kind": "Overworld",
+    "source": "KOKIRI_FOREST",
+    "target": "LW_BRIDGE_FROM_FOREST",
+    "mode": "entrance",
+    "entrances": [
+      1504
+    ],
+    "source_scene": 85,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001524,
+    "name": "Scene Transition: Prelude of Light -> Temple of Time Warp Pad",
+    "index": "ENTR_TEMPLE_OF_TIME_WARP_PAD",
+    "kind": "WarpSong",
+    "source": "PRELUDE_OF_LIGHT_WARP",
+    "target": "TEMPLE_OF_TIME",
+    "mode": "entrance",
+    "entrances": [
+      1524
+    ],
+    "source_scene": -1,
+    "target_scene": 67,
+    "source_scene_token": "SCENE_ID_MAX",
+    "target_scene_token": "SCENE_TEMPLE_OF_TIME",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001536,
+    "name": "Scene Transition: Minuet of Forest -> SFM Warp Pad",
+    "index": "ENTR_SACRED_FOREST_MEADOW_WARP_PAD",
+    "kind": "WarpSong",
+    "source": "MINUET_OF_FOREST_WARP",
+    "target": "SACRED_FOREST_MEADOW",
+    "mode": "entrance",
+    "entrances": [
+      1536
+    ],
+    "source_scene": -1,
+    "target_scene": 86,
+    "source_scene_token": "SCENE_ID_MAX",
+    "target_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001540,
+    "name": "Scene Transition: Serenade of Water -> Lake Hylia Warp Pad",
+    "index": "ENTR_LAKE_HYLIA_WARP_PAD",
+    "kind": "WarpSong",
+    "source": "SERENADE_OF_WATER_WARP",
+    "target": "LAKE_HYLIA",
+    "mode": "entrance",
+    "entrances": [
+      1540
+    ],
+    "source_scene": -1,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_ID_MAX",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001544,
+    "name": "Scene Transition: Phantom Ganon Blue Warp -> Forest Temple Blue Warp",
+    "index": "ENTR_SACRED_FOREST_MEADOW_FOREST_TEMPLE_BLUE_WARP",
+    "kind": "BlueWarp",
+    "source": "FOREST_TEMPLE_BOSS_ROOM",
+    "target": "SACRED_FOREST_MEADOW",
+    "mode": "entrance",
+    "entrances": [
+      1544
+    ],
+    "source_scene": 20,
+    "target_scene": 86,
+    "source_scene_token": "SCENE_FOREST_TEMPLE_BOSS",
+    "target_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001548,
+    "name": "Scene Transition: Morpha Blue Warp -> Water Temple Blue Warp",
+    "index": "ENTR_LAKE_HYLIA_WATER_TEMPLE_BLUE_WARP",
+    "kind": "BlueWarp",
+    "source": "WATER_TEMPLE_BOSS_ROOM",
+    "target": "LAKE_HYLIA",
+    "mode": "entrance",
+    "entrances": [
+      1548
+    ],
+    "source_scene": 22,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_WATER_TEMPLE_BOSS",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001552,
+    "name": "Scene Transition: Twinrova Blue Warp -> Spirit Temple Blue Warp",
+    "index": "ENTR_DESERT_COLOSSUS_SPIRIT_TEMPLE_BLUE_WARP",
+    "kind": "BlueWarp",
+    "source": "SPIRIT_TEMPLE_BOSS_ROOM",
+    "target": "DESERT_COLOSSUS",
+    "mode": "entrance",
+    "entrances": [
+      1552
+    ],
+    "source_scene": 23,
+    "target_scene": 92,
+    "source_scene_token": "SCENE_SPIRIT_TEMPLE_BOSS",
+    "target_scene_token": "SCENE_DESERT_COLOSSUS",
+    "grotto": -1,
+    "content": -1
+  },
+  {
+    "id": 11001792,
+    "name": "Scene Transition: Colossus Grotto Entry -> Colossus Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_COLOSSUS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DESERT_COLOSSUS",
+    "target": "COLOSSUS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1468
+    ],
+    "source_scene": 92,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_DESERT_COLOSSUS",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 0,
+    "content": 253
+  },
+  {
+    "id": 11001793,
+    "name": "Scene Transition: LH Grave Grotto Entry -> LH Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_LH_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LAKE_HYLIA",
+    "target": "LH_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1444
+    ],
+    "source_scene": 87,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_LAKE_HYLIA",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 1,
+    "content": 239
+  },
+  {
+    "id": 11001794,
+    "name": "Scene Transition: ZR Rock Circle Grotto Entry -> ZR Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_ZR_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "ZORA_RIVER",
+    "target": "ZR_STORMS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1468
+    ],
+    "source_scene": 84,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_ZORAS_RIVER",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 2,
+    "content": 235
+  },
+  {
+    "id": 11001795,
+    "name": "Scene Transition: ZR Raised Boulder Grotto Entry -> ZR Fairy Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_ZR_FAIRY_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "ZORA_RIVER",
+    "target": "ZR_FAIRY_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      877
+    ],
+    "source_scene": 84,
+    "target_scene": 60,
+    "source_scene_token": "SCENE_ZORAS_RIVER",
+    "target_scene_token": "SCENE_FAIRYS_FOUNTAIN",
+    "grotto": 3,
+    "content": 230
+  },
+  {
+    "id": 11001796,
+    "name": "Scene Transition: ZR Raised Open Grotto Entry -> ZR Open Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_ZR_OPEN_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "ZORA_RIVER",
+    "target": "ZR_OPEN_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 84,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_ZORAS_RIVER",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 4,
+    "content": 41
+  },
+  {
+    "id": 11001797,
+    "name": "Scene Transition: DMC Hammer Grotto Entry -> DMC Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_DMC_HAMMER_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DMC_LOWER_NEARBY",
+    "target": "DMC_HAMMER_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1444
+    ],
+    "source_scene": 97,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 5,
+    "content": 249
+  },
+  {
+    "id": 11001798,
+    "name": "Scene Transition: DMC Upper Grotto Entry -> DMC Upper Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_DMC_UPPER_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DMC_UPPER_NEARBY",
+    "target": "DMC_UPPER_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 97,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 6,
+    "content": 122
+  },
+  {
+    "id": 11001799,
+    "name": "Scene Transition: GC Lava Grotto Entry -> GC Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_GORON_CITY_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "GC_GROTTO_PLATFORM",
+    "target": "GC_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1444
+    ],
+    "source_scene": 98,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_GORON_CITY",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 7,
+    "content": 251
+  },
+  {
+    "id": 11001800,
+    "name": "Scene Transition: DMT Rock Circle Grotto Entry -> DMT Storms Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_DMT_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DEATH_MOUNTAIN_TRAIL",
+    "target": "DMT_STORMS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 96,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 8,
+    "content": 87
+  },
+  {
+    "id": 11001801,
+    "name": "Scene Transition: DMT Boulder Grotto Entry -> DMT Cow Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_DMT_COW_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DEATH_MOUNTAIN_TRAIL",
+    "target": "DMT_COW_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1532
+    ],
+    "source_scene": 96,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 9,
+    "content": 248
+  },
+  {
+    "id": 11001802,
+    "name": "Scene Transition: Kak Open Grotto Entry -> Kak Open Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_KAK_OPEN_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "KAK_BACKYARD",
+    "target": "KAK_OPEN_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 82,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 10,
+    "content": 40
+  },
+  {
+    "id": 11001803,
+    "name": "Scene Transition: Kak Center Grotto Entry -> Kak Redead Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_KAK_REDEAD_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "KAKARIKO_VILLAGE",
+    "target": "KAK_REDEAD_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1440
+    ],
+    "source_scene": 82,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 11,
+    "content": 231
+  },
+  {
+    "id": 11001804,
+    "name": "Scene Transition: HC Storms Grotto Entry -> HC Storms Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HC_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HC_MOAT",
+    "target": "HC_STORMS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1464
+    ],
+    "source_scene": 95,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_HYRULE_CASTLE",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 12,
+    "content": 246
+  },
+  {
+    "id": 11001805,
+    "name": "Scene Transition: HF Northwest Tree Grotto Entry -> HF Tektite Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HF_TEKTITE_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HYRULE_FIELD",
+    "target": "HF_TEKTITE_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1472
+    ],
+    "source_scene": 81,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 13,
+    "content": 225
+  },
+  {
+    "id": 11001806,
+    "name": "Scene Transition: HF Stone Bridge Tree Grotto Entry -> HF Stone Bridge Tree Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HF_NEAR_KAK_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HYRULE_FIELD",
+    "target": "HF_NEAR_KAK_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1432
+    ],
+    "source_scene": 81,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 14,
+    "content": 229
+  },
+  {
+    "id": 11001807,
+    "name": "Scene Transition: HF Northwest Boulder Grotto Entry -> HF Fairy Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HF_FAIRY_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HYRULE_FIELD",
+    "target": "HF_FAIRY_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      877
+    ],
+    "source_scene": 81,
+    "target_scene": 60,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_FAIRYS_FOUNTAIN",
+    "grotto": 15,
+    "content": 255
+  },
+  {
+    "id": 11001808,
+    "name": "Scene Transition: HF Near Market Boulder Grotto Entry -> HF Near Market Boulder Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HF_NEAR_MARKET_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HYRULE_FIELD",
+    "target": "HF_NEAR_MARKET_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 81,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 16,
+    "content": 0
+  },
+  {
+    "id": 11001809,
+    "name": "Scene Transition: HF West Rock Circle Grotto Entry -> HF Cow Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HF_COW_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HYRULE_FIELD",
+    "target": "HF_COW_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1448
+    ],
+    "source_scene": 81,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 17,
+    "content": 228
+  },
+  {
+    "id": 11001810,
+    "name": "Scene Transition: HF Fenced Grotto Entry -> HF Fenced Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HF_INSIDE_FENCE_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HYRULE_FIELD",
+    "target": "HF_INSIDE_FENCE_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1436
+    ],
+    "source_scene": 81,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 18,
+    "content": 230
+  },
+  {
+    "id": 11001811,
+    "name": "Scene Transition: HF South Open Grotto Entry -> HF Open Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HF_OPEN_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HYRULE_FIELD",
+    "target": "HF_OPEN_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 81,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 19,
+    "content": 3
+  },
+  {
+    "id": 11001812,
+    "name": "Scene Transition: HF Southeast Boulder Grotto Entry -> HF Southeast Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_HF_SOUTHEAST_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HYRULE_FIELD",
+    "target": "HF_SOUTHEAST_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 81,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_HYRULE_FIELD",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 20,
+    "content": 34
+  },
+  {
+    "id": 11001813,
+    "name": "Scene Transition: LLR Grotto Entry -> LLR Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_LLR_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LON_LON_RANCH",
+    "target": "LLR_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1444
+    ],
+    "source_scene": 99,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_LON_LON_RANCH",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 21,
+    "content": 252
+  },
+  {
+    "id": 11001814,
+    "name": "Scene Transition: SFM Wolfos Grotto Entry -> SFM Wolfos Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_SFM_WOLFOS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "SFM_ENTRYWAY",
+    "target": "SFM_WOLFOS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1460
+    ],
+    "source_scene": 86,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 22,
+    "content": 237
+  },
+  {
+    "id": 11001815,
+    "name": "Scene Transition: SFM Storms Grotto Entry -> SFM Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_SFM_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "SACRED_FOREST_MEADOW",
+    "target": "SFM_STORMS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1468
+    ],
+    "source_scene": 86,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 23,
+    "content": 238
+  },
+  {
+    "id": 11001816,
+    "name": "Scene Transition: SFM Fairy Grotto Entry -> SFM Fairy Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_SFM_FAIRY_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "SACRED_FOREST_MEADOW",
+    "target": "SFM_FAIRY_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      877
+    ],
+    "source_scene": 86,
+    "target_scene": 60,
+    "source_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "target_scene_token": "SCENE_FAIRYS_FOUNTAIN",
+    "grotto": 24,
+    "content": 255
+  },
+  {
+    "id": 11001817,
+    "name": "Scene Transition: LW North Grotto Entry -> LW Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_LW_SCRUBS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LW_BEYOND_MIDO",
+    "target": "LW_SCRUBS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1456
+    ],
+    "source_scene": 91,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 25,
+    "content": 245
+  },
+  {
+    "id": 11001818,
+    "name": "Scene Transition: LW Tunnel Grotto Entry -> LW Tunnel Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_LW_NEAR_SHORTCUTS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LOST_WOODS",
+    "target": "LW_NEAR_SHORTCUTS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 91,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 26,
+    "content": 20
+  },
+  {
+    "id": 11001819,
+    "name": "Scene Transition: KF Storms Grotto Entry -> KF Storms Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_KF_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "KOKIRI_FOREST",
+    "target": "KF_STORMS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      63
+    ],
+    "source_scene": 85,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_KOKIRI_FOREST",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 27,
+    "content": 44
+  },
+  {
+    "id": 11001820,
+    "name": "Scene Transition: ZD Island Grotto Entry -> ZD Fairy Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_ZD_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "ZORAS_DOMAIN_ISLAND",
+    "target": "ZD_STORMS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      877
+    ],
+    "source_scene": 88,
+    "target_scene": 60,
+    "source_scene_token": "SCENE_ZORAS_DOMAIN",
+    "target_scene_token": "SCENE_FAIRYS_FOUNTAIN",
+    "grotto": 28,
+    "content": 255
+  },
+  {
+    "id": 11001821,
+    "name": "Scene Transition: GF Storms Grotto Entry -> GF Fairy Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_GF_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "GF_NEAR_GROTTO",
+    "target": "GF_STORMS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      877
+    ],
+    "source_scene": 93,
+    "target_scene": 60,
+    "source_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "target_scene_token": "SCENE_FAIRYS_FOUNTAIN",
+    "grotto": 29,
+    "content": 255
+  },
+  {
+    "id": 11001822,
+    "name": "Scene Transition: GV Behind Tent Grotto Entry -> GV Deku Scrub Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_GV_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "GV_FORTRESS_SIDE",
+    "target": "GV_STORMS_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1468
+    ],
+    "source_scene": 90,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_GERUDO_VALLEY",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 30,
+    "content": 240
+  },
+  {
+    "id": 11001823,
+    "name": "Scene Transition: GV Silver Rock Grotto Entry -> GV Octorok Grotto",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_GV_OCTOROK_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "GV_GROTTO_LEDGE",
+    "target": "GV_OCTOROK_GROTTO",
+    "mode": "grotto_load",
+    "entrances": [
+      1452
+    ],
+    "source_scene": 90,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_GERUDO_VALLEY",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 31,
+    "content": 242
+  },
+  {
+    "id": 11001824,
+    "name": "Scene Transition: LW Meadow Grotto Entry -> Deku Theater",
+    "index": "ENTRANCE_GROTTO_LOAD(GROTTO_LW_DEKU_THEATRE_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LW_BEYOND_MIDO",
+    "target": "DEKU_THEATER",
+    "mode": "grotto_load",
+    "entrances": [
+      1476
+    ],
+    "source_scene": 91,
+    "target_scene": 62,
+    "source_scene_token": "SCENE_LOST_WOODS",
+    "target_scene_token": "SCENE_GROTTOS",
+    "grotto": 32,
+    "content": 243
+  },
+  {
+    "id": 11002048,
+    "name": "Scene Transition: Colossus Deku Scrub Grotto -> Colossus Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_COLOSSUS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "COLOSSUS_GROTTO",
+    "target": "DESERT_COLOSSUS",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 92,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_DESERT_COLOSSUS",
+    "grotto": 0,
+    "content": 253
+  },
+  {
+    "id": 11002049,
+    "name": "Scene Transition: LH Deku Scrub Grotto -> LH Grave Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_LH_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LH_GROTTO",
+    "target": "LAKE_HYLIA",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 87,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_LAKE_HYLIA",
+    "grotto": 1,
+    "content": 239
+  },
+  {
+    "id": 11002050,
+    "name": "Scene Transition: ZR Deku Scrub Grotto -> ZR Rock Circle Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_ZR_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "ZR_STORMS_GROTTO",
+    "target": "ZORA_RIVER",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 84,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_ZORAS_RIVER",
+    "grotto": 2,
+    "content": 235
+  },
+  {
+    "id": 11002051,
+    "name": "Scene Transition: ZR Fairy Grotto -> ZR Raised Boulder Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_ZR_FAIRY_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "ZR_FAIRY_GROTTO",
+    "target": "ZORA_RIVER",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 84,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_ZORAS_RIVER",
+    "grotto": 3,
+    "content": 230
+  },
+  {
+    "id": 11002052,
+    "name": "Scene Transition: ZR Open Grotto -> ZR Raised Open Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_ZR_OPEN_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "ZR_OPEN_GROTTO",
+    "target": "ZORA_RIVER",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 84,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_ZORAS_RIVER",
+    "grotto": 4,
+    "content": 41
+  },
+  {
+    "id": 11002053,
+    "name": "Scene Transition: DMC Deku Scrub Grotto -> DMC Hammer Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_DMC_HAMMER_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DMC_HAMMER_GROTTO",
+    "target": "DMC_LOWER_LOCAL",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 97,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "grotto": 5,
+    "content": 249
+  },
+  {
+    "id": 11002054,
+    "name": "Scene Transition: DMC Upper Grotto -> DMC Upper Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_DMC_UPPER_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DMC_UPPER_GROTTO",
+    "target": "DMC_UPPER_LOCAL",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 97,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_CRATER",
+    "grotto": 6,
+    "content": 122
+  },
+  {
+    "id": 11002055,
+    "name": "Scene Transition: GC Deku Scrub Grotto -> GC Lava Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_GORON_CITY_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "GC_GROTTO",
+    "target": "GC_GROTTO_PLATFORM",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 98,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_GORON_CITY",
+    "grotto": 7,
+    "content": 251
+  },
+  {
+    "id": 11002056,
+    "name": "Scene Transition: DMT Storms Grotto -> DMT Rock Circle Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_DMT_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DMT_STORMS_GROTTO",
+    "target": "DEATH_MOUNTAIN_TRAIL",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 96,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "grotto": 8,
+    "content": 87
+  },
+  {
+    "id": 11002057,
+    "name": "Scene Transition: DMT Cow Grotto -> DMT Boulder Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_DMT_COW_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DMT_COW_GROTTO",
+    "target": "DEATH_MOUNTAIN_TRAIL",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 96,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_DEATH_MOUNTAIN_TRAIL",
+    "grotto": 9,
+    "content": 248
+  },
+  {
+    "id": 11002058,
+    "name": "Scene Transition: Kak Open Grotto -> Kak Open Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_KAK_OPEN_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "KAK_OPEN_GROTTO",
+    "target": "KAK_BACKYARD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": 10,
+    "content": 40
+  },
+  {
+    "id": 11002059,
+    "name": "Scene Transition: Kak Redead Grotto -> Kak Center Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_KAK_REDEAD_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "KAK_REDEAD_GROTTO",
+    "target": "KAKARIKO_VILLAGE",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 82,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_KAKARIKO_VILLAGE",
+    "grotto": 11,
+    "content": 231
+  },
+  {
+    "id": 11002060,
+    "name": "Scene Transition: HC Storms Grotto -> HC Storms Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HC_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HC_STORMS_GROTTO",
+    "target": "HC_MOAT",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 95,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_CASTLE",
+    "grotto": 12,
+    "content": 246
+  },
+  {
+    "id": 11002061,
+    "name": "Scene Transition: HF Tektite Grotto -> HF Northwest Tree Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HF_TEKTITE_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HF_TEKTITE_GROTTO",
+    "target": "HYRULE_FIELD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": 13,
+    "content": 225
+  },
+  {
+    "id": 11002062,
+    "name": "Scene Transition: HF Stone Bridge Tree Grotto -> HF Stone Bridge Tree Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HF_NEAR_KAK_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HF_NEAR_KAK_GROTTO",
+    "target": "HYRULE_FIELD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": 14,
+    "content": 229
+  },
+  {
+    "id": 11002063,
+    "name": "Scene Transition: HF Fairy Grotto -> HF Northwest Boulder Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HF_FAIRY_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HF_FAIRY_GROTTO",
+    "target": "HYRULE_FIELD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": 15,
+    "content": 255
+  },
+  {
+    "id": 11002064,
+    "name": "Scene Transition: HF Near Market Boulder Grotto -> HF Near Market Boulder Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HF_NEAR_MARKET_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HF_NEAR_MARKET_GROTTO",
+    "target": "HYRULE_FIELD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": 16,
+    "content": 0
+  },
+  {
+    "id": 11002065,
+    "name": "Scene Transition: HF Cow Grotto -> HF West Rock Circle Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HF_COW_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HF_COW_GROTTO",
+    "target": "HYRULE_FIELD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": 17,
+    "content": 228
+  },
+  {
+    "id": 11002066,
+    "name": "Scene Transition: HF Fenced Deku Scrub Grotto -> HF Fenced Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HF_INSIDE_FENCE_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HF_INSIDE_FENCE_GROTTO",
+    "target": "HYRULE_FIELD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": 18,
+    "content": 230
+  },
+  {
+    "id": 11002067,
+    "name": "Scene Transition: HF Open Grotto -> HF South Open Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HF_OPEN_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HF_OPEN_GROTTO",
+    "target": "HYRULE_FIELD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": 19,
+    "content": 3
+  },
+  {
+    "id": 11002068,
+    "name": "Scene Transition: HF Southeast Grotto -> HF Southeast Boulder Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_HF_SOUTHEAST_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "HF_SOUTHEAST_GROTTO",
+    "target": "HYRULE_FIELD",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 81,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_HYRULE_FIELD",
+    "grotto": 20,
+    "content": 34
+  },
+  {
+    "id": 11002069,
+    "name": "Scene Transition: LLR Deku Scrub Grotto -> LLR Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_LLR_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LLR_GROTTO",
+    "target": "LON_LON_RANCH",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 99,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_LON_LON_RANCH",
+    "grotto": 21,
+    "content": 252
+  },
+  {
+    "id": 11002070,
+    "name": "Scene Transition: SFM Wolfos Grotto -> SFM Wolfos Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_SFM_WOLFOS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "SFM_WOLFOS_GROTTO",
+    "target": "SFM_ENTRYWAY",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 86,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "grotto": 22,
+    "content": 237
+  },
+  {
+    "id": 11002071,
+    "name": "Scene Transition: SFM Deku Scrub Grotto -> SFM Storms Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_SFM_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "SFM_STORMS_GROTTO",
+    "target": "SACRED_FOREST_MEADOW",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 86,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "grotto": 23,
+    "content": 238
+  },
+  {
+    "id": 11002072,
+    "name": "Scene Transition: SFM Fairy Grotto -> SFM Fairy Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_SFM_FAIRY_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "SFM_FAIRY_GROTTO",
+    "target": "SACRED_FOREST_MEADOW",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 86,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_SACRED_FOREST_MEADOW",
+    "grotto": 24,
+    "content": 255
+  },
+  {
+    "id": 11002073,
+    "name": "Scene Transition: LW Deku Scrub Grotto -> LW North Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_LW_SCRUBS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LW_SCRUBS_GROTTO",
+    "target": "LW_BEYOND_MIDO",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": 25,
+    "content": 245
+  },
+  {
+    "id": 11002074,
+    "name": "Scene Transition: LW Tunnel Grotto -> LW Tunnel Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_LW_NEAR_SHORTCUTS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "LW_NEAR_SHORTCUTS_GROTTO",
+    "target": "LOST_WOODS",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": 26,
+    "content": 20
+  },
+  {
+    "id": 11002075,
+    "name": "Scene Transition: KF Storms Grotto -> KF Storms Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_KF_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "KF_STORMS_GROTTO",
+    "target": "KOKIRI_FOREST",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 85,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_KOKIRI_FOREST",
+    "grotto": 27,
+    "content": 44
+  },
+  {
+    "id": 11002076,
+    "name": "Scene Transition: ZD Fairy Grotto -> ZD Island Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_ZD_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "ZD_STORMS_GROTTO",
+    "target": "ZORAS_DOMAIN_ISLAND",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 88,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_ZORAS_DOMAIN",
+    "grotto": 28,
+    "content": 255
+  },
+  {
+    "id": 11002077,
+    "name": "Scene Transition: GF Fairy Grotto -> GF Storms Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_GF_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "GF_STORMS_GROTTO",
+    "target": "GF_NEAR_GROTTO",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 93,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_GERUDOS_FORTRESS",
+    "grotto": 29,
+    "content": 255
+  },
+  {
+    "id": 11002078,
+    "name": "Scene Transition: GV Deku Scrub Grotto -> GV Behind Tent Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_GV_STORMS_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "GV_STORMS_GROTTO",
+    "target": "GV_FORTRESS_SIDE",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 90,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_GERUDO_VALLEY",
+    "grotto": 30,
+    "content": 240
+  },
+  {
+    "id": 11002079,
+    "name": "Scene Transition: GV Octorok Grotto -> GV Silver Rock Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_GV_OCTOROK_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "GV_OCTOROK_GROTTO",
+    "target": "GV_GROTTO_LEDGE",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 90,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_GERUDO_VALLEY",
+    "grotto": 31,
+    "content": 242
+  },
+  {
+    "id": 11002080,
+    "name": "Scene Transition: Deku Theater -> LW Meadow Grotto Entry",
+    "index": "ENTRANCE_GROTTO_EXIT(GROTTO_LW_DEKU_THEATRE_OFFSET)",
+    "kind": "GrottoGrave",
+    "source": "DEKU_THEATER",
+    "target": "LOST_WOODS",
+    "mode": "grotto_exit",
+    "entrances": [],
+    "source_scene": 62,
+    "target_scene": 91,
+    "source_scene_token": "SCENE_GROTTOS",
+    "target_scene_token": "SCENE_LOST_WOODS",
+    "grotto": 32,
+    "content": 243
+  },
+  {
+    "id": 11683197,
+    "name": "Scene Transition: Castle Courtyard guards -> Hyrule Castle drain",
+    "index": "ENTR_CASTLE_GROUNDS_RAINBOW_BRIDGE_EXIT",
+    "kind": "Interior",
+    "source": "HC_GARDEN",
+    "target": "HC_DRAIN_LEDGE",
+    "mode": "entrance",
+    "entrances": [
+      573
+    ],
+    "source_scene": 69,
+    "target_scene": 95,
+    "source_scene_token": "SCENE_CASTLE_COURTYARD_GUARDS_DAY",
+    "target_scene_token": "SCENE_HYRULE_CASTLE",
+    "grotto": -1,
+    "content": -1
+  }
+]

@@ -24,6 +24,10 @@ bool Archipelago_IsAuthenticatedForFileSelect(void);
 bool Archipelago_IsCurrentSaveActive(void);
 // Save identity, independent of connection/enabled state, for physical seed rules.
 bool Archipelago_IsCurrentSaveFile(void);
+// First-use directed physical crossings; never used for entrance discovery flags.
+bool Archipelago_HasSceneTransitionChecks(void);
+void Archipelago_CaptureSceneTransition(void);
+void Archipelago_BeginDoorTransition(int door, int fromRoom, int toRoom, const struct Actor* actor, int side);
 // Freeze passive outdoor time until Flow; explicit Sun's Song changes still run.
 bool Archipelago_ShouldFreezeTime(void);
 void Archipelago_InitSaveFile(void);

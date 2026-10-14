@@ -104,6 +104,8 @@ def conversation_rule(world, entry, scrub_region=None):
                  if route["age"] == "adult" else (H.is_child(b) | H.is_adult(b))]
         if route["time"] != "either":
             gates.append(H.at_day(b) if route["time"] == "day" else H.at_night(b))
+        if entry['id'] == 10000012 and route['region'] == 'THE_GRAVEYARD':
+            gates.append(H.at_clock_window(b, 'dampe'))
         for gate in route["gates"]:
             if gate == "climb":
                 if o.shuffle_climb.value: gates.append(Has("Climb"))

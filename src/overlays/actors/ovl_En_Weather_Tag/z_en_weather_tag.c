@@ -1,3 +1,4 @@
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 /*
  * File: z_en_weather_tag.c
  * Overlay: ovl_En_Weather_Tag
@@ -161,7 +162,7 @@ u8 WeatherTag_CheckEnableWeatherEffect(EnWeatherTag* this, PlayState* play, u8 a
                 ret = true;
             }
         } else {
-            if (gTimeSpeed != 0) {
+            if (gTimeSpeed != 0 && !Archipelago_ShouldFreezeTime()) {
                 gSaveContext.dayTime += 0x14;
             }
         }
@@ -196,7 +197,7 @@ u8 WeatherTag_CheckRestoreWeather(EnWeatherTag* this, PlayState* play, u8 arg2, 
 
                 ret = true;
             }
-        } else if (gTimeSpeed != 0) {
+        } else if (gTimeSpeed != 0 && !Archipelago_ShouldFreezeTime()) {
             gSaveContext.dayTime += 0x14;
         }
     }

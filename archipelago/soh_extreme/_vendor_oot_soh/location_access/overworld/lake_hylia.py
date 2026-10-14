@@ -50,7 +50,7 @@ def set_region_rules(world: "SohWorld") -> None:
     add_locations(Regions.LAKE_HYLIA, world, [
         (Locations.LH_UNDERWATER_ITEM, lambda bundle: is_child(bundle) &
          can_use(Items.SILVER_SCALE, bundle)),
-        (Locations.LH_SUN, lambda bundle: is_adult(bundle) &
+        (Locations.LH_SUN, lambda bundle: is_adult(bundle) & at_clock_window(bundle, 'dawn') &
          ((has_item(Events.WATER_TEMPLE_COMPLETED, bundle) &
            has_item(Items.BRONZE_SCALE, bundle)) |
           can_use(Items.DISTANT_SCARECROW, bundle)) &

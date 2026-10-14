@@ -72,8 +72,8 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.THIEVES_HIDEOUT_DOUBLE_CELL, world, [
-        (Regions.GERUDO_FORTRESS_OUTSKIRTS, lambda bundle: True_()),
-        (Regions.GF_NEAR_GROTTO, lambda bundle: True_()),
+        (Regions.GF_ABOVE_GTG, lambda bundle: True_()),
+        (Regions.GF_TOP_OF_LOWER_VINES, lambda bundle: True_()),
         (Regions.THIEVES_HIDEOUT_RESCUE_CARPENTERS,
          lambda bundle: True_())
     ])
@@ -112,8 +112,8 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.THIEVES_HIDEOUT_STEEP_SLOPE_CELL, world, [
-        (Regions.GF_ABOVE_GTG, lambda bundle: True_()),
-        (Regions.GF_TOP_OF_LOWER_VINES, lambda bundle: True_()),
+        (Regions.GF_NEAR_GROTTO, lambda bundle: True_()),
+        (Regions.GF_BOTTOM_OF_LOWER_VINES, lambda bundle: True_()),
         (Regions.THIEVES_HIDEOUT_RESCUE_CARPENTERS,
          lambda bundle: True_())
     ])

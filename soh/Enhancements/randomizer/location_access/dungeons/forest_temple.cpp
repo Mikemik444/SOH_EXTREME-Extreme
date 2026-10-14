@@ -241,7 +241,7 @@ void RegionTable_Init_ForestTemple() {
         LOCATION(RC_FOREST_TEMPLE_FLOORMASTER_CHEST, logic->CanDamage() && logic->HasItem(RG_OPEN_CHEST)),
     }, {
         //Exits
-        ENTRANCE(RR_FOREST_TEMPLE_NW_COURTYARD_UPPER, true),
+        ENTRANCE(RR_FOREST_TEMPLE_NW_COURTYARD_UPPER, AnyAgeTime([]{return logic->CanKillEnemy(RE_FLOORMASTER);})),
     });
 
     areaTable[RR_FOREST_TEMPLE_RED_DOORMAT_HALLWAY] = Region("Forest Temple West Hallway", SCENE_FOREST_TEMPLE, {}, {}, {

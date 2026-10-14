@@ -247,10 +247,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.DODONGOS_CAVERN_COMPASS_ROOM, world, [
         (Regions.DODONGOS_CAVERN_STAIRS_LOWER,
-         lambda bundle: can_use_any(
-             [Items.MASTER_SWORD, Items.BIGGORONS_SWORD,
-                 Items.MEGATON_HAMMER, Items.GORONS_BRACELET],
-             bundle) | has_explosives(bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.ARMOS) |
+             (has_extreme_enemy_soul(bundle, Enemies.ARMOS) & has_item(Items.GORONS_BRACELET, bundle))),
     ])
 
     # Dodongos Cavern Armos Room

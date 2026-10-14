@@ -43,9 +43,9 @@ void RegionTable_Init_SpiritTemple() {
         //Exits
         ENTRANCE(RR_SPIRIT_TEMPLE_FOYER,               logic->CanUse(RG_CRAWL)),
         ENTRANCE(RR_SPIRIT_TEMPLE_CHILD_BOXES,         logic->CanUse(RG_CRAWL)),
-        //Implies logic->CanKillEnemy(RE_KEESE)
-        ENTRANCE(RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_SOUTH, AnyAgeTime([]{return logic->CanKillEnemy(RE_ARMOS);})),
-        ENTRANCE(RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH,  AnyAgeTime([]{return logic->CanKillEnemy(RE_ARMOS);})),
+        // Separate souls mean killing the Armos no longer implies clearing Keese.
+        ENTRANCE(RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_SOUTH, AnyAgeTime([]{return logic->CanKillEnemy(RE_ARMOS) && logic->CanKillEnemy(RE_KEESE);})),
+        ENTRANCE(RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH,  AnyAgeTime([]{return logic->CanKillEnemy(RE_ARMOS) && logic->CanKillEnemy(RE_KEESE);})),
     });
 
     areaTable[RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_SOUTH] = Region("Spirit Temple Switch Bridge South", SCENE_SPIRIT_TEMPLE, {
@@ -79,8 +79,8 @@ void RegionTable_Init_SpiritTemple() {
         LOCATION(RC_SPIRIT_TEMPLE_ANUBIS_POT_4, true),
     }, {
         //Exits
-        ENTRANCE(RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_NORTH, AnyAgeTime([]{return logic->CanHitSwitch() || logic->HasItem(RG_POWER_BRACELET) || logic->CanKillEnemy(RE_ANUBIS);})),
-        ENTRANCE(RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH,  AnyAgeTime([]{return logic->CanHitSwitch() || logic->HasItem(RG_POWER_BRACELET) || logic->CanKillEnemy(RE_ANUBIS);})),
+        ENTRANCE(RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_NORTH, AnyAgeTime([]{return logic->HasEnemySoul(RE_ANUBIS) && (logic->CanHitSwitch() || logic->HasItem(RG_POWER_BRACELET) || logic->CanKillEnemy(RE_ANUBIS));})),
+        ENTRANCE(RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH,  AnyAgeTime([]{return logic->HasEnemySoul(RE_ANUBIS) && (logic->CanHitSwitch() || logic->HasItem(RG_POWER_BRACELET) || logic->CanKillEnemy(RE_ANUBIS));})),
     });
 
     areaTable[RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH] = Region("Spirit Temple Rupee Bridge North", SCENE_SPIRIT_TEMPLE, {

@@ -40,6 +40,12 @@ class ArchipelagoClient {
     void ReportCheck(int32_t randomizerCheck);
     void ReportNpcSpeech(int32_t randomizerCheck);
     bool ReportNpcSpeechLocation(int64_t speechLocation);
+    bool HasSceneTransitionChecks() const;
+    void CaptureSceneTransition();
+    void CompleteSceneTransition(int16_t scene);
+    void BeginDoorTransition(int door, int fromRoom, int toRoom, const struct Actor* actor, int side);
+    void AdvanceDoorTransition();
+    void ReportTransition(int64_t location);
     bool ReportFallbackNpcSpeech(const struct Actor* actor);
     // Read-only, game-thread draw query; never reports or reserves a check.
     bool ShouldHighlightNpcSpeech(const struct Actor* actor) const;
