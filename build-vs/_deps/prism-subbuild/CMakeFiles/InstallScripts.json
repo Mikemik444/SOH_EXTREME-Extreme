@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"E:/test/bb/build-vs/_deps/prism-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
