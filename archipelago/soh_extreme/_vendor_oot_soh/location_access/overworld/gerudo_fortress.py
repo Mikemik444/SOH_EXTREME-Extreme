@@ -94,8 +94,8 @@ def set_region_rules(world: "SohWorld") -> None:
          | can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
         (Regions.GF_TOP_OF_UPPER_VINES,
          lambda bundle: has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle) & can_use(Items.LONGSHOT, bundle)),
-        (Regions.GF_HBA_RANGE, lambda bundle: is_child(bundle)
-         | has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)),
+        # Missing NPC Soul must not turn the guard's absence into an access route.
+        (Regions.GF_HBA_RANGE, lambda bundle: has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)),
     ])
 
     # GF to GTG
@@ -281,7 +281,7 @@ def set_region_rules(world: "SohWorld") -> None:
 
     # GF HBA Range
     # Locations
-    add_locations(Regions.GF_HBA_RANGE, world, [
+    archery_locations = [
         (Locations.GF_HBA_1000_POINTS,
          lambda bundle: is_adult(bundle) & has_item(Items.CHILD_WALLET, bundle) & has_item(
              Items.GERUDO_MEMBERSHIP_CARD, bundle) & can_use(Items.EPONA, bundle) & can_use(Items.FAIRY_BOW,
@@ -317,6 +317,10 @@ def set_region_rules(world: "SohWorld") -> None:
          lambda bundle: can_break_crates(bundle)),
         (Locations.GF_SOUTH_TARGET_WEST_CRATE,
          lambda bundle: can_break_crates(bundle)),
+    ]
+    add_locations(Regions.GF_HBA_RANGE, world, [
+        (location, lambda bundle, rule=rule: has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle) & rule(bundle))
+        for location, rule in archery_locations
     ])
     # Connections
     connect_regions(Regions.GF_HBA_RANGE, world, [

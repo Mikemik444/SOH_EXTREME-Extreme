@@ -109,11 +109,19 @@
     "language": "Hylian",
     "routes": [
       {
+        "region": "THIEVES_HIDEOUT_1_TORCH_CELL",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenter_prison"
+        ]
+      },
+      {
         "region": "GV_CARPENTER_TENT",
         "age": "adult",
         "time": "either",
         "gates": [
-          "carpenters"
+          "carpenter_tent"
         ]
       },
       {
@@ -145,11 +153,19 @@
     "language": "Hylian",
     "routes": [
       {
+        "region": "THIEVES_HIDEOUT_DEAD_END_CELL",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenter_prison"
+        ]
+      },
+      {
         "region": "GV_CARPENTER_TENT",
         "age": "adult",
         "time": "either",
         "gates": [
-          "carpenters"
+          "carpenter_tent"
         ]
       },
       {
@@ -181,11 +197,19 @@
     "language": "Hylian",
     "routes": [
       {
+        "region": "THIEVES_HIDEOUT_DOUBLE_CELL",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenter_prison"
+        ]
+      },
+      {
         "region": "GV_CARPENTER_TENT",
         "age": "adult",
         "time": "either",
         "gates": [
-          "carpenters"
+          "carpenter_tent"
         ]
       },
       {
@@ -217,11 +241,19 @@
     "language": "Hylian",
     "routes": [
       {
+        "region": "THIEVES_HIDEOUT_STEEP_SLOPE_CELL",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "carpenter_prison"
+        ]
+      },
+      {
         "region": "GV_CARPENTER_TENT",
         "age": "adult",
         "time": "either",
         "gates": [
-          "carpenters"
+          "carpenter_tent"
         ]
       },
       {

@@ -60,7 +60,8 @@ void RegionTable_Init_GerudoFortress() {
         // RANDTODO: Add tricks for getting past the gerudo guarding the hba range
         ENTRANCE(RR_GF_ABOVE_GTG,          logic->IsChild || logic->CanPassEnemy(RE_GERUDO_GUARD)),
         ENTRANCE(RR_GF_TOP_OF_UPPER_VINES, logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanUse(RG_LONGSHOT)),
-        ENTRANCE(RR_GF_HBA_RANGE,          logic->IsChild || logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD)),
+        // Keep this gate even when NPC Soul has not spawned the guard yet.
+        ENTRANCE(RR_GF_HBA_RANGE,          logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD)),
     });
 
     areaTable[RR_GF_TO_GTG] = Region("GF to GTG", SCENE_GERUDOS_FORTRESS, {}, {}, {
@@ -225,27 +226,28 @@ void RegionTable_Init_GerudoFortress() {
     });
 
     areaTable[RR_GF_HBA_RANGE] = Region("GF HBA Range", SCENE_GERUDOS_FORTRESS, {}, {
-        //Locations
+        // Every check also keeps the card gate when the local finder starts
+        // inside the range. An absent guard is never a logical access route.
         LOCATION(RC_GF_HBA_1000_POINTS,          logic->IsAdult && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_GERUDO) && logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->SummonEpona() && logic->CanUse(RG_FAIRY_BOW) && logic->AtDay),
         LOCATION(RC_GF_HBA_1500_POINTS,          logic->IsAdult && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_GERUDO) && logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->SummonEpona() && logic->CanUse(RG_FAIRY_BOW) && logic->AtDay),
-        LOCATION(RC_GF_HBA_RANGE_GS,             logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) && logic->CanGetNightTimeGS()),
-        LOCATION(RC_GF_HBA_RANGE_CRATE_1,        logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_RANGE_CRATE_2,        logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_RANGE_CRATE_3,        logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_RANGE_CRATE_4,        logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_RANGE_CRATE_5,        logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_RANGE_CRATE_6,        logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_RANGE_CRATE_7,        logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_CANOPY_EAST_CRATE,    logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_CANOPY_WEST_CRATE,    logic->CanBreakCrates()),
-        LOCATION(RC_GF_NORTH_TARGET_EAST_CRATE,  logic->CanBreakCrates()),
-        LOCATION(RC_GF_NORTH_TARGET_WEST_CRATE,  logic->IsAdult || (logic->BlastOrSmash() || logic->HookshotOrBoomerang() || logic->CanUse(RG_HOVER_BOOTS))),
+        LOCATION(RC_GF_HBA_RANGE_GS,             logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) && logic->CanGetNightTimeGS()),
+        LOCATION(RC_GF_HBA_RANGE_CRATE_1,        logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_RANGE_CRATE_2,        logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_RANGE_CRATE_3,        logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_RANGE_CRATE_4,        logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_RANGE_CRATE_5,        logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_RANGE_CRATE_6,        logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_RANGE_CRATE_7,        logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_CANOPY_EAST_CRATE,    logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_CANOPY_WEST_CRATE,    logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_NORTH_TARGET_EAST_CRATE,  logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_NORTH_TARGET_WEST_CRATE,  logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates() && (logic->IsAdult || logic->BlastOrSmash() || logic->HookshotOrBoomerang() || logic->CanUse(RG_HOVER_BOOTS))),
         //implies logic->CanBreakCrates()
-        LOCATION(RC_GF_NORTH_TARGET_CHILD_CRATE, logic->IsChild && logic->BlastOrSmash()),
-        LOCATION(RC_GF_SOUTH_TARGET_EAST_CRATE,  logic->CanBreakCrates()),
-        LOCATION(RC_GF_SOUTH_TARGET_WEST_CRATE,  logic->CanBreakCrates()),
-        LOCATION(RC_GF_HBA_RECTANGLE_SIGN,       logic->IsAdult && logic->CanRead()),
-        LOCATION(RC_GF_WONDER_ARCHERY_SIGN,      logic->CanUse(RG_HOOKSHOT)),
+        LOCATION(RC_GF_NORTH_TARGET_CHILD_CRATE, logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates() && logic->IsChild && logic->BlastOrSmash()),
+        LOCATION(RC_GF_SOUTH_TARGET_EAST_CRATE,  logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_SOUTH_TARGET_WEST_CRATE,  logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_HBA_RECTANGLE_SIGN,       logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->IsAdult && logic->CanRead()),
+        LOCATION(RC_GF_WONDER_ARCHERY_SIGN,      logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanUse(RG_HOOKSHOT)),
     }, {
         //Exits
         ENTRANCE(RR_GF_OUTSIDE_GTG, logic->IsChild || logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD)),

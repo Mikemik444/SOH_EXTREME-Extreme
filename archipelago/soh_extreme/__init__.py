@@ -3125,6 +3125,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             location = self.get_location(fork_loc.name)
             family = fork_loc.family
 
+            # These fork checks share the archery range's permanent card gate,
+            # including while NPC Soul has not spawned its entrance guard.
+            if fork_loc.rc in {"RC_GF_HBA_RECTANGLE_SIGN", "RC_GF_WONDER_ARCHERY_SIGN"}:
+                require(location, "Gerudo Membership Card")
+
             # Use the exact parent chosen by create_regions(), so age-aware
             # helper dependencies follow the native subregion instead of the old
             # broad ForkLocations parent.
@@ -3547,9 +3552,15 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 or "MEDIGORON" in upper_name
                 or "CARPET SALESMAN" in upper_name
                 or "BEAN SALESMAN" in upper_name
-                or "SHOOTING GALLERY" in upper_name
-                or "BOMBCHU BOWLING" in upper_name
-                or "HORSEBACK ARCHERY" in upper_name
+                # Match the actual rewards, not objects near the minigame.
+                # "GF Horseback Archery Range Crate" and "Market Shooting
+                # Gallery Crate" do not involve an NPC or a conversation.
+                or location.name in (
+                    Locations.MARKET_SHOOTING_GALLERY, Locations.KAK_SHOOTING_GALLERY_REWARD,
+                    Locations.MARKET_BOMBCHU_BOWLING_FIRST_PRIZE,
+                    Locations.MARKET_BOMBCHU_BOWLING_SECOND_PRIZE,
+                    Locations.GF_HBA_1000_POINTS, Locations.GF_HBA_1500_POINTS,
+                )
                 or ("TREASURE CHEST GAME" in upper_name and
                     (not o.shuffle_chest_minigame.value or location.address not in CHEST_TYPES_BY_AP_ID))
                 or re.search(r"\b(?:10|20|30|40|50|100) GOLD SKULLTULA REWARD$", upper_name) is not None
@@ -5376,6 +5387,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "shuffle_shovel": o.shuffle_shovel.value,
             "npc_speech_sanity": o.npc_speech_sanity.value,
             "npc_speech_identity_version": NpcSpeech.identity_version(self),
+            "npc_speech_catalog_revision": NpcSpeech.catalog_revision(self),
             "song_note_shuffle": o.song_note_shuffle.value,
             "shuffle_flow_of_time": o.shuffle_flow_of_time.value,
             "frozen_starting_time": o.frozen_starting_time.value,

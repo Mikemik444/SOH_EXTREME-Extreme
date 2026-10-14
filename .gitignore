@@ -3,7 +3,9 @@ __pycache__/
 .pyc
 .DS_Store
 x64/
-
+*AUDIT*
+*validation*
+*VALIDATION*
 # Text editor remnants
 .vscode/
 .vs/

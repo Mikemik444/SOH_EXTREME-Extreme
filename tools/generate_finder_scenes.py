@@ -59,6 +59,8 @@ def generate():
         "LOST_WOODS": "THE_LOST_WOODS", "MARKET": "THE_MARKET",
         "KAK_POTION_SHOP_FRONT": "KAK_POTION_SHOP",
         "KAK_WINDMILL": "KAK_WINDMILL_LOWER",
+        **{"THIEVES_HIDEOUT_" + cell: "TH_" + cell for cell in (
+            "1_TORCH_CELL", "DEAD_END_CELL", "DOUBLE_CELL", "STEEP_SLOPE_CELL")},
     }
     scene_aliases = {
         "KAK_GRANNYS_POTION_SHOP": "SCENE_POTION_SHOP_GRANNY",

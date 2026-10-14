@@ -9,8 +9,13 @@ from importlib.resources import files
 from rule_builder.rules import And, Or, Has, CanReachRegion
 from ._vendor_oot_soh import LogicHelpers as H
 from ._vendor_oot_soh.Enums import Regions, Items, Events
+from ._vendor_oot_soh.Options import FortressCarpenters
 
 IDENTITY_VERSION = 2
+CATALOG_REVISION = 1
+# One-time story conversations can disappear permanently. Keep their catalogue
+# identities for old seeds, but never place items on them in new seeds.
+NEW_SEED_EXCLUSIONS = frozenset({10000096, 10000099})  # Nabooru, Princess Ruto
 CATALOG = tuple(json.loads(files(__package__).joinpath("NpcSpeechCatalog.json").read_text(encoding="utf-8")))
 NAME_TO_ID = {e["name"]: e["id"] for e in CATALOG}
 BY_NAME = {e["name"]: e for e in CATALOG}
@@ -32,8 +37,14 @@ def identity_version(world):
     return int(world.passthrough.get("npc_speech_identity_version", 1)) if world.using_ut else IDENTITY_VERSION
 
 
+def catalog_revision(world):
+    return int(world.passthrough.get("npc_speech_catalog_revision", 0)) if world.using_ut else CATALOG_REVISION
+
+
 def active_entries(world):
     for e in CATALOG:
+        if catalog_revision(world) >= 1 and e["id"] in NEW_SEED_EXCLUSIONS:
+            continue
         # Native one-time scrubs are not spawned when Scrub Shuffle is off.
         if e.get("native_rc") in ("RC_LW_DEKU_SCRUB_NEAR_BRIDGE", "RC_HF_DEKU_SCRUB_GROTTO",
                                    "RC_LW_DEKU_SCRUB_GROTTO_FRONT") and not world.options.shuffle_scrubs.value:
@@ -69,6 +80,15 @@ def conversation_rule(world, entry, scrub_region=None):
         return And(*rules)
     alternatives = []
     for route in routes:
+        # Fast mode pre-rescues carpenters 1/2/3; free mode pre-rescues all
+        # four. Only actors still in prison provide a prison conversation.
+        # Keep every identity: pre-rescued carpenters can be met in the tent
+        # and their childhood Kakariko conversations remain the same checks.
+        if "carpenter_prison" in route["gates"]:
+            carpenter = entry["matches"][0][3]
+            if (o.fortress_carpenters.value == FortressCarpenters.option_free or
+                    (o.fortress_carpenters.value == FortressCarpenters.option_fast and carpenter != 0)):
+                continue
         region = Regions[route["region"]]
         b = (region, world)
         # SohLocation evaluates its rules with an age already selected. In that
@@ -89,6 +109,13 @@ def conversation_rule(world, entry, scrub_region=None):
                 if o.shuffle_enemy_soul.value:
                     gates.append(Has("Enemy Soul" if o.shuffle_enemy_soul.value == 1 else gate))
             elif gate == "carpenters": gates.append(H.has_item(Events.RESCUED_ALL_CARPENTERS, b))
+            elif gate == "carpenter_prison":
+                pass  # First talk through the bars precedes the fight/key/rescue.
+            elif gate == "carpenter_tent":
+                carpenter = entry["matches"][0][3]
+                if not (o.fortress_carpenters.value == FortressCarpenters.option_free or
+                        (o.fortress_carpenters.value == FortressCarpenters.option_fast and carpenter != 0)):
+                    gates.append(H.has_item(Events.RESCUED_ALL_CARPENTERS, b))
             elif gate == "stop_goron":
                 gates.append(H.has_explosives(b) | (H.is_adult(b) &
                     (H.has_item(Items.GORONS_BRACELET, b) | H.can_use(Items.FAIRY_BOW, b))))

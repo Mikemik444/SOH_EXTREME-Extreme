@@ -1758,6 +1758,16 @@ static SohExtreme::TrackerScene FinderNativeScene(RandomizerCheck rc) {
 
 static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClient& client,
                                                const SohExtreme::TrackerScene& current, int age, int time) {
+    // These four permanent identities move individually from prison to tent.
+    // Fast mode starts with 1/2/3 rescued; consult the actual rescue flags so
+    // an empty cell never takes priority over the carpenter's current scene.
+    constexpr int64_t firstCarpenterConversation = 10000004;
+    if (age == 1 && id >= firstCarpenterConversation && id < firstCarpenterConversation + 4) {
+        const int carpenter = static_cast<int>(id - firstCarpenterConversation);
+        return Flags_GetEventChkInf(EVENTCHKINF_CARPENTERS_FREE(carpenter))
+            ? FinderScene(SCENE_CARPENTERS_TENT, RCAREA_GERUDO_VALLEY)
+            : FinderScene(SCENE_THIEVES_HIDEOUT, RCAREA_GERUDO_FORTRESS);
+    }
     struct ConversationScene {
         int64_t location;
         RandomizerCheck check;
