@@ -3,9 +3,6 @@ __pycache__/
 .pyc
 .DS_Store
 x64/
-*AUDIT*
-*validation*
-*VALIDATION*
 # Text editor remnants
 .vscode/
 .vs/
@@ -414,3 +411,59 @@ ReleaseObj/*
 
 # Junk from App Bundle
 appsupport
+
+# SOH-EXTREME generated output (keep source, test scripts, and fixtures tracked)
+# These rules affect untracked files; existing tracked artifacts need a separate cleanup.
+/build-vs/
+/patch-backups/
+/validation/results/
+
+# Runtime downloads belong in release packages, not source commits.
+/soh.exe
+/APCpp.dll
+/soh.o2r
+/soh_extreme.apworld
+
+# One-off source patches and backup copies; preserve patches used inside build tools.
+/*.patch
+/*.diff
+/CMakeLists.txt.before_torch_fix
+
+# Generated audit, package, and checksum reports.
+/APWORLD_SOURCE_SYNC_REPORT.json
+/FILE_MANIFEST.json
+/MANIFEST.json
+/PATCH_MANIFEST.json
+/SHA256.json
+/SHA256SUMS.json
+/SHA256SUMS-*.txt
+/CHECK-AUDIT-*.json
+/TEST-EVIDENCE-*.json
+/VALIDATION-*.json
+/VALIDATION.json
+/THREE-SEED-BEATABILITY-AUDIT.json
+/THREE-SEED-BEATABILITY-AUDIT.txt
+/manifest_all_souls_render_fix.json
+/manifest_shovel_roll_apcpp_fix.json
+/soul_render_coverage.json
+
+# Loose validation output; preserve input catalogues, fixtures, and test configuration.
+/validation/APWORLD_TEST_RESULTS.txt
+/validation/AP_FILE_HASHES.json
+/validation/AP_SOURCE.diff
+/validation/AP_SOURCE_AUDIT.json
+/validation/PACKER_TEST_RESULTS.txt
+/validation/installer-static-audit.json
+/validation/logic-results.json
+/validation/package-audit.json
+/validation/source-changes.diff
+/validation/source-parity-audit.json
+/validation/test-results.json
+/validation/test-run.txt
+
+# Local command output and stray scratch files.
+/error.txt
+/testlog.txt
+/wow.txt
+/Added
+/^
