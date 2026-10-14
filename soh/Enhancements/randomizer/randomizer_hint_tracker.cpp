@@ -13,6 +13,7 @@
 #include "randomizer_hint_tracker.h"
 #include "soh/OTRGlobals.h"
 #include "soh/SaveManager.h"
+#include "soh/Network/Archipelago/ArchipelagoClient.h"
 #include "soh/SohGui/SohGui.hpp"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/Enhancements/randomizer/hint.h"
@@ -204,7 +205,7 @@ static std::string NormalizeForCompare(const std::string& text) {
 // (GossipStoneHints.cpp) and must stay in sync with it.
 static const std::string& GetJoinedHintText(RandomizerHint hintKey) {
     auto cached = hintTextCache.find(hintKey);
-    if (cached != hintTextCache.end()) {
+    if (cached != hintTextCache.end() && !ArchipelagoClient::GetInstance().IsGameplaySessionActive()) {
         return cached->second;
     }
     Rando::Hint* hint = OTRGlobals::Instance->gRandoContext->GetHint(hintKey);

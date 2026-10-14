@@ -3,6 +3,7 @@
 #include "SeedContext.h"
 #include "static_data.h"
 #include "rng.h"
+#include "soh/Network/Archipelago/ArchipelagoClient.h"
 
 namespace Rando {
 Hint::Hint() {
@@ -274,7 +275,57 @@ const HintText Hint::GetHintText(size_t id) const {
     }
 }
 
+// AP saves do not run native seed hint generation. Resolve their actual
+// placements directly while retaining each NPC's original dialogue controls.
+static bool IsArchipelagoHint(RandomizerHint key) {
+    return ArchipelagoClient::GetInstance().IsGameplaySessionActive() && key != RH_NONE &&
+           !(key >= RH_MINUET_WARP_LOC && key <= RH_PRELUDE_WARP_LOC);
+}
+
+static CustomMessage ArchipelagoHintMessage(RandomizerHint key, MessageFormat format, size_t id) {
+    auto& ap = ArchipelagoClient::GetInstance();
+    auto ctx = Context::GetInstance();
+    CustomMessage message;
+    const auto data = StaticData::staticHintInfoMap.find(key);
+    if (data != StaticData::staticHintInfoMap.end() && !data->second.targetChecks.empty()) {
+        const auto& info = data->second;
+        const auto index = id < info.hintKeys.size() ? id : 0;
+        message = StaticData::hintTextTable[info.hintKeys[index]].GetHintMessage();
+        std::vector<CustomMessage> items;
+        for (const auto check : info.targetChecks) {
+            auto item = ap.GetHintItemDescription(check);
+            if (item.empty()) item = "an item (Archipelago details are still loading)";
+            items.emplace_back(item);
+        }
+        message.InsertNames(items);
+        if (info.num) message.InsertNumber(info.num);
+        message.SetSingularPlural();
+    } else {
+        auto text = ap.GetInGameHint(StaticData::hintNames[key].GetEnglish(MF_CLEAN),
+                                   key < RH_GANONDORF_HINT ? static_cast<int32_t>(key) - 1 : -1);
+        if (text.empty() && key == RH_GANONDORF_JOKE)
+            text = "You have what you need. Face Ganondorf!";
+        if (text.empty()) text = "Archipelago hint details are still loading. Reconnect and read this hint again.";
+        message = CustomMessage(text);
+        if (key == RH_ALTAR_CHILD) {
+            if (!ctx->GetOption(RSK_TOT_ALTAR_HINT)) message = CustomMessage("");
+            auto ending = ctx->GetOption(RSK_DOOR_OF_TIME).Is(RO_DOOROFTIME_OPEN) ? RHT_CHILD_ALTAR_TEXT_END_DOTOPEN :
+                          ctx->GetOption(RSK_DOOR_OF_TIME).Is(RO_DOOROFTIME_SONGONLY) ? RHT_CHILD_ALTAR_TEXT_END_DOTSONGONLY :
+                          RHT_CHILD_ALTAR_TEXT_END_DOTCLOSED;
+            message += StaticData::hintTextTable[ending].GetHintMessage();
+        } else if (key == RH_ALTAR_ADULT) {
+            if (!ctx->GetOption(RSK_TOT_ALTAR_HINT)) message = CustomMessage("");
+            message += Hint::GetBridgeReqsText() + Hint::GetGanonBossKeyText() + Hint::GetGanonsSoulText() + Hint::GetWinconText();
+        }
+    }
+    if (format == MF_FORMATTED) message.Format();
+    else if (format == MF_AUTO_FORMAT) message.AutoFormat();
+    else if (format == MF_CLEAN) message.Clean();
+    return message;
+}
+
 const CustomMessage Hint::GetHintMessage(MessageFormat format, size_t id) const {
+    if (IsArchipelagoHint(ownKey)) return ArchipelagoHintMessage(ownKey, format, id);
     auto ctx = Rando::Context::GetInstance();
     CustomMessage hintText = CustomMessage("");
 
@@ -706,6 +757,14 @@ const std::string& Hint::GetDistribution() const {
 }
 
 bool Hint::IsEnabled() const {
+    if (IsArchipelagoHint(ownKey)) {
+        auto ctx = Context::GetInstance();
+        if (ownKey < RH_GANONDORF_HINT) return ctx->GetOption(RSK_GOSSIP_STONE_HINTS).IsNot(RO_GOSSIP_STONES_NONE);
+        if (ownKey == RH_ALTAR_CHILD || ownKey == RH_ALTAR_ADULT) return true;
+        if (ownKey == RH_GANONDORF_HINT || ownKey == RH_GANONDORF_JOKE) return ctx->GetOption(RSK_GANONDORF_HINT).Get() != 0;
+        auto data = StaticData::staticHintInfoMap.find(ownKey);
+        return data != StaticData::staticHintInfoMap.end() && ctx->GetOption(data->second.setting).Get() != 0;
+    }
     return enabled;
 }
 

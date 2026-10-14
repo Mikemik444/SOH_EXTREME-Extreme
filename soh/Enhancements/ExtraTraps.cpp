@@ -397,7 +397,7 @@ static void ResetExtraTrapEffects() {
     teleportRoll = ENTR_MAX;
 }
 
-static void OnPlayerUpdate() {
+static void UpdateExtraTrapEffects() {
     if (gPlayState == nullptr || (statusTimer < 0 && eventTimer < 0)) {
         return;
     }
@@ -445,6 +445,28 @@ static void OnPlayerUpdate() {
     }
 }
 
+static void OnPlayerUpdate() {
+    // Retry queued traps every gameplay update, including actions that do not
+    // visit Player_ActionHandler_2. Never consume an unrelated item offer by
+    // short-circuiting the native give-item handler.
+    const bool eventWasPending = eventTimer >= 0;
+    UpdateExtraTrapEffects();
+    if (!gSaveContext.ship.pendingIceTrapCount || eventWasPending ||
+        !SohExtreme::CanTriggerGameplayTrap(gPlayState)) {
+        return;
+    }
+
+    const ExtraTrapSettings settings = GetEffectiveExtraTrapSettings();
+    if (settings.enabled) {
+        RollRandomTrap(settings);
+    } else {
+        GameInteractor::RawAction::FreezePlayer();
+    }
+    gSaveContext.ship.pendingIceTrapCount--;
+    gSaveContext.ship.stats.count[COUNT_ICE_TRAPS]++;
+    GameInteractor_ExecuteOnItemReceiveHooks(ItemTable_RetrieveEntry(MOD_RANDOMIZER, RG_ICE_TRAP));
+}
+
 void RegisterExtraTraps() {
     // Evaluate policy at delivery time. AP can enable delayed traps while the
     // local master toggle is off. Also finish a running speed effect if the user
@@ -452,30 +474,6 @@ void RegisterExtraTraps() {
     COND_HOOK(OnPlayerUpdate, true, OnPlayerUpdate);
     COND_HOOK(OnLoadGame, true, [](int32_t) { ResetExtraTrapEffects(); });
     COND_HOOK(OnExitGame, true, [](int32_t) { ResetExtraTrapEffects(); });
-
-    COND_VB_SHOULD(VB_SHORT_CIRCUIT_GIVE_ITEM_PROCESS, true, {
-        if (!gSaveContext.ship.pendingIceTrapCount) {
-            return;
-        }
-
-        // Keep the queue/count intact while unsafe. Do not short-circuit the
-        // native item handler until a trap actually fires; that would clear a
-        // different actor's pending item offer. Preserve an already rolled
-        // delayed event instead of replacing it with the next queued trap.
-        if (eventTimer >= 0 || !SohExtreme::CanTriggerGameplayTrap(gPlayState)) {
-            return;
-        }
-        *should = true;
-        gSaveContext.ship.pendingIceTrapCount--;
-        gSaveContext.ship.stats.count[COUNT_ICE_TRAPS]++;
-        GameInteractor_ExecuteOnItemReceiveHooks(ItemTable_RetrieveEntry(MOD_RANDOMIZER, RG_ICE_TRAP));
-        const ExtraTrapSettings settings = GetEffectiveExtraTrapSettings();
-        if (settings.enabled) {
-            RollRandomTrap(settings);
-        } else {
-            GameInteractor::RawAction::FreezePlayer();
-        }
-    });
 }
 
 static RegisterShipInitFunc initFunc(RegisterExtraTraps);

@@ -10,6 +10,7 @@
 #include "soh/Enhancements/randomizer/SeedContext.h"
 #include <soh/OTRGlobals.h>
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
+#include "soh/Network/Archipelago/ArchipelagoClient.h"
 
 extern "C" {
 #include "z64scene.h"
@@ -150,13 +151,18 @@ void BuildSkulltulaPeopleMessage(uint16_t* textId, bool* loadFromMessageTable) {
                                       "et j'aurai quelque chose à te donner! [[color]]([[1]])%w");
     msg.InsertNumber(count);
     msg.Replace("[[color]]", item.GetColor());
-    msg.InsertNames({ item.GetHint().GetHintMessage() });
+    auto& ap = ArchipelagoClient::GetInstance();
+    const auto apItem = ap.GetHintItemDescription(rc);
+    msg.InsertNames({ ap.IsGameplaySessionActive()
+        ? CustomMessage(apItem.empty() ? "an item (Archipelago details are still loading)" : apItem)
+        : item.GetHint().GetHintMessage() });
     msg.AutoFormat();
     msg.LoadIntoFont();
     *loadFromMessageTable = false;
 }
 
 void Build100SkullsHintMessage(uint16_t* textId, bool* loadFromMessageTable) {
+    const RandomizerCheck rc = RC_KAK_100_GOLD_SKULLTULA_REWARD;
     CustomMessage msg = CustomMessage("Yeaaarrgh! I'm cursed!!^Please save me by destroying %y100 Spiders of the "
                                       "Curse%w and I will give you [[color]][[1]]%w!",
                                       /*german*/
@@ -168,7 +174,11 @@ void Build100SkullsHintMessage(uint16_t* textId, bool* loadFromMessageTable) {
     Rando::Item& item =
         Rando::StaticData::RetrieveItem(RAND_GET_ITEM_LOC(RC_KAK_100_GOLD_SKULLTULA_REWARD)->GetPlacedRandomizerGet());
     msg.Replace("[[color]]", item.GetColor());
-    msg.InsertNames({ item.GetHint().GetHintMessage() });
+    auto& ap = ArchipelagoClient::GetInstance();
+    const auto apItem = ap.GetHintItemDescription(rc);
+    msg.InsertNames({ ap.IsGameplaySessionActive()
+        ? CustomMessage(apItem.empty() ? "an item (Archipelago details are still loading)" : apItem)
+        : item.GetHint().GetHintMessage() });
     msg.AutoFormat();
     msg.LoadIntoFont();
     *loadFromMessageTable = false;

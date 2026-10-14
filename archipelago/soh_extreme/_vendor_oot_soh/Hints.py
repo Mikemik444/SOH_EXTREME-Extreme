@@ -48,58 +48,79 @@ def GetNonlocalHintOptionMapping(world: "SohWorld") -> dict[hk, OptionItemMappin
         hk.FISHING_POLE: OptionItemMapping(world.options.fishing_pole_hint, [Items.FISHING_POLE])
     }
 
-def CreateNonlocalHints(world: "SohWorld") -> list[StaticHint]:
-    hints = list[StaticHint]()
+def _belongs_to(world, item):
+    if item.player == world.player:
+        return True
+    group = world.multiworld.groups.get(item.player, {})
+    return world.player in group.get("players", ())
 
-    for hint_key, mapping in GetNonlocalHintOptionMapping(world).items():
+
+def _item_locations(world, name):
+    return sorted((loc for loc in world.multiworld.get_locations()
+                   if loc.address is not None and loc.item is not None
+                   and loc.item.name == name and _belongs_to(world, loc.item)),
+                  key=lambda loc: (loc.player, loc.address))
+
+
+def _starting_item(world, name):
+    return next((item for player, items in world.multiworld.precollected_items.items()
+                 for item in items if item.name == name and _belongs_to(world, item)), None)
+
+
+def CreateNonlocalHints(world: "SohWorld") -> list[StaticHint]:
+    # Retain the original wire format for older clients. Unplaced items are
+    # normal during tracker regeneration; they must not discard other hints.
+    result = []
+    for key, mapping in GetNonlocalHintOptionMapping(world).items():
         if not mapping.option.value:
             continue
+        locations = []
+        for name in mapping.hint_items:
+            if _starting_item(world, name):
+                locations.append(locationPair(world.player, location_data_table[Locations.LINKS_POCKET].loc_id))
+            else:
+                locations.extend(locationPair(loc.player, loc.address) for loc in _item_locations(world, name))
+        result.append(StaticHint(key, locations))
+    return result
 
-        hint_locations = list[locationPair]()
 
-        for hinted_item in mapping.hint_items:
-            # find the item and create a hint
-            # check if we start with the item first
-            placed_item = FindHintedItemInPool(hinted_item, world.multiworld.precollected_items[world.player])
-            if placed_item:
-                hint_locations.append(locationPair(world.player, location_data_table[Locations.LINKS_POCKET].loc_id))
-                continue
-
-            # then check if it's placed somewhere in the multiworld
-            placed_item = FindHintedItemInPool(hinted_item, world.item_pool)
-            if not placed_item:
-                placed_item = FindHintedItemInPool(hinted_item, world.preplaced_items)
-            if placed_item:
-                if placed_item.location.address == None:
-                    # the item is in our world but has no location for some reason, this means it could be an item link
-                    # search the entire world for the real items location
-                    placed_item = FindHintedItemFromMultiWorld(hinted_item, world.multiworld)
-                    if placed_item == None:
-                        # I don't know anymore
-                        continue
-                if placed_item.location.address != None:
-                    hint_locations.append(locationPair(placed_item.location.player, placed_item.location.address))
-        hints.append(StaticHint(hint_key, hint_locations))
-
-    return hints
-
-def FindHintedItemInPool(hinted_item: Items, pool: Iterable[Item]) -> Item | None:
-    for item in pool:
-        if item.name != hinted_item:
+def CreateInGameHints(world: "SohWorld") -> dict:
+    # Use finalized multiworld placements, including item-link group recipients.
+    # Names travel with their owner/game; numeric IDs from different games are
+    # never interpreted in SOH's item or location namespace.
+    mw = world.multiworld
+    def record(item, loc=None):
+        finder = world.player if loc is None else loc.player
+        return dict(item=item.name, recipient=mw.player_name[item.player],
+                    location="Starting inventory" if loc is None else loc.name,
+                    finder=mw.player_name[finder], game=mw.game[finder],
+                    starting=loc is None)
+    result = {}
+    for key, mapping in GetNonlocalHintOptionMapping(world).items():
+        if not mapping.option.value:
             continue
-        return item
-
-    return None
-
-def FindHintedItemFromMultiWorld(hinted_item: Items, multiworld: MultiWorld) -> Item | None:
-    for location in multiworld.get_locations():
-        if location.address == None:
-            continue
-        if location.item == None:
-            continue
-
-        if location.item.name == hinted_item:
-            if location.item.location.address == None:
-                continue
-            return location.item
-    return None
+        rows = []
+        for name in mapping.hint_items:
+            starting = _starting_item(world, name)
+            if starting is not None:
+                rows.append(record(starting))
+            else:
+                rows.extend(record(loc.item, loc) for loc in _item_locations(world, name))
+        result[key.value] = rows
+    if world.options.gossip_stone_hints.value:
+        candidates = sorted((loc for loc in mw.get_locations()
+                             if loc.address is not None and loc.item is not None
+                             and (loc.player == world.player or _belongs_to(world, loc.item))),
+                            key=lambda loc: (not loc.item.advancement, loc.player, loc.address))
+        progression = [loc for loc in candidates if loc.item.advancement]
+        candidates = progression or candidates
+        # A separate RNG makes repeated slot-data requests deterministic and
+        # leaves generation's random stream untouched.
+        import random
+        random.Random(f"{mw.seed_name}:{world.player}:soh-hints-v1").shuffle(candidates)
+        stones = [key for key in hk if key.name.endswith("GOSSIP_STONE")]
+        if candidates:
+            for index, key in enumerate(stones):
+                loc = candidates[index % len(candidates)]
+                result[key.value] = [record(loc.item, loc)]
+    return result

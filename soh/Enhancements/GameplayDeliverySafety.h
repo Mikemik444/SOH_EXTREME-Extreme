@@ -25,9 +25,11 @@ inline bool CanReceiveGameplayReward(PlayState* play) {
     if (player == nullptr || Player_InBlockingCsMode(play, player)) {
         return false;
     }
+    // Freeze sets DAMAGED immediately, but FROZEN starts on the next player
+    // tick. Do not let another reward replace that newly started animation.
     return !(player->stateFlags1 &
              (PLAYER_STATE1_LOADING | PLAYER_STATE1_INPUT_DISABLED | PLAYER_STATE1_TALKING |
-              PLAYER_STATE1_DEAD | PLAYER_STATE1_GETTING_ITEM | PLAYER_STATE1_CARRYING_ACTOR |
+              PLAYER_STATE1_DEAD | PLAYER_STATE1_DAMAGED | PLAYER_STATE1_GETTING_ITEM | PLAYER_STATE1_CARRYING_ACTOR |
               PLAYER_STATE1_HANGING_OFF_LEDGE | PLAYER_STATE1_CLIMBING_LEDGE | PLAYER_STATE1_CLIMBING_LADDER |
               PLAYER_STATE1_IN_ITEM_CS | PLAYER_STATE1_IN_CUTSCENE | PLAYER_STATE1_FLOOR_DISABLED)) &&
            !(player->stateFlags2 &
@@ -37,16 +39,18 @@ inline bool CanReceiveGameplayReward(PlayState* play) {
 }
 
 inline bool IsPlayerOnDryGround(const Player* player) {
-    // Iron Boots can set GROUND while Link is underwater; use water collision
-    // and diving flags as well as the ordinary swimming flag.
+    // Water collision also includes zero-depth surface contact. Use actual
+    // depth so a grounded Link at the shoreline is not blocked indefinitely.
+    // Iron Boots underwater, swimming, and diving still defer the trap.
     return player != nullptr && (player->actor.bgCheckFlags & BGCHECKFLAG_GROUND) &&
-           !(player->actor.bgCheckFlags & BGCHECKFLAG_WATER) &&
+           player->actor.yDistToWater <= 0.0f &&
            !(player->stateFlags1 & PLAYER_STATE1_IN_WATER) &&
            !(player->stateFlags2 & (PLAYER_STATE2_UNDERWATER | PLAYER_STATE2_DIVING));
 }
 
 inline bool CanTriggerGameplayTrap(PlayState* play) {
-    return CanReceiveGameplayReward(play) && IsPlayerOnDryGround(GET_PLAYER(play));
+    return CanReceiveGameplayReward(play) && IsPlayerOnDryGround(GET_PLAYER(play)) &&
+           !(GET_PLAYER(play)->stateFlags1 & PLAYER_STATE1_ON_HORSE);
 }
 
 } // namespace SohExtreme

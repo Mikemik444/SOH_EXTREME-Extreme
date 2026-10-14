@@ -89,7 +89,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Events
     add_events(Regions.MARKET_GUARD_HOUSE, world, [
         (EventLocations.MARKET_GUARD_HOUSE,
-         Events.CAN_EMPTY_BIG_POES, lambda bundle: (is_adult(bundle)))
+         Events.CAN_EMPTY_BIG_POES, lambda bundle: (is_adult(bundle) & can_interact_npc(bundle, "Hylian")))
     ])
     # Locations
     add_locations(Regions.MARKET_GUARD_HOUSE, world, [

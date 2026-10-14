@@ -12,6 +12,7 @@
 #include "TrackerMirror.h"
 #include "TrackerWorker.h"
 #include "ArchipelagoSaveSnapshot.h"
+#include "ArchipelagoHintData.h"
 
 
 class ArchipelagoClient {
@@ -64,6 +65,9 @@ class ArchipelagoClient {
     void RefreshPlacementsForScene(int16_t sceneNum);
     void EnsureLocationScouts();
     std::string GetRemoteItemDescription(int32_t randomizerCheck);
+    // Game-thread only. No chat commands, hint purchases, or remote scouting.
+    std::string GetInGameHint(const std::string& key, int32_t stoneIndex = -1);
+    std::string GetHintItemDescription(int32_t randomizerCheck);
     bool IsReadyForFileSelect() const;
     void ApplySlotSettings();
     void EnforceSlotSettings();
@@ -112,6 +116,7 @@ class ArchipelagoClient {
     void ResetRemotePresentations();
     void QueueRemotePresentation(int64_t locationId);
     bool ProcessRemotePresentation();
+    SohExtreme::InGameHintData inGameHints;
     std::vector<HintInfo> hints;
     bool hintSnapshotLoaded = false;
     std::deque<int64_t> remotePresentations;

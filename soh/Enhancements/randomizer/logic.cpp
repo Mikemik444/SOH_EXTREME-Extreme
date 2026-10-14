@@ -1867,9 +1867,9 @@ bool Logic::CanBreakRocks() {
     if (ctx->GetOption(RSK_SHUFFLE_ROCK_SOUL) && !HasItem(RG_ROCK_SOUL)) {
         return false;
     }
-    // SOH-EXTREME: rocks/boulders use explosives or the shuffled Grab ability.
-    // Hammer is intentionally not a substitute for this physical rule.
-    return HasExplosives() || HasItem(RG_POWER_BRACELET);
+    // En_Ishi small rocks also accept Hammer hits. CanUse keeps this method
+    // adult-only; the Rock/Boulder Soul gate above applies to every method.
+    return HasExplosives() || HasItem(RG_POWER_BRACELET) || CanUse(RG_MEGATON_HAMMER);
 }
 
 bool Logic::CanBonkTrees() {

@@ -7,8 +7,136 @@ function(soh_extreme_ap_hints source_dir)
     file(READ "${source_dir}/Archipelago.h" header)
     string(REPLACE "\r\n" "\n" cpp "${cpp}")
     string(REPLACE "\r\n" "\n" header "${header}")
+    string(FIND "${header}" "struct AP_SeedHintListMessage" seed_hint_version)
+    if(seed_hint_version EQUAL -1)
+        string(REPLACE [==[Plaintext, ItemSend, ItemRecv, Hint, Countdown, Chat, ServerChat, HintList]==] [==[Plaintext, ItemSend, ItemRecv, Hint, Countdown, Chat, ServerChat, HintList, SeedHints]==] header "${header}")
+        string(REPLACE [==[// Complete server-owned hint snapshot, delivered on the normal message queue.
+struct AP_StoredHint {
+    std::string item, location, finder, recipient, entrance;
+    bool found = false;
+};
+struct AP_HintListMessage : AP_Message {
+    std::vector<AP_StoredHint> hints;
+};
+
+struct AP_CountdownMessage : AP_Message {]==] [==[// Complete server-owned hint snapshot, delivered on the normal message queue.
+struct AP_StoredHint {
+    std::string item, location, finder, recipient, entrance;
+    bool found = false;
+};
+struct AP_HintListMessage : AP_Message {
+    std::vector<AP_StoredHint> hints;
+};
+
+// Seed-authored hints are independent of the server's purchased hint journal.
+struct AP_SeedHintListMessage : AP_Message {
+    std::string data;
+};
+
+struct AP_CountdownMessage : AP_Message {]==] header "${header}")
+        string(REPLACE [==[// SOH-EXTREME: hints are read-only server data, never purchased/scouted here.
+static std::string sohHintKey;
+static Json::Value sohHints;
+static bool sohHintsLoaded = false;
+static void sohPublishHints() {
+    if (!sohHintsLoaded || !datapkg_outdated_games.empty()) return;
+    auto* message = new AP_HintListMessage;
+    message->type = AP_MessageType::HintList;
+    if (sohHints.isArray()) for (const auto& hint : sohHints) {
+        if (!hint.isObject() || !hint["finding_player"].isInt() || !hint["receiving_player"].isInt() ||
+            !hint["item"].isInt64() || !hint["location"].isInt64()) continue;
+        const auto finder = getPlayer(ap_player_team, hint["finding_player"].asInt());
+        const auto recipient = getPlayer(ap_player_team, hint["receiving_player"].asInt());
+        AP_StoredHint row;
+        row.item = getItemName(recipient.game, hint["item"].asInt64());
+        row.location = getLocationName(finder.game, hint["location"].asInt64());
+        row.finder = finder.alias;
+        row.recipient = recipient.alias;
+        row.entrance = hint["entrance"].isString() ? hint["entrance"].asString() : "";
+        row.found = hint["found"].isBool() && hint["found"].asBool();
+        message->hints.push_back(std::move(row));
+    }
+    AP_QueueMessage(message);
+}
+
+bool parse_response(std::string msg, std::string &request) {]==] [==[// SOH-EXTREME: hints are read-only server data, never purchased/scouted here.
+static std::string sohHintKey;
+static Json::Value sohHints;
+static bool sohHintsLoaded = false;
+static Json::Value sohLegacySeedHints, sohRichSeedHints;
+static std::string sohPublishedSeedHints;
+static void sohPublishSeedHints() {
+    if (!datapkg_outdated_games.empty()) return;
+    Json::Value data(Json::objectValue);
+    // Existing seeds contain [finding slot, location ID] pairs. Resolve the
+    // LOCATION using the finder's game, never the receiving player's game.
+    // The old format cannot safely associate a missing item with an index, so
+    // retain the named hint's real destination without inventing an item name.
+    if (sohLegacySeedHints.isObject()) for (const auto& key : sohLegacySeedHints.getMemberNames()) {
+        const auto& locations = sohLegacySeedHints[key];
+        if (!locations.isArray()) continue;
+        for (const auto& pair : locations) {
+            if (!pair.isArray() || pair.size() != 2 || !pair[0].isInt() || !pair[1].isInt64()) continue;
+            const auto finder = getPlayer(ap_player_team, pair[0].asInt());
+            if (finder.game.empty()) continue;
+            Json::Value row(Json::objectValue);
+            row["location"] = getLocationName(finder.game, pair[1].asInt64());
+            row["finder"] = finder.alias;
+            row["game"] = finder.game;
+            data[key].append(row);
+        }
+    }
+    // New seeds supply the actual item and recipient as well, including group
+    // recipients. Prefer those records, but never replace useful legacy rows
+    // with an empty or malformed value.
+    if (sohRichSeedHints.isObject()) for (const auto& key : sohRichSeedHints.getMemberNames()) {
+        if (sohRichSeedHints[key].isArray() && !sohRichSeedHints[key].empty()) data[key] = sohRichSeedHints[key];
+    }
+    const auto serialized = Json::writeString(Json::StreamWriterBuilder(), data);
+    if (serialized == sohPublishedSeedHints) return;
+    sohPublishedSeedHints = serialized;
+    auto* message = new AP_SeedHintListMessage;
+    message->type = AP_MessageType::SeedHints;
+    message->data = serialized;
+    AP_QueueMessage(message);
+}
+
+static void sohPublishHints() {
+    sohPublishSeedHints();
+    if (!sohHintsLoaded || !datapkg_outdated_games.empty()) return;
+    auto* message = new AP_HintListMessage;
+    message->type = AP_MessageType::HintList;
+    if (sohHints.isArray()) for (const auto& hint : sohHints) {
+        if (!hint.isObject() || !hint["finding_player"].isInt() || !hint["receiving_player"].isInt() ||
+            !hint["item"].isInt64() || !hint["location"].isInt64()) continue;
+        const auto finder = getPlayer(ap_player_team, hint["finding_player"].asInt());
+        const auto recipient = getPlayer(ap_player_team, hint["receiving_player"].asInt());
+        AP_StoredHint row;
+        row.item = getItemName(recipient.game, hint["item"].asInt64());
+        row.location = getLocationName(finder.game, hint["location"].asInt64());
+        row.finder = finder.alias;
+        row.recipient = recipient.alias;
+        row.entrance = hint["entrance"].isString() ? hint["entrance"].asString() : "";
+        row.found = hint["found"].isBool() && hint["found"].asBool();
+        message->hints.push_back(std::move(row));
+    }
+    AP_QueueMessage(message);
+}
+
+bool parse_response(std::string msg, std::string &request) {]==] cpp "${cpp}")
+        string(REPLACE [==[            ap_player_team = root[i]["team"].asInt();
+            sohHintKey = "_read_hints_" + std::to_string(ap_player_team) + "_" + std::to_string(ap_player_id);
+            sohHints = Json::nullValue;
+            sohHintsLoaded = false;]==] [==[            ap_player_team = root[i]["team"].asInt();
+            sohHintKey = "_read_hints_" + std::to_string(ap_player_team) + "_" + std::to_string(ap_player_id);
+            sohHints = Json::nullValue;
+            sohHintsLoaded = false;
+            sohLegacySeedHints = root[i]["slot_data"]["static_hints"];
+            sohRichSeedHints = root[i]["slot_data"]["extreme_hint_data"];
+            sohPublishedSeedHints.clear();]==] cpp "${cpp}")
+    endif()
     set(old [==[Plaintext, ItemSend, ItemRecv, Hint, Countdown, Chat, ServerChat]==])
-    set(new [==[Plaintext, ItemSend, ItemRecv, Hint, Countdown, Chat, ServerChat, HintList]==])
+    set(new [==[Plaintext, ItemSend, ItemRecv, Hint, Countdown, Chat, ServerChat, HintList, SeedHints]==])
     string(FIND "${header}" "${new}" fixed)
     if(fixed EQUAL -1)
         string(FIND "${header}" "${old}" found)
@@ -27,6 +155,11 @@ struct AP_HintListMessage : AP_Message {
     std::vector<AP_StoredHint> hints;
 };
 
+// Seed-authored hints are independent of the server's purchased hint journal.
+struct AP_SeedHintListMessage : AP_Message {
+    std::string data;
+};
+
 struct AP_CountdownMessage : AP_Message {]==])
     string(FIND "${header}" "${new}" fixed)
     if(fixed EQUAL -1)
@@ -41,7 +174,46 @@ struct AP_CountdownMessage : AP_Message {]==])
 static std::string sohHintKey;
 static Json::Value sohHints;
 static bool sohHintsLoaded = false;
+static Json::Value sohLegacySeedHints, sohRichSeedHints;
+static std::string sohPublishedSeedHints;
+static void sohPublishSeedHints() {
+    if (!datapkg_outdated_games.empty()) return;
+    Json::Value data(Json::objectValue);
+    // Existing seeds contain [finding slot, location ID] pairs. Resolve the
+    // LOCATION using the finder's game, never the receiving player's game.
+    // The old format cannot safely associate a missing item with an index, so
+    // retain the named hint's real destination without inventing an item name.
+    if (sohLegacySeedHints.isObject()) for (const auto& key : sohLegacySeedHints.getMemberNames()) {
+        const auto& locations = sohLegacySeedHints[key];
+        if (!locations.isArray()) continue;
+        for (const auto& pair : locations) {
+            if (!pair.isArray() || pair.size() != 2 || !pair[0].isInt() || !pair[1].isInt64()) continue;
+            const auto finder = getPlayer(ap_player_team, pair[0].asInt());
+            if (finder.game.empty()) continue;
+            Json::Value row(Json::objectValue);
+            row["location"] = getLocationName(finder.game, pair[1].asInt64());
+            row["finder"] = finder.alias;
+            row["game"] = finder.game;
+            data[key].append(row);
+        }
+    }
+    // New seeds supply the actual item and recipient as well, including group
+    // recipients. Prefer those records, but never replace useful legacy rows
+    // with an empty or malformed value.
+    if (sohRichSeedHints.isObject()) for (const auto& key : sohRichSeedHints.getMemberNames()) {
+        if (sohRichSeedHints[key].isArray() && !sohRichSeedHints[key].empty()) data[key] = sohRichSeedHints[key];
+    }
+    const auto serialized = Json::writeString(Json::StreamWriterBuilder(), data);
+    if (serialized == sohPublishedSeedHints) return;
+    sohPublishedSeedHints = serialized;
+    auto* message = new AP_SeedHintListMessage;
+    message->type = AP_MessageType::SeedHints;
+    message->data = serialized;
+    AP_QueueMessage(message);
+}
+
 static void sohPublishHints() {
+    sohPublishSeedHints();
     if (!sohHintsLoaded || !datapkg_outdated_games.empty()) return;
     auto* message = new AP_HintListMessage;
     message->type = AP_MessageType::HintList;
@@ -75,7 +247,10 @@ bool parse_response(std::string msg, std::string &request) {]==])
     set(new [==[            ap_player_team = root[i]["team"].asInt();
             sohHintKey = "_read_hints_" + std::to_string(ap_player_team) + "_" + std::to_string(ap_player_id);
             sohHints = Json::nullValue;
-            sohHintsLoaded = false;]==])
+            sohHintsLoaded = false;
+            sohLegacySeedHints = root[i]["slot_data"]["static_hints"];
+            sohRichSeedHints = root[i]["slot_data"]["extreme_hint_data"];
+            sohPublishedSeedHints.clear();]==])
     string(FIND "${cpp}" "${new}" fixed)
     if(fixed EQUAL -1)
         string(FIND "${cpp}" "${old}" found)

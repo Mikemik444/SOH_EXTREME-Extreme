@@ -61,7 +61,9 @@ void RegionTable_Init_Market() {
 
     areaTable[RR_MARKET_GUARD_HOUSE] = Region("Market Guard House", SCENE_MARKET_GUARD_HOUSE, {
         //Events
-        EVENT_ACCESS(LOGIC_CAN_EMPTY_BIG_POES, logic->IsAdult),
+        EVENT_ACCESS(LOGIC_CAN_EMPTY_BIG_POES, logic->IsAdult &&
+                                             (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) &&
+                                             (!ctx->GetOption(RSK_SHUFFLE_SPEAK) || logic->HasItem(RG_SPEAK_HYLIAN))),
     }, {
         //Locations
         LOCATION(RC_MARKET_10_BIG_POES,          logic->IsAdult && logic->HasItem(RG_SPEAK_HYLIAN) && (logic->Get(LOGIC_BIG_POE_KILL) || logic->BigPoes >= ctx->GetOption(RSK_BIG_POE_COUNT).Get())),

@@ -73,9 +73,13 @@ def conversation_rule(world, entry, scrub_region=None):
         rules.append(H.can_stun_deku(b))
         if o.shuffle_business_scrub_soul.value:
             rules.append(Has("Scrub Soul"))
-        # Surface scrub placements are child-only except the SFM scrub.
+        # These surface merchants only spawn as child. Lost Woods grotto
+        # merchants are present in both ages; sharing the LW prefix does not
+        # give them the surface actors' age restriction.
         rc = entry["native_rc"]
-        if rc.startswith(("RC_LW_", "RC_DEKU_TREE_", "RC_JABU_JABUS_BELLY_")):
+        if rc in ("RC_DMC_DEKU_SCRUB", "RC_LW_DEKU_SCRUB_NEAR_BRIDGE",
+                  "RC_LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT", "RC_LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT") or \
+                rc.startswith(("RC_DEKU_TREE_", "RC_JABU_JABUS_BELLY_")):
             rules.append(H.is_child(b))
         return And(*rules)
     alternatives = []

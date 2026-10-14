@@ -11,6 +11,7 @@ namespace Rando {
 class Hint {
   public:
     Hint();
+    void SetKey(RandomizerHint key) { ownKey = key; }
     Hint(RandomizerHint ownKey_, HintType hintType_, std::string distributionName_,
          std::vector<RandomizerHintTextKey> hintKeys_, std::vector<RandomizerCheck> locations_,
          std::vector<RandomizerArea> areas_ = {}, std::vector<TrialKey> trials_ = {});

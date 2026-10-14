@@ -127,7 +127,7 @@
       {
         "region": "KAK_POTION_SHOP_FRONT",
         "age": "child",
-        "time": "night",
+        "time": "either",
         "gates": []
       }
     ],
@@ -217,6 +217,12 @@
         "age": "child",
         "time": "day",
         "gates": []
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "child",
+        "time": "night",
+        "gates": []
       }
     ],
     "source_rows": 13
@@ -260,6 +266,12 @@
         "region": "KAKARIKO_VILLAGE",
         "age": "child",
         "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "child",
+        "time": "night",
         "gates": []
       }
     ],
@@ -799,7 +811,7 @@
     "routes": [
       {
         "region": "FIRE_TEMPLE_BOULDER_MAZE_UPPER",
-        "age": "adult",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -820,8 +832,8 @@
     "language": "Goron",
     "routes": [
       {
-        "region": "FIRE_TEMPLE_BIG_LAVA_ROOM_SOUTH_GORON",
-        "age": "adult",
+        "region": "FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_GORON",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -865,7 +877,7 @@
     "routes": [
       {
         "region": "FIRE_TEMPLE_WEST_PEAK",
-        "age": "adult",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -952,8 +964,8 @@
     "language": "Goron",
     "routes": [
       {
-        "region": "FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_GORON",
-        "age": "adult",
+        "region": "FIRE_TEMPLE_BIG_LAVA_ROOM_SOUTH_GORON",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -975,7 +987,7 @@
     "routes": [
       {
         "region": "FIRE_TEMPLE_BOULDER_MAZE_LOWER",
-        "age": "adult",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -1019,7 +1031,7 @@
     "routes": [
       {
         "region": "FIRE_TEMPLE_SHORTCUT_ROOM",
-        "age": "adult",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -1065,7 +1077,7 @@
     "routes": [
       {
         "region": "FIRE_TEMPLE_BOULDER_MAZE_LOWER_SIDE_ROOM",
-        "age": "adult",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -1153,7 +1165,7 @@
     "routes": [
       {
         "region": "FIRE_TEMPLE_NEAR_BOSS_ROOM",
-        "age": "adult",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -1197,7 +1209,7 @@
     "routes": [
       {
         "region": "FIRE_TEMPLE_LOOP_GORON_ROOM",
-        "age": "adult",
+        "age": "either",
         "time": "either",
         "gates": []
       }
@@ -2196,10 +2208,12 @@
         "gates": []
       },
       {
-        "region": "KAKARIKO_VILLAGE",
+        "region": "KAK_BACKYARD",
         "age": "adult",
-        "time": "day",
-        "gates": []
+        "time": "either",
+        "gates": [
+          "climb"
+        ]
       }
     ],
     "source_rows": 8
@@ -2850,6 +2864,12 @@
         "gates": [
           "Zelda's Letter"
         ]
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
       }
     ],
     "source_rows": 17
@@ -2871,6 +2891,18 @@
         "region": "MARKET",
         "age": "child",
         "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
+      },
+      {
+        "region": "MARKET_DOG_LADY_HOUSE",
+        "age": "child",
+        "time": "night",
         "gates": []
       }
     ],
@@ -2915,6 +2947,18 @@
         "region": "MARKET",
         "age": "child",
         "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "adult",
+        "time": "night",
         "gates": []
       }
     ],
@@ -2982,6 +3026,12 @@
         "age": "child",
         "time": "day",
         "gates": []
+      },
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "adult",
+        "time": "either",
+        "gates": []
       }
     ],
     "source_rows": 6
@@ -3025,6 +3075,18 @@
         "region": "MARKET",
         "age": "child",
         "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "adult",
+        "time": "night",
         "gates": []
       }
     ],
@@ -3070,6 +3132,18 @@
         "age": "child",
         "time": "day",
         "gates": []
+      },
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_CARPENTER_BOSS_HOUSE",
+        "age": "adult",
+        "time": "night",
+        "gates": []
       }
     ],
     "source_rows": 9
@@ -3091,6 +3165,18 @@
         "region": "MARKET",
         "age": "child",
         "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAKARIKO_VILLAGE",
+        "age": "adult",
+        "time": "day",
+        "gates": []
+      },
+      {
+        "region": "KAK_IMPAS_HOUSE",
+        "age": "adult",
+        "time": "night",
         "gates": []
       }
     ],
@@ -3136,6 +3222,14 @@
         "age": "child",
         "time": "day",
         "gates": []
+      },
+      {
+        "region": "KAK_WATCHTOWER",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "climb"
+        ]
       }
     ],
     "source_rows": 6
@@ -3255,26 +3349,8 @@
     "routes": [
       {
         "region": "KAK_IMPAS_HOUSE",
-        "age": "child",
-        "time": "day",
-        "gates": []
-      },
-      {
-        "region": "KAK_IMPAS_HOUSE",
-        "age": "child",
-        "time": "night",
-        "gates": []
-      },
-      {
-        "region": "KAK_IMPAS_HOUSE",
-        "age": "adult",
-        "time": "day",
-        "gates": []
-      },
-      {
-        "region": "KAK_IMPAS_HOUSE",
-        "age": "adult",
-        "time": "night",
+        "age": "either",
+        "time": "either",
         "gates": []
       }
     ],
@@ -3295,8 +3371,8 @@
     "routes": [
       {
         "region": "KAK_CARPENTER_BOSS_HOUSE",
-        "age": "adult",
-        "time": "night",
+        "age": "either",
+        "time": "either",
         "gates": []
       }
     ],

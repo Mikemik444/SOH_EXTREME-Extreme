@@ -1,4 +1,5 @@
 #include "z_en_go2.h"
+#include "soh/OTRGlobals.h"
 #include "overlays/actors/ovl_En_Bom/z_en_bom.h"
 #include "objects/gameplay_keep/gameplay_keep.h"
 #include "objects/object_oF1d_map/object_oF1d_map.h"
@@ -1430,7 +1431,18 @@ s32 EnGo2_IsGoronRollingBig(EnGo2* this, PlayState* play) {
     return true;
 }
 
+// Speech checks remain available even if the cell was opened before the
+// player could speak Goron or had the NPC Soul. Never clear the cell switch.
+static s32 EnGo2_KeepFireGoronForSpeech(const EnGo2* this) {
+    return (this->actor.params & 0x1F) == GORON_FIRE_GENERIC && IS_RANDO &&
+           Randomizer_GetSettingValue(RSK_NPC_SPEECH_SANITY);
+}
+
 s32 EnGo2_IsGoronFireGeneric(EnGo2* this) {
+    if (EnGo2_KeepFireGoronForSpeech(this)) {
+        return false;
+    }
+
     if ((this->actor.params & 0x1F) != GORON_FIRE_GENERIC || this->interactInfo.talkState == NPC_TALK_STATE_IDLE) {
         return false;
     }
@@ -1607,7 +1619,8 @@ void EnGo2_Init(Actor* thisx, PlayState* play) {
             EnGo2_SetupRolling(this, play);
             break;
         case GORON_FIRE_GENERIC:
-            if (Flags_GetSwitch(play, (this->actor.params & 0xFC00) >> 0xA)) {
+            if (Flags_GetSwitch(play, (this->actor.params & 0xFC00) >> 0xA) &&
+                !EnGo2_KeepFireGoronForSpeech(this)) {
                 Actor_Kill(&this->actor);
             } else {
                 this->isAwake = true;

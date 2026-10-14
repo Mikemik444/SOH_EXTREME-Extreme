@@ -78,6 +78,7 @@ std::shared_ptr<Context> Context::GetInstance() {
 }
 
 Hint* Context::GetHint(const RandomizerHint hintKey) {
+    hintTable[hintKey].SetKey(hintKey);
     return &hintTable[hintKey];
 }
 

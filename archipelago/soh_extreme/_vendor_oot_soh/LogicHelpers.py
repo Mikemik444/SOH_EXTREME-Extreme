@@ -127,12 +127,12 @@ def can_swim(bundle) -> Rule:
 
 
 def can_break_rocks(bundle) -> Rule:
-    """Native CanBreakRocks: existence soul AND explosives or basic Grab.
+    """Native CanBreakRocks: soul AND explosives, basic Grab, or usable Hammer.
 
     Do not change blast_or_smash: mud walls and other non-rock obstacles use it.
     """
     return extreme_requirement(bundle, "shuffle_rock_boulder_soul", "Rock / Boulder Soul") & (
-        has_explosives(bundle) | can_grab(bundle))
+        has_explosives(bundle) | can_grab(bundle) | can_use(Items.MEGATON_HAMMER, bundle))
 
 
 def can_climb(bundle) -> Rule:

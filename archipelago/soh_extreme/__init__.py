@@ -31,7 +31,7 @@ from ._vendor_oot_soh.ItemPool import (
     create_item_pool, create_filler_item_pool, create_triforce_pieces,
     get_filler_item, give_starting_items,
 )
-from ._vendor_oot_soh.Hints import CreateNonlocalHints
+from ._vendor_oot_soh.Hints import CreateNonlocalHints, CreateInGameHints
 from rule_builder.rules import Rule, Has, And, Or, True_, CanReachRegion, CanReachLocation
 from ._vendor_oot_soh.Enums import Ages
 from ._vendor_oot_soh.LogicHelpers import (
@@ -3199,9 +3199,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                         | can_use(Items.BOOMERANG, bundle)
                     )
                 else:
-                    # Logic::CanBreakRocks deliberately excludes Hammer.
-                    # Ordinary En_Ishi rocks require explosives or Grab.
-                    physical = has_explosives(bundle) | grab_rule()
+                    # Ordinary En_Ishi rocks accept explosives, Grab, or an
+                    # adult-usable Hammer, always with their shuffled soul.
+                    physical = can_break_rocks(bundle)
                 require_native_fork(location, physical)
             elif family == "boulder":
                 rc_upper = fork_loc.rc.upper()
@@ -3510,6 +3510,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         import re
 
         for location in self.get_locations():
+            if location.name in self._npc_conversations:
+                # Identity-v2 conversations have explicit actor/language/routes
+                # below. A name such as "Skulltula House Resident" is not a gold
+                # skulltula check and must not inherit its unrelated soul gate.
+                continue
             if location.name.startswith(("Enemy Defeat:", "EXTREME Native Event", "EXTREME Native Action", "EXTREME Native RR_")):
                 continue  # Explicit actor/action rules; never classify by room names.
             data = location_data_table.get(location.name)
@@ -3993,7 +3998,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 # without Animal Soul, even if stock AP has already set Freed Epona.
                 'LLR Talon Race',
                 'LLR Time Trial',
-                'HF Big Poe',
+                # HF Big Poe checks Horse Soul through its Epona route. The
+                # explicitly enabled no-Epona trick must not require a horse.
                 'GF HBA 1000 Points',
                 'GF HBA 1500 Points',
             )
@@ -4997,13 +5003,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             field.name: getattr(self.options, field.name).value
             for field in dataclasses.fields(type(self.options))
         }
-        try:
-            hints = CreateNonlocalHints(self)
-            static_hints = {}
-            for hint in hints:
-                static_hints.update(hint.serialize())
-        except Exception:
-            static_hints = {}
+        static_hints = {}
+        for hint in CreateNonlocalHints(self):
+            static_hints.update(hint.serialize())
         data.update({
             "required_trials": self.ganons_trials,
             "triforce_hunt_pieces_required": self.triforce_pieces_required,
@@ -5014,6 +5016,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "enemy_room_disabled_actions": list(getattr(self, "_extreme_room_disabled_actions", [])),
             "enemy_spawn_policy": "placed_and_non_enemy_scripted_encounters",
             "static_hints": static_hints,
+            "extreme_hint_data": CreateInGameHints(self),
             "hintable_items": {item.code for item in self.item_pool + self.preplaced_items if item.code is not None},
             "archipelago_seed": self.random.randint(0, 4294967295),
         })

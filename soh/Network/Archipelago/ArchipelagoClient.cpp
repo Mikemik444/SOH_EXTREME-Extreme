@@ -1013,6 +1013,7 @@ void ArchipelagoClient::Enable() {
         pendingTrapLinks.clear();
         hints.clear();
         hintSnapshotLoaded = false;
+        inGameHints.Clear();
         chatMessages.clear();
     }
     scoutedLocations.clear();
@@ -1126,6 +1127,7 @@ void ArchipelagoClient::Disable() {
     gNewSaveReplayGraceFrames = 0;
     hints.clear();
     hintSnapshotLoaded = false;
+    inGameHints.Clear();
     chatMessages.clear();
 }
 
@@ -2456,7 +2458,10 @@ static std::string ApMessageName(const std::string& name) {
 void ArchipelagoClient::DrainMessages() {
     for (int i = 0; i < 32 && AP_IsMessagePending(); ++i) {
         AP_Message* message = AP_GetLatestMessage();
-        if (message != nullptr && message->type == AP_MessageType::HintList) {
+        if (message != nullptr && message->type == AP_MessageType::SeedHints) {
+            if (!inGameHints.Load(static_cast<AP_SeedHintListMessage*>(message)->data))
+                SPDLOG_WARN("[Archipelago] Invalid in-game hint snapshot");
+        } else if (message != nullptr && message->type == AP_MessageType::HintList) {
             hints.clear();
             for (const auto& row : static_cast<AP_HintListMessage*>(message)->hints) {
                 hints.push_back({ row.item, row.location, row.finder, row.recipient, row.entrance, row.found });
@@ -2577,6 +2582,48 @@ void ArchipelagoClient::ReofferPendingPresentation() {
     // receive queue until the timeout. Live foreign offers remain protected.
     // Re-offering cannot grant, commit, pop the receive queue or reset its timer.
     GiveItemEntryWithoutActor(gPlayState, entry);
+}
+
+std::string ArchipelagoClient::GetHintItemDescription(int32_t randomizerCheck) {
+    if (!IsGameplaySessionActive()) return {};
+    const int64_t location = ResolveApLocationForCheck(randomizerCheck);
+    if (location < 0 && activeLocationsLoaded) {
+        // An unshuffled reward has no AP scout; its vanilla item is authoritative.
+        auto* loc = Rando::StaticData::GetLocation(static_cast<RandomizerCheck>(randomizerCheck));
+        if (loc) return SohExtreme::HintLiteral(Rando::StaticData::RetrieveItem(loc->GetVanillaItem()).GetName().english, 80);
+    }
+    const auto it = scoutedLocations.find(location);
+    if (it == scoutedLocations.end()) return {};
+    const auto& item = it->second;
+    if (item.itemName.empty()) return {};
+    return SohExtreme::HintLiteral(item.itemName, 80) + " for " +
+           (item.playerName.empty() ? "Player " + std::to_string(item.playerId)
+                                    : SohExtreme::HintLiteral(item.playerName, 32));
+}
+
+std::string ArchipelagoClient::GetInGameHint(const std::string& key, int32_t stoneIndex) {
+    if (!IsGameplaySessionActive()) return {};
+    const auto supplied = inGameHints.Get(key);
+    if (!supplied.empty()) return supplied;
+    const bool missingTarget = stoneIndex < 0;
+    if (missingTarget && !inGameHints.IsLoaded()) return {};
+    if (missingTarget) stoneIndex = 0;
+    // Older seeds did not generate gossip hints. Their authoritative scouts
+    // still reveal the real item/recipient, including another game's items.
+    // Keep assignments stable: do not filter on checked state or arrival order.
+    if (!scoutsRequested || scoutedLocations.size() < expectedScoutCount) return {};
+    std::vector<int64_t> candidates;
+    for (const auto& [id, info] : scoutedLocations)
+        if (!info.itemName.empty() && !info.locationName.empty() && (info.flags & 1)) candidates.push_back(id);
+    if (candidates.empty()) for (const auto& [id, info] : scoutedLocations)
+        if (!info.itemName.empty() && !info.locationName.empty()) candidates.push_back(id);
+    if (candidates.empty()) return {};
+    std::sort(candidates.begin(), candidates.end());
+    const auto& item = scoutedLocations.at(candidates[static_cast<size_t>(stoneIndex) % candidates.size()]);
+    return std::string(missingTarget ? "This seed did not store this hint's target. Another lead:^" : "") +
+           SohExtreme::HintLiteral(item.itemName, 80) + " for " +
+           SohExtreme::HintLiteral(item.playerName, 32) + " can be found at " +
+           SohExtreme::HintLiteral(item.locationName, 120) + " in your world.";
 }
 
 std::string ArchipelagoClient::GetRemoteItemDescription(int32_t randomizerCheck) {

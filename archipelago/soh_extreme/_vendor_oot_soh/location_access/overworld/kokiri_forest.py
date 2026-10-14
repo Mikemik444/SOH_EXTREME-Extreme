@@ -167,7 +167,12 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.KOKIRI_FOREST, world, [
-        (Regions.KF_LINKS_HOUSE, lambda bundle: True_()),
+        # The stock graph contracts Link's porch into the house. Reaching the
+        # forest does not grant the ladder/porch route when Climb is shuffled.
+        # Match the native normal routes, including adult-usable Hover Boots.
+        # Child Spawn -> house stays separate and needs actual child-age access.
+        (Regions.KF_LINKS_HOUSE, lambda bundle:
+         extreme_requirement(bundle, "shuffle_climb", "Climb") | can_use(Items.HOVER_BOOTS, bundle)),
         (Regions.KF_MIDOS_HOUSE, lambda bundle: True_()),
         (Regions.KF_SARIAS_HOUSE, lambda bundle: True_()),
         (Regions.KF_HOUSE_OF_TWINS, lambda bundle: True_()),

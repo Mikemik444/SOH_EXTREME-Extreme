@@ -27,10 +27,14 @@ class EventLocations(StrEnum):
 
 
 def set_region_rules(world: "SohWorld") -> None:
+    # Field Poes use the normal Poe Soul, not the Poe Sister Soul. They have
+    # no entry in the inherited stock Enemies enum.
+    soul_mode = world.options.shuffle_enemy_soul.value
+    poe_soul = True_() if not soul_mode else Has("Enemy Soul" if soul_mode == 1 else "Poe Soul")
     # Hyrule Field
     # Events
     add_events(Regions.HYRULE_FIELD, world, [
-        (EventLocations.HF_BIG_POE, Events.CAN_DEFEAT_BIG_POE, lambda bundle: (has_bottle(bundle) &
+        (EventLocations.HF_BIG_POE, Events.CAN_DEFEAT_BIG_POE, lambda bundle: (poe_soul & has_bottle(bundle) &
                                                                                can_use(Items.FAIRY_BOW, bundle) &
                                                                                (can_use(Items.EPONA, bundle) | can_do_trick(Tricks.HF_BIG_POE_WITHOUT_EPONA, bundle)))),
         (EventLocations.HF_RUNNING_MAN, Events.SOLD_BUNNY_HOOD, lambda bundle: (is_child(bundle) &
