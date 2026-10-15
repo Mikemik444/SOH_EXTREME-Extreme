@@ -1,3 +1,2 @@
-SOH-EXTREME source patch 0.11.14
-Archipelago world 0.11.14
-Base: native 0.11.13; 0.11.13a include-order hotfix included
+SOH-EXTREME 1.7.0
+Archipelago world 1.7.0
