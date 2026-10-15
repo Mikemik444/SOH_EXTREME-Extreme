@@ -1014,6 +1014,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # placement manifest so an update cannot silently hide owed items.
             return self.using_ut and loc.address in self.passthrough.get("extreme_active_locations", ())
         o = self.options
+        if loc.family == "tree":
+            return bool(o.shuffle_trees.value) and (not self.using_ut or
+                loc.address in self.passthrough.get("extreme_active_locations", ()))
         if loc.family == "rock": return bool(o.shuffle_rocks.value)
         if loc.family == "boulder": return o.shuffle_boulders.value == 3 or (o.shuffle_boulders.value == 1 and loc.dungeon) or (o.shuffle_boulders.value == 2 and not loc.dungeon)
         if loc.family == "bush":
@@ -3185,7 +3188,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     if trial_medallion is not None:
                         require(location, trial_medallion)
 
-            if family == "rock":
+            if family == "tree":
+                from ._vendor_oot_soh.LogicHelpers import can_bonk_trees
+                require_native_fork(location, can_bonk_trees(bundle))
+            elif family == "rock":
                 rc_upper = fork_loc.rc.upper()
                 if "UNDERWATER_ROCK" in rc_upper:
                     # Native underwater rocks: Bombchus can detonate at depth, or
@@ -3322,17 +3328,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     rule = (is_adult(bundle) & can_use(Items.EPONAS_SONG, bundle) &
                             (has_item(Items.CHILD_WALLET, bundle) | has_item(Events.FREED_EPONA, bundle)))
                 elif rc.startswith("RC_GY_WONDER_DAMPE_RACE_"):
-                    # Every Dampe-race Wonder is physically inside Dampe's race
-                    # tunnel and therefore inherits the same actor/talk gate as
-                    # the native CanTalkToDampe() helper. Broad Graveyard parent
-                    # reachability alone is not enough.
+                    # Wonders 1-5 are before the first race barrier. The shared
+                    # late-race overlay below gates the remaining tunnel items.
                     rule = True_()
-                    if o.shuffle_npc_soul.value:
-                        rule &= Has("NPC Soul")
-                    if o.shuffle_speak.value == 1:
-                        rule &= Has("Speak")
-                    elif o.shuffle_speak.value == 2:
-                        rule &= Has("Speak Hylian")
                 elif rc.startswith("RC_LW_WONDER_") and "SKULL_KIDS_GRASS" in rc:
                     rule = is_child(bundle)
                 elif rc.startswith("RC_MKT_WONDER_DAY_"):
@@ -3421,13 +3419,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                                     & blast_or_smash(bundle))
             elif fork_loc.rc == "RC_KAK_SILVER_BOULDER":
                 # The broad village parent does not reach the boulder's ledge.
-                # Match the native ladder/hover/Longshot alternatives, including
-                # the daytime Cucco carry or explicitly enabled collision trick.
-                longshot_approach = (at_day(bundle) & grab_rule() & animal_rule("Cucco")) | (
-                    can_do_trick(Tricks.VISIBLE_COLLISION, bundle)
-                    & can_jump_slash(bundle) & take_damage(bundle))
-                require_native_fork(location, climb_rule() | can_use(Items.HOVER_BOOTS, bundle)
-                                    | (can_use(Items.LONGSHOT, bundle) & longshot_approach))
+                # Hover Boots, Longshot and Cuccos do not remove the required
+                # climb. Climb is innate when its shuffle is disabled.
+                require_native_fork(location, climb_rule())
             elif fork_loc.rc == "RC_MARKET_TREASURE_CHEST_GAME_SHOPKEEPER":
                 require_native_fork(location, has_item(Items.CHILD_WALLET, bundle))
             elif family == "beggar":
@@ -3542,7 +3536,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             is_named_bush = re.search(r"BUSH\s+\d+$", upper_name) is not None
             is_named_beehive = "BEEHIVE" in upper_name
             is_named_sign = "SIGN" in upper_name
-            is_named_skull = (" SKULLTULA" in upper_name or " GS " in f" {upper_name} ")
+            # A tree named after its nearby GS is still a tree drop, not a
+            # Skulltula actor. Its explicit physical family takes precedence.
+            is_named_skull = not (tags & LocTag.Tree) and (
+                " SKULLTULA" in upper_name or " GS " in f" {upper_name} ")
 
             # Stock Archipelago-SoH metadata does not reliably survive into the
             # EXTREME world's included_locations table for every inherited check.
@@ -4222,8 +4219,14 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
         # Dampe race / grave audit.
         #
-        # NPC Soul is existential: with it missing, Dampe is absent. Reaching the
-        # grave room cannot make race tunnel rupees/Wonders logically available.
+        # Rooms 0 and 1 are open before starting the race. Only checks beyond
+        # the first physical barrier (room 1 -> 2) need Dampe to open the route.
+        early_dampe_checks = {
+            *(f"Graveyard Dampe's Grave Rupee {i}" for i in range(1, 4)),
+            *(f"Graveyard Dampes Grave Pot {i}" for i in range(1, 7)),
+            *(f"EXTREME Gy Wonder Dampe Race {i}" for i in range(1, 6)),
+            "Graveyard Dampes Grave Nut Pot",
+        }
         dampe_region_enum = getattr(Regions, "GRAVEYARD_DAMPES_GRAVE", None)
         dampe_region_name = (
             dampe_region_enum.value
@@ -4246,7 +4249,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     "Graveyard Dampes Windmill Access",
                 }
             )
-            if not in_dampe_race:
+            if not in_dampe_race or name in early_dampe_checks:
                 continue
 
             if o.shuffle_npc_soul.value:

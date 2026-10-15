@@ -2410,3 +2410,4 @@
     { static_cast<int>(RC_ZD_FISH_3), 2390LL }, // ZD Fish 3
     { static_cast<int>(RC_ZD_FISH_4), 2391LL }, // ZD Fish 4
     { static_cast<int>(RC_ZD_FISH_5), 2392LL }, // ZD Fish 5
+    { static_cast<int>(RC_KAK_ADULT_TREE), 9700726LL }, // Kakariko adult tree

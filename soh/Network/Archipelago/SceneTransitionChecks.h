@@ -43,7 +43,10 @@ inline const Crossing* FindSceneCrossing(int source, int entrance, int respawn,
         if (entry.kind==CrossingKind::GrottoExit) {
             if (respawn==2 && entry.content==content &&
                 CrossingScene(entry.target)==CrossingScene(returnScene)) return &entry;
-        } else if (respawn==0 && entry.entrance==entrance &&
+        // FLOOR_EFFECT_2 is an ordinary scene portal. The engine uses -2
+        // to preserve its respawn position, including all three ranch buildings.
+        // Death/void/save returns (-1/1) must still never award a crossing.
+        } else if ((respawn==0 || respawn==-2) && entry.entrance==entrance &&
                    (entry.kind!=CrossingKind::GrottoLoad || entry.content==content)) {
             return &entry;
         }

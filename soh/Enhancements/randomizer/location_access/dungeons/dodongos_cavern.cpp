@@ -67,10 +67,8 @@ void RegionTable_Init_DodongosCavern() {
         ENTRANCE(RR_DODONGOS_CAVERN_LOBBY,               true),
         // Open the wall directly or kill a spawned Baby Dodongo for its explosion.
         ENTRANCE(RR_DODONGOS_CAVERN_SE_ROOM,             AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->CanDetonateBabyDodongo();})),
-        // Adult can reach the lower Lizalfos room directly. Child needs the
-        // shuffled Grab / Power Bracelet interaction to cross this approach.
-        ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS,
-                 logic->IsAdult || logic->HasItem(RG_POWER_BRACELET)),
+        // Move the statue onto the blue switch to open the corridor shutter.
+        ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, logic->HasItem(RG_POWER_BRACELET)),
     });
 
     areaTable[RR_DODONGOS_CAVERN_SE_ROOM] = Region("Dodongos Cavern SE Room", SCENE_DODONGOS_CAVERN, {}, {
@@ -104,8 +102,8 @@ void RegionTable_Init_DodongosCavern() {
     }, {
         //Exits
         // The encounter's switch bars both exits for both ages.
-        ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)),
-        ENTRANCE(RR_DODONGOS_CAVERN_DODONGO_ROOM,        logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)),
+        ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, logic->HasEnemySoul(RE_LIZALFOS) && logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)),
+        ENTRANCE(RR_DODONGOS_CAVERN_DODONGO_ROOM,        logic->HasEnemySoul(RE_LIZALFOS) && logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)),
     });
 
     areaTable[RR_DODONGOS_CAVERN_DODONGO_ROOM] = Region("Dodongos Cavern Dodongo Room", SCENE_DODONGOS_CAVERN, {}, {
@@ -236,8 +234,8 @@ void RegionTable_Init_DodongosCavern() {
         //Exits
         ENTRANCE(RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM,  AnyAgeTime([]{return logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2);})),
         ENTRANCE(RR_DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM, AnyAgeTime([]{return logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2);})),
-        ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS,   logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)),
-        ENTRANCE(RR_DODONGOS_CAVERN_DODONGO_ROOM,          logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)),
+        ENTRANCE(RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS,   logic->HasEnemySoul(RE_LIZALFOS) && logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)),
+        ENTRANCE(RR_DODONGOS_CAVERN_DODONGO_ROOM,          logic->HasEnemySoul(RE_LIZALFOS) && logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)),
     });
 
     areaTable[RR_DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM] = Region("Dodongos Cavern Second Slingshot Room", SCENE_DODONGOS_CAVERN, {}, {

@@ -105,7 +105,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.DODONGOS_CAVERN_LOBBY, lambda bundle: True_()),
         (Regions.DODONGOS_CAVERN_SE_ROOM,
          lambda bundle: can_break_mud_walls(bundle) | can_detonate_baby_dodongo(bundle)),
-        (Regions.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, lambda bundle: True_()),
+        (Regions.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, lambda bundle: can_grab(bundle)),
     ])
 
     # Dodongos Cavern SE Room
@@ -140,9 +140,9 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.DODONGOS_CAVERN_LOWER_LIZALFOS, world, [
         (Regions.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS,
-         lambda bundle: has_item(LocalEvents.DODONGOS_CAVERN_LOWER_LIZALFOS_DEFEATED, bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.LIZALFOS, EnemyDistance.CLOSE, quantity=2)),
         (Regions.DODONGOS_CAVERN_DODONGO_ROOM,
-         lambda bundle: has_item(LocalEvents.DODONGOS_CAVERN_LOWER_LIZALFOS_DEFEATED, bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.LIZALFOS, EnemyDistance.CLOSE, quantity=2)),
         (Regions.DODONGOS_CAVERN_LOWER_LIZALFOS_LOCATIONS, lambda bundle: True_()),
     ])
 
@@ -328,9 +328,9 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM,
          lambda bundle: can_kill_enemy(bundle, Enemies.LIZALFOS, EnemyDistance.CLOSE, quantity=2)),
         (Regions.DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS,
-         lambda bundle: has_item(LocalEvents.DODONGOS_CAVERN_LOWER_LIZALFOS_DEFEATED, bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.LIZALFOS, EnemyDistance.CLOSE, quantity=2)),
         (Regions.DODONGOS_CAVERN_DODONGO_ROOM,
-         lambda bundle: has_item(LocalEvents.DODONGOS_CAVERN_LOWER_LIZALFOS_DEFEATED, bundle)),
+         lambda bundle: can_kill_enemy(bundle, Enemies.LIZALFOS, EnemyDistance.CLOSE, quantity=2)),
         (Regions.DODONGOS_CAVERN_LOWER_LIZALFOS_LOCATIONS, lambda bundle: True_()),
     ])
 

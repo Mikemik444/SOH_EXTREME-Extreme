@@ -1899,16 +1899,16 @@ void SohMenu::AddMenuEnhancements() {
         .Options(CheckboxOptions().Tooltip("Changes Heart Piece and Heart Container functionality.\n\n"
                                            " - Each Heart Container or full Heart Piece reduces Link's Hearts by 1.\n"
                                            " - Can be enabled retroactively after a File has already started."));
-    AddWidget(path, "AP Off uses your Additional Traps profile; Ice Only/Expanded use the seed policy.", WIDGET_TEXT)
+    AddWidget(path, "Additional Traps overrides AP trap effects when enabled.", WIDGET_TEXT)
         .PreFunc([](WidgetInfo& info) { info.isHidden = !(IS_RANDO && Archipelago_IsCurrentSaveFile()); });
-    AddWidget(path, "Local trap preferences below stay saved.", WIDGET_TEXT)
+    AddWidget(path, "When disabled, AP uses the seed's trap effects. Your preferences stay saved.", WIDGET_TEXT)
         .PreFunc([](WidgetInfo& info) { info.isHidden = !(IS_RANDO && Archipelago_IsCurrentSaveFile()); });
     AddWidget(path, "Additional Traps", WIDGET_CVAR_CHECKBOX)
         .CVar(CVAR_ENHANCEMENT("ExtraTraps.Enabled"))
         .Options(CheckboxOptions().Tooltip(
             "Enables additional Trap variants.\n\n"
-            "For Archipelago saves, Extreme Trap Pool = Off uses these local trap-effect choices for received "
-            "Ice Traps. Ice Only and Expanded use the seed's YAML policy instead. These preferences stay saved "
+            "When enabled, received traps use the effects selected below, including in Archipelago saves. "
+            "When disabled, Archipelago uses the seed's trap effects. These preferences stay saved "
             "and are never overwritten by loading or reconnecting an AP save."));
     AddWidget(path, "Trap Options", WIDGET_SEPARATOR_TEXT).PreFunc([](WidgetInfo& info) {
         info.isHidden = CVarGetInteger(CVAR_ENHANCEMENT("ExtraTraps.Enabled"), 0) == 0;

@@ -82,6 +82,9 @@ def generate():
             key=(0x700 if entering else 0x800)+grotto
             mode='grotto_load' if entering else 'grotto_exit'
             target=entrances[engine][1] if entering else outside
+            # Logic regions group fairy fountains under SCENE_GROTTOS, but
+            # physical crossing recognition must use the loaded engine scene.
+            source_scene=outside if entering else entrances[engine][1]
             targets=[entrances[engine][0]] if entering else []
         else:
             key,target,spawn=entrances[idx]

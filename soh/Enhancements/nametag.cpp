@@ -17,6 +17,7 @@ extern PlayState* gPlayState;
 
 typedef struct {
     Actor* actor;
+    Vec3f position;            // Fixed world position when actor is null
     std::string text;          // Original text
     std::string processedText; // Text filtered for supported font textures
     const char* tag;           // Tag identifier
@@ -41,26 +42,33 @@ void FreeNameTag(NameTag* nameTag) {
         nameTag->vtx = nullptr;
     }
     if (nameTag->mtx != nullptr) {
-        free(nameTag->mtx);
+        delete nameTag->mtx;
         nameTag->mtx = nullptr;
     }
 }
 
 void DrawNameTag(PlayState* play, const NameTag* nameTag) {
-    if (nameTag->actor == nullptr || nameTag->actor->draw == nullptr || !nameTag->actor->isDrawn ||
+    if ((nameTag->actor && (nameTag->actor->draw == nullptr || !nameTag->actor->isDrawn)) ||
         nameTag->vtx == nullptr || nameTag->mtx == nullptr) {
         return;
     }
 
+    const Vec3f position = nameTag->actor ? nameTag->actor->world.pos : nameTag->position;
+    const Vec3f player = GET_PLAYER(play)->actor.world.pos;
+    const float dx = position.x - player.x, dy = position.y - player.y, dz = position.z - player.z;
+    const float distanceSq = dx * dx + dy * dy + dz * dz;
+    const float fadeStart = nameTag->actor ? 360000.0f : 1960000.0f;
+    const float fadeEnd = nameTag->actor ? 440000.0f : 2250000.0f;
+
     // Name tag is too far away to meaningfully read, don't bother rendering it
-    if (nameTag->actor->xyzDistToPlayerSq > 440000.0f) {
+    if (distanceSq > fadeEnd) {
         return;
     }
 
     // Fade out name tags that are far away
     float alpha = 1.0f;
-    if (nameTag->actor->xyzDistToPlayerSq > 360000.0f) {
-        alpha = (440000.0f - nameTag->actor->xyzDistToPlayerSq) / 80000.0f;
+    if (distanceSq > fadeStart) {
+        alpha = (fadeEnd - distanceSq) / (fadeEnd - fadeStart);
     }
 
     float scale = 75.0f / 100.f;
@@ -81,18 +89,18 @@ void DrawNameTag(PlayState* play, const NameTag* nameTag) {
         textColor = CVarGetColor(CVAR_COSMETIC("HUD.NameTagActorText.Value"), textColor);
     }
 
-    FrameInterpolation_RecordOpenChild(nameTag->actor, 0);
+    FrameInterpolation_RecordOpenChild(nameTag->mtx, 0);
 
     // Prefer the highest between world position and focus position if targetable
-    float posY = nameTag->actor->world.pos.y;
-    if (nameTag->actor->flags & ACTOR_FLAG_ATTENTION_ENABLED) {
+    float posY = position.y;
+    if (nameTag->actor && (nameTag->actor->flags & ACTOR_FLAG_ATTENTION_ENABLED)) {
         posY = std::max(posY, nameTag->actor->focus.pos.y);
     }
 
     posY += nameTag->yOffset + 16;
 
     // Set position, billboard effect, scale (with mirror mode), then center nametag
-    Matrix_Translate(nameTag->actor->world.pos.x, posY, nameTag->actor->world.pos.z, MTXMODE_NEW);
+    Matrix_Translate(position.x, posY, position.z, MTXMODE_NEW);
     Matrix_ReplaceRotation(&play->billboardMtxF);
     Matrix_Scale(scale * (sMirrorWorldActive ? -1.0f : 1.0f), -scale, 1.0f, MTXMODE_APPLY);
     Matrix_Translate(static_cast<f32>(-nameTag->width / 2.0f), static_cast<f32>(-nameTag->height), 0.0f, MTXMODE_APPLY);
@@ -194,12 +202,11 @@ void UpdateNameTags() {
     // With multiple name tags, a tag can only obscure other tags based on draw order.
     // Here we sort the tags so that actors further away from the camera are ordered first.
     std::sort(nameTags.begin(), nameTags.end(), [](NameTag a, NameTag b) {
-        if (a.actor == nullptr || b.actor == nullptr) {
-            return true;
-        }
-
-        f32 aDistToCamera = Actor_WorldDistXZToPoint(a.actor, &gPlayState->mainCamera.eye);
-        f32 bDistToCamera = Actor_WorldDistXZToPoint(b.actor, &gPlayState->mainCamera.eye);
+        const Vec3f pa = a.actor ? a.actor->world.pos : a.position;
+        const Vec3f pb = b.actor ? b.actor->world.pos : b.position;
+        const auto& eye = gPlayState->mainCamera.eye;
+        const float aDistToCamera = (pa.x-eye.x)*(pa.x-eye.x) + (pa.z-eye.z)*(pa.z-eye.z);
+        const float bDistToCamera = (pb.x-eye.x)*(pb.x-eye.x) + (pb.z-eye.z)*(pb.z-eye.z);
 
         return aDistToCamera > bDistToCamera;
     });
@@ -207,7 +214,7 @@ void UpdateNameTags() {
     sMirrorWorldActive = CVarGetInteger(CVAR_ENHANCEMENT("MirroredWorld"), 0);
 }
 
-extern "C" void NameTag_RegisterForActorWithOptions(Actor* actor, const char* text, NameTagOptions options) {
+static void RegisterNameTag(Actor* actor, Vec3f position, const char* text, NameTagOptions options) {
     std::string processedText = std::string(Interface_ReplaceSpecialCharacters((char*)text));
 
     // Strip out unsupported characters
@@ -256,6 +263,7 @@ extern "C" void NameTag_RegisterForActorWithOptions(Actor* actor, const char* te
 
     NameTag nameTag;
     nameTag.actor = actor;
+    nameTag.position = position;
     nameTag.text = std::string(text);
     nameTag.processedText = processedText;
     nameTag.tag = options.tag;
@@ -270,6 +278,15 @@ extern "C" void NameTag_RegisterForActorWithOptions(Actor* actor, const char* te
     nameTags.push_back(nameTag);
 
     NameTag_RegisterHooks();
+}
+
+extern "C" void NameTag_RegisterForActorWithOptions(Actor* actor, const char* text, NameTagOptions options) {
+    if (!actor) return;
+    RegisterNameTag(actor, {}, text, options);
+}
+
+extern "C" void NameTag_RegisterAtWorldPosition(float x, float y, float z, const char* text, NameTagOptions options) {
+    RegisterNameTag(nullptr, { x, y, z }, text, options);
 }
 
 extern "C" void NameTag_RegisterForActor(Actor* actor, const char* text) {

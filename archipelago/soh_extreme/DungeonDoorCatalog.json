@@ -517,7 +517,9 @@
     "rotation": 10923,
     "entrances": [],
     "grotto": -1,
-    "content": -1
+    "content": -1,
+    "condition": "HasEnemySoul(RE_LIZALFOS) && CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)",
+    "reason": "Both lower Lizalfos exits are barred until the pair can be defeated."
   },
   {
     "id": 11201042,
@@ -569,7 +571,9 @@
     "rotation": -32768,
     "entrances": [],
     "grotto": -1,
-    "content": -1
+    "content": -1,
+    "condition": "HasEnemySoul(RE_LIZALFOS) && CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)",
+    "reason": "Both lower Lizalfos exits are barred until the pair can be defeated."
   },
   {
     "id": 11201044,
@@ -1091,7 +1095,9 @@
     "rotation": 0,
     "entrances": [],
     "grotto": -1,
-    "content": -1
+    "content": -1,
+    "condition": "HasItem(RG_POWER_BRACELET)",
+    "reason": "The corridor blue switch requires moving its statue; adult is not a bypass."
   },
   {
     "id": 11201066,

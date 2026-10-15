@@ -129,7 +129,9 @@ def set_region_rules(world: "SohWorld") -> None:
          lambda bundle: is_child(bundle) & can_break_crates(bundle)),
         (Locations.KAK_NEAR_BAZAAR_CHILD_CRATE, lambda bundle: is_child(
             bundle) & can_break_crates(bundle)),
-        (Locations.KAK_TREE, lambda bundle: can_bonk_trees(bundle)),
+        (Locations.KAK_TREE, lambda bundle: can_bonk_trees(bundle) & (
+            is_child(bundle) if (not world.using_ut or 9700726 in
+                world.passthrough.get("extreme_active_locations", ())) else True_())),
     ])
     # Connections
     connect_regions(Regions.KAKARIKO_VILLAGE, world, [

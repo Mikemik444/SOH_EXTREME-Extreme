@@ -1,6 +1,7 @@
 #include <soh/OTRGlobals.h>
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "static_data.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/ObjectExtension/ObjectExtension.h"
 #include "item_category_adj.h"
 #include "soh/Enhancements/randomizer/randomizer.h"
@@ -136,6 +137,12 @@ static CheckIdentity IdentifyTree(s32 sceneNum, s32 posX, s32 posZ) {
     Rando::Location* location =
         OTRGlobals::Instance->gRandomizer->GetCheckObjectFromActor(ACTOR_EN_WOOD02, sceneNum, actorParams);
 
+    // Both ages use the same coordinates, but have independent placements in
+    // new seeds. Old AP manifests retain their original shared tree identity.
+    if (sceneNum == SCENE_KAKARIKO_VILLAGE && posX == -860 && posZ == 522) {
+        const bool split = !Archipelago_IsCurrentSaveFile() || Archipelago_IsLocationActive(9700726LL);
+        location = Rando::StaticData::GetLocation(LINK_IS_ADULT && split ? RC_KAK_ADULT_TREE : RC_KAK_TREE);
+    }
     IdentifyCheck(&treeIdentity, location);
 
     if ((location->GetRCType() != RCTYPE_NLTREE ||
@@ -294,6 +301,9 @@ void Rando::StaticData::RegisterTreeLocations() {
     locationTable[RC_ZF_TREE]                     = Location::Tree(RC_ZF_TREE,                           RCQUEST_BOTH, RCAREA_ZORAS_FOUNTAIN,        SCENE_ZORAS_FOUNTAIN,              TWO_ACTOR_PARAMS(186, 2222),    "Tree in Zora's Fountain",           RHT_TREE_ZORAS_FOUNTAIN,  RG_DEKU_NUTS_5, SpoilerCollectionCheck::RandomizerInf(RAND_INF_ZF_TREE));
     locationTable[RC_ZR_TREE]                     = Location::Tree(RC_ZR_TREE,                           RCQUEST_BOTH, RCAREA_ZORAS_RIVER,           SCENE_ZORAS_RIVER,                 TWO_ACTOR_PARAMS(-1690, 554),   "Tree in Zoras River",               RHT_TREE_ZORAS_RIVER,     RG_DEKU_NUTS_5, SpoilerCollectionCheck::RandomizerInf(RAND_INF_ZR_TREE));
     locationTable[RC_KAK_TREE]                    = Location::Tree(RC_KAK_TREE,                          RCQUEST_BOTH, RCAREA_KAKARIKO_VILLAGE,      SCENE_KAKARIKO_VILLAGE,            TWO_ACTOR_PARAMS(-860, 522),    "Tree",                              RHT_TREE_KAKARIKO,        RG_DEKU_NUTS_5, SpoilerCollectionCheck::RandomizerInf(RAND_INF_KAK_TREE));
+    locationTable[RC_KAK_ADULT_TREE] = Location::Tree(RC_KAK_ADULT_TREE, RCQUEST_BOTH, RCAREA_KAKARIKO_VILLAGE,
+        SCENE_KAKARIKO_VILLAGE, TWO_ACTOR_PARAMS(-860, 522), "Adult Tree", RHT_TREE_KAKARIKO, RG_DEKU_NUTS_5,
+        SpoilerCollectionCheck::RandomizerInf(RAND_INF_KAK_ADULT_TREE));
     locationTable[RC_LLR_TREE]                    = Location::Tree(RC_LLR_TREE,                          RCQUEST_BOTH, RCAREA_LON_LON_RANCH,         SCENE_LON_LON_RANCH,               TWO_ACTOR_PARAMS(1309, -2241),  "Tree",                              RHT_TREE_LON_LON_RANCH,   RG_DEKU_NUTS_5, SpoilerCollectionCheck::RandomizerInf(RAND_INF_LLR_TREE));
 
     locationTable[RC_HF_BUSH_NEAR_LAKE_1]         = Location::Bush(RC_HF_BUSH_NEAR_LAKE_1,               RCQUEST_BOTH, RCAREA_HYRULE_FIELD,          SCENE_HYRULE_FIELD,                TWO_ACTOR_PARAMS(-3506,13460),  "Bush Near Lake 1",                  RHT_BUSH_HYRULE_FIELD,     RG_RECOVERY_HEART, SpoilerCollectionCheck::RandomizerInf(RAND_INF_HF_BUSH_NEAR_LAKE_1));

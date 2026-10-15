@@ -1358,9 +1358,9 @@
       {
         "target": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
         "region": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
-        "condition": "logic->IsAdult || logic->HasItem(RG_POWER_BRACELET)",
+        "condition": "logic->HasItem(RG_POWER_BRACELET)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 72
+        "line": 71
       }
     ],
     "events": [],
@@ -1375,7 +1375,7 @@
         "region": "RR_DODONGOS_CAVERN_SE_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 81
+        "line": 79
       }
     ],
     "events": [],
@@ -1390,14 +1390,14 @@
         "region": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 90
+        "line": 88
       },
       {
         "target": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
         "region": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 91
+        "line": 89
       }
     ],
     "events": [],
@@ -1410,16 +1410,16 @@
       {
         "target": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
         "region": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
-        "condition": "logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)",
+        "condition": "logic->HasEnemySoul(RE_LIZALFOS) && logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 107
+        "line": 105
       },
       {
         "target": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
         "region": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
-        "condition": "logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)",
+        "condition": "logic->HasEnemySoul(RE_LIZALFOS) && logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 108
+        "line": 106
       }
     ],
     "events": [
@@ -1428,7 +1428,7 @@
         "region": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
         "condition": "logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 96
+        "line": 94
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp",
@@ -1442,21 +1442,21 @@
         "region": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
         "condition": "logic->HasFireSourceWithTorch()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 119
+        "line": 117
       },
       {
         "target": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
         "region": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 120
+        "line": 118
       },
       {
         "target": "RR_DODONGOS_CAVERN_NEAR_DODONGO_ROOM",
         "region": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
         "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->HasItem(RG_GORONS_BRACELET);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 121
+        "line": 119
       }
     ],
     "events": [],
@@ -1471,7 +1471,7 @@
         "region": "RR_DODONGOS_CAVERN_NEAR_DODONGO_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 129
+        "line": 127
       }
     ],
     "events": [],
@@ -1486,21 +1486,21 @@
         "region": "RR_DODONGOS_CAVERN_STAIRS_LOWER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 138
+        "line": 136
       },
       {
         "target": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
         "region": "RR_DODONGOS_CAVERN_STAIRS_LOWER",
         "condition": "logic->HasExplosives() || logic->HasItem(RG_GORONS_BRACELET) || logic->CanUse(RG_DINS_FIRE) || (ctx->GetTrickOption(RT_DC_STAIRS_WITH_BOW) && logic->CanUse(RG_FAIRY_BOW))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 139
+        "line": 137
       },
       {
         "target": "RR_DODONGOS_CAVERN_COMPASS_ROOM",
         "region": "RR_DODONGOS_CAVERN_STAIRS_LOWER",
         "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->HasItem(RG_GORONS_BRACELET);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 140
+        "line": 138
       }
     ],
     "events": [],
@@ -1515,14 +1515,14 @@
         "region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 154
+        "line": 152
       },
       {
         "target": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
         "region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 155
+        "line": 153
       }
     ],
     "events": [],
@@ -1537,7 +1537,7 @@
         "region": "RR_DODONGOS_CAVERN_COMPASS_ROOM",
         "condition": "logic->CanKillEnemy(RE_ARMOS) || (logic->HasEnemySoul(RE_ARMOS) && logic->HasItem(RG_GORONS_BRACELET))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 164
+        "line": 162
       }
     ],
     "events": [],
@@ -1552,14 +1552,14 @@
         "region": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 169
+        "line": 167
       },
       {
         "target": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
         "region": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
         "condition": "logic->IsAdult || (logic->HasItem(RG_POWER_BRACELET) && logic->HasItem(RG_CLIMB)) || ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) || logic->CanUse(RG_HOOKSHOT)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 170
+        "line": 168
       }
     ],
     "events": [],
@@ -1574,21 +1574,21 @@
         "region": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
         "condition": "logic->TakeDamage()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 179
+        "line": 177
       },
       {
         "target": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
         "region": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 180
+        "line": 178
       },
       {
         "target": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
         "region": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
         "condition": "((logic->IsAdult || logic->BunnyHood()) && ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS)) || logic->CanUse(RG_HOVER_BOOTS) || \n                                                         (ctx->GetTrickOption(RT_DAMAGE_BOOST_SIMPLE) && logic->HasExplosives() && logic->CanJumpslash())",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 182
+        "line": 180
       }
     ],
     "events": [],
@@ -1603,28 +1603,28 @@
         "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
         "condition": "logic->CanClimbLadder() || ((logic->IsAdult || logic->CanMiddairGroundJump(true)) && logic->BunnyHovers())",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 195
+        "line": 193
       },
       {
         "target": "RR_DODONGOS_CAVERN_2F_SIDE_ROOM",
         "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
         "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls() || (ctx->GetTrickOption(RT_DC_SCRUB_ROOM) && (logic->IsAdult || logic->BunnyHood()) && logic->HasItem(RG_GORONS_BRACELET));})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 196
+        "line": 194
       },
       {
         "target": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
         "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
         "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->HasItem(RG_GORONS_BRACELET);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 197
+        "line": 195
       },
       {
         "target": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
         "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
         "condition": "(logic->IsAdult && ((ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) && logic->BunnyHood()) || logic->CanGroundJump(true) || logic->CanUse(RG_HOVER_BOOTS))) ||\n                                                              logic->CanUse(RG_LONGSHOT) || (ctx->GetTrickOption(RT_DAMAGE_BOOST_SIMPLE) && logic->HasExplosives() && logic->CanJumpslash()) || \n                                                              logic->CanMiddairGroundJump()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 198
+        "line": 196
       }
     ],
     "events": [],
@@ -1639,7 +1639,7 @@
         "region": "RR_DODONGOS_CAVERN_2F_SIDE_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 209
+        "line": 207
       }
     ],
     "events": [],
@@ -1654,14 +1654,14 @@
         "region": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 219
+        "line": 217
       },
       {
         "target": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
         "region": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
         "condition": "logic->CanHitEyeTargets() || ctx->GetTrickOption(RT_DC_SLINGSHOT_SKIP) || (logic->IsAdult && logic->CanGroundJump()) || logic->CanUse(RG_HOVER_BOOTS)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 220
+        "line": 218
       }
     ],
     "events": [],
@@ -1676,28 +1676,28 @@
         "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
         "condition": "AnyAgeTime([]{return logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 237
+        "line": 235
       },
       {
         "target": "RR_DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM",
         "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
         "condition": "AnyAgeTime([]{return logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 238
+        "line": 236
       },
       {
         "target": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
         "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
-        "condition": "logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)",
+        "condition": "logic->HasEnemySoul(RE_LIZALFOS) && logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 239
+        "line": 237
       },
       {
         "target": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
         "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
-        "condition": "logic->Get(LOGIC_DC_KILLED_LOWER_LIZALFOS)",
+        "condition": "logic->HasEnemySoul(RE_LIZALFOS) && logic->CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 240
+        "line": 238
       }
     ],
     "events": [],
@@ -1712,14 +1712,14 @@
         "region": "RR_DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 249
+        "line": 247
       },
       {
         "target": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
         "region": "RR_DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM",
         "condition": "logic->CanHitEyeTargets() || ctx->GetTrickOption(RT_DC_SLINGSHOT_SKIP) || (logic->IsAdult && logic->CanGroundJump()) || \n                                                         logic->CanRecoilHover(RECOIL_SWORD_AND_SHIELD) || logic->BunnyHovers()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 251
+        "line": 249
       }
     ],
     "events": [],
@@ -1734,28 +1734,28 @@
         "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 262
+        "line": 260
       },
       {
         "target": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
         "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 263
+        "line": 261
       },
       {
         "target": "RR_DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM",
         "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 264
+        "line": 262
       },
       {
         "target": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
         "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 265
+        "line": 263
       }
     ],
     "events": [],
@@ -1770,21 +1770,21 @@
         "region": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 278
+        "line": 276
       },
       {
         "target": "RR_DODONGOS_CAVERN_LOBBY_SWITCH",
         "region": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
         "condition": "logic->CanUse(RG_HOVER_BOOTS) || (ctx->GetTrickOption(RT_DC_CHILD_LOBBY) && logic->CanJumpslashExceptHammer() && logic->TakeDamage())",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 280
+        "line": 278
       },
       {
         "target": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
         "region": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 281
+        "line": 279
       }
     ],
     "events": [
@@ -1793,14 +1793,14 @@
         "region": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
         "condition": "logic->HasExplosives()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 270
+        "line": 268
       },
       {
         "event": "LOGIC_DC_LIFT_PLATFORM",
         "region": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 271
+        "line": 269
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp",
@@ -1814,21 +1814,21 @@
         "region": "RR_DODONGOS_CAVERN_BOSS_AREA",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 292
+        "line": 290
       },
       {
         "target": "RR_DODONGOS_CAVERN_BACK_ROOM",
         "region": "RR_DODONGOS_CAVERN_BOSS_AREA",
         "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls();})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 293
+        "line": 291
       },
       {
         "target": "RR_DODONGOS_CAVERN_BOSS_ENTRYWAY",
         "region": "RR_DODONGOS_CAVERN_BOSS_AREA",
         "condition": "logic->HasItem(RG_POWER_BRACELET)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 294
+        "line": 292
       }
     ],
     "events": [
@@ -1837,7 +1837,7 @@
         "region": "RR_DODONGOS_CAVERN_BOSS_AREA",
         "condition": "logic->CanBreakPots()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 286
+        "line": 284
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp",
@@ -1851,7 +1851,7 @@
         "region": "RR_DODONGOS_CAVERN_BACK_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 306
+        "line": 304
       }
     ],
     "events": [],
@@ -1866,7 +1866,7 @@
         "region": "RR_DODONGOS_CAVERN_BOSS_ENTRYWAY",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 730
+        "line": 728
       }
     ],
     "events": [],
@@ -1881,14 +1881,14 @@
         "region": "RR_DODONGOS_CAVERN_BOSS_EXIT",
         "condition": "ctx->GetDungeon(DODONGOS_CAVERN)->IsVanilla()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 735
+        "line": 733
       },
       {
         "target": "RR_DODONGOS_CAVERN_MQ_BEHIND_MOUTH",
         "region": "RR_DODONGOS_CAVERN_BOSS_EXIT",
         "condition": "ctx->GetDungeon(DODONGOS_CAVERN)->IsMQ()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 736
+        "line": 734
       }
     ],
     "events": [],
@@ -1903,14 +1903,14 @@
         "region": "RR_DODONGOS_CAVERN_BOSS_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 753
+        "line": 751
       },
       {
         "target": "RR_DEATH_MOUNTAIN_TRAIL",
         "region": "RR_DODONGOS_CAVERN_BOSS_ROOM",
         "condition": "logic->Get(LOGIC_DODONGOS_CAVERN_CLEAR)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 754
+        "line": 752
       }
     ],
     "events": [
@@ -1919,7 +1919,7 @@
         "region": "RR_DODONGOS_CAVERN_BOSS_ROOM",
         "condition": "AnyAgeTime([]{return logic->HasExplosives() ||\n                                                                  (ctx->GetTrickOption(RT_DC_HAMMER_FLOOR) ? logic->CanUse(RG_MEGATON_HAMMER) || (ctx->GetTrickOption(RT_BLUE_FIRE_MUD_WALLS) && logic->BlueFire()) :\n                                                                                                             ctx->GetTrickOption(RT_BLUE_FIRE_MUD_WALLS) && logic->CanUse(RG_BOTTLE_WITH_BLUE_FIRE));})\n                                                                  && logic->CanKillEnemy(RE_KING_DODONGO)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
-        "line": 742
+        "line": 740
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp",

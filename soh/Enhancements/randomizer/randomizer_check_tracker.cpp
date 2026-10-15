@@ -11,10 +11,14 @@
 
 #include "randomizer_check_tracker.h"
 #include "CheckFinderState.h"
+#include "soh/Enhancements/nametag.h"
 #include "soh/Network/Archipelago/ArchipelagoClient.h"
 #include "soh/Network/Archipelago/TrackerScenes.h"
+#include "soh/Network/Archipelago/SceneTransitionChecks.h"
 #include "soh/util.h"
 #include "randomizer_grotto.h"
+#include "randomizer_entrance.h"
+#include "SceneExitLabels.h"
 
 extern "C" bool Archipelago_ShouldHandleCheck(int32_t randomizerCheck);
 extern "C" bool Archipelago_IsCheckMappedActive(int32_t randomizerCheck);
@@ -53,6 +57,7 @@ extern "C" {
 #include "variables.h"
 #include "macros.h"
 extern PlayState* gPlayState;
+extern s16 dynamicExitList[];
 }
 
 extern "C" GetItemEntry ItemTable_RetrieveEntry(s16 modIndex, s16 getItemID);
@@ -1837,6 +1842,171 @@ static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClie
     return {};
 }
 
+
+// Debug visibility never evaluates or submits checks. Room numbers are engine
+// rooms; several logical regions can legitimately occupy the same room.
+struct RoomDebugDoor {
+    int scene, door, side, from, to, targetScene, x, y, z;
+    const char* sourceRegion;
+    const char* targetRegion;
+};
+static constexpr RoomDebugDoor roomDebugDoors[] = {
+#include "RoomDebugDoorData.inc"
+};
+static bool roomDebugOpen = false;
+static constexpr const char* roomDebugTag = "soh_extreme_room_debug";
+static std::map<Actor*, std::string> roomDebugTags;
+
+static std::string RoomDebugDestination(int index) {
+    const auto& door = gPlayState->transiActorCtx.list[index];
+    const int room = gPlayState->roomCtx.curRoom.num;
+    const Player* player = GET_PLAYER(gPlayState);
+    int side = door.sides[0].room == room ? 0 : 1;
+    if (door.sides[0].room == door.sides[1].room && player) {
+        const float distance = (player->actor.world.pos.x - door.pos.x) * Math_SinS(door.rotY) +
+                               (player->actor.world.pos.z - door.pos.z) * Math_CosS(door.rotY);
+        side = distance > 0 ? 1 : 0;
+    }
+    for (const auto& row : roomDebugDoors) {
+        if (row.scene != gPlayState->sceneNum || row.door != index ||
+            (row.side >= 0 && row.side != side) ||
+            row.x != door.pos.x || row.z != door.pos.z) continue;
+        return "Door " + std::to_string(index + 1) + " -> Room " + std::to_string(row.to) +
+               "\n" + (row.targetScene != row.scene ? SohUtils::GetSceneName(row.targetScene) + " / " : "") +
+               row.targetRegion;
+    }
+    const int target = door.sides[1 - side].room;
+    return "Door " + std::to_string(index + 1) +
+           (target >= 0 ? " -> Room " + std::to_string(target) : " -> Scene exit");
+}
+
+static void UpdateRoomDebugLabels() {
+    std::map<Actor*, std::string> next;
+    // The labels are an independent debug toggle, not the popup's lifetime.
+    if (CVarGetInteger(CVAR_TRACKER_CHECK("RoomDebugDestinationLabels"), 0) &&
+        gPlayState && GameInteractor::IsSaveLoaded(true)) {
+        for (Actor* actor = gPlayState->actorCtx.actorLists[ACTORCAT_DOOR].head; actor; actor = actor->next) {
+            if (actor->id == ACTOR_EN_HOLL) continue; // Invisible passages use world-position labels.
+            const int index = static_cast<uint16_t>(actor->params) >> 10;
+            if (index >= gPlayState->transiActorCtx.numActors) continue;
+            const auto& door = gPlayState->transiActorCtx.list[index];
+            // Shutters overwrite home.pos.z with their draw offset at init.
+            // Use the current horizontal position: shutters only lift in Y,
+            // while each leaf of an EnDoor double door shifts 30 units in X/Z.
+            const float dx = actor->world.pos.x - door.pos.x;
+            const float dz = actor->world.pos.z - door.pos.z;
+            if (std::abs(static_cast<int>(door.id)) != actor->id || dx * dx + dz * dz > 32.0f * 32.0f)
+                continue;
+            next.emplace(actor, RoomDebugDestination(index));
+        }
+    }
+    if (next == roomDebugTags) return;
+    NameTag_RemoveAllByTag(roomDebugTag);
+    roomDebugTags = std::move(next);
+    for (const auto& [actor, label] : roomDebugTags) {
+        NameTagOptions options = { roomDebugTag, 55, { 255, 245, 140, 255 }, true };
+        NameTag_RegisterForActorWithOptions(actor, label.c_str(), options);
+    }
+}
+
+
+struct RoomDebugSceneTransition {
+    int64_t location;
+    int source, target, entrance, grotto;
+    const char* name;
+    const char* kind;
+};
+static constexpr RoomDebugSceneTransition roomDebugSceneTransitions[] = {
+#include "RoomDebugSceneData.inc"
+};
+
+static bool RoomDebugSceneMatches(const RoomDebugSceneTransition& row, int scene, int spawn, int grotto) {
+    if (row.source < 0) return true; // Song warps are listed separately.
+    if (SohExtreme::CrossingScene(row.source) != SohExtreme::CrossingScene(scene)) return false;
+    if (row.grotto >= 0) return row.grotto == grotto;
+    // A shared scene resource does not make Talon's house the ranch tower,
+    // or the Kakariko bazaar the Market bazaar. Respect its physical spawn.
+    const auto* data = EntranceTracker::GetEntranceData(row.entrance);
+    bool hasScene = false;
+    if (data) for (const auto& variant : data->scenes) {
+        if (SohExtreme::CrossingScene(variant.scene) != SohExtreme::CrossingScene(scene)) continue;
+        hasScene = true;
+        if (variant.spawn < 0 || variant.spawn == spawn) return true;
+    }
+    return !hasScene;
+}
+
+#include "RoomDebugWorldLabels.inc"
+
+static void DrawRoomDebugSceneTransitions() {
+    const int scene = gPlayState->sceneNum;
+    const int grotto = (scene == SCENE_GROTTOS || scene == SCENE_FAIRYS_FOUNTAIN) ? Grotto_CurrentGrotto() : -1;
+    for (bool songWarps : { false, true }) {
+        if (!ImGui::CollapsingHeader(songWarps ? "Song warps (all scenes)" : "Scene entrances and exits",
+                                    songWarps ? ImGuiTreeNodeFlags_None : ImGuiTreeNodeFlags_DefaultOpen)) continue;
+        int count = 0;
+        for (const auto& row : roomDebugSceneTransitions) {
+            if ((row.source < 0) != songWarps || !RoomDebugSceneMatches(row, scene, gPlayState->curSpawn, grotto)) continue;
+            ++count;
+            ImGui::PushID(static_cast<int>(row.location));
+            ImGui::TextWrapped("%s", row.name);
+            const char* status = Archipelago_IsLocationReported(row.location) ? "Checked" :
+                (Archipelago_IsLocationActive(row.location) ? "Unchecked" : "Not a check in this seed");
+            ImGui::TextWrapped("%s | %s | Entrance 0x%04X | AP %lld", row.kind, status, row.entrance,
+                               static_cast<long long>(row.location));
+            ImGui::TextWrapped("Destination scene: %s (%d)", SohUtils::GetSceneName(row.target).c_str(), row.target);
+            ImGui::Separator();
+            ImGui::PopID();
+        }
+        if (!count) ImGui::TextUnformatted("No catalogued scene transitions here.");
+    }
+}
+
+static void DrawRoomDebugWindow() {
+    if (!roomDebugOpen) return;
+    ImGui::SetNextWindowSize({ 620, 500 }, ImGuiCond_FirstUseEver);
+    if (ImGui::Begin("Room debug", &roomDebugOpen)) {
+        if (!gPlayState || !GameInteractor::IsSaveLoaded(true)) {
+            ImGui::TextUnformatted("Load a save to inspect the current room.");
+        } else {
+            const int scene = gPlayState->sceneNum;
+            const int room = gPlayState->roomCtx.curRoom.num;
+            ImGui::Text("Scene: %s (%d)", SohUtils::GetSceneName(scene).c_str(), scene);
+            ImGui::Text("Room: %d", room);
+            std::set<std::string> regions;
+            for (const auto& door : roomDebugDoors) {
+                if (door.scene == scene && door.from == room) regions.insert(door.sourceRegion);
+                if (door.targetScene == scene && door.to == room) regions.insert(door.targetRegion);
+            }
+            if (regions.empty()) regions.insert(SohUtils::GetSceneName(scene));
+            std::string names;
+            for (const auto& name : regions) { if (!names.empty()) names += " / "; names += name; }
+            ImGui::TextWrapped("Region%s: %s", regions.size() > 1 ? "s in this room" : "", names.c_str());
+            // A fresh opt-in key intentionally ignores the old auto-enabled
+            // RoomDebugDoorLabels preference. Only this checkbox enables labels.
+            bool labels = CVarGetInteger(CVAR_TRACKER_CHECK("RoomDebugDestinationLabels"), 0);
+            if (ImGui::Checkbox("Show destination labels at doors and scene exits", &labels)) {
+                CVarSetInteger(CVAR_TRACKER_CHECK("RoomDebugDestinationLabels"), labels);
+                Ship::Context::GetRawInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
+            }
+            ImGui::TextWrapped("Labels stay enabled when this window is closed. Turn them off here when finished.");
+            ImGui::Separator();
+            ImGui::TextWrapped("Debug lists include checked and blocked routes. They do not indicate reachability.");
+            if (ImGui::CollapsingHeader("Room doors and passages", ImGuiTreeNodeFlags_DefaultOpen)) {
+                for (int i = 0; i < gPlayState->transiActorCtx.numActors; ++i) {
+                    const auto& door = gPlayState->transiActorCtx.list[i];
+                    if (door.sides[0].room == room || door.sides[1].room == room)
+                        ImGui::TextWrapped("%s", RoomDebugDestination(i).c_str());
+                }
+            }
+            DrawRoomDebugSceneTransitions();
+        }
+    }
+    ImGui::End();
+    UpdateRoomDebugLabels();
+    UpdateRoomDebugWorldLabels();
+}
+
 static void DrawUniversalFinderMirror() {
     auto& client = ArchipelagoClient::GetInstance();
     std::string status;
@@ -1847,6 +2017,10 @@ static void DrawUniversalFinderMirror() {
     if (ImGui::Button("Restart AP tracker")) {
         client.RestartFinderWorker();
         return; // restarting invalidates the snapshot pointer
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Room debug")) {
+        roomDebugOpen = true;
     }
     if (snapshot == nullptr) {
         if (client.CanConfirmLegacyReconnect()) {
@@ -3507,6 +3681,7 @@ void LoadFromPreset(const nlohmann::json& info) {
 }
 
 void CheckTrackerWindow::Draw() {
+    DrawRoomDebugWindow();
     if (!IsVisible()) {
         return;
     }
@@ -3764,6 +3939,16 @@ void CheckTrackerWindow::InitElement() {
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnExitGame>([](uint32_t fileNum) { Teardown(); });
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnItemReceive>(CheckTrackerItemReceive);
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnPlayerUpdate>(CheckTrackerLiveLogicStateUpdate);
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnPlayerUpdate>(UpdateRoomDebugLabels);
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnPlayerUpdate>(UpdateRoomDebugWorldLabels);
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnPlayDestroy>(ResetRoomDebugWorldLabels);
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnSceneInit>([](int16_t) {
+        roomDebugTags.clear();
+        ResetRoomDebugWorldLabels();
+    });
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnActorDestroy>([](void* actor) {
+        roomDebugTags.erase(static_cast<Actor*>(actor));
+    });
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnTransitionEnd>(CheckTrackerTransition);
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnShopSlotChange>(CheckTrackerShopSlotChange);
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnSceneFlagSet>(CheckTrackerSceneFlagSet);

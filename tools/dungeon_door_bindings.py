@@ -163,3 +163,12 @@ for door, keys in ((15,2),(16,1)):
     CONDITIONS[11,door,0] = (
         f'SmallKeys(SCENE_GERUDO_TRAINING_GROUND, {keys})',
         'Approach the right branch from the lava room; Skeleton Key also opens this lock.')
+
+
+# DC shutters: source-region access is independent of clearing the encounter.
+for door in (8, 9):
+    CONDITIONS[1,door,1] = (
+        'HasEnemySoul(RE_LIZALFOS) && CanKillEnemy(RE_LIZALFOS, ED_CLOSE, true, 2)',
+        'Both lower Lizalfos exits are barred until the pair can be defeated.')
+CONDITIONS[1,19,1] = ('HasItem(RG_POWER_BRACELET)',
+    'The corridor blue switch requires moving its statue; adult is not a bypass.')

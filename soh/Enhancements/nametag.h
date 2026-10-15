@@ -20,6 +20,8 @@ extern "C" {
 
 // Registers a name tag to an actor with additional options applied
 void NameTag_RegisterForActorWithOptions(Actor* actor, const char* text, NameTagOptions options);
+// Registers a scene-owned label without requiring a visible actor. Cleared on scene destruction.
+void NameTag_RegisterAtWorldPosition(float x, float y, float z, const char* text, NameTagOptions options);
 // Registers a name tag to an actor. Multiple name tags can exist for the same actor
 void NameTag_RegisterForActor(Actor* actor, const char* text);
 // Remove all name tags registered to a specific actor

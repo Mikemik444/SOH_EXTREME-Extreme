@@ -50,9 +50,9 @@ const char* altTrapTypeCvars[] = {
     CVAR_ENHANCEMENT("ExtraTraps.Magic"), CVAR_ENHANCEMENT("ExtraTraps.Health"),
 };
 
-// Local ExtraTraps CVars belong to the user's configuration. AP uses the resolved
-// seed options instead. Keep both profiles separate: reading AP policy must not
-// change, persist, or hide the user's saved enhancement choices.
+// An enabled Additional Traps profile is an explicit local effect override.
+// Otherwise AP can supply its seed defaults. Reading either profile never
+// changes or persists the user's saved enhancement choices.
 struct ExtraTrapSettings {
     bool enabled = false;
     std::array<int, ADD_TRAP_MAX> types{};
@@ -68,6 +68,9 @@ static ExtraTrapSettings GetLocalExtraTrapSettings() {
 }
 
 static ExtraTrapSettings GetEffectiveExtraTrapSettings() {
+    const ExtraTrapSettings local = GetLocalExtraTrapSettings();
+    if (local.enabled) return local;
+
     // Use save identity, not authentication: a temporary network disconnect must
     // not change the effects of traps already queued in this AP save.
     if (IS_RANDO && Archipelago_IsCurrentSaveFile()) {
@@ -75,7 +78,7 @@ static ExtraTrapSettings GetEffectiveExtraTrapSettings() {
         if (context == nullptr) {
             // Until the AP seed context has been restored, honor the user's local
             // Additional Traps profile rather than silently forcing plain freeze.
-            return GetLocalExtraTrapSettings();
+            return local;
         }
 
         const auto pool = context->GetOption(RSK_EXTREME_TRAP_POOL).Get();
@@ -83,14 +86,14 @@ static ExtraTrapSettings GetEffectiveExtraTrapSettings() {
             // AP's normal Ice Trap pool intentionally leaves effect selection to
             // the local Additional Traps enhancement. This preserves the AP item
             // itself while allowing Freeze/Burn/Shock/etc. to be chosen locally.
-            return GetLocalExtraTrapSettings();
+            return local;
         }
 
         ExtraTrapSettings settings;
         settings.enabled = pool == 1 || pool == 2;
-        if (pool == 1) { // Ice Only: explicitly force the vanilla freeze effect.
+        if (pool == 1) { // Ice Only default when no local override is enabled.
             settings.types[ADD_ICE_TRAP] = 1;
-        } else if (pool == 2) { // Expanded: the seed's selected types are authoritative.
+        } else if (pool == 2) { // Expanded seed defaults when no local override is enabled.
             settings.types[ADD_ICE_TRAP] = context->GetOption(RSK_EXTREME_ICE_TRAPS).Get() != 0;
             settings.types[ADD_BURN_TRAP] = context->GetOption(RSK_EXTREME_FIRE_TRAPS).Get() != 0;
             settings.types[ADD_SPEED_TRAP] = context->GetOption(RSK_EXTREME_SLOW_TRAPS).Get() != 0;
@@ -100,7 +103,7 @@ static ExtraTrapSettings GetEffectiveExtraTrapSettings() {
         return settings;
     }
 
-    return GetLocalExtraTrapSettings();
+    return local;
 }
 
 const std::vector<EntranceIndex> simpleTeleportDestinations = {

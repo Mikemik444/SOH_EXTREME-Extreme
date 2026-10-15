@@ -746,6 +746,7 @@ FORK_LOCATIONS = (
     ForkLocationData('EXTREME Zr Wonder Pillars 2', 9700723, 'RC_ZR_WONDER_PILLARS_2', 'wonder', Regions.ZORA_RIVER, False),
     ForkLocationData('EXTREME Zr Wonder Pillars 3', 9700724, 'RC_ZR_WONDER_PILLARS_3', 'wonder', Regions.ZORA_RIVER, False),
     ForkLocationData('EXTREME Zr Wonder Pillars 4', 9700725, 'RC_ZR_WONDER_PILLARS_4', 'wonder', Regions.ZORA_RIVER, False),
+    ForkLocationData('EXTREME Kak Adult Tree', 9700726, 'RC_KAK_ADULT_TREE', 'tree', Regions.KAKARIKO_VILLAGE, False),
 )
 
 FORK_LOCATION_NAME_TO_ID = {loc.name: loc.address for loc in FORK_LOCATIONS}

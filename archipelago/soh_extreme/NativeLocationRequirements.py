@@ -4,6 +4,7 @@
 # Reproduce with validation/generate_fork_age_table.py and the source audit.
 
 FORK_LOCATION_AGES = {
+    'RC_KAK_ADULT_TREE': 'adult',
     'RC_COLOSSUS_WONDER_OASIS_CHILD_TREE': 'child',
     'RC_DMC_GOSSIP_ROCK_1': 'child',
     'RC_DMC_GOSSIP_ROCK_2': 'child',
