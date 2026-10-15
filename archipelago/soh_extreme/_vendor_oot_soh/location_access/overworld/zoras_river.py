@@ -67,10 +67,10 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.ZR_FRONT, world, [
-        # Match the native obstruction: explosives alone cannot act on
-        # soul-locked rocks. Deep diving is an alternate route around it.
+        # Large boulders need explosives and Rock/Boulder Soul. Grab only
+        # lifts small rocks. Deep diving is an alternate route around them.
         (Regions.ZORA_RIVER, lambda bundle: is_adult(bundle)
-         | has_item(Items.SILVER_SCALE, bundle) | can_break_rocks(bundle)
+         | has_item(Items.SILVER_SCALE, bundle) | (can_break_rocks(bundle) & blast_or_smash(bundle))
          | can_use(Items.HOVER_BOOTS, bundle)),
         (Regions.HYRULE_FIELD, lambda bundle: True_())
     ])
@@ -171,7 +171,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.ZORA_RIVER, world, [
         (Regions.ZR_FRONT, lambda bundle: is_adult(bundle)
-         | has_item(Items.SILVER_SCALE, bundle) | can_break_rocks(bundle)
+         | has_item(Items.SILVER_SCALE, bundle) | (can_break_rocks(bundle) & blast_or_smash(bundle))
          | can_use(Items.HOVER_BOOTS, bundle)),
         (Regions.ZR_OPEN_GROTTO, lambda bundle: can_reach_zr_raised_ledge(bundle)),
         (Regions.ZR_FAIRY_GROTTO, lambda bundle:

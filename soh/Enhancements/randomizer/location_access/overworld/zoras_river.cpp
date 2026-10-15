@@ -52,7 +52,8 @@ void RegionTable_Init_ZoraRiver() {
         LOCATION(RC_ZR_WONDER_LOWER_RIVER_4, logic->IsChild && (logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_IRON_BOOTS) || (ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid()))),
     }, {
         //Exits
-        ENTRANCE(RR_ZORAS_RIVER,  logic->IsAdult || logic->HasItem(RG_SILVER_SCALE) || logic->CanBreakRocks() || logic->CanUse(RG_HOVER_BOOTS)),
+        // Grab lifts small rocks, not these boulders. Keep their soul gate.
+        ENTRANCE(RR_ZORAS_RIVER,  logic->IsAdult || logic->HasItem(RG_SILVER_SCALE) || (logic->CanBreakRocks() && logic->BlastOrSmash()) || logic->CanUse(RG_HOVER_BOOTS)),
         ENTRANCE(RR_HYRULE_FIELD, true),
     });
 
@@ -127,10 +128,10 @@ void RegionTable_Init_ZoraRiver() {
         //Exits
         // Child access to the upper river is NOT satisfied by basic Swim/Bronze
         // Scale. The real routes are the deep-dive shortcut (Silver Scale) or
-        // clearing the rock obstruction with the SOH-EXTREME rock rule. Adult
+        // explosives plus Rock/Boulder Soul. Grab cannot lift these boulders. Adult
         // can enter from the normal upper route, but the child-only Wonder checks
         // below still require child age.
-        ENTRANCE(RR_ZR_FRONT,            logic->IsAdult || logic->HasItem(RG_SILVER_SCALE) || logic->CanBreakRocks() || logic->CanUse(RG_HOVER_BOOTS)),
+        ENTRANCE(RR_ZR_FRONT,            logic->IsAdult || logic->HasItem(RG_SILVER_SCALE) || (logic->CanBreakRocks() && logic->BlastOrSmash()) || logic->CanUse(RG_HOVER_BOOTS)),
         ENTRANCE(RR_ZR_ATOP_LADDER,      CanReachZrUpperPath()),
         ENTRANCE(RR_ZR_PILLAR,           (logic->IsChild && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOVER_BOOTS) || (logic->IsAdult && (ctx->GetTrickOption(RT_ZR_LOWER) || logic->BunnyHood()))),
         ENTRANCE(RR_ZR_FROM_SHORTCUT,    logic->HasItem(RG_SILVER_SCALE) || logic->CanUse(RG_IRON_BOOTS)),

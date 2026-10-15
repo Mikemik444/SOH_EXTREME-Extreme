@@ -2537,9 +2537,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         lake_bundle = (Regions.LAKE_HYLIA, self)
         lake_routes = (
             (Regions.HYRULE_FIELD, Regions.LAKE_HYLIA,
-             can_climb(field_bundle) | can_use(Items.EPONA, field_bundle)),
+             can_climb(field_bundle) | can_swim(field_bundle) | can_use(Items.EPONA, field_bundle)),
             (Regions.LAKE_HYLIA, Regions.HYRULE_FIELD,
-             can_climb(lake_bundle) | can_use(Items.EPONA, lake_bundle)),
+             can_climb(lake_bundle) | can_swim(lake_bundle) | can_use(Items.EPONA, lake_bundle)),
             (Regions.GV_LOWER_STREAM, Regions.LAKE_HYLIA,
              can_swim((Regions.GV_LOWER_STREAM, self))),
             (Regions.LH_FROM_SHORTCUT, Regions.LAKE_HYLIA,
@@ -3364,10 +3364,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     #   A) Silver Scale/deep-dive access. With Shuffle Swim on,
                     #      the first physical Progressive Scale also grants virtual
                     #      Swim while remaining counted as physical tier #1;
-                    #   B) Rock/Boulder Soul + Bomb Bag/Bombchu; or
-                    #   C) Rock/Boulder Soul + EXTREME Grab.
+                    #   B) Rock/Boulder Soul + Bomb Bag/Bombchu.
                     deep_dive_route = deep_swim_route()
-                    rock_break_route = Has("Progressive Bomb Bag") | Has("Bombchu Bag") | grab_rule()
+                    rock_break_route = Has("Progressive Bomb Bag") | Has("Bombchu Bag")
                     if o.shuffle_rock_boulder_soul.value:
                         rock_break_route &= Has("Rock / Boulder Soul")
                     upper_child_route = deep_dive_route | rock_break_route
@@ -3422,6 +3421,14 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 # Hover Boots, Longshot and Cuccos do not remove the required
                 # climb. Climb is innate when its shuffle is disabled.
                 require_native_fork(location, climb_rule())
+            elif fork_loc.rc == "RC_KF_LOST_WOODS_ARROW_SIGN":
+                # This sign is on the Lost Woods entrance ledge. The stock
+                # graph contracts that ledge into the forest floor. Climb
+                # reaches it locally; returning from accessible Lost Woods
+                # also works, with that region's actual route requirements.
+                from .NpcSpeech import ConversationRegion
+                require_native_fork(location, climb_rule() |
+                                    ConversationRegion(str(Regions.LOST_WOODS)))
             elif fork_loc.rc == "RC_MARKET_TREASURE_CHEST_GAME_SHOPKEEPER":
                 require_native_fork(location, has_item(Items.CHILD_WALLET, bundle))
             elif family == "beggar":
@@ -4425,7 +4432,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         zr_bundle = (Regions.ZORA_RIVER, self)
         zr_basic_swim = swim_rule()
         zr_deep_swim = deep_swim_route()
-        zr_front_break = Has("Progressive Bomb Bag") | Has("Bombchu Bag") | grab_rule()
+        zr_front_break = Has("Progressive Bomb Bag") | Has("Bombchu Bag")
         if o.shuffle_rock_boulder_soul.value:
             zr_front_break = zr_front_break & Has("Rock / Boulder Soul")
         zr_upper_child_entry = zr_deep_swim | zr_front_break

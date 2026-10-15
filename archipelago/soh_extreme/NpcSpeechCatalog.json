@@ -2555,7 +2555,7 @@
         "region": "MARKET_MASK_SHOP",
         "age": "child",
         "time": "either",
-        "gates": []
+        "gates": ["Kakariko Gate Open"]
       }
     ],
     "source_rows": 4
@@ -3700,7 +3700,7 @@
     "language": "Hylian",
     "routes": [
       {
-        "region": "ZR_FRONT",
+        "region": "ZORA_RIVER",
         "age": "child",
         "time": "either",
         "gates": []

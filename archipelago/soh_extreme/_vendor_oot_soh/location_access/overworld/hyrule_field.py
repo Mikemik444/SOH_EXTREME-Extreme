@@ -166,8 +166,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.HYRULE_FIELD, world, [
         (Regions.LW_BRIDGE, lambda bundle: True_()),
-        # The Field fence needs the ladder or a usable adult Epona route.
-        (Regions.LAKE_HYLIA, lambda bundle: can_climb(bundle) | can_use(Items.EPONA, bundle)),
+        # Climb over the fence or swim around it; adult Epona also works.
+        (Regions.LAKE_HYLIA, lambda bundle: can_climb(bundle) | can_swim(bundle) | can_use(Items.EPONA, bundle)),
         (Regions.GERUDO_VALLEY, lambda bundle: True_()),
         (Regions.MARKET_ENTRANCE, lambda bundle: is_adult(bundle) | at_day(bundle)),
         (Regions.KAKARIKO_VILLAGE, lambda bundle: True_()),

@@ -702,7 +702,14 @@ bool Logic::CanUse(RandomizerGet itemName) {
         case RG_NUTS:
             return Get(LOGIC_NUT_ACCESS);
         case RG_STICKS:
-            return IsChild /* || StickAsAdult;*/ && Get(LOGIC_STICK_ACCESS);
+            // A received bag/capacity upgrade supplies sticks immediately.
+            // HasItem above already requires a bag. Live checks also accept
+            // carried sticks without inventing ammo for an empty bag.
+            return IsChild /* || StickAsAdult;*/ &&
+                   (Get(LOGIC_STICK_ACCESS) || GetAmmo(ITEM_STICK) > 0 ||
+                    (!CalculatingAvailableChecks &&
+                     (ctx->GetOption(RSK_SHUFFLE_DEKU_STICK_BAG) || CurrentUpgrade(UPG_STICKS) > 1 ||
+                      ctx->GetOption(RSK_STARTING_STICKS))));
         case RG_DEKU_SHIELD:
             return IsChild; // || DekuShieldAsAdult;
         case RG_PROGRESSIVE_BOMB_BAG:

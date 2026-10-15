@@ -88,10 +88,11 @@ void RegionTable_Init_Kakariko() {
         ENTRANCE(RR_KAK_POTION_SHOP,          (logic->AtDay || logic->IsChild) && logic->HasItem(RG_KAK_POTION_SHOP_KEY)),
         ENTRANCE(RR_KAK_REDEAD_GROTTO,        logic->CanOpenBombGrotto()),
         // SOH-EXTREME: normal Adult access is valid. Child access uses the
-        // Kakariko Cucco, so require the Cucco/Animal Soul when shuffled.
+        // Kakariko Cucco, so require its soul and the ability to pick it up.
         ENTRANCE(RR_KAK_IMPAS_LEDGE,          logic->IsAdult ||
                                                   (logic->IsChild && logic->AtDay &&
-                                                   logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO)) ||
+                                                   logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) &&
+                                                   logic->HasItem(RG_POWER_BRACELET)) ||
                                                   (logic->IsChild && logic->BunnyHovers() && logic->CanJumpslash())),
         ENTRANCE(RR_KAK_WATCHTOWER,           logic->HasItem(RG_CLIMB) && (logic->IsAdult || logic->AtDay || logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_LONGSHOT) || (ctx->GetTrickOption(RT_KAK_TOWER_GS) && logic->CanJumpslashExceptHammer()))),
         ENTRANCE(RR_KAK_ROOFTOP,              logic->CanUse(RG_HOOKSHOT) || (ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) && logic->IsAdult)),
@@ -99,7 +100,7 @@ void RegionTable_Init_Kakariko() {
         ENTRANCE(RR_THE_GRAVEYARD,            true),
         ENTRANCE(RR_KAK_BEHIND_GATE,          logic->IsAdult || logic->Get(LOGIC_KAKARIKO_GATE_OPEN)),
         //adult or bunny can jump from the fence near the windmill to ledgegrab the fence near granny's shop. is in logic on N64
-        ENTRANCE(RR_KAK_BACKYARD,             logic->IsAdult || logic->BunnyHood() || (logic->AtDay && logic->HasItem(RG_POWER_BRACELET))),
+        ENTRANCE(RR_KAK_BACKYARD,             logic->IsAdult || logic->BunnyHood() || (logic->IsChild && logic->AtDay && logic->HasAnimalSoul(RG_ANIMAL_SOUL_CUCCO) && logic->HasItem(RG_POWER_BRACELET))),
         ENTRANCE(RR_KAK_BEHIND_POTION_SHOP,   logic->CanUse(RG_HOOKSHOT) || (ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) && logic->IsAdult)),
     });
 

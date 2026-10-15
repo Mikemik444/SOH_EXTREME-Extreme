@@ -4,7 +4,7 @@ Explicit slot values override these defaults. Keep the C++ fallback in
 ArchipelagoNativeDefaults.inc in sync for existing seeds/cached save settings.
 Starting inventory is granted by AP, never inherited from a local seed.
 """
-NATIVE_AP_DEFAULTS = {'BunnyHood': 0,
+NATIVE_AP_DEFAULTS = {'BunnyHood': 1,
  'DecoupleEntrances': 0,
  'EarlyGrannysShop': 0,
  'MQDungeonCount': 0,

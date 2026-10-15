@@ -1,5 +1,5 @@
 // NativeSettings.py counterpart: defaults only; explicit AP slot values win.
-{ "BunnyHood", 0 },
+{ "BunnyHood", 1 },
 { "DecoupleEntrances", 0 },
 { "EarlyGrannysShop", 0 },
 { "MQDungeonCount", 0 },

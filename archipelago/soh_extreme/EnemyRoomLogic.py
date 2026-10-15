@@ -358,9 +358,9 @@ class NativeRoomCompiler:
             target=a[0].removeprefix('TK_').removesuffix('_TRIAL').lower()
             return not any(target in str(t).lower() for t in self.world.ganons_trials)
         if name=='BunnyHood':
-            # RSK_BUNNY_HOOD is not exposed by this AP world and AP saves use
-            # the authoritative slot configuration (default disabled).
-            return False
+            # AP enables the native speed/jump effect, but still requires
+            # access to the hood and an age that can wear it.
+            return H.can_use_bunny_hood(b)
         if name=='SmallKeys':return H.small_keys(Items[KEYS[a[0]]],a[1],b)
         if name=='WaterLevel':return self.expr(WATER_FORMULAS[a[0]],rr)
         if name=='CanGroundJump':return H.can_ground_jump(b,*a)

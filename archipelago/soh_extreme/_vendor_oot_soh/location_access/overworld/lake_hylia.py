@@ -155,7 +155,7 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.LAKE_HYLIA, world, [
-        (Regions.HYRULE_FIELD, lambda bundle: can_climb(bundle) | can_use(Items.EPONA, bundle)),
+        (Regions.HYRULE_FIELD, lambda bundle: can_climb(bundle) | can_swim(bundle) | can_use(Items.EPONA, bundle)),
         (Regions.LH_FROM_SHORTCUT, lambda bundle: can_swim(bundle)),
         (Regions.LH_OWL_FLIGHT, lambda bundle: is_child(bundle) & can_interact_npc(bundle, "Hylian")),
         (Regions.LH_FISHING_ISLAND, lambda bundle: ((is_child(bundle)

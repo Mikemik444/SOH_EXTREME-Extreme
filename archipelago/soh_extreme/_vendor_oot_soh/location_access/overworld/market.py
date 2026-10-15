@@ -245,7 +245,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Events
     add_events(Regions.MARKET_MASK_SHOP, world, [
         (EventLocations.MARKET_MASK_SHOP_MASKS, Events.CAN_BORROW_MASKS, lambda bundle: (
-            has_item(Items.ZELDAS_LETTER, bundle) & has_item(Events.KAKARIKO_GATE_OPEN, bundle))),
+            can_interact_npc(bundle, "Hylian") & has_item(Events.KAKARIKO_GATE_OPEN, bundle))),
         (EventLocations.MARKET_MASK_SHOP_SKULL_MASK, Events.CAN_BORROW_SKULL_MASK, lambda bundle: has_item(Events.CAN_BORROW_MASKS, bundle) & (OptionFilter(CompleteMaskQuest, True) |
                                                                                                                                                  has_item(Events.SOLD_KEATON_MASK, bundle))),
         (EventLocations.MARKET_MASK_SHOP_SPOOKY_MASK, Events.CAN_BORROW_SPOOKY_MASK, lambda bundle: has_item(Events.CAN_BORROW_MASKS, bundle) & (OptionFilter(CompleteMaskQuest, True) |
@@ -342,7 +342,8 @@ def set_region_rules(world: "SohWorld") -> None:
         (Locations.MARKET_LOST_DOG, lambda bundle: (
             is_child(bundle) & at_night(bundle))),
         (Locations.MARKET_LOST_DOG_HOUSE_CRATE,
-         lambda bundle: (can_break_crates(bundle)))
+         # Weapons cannot be used in this house; roll into the fixed crate.
+         lambda bundle: can_break_crates(bundle) & extreme_requirement(bundle, "shuffle_roll", "Roll"))
     ])
     # Connections
     connect_regions(Regions.MARKET_DOG_LADY_HOUSE, world, [

@@ -234,7 +234,8 @@ void RegionTable_Init_Market() {
     areaTable[RR_MARKET_DOG_LADY_HOUSE] = Region("Market Dog Lady House", SCENE_DOG_LADY_HOUSE, {}, {
         //Locations
         LOCATION(RC_MARKET_LOST_DOG,         logic->IsChild && logic->AtNight && logic->HasItem(RG_SPEAK_HYLIAN)),
-        LOCATION(RC_MK_LOST_DOG_HOUSE_CRATE, logic->CanBreakCrates()),
+        // Weapons cannot be used indoors here; the crate needs a roll.
+        LOCATION(RC_MK_LOST_DOG_HOUSE_CRATE, logic->CanBreakCrates() && logic->HasItem(RG_ROLL)),
     }, {
         //Exits
         ENTRANCE(RR_MARKET_BACK_ALLEY, true),

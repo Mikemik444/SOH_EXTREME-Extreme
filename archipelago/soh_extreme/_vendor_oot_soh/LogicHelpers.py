@@ -122,6 +122,15 @@ def can_grab(bundle) -> Rule:
     return extreme_requirement(bundle, "shuffle_grab", "Grab / Power Bracelet")
 
 
+def can_use_bunny_hood(bundle) -> Rule:
+    """AP enables speed/jump; the vanilla mask quest must still supply the hood.
+
+    Masks are not shuffled by this APWorld and cannot be worn as Adult.
+    The borrowing event already includes Mask Shop access and quest progress.
+    """
+    return is_child(bundle) & has_item(Events.CAN_BORROW_BUNNY_HOOD, bundle)
+
+
 def can_swim(bundle) -> Rule:
     return extreme_requirement(bundle, "shuffle_swim", "Swim")
 
@@ -260,7 +269,13 @@ def can_use_any(names: list[Items], bundle: tuple[Regions, "SohWorld"]) -> Rule:
 
 def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"], count: int = 1) -> Rule:
     if item == Items.STICKS:
-        return has_item(Events.CAN_FARM_STICKS, bundle) & has_item(Items.DEKU_STICK_BAG, bundle)
+        # Receiving a shuffled bag/capacity upgrade fills it with sticks.
+        # The unshuffled bag is only an innate capacity tier, not free ammo.
+        grant_count = 1 if bundle[1].options.shuffle_deku_stick_bag.value else 2
+        return has_item(Items.DEKU_STICK_BAG, bundle) & (
+            has_item(Events.CAN_FARM_STICKS, bundle)
+            | Has(Items.PROGRESSIVE_STICK_CAPACITY, grant_count)
+            | OptionFilter(StartWithStickAmmo, True))
 
     if item in (Items.BOMBCHU_BAG, Items.BOMBCHUS_5, Items.BOMBCHUS_10, Items.BOMBCHUS_20):
         return bombchus_enabled(bundle)

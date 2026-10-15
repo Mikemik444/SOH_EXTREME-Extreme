@@ -79,10 +79,11 @@ static bool IsMegaAnimalActor(s16 id) {
 }
 
 static bool IsMegaPotActor(s16 id) {
+    // EN_WALL_TUBO is the invisible Bombchu Bowling target detector, not a
+    // breakable pot. Blocking its init leaves the wall unable to register hits.
     switch (id) {
         case ACTOR_OBJ_TSUBO:
         case ACTOR_EN_TUBO_TRAP:
-        case ACTOR_EN_WALL_TUBO:
             return true;
         default:
             return false;

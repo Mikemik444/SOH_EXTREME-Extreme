@@ -158,7 +158,9 @@ def set_region_rules(world: "SohWorld") -> None:
          lambda bundle: (at_day(bundle) | is_child(bundle)) & can_open_overworld_door(
              Items.KAK_POTION_SHOP_KEY, bundle)),
         (Regions.KAK_REDEAD_GROTTO, lambda bundle: can_open_bomb_grotto(bundle)),
-        (Regions.KAK_IMPAS_LEDGE, lambda bundle: (is_child(bundle) & at_day(bundle)) | (
+        # Child reaches this ledge by carrying a daytime Cucco.
+        (Regions.KAK_IMPAS_LEDGE, lambda bundle: (is_child(bundle) & at_day(bundle) &
+            can_grab(bundle) & has_animal_soul(bundle, "Cucco")) | (
             is_adult(bundle) & can_do_trick(Tricks.VISIBLE_COLLISION, bundle))),
         (Regions.KAK_WATCHTOWER,
          lambda bundle: is_adult(bundle) | at_day(bundle) | can_kill_enemy(bundle, Enemies.GOLD_SKULLTULA,
@@ -173,7 +175,8 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.THE_GRAVEYARD, lambda bundle: True_()),
         (Regions.KAK_BEHIND_GATE,
          lambda bundle: is_adult(bundle) | has_item(Events.KAKARIKO_GATE_OPEN, bundle)),
-        (Regions.KAK_BACKYARD, lambda bundle: is_adult(bundle) | at_day(bundle)),
+        (Regions.KAK_BACKYARD, lambda bundle: is_adult(bundle) | can_use_bunny_hood(bundle)
+         | (is_child(bundle) & at_day(bundle) & can_grab(bundle) & has_animal_soul(bundle, "Cucco"))),
     ])
 
     # Kak Impas Ledge

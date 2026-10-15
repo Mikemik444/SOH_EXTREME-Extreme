@@ -255,7 +255,11 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.DODONGOS_CAVERN_ARMOS_ROOM, world, [
         (Regions.DODONGOS_CAVERN_STAIRS_UPPER, lambda bundle: True_()),
-        (Regions.DODONGOS_CAVERN_BOMB_ROOM_LOWER, lambda bundle: True_()),
+        # Child must move the statue and climb to the switch. Adult can reach
+        # it directly. The native-only jump trick has no AP option.
+        (Regions.DODONGOS_CAVERN_BOMB_ROOM_LOWER, lambda bundle: is_adult(bundle)
+         | (can_grab(bundle) & can_climb(bundle))
+         | can_use(Items.HOOKSHOT, bundle)),
     ])
 
     # Dodongos Cavern Bomb Room Lower

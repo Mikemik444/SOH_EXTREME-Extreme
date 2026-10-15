@@ -1863,6 +1863,9 @@ void ArchipelagoClient::ApplySlotSettings() {
         // from the previously connected save's AP-only CVars.
         slotSettings.try_emplace("SceneTransitionChecks", 0);
         slotSettings.try_emplace("SceneTransitionCatalogVersion", 0);
+        // AP routes include Bunny Hood speed/jumps. Upgrade old cached/server
+        // settings too; the effect still requires wearing the actual hood.
+        slotSettings["BunnyHood"] = 1;
         settingsSnapshot = slotSettings;
     }
 
