@@ -3,6 +3,8 @@
 #include "overlays/actors/ovl_En_Bom_Chu/z_en_bom_chu.h"
 #include "overlays/actors/ovl_En_Ex_Item/z_en_ex_item.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
+#include "soh/Enhancements/randomizer/randomizerEnums.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -204,7 +206,24 @@ void EnBomBowlPit_WaitTillPrizeGiven(EnBomBowlPit* this, PlayState* play) {
 }
 
 void EnBomBowlPit_Reset(EnBomBowlPit* this, PlayState* play) {
-    if ((Message_GetState(&play->msgCtx) == TEXT_STATE_DONE) && Message_ShouldAdvance(play)) {
+    Player* player = GET_PLAYER(play);
+    s32 messageState = Message_GetState(&play->msgCtx);
+    RandomizerCheck prizeCheck = RC_UNKNOWN_CHECK;
+
+    if (this->prizeIndex == EXITEM_BOMB_BAG_BOWLING) {
+        prizeCheck = RC_MARKET_BOMBCHU_BOWLING_FIRST_PRIZE;
+    } else if (this->prizeIndex == EXITEM_HEART_PIECE_BOWLING) {
+        prizeCheck = RC_MARKET_BOMBCHU_BOWLING_SECOND_PRIZE;
+    }
+
+    // AP owns these rewards after SetupGivePrize sets the collection flag. Filler,
+    // remote or delayed rewards need not open a local item textbox. Finish the
+    // round once its cutscene ends, without replacing an active item/message.
+    if (((messageState == TEXT_STATE_DONE) && Message_ShouldAdvance(play)) ||
+        ((messageState == TEXT_STATE_NONE) && (prizeCheck != RC_UNKNOWN_CHECK) &&
+         Archipelago_ShouldHandleCheck(prizeCheck) && !Player_InBlockingCsMode(play, player) &&
+         !(player->stateFlags1 &
+           (PLAYER_STATE1_IN_CUTSCENE | PLAYER_STATE1_GETTING_ITEM | PLAYER_STATE1_IN_ITEM_CS)))) {
         // "Normal termination"/"completion"
         osSyncPrintf(VT_FGCOL(GREEN) "☆☆☆☆☆ 正常終了 ☆☆☆☆☆ \n" VT_RST);
         if (this->getItemId == GI_HEART_PIECE) {

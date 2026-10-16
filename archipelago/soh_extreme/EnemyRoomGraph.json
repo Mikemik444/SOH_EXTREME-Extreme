@@ -1791,7 +1791,7 @@
       {
         "event": "LOGIC_DC_EYES_LIT",
         "region": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
-        "condition": "logic->HasExplosives()",
+        "condition": "logic->CanUse(RG_BOMB_BAG)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\dodongos_cavern.cpp",
         "line": 268
       },
@@ -3223,7 +3223,7 @@
       {
         "target": "RR_FIRE_TEMPLE_ABOVE_FIRE_MAZE",
         "region": "RR_FIRE_TEMPLE_BASE_OF_COLLAPSING_STAIRS",
-        "condition": "logic->Get(LOGIC_FIRE_HIT_STAIRS) && (logic->IsAdult || logic->Get(LOGIC_FIRE_CHILD_AT_TOP_OF_STAIRS)) && logic->HasItem(RG_POWER_BRACELET)",
+        "condition": "logic->Get(LOGIC_FIRE_HIT_STAIRS) && (logic->IsAdult || logic->Get(LOGIC_FIRE_CHILD_AT_TOP_OF_STAIRS)) && logic->HasItem(RG_POWER_BRACELET) && (!ctx->GetOption(RSK_SHUFFLE_CRATE_SOUL) || logic->HasItem(RG_CRATE_SOUL))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\fire_temple.cpp",
         "line": 468
       }

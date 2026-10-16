@@ -41,6 +41,10 @@ def enemy_drop_rule(world, entry):
         gates.append(can_talk_hint_scrub(b))
     if entry.grotto_id >= 0 and o.shuffle_shovel.value:
         gates.append(Has("Shovel"))
+    if entry.scene_id == 0x22:  # Market Ruins: combat C-button items are disabled.
+        # The eight ReDeads need a usable adult B-button sword. Owning Hammer,
+        # sticks or magic elsewhere does not make them usable in this scene.
+        gates.append(can_use(Items.MASTER_SWORD, b) | can_use(Items.BIGGORONS_SWORD, b))
 
     # Build each branch from only that age's usable weapons. Combining a generic
     # "child reachable" with an independently adult-reachable Bow was unsound.

@@ -1,5 +1,5 @@
 from typing import ClassVar, Any, Callable
-from collections import deque
+from collections import deque, Counter
 import pkgutil
 import json
 import dataclasses
@@ -170,6 +170,24 @@ EXTREME_ITEMS = {
     "Big Octo Soul": 9500185,
 
 }
+SONG_NOTE_LAYOUT = (
+    ("Zelda's Lullaby", 6),
+    ("Epona's Song", 6),
+    ("Saria's Song", 6),
+    ("Sun's Song", 6),
+    ("Song of Time", 6),
+    ("Song of Storms", 6),
+    ("Minuet of Forest", 6),
+    ("Bolero of Fire", 8),
+    ("Serenade of Water", 5),
+    ("Requiem of Spirit", 6),
+    ("Nocturne of Shadow", 7),
+    ("Prelude of Light", 6),
+)
+# New seeds use repeatable per-song items. Legacy note IDs remain reserved.
+PROGRESSIVE_SONG_ITEMS = {f"Progressive {song}": 9500300 + i
+                          for i, (song, _) in enumerate(SONG_NOTE_LAYOUT)}
+EXTREME_ITEMS.update(PROGRESSIVE_SONG_ITEMS)
 for i in range(74):
     EXTREME_ITEMS[f"Song Note {i + 1:02d}"] = 9500020 + i
 
@@ -794,7 +812,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
     item_name_groups = {k: set(v) for k, v in _create_groups(item_data_table).items() if k != "Everything"} | {
         "Extreme Abilities": {"Roll", "Grab / Power Bracelet", "Climb", "Crawl", "Speak", "Open Chest", "Shovel", "Flow of Time"},
         "Extreme Souls": {name for name in EXTREME_ITEMS if name.endswith("Soul")},
-        "Song Notes": {name for name in EXTREME_ITEMS if name.startswith("Song Note ")},
+        "Song Notes": {name for name in EXTREME_ITEMS if name.startswith("Song Note ")} | set(PROGRESSIVE_SONG_ITEMS),
         "Silver Rupees": set(SILVER_GROUP_ITEMS),
     }
     location_name_groups = {k: set(v) for k, v in _create_groups(location_data_table).items() if k != "Everywhere"} | {
@@ -1454,9 +1472,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
     def push_precollected(self, item: Item) -> None:
         if self.options.song_note_shuffle.value and item.name in self.SONG_NOTE_GROUPS:
-            existing = {entry.name for entry in self.multiworld.precollected_items[self.player]}
-            for note in self.SONG_NOTE_GROUPS[item.name]:
-                if note not in existing:
+            existing = Counter(entry.name for entry in self.multiworld.precollected_items[self.player])
+            for note, needed in Counter(self._song_note_groups()[item.name]).items():
+                for _ in range(max(0, needed - existing[note])):
                     super().push_precollected(self.create_item(note))
             return
         super().push_precollected(item)
@@ -1473,12 +1491,12 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             return
         for option in (self.options.start_inventory, self.options.start_inventory_from_pool):
             expanded = dict(option.value)
-            for song, notes in self.SONG_NOTE_GROUPS.items():
+            for song, notes in self._song_note_groups().items():
                 count = expanded.pop(song, 0)
                 if count:
-                    # A completed song is a set, not repeatable progression tiers.
-                    for note in notes:
-                        expanded[note] = max(expanded.get(note, 0), 1)
+                    # Starting a complete song grants its required number of copies.
+                    for note, needed in Counter(notes).items():
+                        expanded[note] = max(expanded.get(note, 0), needed)
             option.value = expanded
 
     def _create_stock_item_pool(self) -> None:
@@ -1699,22 +1717,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
     }
 
     # Must match ArchipelagoClient::RefreshSongNotes() in the SOH fork.
-    # The 74 AP note items are contiguous, and each tuple gives the normal SoH
-    # song item unlocked once every note in that slice has been collected.
-    SONG_NOTE_LAYOUT = (
-        ("Zelda's Lullaby", 6),
-        ("Epona's Song", 6),
-        ("Saria's Song", 6),
-        ("Sun's Song", 6),
-        ("Song of Time", 6),
-        ("Song of Storms", 6),
-        ("Minuet of Forest", 6),
-        ("Bolero of Fire", 8),
-        ("Serenade of Water", 5),
-        ("Requiem of Spirit", 6),
-        ("Nocturne of Shadow", 7),
-        ("Prelude of Light", 6),
-    )
+    # Legacy note IDs form 74 contiguous flags; progressive song receipts fill
+    # those same slices. A full slice unlocks the corresponding normal SoH song.
+    SONG_NOTE_LAYOUT = SONG_NOTE_LAYOUT
 
     SONG_NOTE_GROUPS = {}
     _song_note_offset = 0
@@ -1726,10 +1731,18 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         _song_note_offset += _song_note_count
     del _song_note_offset, _song_name, _song_note_count
 
+    def _song_note_revision(self):
+        return int(self.passthrough.get("song_note_catalog_revision", 0)) if self.using_ut else 1
+
+    def _song_note_groups(self):
+        if not self._song_note_revision():
+            return self.SONG_NOTE_GROUPS
+        return {song: (f"Progressive {song}",) * count for song, count in self.SONG_NOTE_LAYOUT}
+
     @classmethod
     def _song_for_note(cls, note_name: str):
         for song_name, notes in cls.SONG_NOTE_GROUPS.items():
-            if note_name in notes:
+            if note_name in notes or note_name == f"Progressive {song_name}":
                 return song_name, notes
         return None, None
 
@@ -1747,7 +1760,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             return False
 
         virtual = state._soh_extreme_virtual_songs.setdefault(self.player, set())
-        complete = all(state.has(required_note, self.player) for required_note in notes)
+        collected = sum(state.has(note, self.player) for note in notes) + state.count(f"Progressive {song_name}", self.player)
+        complete = collected >= len(notes)
 
         if complete and song_name not in virtual:
             # IMPORTANT: do not mutate state.prog_items directly here. The SoH
@@ -1806,7 +1820,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if state._soh_extreme_piece_of_heart_count[self.player] == 4:
                 state._soh_extreme_piece_of_heart_count[self.player] = 0
                 state._soh_extreme_heart_count[self.player] += 1
-        if self.options.song_note_shuffle.value and item.name.startswith("Song Note "):
+        if self.options.song_note_shuffle.value and self._song_for_note(item.name)[0] is not None:
             changed = self._refresh_virtual_song_for_note(state, item.name) or changed
         return changed
 
@@ -1849,7 +1863,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if state._soh_extreme_piece_of_heart_count[self.player] == -1:
                 state._soh_extreme_piece_of_heart_count[self.player] = 3
                 state._soh_extreme_heart_count[self.player] -= 1
-        if self.options.song_note_shuffle.value and item.name.startswith("Song Note "):
+        if self.options.song_note_shuffle.value and self._song_for_note(item.name)[0] is not None:
             changed = self._refresh_virtual_song_for_note(state, item.name) or changed
         return changed
 
@@ -4778,14 +4792,15 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         elif o.shuffle_open_chest.value == 2:
             extras.extend(["Open Chest", "Open Chest"])
         if o.song_note_shuffle.value:
-            starting_notes = {item.name for item in self.multiworld.precollected_items[self.player]}
+            starting_notes = Counter(item.name for item in self.multiworld.precollected_items[self.player])
             from_pool = o.start_inventory_from_pool.value
-            # Starting-song options already grant these notes. For common
-            # from-pool requests, leave one in the pool for AP's later depletion.
-            extras.extend(
-                note for notes in self.SONG_NOTE_GROUPS.values() for note in notes
-                if note not in starting_notes or from_pool.get(note, 0)
-            )
+            for song, notes in self._song_note_groups().items():
+                for note, needed in Counter(notes).items():
+                    starting = starting_notes[note]
+                    if note in PROGRESSIVE_SONG_ITEMS:
+                        starting += sum(bool(starting_notes[n]) for n in self.SONG_NOTE_GROUPS[song])
+                    # AP removes from-pool requests later; keep those copies here.
+                    extras.extend([note] * max(0, needed - max(0, starting - from_pool.get(note, 0))))
 
         # Setting/check coverage audit.  An enabled sanity family must actually
         # contribute checks to the AP world.  This catches the class of bugs
@@ -4994,7 +5009,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 raise OptionError(
                     "SOH-EXTREME individual-note mode cannot place complete song items: "
                     + ", ".join(bypasses)
-                    + ". Use Song Note items in plando, or disable individual notes."
+                    + ". Use Progressive song items in plando, or disable individual notes."
                 )
         from .FrontierFill import validate_filled_world
         validate_filled_world(self)
@@ -5408,6 +5423,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "npc_speech_identity_version": NpcSpeech.identity_version(self),
             "npc_speech_catalog_revision": NpcSpeech.catalog_revision(self),
             "song_note_shuffle": o.song_note_shuffle.value,
+            "song_note_catalog_revision": self._song_note_revision(),
+            "progressive_song_requirements": {f"Progressive {song}": count for song, count in self.SONG_NOTE_LAYOUT},
             "shuffle_flow_of_time": o.shuffle_flow_of_time.value,
             "frozen_starting_time": o.frozen_starting_time.value,
             "time_speed_after_unlock": o.time_speed_after_unlock.value,

@@ -11,14 +11,18 @@ class SohLocation(Location):
     def can_reach(self, state: CollectionState) -> bool:
         can_reach = False
         # check if we can reach this as either age
+        for age in (Ages.CHILD, Ages.ADULT):
+            can_reach |= self.can_reach_as_age(state, age)
+        return can_reach
+
+    def can_reach_as_age(self, state: CollectionState, age: Ages) -> bool:
+        """Evaluate the same region and location rules for one reachable age."""
         stored_age = state._soh_extreme_age[self.player]  # type: ignore
         try:
-            for age in [Ages.CHILD, Ages.ADULT]:
-                state._soh_extreme_age[self.player] = age  # type: ignore
-                can_reach |= super().can_reach(state)
+            state._soh_extreme_age[self.player] = age  # type: ignore
+            return super().can_reach(state)
         finally:
             state._soh_extreme_age[self.player] = stored_age  # type: ignore
-        return can_reach
 
 
 class LocTag(IntFlag):

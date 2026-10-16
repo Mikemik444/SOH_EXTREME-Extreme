@@ -20,15 +20,17 @@ class LocalEvents(StrEnum):
 
 
 def set_region_rules(world: "SohWorld") -> None:
+    # Talking to the prisoner summons the guard; rescue events and guard drops
+    # need the same NPC Soul/language gate as the first-conversation checks.
     # Thieves' Hideout 1 Torch Cell
     # Events
     add_events(Regions.THIEVES_HIDEOUT_1_TORCH_CELL, world, [
         (EventsLocations.TH_1_TORCH_CARPENTER_CELL, LocalEvents.TH_1_TORCH_CELL_CARPENTER_FREED,
-         lambda bundle: can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR))
+         lambda bundle: can_interact_npc(bundle, "Hylian") & can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR))
     ])
     # Locations
     add_locations(Regions.THIEVES_HIDEOUT_1_TORCH_CELL, world, [
-        (Locations.TH_1_TORCH_CARPENTER, lambda bundle: can_kill_enemy(
+        (Locations.TH_1_TORCH_CARPENTER, lambda bundle: can_interact_npc(bundle, "Hylian") & can_kill_enemy(
             bundle, Enemies.GERUDO_WARRIOR)),
         (Locations.TH_1_TORCH_CELL_RIGHT_POT,
          lambda bundle: can_break_pots(bundle)),
@@ -49,12 +51,12 @@ def set_region_rules(world: "SohWorld") -> None:
     # Events
     add_events(Regions.THIEVES_HIDEOUT_DOUBLE_CELL, world, [
         (EventsLocations.TH_DOUBLE_CELL_CARPENTER_CELL, LocalEvents.TH_DOUBLE_CELL_CARPENTER_FREED,
-         lambda bundle: can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR)),
+         lambda bundle: can_interact_npc(bundle, "Hylian") & can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR)),
     ])
     # Locations
     add_locations(Regions.THIEVES_HIDEOUT_DOUBLE_CELL, world, [
         (Locations.TH_DOUBLE_CELL_CARPENTER,
-         lambda bundle: can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR)),
+         lambda bundle: can_interact_npc(bundle, "Hylian") & can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR)),
         (Locations.TH_DOUBLE_CELL_RIGHT_POT, lambda bundle: can_break_pots(bundle)),
         (Locations.TH_DOUBLE_CELL_MIDDLE_POT,
          lambda bundle: can_break_pots(bundle)),
@@ -82,11 +84,11 @@ def set_region_rules(world: "SohWorld") -> None:
     # Events
     add_events(Regions.THIEVES_HIDEOUT_DEAD_END_CELL, world, [
         (EventsLocations.TH_DEAD_END_CARPENTER_CELL, LocalEvents.TH_DEAD_END_CELL_CARPENTER_FREED,
-         lambda bundle: can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR))
+         lambda bundle: can_interact_npc(bundle, "Hylian") & can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR))
     ])
     # Locations
     add_locations(Regions.THIEVES_HIDEOUT_DEAD_END_CELL, world, [
-        (Locations.TH_DEAD_END_CARPENTER, lambda bundle: can_kill_enemy(
+        (Locations.TH_DEAD_END_CARPENTER, lambda bundle: can_interact_npc(bundle, "Hylian") & can_kill_enemy(
             bundle, Enemies.GERUDO_WARRIOR)),
         (Locations.TH_DEAD_END_CELL_CRATE, lambda bundle: can_break_crates(bundle))
     ])
@@ -101,12 +103,12 @@ def set_region_rules(world: "SohWorld") -> None:
     # Events
     add_events(Regions.THIEVES_HIDEOUT_STEEP_SLOPE_CELL, world, [
         (EventsLocations.TH_STEEP_SLOPE_CARPENTER_CELL, LocalEvents.TH_STEEP_SLOPE_CELL_CARPENTER_FREED,
-         lambda bundle: can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR))
+         lambda bundle: can_interact_npc(bundle, "Hylian") & can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR))
     ])
     # Locations
     add_locations(Regions.THIEVES_HIDEOUT_STEEP_SLOPE_CELL, world, [
         (Locations.TH_STEEP_SLOPE_CARPENTER,
-         lambda bundle: can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR)),
+         lambda bundle: can_interact_npc(bundle, "Hylian") & can_kill_enemy(bundle, Enemies.GERUDO_WARRIOR)),
         (Locations.TH_STEEP_SLOPE_RIGHT_POT, lambda bundle: can_break_pots(bundle)),
         (Locations.TH_STEEP_SLOPE_LEFT_POT, lambda bundle: can_break_pots(bundle))
     ])

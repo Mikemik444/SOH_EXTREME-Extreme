@@ -213,7 +213,7 @@ def set_region_rules(world: "SohWorld") -> None:
     add_locations(Regions.DODONGOS_CAVERN_STAIRS_UPPER, world, [
         (Locations.DODONGOS_CAVERN_GS_ALCOVE_ABOVE_STAIRS,
          lambda bundle: can_get_enemy_drop(bundle, Enemies.GOLD_SKULLTULA, EnemyDistance.LONGSHOT) | (
-             has_item(LocalEvents.DODONGOS_CAVERN_LIFT_PLATFORM, bundle) & can_get_enemy_drop(bundle,
+             can_climb(bundle) & has_item(LocalEvents.DODONGOS_CAVERN_LIFT_PLATFORM, bundle) & can_get_enemy_drop(bundle,
                                                                                                 Enemies.GOLD_SKULLTULA,
                                                                                                 EnemyDistance.BOOMERANG))),
         (Locations.DODONGOS_CAVERN_STAIRCASE_POT1,
@@ -374,7 +374,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Events
     add_events(Regions.DODONGOS_CAVERN_FAR_BRIDGE, world, [
         (EventLocations.DODONGOS_CAVERN_EYES, LocalEvents.DODONGOS_CAVERN_EYES_LIT,
-         lambda bundle: has_explosives(bundle)),
+         lambda bundle: can_use(Items.BOMB_BAG, bundle)),
         (EventLocations.DODONGOS_CAVERN_LIFT_SWITCH,
          LocalEvents.DODONGOS_CAVERN_LIFT_PLATFORM, lambda bundle: True_()),
     ])

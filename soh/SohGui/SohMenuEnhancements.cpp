@@ -234,6 +234,7 @@ void SohMenu::AddMenuEnhancements() {
             "After saving, choose Continue or Return to Spawn.\n"
             "Return to Spawn uses child Link's spawn as a child and adult Link's spawn as an adult.\n"
             "Dungeons and Remember Save Location also offer Restart.\n"
+            "If your age differs from the seed's starting age, Return to Spawn offers Revert to Child/Adult.\n"
             "Randomized spawn entrances are respected."));
 
     AddWidget(path, "Containers Match Contents", WIDGET_SEPARATOR_TEXT);

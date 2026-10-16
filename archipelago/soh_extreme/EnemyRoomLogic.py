@@ -143,6 +143,7 @@ CAPABILITIES = {
     'RG_ROLL':('shuffle_roll','Roll'), 'RG_OPEN_CHEST':('shuffle_open_chest','Open Chest'),
     'RG_SHOVEL':('shuffle_shovel','Shovel'), 'RG_NPC_SOUL':('shuffle_npc_soul','NPC Soul'),
     'RG_POT_SOUL':('shuffle_pot_soul','Pot Soul'),
+    'RG_CRATE_SOUL':('shuffle_crate_soul','Crate Soul'),
 }
 SILVER = {
  'RG_SHADOW_SILVER_BLADES':'Shadow Silver: Blades', 'RG_SHADOW_SILVER_PIT':'Shadow Silver: Pit',
@@ -349,7 +350,8 @@ class NativeRoomCompiler:
                 self.unknown_tricks.add(a[0]);return False
             return bool(o.enable_all_tricks.value or str(H.Tricks[token]) in o.tricks_in_logic.value)
         if name=='Option':
-            key={'RSK_MEDALLION_LOCKED_TRIALS':'medallion_locked_trials','RSK_SUNLIGHT_ARROWS':'sunlight_arrows'}[a[0]]
+            key={'RSK_MEDALLION_LOCKED_TRIALS':'medallion_locked_trials','RSK_SUNLIGHT_ARROWS':'sunlight_arrows',
+                 'RSK_SHUFFLE_CRATE_SOUL':'shuffle_crate_soul'}[a[0]]
             return bool(getattr(o,key).value)
         if name=='OptionIs':
             if a==['RSK_SHUFFLE_DUNGEON_ENTRANCES','RO_DUNGEON_ENTRANCE_SHUFFLE_OFF']:return True

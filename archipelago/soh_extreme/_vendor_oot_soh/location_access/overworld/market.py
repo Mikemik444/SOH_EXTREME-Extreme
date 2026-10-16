@@ -340,7 +340,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Locations
     add_locations(Regions.MARKET_DOG_LADY_HOUSE, world, [
         (Locations.MARKET_LOST_DOG, lambda bundle: (
-            is_child(bundle) & at_night(bundle))),
+            is_child(bundle) & at_night(bundle) & has_animal_soul(bundle, "Dog"))),
         (Locations.MARKET_LOST_DOG_HOUSE_CRATE,
          # Weapons cannot be used in this house; roll into the fixed crate.
          lambda bundle: can_break_crates(bundle) & extreme_requirement(bundle, "shuffle_roll", "Roll"))

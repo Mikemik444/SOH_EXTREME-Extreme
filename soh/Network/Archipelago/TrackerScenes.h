@@ -11,6 +11,7 @@ struct TrackerScene {
     int scene = -1;
     int instance = 0;
     std::string name = "Other checks";
+    int area = -1; // Broad physical region; separate from the scene/instance key.
 
     std::pair<int, int> Key() const { return { scene, instance }; }
     bool Matches(const TrackerScene& other) const {
@@ -24,7 +25,28 @@ struct TrackerSceneGroup {
     size_t normal = 0;
     size_t glitched = 0;
     bool currentScene = false;
+    bool currentRegion = false;
 };
+
+// The existing wire format carries UT's age annotations as a terminal suffix.
+// Read only those exact suffixes; aliases and location names may mention ages.
+// Zero means an older/unknown row, not an unreachable check.
+inline uint8_t TrackerRowAgeMask(const TrackerRow& row) {
+    const auto endsWith = [&](const std::string& suffix) {
+        return row.name.size() >= suffix.size() &&
+               row.name.compare(row.name.size() - suffix.size(), suffix.size(), suffix) == 0;
+    };
+    if (endsWith(" [Child only]")) return 1;
+    if (endsWith(" [Adult only]")) return 2;
+    if (endsWith(" [Child / Adult]")) return 3;
+    return 0;
+}
+
+inline bool TrackerRowMatchesAge(const TrackerRow& row, bool adult) {
+    const uint8_t ages = TrackerRowAgeMask(row);
+    // Keep older snapshots usable instead of silently hiding unknown checks.
+    return ages == 0 || (ages & (adult ? 2 : 1)) != 0;
+}
 
 // Select a moving NPC's route for this age/time before preferring a local
 // route. Merely sharing its AP parent must never make another scene current.
@@ -48,6 +70,7 @@ std::vector<TrackerSceneGroup> GroupTrackerRowsByScene(const TrackerSnapshot& sn
         auto& group = grouped[scene.Key()];
         group.scene = scene;
         group.currentScene = here;
+        group.currentRegion = scene.area >= 0 && scene.area == current.area;
         group.rows.push_back(&row);
         if (row.state == 1) ++group.normal;
         else ++group.glitched;
@@ -63,6 +86,7 @@ std::vector<TrackerSceneGroup> GroupTrackerRowsByScene(const TrackerSnapshot& sn
     }
     std::sort(result.begin(), result.end(), [currentFirst](const TrackerSceneGroup& a, const TrackerSceneGroup& b) {
         if (currentFirst && a.currentScene != b.currentScene) return a.currentScene;
+        if (currentFirst && a.currentRegion != b.currentRegion) return a.currentRegion;
         if ((a.scene.scene < 0) != (b.scene.scene < 0)) return a.scene.scene >= 0;
         if (a.scene.name != b.scene.name) return a.scene.name < b.scene.name;
         return a.scene.Key() < b.scene.Key();

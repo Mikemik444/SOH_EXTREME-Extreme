@@ -538,10 +538,9 @@ def create_item_pool(world: "SohWorld") -> None:
         items_to_create[Items.GREG_THE_GREEN_RUPEE] -= create_special_progression_item(
             world, Items.GREG_THE_GREEN_RUPEE, ItemClassification.filler)
 
-    # Stone of Agony is Progression unless not required for Grottos
-    if world.options.enable_all_tricks or str(Tricks.GROTTOS_WITHOUT_AGONY) in world.options.tricks_in_logic:
-        items_to_create[Items.STONE_OF_AGONY] -= create_special_progression_item(
-            world, Items.STONE_OF_AGONY, ItemClassification.filler)
+    # EXTREME always requires Stone of Agony to discover hidden grottos,
+    # including seeds that retain the legacy Grottos Without Agony trick.
+    # Keep its normal progression classification for fill and tracker logic.
 
     # Ice Arrows set to filler if not useful (blue fire arrows enabled)
     if not world.options.blue_fire_arrows:

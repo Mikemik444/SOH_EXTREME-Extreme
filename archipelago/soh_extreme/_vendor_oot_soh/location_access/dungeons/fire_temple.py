@@ -518,7 +518,9 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.FIRE_TEMPLE_HAMMER_RETURN_PATH, world, [
         (Regions.FIRE_TEMPLE_ABOVE_FIRE_MAZE,
-         lambda bundle: can_use(Items.MEGATON_HAMMER, bundle))
+         # The small crate must remain on the floor switch to keep the door open.
+         lambda bundle: can_use(Items.MEGATON_HAMMER, bundle) & can_grab(bundle) &
+         extreme_requirement(bundle, "shuffle_crate_soul", "Crate Soul"))
     ])
 
     # Fire Temple Above Fire Maze

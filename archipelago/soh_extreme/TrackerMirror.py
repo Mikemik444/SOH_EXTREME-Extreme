@@ -74,14 +74,17 @@ def encode_snapshot(*, nonce: str, request: int, revision: int, slot: int,
 def snapshot_rows(core, tracker_state, world, active: set[int], checked: set[int]) -> list[dict]:
     """Use the exact returned normal/glitched lists displayed by UT.
 
-    Do not recompute location.can_reach here. This preserves UT's ignored and
-    excluded-location filters and manual inventory, instead of approximating it.
+    UT's returned lists alone decide which checks are shown. Age annotations
+    query those same rules using a copy of UT's evaluated inventory/events;
+    they do not add/remove checks or change UT's state or filters.
     """
     normal=list(tracker_state.in_logic_locations)
     glitched=list(tracker_state.glitched_locations) if core.enable_glitched_logic else []
     aliases=getattr(core,'location_alias_map',{})
     rows=[];seen=set()
     for status,names in ((1,normal),(2,glitched)):
+        state=getattr(tracker_state,'state' if status==1 else 'glitches_state',None)
+        age_state=state.copy() if state is not None and names else None
         for name in names:
             loc=world.get_location(name)
             i=loc.address
@@ -91,6 +94,14 @@ def snapshot_rows(core, tracker_state, world, active: set[int], checked: set[int
             seen.add(i)
             label=str(loc.name)
             if i in aliases:label+=' ('+str(aliases[i])+')'
+            if age_state is not None and hasattr(loc,'can_reach_as_age'):
+                # Keep transport-only use independent of AP's rule modules.
+                from ._vendor_oot_soh.Enums import Ages
+                child=loc.can_reach_as_age(age_state,Ages.CHILD)
+                adult=loc.can_reach_as_age(age_state,Ages.ADULT)
+                if child and adult:label+=' [Child / Adult]'
+                elif child:label+=' [Child only]'
+                elif adult:label+=' [Adult only]'
             rows.append({'id':i,'state':status,'name':label,
                          'region':display_region(loc)})
     rows.sort(key=lambda r:(r['state'],r['region'],r['name'],r['id']))

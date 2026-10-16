@@ -464,8 +464,8 @@ void RegionTable_Init_FireTemple() {
     areaTable[RR_FIRE_TEMPLE_BASE_OF_COLLAPSING_STAIRS] = Region("Fire Temple Base of Collapsing Stairs", SCENE_FIRE_TEMPLE, {}, {}, {
         //Exits
         ENTRANCE(RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS, logic->Get(LOGIC_FIRE_HIT_STAIRS) && logic->IsAdult),
-        // this is here to maintain 1:1 door entrances between regions
-        ENTRANCE(RR_FIRE_TEMPLE_ABOVE_FIRE_MAZE,          logic->Get(LOGIC_FIRE_HIT_STAIRS) && (logic->IsAdult || logic->Get(LOGIC_FIRE_CHILD_AT_TOP_OF_STAIRS)) && logic->HasItem(RG_POWER_BRACELET)),
+        // Carry a small crate down the stairs to hold the floor switch while passing the door.
+        ENTRANCE(RR_FIRE_TEMPLE_ABOVE_FIRE_MAZE,          logic->Get(LOGIC_FIRE_HIT_STAIRS) && (logic->IsAdult || logic->Get(LOGIC_FIRE_CHILD_AT_TOP_OF_STAIRS)) && logic->HasItem(RG_POWER_BRACELET) && (!ctx->GetOption(RSK_SHUFFLE_CRATE_SOUL) || logic->HasItem(RG_CRATE_SOUL))),
     });
 
     areaTable[RR_FIRE_TEMPLE_ABOVE_FIRE_MAZE] = Region("Fire Temple Above Fire Maze", SCENE_FIRE_TEMPLE, {

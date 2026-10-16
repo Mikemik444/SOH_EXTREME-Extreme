@@ -280,6 +280,8 @@ static RandomizerGet GetRemoteArchipelagoDisplay(int flags) {
 }
 constexpr int64_t AP_FIRST_SONG_NOTE = 9500020;
 constexpr int64_t AP_LAST_SONG_NOTE = 9500093;
+constexpr int64_t AP_FIRST_PROGRESSIVE_SONG = 9500300;
+constexpr int64_t AP_LAST_PROGRESSIVE_SONG = 9500311;
 
 // AP base item IDs 1..276 intentionally match SoH RandomizerGet IDs in the
 // 9.2.3-based world. This is the same numbering used by Items.py.
@@ -296,6 +298,7 @@ static bool HasNote(RandomizerInf first, int offset) {
 }
 
 static RandomizerGet GetApSongNoteDisplay(int64_t itemId);
+static RandomizerGet GetApProgressiveSongDisplay(const std::string& name);
 
 static RandomizerGet MapApItemNameToRandomizerGet(const std::string& itemName) {
     static const std::unordered_map<std::string, RandomizerGet> kItemNameMap = {
@@ -307,7 +310,12 @@ static RandomizerGet MapApItemNameToRandomizerGet(const std::string& itemName) {
         return it->second;
     }
 
-    // The AP catalog names notes 01..74. Resolve their owning song rather than
+    if (itemName.rfind("Progressive ", 0) == 0) {
+        const auto song = GetApProgressiveSongDisplay(itemName);
+        if (song != RG_NONE) return song;
+    }
+
+    // The legacy AP catalog names notes 01..74. Resolve their owning song rather than
     // losing that identity in a single shared note model. Reject malformed names
     // so a valid numeric item ID can still resolve a delayed/missing name.
     if (itemName.rfind("Song Note ", 0) == 0 && itemName.size() >= 11 && itemName.size() <= 12) {
@@ -373,36 +381,71 @@ static constexpr SongNotes kApSongNotes[] = {
         {"Prelude of Light", 6, QUEST_SONG_PRELUDE, RG_AP_NOTE_PRELUDE},
     };
 
-static RandomizerGet GetApSongNoteDisplay(int64_t itemId) {
-    if (itemId < AP_FIRST_SONG_NOTE || itemId > AP_LAST_SONG_NOTE) return RG_NONE;
+static int GetApSongIndex(int64_t itemId) {
+    if (itemId >= AP_FIRST_PROGRESSIVE_SONG && itemId <= AP_LAST_PROGRESSIVE_SONG)
+        return static_cast<int>(itemId - AP_FIRST_PROGRESSIVE_SONG);
+    if (itemId < AP_FIRST_SONG_NOTE || itemId > AP_LAST_SONG_NOTE) return -1;
     int note = static_cast<int>(itemId - AP_FIRST_SONG_NOTE);
+    int index = 0;
     for (const auto& song : kApSongNotes) {
-        if (note < song.count) return song.display;
+        if (note < song.count) return index;
         note -= song.count;
+        ++index;
     }
+    return -1;
+}
+
+static bool IsApSongNote(int64_t itemId) {
+    return GetApSongIndex(itemId) >= 0;
+}
+
+static RandomizerGet GetApSongNoteDisplay(int64_t itemId) {
+    const int index = GetApSongIndex(itemId);
+    return index < 0 ? RG_NONE : kApSongNotes[index].display;
+}
+
+static RandomizerGet GetApProgressiveSongDisplay(const std::string& name) {
+    for (const auto& song : kApSongNotes)
+        if (name == "Progressive " + std::string(song.name)) return song.display;
     return RG_NONE;
 }
 
-static std::string BuildApSongNotePickupDescription(int64_t itemId) {
-    if (itemId < AP_FIRST_SONG_NOTE || itemId > AP_LAST_SONG_NOTE) return {};
-    const int note = static_cast<int>(itemId - AP_FIRST_SONG_NOTE);
+static bool ApplyApSongNote(int64_t itemId) {
+    const int index = GetApSongIndex(itemId);
+    if (index < 0) return false;
     int offset = 0;
-    for (const auto& song : kApSongNotes) {
-        if (note < offset + song.count) {
-            int collected = 0;
-            for (int i = 0; i < song.count; ++i) {
-                // The textbox opens before the receipt callback. Include this
-                // pickup once, even if the server sends an already-owned note.
-                if (offset + i == note || Flags_GetRandomizerInf(
-                        static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + offset + i))) ++collected;
-            }
-            return "You found a %g" + std::string(song.name) + "%w note!&Notes: %y" +
-                std::to_string(collected) + "/" + std::to_string(song.count) + "%w" +
-                (collected == song.count ? " - Song complete!" : ".");
-        }
-        offset += song.count;
+    for (int i = 0; i < index; ++i) offset += kApSongNotes[i].count;
+    if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
+        offset = static_cast<int>(itemId - AP_FIRST_SONG_NOTE);
+    } else {
+        // Each committed receipt fills one missing flag. Legacy saves and new
+        // progressive items share the same persistent song-note flags.
+        int next = 0;
+        while (next < kApSongNotes[index].count && HasNote(RAND_INF_SONG_NOTE_0, offset + next)) ++next;
+        if (next == kApSongNotes[index].count) return true; // capped duplicate
+        offset += next;
     }
-    return {};
+    const auto flag = static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + offset);
+    Flags_SetRandomizerInf(flag);
+    return Flags_GetRandomizerInf(flag);
+}
+
+static std::string BuildApSongNotePickupDescription(int64_t itemId) {
+    const int index = GetApSongIndex(itemId);
+    if (index < 0) return {};
+    int offset = 0;
+    for (int i = 0; i < index; ++i) offset += kApSongNotes[i].count;
+    const auto& song = kApSongNotes[index];
+    int collected = 0;
+    for (int i = 0; i < song.count; ++i)
+        if (HasNote(RAND_INF_SONG_NOTE_0, offset + i)) ++collected;
+    // This textbox precedes the receipt callback. Preview exactly one new note.
+    if (itemId >= AP_FIRST_PROGRESSIVE_SONG ||
+        !HasNote(RAND_INF_SONG_NOTE_0, static_cast<int>(itemId - AP_FIRST_SONG_NOTE)))
+        collected = std::min(collected + 1, song.count);
+    return "%gProgressive " + std::string(song.name) + "%w - %y" +
+        std::to_string(collected) + "/" + std::to_string(song.count) + "%w" +
+        (collected == song.count ? "&Song complete!" : ".");
 }
 
 static std::string GetApItemDisplayName(int64_t itemId) {
@@ -522,6 +565,9 @@ static std::string GetApItemDisplayName(int64_t itemId) {
         default: break;
     }
 
+    if (itemId >= AP_FIRST_PROGRESSIVE_SONG && itemId <= AP_LAST_PROGRESSIVE_SONG) {
+        return "Progressive " + std::string(kApSongNotes[itemId - AP_FIRST_PROGRESSIVE_SONG].name);
+    }
     if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
         return "Song Note " + std::to_string(static_cast<int>(itemId - AP_FIRST_SONG_NOTE) + 1);
     }
@@ -1425,10 +1471,8 @@ void ArchipelagoClient::FinalizeMajorItemReceipt(int modIndex, int itemId, int g
             !Flags_GetRandomizerInf(static_cast<RandomizerInf>(flag->second))) return;
     }
 
-    if (apItemId >= AP_FIRST_SONG_NOTE && apItemId <= AP_LAST_SONG_NOTE) {
-        const auto flag = static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + apItemId - AP_FIRST_SONG_NOTE);
-        Flags_SetRandomizerInf(flag);
-        if (!Flags_GetRandomizerInf(flag)) return;
+    if (IsApSongNote(apItemId)) {
+        if (!ApplyApSongNote(apItemId)) return;
         RefreshSongNotes();
     }
 
@@ -1670,8 +1714,8 @@ int32_t ArchipelagoClient::MapApItemToRandomizerGet(int64_t itemId) const {
         case AP_ITEM_GANONS_CASTLE_MQ_SILVER_WATER: randoGet = RG_GANONS_CASTLE_MQ_SILVER_WATER; break;
         case AP_ITEM_GANONS_CASTLE_MQ_SILVER_SHADOW: randoGet = RG_GANONS_CASTLE_MQ_SILVER_SHADOW; break;
         default:
-            if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
-                randoGet = GetApSongNoteDisplay(itemId); // receipt grants the exact note flag
+            if (IsApSongNote(itemId)) {
+                randoGet = GetApSongNoteDisplay(itemId); // receipt grants the legacy or next progressive note flag
             }
             break;
     }
@@ -2981,7 +3025,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         case AP_ITEM_GANONS_CASTLE_MQ_SILVER_SHADOW: randoGet = RG_GANONS_CASTLE_MQ_SILVER_SHADOW; break;
             case AP_ITEM_FLOW_OF_TIME: randoGet = RG_FLOW_OF_TIME; break;
             default:
-                if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
+                if (IsApSongNote(itemId)) {
                     randoGet = GetApSongNoteDisplay(itemId);
                     break;
                 }
@@ -3103,10 +3147,8 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
     // major item can leave the first session effectively locked in item presentation
     // for minutes. Apply historical rewards directly and silently instead.
     if (historicalNewSaveReplay) {
-        if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
-            const auto flag = static_cast<RandomizerInf>(RAND_INF_SONG_NOTE_0 + itemId - AP_FIRST_SONG_NOTE);
-            Flags_SetRandomizerInf(flag);
-            if (!Flags_GetRandomizerInf(flag)) return false;
+        if (IsApSongNote(itemId)) {
+            if (!ApplyApSongNote(itemId)) return false;
             RefreshSongNotes();
             return true;
         }
@@ -3132,7 +3174,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
     // starting inventory/replayed filler, which should not repeatedly stop the player.
     const bool isExtremeProgression =
         ((itemId >= AP_EXTREME_ITEM_BASE && itemId <= AP_ITEM_ENEMY_SOUL_BIG_OCTO &&
-          !(itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE)) ||
+          !IsApSongNote(itemId)) ||
          (itemId >= AP_FIRST_SILVER_ITEM && itemId <= AP_LAST_SILVER_ITEM));
     const GetItemCategory apCategory = item.GetCategory();
     const bool forceHoldAnimation =
@@ -3207,7 +3249,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         gAwaitingMajorFrames = 0;
     }
 
-    if (itemId >= AP_FIRST_SONG_NOTE && itemId <= AP_LAST_SONG_NOTE) {
+    if (IsApSongNote(itemId)) {
         songNotePickupDescription = BuildApSongNotePickupDescription(itemId);
     }
 

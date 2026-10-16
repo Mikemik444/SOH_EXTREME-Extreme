@@ -975,6 +975,8 @@ class SkipScarecrowsSong(DefaultOnToggle):
     """
     Start with the ability to summon Pierre the Scarecrow. Pulling out an Ocarina in Pierre's locations will automatically summon him.
     With Shuffle Ocarina Buttons enabled, you'll need at least two Ocarina buttons to summon him.
+    When disabled, logic requires an Ocarina and all five buttons to teach the song as Child at Lake Hylia,
+    then return as Adult to confirm it before using Scarecrow routes.
     """
     display_name = "Skip Scarecrow's Song"
 

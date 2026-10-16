@@ -971,7 +971,6 @@ void DrawItemCount(ItemTrackerItem item, bool hideMax) {
                (OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_TRIFORCE_HUNT_PIECES_TOTAL) > 0) &&
                IsValidSaveFile()) {
         std::string currentString = "";
-        std::string requiredString = "";
         std::string maxString = "";
         uint8_t piecesTotal = OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_TRIFORCE_HUNT_PIECES_TOTAL);
         uint8_t piecesRequired = OTRGlobals::Instance->gRandomizer->GetTriforcePiecesRequired();
@@ -988,7 +987,6 @@ void DrawItemCount(ItemTrackerItem item, bool hideMax) {
 
         currentString += std::to_string(gSaveContext.ship.quest.data.randomizer.triforcePiecesCollected);
         currentString += "/";
-        // gItemTrackerTriforcePieceTrack
         if (trackerTriforcePieceNumberDisplayMode == TRIFORCE_PIECE_COLLECTED_REQUIRED_MAX) {
             currentString += std::to_string(piecesRequired);
             currentString += "/";
@@ -997,8 +995,10 @@ void DrawItemCount(ItemTrackerItem item, bool hideMax) {
             maxString += std::to_string(piecesRequired);
         }
 
-        ImGui::SetCursorScreenPos(
-            ImVec2(p.x + (iconSize >> 1) - (ImGui::CalcTextSize((currentString + maxString).c_str()).x / 2), p.y - 14));
+        // A multi-digit count can be wider than its icon. Keep it inside this
+        // cell instead of centering its first digits outside the window.
+        const float countWidth = ImGui::CalcTextSize(currentString.c_str()).x + ImGui::CalcTextSize(maxString.c_str()).x;
+        ImGui::SetCursorScreenPos(ImVec2(p.x + std::max(0.0f, (iconSize - countWidth) / 2.0f), p.y - 14));
         ImGui::PushStyleColor(ImGuiCol_Text, currentColor);
         ImGui::Text("%s", currentString.c_str());
         ImGui::PopStyleColor();
@@ -1676,12 +1676,22 @@ void DrawItemsInRows(std::vector<ItemTrackerItem> items, int columns = 6) {
     int topPadding =
         (CVarGetInteger(CVAR_TRACKER_ITEM("WindowType"), TRACKER_WINDOW_FLOATING) == TRACKER_WINDOW_WINDOW) ? 20 : 0;
 
+    float rowExtraWidth = 0.0f;
     for (size_t i = 0; i < items.size(); i++) {
         size_t row = i / columns;
         size_t column = i % columns;
+        if (column == 0) {
+            rowExtraWidth = 0.0f;
+        }
         ImGui::SetCursorPos(
-            ImVec2((column * (iconSize + iconSpacing) + 8.0f), (row * (iconSize + iconSpacing)) + 8.0f + topPadding));
+            ImVec2(column * (iconSize + iconSpacing) + 8.0f + rowExtraWidth,
+                   (row * (iconSize + iconSpacing)) + 8.0f + topPadding));
         items[i].drawFunc(items[i]);
+        if (items[i].kind == ITEM_KIND_RG && items[i].id == RG_TRIFORCE_PIECE) {
+            // Reserve the full count width for auto-sizing and for any icons
+            // following the Triforce on this row (such as the fishing pole).
+            rowExtraWidth += std::max(0.0f, ImGui::GetItemRectSize().x - iconSize - std::min(0, iconSpacing));
+        }
     }
 }
 
@@ -2183,7 +2193,7 @@ static void DrawSongNoteProgress() {
         }
         totalHave += haveCount;
 
-        ImGui::Text("%s  %d/%d", song.name, haveCount, song.count);
+        ImGui::Text("Progressive %s - %d/%d", song.name, haveCount, song.count);
 
         for (int i = 0; i < song.count; ++i) {
             if (i != 0) {

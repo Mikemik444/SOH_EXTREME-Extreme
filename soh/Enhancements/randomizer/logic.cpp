@@ -1804,10 +1804,11 @@ bool Logic::HookshotOrBoomerang() {
 }
 
 bool Logic::ScarecrowsSong() {
-    // Knowing the tune never substitutes for a usable instrument/buttons.
+    // Free Scarecrow keeps its two-button shortcut. Otherwise learn the song
+    // at Lake Hylia as Child, confirm it as Adult, and own every playable button.
     return CanUse(RG_FAIRY_OCARINA) && OcarinaButtons() >= 2 &&
            (ctx->GetOption(RSK_SKIP_SCARECROWS_SONG) ||
-            (Get(LOGIC_CHILD_SCARECROW) && Get(LOGIC_ADULT_SCARECROW)));
+            (OcarinaButtons() >= 5 && Get(LOGIC_CHILD_SCARECROW) && Get(LOGIC_ADULT_SCARECROW)));
 }
 
 bool Logic::BlueFire() {
@@ -2038,14 +2039,14 @@ bool Logic::CanOpenBombGrotto() {
     if (ctx->GetOption(RSK_SHUFFLE_SHOVEL) && !HasItem(RG_SHOVEL)) {
         return false;
     }
-    return CanBreakRocks() && (HasItem(RG_STONE_OF_AGONY) || ctx->GetTrickOption(RT_GROTTOS_WITHOUT_AGONY));
+    return CanBreakRocks() && HasItem(RG_STONE_OF_AGONY);
 }
 
 bool Logic::CanOpenStormsGrotto() {
     if (ctx->GetOption(RSK_SHUFFLE_SHOVEL) && !HasItem(RG_SHOVEL)) {
         return false;
     }
-    return CanUse(RG_SONG_OF_STORMS) && (HasItem(RG_STONE_OF_AGONY) || ctx->GetTrickOption(RT_GROTTOS_WITHOUT_AGONY));
+    return CanUse(RG_SONG_OF_STORMS) && HasItem(RG_STONE_OF_AGONY);
 }
 
 bool Logic::CanGetNightTimeGS() {

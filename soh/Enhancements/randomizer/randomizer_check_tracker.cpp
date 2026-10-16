@@ -1728,6 +1728,7 @@ static SohExtreme::TrackerScene FinderScene(int scene, RandomizerCheckArea area,
         area = RCAREA_KAKARIKO_VILLAGE;
     }
     SohExtreme::TrackerScene result{ scene, 0, SohUtils::GetSceneName(scene) };
+    result.area = area >= RCAREA_KOKIRI_FOREST && area < RCAREA_INVALID ? static_cast<int>(area) : -1;
     if (scene == SCENE_GROTTOS || scene == SCENE_FAIRYS_FOUNTAIN) {
         // Grotto IDs identify destinations even with shuffled entrances. Area
         // alone cannot distinguish two different grottos in Hyrule Field.
@@ -2068,14 +2069,27 @@ static void DrawUniversalFinderMirror() {
         }
         return;
     }
-    size_t normal = 0, glitched = 0;
+    bool currentAgeOnly = CVarGetInteger(CVAR_TRACKER_CHECK("CurrentAgeOnly"), 0) != 0;
+    if (ImGui::Checkbox("Current age only", &currentAgeOnly)) {
+        CVarSetInteger(CVAR_TRACKER_CHECK("CurrentAgeOnly"), currentAgeOnly);
+        Ship::Context::GetRawInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
+    }
+    const bool filterAge = currentAgeOnly && gPlayState != nullptr;
+    const bool adult = LINK_IS_ADULT;
+    size_t normal = 0, glitched = 0, unknownAge = 0;
     for (const auto& row : snapshot->rows) {
         if (!IsFinderRowEnabled(row.id)) continue;
+        if (filterAge && !SohExtreme::TrackerRowMatchesAge(row, adult)) continue;
+        if (filterAge && SohExtreme::TrackerRowAgeMask(row) == 0) ++unknownAge;
         if (row.state == 1) ++normal; else ++glitched;
     }
     ImGui::Text("In logic: %u   Glitched: %u   Checked: %u / %u",
         static_cast<unsigned>(normal), static_cast<unsigned>(glitched),
         static_cast<unsigned>(snapshot->checked.size()), static_cast<unsigned>(snapshot->active.size()));
+    if (unknownAge != 0) {
+        ImGui::TextWrapped("Some checks have no age information and remain visible. Update the SOH-EXTREME APWorld "
+                           "and restart the tracker to enable age filtering for them.");
+    }
     if (snapshot->received > client.GetAppliedItemCount()) {
         ImGui::TextWrapped("AP has delivered %llu items; %llu are applied to this save. "
             "This list uses the AP received inventory, as Universal Tracker does.",
@@ -2090,10 +2104,12 @@ static void DrawUniversalFinderMirror() {
     const auto current = FinderScene(scene, gPlayState != nullptr ? GetCheckArea() : RCAREA_INVALID,
                                     grottoScene ? Grotto_CurrentGrotto() : -1);
     if (current.scene >= 0) ImGui::Text("Current scene: %s", current.name.c_str());
+    if (current.area >= 0) ImGui::Text("Current region: %s",
+        RandomizerCheckObjects::GetRCAreaName(static_cast<RandomizerCheckArea>(current.area)).c_str());
     static bool currentFirst = true;
     static bool onlyCurrent = false;
     static ImGuiTextFilter filter;
-    ImGui::Checkbox("Current scene first", &currentFirst);
+    ImGui::Checkbox("Current scene/region first", &currentFirst);
     ImGui::SameLine();
     ImGui::Checkbox("Only current scene", &onlyCurrent);
     filter.Draw("Search scene/region/check");
@@ -2101,9 +2117,10 @@ static void DrawUniversalFinderMirror() {
         ImGui::TextWrapped("Scene labels are synchronizing; showing all scenes until the mapping is ready.");
     const auto groups = SohExtreme::GroupTrackerRowsByScene(*snapshot, current, currentFirst, onlyCurrent && sceneMappingsReady,
         [&](int64_t id) {
-            return FinderRowScene(id, client, current, LINK_IS_ADULT ? 1 : 0, IS_NIGHT ? 1 : 0);
+            return FinderRowScene(id, client, current, adult ? 1 : 0, IS_NIGHT ? 1 : 0);
         }, [&](const SohExtreme::TrackerRow& row, const SohExtreme::TrackerScene& rowScene) {
             if (!IsFinderRowEnabled(row.id)) return false;
+            if (filterAge && !SohExtreme::TrackerRowMatchesAge(row, adult)) return false;
             const std::string text = rowScene.name + " | " + row.region + " | " + row.name;
             return filter.PassFilter(text.c_str());
         });
@@ -2115,7 +2132,8 @@ static void DrawUniversalFinderMirror() {
             // location change, preserving the user's expand/collapse choices.
             ImGui::PushID(group.scene.scene);
             ImGui::PushID(group.scene.instance);
-            const std::string label = (group.currentScene ? "[Current scene] " : "") + group.scene.name +
+            const std::string label = (group.currentScene ? "[Current scene] " :
+                group.currentRegion ? "[Current region] " : "") + group.scene.name +
                 " (" + std::to_string(group.normal) + " in logic, " + std::to_string(group.glitched) + " glitched)###APScene";
             if (ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
                 ImGui::Indent();

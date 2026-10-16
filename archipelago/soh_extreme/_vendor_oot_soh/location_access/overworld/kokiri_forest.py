@@ -42,9 +42,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Locations.KF_GS_KNOW_IT_ALL_HOUSE, lambda bundle: (is_child(bundle) &
                                                             can_attack(bundle) &
                                                             can_get_nighttime_gs(bundle))),
-        (Locations.KF_GS_BEAN_PATCH, lambda bundle: can_attack(bundle) &
-         is_child(bundle) &
-         can_use(Items.BOTTLE_WITH_BUGS, bundle)),
+        (Locations.KF_GS_BEAN_PATCH, lambda bundle: can_attack(bundle) & can_spawn_soil_skull(bundle)),
         (Locations.KF_GS_HOUSE_OF_TWINS, lambda bundle: is_adult(bundle) &
          (hookshot_or_boomerang(bundle)
           | (can_do_trick(Tricks.KF_ADULT_GS, bundle)

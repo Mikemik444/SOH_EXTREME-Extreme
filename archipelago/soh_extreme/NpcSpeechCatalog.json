@@ -1030,7 +1030,7 @@
     "language": "Goron",
     "routes": [
       {
-        "region": "FIRE_TEMPLE_SHORTCUT_ROOM",
+        "region": "FIRE_TEMPLE_SHORTCUT_CLIMB",
         "age": "either",
         "time": "either",
         "gates": []

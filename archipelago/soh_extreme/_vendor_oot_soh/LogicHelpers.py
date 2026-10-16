@@ -220,23 +220,7 @@ def can_use(item: Items, bundle: tuple[Regions, "SohWorld"]) -> Rule:
         rule &= can_swim(bundle)
 
     if item == Items.MAGIC_BEAN:
-        # Each patch is a separate native actor controlled by its own Bean Soul.
-        # Gate use at the patch, including the planted event and bean fairies.
-        souls = {
-            Regions.DMC_CENTRAL_LOCAL: "Death Mountain Crater Bean Soul",
-            Regions.DEATH_MOUNTAIN_TRAIL: "Death Mountain Trail Bean Soul",
-            Regions.DESERT_COLOSSUS: "Desert Colossus Bean Soul",
-            Regions.GV_UPPER_STREAM: "Gerudo Valley Bean Soul",
-            Regions.THE_GRAVEYARD: "Graveyard Bean Soul",
-            Regions.KOKIRI_FOREST: "Kokiri Forest Bean Soul",
-            Regions.LAKE_HYLIA: "Lake Hylia Bean Soul",
-            Regions.LOST_WOODS: "Lost Woods Bridge Bean Soul",
-            Regions.LW_BEYOND_MIDO: "Lost Woods Bean Soul",
-            Regions.ZORA_RIVER: "Zora's River Bean Soul",
-        }
-        soul = souls.get(bundle[0])
-        if soul is not None:
-            rule &= extreme_requirement(bundle, "shuffle_bean_souls", soul)
+        rule &= has_bean_soul(bundle)
 
     if item == Items.FISHING_POLE:
         # Pond access is not permission to start the owner's paid minigame.
@@ -303,25 +287,6 @@ def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"],
 
     if item == Items.DISTANT_SCARECROW:
         return scarecrows_song(bundle) & can_use(Items.LONGSHOT, bundle)
-
-    if item == Items.MAGIC_BEAN:
-        # Each patch is a separate native actor controlled by its own Bean Soul.
-        # Gate use at the patch, including the planted event and bean fairies.
-        souls = {
-            Regions.DMC_CENTRAL_LOCAL: "Death Mountain Crater Bean Soul",
-            Regions.DEATH_MOUNTAIN_TRAIL: "Death Mountain Trail Bean Soul",
-            Regions.DESERT_COLOSSUS: "Desert Colossus Bean Soul",
-            Regions.GV_UPPER_STREAM: "Gerudo Valley Bean Soul",
-            Regions.THE_GRAVEYARD: "Graveyard Bean Soul",
-            Regions.KOKIRI_FOREST: "Kokiri Forest Bean Soul",
-            Regions.LAKE_HYLIA: "Lake Hylia Bean Soul",
-            Regions.LOST_WOODS: "Lost Woods Bridge Bean Soul",
-            Regions.LW_BEYOND_MIDO: "Lost Woods Bean Soul",
-            Regions.ZORA_RIVER: "Zora's River Bean Soul",
-        }
-        soul = souls.get(bundle[0])
-        if soul is not None:
-            rule &= extreme_requirement(bundle, "shuffle_bean_souls", soul)
 
     if item == Items.FISHING_POLE:
         return OptionFilter(ShuffleFishingPole, False) | Has(Items.FISHING_POLE)
@@ -454,10 +419,12 @@ def can_afford_slot(slot: Locations, bundle: tuple[Regions, "SohWorld"]) -> Rule
 
 
 def scarecrows_song(bundle: tuple[Regions, "SohWorld"]) -> Rule:
-    # Teaching the tune does not provide an instrument/buttons to play it.
+    # Free Scarecrow keeps its two-button shortcut. The learned song requires
+    # all five buttons and access to its Child and Adult Lake Hylia events.
     return (can_use(Items.FAIRY_OCARINA, bundle) & has_enough_ocarina_buttons(bundle, 2)
             & (OptionFilter(SkipScarecrowsSong, True)
-               | (has_item(Events.CHILD_SCARECROW_UNLOCKED, bundle)
+               | (has_enough_ocarina_buttons(bundle, 5)
+                  & has_item(Events.CHILD_SCARECROW_UNLOCKED, bundle)
                   & has_item(Events.ADULT_SCARECROW_UNLOCKED, bundle))))
 
 
@@ -536,6 +503,30 @@ ocarina_buttons_required: dict[str, list[str]] = {
 }
 
 
+@dataclasses.dataclass
+class SongNotesComplete(Rule, game="SOH-EXTREME"):
+    song: str
+
+    def _instantiate(self, world: "SohWorld") -> Rule.Resolved:
+        return self.Resolved(song=self.song, notes=world.SONG_NOTE_GROUPS[self.song],
+                             player=world.player, caching_enabled=getattr(world, "rule_caching_enabled", False))
+
+    class Resolved(Rule.Resolved):
+        song: str
+        notes: tuple[str, ...]
+        player: int
+
+        def _evaluate(self, state: CollectionState) -> bool:
+            return (state.count(f"Progressive {self.song}", self.player) +
+                    sum(state.has(note, self.player) for note in self.notes)) >= len(self.notes)
+
+        def item_dependencies(self) -> dict[str, set[int]]:
+            return {name: {id(self)} for name in (*self.notes, f"Progressive {self.song}")}
+
+        def __str__(self) -> str:
+            return f"Progressive {self.song}: {len(self.notes)} required"
+
+
 def can_play_song(song: StrEnum, bundle: tuple[Regions, "SohWorld"]) -> Rule:
     # Full-song possession is produced by collect/remove only after the complete
     # note group when Individual Notes is enabled. The instrument and physical
@@ -546,7 +537,7 @@ def can_play_song(song: StrEnum, bundle: tuple[Regions, "SohWorld"]) -> Rule:
     if note_mode is not None and note_mode.value:
         # Do not let a stale or manually supplied full-song event bypass a
         # missing note. Completion, instrument, and buttons are independent.
-        learned &= HasAll(*world.SONG_NOTE_GROUPS[str(song)])
+        learned &= SongNotesComplete(str(song))
     return (can_use(Items.FAIRY_OCARINA, bundle) & learned
             & (OptionFilter(ShuffleOcarinaButtons, False)
                | HasAll(*ocarina_buttons_required[song])))
@@ -941,7 +932,8 @@ def can_break_upper_beehives(bundle: tuple[Regions, "SohWorld"]) -> Rule:
 
 
 def can_open_storms_grotto(bundle: tuple[Regions, "SohWorld"]) -> Rule:
-    return (can_use(Items.SONG_OF_STORMS, bundle) & (has_item(Items.STONE_OF_AGONY, bundle) | can_do_trick(Tricks.GROTTOS_WITHOUT_AGONY, bundle)))
+    # Hidden holes must be discovered even when legacy trick flags are enabled.
+    return can_use(Items.SONG_OF_STORMS, bundle) & has_item(Items.STONE_OF_AGONY, bundle)
 
 
 def can_hit_at_range(bundle: tuple[Regions, "SohWorld"],
@@ -1400,8 +1392,26 @@ def cleared_enough_dungeons(amount: int):
     return HasFromList(*dungeon_events, count=amount)
 
 
+def has_bean_soul(bundle: tuple[Regions, "SohWorld"]) -> Rule:
+    """The soil actor needs its area soul for planting AND releasing bugs."""
+    souls = {
+        Regions.DMC_CENTRAL_LOCAL: "Death Mountain Crater Bean Soul",
+        Regions.DEATH_MOUNTAIN_TRAIL: "Death Mountain Trail Bean Soul",
+        Regions.DESERT_COLOSSUS: "Desert Colossus Bean Soul",
+        Regions.GV_UPPER_STREAM: "Gerudo Valley Bean Soul",
+        Regions.THE_GRAVEYARD: "Graveyard Bean Soul",
+        Regions.KOKIRI_FOREST: "Kokiri Forest Bean Soul",
+        Regions.LAKE_HYLIA: "Lake Hylia Bean Soul",
+        Regions.LOST_WOODS: "Lost Woods Bridge Bean Soul",
+        Regions.LW_BEYOND_MIDO: "Lost Woods Bean Soul",
+        Regions.ZORA_RIVER: "Zora's River Bean Soul",
+    }
+    soul = souls.get(bundle[0])
+    return extreme_requirement(bundle, "shuffle_bean_souls", soul) if soul else True_()
+
+
 def can_spawn_soil_skull(bundle: tuple[Regions, "SohWorld"]) -> Rule:
-    return is_child(bundle) & can_use(Items.BOTTLE_WITH_BUGS, bundle)
+    return is_child(bundle) & can_use(Items.BOTTLE_WITH_BUGS, bundle) & has_bean_soul(bundle)
 
 
 def fire_timer_at_least(bundle: tuple[Regions, "SohWorld"], amount: int) -> Rule:
@@ -1459,7 +1469,7 @@ def hearts_at_least(bundle: tuple[Regions, "SohWorld"], amount) -> Rule:
 
 
 def can_open_bomb_grotto(bundle: tuple[Regions, "SohWorld"]) -> Rule:
-    return blast_or_smash(bundle) & (has_item(Items.STONE_OF_AGONY, bundle) | can_do_trick(Tricks.GROTTOS_WITHOUT_AGONY, bundle))
+    return blast_or_smash(bundle) & has_item(Items.STONE_OF_AGONY, bundle)
 
 
 def trade_quest_step(item: Items, bundle: tuple[Regions, "SohWorld"]) -> Rule:

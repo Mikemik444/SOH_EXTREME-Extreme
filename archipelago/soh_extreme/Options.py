@@ -108,9 +108,10 @@ class NpcSpeechSanity(Toggle):
     display_name = "NPC Speech Sanity"
 
 class SongNoteShuffle(Choice):
-    """Replace complete songs with 74 distinct notes in the normal item pool.
+    """Replace complete songs with 74 Progressive song items in the normal pool.
 
-    Each song unlocks after its entire note group is collected; playing still
+    Collect the required copies of Progressive [Song]: 6 for most songs,
+    8 for Bolero, 5 for Serenade, and 7 for Nocturne. Playing still
     requires an Ocarina and its shuffled buttons. While enabled, whole-song
     placement modes (vanilla/song locations/dungeon rewards) do not apply to
     the notes. Explicitly starting with a song grants its complete note group.

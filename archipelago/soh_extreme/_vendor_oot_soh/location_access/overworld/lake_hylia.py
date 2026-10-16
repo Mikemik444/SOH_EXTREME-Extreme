@@ -35,10 +35,11 @@ def set_region_rules(world: "SohWorld") -> None:
          lambda bundle: can_cut_shrubs(bundle)),
         (EventLocations.CHILD_SCARECROW, Events.CHILD_SCARECROW_UNLOCKED, lambda bundle: is_child(bundle) &
          has_item(Items.FAIRY_OCARINA, bundle) &
-         has_enough_ocarina_buttons(bundle, 2)),
+         has_enough_ocarina_buttons(bundle, 5)),
         (EventLocations.ADULT_SCARECROW, Events.ADULT_SCARECROW_UNLOCKED, lambda bundle: is_adult(bundle) &
+         has_item(Events.CHILD_SCARECROW_UNLOCKED, bundle) &
          has_item(Items.FAIRY_OCARINA, bundle) &
-         has_enough_ocarina_buttons(bundle, 2)),
+         has_enough_ocarina_buttons(bundle, 5)),
         (EventLocations.LH_BEAN_PATCH, LocalEvents.LH_BEAN_PLANTED, lambda bundle: is_child(bundle) &
          can_use(Items.MAGIC_BEAN, bundle)),
         (EventLocations.LH_DAY_NIGHT_CYCLE_CHILD,

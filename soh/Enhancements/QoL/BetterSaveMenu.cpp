@@ -23,16 +23,32 @@ static CustomMessage continueOverworldMsg = CustomMessage(
 static CustomMessage continueDungeonMsg =
     CustomMessage("\x08 Continue?&" + CustomMessage::THREE_WAY_CHOICE() + "%gContinue&Restart&Return to Spawn%w\x09",
                   TEXTBOX_TYPE_BLUE);
+static CustomMessage spawnAsChildMsg = CustomMessage(
+    "\x08 Return to spawn?&" + CustomMessage::THREE_WAY_CHOICE() +
+        "%gKeep current age&Revert to Child&Cancel%w\x09", TEXTBOX_TYPE_BLUE);
+static CustomMessage spawnAsAdultMsg = CustomMessage(
+    "\x08 Return to spawn?&" + CustomMessage::THREE_WAY_CHOICE() +
+        "%gKeep current age&Revert to Adult&Cancel%w\x09", TEXTBOX_TYPE_BLUE);
+static int8_t pendingSpawnAge = -1;
 
 extern "C" uint8_t Randomizer_GetSettingValue(RandomizerSettingKey randoSettingKey);
 
-static int16_t GetAgeSpawnEntrance() {
+static uint8_t GetDefaultSpawnAge() {
+    // SelectedStartingAge is the resolved seed value, including Random starts.
+    return Randomizer_GetSettingValue(RSK_SELECTED_STARTING_AGE) == RO_AGE_ADULT ? LINK_AGE_ADULT : LINK_AGE_CHILD;
+}
+
+static bool CanRevertToDefaultAge() {
+    return IS_RANDO && gSaveContext.linkAge != GetDefaultSpawnAge();
+}
+
+static int16_t GetAgeSpawnEntrance(uint8_t age) {
     if (IS_RANDO) {
         // The randomizer separates adult spawn from Prelude of Light and may
         // override either age's spawn entrance.
-        return Entrance_OverrideNextIndex(LINK_IS_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_HYRULE_FIELD_10);
+        return Entrance_OverrideNextIndex(age == LINK_AGE_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_HYRULE_FIELD_10);
     }
-    return LINK_IS_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_TEMPLE_OF_TIME_WARP_PAD;
+    return age == LINK_AGE_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_TEMPLE_OF_TIME_WARP_PAD;
 }
 
 bool IsSceneDungeon(int16_t scene) {
@@ -69,6 +85,34 @@ bool IsSceneDungeon(int16_t scene) {
     }
 }
 
+static void StartContinuePrompt(PlayState* play) {
+    play->pauseCtx.unk_1EC = 4;
+    Message_StartTextbox(play, IsSceneDungeon(gSaveContext.savedSceneNum) ||
+        CVarGetInteger(CVAR_ENHANCEMENT("RememberSaveLocation"), 0) ?
+        TEXT_CONTINUE_DUNGEON_MSG : TEXT_CONTINUE_OVERWORLD_MSG, NULL);
+}
+
+static void BeginSaveMenuReload(PlayState* play, bool returnToSpawn, int8_t age = -1) {
+    Audio_PlaySfxGeneral(NA_SE_SY_PIECE_OF_HEART, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
+    Play_SaveSceneFlags(play);
+    Sram_OpenSave();
+    pendingSpawnAge = age;
+    gSaveContext.ship.resetToSpawn = returnToSpawn;
+    play->pauseCtx.promptChoice = 0;
+    play->pauseCtx.unk_1EC = 7;
+}
+
+static void ChooseSaveMenuSpawn(PlayState* play) {
+    if (CanRevertToDefaultAge()) {
+        // A separate prompt preserves Continue/Restart in the three-choice menu.
+        play->pauseCtx.unk_1EC = 8;
+        Message_StartTextbox(play, TEXT_RETURN_TO_SPAWN_AGE_MSG, NULL);
+    } else {
+        BeginSaveMenuReload(play, true);
+    }
+}
+
 void HandleSaveMenu(bool* should, PlayState* play) {
     PauseContext* pauseCtx = &play->pauseCtx;
     InterfaceContext* interfaceCtx = &play->interfaceCtx;
@@ -76,6 +120,7 @@ void HandleSaveMenu(bool* should, PlayState* play) {
         case 0:
             *should = false;
             gSaveContext.ship.resetToSpawn = 0;
+            pendingSpawnAge = -1;
             Message_StartTextbox(play, TEXT_SAVE_MSG, NULL);
             pauseCtx->unk_1EC = 1;
             break;
@@ -86,13 +131,7 @@ void HandleSaveMenu(bool* should, PlayState* play) {
                     Audio_PlaySfxGeneral(NA_SE_SY_PIECE_OF_HEART, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                          &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
                     Play_PerformSave(play);
-                    pauseCtx->unk_1EC = 4;
-                    if (IsSceneDungeon(gSaveContext.savedSceneNum) ||
-                        CVarGetInteger(CVAR_ENHANCEMENT("RememberSaveLocation"), 0)) {
-                        Message_StartTextbox(play, TEXT_CONTINUE_DUNGEON_MSG, NULL);
-                    } else {
-                        Message_StartTextbox(play, TEXT_CONTINUE_OVERWORLD_MSG, NULL);
-                    }
+                    StartContinuePrompt(play);
                 } else {
                     Interface_SetDoAction(play, DO_ACTION_NONE);
                     gSaveContext.buttonStatus[0] = gSaveContext.buttonStatus[1] = gSaveContext.buttonStatus[2] =
@@ -129,28 +168,27 @@ void HandleSaveMenu(bool* should, PlayState* play) {
                     case 1: {
                         // Reset (Dungeon) / Return to Spawn (Overworld)
                         const bool returnToSpawn = play->msgCtx.textId == TEXT_CONTINUE_OVERWORLD_MSG;
-                        Audio_PlaySfxGeneral(NA_SE_SY_PIECE_OF_HEART, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                        Play_SaveSceneFlags(play);
-                        Sram_OpenSave();
-                        // The two-choice prompt explicitly promises the age's
-                        // spawn, even when normal save loading chooses a dungeon
-                        // entrance or Link's House for an adult save.
-                        gSaveContext.ship.resetToSpawn = returnToSpawn;
-                        pauseCtx->promptChoice = 0;
-                        pauseCtx->unk_1EC = 7;
+                        if (returnToSpawn) ChooseSaveMenuSpawn(play);
+                        else BeginSaveMenuReload(play, false);
                         break;
                     }
                     case 2:
                         // Reset to Spawn (Dungeon)
-                        Audio_PlaySfxGeneral(NA_SE_SY_PIECE_OF_HEART, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
-                                             &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
-                        Play_SaveSceneFlags(play);
-                        Sram_OpenSave();
-                        gSaveContext.ship.resetToSpawn = 1;
-                        pauseCtx->promptChoice = 0;
-                        pauseCtx->unk_1EC = 7;
+                        ChooseSaveMenuSpawn(play);
                         break;
+                }
+            }
+            break;
+        case 8:
+            *should = false;
+            if (Message_GetState(&play->msgCtx) == TEXT_STATE_CHOICE && Message_ShouldAdvance(play)) {
+                if (play->msgCtx.choiceIndex == 0) {
+                    BeginSaveMenuReload(play, true);
+                } else if (play->msgCtx.choiceIndex == 1 && CanRevertToDefaultAge()) {
+                    BeginSaveMenuReload(play, true, GetDefaultSpawnAge());
+                } else {
+                    pendingSpawnAge = -1;
+                    StartContinuePrompt(play);
                 }
             }
             break;
@@ -181,9 +219,17 @@ void HandleSaveMenu(bool* should, PlayState* play) {
                     gSaveContext.natureAmbienceId = 0xFF;
                     GameInteractor_ExecuteOnLoadGame(gSaveContext.fileNum);
                     if (gSaveContext.ship.resetToSpawn) {
-                        gSaveContext.entranceIndex = GetAgeSpawnEntrance();
+                        if (pendingSpawnAge >= 0) {
+                            // Play_Destroy performs the normal age equipment swap;
+                            // Player_Destroy then commits linkAge for the new scene.
+                            // Do not change linkAge early or bypass that equipment swap.
+                            play->linkAgeOnLoad = pendingSpawnAge;
+                        }
+                        gSaveContext.entranceIndex = GetAgeSpawnEntrance(
+                            pendingSpawnAge >= 0 ? pendingSpawnAge : gSaveContext.linkAge);
                         gSaveContext.ship.resetToSpawn = 0;
                     }
+                    pendingSpawnAge = -1;
                 }
             }
             break;
@@ -198,6 +244,8 @@ void RegisterBetterSave() {
     saveMsg.Format();
     continueOverworldMsg.Format();
     continueDungeonMsg.Format();
+    spawnAsChildMsg.Format();
+    spawnAsAdultMsg.Format();
 
     COND_VB_SHOULD(VB_LOAD_SAVE_MENU, CVAR_BETTERSAVE_VALUE, {
         PlayState* play = va_arg(args, PlayState*);
@@ -224,6 +272,11 @@ void RegisterBetterSave() {
                      continueOverworldMsg.LoadIntoFont();
                      *loadFromMessageTable = false;
                      return;
+                 });
+    COND_ID_HOOK(OnOpenText, TEXT_RETURN_TO_SPAWN_AGE_MSG, CVAR_BETTERSAVE_VALUE,
+                 [](uint16_t* textId, bool* loadFromMessageTable) {
+                     (GetDefaultSpawnAge() == LINK_AGE_CHILD ? spawnAsChildMsg : spawnAsAdultMsg).LoadIntoFont();
+                     *loadFromMessageTable = false;
                  });
 }
 

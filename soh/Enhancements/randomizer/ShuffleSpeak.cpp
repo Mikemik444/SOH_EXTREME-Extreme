@@ -26,6 +26,18 @@ void RegisterShuffleSpeak() {
 
     COND_VB_SHOULD(VB_SPEAK, shouldRegister, {
         Actor* talkActor = GET_PLAYER(gPlayState)->talkActor;
+        // Dampé starts his race through an automatic conversation. Carpenters
+        // must also keep their language gate during forced/automatic dialogue.
+        // Check these identities before the general auto-talk exemption below.
+        if (talkActor != NULL &&
+            (talkActor->id == ACTOR_EN_TK || talkActor->id == ACTOR_EN_PO_RELAY ||
+             talkActor->id == ACTOR_EN_DAIKU || talkActor->id == ACTOR_EN_DAIKU_KAKARIKO ||
+             talkActor->id == ACTOR_EN_TORYO)) {
+            if (!Flags_GetRandomizerInf(RAND_INF_CAN_SPEAK_HYLIAN)) {
+                *should = false;
+            }
+            return;
+        }
         // Hint scrubs become ACTORCAT_BG after surrender and auto-accept when
         // touched. Both paths still need Deku speech; NPC-only filtering below
         // used to let this required conversation bypass the language shuffle.
