@@ -36,9 +36,10 @@ inline uint8_t TrackerRowAgeMask(const TrackerRow& row) {
         return row.name.size() >= suffix.size() &&
                row.name.compare(row.name.size() - suffix.size(), suffix.size(), suffix) == 0;
     };
-    if (endsWith(" [Child only]")) return 1;
-    if (endsWith(" [Adult only]")) return 2;
-    if (endsWith(" [Child / Adult]")) return 3;
+    // Accept prior APWorld labels as well as the current compact wording.
+    if (endsWith(" [Child]") || endsWith(" [Child only]")) return 1;
+    if (endsWith(" [Adult]") || endsWith(" [Adult only]")) return 2;
+    if (endsWith(" [Any age]") || endsWith(" [Child / Adult]")) return 3;
     return 0;
 }
 
@@ -68,9 +69,11 @@ std::vector<TrackerSceneGroup> GroupTrackerRowsByScene(const TrackerSnapshot& sn
         const bool here = scene.Matches(current);
         if (onlyCurrent && !here) continue;
         auto& group = grouped[scene.Key()];
-        group.scene = scene;
-        group.currentScene = here;
-        group.currentRegion = scene.area >= 0 && scene.area == current.area;
+        // A route without an area must not erase a known map region from
+        // another check in this same scene, regardless of snapshot row order.
+        if (group.rows.empty() || (group.scene.area < 0 && scene.area >= 0)) group.scene = scene;
+        group.currentScene = group.currentScene || here;
+        group.currentRegion = group.scene.area >= 0 && group.scene.area == current.area;
         group.rows.push_back(&row);
         if (row.state == 1) ++group.normal;
         else ++group.glitched;
@@ -90,6 +93,51 @@ std::vector<TrackerSceneGroup> GroupTrackerRowsByScene(const TrackerSnapshot& sn
         if ((a.scene.scene < 0) != (b.scene.scene < 0)) return a.scene.scene >= 0;
         if (a.scene.name != b.scene.name) return a.scene.name < b.scene.name;
         return a.scene.Key() < b.scene.Key();
+    });
+    return result;
+}
+struct TrackerMapRegionGroup {
+    int area = -1;
+    std::string name;
+    std::vector<const TrackerSceneGroup*> scenes;
+    size_t normal = 0;
+    size_t glitched = 0;
+    bool currentRegion = false;
+    bool containsCurrentScene = false;
+};
+
+// Map regions contain physical scenes, rather than AP's finer logic regions.
+// Callers retain the scene groups while using these non-owning references.
+template <typename RegionNameResolver>
+std::vector<TrackerMapRegionGroup> GroupTrackerScenesByRegion(
+    const std::vector<TrackerSceneGroup>& scenes, const TrackerScene& current,
+    bool currentFirst, RegionNameResolver nameForArea) {
+    std::map<int, TrackerMapRegionGroup> grouped;
+    for (const auto& scene : scenes) {
+        auto& region = grouped[scene.scene.area];
+        region.area = scene.scene.area;
+        region.name = region.area >= 0 ? nameForArea(region.area) : "Other regions";
+        region.currentRegion = region.area >= 0 && region.area == current.area;
+        region.containsCurrentScene = region.containsCurrentScene || scene.currentScene;
+        region.scenes.push_back(&scene);
+        region.normal += scene.normal;
+        region.glitched += scene.glitched;
+    }
+    std::vector<TrackerMapRegionGroup> result;
+    for (auto& [area, region] : grouped) {
+        std::sort(region.scenes.begin(), region.scenes.end(), [currentFirst](const auto* a, const auto* b) {
+            if (currentFirst && a->currentScene != b->currentScene) return a->currentScene;
+            if (a->scene.name != b->scene.name) return a->scene.name < b->scene.name;
+            return a->scene.Key() < b->scene.Key();
+        });
+        result.push_back(std::move(region));
+    }
+    std::sort(result.begin(), result.end(), [currentFirst](const auto& a, const auto& b) {
+        if (currentFirst && a.containsCurrentScene != b.containsCurrentScene) return a.containsCurrentScene;
+        if (currentFirst && a.currentRegion != b.currentRegion) return a.currentRegion;
+        if ((a.area < 0) != (b.area < 0)) return a.area >= 0;
+        if (a.name != b.name) return a.name < b.name;
+        return a.area < b.area;
     });
     return result;
 }

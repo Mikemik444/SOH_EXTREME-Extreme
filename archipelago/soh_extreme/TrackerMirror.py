@@ -99,9 +99,9 @@ def snapshot_rows(core, tracker_state, world, active: set[int], checked: set[int
                 from ._vendor_oot_soh.Enums import Ages
                 child=loc.can_reach_as_age(age_state,Ages.CHILD)
                 adult=loc.can_reach_as_age(age_state,Ages.ADULT)
-                if child and adult:label+=' [Child / Adult]'
-                elif child:label+=' [Child only]'
-                elif adult:label+=' [Adult only]'
+                if child and adult:label+=' [Any age]'
+                elif child:label+=' [Child]'
+                elif adult:label+=' [Adult]'
             rows.append({'id':i,'state':status,'name':label,
                          'region':display_region(loc)})
     rows.sort(key=lambda r:(r['state'],r['region'],r['name'],r['id']))

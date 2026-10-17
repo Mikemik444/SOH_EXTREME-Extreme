@@ -87,7 +87,7 @@ Rando::Option* Rando::Location::GetExcludedOption() {
     return &excludedOption;
 }
 
-RandomizerCheckArea GetAreaFromScene(uint8_t scene) {
+RandomizerCheckArea Rando::TryGetAreaFromScene(uint8_t scene) {
     switch (scene) {
         case SCENE_LINKS_HOUSE:
         case SCENE_KOKIRI_FOREST:
@@ -240,12 +240,18 @@ RandomizerCheckArea GetAreaFromScene(uint8_t scene) {
         case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
         case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
         case SCENE_GANONS_TOWER:
+        case SCENE_GANONDORF_BOSS:
         case SCENE_GANON_BOSS:
             return RCAREA_GANONS_CASTLE;
         default:
-            assert(false);
             return RCAREA_INVALID;
     }
+}
+
+RandomizerCheckArea GetAreaFromScene(uint8_t scene) {
+    const auto area = Rando::TryGetAreaFromScene(scene);
+    assert(area != RCAREA_INVALID);
+    return area;
 }
 
 Rando::Location Rando::Location::Base(RandomizerCheck rc, RandomizerCheckQuest quest_, RandomizerCheckType checkType_,

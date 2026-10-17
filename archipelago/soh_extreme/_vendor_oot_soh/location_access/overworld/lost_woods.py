@@ -161,7 +161,8 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.LOST_WOODS, lambda bundle: is_child(
             bundle) | can_use(Items.SARIAS_SONG, bundle)),
         (Regions.SFM_ENTRYWAY, lambda bundle: True_()),
-        (Regions.DEKU_THEATER, lambda bundle: True_()),
+        # The theater is a Shovel-gated grotto, including its traversal checks.
+        (Regions.DEKU_THEATER, lambda bundle: extreme_requirement(bundle, "shuffle_shovel", "Shovel")),
         (Regions.LW_SCRUBS_GROTTO, lambda bundle: blast_or_smash(bundle)),
     ])
 

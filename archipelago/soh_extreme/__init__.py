@@ -3208,18 +3208,12 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             elif family == "rock":
                 rc_upper = fork_loc.rc.upper()
                 if "UNDERWATER_ROCK" in rc_upper:
-                    # Native underwater rocks: Bombchus can detonate at depth, or
-                    # Adult Link can use EXTREME Grab. Reaching the object also
-                    # needs Adult access or a child water/projectile route. The
-                    # bomb-underwater trick is intentionally left to stock trick
-                    # logic rather than assumed.
-                    physical = (
+                    # Swim is required at either age. Bombchus can detonate
+                    # underwater, while Adult Link can also use EXTREME Grab.
+                    # Do not assume the optional bomb-detonation trick.
+                    physical = swim_rule() & (
                         can_use(Items.BOMBCHU_BAG, bundle)
                         | (is_adult(bundle) & grab_rule())
-                    ) & (
-                        is_adult(bundle)
-                        | swim_rule()
-                        | can_use(Items.BOOMERANG, bundle)
                     )
                 else:
                     # Ordinary En_Ishi rocks accept explosives, Grab, or an
@@ -4192,7 +4186,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     continue
                 for entrance in region.exits:
                     connected = getattr(entrance, "connected_region", None)
-                    if connected is None or "GROTTO" not in connected.name.upper():
+                    if connected is None or not (
+                        "GROTTO" in connected.name.upper() or connected.name == str(Regions.DEKU_THEATER)
+                    ):
                         continue
                     add_resolved_rule(entrance, Has("Shovel"), register_indirects=True)
 

@@ -1722,25 +1722,45 @@ void InternalRecalculateAvailableChecks(RandomizerRegion startingRegion, RandoAg
 static SohExtreme::TrackerScene FinderScene(int scene, RandomizerCheckArea area, int grotto = -1) {
     if (scene < 0 || scene >= SCENE_ID_MAX) return {};
     // Native shop lookup reserves the test-scene ID for Kakariko's bazaar.
-    // Its physical scene is still SCENE_BAZAAR (see GetCheckFromActor).
     if (scene == SCENE_TEST01) {
         scene = SCENE_BAZAAR;
         area = RCAREA_KAKARIKO_VILLAGE;
     }
+    const auto validArea = [](RandomizerCheckArea value) {
+        return value >= RCAREA_KOKIRI_FOREST && value < RCAREA_INVALID;
+    };
+    const bool grottoScene = scene == SCENE_GROTTOS || scene == SCENE_FAIRYS_FOUNTAIN;
+    const bool sharedScene = scene == SCENE_BAZAAR || scene == SCENE_SHOOTING_GALLERY ||
+        scene == SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC || scene == SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS ||
+        scene == SCENE_WINDMILL_AND_DAMPES_GRAVE;
     SohExtreme::TrackerScene result{ scene, 0, SohUtils::GetSceneName(scene) };
-    result.area = area >= RCAREA_KOKIRI_FOREST && area < RCAREA_INVALID ? static_cast<int>(area) : -1;
-    if (scene == SCENE_GROTTOS || scene == SCENE_FAIRYS_FOUNTAIN) {
-        // Grotto IDs identify destinations even with shuffled entrances. Area
-        // alone cannot distinguish two different grottos in Hyrule Field.
+    if (grottoScene) {
+        // Resolve the exact grotto's map region, never the last generic grotto
+        // in the native check table. This also covers transition/NPC-only rows.
         result.instance = grotto >= 0 && grotto < GROTTO_OFFSET_MAX ? grotto + 1 : -1;
         if (result.instance >= 0) {
             const auto* entrance = EntranceTracker::GetEntranceData(ENTRANCE_GROTTO_EXIT_START + grotto);
-            if (entrance != nullptr) result.name = entrance->source;
+            if (entrance != nullptr) {
+                result.name = entrance->source;
+                const int group = static_cast<int>(entrance->srcGroup);
+                if (group >= 0 && group < static_cast<int>(sizeof(AreaFromEntranceGroup) / sizeof(AreaFromEntranceGroup[0])) &&
+                    validArea(AreaFromEntranceGroup[group])) area = AreaFromEntranceGroup[group];
+            }
         }
-    } else if (scene == SCENE_BAZAAR || scene == SCENE_SHOOTING_GALLERY ||
-               scene == SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC || scene == SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS) {
-        result.instance = area >= RCAREA_KOKIRI_FOREST && area < RCAREA_INVALID ? static_cast<int>(area) + 1 : -1;
-        if (result.instance >= 0) result.name = RandomizerCheckObjects::GetRCAreaName(area) + " - " + result.name;
+    } else if (!validArea(area) && !sharedScene) {
+        // Generated transition/NPC routes often only specify a scene. Its
+        // physical map region is independent of the AP logic parent.
+        area = Rando::TryGetAreaFromScene(static_cast<uint8_t>(scene));
+        if (!validArea(area)) area = RandomizerCheckObjects::GetRCAreaBySceneID(static_cast<SceneID>(scene));
+    }
+    result.area = validArea(area) ? static_cast<int>(area) : -1;
+    if (sharedScene) {
+        result.instance = validArea(area) ? static_cast<int>(area) + 1 : -1;
+        if (result.instance >= 0) {
+            if (scene == SCENE_WINDMILL_AND_DAMPES_GRAVE)
+                result.name = area == RCAREA_KAKARIKO_VILLAGE ? "Windmill" : "Dampe's Grave";
+            else result.name = RandomizerCheckObjects::GetRCAreaName(area) + " - " + result.name;
+        }
     }
     return result;
 }
@@ -2104,7 +2124,7 @@ static void DrawUniversalFinderMirror() {
     const auto current = FinderScene(scene, gPlayState != nullptr ? GetCheckArea() : RCAREA_INVALID,
                                     grottoScene ? Grotto_CurrentGrotto() : -1);
     if (current.scene >= 0) ImGui::Text("Current scene: %s", current.name.c_str());
-    if (current.area >= 0) ImGui::Text("Current region: %s",
+    if (current.area >= 0) ImGui::Text("Current map region: %s",
         RandomizerCheckObjects::GetRCAreaName(static_cast<RandomizerCheckArea>(current.area)).c_str());
     static bool currentFirst = true;
     static bool onlyCurrent = false;
@@ -2121,35 +2141,50 @@ static void DrawUniversalFinderMirror() {
         }, [&](const SohExtreme::TrackerRow& row, const SohExtreme::TrackerScene& rowScene) {
             if (!IsFinderRowEnabled(row.id)) return false;
             if (filterAge && !SohExtreme::TrackerRowMatchesAge(row, adult)) return false;
-            const std::string text = rowScene.name + " | " + row.region + " | " + row.name;
+            const std::string mapRegion = rowScene.area >= 0
+                ? RandomizerCheckObjects::GetRCAreaName(static_cast<RandomizerCheckArea>(rowScene.area)) : "";
+            const std::string text = mapRegion + " | " + rowScene.name + " | " + row.region + " | " + row.name;
             return filter.PassFilter(text.c_str());
         });
+    const auto regions = SohExtreme::GroupTrackerScenesByRegion(groups, current, currentFirst, [](int area) {
+        return RandomizerCheckObjects::GetRCAreaName(static_cast<RandomizerCheckArea>(area));
+    });
     ImGui::Separator();
     if (ImGui::BeginChild("SOHExtremeUTRegions", ImVec2(0, 0), false)) {
-        if (groups.empty()) ImGui::TextUnformatted("No remaining in-logic checks match this view.");
-        for (const auto& group : groups) {
-            // Scene/instance identity stays stable when counts or the player's
-            // location change, preserving the user's expand/collapse choices.
-            ImGui::PushID(group.scene.scene);
-            ImGui::PushID(group.scene.instance);
-            const std::string label = (group.currentScene ? "[Current scene] " :
-                group.currentRegion ? "[Current region] " : "") + group.scene.name +
-                " (" + std::to_string(group.normal) + " in logic, " + std::to_string(group.glitched) + " glitched)###APScene";
-            if (ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+        if (regions.empty()) ImGui::TextUnformatted("No remaining in-logic checks match this view.");
+        for (const auto& region : regions) {
+            ImGui::PushID(region.area);
+            const std::string regionLabel = (region.currentRegion ? "[Current region] " : "") + region.name +
+                " (" + std::to_string(region.normal) + " in logic, " + std::to_string(region.glitched) + " glitched)###APMapRegion";
+            if (ImGui::CollapsingHeader(regionLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
                 ImGui::Indent();
-                for (const auto* row : group.rows) {
-                    const std::string line = (row->state == 2 ? "[Glitched] " : "") + row->name;
-                    ImGui::TextUnformatted(line.c_str());
-                    if (ImGui::IsItemHovered()) {
-                        ImGui::BeginTooltip();
-                        ImGui::Text("AP location ID: %lld", static_cast<long long>(row->id));
-                        ImGui::TextUnformatted(row->region.c_str());
-                        ImGui::EndTooltip();
+                for (const auto* group : region.scenes) {
+                    // Map-region and scene identities remain stable as counts,
+                    // inventory, age and the player's current location change.
+                    ImGui::PushID(group->scene.scene);
+                    ImGui::PushID(group->scene.instance);
+                    const std::string label = (group->currentScene ? "[Current scene] " : "") + group->scene.name +
+                        " (" + std::to_string(group->normal) + " in logic, " + std::to_string(group->glitched) + " glitched)###APScene";
+                    if (ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+                        ImGui::Indent();
+                        for (const auto* row : group->rows) {
+                            const std::string line = (row->state == 2 ? "[Glitched] " : "") + row->name;
+                            ImGui::TextUnformatted(line.c_str());
+                            if (ImGui::IsItemHovered()) {
+                                ImGui::BeginTooltip();
+                                ImGui::Text("AP location ID: %lld", static_cast<long long>(row->id));
+                                ImGui::Text("Map region: %s", region.name.c_str());
+                                ImGui::TextUnformatted(row->region.c_str());
+                                ImGui::EndTooltip();
+                            }
+                        }
+                        ImGui::Unindent();
                     }
+                    ImGui::PopID();
+                    ImGui::PopID();
                 }
                 ImGui::Unindent();
             }
-            ImGui::PopID();
             ImGui::PopID();
         }
     }

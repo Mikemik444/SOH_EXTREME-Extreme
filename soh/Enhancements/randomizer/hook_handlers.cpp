@@ -2543,7 +2543,11 @@ void RandomizerOnActorInitHandler(void* actorRef) {
         }
     }
 
-    if (actor->id == ACTOR_EN_OSSAN && actor->params == OSSAN_TYPE_MASK && RAND_GET_OPTION(RSK_SHUFFLE_MASKS)) {
+    // Mask shuffle removes the shop, but an existing AP seed can still place
+    // an item on this conversation. Keep the owner until that check is sent.
+    // His normal letter gate and the NPC Soul/Speak hooks still apply.
+    if (actor->id == ACTOR_EN_OSSAN && actor->params == OSSAN_TYPE_MASK && RAND_GET_OPTION(RSK_SHUFFLE_MASKS) &&
+        !Archipelago_HasPendingNpcConversation(actor)) {
         Actor_Kill(actor);
     }
 

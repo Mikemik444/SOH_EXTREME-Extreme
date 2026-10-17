@@ -7,7 +7,9 @@ def generate():
     entries=[e for f in ('SceneTransitionCatalog.json','DungeonDoorCatalog.json')
              for e in json.loads((ROOT/'archipelago/soh_extreme'/f).read_text())]
     table=[];finder=[]
-    shared={'KAK_BAZAAR':'KAKARIKO_VILLAGE','MARKET_BAZAAR':'MARKET',
+    shared={'KAK_WINDMILL':'KAKARIKO_VILLAGE', 'KAK_WINDMILL_LOWER':'KAKARIKO_VILLAGE', 'KAK_WINDMILL_UPPER':'KAKARIKO_VILLAGE',
+            'GRAVEYARD_DAMPES_GRAVE':'GRAVEYARD', 'GRAVEYARD_DAMPES_GRAVE_START':'GRAVEYARD',
+            'KAK_BAZAAR':'KAKARIKO_VILLAGE','MARKET_BAZAAR':'MARKET',
             'KAK_SHOOTING_GALLERY':'KAKARIKO_VILLAGE','MARKET_SHOOTING_GALLERY':'MARKET',
             'DMT_GREAT_FAIRY_FOUNTAIN':'DEATH_MOUNTAIN_TRAIL',
             'DMC_GREAT_FAIRY_FOUNTAIN':'DEATH_MOUNTAIN_CRATER',

@@ -374,6 +374,8 @@ class CanAffordSlot(Rule, game="SOH-EXTREME"):
         def _evaluate(self, state: CollectionState) -> bool:
             world = state.multiworld.worlds[self.player]
             wallet = get_wallet_for_shop_slot(self.location, world)[0] #type: ignore
+            if wallet is None:
+                return True
             prog_wallet_count = progressive_items[Items.PROGRESSIVE_WALLET].index(wallet) + 1
             return state.has(Items.PROGRESSIVE_WALLET, self.player, prog_wallet_count)
 
@@ -382,7 +384,11 @@ class CanAffordSlot(Rule, game="SOH-EXTREME"):
         
         @override
         def explain_json(self, state: CollectionState | None = None) -> list[JSONMessagePart]:
+            if state is None:
+                return [{"type": "text", "text": str(self)}]
             data = get_wallet_for_shop_slot(self.location, state.multiworld.worlds[self.player])
+            if data[0] is None:
+                return [{"type": "text", "text": "Free item (0 rupees); no wallet required"}]
             verb = "Missing " if state and not self(state) else "Has "
             messages: list[JSONMessagePart] = [{"type": "text", "text": verb}]
             if state:
@@ -397,9 +403,11 @@ class CanAffordSlot(Rule, game="SOH-EXTREME"):
 
         @override
         def explain_str(self, state: CollectionState | None = None) -> str:
-            data = get_wallet_for_shop_slot(self.location, state.multiworld.worlds[self.player])
             if state is None:
                 return str(self)
+            data = get_wallet_for_shop_slot(self.location, state.multiworld.worlds[self.player])
+            if data[0] is None:
+                return "Free item (0 rupees); no wallet required"
             prefix = "Has" if self(state) else "Missing"
             return f"{prefix} {data[0]} to buy item for {str(data[1])} rupees"
 
@@ -408,8 +416,11 @@ class CanAffordSlot(Rule, game="SOH-EXTREME"):
             return f"Has wallet large enough to buy the item at {str(self.location)}"
 
 
-def get_wallet_for_shop_slot(location: Locations, world: "SohWorld") -> tuple[str, int]:
+def get_wallet_for_shop_slot(location: Locations, world: "SohWorld") -> tuple[str | None, int]:
     price = world.shop_prices.get(location, 500)
+    # No wallet means zero capacity, which is enough for a free purchase.
+    if price == 0:
+        return None, price
     for wallet, amount in wallet_capacities.items():
         if amount >= price:
             return str(wallet), price

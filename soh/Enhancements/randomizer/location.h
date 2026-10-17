@@ -11,6 +11,10 @@
 #include "option.h"
 
 namespace Rando {
+// Physical map region for scenes with a single owner. Shared/unknown scenes
+// return RCAREA_INVALID and require their entrance or location metadata.
+RandomizerCheckArea TryGetAreaFromScene(uint8_t scene);
+
 class SpoilerCollectionCheck {
   public:
     SpoilerCollectionCheckType type = SPOILER_CHK_NONE;

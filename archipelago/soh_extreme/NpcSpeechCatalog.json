@@ -923,7 +923,7 @@
         "region": "MARKET_BAZAAR",
         "age": "child",
         "time": "either",
-        "gates": []
+        "gates": ["Goron's Ruby"]
       }
     ],
     "source_rows": 4

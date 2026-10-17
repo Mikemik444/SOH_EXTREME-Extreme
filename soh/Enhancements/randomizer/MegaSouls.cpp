@@ -784,7 +784,8 @@ extern "C" bool MegaSoul_IsEnemyDefeatLocationPending(const Actor* actor) {
 }
 
 extern "C" bool MegaSoul_ShouldHighlightEnemy(const Actor* actor) {
-    if (actor == nullptr || !IS_RANDO || actor->draw == nullptr || actor->update == nullptr) return false;
+    if (actor == nullptr || !IS_RANDO || !RAND_GET_OPTION(RSK_SHUFFLE_ENEMY_DROPS) ||
+        actor->draw == nullptr || actor->update == nullptr) return false;
     const auto* identity = ObjectExtension::GetInstance().Get<EnemyDefeatIdentity>(actor);
     if (identity == nullptr || !HasRequiredEnemySoul(actor) || IsSkulltulaSoulLocked(actor)) return false;
     // Use the exact placement's collected/outbox state, not its death state.

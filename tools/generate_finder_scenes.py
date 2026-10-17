@@ -56,6 +56,7 @@ def generate():
     # AP route names predate the fork's native region renames. These are exact
     # aliases, not guesses from a check's name or AP parent region.
     aliases = {
+        "ZORA_RIVER": "ZORAS_RIVER",
         "LOST_WOODS": "THE_LOST_WOODS", "MARKET": "THE_MARKET",
         "KAK_POTION_SHOP_FRONT": "KAK_POTION_SHOP",
         "KAK_WINDMILL": "KAK_WINDMILL_LOWER",
@@ -75,6 +76,7 @@ def generate():
             "FIRE_TEMPLE_BOULDER_MAZE_LOWER_SIDE_ROOM")},
     }
     shared_areas = {
+        "KAK_WINDMILL": "KAKARIKO_VILLAGE", "GRAVEYARD_DAMPES_GRAVE": "GRAVEYARD",
         "KAK_BAZAAR": "KAKARIKO_VILLAGE", "MARKET_BAZAAR": "MARKET",
         "KAK_SHOOTING_GALLERY": "KAKARIKO_VILLAGE", "MARKET_SHOOTING_GALLERY": "MARKET",
     }

@@ -4090,6 +4090,7 @@ static int64_t Archipelago_ResolveNpcSpeechLocation(const Actor* actor, int16_t 
 bool ArchipelagoClient::ShouldHighlightNpcSpeech(const Actor* actor) const {
     if (!IsGameplaySessionActive() || gPlayState == nullptr || actor == nullptr ||
         actor->init != nullptr || actor->draw == nullptr || actor->update == nullptr ||
+        !RAND_GET_OPTION(RSK_NPC_SPEECH_SANITY) ||
         !CVarGetInteger(CVAR_RANDOMIZER_SETTING("NpcSpeechSanity"), 0)) return false;
     if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !Flags_GetRandomizerInf(RAND_INF_NPC_SOUL)) return false;
 

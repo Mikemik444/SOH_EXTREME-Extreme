@@ -1695,6 +1695,7 @@ EnItem00* Item_DropCollectible2(PlayState* play, Vec3f* spawnPos, s16 params) {
 
 void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnPos, s16 params) {
     s32 pad;
+    int enemyDropDecision = 0;
     EnItem00* spawnedActor;
     s16 dropQuantity;
     s16 param8000;
@@ -1711,7 +1712,7 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
     if (fromActor != NULL) {
         // Separate extension state, never overload the engine damage dropFlag.
         // Also covers ordinary wall spiders, which are ACTORCAT_NPC.
-        const int enemyDropDecision = MegaSoul_ConsumeNormalEnemyDrop(fromActor);
+        enemyDropDecision = MegaSoul_ConsumeNormalEnemyDrop(fromActor);
         if (enemyDropDecision < 0) return;
         if (enemyDropDecision > 0) {
             params = ((s16)(Rand_ZeroOne() * 16.0f)) * 0x10;
@@ -1802,16 +1803,32 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
             params = 0xA * 0x10;
             dropTableIndex = 0x0;
             dropId = ITEM00_RUPEE_RED;
+        } else if (enemyDropDecision > 0) {
+            dropId = ITEM00_RUPEE_GREEN;
         } else {
             return;
         }
     }
 
+    // Empty or disabled ordinary enemy loot must still leave something to pick
+    // up. AP first-defeat pickups use their own identity/report path above and
+    // never enter this fallback; do not substitute their assigned rewards.
+    if (enemyDropDecision > 0 &&
+        (dropId == 0xFF || (dropId == ITEM00_HEART && CVarGetInteger(CVAR_ENHANCEMENT("NoHeartDrops"), 0)))) {
+        dropId = ITEM00_RUPEE_GREEN;
+    }
     if (dropId != 0xFF && (!CVarGetInteger(CVAR_ENHANCEMENT("NoHeartDrops"), 0) || dropId != ITEM00_HEART)) {
         dropQuantity = sDropQuantities[params + dropTableIndex];
+        if (enemyDropDecision > 0 && dropQuantity <= 0) {
+            dropId = ITEM00_RUPEE_GREEN;
+            dropQuantity = 1;
+        }
         while (dropQuantity > 0) {
             if (!param8000) {
                 dropId = func_8001F404(dropId);
+                // Ammo/magic can be rejected when its required inventory item
+                // is missing. Preserve the enemy reward as a rupee in that case.
+                if (enemyDropDecision > 0 && dropId == 0xFF) dropId = ITEM00_RUPEE_GREEN;
                 if (dropId != 0xFF) {
                     spawnedActor = (EnItem00*)Actor_Spawn(&play->actorCtx, play, ACTOR_EN_ITEM00, spawnPos->x,
                                                           spawnPos->y, spawnPos->z, 0, 0, 0, dropId);
@@ -1832,8 +1849,13 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
                     }
                 }
             } else {
-                dropId = EnItem00_ConvertOrdinaryBombDrop(dropId);
-                if (CVarGetInteger(CVAR_ENHANCEMENT("BushDropFix"), 0) || dropId == ITEM00_BOMBCHU) {
+                if (enemyDropDecision > 0) {
+                    dropId = func_8001F404(dropId);
+                    if (dropId == 0xFF) dropId = ITEM00_RUPEE_GREEN;
+                } else {
+                    dropId = EnItem00_ConvertOrdinaryBombDrop(dropId);
+                }
+                if (enemyDropDecision > 0 || CVarGetInteger(CVAR_ENHANCEMENT("BushDropFix"), 0) || dropId == ITEM00_BOMBCHU) {
                     Item_DropCollectible(play, spawnPos, dropId | 0x8000);
                 } else {
                     Item_DropCollectible(play, spawnPos, params | 0x8000);
