@@ -38,7 +38,7 @@ void RegionTable_Init_CastleGrounds() {
         //Exits
         ENTRANCE(RR_CASTLE_GROUNDS, true),
         ENTRANCE(RR_HC_ABOVE_VINE,  logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT)),
-        ENTRANCE(RR_HC_PAST_GATE,   (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_HYLIAN)),
+        ENTRANCE(RR_HC_PAST_GATE,   logic->HasItem(RG_CHILD_WALLET) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_HYLIAN)),
     });
 
     areaTable[RR_HC_ABOVE_VINE] = Region("Hyrule Castle Above Vine", SCENE_HYRULE_CASTLE, {
@@ -98,7 +98,7 @@ void RegionTable_Init_CastleGrounds() {
 
     areaTable[RR_HC_MOAT] = Region("Hyrule Castle Moat", SCENE_HYRULE_CASTLE, {
         //Events
-        EVENT_ACCESS(LOGIC_TALON_RETURNED_FROM_CASTLE, (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) && logic->CanUse(RG_WEIRD_EGG) && logic->HasItem(RG_SPEAK_HYLIAN)),
+        EVENT_ACCESS(LOGIC_TALON_RETURNED_FROM_CASTLE, logic->CanUse(RG_WEIRD_EGG) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_HYLIAN)),
     }, {
         //Locations
         LOCATION(RC_HC_GRASS_1,             logic->CanCollectGrass()),

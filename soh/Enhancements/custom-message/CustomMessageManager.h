@@ -4,6 +4,7 @@
 #include <exception>
 #include <vector>
 #include <string>
+#include "../../Network/Archipelago/ArchipelagoHintTarget.h"
 
 #include "../../../include/z64item.h"
 #include "../../../include/z64.h"
@@ -89,6 +90,13 @@ class CustomMessage {
     bool operator!=(const CustomMessage& right) const;
 
     void LoadIntoFont();
+
+    // Provenance is captured while building the selected hint, never published
+    // by getters/formatters. Only the actually displayed message can reveal it.
+    void AddHintTargets(const std::vector<SohExtreme::HintTarget>& targets) {
+        hintedItemTargets.insert(hintedItemTargets.end(), targets.begin(), targets.end());
+    }
+    const std::vector<SohExtreme::HintTarget>& GetHintTargets() const { return hintedItemTargets; }
 
     /**
      * @brief Finds an instance of oldStr in each language of the CustomMessage
@@ -199,26 +207,9 @@ class CustomMessage {
     void FormatString(std::string& str) const;
 
     /**
-     * @brief finds NEWLINEs in a string, while filtering
-     * /x01's that are used as opperands
-     */
-    size_t FindNEWLINE(std::string& str, size_t lastNewline) const;
-
-    /**
-     * @brief Inserts a string into another string, following the rules
-     * of auto-format inserting new lines: spaces and & are replaced while
-     * other chars are appended to.
-     *
-     * @param str the string we are inserting into
-     * @param pos the position in the string to insert
-     * @param breakString the string we are inserting
-     */
-    bool AddBreakString(std::string& str, size_t pos, std::string breakString) const;
-
-    /**
      * @brief formats the string specifically to fit in OoT's
      * textboxes, and use it's formatting.
-     * RANDOTODO whoever knows exactly what this does check my adaption
+     * Long text uses native A-to-advance pages without discarding hint content.
      */
     void AutoFormatString(std::string& str) const;
 
@@ -234,6 +225,7 @@ class CustomMessage {
     TextBoxPosition position = TEXTBOX_POS_BOTTOM;
     std::vector<std::string> colors = {};
     std::vector<bool> capital = {};
+    std::vector<SohExtreme::HintTarget> hintedItemTargets;
 };
 
 typedef std::unordered_map<uint16_t, CustomMessage> CustomMessageTable;

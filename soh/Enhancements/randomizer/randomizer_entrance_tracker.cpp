@@ -4,7 +4,10 @@
 #include "soh/SohGui/SohGui.hpp"
 
 #include <string>
+#include <map>
 #include <vector>
+#include <algorithm>
+#include <tuple>
 #include <libultraship/controller/controldeck/ControlDeck.h>
 #include "soh/Enhancements/randomizer/randomizer.h"
 
@@ -19,6 +22,8 @@ extern PlayState* gPlayState;
 
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "entrance.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
+#include "soh/Network/Archipelago/EntranceRouting.h"
 
 using namespace UIWidgets;
 
@@ -53,11 +58,11 @@ static std::string spoilerEntranceGroupNames[] = {
     "Goron City",        "Zora's River",      "Zora's Domain",        "Zora's Fountain",
     "Hyrule Field",      "Lon Lon Ranch",     "Lake Hylia",           "Gerudo Valley",
     "Gerudo Fortress",   "Haunted Wasteland", "Desert Colossus",      "Market",
-    "Hyrule Castle",
+    "Hyrule Castle", "Other Entrances",
 };
 
 static std::string groupTypeNames[] = {
-    "One Way", "Overworld", "Interior", "Fortress", "Grotto", "Dungeon",
+    "One Way", "Overworld", "Interior", "Fortress", "Grotto", "Dungeon", "Room Door",
 };
 
 // Entrance data for the tracker taken from the 3ds rando entrance tracker, and supplemented with scene/spawn info and
@@ -406,8 +411,17 @@ const EntranceData entranceData[] = {
 int16_t LinkIsInArea(const EntranceData* entrance) {
     bool result = false;
 
-    if (gPlayState == nullptr) {
+    if (gPlayState == nullptr || entrance == nullptr) {
         return -1;
+    }
+
+    if (const auto* endpoint = SohExtreme::EntranceEndpointById(entrance->index);
+        endpoint && endpoint->door >= 0) {
+        // A room door is available from its actual source room, not from every
+        // room that shares the dungeon's scene or the anchor entrance spawn.
+        if (gPlayState->sceneNum != endpoint->sourceScene ||
+            gPlayState->roomCtx.curRoom.num != endpoint->fromRoom) return -1;
+        return static_cast<int16_t>(0x4000 | (endpoint->sourceScene << 6) | endpoint->fromRoom);
     }
 
     // Handle detecting the current grotto
@@ -458,14 +472,69 @@ bool IsEntranceDiscovered(s16 index) {
     return isDiscovered;
 }
 
-const EntranceData* GetEntranceData(s16 index) {
+static const EntranceData* GetNativeEntranceData(s16 index) {
     for (size_t i = 0; i < ARRAY_COUNT(entranceData); i++) {
         if (index == entranceData[i].index) {
             return &entranceData[i];
         }
     }
-    // Shouldn't be reached
     return nullptr;
+}
+
+static SpoilerEntranceGroup EntranceGroupForScene(int scene) {
+    if (scene < 0) return ENTRANCE_GROUP_OTHER;
+    // Native scene metadata describes the source area, including the familiar
+    // overworld grouping for dungeon and boss rooms.
+    for (const auto& entry : entranceData) {
+        if (entry.srcGroup == ENTRANCE_GROUP_ONE_WAY) continue;
+        for (const auto& info : entry.scenes) {
+            if (info.scene == scene) return entry.srcGroup;
+        }
+    }
+    return ENTRANCE_GROUP_OTHER;
+}
+
+const EntranceData* GetEntranceData(s16 index) {
+    if (const auto* native = GetNativeEntranceData(index)) return native;
+    // AP uses synthetic indices for exact room-door endpoints and additional
+    // one-way exits. They cannot be indexed through the stock tracker catalog.
+    // Own these strings and vectors in a stable map so hints and list rows may
+    // safely retain the returned pointers.
+    static const std::map<int16_t, EntranceData> apData = [] {
+        std::map<int16_t, EntranceData> result;
+        for (const auto& endpoint : SohExtreme::kEntranceEndpoints) {
+            if (GetNativeEntranceData(static_cast<int16_t>(endpoint.id))) continue;
+            const std::string name = endpoint.name;
+            const size_t arrow = name.find(" -> ");
+            std::string source = arrow == std::string::npos ? name : name.substr(0, arrow);
+            std::string destination = arrow == std::string::npos ? name : name.substr(arrow + 4);
+            if (endpoint.door >= 0) {
+                const size_t detail = destination.find(" (door ");
+                if (detail != std::string::npos) source += destination.substr(detail);
+            }
+            const auto* reverse = SohExtreme::EntranceEndpointById(endpoint.reverse);
+            const int sourceScene = endpoint.sourceScene >= 0 ? endpoint.sourceScene :
+                                    (reverse ? reverse->scene : -1);
+            EntranceData data{};
+            data.index = static_cast<int16_t>(endpoint.id);
+            data.reverseIndex = static_cast<int16_t>(endpoint.reverse);
+            if (sourceScene >= 0) data.scenes.push_back({ static_cast<int8_t>(sourceScene), -1 });
+            data.source = std::move(source);
+            data.destination = std::move(destination);
+            data.srcGroup = EntranceGroupForScene(sourceScene);
+            data.dstGroup = EntranceGroupForScene(endpoint.scene);
+            data.type = endpoint.door >= 0 ? ENTRANCE_TYPE_ROOM_DOOR :
+                        (endpoint.reverse < 0 ? ENTRANCE_TYPE_ONE_WAY : ENTRANCE_TYPE_OVERWORLD);
+            data.metaTag = endpoint.door >= 0 ? "room door" : "one way";
+            // Room endpoints have distinct source sides. Never hide a room
+            // return as if it were a redundant single-exit house interior.
+            data.oneExit = 1;
+            result.emplace(data.index, std::move(data));
+        }
+        return result;
+    }();
+    const auto found = apData.find(index);
+    return found == apData.end() ? nullptr : &found->second;
 }
 
 void LoadFromPreset(const nlohmann::json& info) {
@@ -491,112 +560,59 @@ void CheckEntranceNames() {
     }
 }
 
-void SortEntranceListByType(EntranceOverride* entranceList, u8 byDest) {
-    EntranceOverride tempList[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
-
-    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-        tempList[i] = entranceList[i];
+static size_t EntranceDisplayOrder(int16_t index) {
+    for (size_t i = 0; i < ARRAY_COUNT(entranceData); ++i) {
+        if (entranceData[i].index == index) return i;
     }
+    return ARRAY_COUNT(entranceData) + static_cast<uint16_t>(index);
+}
 
-    size_t idx = 0;
-
-    for (size_t k = 0; k < ENTRANCE_TYPE_COUNT; k++) {
-        for (size_t i = 0; i < ARRAY_COUNT(entranceData); i++) {
-            for (size_t j = 0; j < ENTRANCE_OVERRIDES_MAX_COUNT; j++) {
-                if (Entrance_EntranceIsNull(&tempList[j])) {
-                    break;
-                }
-
-                int16_t entranceIndex = byDest ? tempList[j].override : tempList[j].index;
-
-                if (entranceData[i].type == k && entranceIndex == entranceData[i].index) {
-                    entranceList[idx] = tempList[j];
-                    idx++;
-                    break;
-                }
-            }
-        }
+static size_t EntranceGroup(const EntranceOverride& route, TrackerEntranceGroupingType grouping) {
+    const auto* source = GetEntranceData(route.index);
+    const auto* target = GetEntranceData(route.override);
+    switch (grouping) {
+        case ENTRANCE_SOURCE_AREA: return source->srcGroup;
+        case ENTRANCE_DESTINATION_AREA:
+            return source->srcGroup == ENTRANCE_GROUP_ONE_WAY ? ENTRANCE_GROUP_ONE_WAY : target->dstGroup;
+        case ENTRANCE_SOURCE_TYPE: return source->type;
+        case ENTRANCE_DESTINATION_TYPE:
+            return source->srcGroup == ENTRANCE_GROUP_ONE_WAY ? ENTRANCE_TYPE_ONE_WAY : target->type;
+        default: return 0;
     }
 }
 
+static void SortEntranceList(EntranceOverride* entranceList, TrackerEntranceGroupingType grouping) {
+    std::vector<EntranceOverride> rows;
+    rows.reserve(ENTRANCE_OVERRIDES_MAX_COUNT);
+    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; ++i) {
+        const auto& route = entranceList[i];
+        if (!Entrance_EntranceIsNull(&entranceList[i]) &&
+            GetEntranceData(route.index) && GetEntranceData(route.override)) rows.push_back(route);
+    }
+    const bool byDestination = grouping == ENTRANCE_DESTINATION_AREA || grouping == ENTRANCE_DESTINATION_TYPE;
+    auto order = [&](const EntranceOverride& route) {
+        const auto* source = GetEntranceData(route.index);
+        const auto* target = GetEntranceData(route.override);
+        int16_t endpoint = route.index;
+        if (byDestination && source->srcGroup != ENTRANCE_GROUP_ONE_WAY) {
+            endpoint = grouping == ENTRANCE_DESTINATION_AREA && target->reverseIndex >= 0 ?
+                       target->reverseIndex : target->index;
+        }
+        return std::tuple{ EntranceGroup(route, grouping), EntranceDisplayOrder(endpoint), route.index, route.override };
+    };
+    // Sort the actual routes, not the stock catalog. Several one-way sources
+    // may share one target, and synthetic room destinations have no stock row.
+    std::stable_sort(rows.begin(), rows.end(), [&](const auto& a, const auto& b) { return order(a) < order(b); });
+    std::fill_n(entranceList, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
+    std::copy(rows.begin(), rows.end(), entranceList);
+}
+
+void SortEntranceListByType(EntranceOverride* entranceList, u8 byDest) {
+    SortEntranceList(entranceList, byDest ? ENTRANCE_DESTINATION_TYPE : ENTRANCE_SOURCE_TYPE);
+}
+
 void SortEntranceListByArea(EntranceOverride* entranceList, u8 byDest) {
-    auto entranceCtx = Rando::Context::GetInstance()->GetEntranceShuffler();
-    EntranceOverride tempList[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
-
-    // Store to temp
-    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-        tempList[i] = entranceList[i];
-        // Don't include one-way indexes in the tempList if we're sorting by destination
-        // so that we keep them at the beginning.
-        if (byDest) {
-            if (GetEntranceData(tempList[i].index)->srcGroup == ENTRANCE_GROUP_ONE_WAY) {
-                tempList[i] = emptyOverride;
-            }
-        }
-    }
-
-    size_t idx = 0;
-    // Sort Source List based on entranceData order
-    if (!byDest) {
-        for (size_t i = 0; i < ARRAY_COUNT(entranceData); i++) {
-            for (size_t j = 0; j < ENTRANCE_OVERRIDES_MAX_COUNT; j++) {
-                if (Entrance_EntranceIsNull(&tempList[j])) {
-                    break;
-                }
-                if (tempList[j].index == entranceData[i].index) {
-                    entranceList[idx] = tempList[j];
-                    idx++;
-                    break;
-                }
-            }
-        }
-
-    } else {
-        // Increment the idx by however many one-way entrances are shuffled since these
-        // will still be displayed at the beginning
-        idx += gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_SOURCE_AREA][ENTRANCE_GROUP_ONE_WAY];
-
-        // Sort the rest of the Destination List by matching destination strings with source strings when possible
-        // and otherwise by group
-        for (size_t group = ENTRANCE_GROUP_KOKIRI_FOREST; group < SPOILER_ENTRANCE_GROUP_COUNT; group++) {
-            for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-                if (Entrance_EntranceIsNull(&entranceCtx->entranceOverrides[i])) {
-                    continue;
-                }
-                const EntranceData* curEntrance = GetEntranceData(entranceCtx->entranceOverrides[i].index);
-                if (curEntrance->srcGroup != group) {
-                    continue;
-                }
-                // First, search the list for the matching reverse entrance if it exists
-                for (size_t j = 0; j < ENTRANCE_OVERRIDES_MAX_COUNT; j++) {
-                    const EntranceData* curOverride = GetEntranceData(tempList[j].override);
-                    if (Entrance_EntranceIsNull(&tempList[j]) || curOverride->dstGroup != group) {
-                        continue;
-                    }
-
-                    if (curEntrance->reverseIndex == curOverride->index) {
-                        entranceList[idx] = tempList[j];
-                        // "Remove" this entrance from the tempList by setting its values to zero
-                        tempList[j] = emptyOverride;
-                        idx++;
-                        break;
-                    }
-                }
-            }
-            // Then find any remaining entrances in the same group and add them to the end
-            for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-                if (Entrance_EntranceIsNull(&tempList[i])) {
-                    continue;
-                }
-                const EntranceData* curOverride = GetEntranceData(tempList[i].override);
-                if (curOverride->dstGroup == group) {
-                    entranceList[idx] = tempList[i];
-                    tempList[i] = emptyOverride;
-                    idx++;
-                }
-            }
-        }
-    }
+    SortEntranceList(entranceList, byDest ? ENTRANCE_DESTINATION_AREA : ENTRANCE_SOURCE_AREA);
 }
 
 s16 GetLastEntranceOverride() {
@@ -625,65 +641,40 @@ void ClearEntranceTrackingData() {
 void InitEntranceTrackingData() {
     auto entranceCtx = Rando::Context::GetInstance()->GetEntranceShuffler();
     gEntranceTrackingData = { 0 };
+    std::fill_n(srcListSortedByArea, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
+    std::fill_n(destListSortedByArea, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
+    std::fill_n(srcListSortedByType, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
+    std::fill_n(destListSortedByType, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
 
-    // Check if entrance randomization is disabled
-    if (!OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_ENTRANCES)) {
-        return;
-    }
+    if (!OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_ENTRANCES) &&
+        !Archipelago_EntranceShuffleActive()) return;
 
-    // Set total and group counts
-    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-        if (Entrance_EntranceIsNull(&entranceCtx->entranceOverrides[i])) {
-            break;
+    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; ++i) {
+        const auto& route = entranceCtx->entranceOverrides[i];
+        if (Entrance_EntranceIsNull(&entranceCtx->entranceOverrides[i])) continue;
+        if (!GetEntranceData(route.index) || !GetEntranceData(route.override)) {
+            SPDLOG_WARN("Entrance tracker ignored unknown endpoint: {} -> {}", route.index, route.override);
+            continue;
         }
-        const EntranceData* index = GetEntranceData(entranceCtx->entranceOverrides[i].index);
-        const EntranceData* override = GetEntranceData(entranceCtx->entranceOverrides[i].override);
-
-        if (index->srcGroup == ENTRANCE_GROUP_ONE_WAY) {
-            gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_SOURCE_AREA][ENTRANCE_GROUP_ONE_WAY]++;
-            gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_DESTINATION_AREA][ENTRANCE_GROUP_ONE_WAY]++;
-            gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_SOURCE_TYPE][ENTRANCE_TYPE_ONE_WAY]++;
-            gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_DESTINATION_TYPE][ENTRANCE_TYPE_ONE_WAY]++;
-        } else {
-            gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_SOURCE_AREA][index->srcGroup]++;
-            gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_DESTINATION_AREA][override->dstGroup]++;
-            gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_SOURCE_TYPE][index->type]++;
-            gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_DESTINATION_TYPE][override->type]++;
+        const size_t row = gEntranceTrackingData.EntranceCount++;
+        srcListSortedByArea[row] = destListSortedByArea[row] = route;
+        srcListSortedByType[row] = destListSortedByType[row] = route;
+        for (int grouping = 0; grouping < TRACKER_GROUP_TYPE_COUNT; ++grouping) {
+            const auto type = static_cast<TrackerEntranceGroupingType>(grouping);
+            ++gEntranceTrackingData.GroupEntranceCounts[grouping][EntranceGroup(route, type)];
         }
-        gEntranceTrackingData.EntranceCount++;
     }
 
-    // The entrance data is sorted and grouped in a one dimensional array, so we need to track offsets
-    // Set offsets for areas starting at 0
-    u16 srcOffsetTotal = 0;
-    u16 dstOffsetTotal = 0;
-    for (size_t i = 0; i < SPOILER_ENTRANCE_GROUP_COUNT; i++) {
-        // Set the offset for the current group
-        gEntranceTrackingData.GroupOffsets[ENTRANCE_SOURCE_AREA][i] = srcOffsetTotal;
-        gEntranceTrackingData.GroupOffsets[ENTRANCE_DESTINATION_AREA][i] = dstOffsetTotal;
-        // Increment the offset by the areas entrance count
-        srcOffsetTotal += gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_SOURCE_AREA][i];
-        dstOffsetTotal += gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_DESTINATION_AREA][i];
-    }
-    // Set offsets for types starting at 0
-    srcOffsetTotal = 0;
-    dstOffsetTotal = 0;
-    for (size_t i = 0; i < ENTRANCE_TYPE_COUNT; i++) {
-        // Set the offset for the current group
-        gEntranceTrackingData.GroupOffsets[ENTRANCE_SOURCE_TYPE][i] = srcOffsetTotal;
-        gEntranceTrackingData.GroupOffsets[ENTRANCE_DESTINATION_TYPE][i] = dstOffsetTotal;
-        // Increment the offset by the areas entrance count
-        srcOffsetTotal += gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_SOURCE_TYPE][i];
-        dstOffsetTotal += gEntranceTrackingData.GroupEntranceCounts[ENTRANCE_DESTINATION_TYPE][i];
+    for (int grouping = 0; grouping < TRACKER_GROUP_TYPE_COUNT; ++grouping) {
+        const size_t count = grouping >= ENTRANCE_SOURCE_TYPE ? static_cast<size_t>(ENTRANCE_TYPE_COUNT) :
+                             static_cast<size_t>(SPOILER_ENTRANCE_GROUP_COUNT);
+        uint16_t offset = 0;
+        for (size_t group = 0; group < count; ++group) {
+            gEntranceTrackingData.GroupOffsets[grouping][group] = offset;
+            offset += gEntranceTrackingData.GroupEntranceCounts[grouping][group];
+        }
     }
 
-    // Sort entrances by group and type in entranceData
-    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; i++) {
-        srcListSortedByArea[i] = entranceCtx->entranceOverrides[i];
-        destListSortedByArea[i] = entranceCtx->entranceOverrides[i];
-        srcListSortedByType[i] = entranceCtx->entranceOverrides[i];
-        destListSortedByType[i] = entranceCtx->entranceOverrides[i];
-    }
     SortEntranceListByArea(srcListSortedByArea, 0);
     SortEntranceListByArea(destListSortedByArea, 1);
     SortEntranceListByType(srcListSortedByType, 0);
@@ -931,6 +922,7 @@ void EntranceTrackerWindow::DrawElement() {
 
                 const EntranceData* original = GetEntranceData(entrance.index);
                 const EntranceData* override = GetEntranceData(entrance.override);
+                if (!original || !override) continue;
 
                 // If entrance is a dungeon, grotto, or interior entrance, the transition into that area has oneExit
                 // set, which means we can filter the return transitions as redundant if entrances are not decoupled, as
@@ -1002,6 +994,7 @@ void EntranceTrackerWindow::DrawElement() {
                     for (auto entrance : displayEntrances) {
                         const EntranceData* original = GetEntranceData(entrance.index);
                         const EntranceData* override = GetEntranceData(entrance.override);
+                        if (!original || !override) continue;
 
                         bool isDiscovered = IsEntranceDiscovered(entrance.index);
 

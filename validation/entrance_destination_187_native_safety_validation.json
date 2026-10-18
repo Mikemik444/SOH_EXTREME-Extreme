@@ -1,0 +1,105 @@
+{
+  "status": "passed",
+  "cases": {
+    "catalog": {
+      "age_allowed_native_arrivals": 2870,
+      "door_room_arrivals": 1684,
+      "reviewed_endpoints": 719,
+      "scene_variant_check_identities": 56,
+      "verified_normal_table_entries": 2876
+    },
+    "map_preflight": {
+      "atomic_rejections": 8,
+      "both_age_source_accepted_for_runtime_age_check": true,
+      "valid_missing_policy_revision": true
+    },
+    "paths_and_markers": {
+      "actual_child_bluewarp_paths": 5,
+      "actual_warp_song_paths": 6,
+      "ap_only_physical_grotto_entry": true,
+      "coupled_grotto_return_position_preserved": true,
+      "peek_and_reset_guards": true,
+      "same_map_reconnect_preserves_request": true
+    },
+    "recovery": {
+      "actual_age_preserved": true,
+      "no_valid_table_refuses_scene_load": true,
+      "order": [
+        "source reverse without reshuffle",
+        "actual-age slot spawn",
+        "verified dry house"
+      ],
+      "recovery_cases": 7
+    },
+    "stale_setups": {
+      "native_debug_scene_fixture": "0x00C + layer 12",
+      "native_oob_fixture": "0x610 + layer 4 == table size",
+      "native_unused_scene_fixture": "0x00C + layer 8",
+      "stale_cutscene_arrivals": 60
+    },
+    "story": {
+      "ordinary_unarmed_story_unchanged": true,
+      "production_conditional_triggers": [
+        "Requiem",
+        "Saria ocarina and flag",
+        "Light Arrow cutscene",
+        "Nocturne"
+      ]
+    }
+  },
+  "source_sha256": {
+    "soh/Network/Archipelago/EntranceDestinationPolicy.h": "ad437810079db56bdcdfc30e3fa688ec5a32cfbb0c00c7e16f46b6fb724427a0",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "d4978e4bdcd765821fb4d85421681f3b6977eca5c19f3b0d5de105edd25e0a0f",
+    "soh/Network/Archipelago/EntranceRouting.h": "15f03937754760681db8e199ce3b50fe74bdf3fe6f400efd88f0182626b95564",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "8e07e4ed1ab99b6d4b877dc161bc25e679fd64ca187b9d3a813897631937ddd4",
+    "soh/Network/Archipelago/ArchipelagoC.h": "3aa055f1d3075ce3dd18025698baf9b592f014b50c3980098d0520cd2c92e840",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a",
+    "soh/Network/Archipelago/SceneTransitionChecks.h": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496",
+    "soh/Network/Archipelago/SceneTransitionData.inc": "b7b4aa8c04ba92c233a501a8dabd509bcc4c214fb4bb9146005a2d7020e68893",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "2526d38fee5eef4d9fbcd4a62297078ffd404eceb6d3791932373180bc1e7205",
+    "soh/Enhancements/randomizer/randomizer_entrance.h": "dd0ae80bf799888ccb5519a2475f23c848aaf8547908d9bc1d62a08d511eef1c",
+    "soh/Enhancements/randomizer/randomizer_grotto.c": "c24197093d1ba4324c518ff919d00e5f04748b51cd7a5951bbe31cc72a7924a3",
+    "soh/Enhancements/randomizer/randomizer_grotto.h": "b049586ec0cc4127d4a26a87a6c30eac97449c84f4c0612b3a4ed28ab91fd56a",
+    "soh/Enhancements/randomizer/randomizerTypes.h": "dc86b56177c188419a7b00f600f3f91e45f491dce16989f677cd6dbc609bd2aa",
+    "src/code/z_play.c": "640fcbae23a2b6a6175c0497233d34bd282ded9db25dee0217ba8796b3deb84f",
+    "src/code/z_demo.c": "16a25e8fceb0fc84b42a5942eb9ca0a6321ac69eb93ca42c0aacdf0817060839",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3"
+  },
+  "test_sha256": {
+    "tools/tests/test_entrance_destination_native_safety.py": "b0bd757a08fc15d8195293a46d45b14dd762be45e5779f437d3fe01ea725555f",
+    "tools/tests/entrance_destination_safety_tests.cpp": "949c4cbac9b8630f8a9dabafbeadffd378e1bc301e931cc2babd95f028f9c093",
+    "tools/tests/test_entrance_slot_bridge.py": "184345ca542034a1d5a55f68a321a2d6e2674ef3fc1a54472695f04cb7c33ecd",
+    "tools/tests/entrance_slot_bridge_tests.cpp": "274b99191ac154bea754cb0d40713ee3568e1382dc70dd79981140d95630cca5"
+  },
+  "dependency_sha256": {
+    "json.hpp": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63",
+    "entrance_table.h": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa",
+    "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c",
+    "z64.h": "2b542e7be12e20e49034c17db444bf1de489d4161bb333d3bcd73bc32c34ea71",
+    "z64save.h": "ba9f4092650d8e9cafd72e8185375c332cd69ab7c5b836841853fc7965531ae5"
+  },
+  "captured_fragment_sha256": {
+    "captured_engine_constants.h": "1bca27dc048bddd8451e674fd23b8925813d0d3059f1ff9a025dce04a27409b7",
+    "captured_native_constants.h": "e4e72d4e64a2f13c14ed4b4c4cfe0a90e90636f2db80cf609cdaedbbca18240d",
+    "captured_native_structs.h": "eadba502f94d64a18bb68f257b7fa01f982d9a5fb6b7ba79e9b7939386f75d43",
+    "captured_native_init.inc": "032912ab97617b36188d7837b9e65131cc74da1837a8c522a5225d15aba16101",
+    "captured_grotto_data.inc": "90aea523eef8ac2f0306eae200322b6535d2d9e940cdcebb6196681b4e90f109",
+    "captured_grotto_functions.inc": "eef18a5289bf868adc7883f8005533cc2ae9b060b4a7b5e160af99e2c0bd8d18",
+    "captured_grotto_actor.inc": "f080f8b3dc9464337c8e6fa3b8f9e94bcf541e183ed01b77e552ac5f2cecf5b7",
+    "captured_native_lookup.inc": "539fce8a68a53fb4478a2a77f0fd6438b120d2571e1d86c022005e5ba1efe90c",
+    "captured_warp_songs.inc": "fe77d45af00f5d448b826637a6e04d15e55442247c489c09757f26c219d2a220",
+    "captured_conditions.inc": "0dc9956ee1f8a2a5a7218e832d74de9659e6a11ceecf9a8d685aeda13f50857e",
+    "captured_play_boundary.inc": "f5e7aec00f71829f91ae2c4fe0bcb0dfe053fe91638d9f2a105a8680bfdd0096",
+    "captured_fade_layer.inc": "b7b672278811844bf2a67f7415a7cefeba5ad1d5c3bc7f615fe8f1d03c2c3a00",
+    "captured_bridge_engine.inc": "d8611798da1097f8bb8ef896a65e17b60ddbcc8f6a4b343f84f7f70f7dd0f9ec"
+  },
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_scanner": false,
+  "engine_io_isolated": true,
+  "native_windows_build": false,
+  "in_game_playthrough": false,
+  "limitations": "Verifies native table/resolver/scene-selection code and engine-I/O shims, not scene assets, actor collision, or a full game build."
+}

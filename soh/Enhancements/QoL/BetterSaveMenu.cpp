@@ -3,6 +3,7 @@
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 #include "soh/Enhancements/randomizer/randomizer_entrance.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/ShipInit.hpp"
 
 extern "C" {
@@ -44,6 +45,9 @@ static bool CanRevertToDefaultAge() {
 
 static int16_t GetAgeSpawnEntrance(uint8_t age) {
     if (IS_RANDO) {
+        // This is called only after choosing Return to Spawn. Resolve the
+        // selected age once and discard any room queued by the load hook.
+        if (Archipelago_EntranceSavewarpForAge(age)) return gSaveContext.entranceIndex;
         // The randomizer separates adult spawn from Prelude of Light and may
         // override either age's spawn entrance.
         return Entrance_OverrideNextIndex(age == LINK_AGE_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_HYRULE_FIELD_10);

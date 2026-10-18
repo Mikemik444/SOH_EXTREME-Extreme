@@ -68,7 +68,7 @@ void RegionTable_Init_GanonsCastle() {
         LOCATION(RC_GANONS_CASTLE_FOREST_TRIAL_CHEST, logic->CanKillEnemy(RE_WOLFOS) && logic->HasItem(RG_OPEN_CHEST)),
     }, {
         //Exits
-        ENTRANCE(RR_GANONS_CASTLE_MAIN,                     true),
+        ENTRANCE(RR_GANONS_CASTLE_MAIN,                     !ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_FOREST_MEDALLION)),
         ENTRANCE(RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM, logic->CanUse(RG_FIRE_ARROWS) || (logic->CanUse(RG_HOOKSHOT) && logic->CanUse(RG_DINS_FIRE))),
     });
 
@@ -119,7 +119,7 @@ void RegionTable_Init_GanonsCastle() {
 
     areaTable[RR_GANONS_CASTLE_FIRE_TRIAL_OPEN_DOOR] = Region("Ganon's Castle Fire Trial Open Door", SCENE_INSIDE_GANONS_CASTLE, {}, {}, {
         //Exits
-        ENTRANCE(RR_GANONS_CASTLE_MAIN, true),
+        ENTRANCE(RR_GANONS_CASTLE_MAIN, !ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_FIRE_MEDALLION)),
     });
 
     areaTable[RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN] = Region("Ganon's Castle Fire Trial From Open Door", SCENE_INSIDE_GANONS_CASTLE, {
@@ -207,7 +207,7 @@ void RegionTable_Init_GanonsCastle() {
         LOCATION(RC_GANONS_CASTLE_WATER_TRIAL_DOOR_RED_ICE,       logic->BlueFire()),
     }, {
         //Exits
-        ENTRANCE(RR_GANONS_CASTLE_MAIN,                   true),
+        ENTRANCE(RR_GANONS_CASTLE_MAIN,                   !ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_WATER_MEDALLION) || AnyAgeTime([]{return logic->CanKillEnemy(RE_FREEZARD, ED_CLOSE, true, 2);})),
         ENTRANCE(RR_GANONS_CASTLE_WATER_TRIAL_BLOCK_ROOM, logic->BlueFire() && AnyAgeTime([]{return logic->CanKillEnemy(RE_FREEZARD);})),
     });
 
@@ -259,7 +259,7 @@ void RegionTable_Init_GanonsCastle() {
         LOCATION(RC_GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST, logic->HasItem(RG_OPEN_CHEST)),
     }, {
         //Exits
-        ENTRANCE(RR_GANONS_CASTLE_MAIN,                        true),
+        ENTRANCE(RR_GANONS_CASTLE_MAIN,                        !ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_SHADOW_MEDALLION) || (AnyAgeTime([]{return logic->CanKillEnemy(RE_GREEN_BUBBLE);}) && areaTable[RR_GANONS_CASTLE_SHADOW_TRIAL_POTS_PLATFORM].AnyAgeTime([]{return logic->CanKillEnemy(RE_LIKE_LIKE);}))),
         ENTRANCE(RR_GANONS_CASTLE_SHADOW_TRIAL_SOT_PLATFORM,   logic->CanUse(RG_FIRE_ARROWS) || logic->CanUse(RG_HOOKSHOT) || logic->CanUse(RG_HOVER_BOOTS) || logic->CanUse(RG_SONG_OF_TIME) || logic->IsChild),
         //start the recoil away from the wall
         ENTRANCE(RR_GANONS_CASTLE_SHADOW_TRIAL_TORCH,          logic->CanUse(RG_LONGSHOT) || (logic->IsAdult && logic->CanRecoilHover(RECOIL_HAMMER)) || (logic->CanUse(RG_FIRE_ARROWS) && ((logic->IsAdult && logic->BunnyHood()) || logic->CanUse(RG_HOVER_BOOTS)))),
@@ -372,7 +372,7 @@ void RegionTable_Init_GanonsCastle() {
         LOCATION(RC_GANONS_CASTLE_NEAR_BARRED_DOOR_SPIRIT_SILVER, true),
     }, {
         //Exits
-        ENTRANCE(RR_GANONS_CASTLE_MAIN,                       true),
+        ENTRANCE(RR_GANONS_CASTLE_MAIN,                       !ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_SPIRIT_MEDALLION)),
         ENTRANCE(RR_GANONS_CASTLE_SPIRIT_TRIAL_BEFORE_SWITCH, logic->HasItem(RG_GANONS_CASTLE_SILVER_SPIRIT)),
     });
 
@@ -419,7 +419,7 @@ void RegionTable_Init_GanonsCastle() {
         LOCATION(RC_GANONS_CASTLE_LIGHT_TRIAL_INVISIBLE_ENEMIES_CHEST, (ctx->GetTrickOption(RT_LENS_GANON) || logic->CanUse(RG_LENS_OF_TRUTH)) && (logic->CanKillEnemy(RE_BIG_SKULLTULA) && logic->CanKillEnemy(RE_KEESE, ED_CLOSE, true, 3)) && logic->HasItem(RG_OPEN_CHEST)),
     }, {
         //Exits
-        ENTRANCE(RR_GANONS_CASTLE_MAIN,                      true),
+        ENTRANCE(RR_GANONS_CASTLE_MAIN,                      !ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_LIGHT_MEDALLION)),
         ENTRANCE(RR_GANONS_CASTLE_LIGHT_TRIAL_TRIFORCE_ROOM, logic->SmallKeys(SCENE_INSIDE_GANONS_CASTLE, 1)),
     });
 

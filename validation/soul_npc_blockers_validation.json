@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "cases": 8,
+  "assertions": 191,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "scope": "Actual soul policy/hooks, native draw, talk offering/screen focus, Mido update/blocking, cylinder update and OC separation bodies with engine I/O shims; not a full native build or gameplay test.",
+  "output": [
+    "PASS every allowed NPC placement stays initialized, targetable, updateable and talkable while completely hidden, then renders on acquisition",
+    "PASS ordinary NPCs and wrong guard/Kokiri/Talon variants retain the existing hidden, frozen, untalkable behavior",
+    "PASS null scene/actor handling and disabled/randomizer-off rendering remain safe",
+    "PASS central rendering hides all intended rock/crate families before model/shadow/glow and preserves wall/rolling hazards",
+    "PASS animal/scrub/Skulltula/fishing classifications and the separate Sign Soul speech gate stay intact",
+    "PASS actual native talk state/offer path uses hidden world-relative focus and retains distance/offscreen restrictions",
+    "PASS actual Mido Update and BlockPath retain per-frame solid OC, positioning, talk, and quest-triggered path clearing while invisible",
+    "PASS adult Lost Woods Mido still accepts the ocarina and clears his route on the existing quest action",
+    "RESULT cases=8 assertions=191"
+  ],
+  "sources": {
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "d1d3af82330dbbe5e130916c820d80e92a35134a29c3097acbb415efe67ffd40",
+    "soh/Enhancements/randomizer/SoulActorAccess.h": "93f8b6022cfa8e1385dd08498214cc3a149956911c6b88d0bde072f37ee39646",
+    "src/code/z_actor.c": "99ed54b7bb20bbdc782d27e679e4cd17a39b263a38b1acd074d4739048b49fef",
+    "src/code/z_collision_check.c": "801ca4f23b45ac95073e98ce1872eb1bed3ca7cfa77221367772c282766ad98d",
+    "src/overlays/actors/ovl_En_Md/z_en_md.c": "55a251abeea87779db994481bdc04c1055ea6889d99139c321b6ea488463b58a"
+  }
+}

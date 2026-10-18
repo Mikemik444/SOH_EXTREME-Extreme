@@ -1,0 +1,35 @@
+{
+  "cases": [
+    "same_verified_save_keeps_worker_nonce_and_requests_fresh_snapshots",
+    "preservation_still_reloads_receipts_inventory_settings_and_identity",
+    "same_identity_pending_journal_survives_offline_or_stopped_worker",
+    "seed_team_slot_and_legacy_identity_changes_reset_worker_and_journal",
+    "connection_alias_address_settings_and_verification_changes_reset_worker",
+    "unloaded_or_invalid_settings_retain_the_existing_validation_gate",
+    "vanilla_load_clears_ap_journal_and_host_without_applying_ap_settings",
+    "new_ap_save_never_inherits_current_worker_or_previous_hint_journal"
+  ],
+  "status": "passed",
+  "scope": "Complete production LoadSaveMetadata method; worker/engine IO isolated.",
+  "source_sha256": {
+    "soh/Network/Archipelago/ArchipelagoHintData.h": "02b498c2fb85878c24d1eac557e1e9fa5bc991a7966b585f85f83e3df7eea8ee",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "8dcb9c4728fda123a1b038a465224fe17a15dce9bbd8f68f574e8849330364fa",
+    "tools/tests/archipelago_save_metadata_tests.cpp": "ad1ca578382f93037f13a948fd44cda6239ef4e6a27d54ad7c906ea84c0285ca",
+    "tools/tests/test_archipelago_hints.py": "640479f28cbd085df8fe348e09f5457fe95ba9c23ca4840934dbd57a92722786",
+    "soh/Network/Archipelago/ArchipelagoHintTarget.h": "4face49f1413e1efd39e4787e6ca078119e61f68259c3708636c6aab4046267c",
+    "soh/Network/Archipelago/ArchipelagoHintClient.inc": "135c702b3f3c87a14e542e9f408be683dd1cd425f7891a9dbc7f6b74212865fa",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "114ecb087b1ecf6ff30104427c3eb2abdaa8cc215262726f22e8c5d2e7efe21e",
+    "soh/Network/Archipelago/SaveConnectionIdentity.h": "68f748b8b1fec735d60060e8918300332cb486229d254a1152d0117a8393fad4"
+  },
+  "source_unchanged_during_test": true,
+  "json_header_sha256": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63",
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_sanitizer_enabled": false,
+  "native_textbox_pagination_tested_here": false,
+  "reveal_snapshot_journal_methods": false,
+  "actual_prime_new_save_metadata": false,
+  "save_metadata_worker_preservation": true
+}

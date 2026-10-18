@@ -1,0 +1,158 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "changed_overworld_routes": 52,
+      "changed_routes": 700,
+      "coupled_returns": 692,
+      "door_cases": {
+        "accepted_exact_plane_openings": 155,
+        "accepted_near_plane_openings": 307,
+        "canceled_or_dead_crossings_rejected": 3532,
+        "handle_directions": 114,
+        "jabu_cases": 75,
+        "local_carrier_check_cases": 30,
+        "local_carrier_directions": 12,
+        "ordinary_openings": 421,
+        "shuffled": true,
+        "shutter_directions": 307,
+        "wrong_arrivals_rejected": 853
+      },
+      "fixture": "/workspace/scratch/8fddab5b8169/tests/entrance_184_bridge_child_cvars.json",
+      "native_dynamic_lookups": 14,
+      "native_scene_lookups": 232,
+      "routes": 719,
+      "scene_rows": 298,
+      "settings": 1028,
+      "spawn_cases": [
+        {
+          "age": "child",
+          "cached_loads": 3,
+          "late_load_transitions": 1,
+          "native_entrance": 343,
+          "room": -1,
+          "save_menu_returns": 3,
+          "scene": 99,
+          "target": 343
+        },
+        {
+          "age": "adult",
+          "cached_loads": 3,
+          "late_load_transitions": 1,
+          "native_entrance": 549,
+          "room": -1,
+          "save_menu_returns": 3,
+          "scene": 89,
+          "target": 549
+        }
+      ]
+    },
+    {
+      "changed_overworld_routes": 52,
+      "changed_routes": 700,
+      "coupled_returns": 692,
+      "door_cases": {
+        "accepted_exact_plane_openings": 155,
+        "accepted_near_plane_openings": 307,
+        "canceled_or_dead_crossings_rejected": 3532,
+        "handle_directions": 114,
+        "jabu_cases": 75,
+        "local_carrier_check_cases": 30,
+        "local_carrier_directions": 12,
+        "ordinary_openings": 421,
+        "shuffled": true,
+        "shutter_directions": 307,
+        "wrong_arrivals_rejected": 853
+      },
+      "fixture": "/workspace/scratch/8fddab5b8169/tests/entrance_184_bridge_adult_cvars.json",
+      "native_dynamic_lookups": 14,
+      "native_scene_lookups": 232,
+      "routes": 719,
+      "scene_rows": 298,
+      "settings": 1028,
+      "spawn_cases": [
+        {
+          "age": "child",
+          "cached_loads": 3,
+          "late_load_transitions": 1,
+          "native_entrance": 549,
+          "room": -1,
+          "save_menu_returns": 3,
+          "scene": 89,
+          "target": 549
+        },
+        {
+          "age": "adult",
+          "cached_loads": 3,
+          "late_load_transitions": 1,
+          "native_entrance": 343,
+          "room": -1,
+          "save_menu_returns": 3,
+          "scene": 99,
+          "target": 343
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    "production JSON parser",
+    "719-route exported maps",
+    "complete native Entrance_Init",
+    "native scene and dynamic-exit lookup",
+    "native grotto load/return resolution",
+    "cached and late child/adult spawn",
+    "save-menu age spawn",
+    "paired return endpoints",
+    "native player door dispatch",
+    "all 421 catalog door directions",
+    "native-accepted near-plane shutter openings",
+    "local carrier-door checks",
+    "death/cancel/open-only/partial-crossing rejection",
+    "wrong-arrival rejection",
+    "inconsistent-map rejection",
+    "legacy all-off preservation"
+  ],
+  "engine_io_isolated": true,
+  "native_windows_build": false,
+  "in_game_playthrough": false,
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_scanner": false,
+  "source_sha256": {
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "476cd0a10a39ef0727a737f11b7818b8cf80c2bc7a84445d0b142c30bb8113bf",
+    "soh/Network/Archipelago/EntranceRouting.h": "080d2e8179f811050bc84bc32268522f80f0f88b19c6dd5ad7f6ed3df9bb92b4",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "da827319d9c16407e3d55508685bf76185b26f81125b864902ddc8536966fe2e",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "f69919980ebc37d805d83ac465d49bcc0f0165b3a9da21385323ebce69a4a2af",
+    "soh/Enhancements/randomizer/randomizer_entrance.h": "dd0ae80bf799888ccb5519a2475f23c848aaf8547908d9bc1d62a08d511eef1c",
+    "soh/Enhancements/randomizer/randomizer_grotto.c": "69865c227f5fee6578c382b694bdb87c6ce4d59a9273bd663eb1000cd8e5afc8",
+    "soh/Enhancements/randomizer/randomizer_grotto.h": "b049586ec0cc4127d4a26a87a6c30eac97449c84f4c0612b3a4ed28ab91fd56a",
+    "soh/Enhancements/randomizer/randomizerTypes.h": "dc86b56177c188419a7b00f600f3f91e45f491dce16989f677cd6dbc609bd2aa",
+    "soh/Enhancements/randomizer/settings.cpp": "de7045482aa02e5a4043cc5cbb1d1c94798ae59c2b9aa248c05dce03e942458d",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/QoL/BetterSaveMenu.cpp": "eb4ae4bcc2ce1bdea4478b652d7e9c8ebdeb515798295692ac24101f95eb5842",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "src/overlays/actors/ovl_player_actor/z_player.c": "bedcd6d3cbef6cd3d3f3d286ca7f491d7327e110110b67daf3ce4fa230c803ee",
+    "src/overlays/actors/ovl_Door_Shutter/z_door_shutter.c": "bfe80a290982db02459b5952e1a57ce4242e45aec54e766884ba04e5bbaab970",
+    "soh/Network/Archipelago/SceneTransitionChecks.h": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496",
+    "soh/Network/Archipelago/SceneTransitionData.inc": "b7b4aa8c04ba92c233a501a8dabd509bcc4c214fb4bb9146005a2d7020e68893",
+    "src/code/z_actor.c": "1385aee878e4e936ba0b39eaaef132f656d512512fd9dc9afa13887b0aee26cc"
+  },
+  "test_sha256": {
+    "tools/tests/test_entrance_slot_bridge.py": "1ac4db4e5016471523520f2898954a211412bf8beb1a86aceeaa0fcef06120e9",
+    "tools/tests/entrance_slot_bridge_tests.cpp": "b16585e96d903030ee2b89b9e1800e7dd98bd7eeb7ddb734fad1f1926ace718a"
+  },
+  "fixture_sha256": {
+    "tests/entrance_184_bridge_child_cvars.json": "4baea23d2a68d2a3202504e69b25da4363006febe53fa929656915a0d1fc2eec",
+    "tests/entrance_184_bridge_adult_cvars.json": "37d64eda229a74a4db50a08eab86044859f166dce9626ee97b12d08cf9fd5f84"
+  },
+  "dependency_sha256": {
+    "json.hpp": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63",
+    "entrance_table.h": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa",
+    "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c",
+    "z64.h": "2b542e7be12e20e49034c17db444bf1de489d4161bb333d3bcd73bc32c34ea71",
+    "z64save.h": "ba9f4092650d8e9cafd72e8185375c332cd69ab7c5b836841853fc7965531ae5"
+  }
+}

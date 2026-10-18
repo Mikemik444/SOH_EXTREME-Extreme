@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "target_version": "1.8.3",
+  "method": "byte_for_byte_equality",
+  "sha256": "119ddbd1d2e1f6d8e60e30edc33e2bc35e6d983cafdb61608bacb25198a18f9e",
+  "reference_version": "1.8.2",
+  "reference_sha256": "119ddbd1d2e1f6d8e60e30edc33e2bc35e6d983cafdb61608bacb25198a18f9e",
+  "semantic_changes_from_delivered_1_8_2": 0,
+  "bytes": 64648,
+  "utf8_bom_preserved": true,
+  "crlf_preserved": true
+}

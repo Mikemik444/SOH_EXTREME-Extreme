@@ -1,0 +1,61 @@
+--- 1.8.5/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
++++ 1.8.6/soh/Enhancements/randomizer/randomizer_check_tracker.cpp
+@@ -2045,6 +2045,21 @@
+     UpdateRoomDebugWorldLabels();
+ }
+ 
++// Automatic expansion follows the physical zone. Remember only deliberate
++// mouse/keyboard toggles so snapshot updates and zone changes cannot overwrite
++// sections the player chose to open or close. A clipped header returning false
++// is not a user action and must not become a manual close preference.
++template <typename Key>
++static bool DrawFinderDropdown(const std::string& label, const Key& key, bool automaticOpen,
++                               std::map<Key, bool>& manualChoices) {
++    const auto choice = manualChoices.find(key);
++    const bool open = choice != manualChoices.end() ? choice->second : automaticOpen;
++    ImGui::SetNextItemOpen(open, ImGuiCond_Always);
++    const bool expanded = ImGui::CollapsingHeader(label.c_str());
++    if (ImGui::IsItemToggledOpen()) manualChoices[key] = expanded;
++    return expanded;
++}
++
+ static void DrawUniversalFinderMirror() {
+     auto& client = ArchipelagoClient::GetInstance();
+     std::string status;
+@@ -2146,6 +2161,8 @@
+     static bool currentFirst = true;
+     static bool onlyCurrent = false;
+     static ImGuiTextFilter filter;
++    static std::map<int, bool> regionDropdownChoices;
++    static std::map<std::array<int, 3>, bool> sceneDropdownChoices;
+     ImGui::Checkbox("Current scene/region first", &currentFirst);
+     ImGui::SameLine();
+     ImGui::Checkbox("Only current scene", &onlyCurrent);
+@@ -2187,7 +2204,16 @@
+             const bool showRegionHeader = region.scenes.size() > 1;
+             const std::string regionLabel = (region.currentRegion ? "[Current region] " : "") + region.name +
+                 " (" + std::to_string(region.normal) + " in logic, " + std::to_string(region.glitched) + " glitched)###APMapRegion";
+-            if (!showRegionHeader || ImGui::CollapsingHeader(regionLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
++            bool regionAutomaticallyOpen = region.currentRegion || region.containsCurrentScene;
++            for (const auto* group : region.scenes) {
++                const std::array<int, 3> key = { region.area, group->scene.scene, group->scene.instance };
++                const auto choice = sceneDropdownChoices.find(key);
++                // A manually opened scene also keeps its automatic parent open
++                // after leaving the zone. An explicit parent close still wins.
++                if (choice != sceneDropdownChoices.end() && choice->second) regionAutomaticallyOpen = true;
++            }
++            if (!showRegionHeader || DrawFinderDropdown(regionLabel, region.area, regionAutomaticallyOpen,
++                                                         regionDropdownChoices)) {
+                 if (showRegionHeader) ImGui::Indent();
+                 for (const auto* group : region.scenes) {
+                     // Map-region and scene identities remain stable as counts,
+@@ -2196,7 +2222,8 @@
+                     ImGui::PushID(group->scene.instance);
+                     const std::string label = (group->currentScene ? "[Current scene] " : "") + group->scene.name +
+                         " (" + std::to_string(group->normal) + " in logic, " + std::to_string(group->glitched) + " glitched)###APScene";
+-                    if (ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
++                    const std::array<int, 3> key = { region.area, group->scene.scene, group->scene.instance };
++                    if (DrawFinderDropdown(label, key, group->currentScene, sceneDropdownChoices)) {
+                         ImGui::Indent();
+                         for (const auto* row : group->rows) {
+                             const std::string line = (row->state == 2 ? "[Glitched] " : "") +

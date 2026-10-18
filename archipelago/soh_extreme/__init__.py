@@ -49,7 +49,8 @@ from .PhysicalChestTypes import CHEST_TYPES_BY_AP_ID
 from .EnemyDropLocations import ENEMY_DROP_LOCATIONS, ENEMY_DROP_LOCATION_NAME_TO_ID, ENEMY_UNUSED_OBJECT_IDS
 from .NativeRegionMap import FORK_NATIVE_REGIONS
 from .SpeechLocations import SPEECH_LOCATIONS, SPEECH_LOCATION_NAME_TO_ID
-from . import NpcSpeech, SceneTransitions
+from . import NpcSpeech, SceneTransitions, EntranceRandomizer
+from .CheckDescriptions import CHECK_NAME_ALIASES, canonical_location_name, normalize_location_options
 from .NativeLogic import (
     NATIVE_REGION_EDGES, NATIVE_CUSTOM_ENTRANCES, NATIVE_CUSTOM_LOCATIONS,
     NATIVE_CUSTOM_EVENTS, NATIVE_LOCATION_METADATA_RULES, NATIVE_UNMAPPED_LOCATION_RULES,
@@ -736,6 +737,17 @@ class SohExtremeLogicState(LogicMixin):
                     blocked.update(new_region.exits)
                     queue.extend(new_region.exits)
                     self.path[new_region] = (new_region.name, self.path.get(connection, None))
+                    self.multiworld.worlds[player].reached_region(self, new_region)
+
+                    # A switch-side approach can become reachable after its
+                    # dependent door was examined. Retry only those blocked
+                    # exits, using this age's graph and AP's registered region
+                    # dependencies; do not latch a temporary switch as an item.
+                    entrances = self.multiworld.indirect_connections.get(new_region)
+                    if entrances is not None:
+                        relevant = entrances.intersection(blocked)
+                        relevant.difference_update(queue)
+                        queue.extend(relevant)
 
         self._soh_extreme_age[player] = Ages.null
 
@@ -822,7 +834,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         "Scene Transitions": set(SceneTransitions.NAME_TO_ID),
         "NPC Speech Sanity": set(SPEECH_LOCATION_NAME_TO_ID) | set(NpcSpeech.NAME_TO_ID),
         "Enemy Drops": set(ENEMY_DROP_LOCATION_NAME_TO_ID),
-    }
+    } | {legacy: {name} for legacy, name in CHECK_NAME_ALIASES.items()}
 
     def __init__(self, multiworld, player):
         super().__init__(multiworld, player)
@@ -854,6 +866,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
     def get_filler_item_name(self) -> str:
         return get_filler_item(self)
+
+    def get_location(self, location_name: str):
+        # Older user options, scripts, and UT snapshots may use the original
+        # physical labels. Keep one canonical location object and protocol ID.
+        return super().get_location(canonical_location_name(location_name))
 
     def set_completion_rule(self, goal: Rule = None) -> None:
         if not self.options.true_no_logic:
@@ -1021,6 +1038,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
 
     def _enemy_location_enabled(self, loc) -> bool:
+        if loc.address == 9800484 and EntranceRandomizer.enabled(self) and self.options.triforce_hunt.value:
+            # Exact room routing cannot grant entry through the absent final boss key.
+            return self.using_ut and loc.address in self.passthrough.get("extreme_active_locations", ())
         if loc.address in ENEMY_UNUSED_OBJECT_IDS:
             return self.using_ut and loc.address in self.passthrough.get("extreme_active_locations", ())
         return True
@@ -1065,7 +1085,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         if self.using_ut:
             fill_shop_items(self)
 
-        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value:
+        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value or EntranceRandomizer.enabled(self):
             from .EnemyRoomLogic import create_enemy_room_graph
             create_enemy_room_graph(self)
 
@@ -1525,6 +1545,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # *before* stock SoH's generate_early() resolves any option-dependent
         # regions, pools, prices, or prefill state.
         self._apply_universal_tracker_slot_data()
+        normalize_location_options(self.options)
+        EntranceRandomizer.restore_legacy_defaults(self)
 
         # Resolve the native Random=0 sentinel once, before rules are built.
         # The concrete value is exported to both SoH and Universal Tracker;
@@ -1601,9 +1623,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         return result
 
     def pre_fill(self) -> None:
-        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value:
+        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value or EntranceRandomizer.enabled(self):
             from .EnemyRoomLogic import prune_optional_native_actions
             prune_optional_native_actions(self)
+        EntranceRandomizer.prune_obsolete_actions(self)
         # Tracker regeneration restores the original shop events in create_regions.
         # It must not refill them or randomly relocate original dungeon items.
         if self.using_ut:
@@ -1944,9 +1967,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
     # They mirror the fork's central MegaSoulAllowsLocation()/interaction gates.
     def set_rules(self) -> None:
         generate_prices(self)
-        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value:
+        if self.options.shuffle_enemy_drops.value or self.options.shuffle_silver.value in (1, 2) or self.options.scene_transition_checks.value or EntranceRandomizer.enabled(self):
             from .SilverRoomLogic import install_silver_routes
             install_silver_routes(self)
+            EntranceRandomizer.prepare_location_routes(self)
             # Trial selection and UT slot-data restoration happen in create_items.
             # Compiling these rules in create_regions would silently skip trials.
             self._extreme_room_compiler.install()
@@ -1972,6 +1996,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         grass_tags = LocTag.Overworld_Grass | LocTag.Grotto_Grass | LocTag.Dungeon_Grass
         npc_tags = (LocTag.Shop | LocTag.Merchant | LocTag.Trade_Location |
                     LocTag.Shooting_Minigame | LocTag.House_of_Skulltula_Reward)
+        # King Zora is an active path blocker in both ages. These exact native
+        # reward/trade IDs keep their language, thaw, age and exchange rules.
+        path_blocker_location_ids = frozenset({110, 740})
 
         fork_requirements = {}
         fork_any_requirements = {}
@@ -2014,6 +2041,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             return alternatives[0] if len(alternatives) == 1 else Or(*alternatives)
 
         def require(location, item_name: str, count: int = 1):
+            if EntranceRandomizer.enabled(self):
+                self._er_local_item_rules[location.name].append(Has(_soh_item_name(self, item_name) or item_name, count))
             # Fork-native checks do not have stock SoH resolved rules.  Accumulate
             # every Extreme requirement and install them together after all gates
             # have been discovered, rather than overwriting one gate with another.
@@ -2169,10 +2198,14 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             return None
 
         def require_any_fork(location, *item_names: str):
+            if EntranceRandomizer.enabled(self):
+                self._er_local_item_rules[location.name].append(RequireAnyExistingItems(item_names))
             if location.name in FORK_LOCATION_NAME_TO_ID:
                 fork_any_requirements.setdefault(location.name, []).append(tuple(item_names))
 
         def require_groups_fork(location, groups):
+            if EntranceRandomizer.enabled(self):
+                self._er_local_item_rules[location.name].append(RequireAnyItemGroups(groups))
             if location.name in FORK_LOCATION_NAME_TO_ID:
                 fork_group_requirements.setdefault(location.name, []).append(tuple(groups))
 
@@ -2958,6 +2991,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             for item_name in item_names:
                 if not native_item_enabled(item_name):
                     continue
+                if item_name == "NPC Soul" and ap_id in path_blocker_location_ids:
+                    continue
                 if item_name == "Speak":
                     require_speak(location)
                 elif item_name == "Animal Soul":
@@ -2997,7 +3032,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             bomb_route = Has("Progressive Bomb Bag") | Has("Bombchu Bag")
             if o.shuffle_rock_boulder_soul.value:
                 bomb_route = bomb_route & Has("Rock / Boulder Soul")
-            scale_route = Has("Progressive Scale", 1)
+            # Use the same Silver Scale threshold as the actual river entrance.
+            # The first shuffled scale grants surface Swim, not this shortcut.
+            scale_route = deep_swim_route()
 
             routes = [climb_route, scale_route]
             if include_gc_warp:
@@ -3183,7 +3220,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # Medallion Locked Trials was enabled.  Mirror the native trial-door
             # requirements directly on every custom actor that physically lives
             # inside a trial.
-            if o.medallion_locked_trials.value:
+            # ER collection proxies already use exact native room paths. A
+            # shuffled arrival can reach a trial item without crossing its
+            # medallion door; retain this broad-parent fallback only otherwise.
+            if o.medallion_locked_trials.value and location.name not in getattr(self, "_er_locations", {}):
                 rc_upper = fork_loc.rc.upper()
                 if rc_upper.startswith("RC_GANONS_CASTLE_") or rc_upper.startswith("RC_GANONS_GANONS_CASTLE_"):
                     trial_medallion = None
@@ -3782,7 +3822,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # speak checks also require NPC Soul when that option is active.
             if o.shuffle_speak.value and ((tags & npc_tags) or is_named_npc_interaction):
                 require_speak(location)
-            if o.shuffle_npc_soul.value and ((tags & npc_tags) or is_named_npc_interaction):
+            if (o.shuffle_npc_soul.value and location.address not in path_blocker_location_ids
+                    and ((tags & npc_tags) or is_named_npc_interaction)):
                 require(location, 'NPC Soul')
 
         # 0.7.6 uses the boolean-preserving native C++ overlay above instead of
@@ -3806,29 +3847,22 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if o.shuffle_speak.value:
                 require_speak(rolling_goron_adult)
 
-        # Stock AP also models some progression interactions as event locations
-        # which are not covered by NPC LocTags. In Closed Forest, Mido is a real
-        # actor interaction, so Speak/NPC Soul must gate the event that opens the
-        # Deku Tree / forest progression route.
+        # Mido remains active and interactable while invisible. His event
+        # still requires the proper language and the stock sword/shield/age
+        # requirements before opening the Deku Tree / forest progression route.
         for event_name in ("Mido", "Mido From Outside Deku Tree"):
             try:
                 event_location = self.get_location(event_name)
             except Exception:
                 continue
-            if o.shuffle_speak.value:
-                require_speak(event_location)
-            if o.shuffle_npc_soul.value:
-                require(event_location, "NPC Soul")
+            require_language(event_location, "Kokiri")
 
         # The letter bottle becomes usable only after the child King Zora
-        # exchange. Its event already requires child access to Zoras Domain;
-        # it must also require the actor and his language, like a normal check.
-        # Otherwise every HasBottle rule can use the still-sealed letter bottle.
+        # exchange. He stays active while hidden; language and the stock child,
+        # letter and Domain access requirements still gate the actual exchange.
         if o.zoras_fountain.value != 2:
             letter_delivery = self.get_location("ZD Deliver Ruto's Letter")
             require_language(letter_delivery, "Zora")
-            if o.shuffle_npc_soul.value:
-                require(letter_delivery, "NPC Soul")
 
         # Song from Saria is an inherited stock location whose native metadata
         # does not always carry NPC tags into the standalone EXTREME world.
@@ -3875,7 +3909,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     continue
                 if self.options.shuffle_speak.value:
                     require_speak(location)
-                if self.options.shuffle_npc_soul.value:
+                if self.options.shuffle_npc_soul.value and speech.base_address not in path_blocker_location_ids:
                     require(location, "NPC Soul")
 
             # Generic flavor-NPC capacity slots are intentionally absent from the
@@ -4589,7 +4623,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # Scrub Soul still controls the scrub actor; merchant conversation
             # additionally needs NPC interaction availability, just like native
             # HasItem(RG_SPEAK_DEKU) and the runtime business-scrub talk hook.
-            if o.shuffle_npc_soul.value:
+            if o.shuffle_npc_soul.value and address not in path_blocker_location_ids:
                 require(location, "NPC Soul")
             native_npc_interactions[location.name] = language
         self._extreme_native_interactions = native_npc_interactions
@@ -4641,6 +4675,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             add_resolved_rule(sheik, can_interact_npc((sheik.parent_region, self), "Hylian"))
 
         SceneTransitions.install_rules(self)
+        EntranceRandomizer.finalize_room_graph(self)
+
+    def connect_entrances(self):
+        EntranceRandomizer.connect(self)
 
     def create_items(self) -> None:
         self._create_stock_item_pool()
@@ -5017,6 +5055,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # Recheck the actual final placements, including cross-game deliveries.
         from .FrontierFill import validate_final_multiworld
         validate_final_multiworld(multiworld)
+        from .HintAreas import prepare_hint_areas
+        for player in multiworld.player_ids:
+            world = multiworld.worlds[player]
+            if world.game == cls.game:
+                prepare_hint_areas(world)
 
     def fill_slot_data(self):
         # Publish every resolved option directly.  Dynamic seed state that is not
@@ -5345,6 +5388,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "ExtremeTrapPercent": o.extreme_trap_filler_replacement.value,
         }.items():
             cv(key, value)
+
+        cvars.update(EntranceRandomizer.native_settings(self))
+        if EntranceRandomizer.enabled(self):
+            data["entrance_randomizer"] = EntranceRandomizer.slot_data(self)
 
         # Exact AP shop prices keyed by numeric location id. The native client applies
         # these after scouting so shop actors display/charge the server-generated price.

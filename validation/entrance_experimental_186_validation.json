@@ -1,0 +1,975 @@
+{
+  "status": "passed",
+  "version": "1.8.6",
+  "assertions_passed": 164,
+  "scope": "Read-only Python AST/official AP option runtime comparison and native source-contract review.",
+  "native_compilation_performed": false,
+  "rendered_ui_verified": false,
+  "behavioral_entrance_routing_or_in_game_playthrough_tested_here": false,
+  "baseline": {
+    "release": "1.8.5",
+    "replacement_zip": "/workspace/scratch/8fddab5b8169/delivery/SOH-EXTREME-1.8.5-source-files.zip",
+    "replacement_zip_sha256": "bde17f3b51730bccf9aaa091647176824c626edf466553a89cac5c668f47b920",
+    "original_source_zip": "/workspace/scratch/8fddab5b8169/upload/haha.zip",
+    "original_source_zip_sha256": "854ffecebd1e01ffd16c5e2b5cd8b2c43648e84180d5be75055a32c65ef4f59b",
+    "method": "Original uploaded source overlaid by complete replacement files from the 1.8.5 ZIP.",
+    "source_origin": {
+      "archipelago/soh_extreme/EntranceOptions.py": "1.8.5 replacement source ZIP",
+      "archipelago/soh_extreme/EntranceRandomizer.py": "1.8.5 replacement source ZIP",
+      "archipelago/soh_extreme/Options.py": "1.8.5 replacement source ZIP",
+      "soh/Enhancements/randomizer/option.cpp": "original source inherited unchanged by 1.8.5",
+      "soh/Enhancements/randomizer/option.h": "original source inherited unchanged by 1.8.5",
+      "soh/Enhancements/randomizer/settings.cpp": "original source inherited unchanged by 1.8.5",
+      "soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h": "original source inherited unchanged by 1.8.5",
+      "soh/Enhancements/randomizer/3drando/spoiler_log.cpp": "original source inherited unchanged by 1.8.5"
+    },
+    "source_sha256": {
+      "archipelago/soh_extreme/EntranceOptions.py": "608dcd904b417ef8c5154175e82408f2b45ec842ae738e2508a38a9887314234",
+      "archipelago/soh_extreme/EntranceRandomizer.py": "1d42a62d8119f0c894933c10809d95f7368d65ea854a688613e38d760fca4def",
+      "archipelago/soh_extreme/Options.py": "bd645344d5ba66d65da4cbfc858a992896d32a29f5cfdf8691df80512bbff599",
+      "soh/Enhancements/randomizer/option.cpp": "2165d68e9b60537b9bd65612005d1b93cdd960267a89e27e9498bc8c3ac361ef",
+      "soh/Enhancements/randomizer/option.h": "517768005dc0c6a47723574e97495dddbb674043f4d7237bebe604c05c095ea2",
+      "soh/Enhancements/randomizer/settings.cpp": "de7045482aa02e5a4043cc5cbb1d1c94798ae59c2b9aa248c05dce03e942458d",
+      "soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h": "8d7911b0c242ce2f3210db17959de93be56cd8c106fa065f1f086c94890a129b",
+      "soh/Enhancements/randomizer/3drando/spoiler_log.cpp": "080d4ee745d452ccc9a393b7edfcd9b01d6d9ad7c39c7132489a7448dcc66fc0"
+    }
+  },
+  "source_sha256": {
+    "archipelago/soh_extreme/EntranceOptions.py": "be2e6af611a566af664474b91c6bb1dbaeb4cfc5e03b8f92c61c956af66b626e",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "1d42a62d8119f0c894933c10809d95f7368d65ea854a688613e38d760fca4def",
+    "archipelago/soh_extreme/Options.py": "bd645344d5ba66d65da4cbfc858a992896d32a29f5cfdf8691df80512bbff599",
+    "soh/Enhancements/randomizer/option.cpp": "405dfa91239fd24ad3933a44d39c488c3b4de9d8ef34dcbd90288629759d6cb6",
+    "soh/Enhancements/randomizer/option.h": "517768005dc0c6a47723574e97495dddbb674043f4d7237bebe604c05c095ea2",
+    "soh/Enhancements/randomizer/settings.cpp": "0e78095dcf662f161ffadf06110368592e1a8acdffb905e4e8f9dfea3110d6c8",
+    "soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h": "8d7911b0c242ce2f3210db17959de93be56cd8c106fa065f1f086c94890a129b",
+    "soh/Enhancements/randomizer/3drando/spoiler_log.cpp": "080d4ee745d452ccc9a393b7edfcd9b01d6d9ad7c39c7132489a7448dcc66fc0"
+  },
+  "source_unchanged_during_validation": true,
+  "validator_sha256": "7f44a2290bd94cd656e44033a87124dd98d988803bdf2357d752cca30a8a9403",
+  "ap_options": [
+    {
+      "yaml_key": "shuffle_overworld_entrances",
+      "class": "ShuffleOverworldEntrances",
+      "label": "Shuffle Overworld Entrances (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_interior_entrances",
+      "class": "ShuffleInteriorEntrances",
+      "label": "Shuffle Interior Entrances (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_dungeon_entrances",
+      "class": "ShuffleDungeonEntrances",
+      "label": "Shuffle Dungeon Entrances (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_grotto_entrances",
+      "class": "ShuffleGrottoEntrances",
+      "label": "Shuffle Grotto and Grave Entrances (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_boss_entrances",
+      "class": "ShuffleBossEntrances",
+      "label": "Shuffle Boss Chambers (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_one_way_entrances",
+      "class": "ShuffleOneWayEntrances",
+      "label": "Shuffle One-Way Entrances (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_owl_drops",
+      "class": "ShuffleOwlDrops",
+      "label": "Shuffle Owl Destinations (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_warp_songs",
+      "class": "ShuffleWarpSongs",
+      "label": "Shuffle Warp Song Destinations (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_child_spawn",
+      "class": "ShuffleChildSpawn",
+      "label": "Shuffle Child Spawn (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_adult_spawn",
+      "class": "ShuffleAdultSpawn",
+      "label": "Shuffle Adult Spawn (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "shuffle_dungeon_doors",
+      "class": "ShuffleDungeonDoors",
+      "label": "Shuffle Dungeon Room Doors (Experimental)",
+      "default": 0,
+      "valid_keys": null,
+      "tooltip_prefix": "Experimental. "
+    },
+    {
+      "yaml_key": "mixed_entrance_pools",
+      "class": "MixedEntrancePools",
+      "label": "Mixed Entrance Pools (Experimental)",
+      "default": [],
+      "valid_keys": [
+        "adult_spawn",
+        "all",
+        "bosses",
+        "child_spawn",
+        "dungeon_doors",
+        "dungeons",
+        "grottos",
+        "interiors",
+        "one_ways",
+        "overworld",
+        "owls",
+        "warp_songs"
+      ],
+      "tooltip_prefix": "Experimental. "
+    }
+  ],
+  "ap_group": "Entrance Randomizer (Experimental)",
+  "native_section": "Entrances (Experimental)",
+  "native_controls": [
+    {
+      "key": "RSK_SHUFFLE_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_SHUFFLE_ENTRANCES, \"\")",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_DUNGEON_ENTRANCES",
+      "declaration": "OPT_U8(RSK_SHUFFLE_DUNGEON_ENTRANCES, {\"Off\", \"On\", \"On + Ganon\"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING(\"ShuffleDungeonsEntrances\"), WIDGET_CVAR_COMBOBOX, RO_DUNGEON_ENTRANCE_SHUFFLE_OFF)",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_BOSS_ENTRANCES",
+      "declaration": "OPT_U8(RSK_SHUFFLE_BOSS_ENTRANCES, {\"Off\", \"Age Restricted\", \"Full\"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING(\"ShuffleBossEntrances\"), WIDGET_CVAR_COMBOBOX, RO_BOSS_ROOM_ENTRANCE_SHUFFLE_OFF)",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_GANONS_TOWER_ENTRANCE",
+      "declaration": "OPT_BOOL(RSK_SHUFFLE_GANONS_TOWER_ENTRANCE, CVAR_RANDOMIZER_SETTING(\"ShuffleGanonTowerEntrance\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_OVERWORLD_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_SHUFFLE_OVERWORLD_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"ShuffleOverworldEntrances\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_INTERIOR_ENTRANCES",
+      "declaration": "OPT_U8(RSK_SHUFFLE_INTERIOR_ENTRANCES, {\"Off\", \"Simple\", \"All\"}, OptionCategory::Setting, CVAR_RANDOMIZER_SETTING(\"ShuffleInteriorsEntrances\"), WIDGET_CVAR_COMBOBOX, RO_INTERIOR_ENTRANCE_SHUFFLE_OFF)",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_THIEVES_HIDEOUT_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_SHUFFLE_THIEVES_HIDEOUT_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"ShuffleThievesHideoutEntrances\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_GROTTO_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_SHUFFLE_GROTTO_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"ShuffleGrottosEntrances\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_OWL_DROPS",
+      "declaration": "OPT_BOOL(RSK_SHUFFLE_OWL_DROPS, CVAR_RANDOMIZER_SETTING(\"ShuffleOwlDrops\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_WARP_SONGS",
+      "declaration": "OPT_BOOL(RSK_SHUFFLE_WARP_SONGS, CVAR_RANDOMIZER_SETTING(\"ShuffleWarpSongs\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_SHUFFLE_OVERWORLD_SPAWNS",
+      "declaration": "OPT_BOOL(RSK_SHUFFLE_OVERWORLD_SPAWNS, CVAR_RANDOMIZER_SETTING(\"ShuffleOverworldSpawns\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_DECOUPLED_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_DECOUPLED_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"DecoupleEntrances\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_MIXED_ENTRANCE_POOLS",
+      "declaration": "OPT_BOOL(RSK_MIXED_ENTRANCE_POOLS, CVAR_RANDOMIZER_SETTING(\"MixedEntrances\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_MIX_DUNGEON_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_MIX_DUNGEON_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"MixDungeons\"), IMFLAG_NONE)",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_MIX_BOSS_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_MIX_BOSS_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"MixBosses\"), IMFLAG_NONE)",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_MIX_OVERWORLD_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_MIX_OVERWORLD_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"MixOverworld\"), IMFLAG_NONE)",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_MIX_INTERIOR_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_MIX_INTERIOR_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"MixInteriors\"), IMFLAG_NONE)",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_MIX_THIEVES_HIDEOUT_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_MIX_THIEVES_HIDEOUT_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"MixThievesHideout\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    },
+    {
+      "key": "RSK_MIX_GROTTO_ENTRANCES",
+      "declaration": "OPT_BOOL(RSK_MIX_GROTTO_ENTRANCES, CVAR_RANDOMIZER_SETTING(\"MixGrottos\"))",
+      "experimental_label": true,
+      "experimental_tooltip": true
+    }
+  ],
+  "mixed_all_evaluations": 4096,
+  "assertions": [
+    {
+      "name": "inherited_native_baseline_is_tied_to_185_complete_source_audit",
+      "passed": true
+    },
+    {
+      "name": "reviewed_native_files_were_unchanged_and_not_replaced_in_185",
+      "passed": true
+    },
+    {
+      "name": "all_twelve_existing_ap_option_classes_are_preserved",
+      "passed": true
+    },
+    {
+      "name": "all_twelve_yaml_option_keys_and_order_are_unchanged",
+      "passed": true,
+      "keys": [
+        "shuffle_overworld_entrances",
+        "shuffle_interior_entrances",
+        "shuffle_dungeon_entrances",
+        "shuffle_grotto_entrances",
+        "shuffle_boss_entrances",
+        "shuffle_one_way_entrances",
+        "shuffle_owl_drops",
+        "shuffle_warp_songs",
+        "shuffle_child_spawn",
+        "shuffle_adult_spawn",
+        "shuffle_dungeon_doors",
+        "mixed_entrance_pools"
+      ]
+    },
+    {
+      "name": "ShuffleOverworldEntrances_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOverworldEntrances_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOverworldEntrances_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOverworldEntrances_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOverworldEntrances_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOverworldEntrances_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOverworldEntrances_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleInteriorEntrances_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleInteriorEntrances_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleInteriorEntrances_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleInteriorEntrances_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleInteriorEntrances_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleInteriorEntrances_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleInteriorEntrances_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonEntrances_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonEntrances_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonEntrances_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonEntrances_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonEntrances_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonEntrances_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonEntrances_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleGrottoEntrances_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleGrottoEntrances_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleGrottoEntrances_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleGrottoEntrances_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleGrottoEntrances_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleGrottoEntrances_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleGrottoEntrances_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleBossEntrances_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleBossEntrances_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleBossEntrances_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleBossEntrances_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleBossEntrances_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleBossEntrances_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleBossEntrances_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOneWayEntrances_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOneWayEntrances_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOneWayEntrances_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOneWayEntrances_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOneWayEntrances_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOneWayEntrances_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOneWayEntrances_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOwlDrops_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOwlDrops_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOwlDrops_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOwlDrops_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOwlDrops_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOwlDrops_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleOwlDrops_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleWarpSongs_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleWarpSongs_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleWarpSongs_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleWarpSongs_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleWarpSongs_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleWarpSongs_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleWarpSongs_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleChildSpawn_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleChildSpawn_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleChildSpawn_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleChildSpawn_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleChildSpawn_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleChildSpawn_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleChildSpawn_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleAdultSpawn_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleAdultSpawn_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleAdultSpawn_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleAdultSpawn_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleAdultSpawn_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleAdultSpawn_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleAdultSpawn_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonDoors_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonDoors_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonDoors_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonDoors_input_0_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonDoors_input_1_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonDoors_input_False_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ShuffleDungeonDoors_input_True_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "MixedEntrancePools_tooltip_is_experimental_and_preserves_original_help",
+      "passed": true
+    },
+    {
+      "name": "MixedEntrancePools_visible_label_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "MixedEntrancePools_base_default_and_valid_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "MixedEntrancePools_input_['all']_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "MixedEntrancePools_input_[]_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "MixedEntrancePools_input_['interiors', 'overworld']_serializes_unchanged",
+      "passed": true
+    },
+    {
+      "name": "ap_group_heading_is_experimental",
+      "passed": true
+    },
+    {
+      "name": "entire_ap_option_ast_diff_contains_only_labels_tooltips_and_group_heading",
+      "passed": true
+    },
+    {
+      "name": "experimental_ap_group_contains_every_entrance_option",
+      "passed": true
+    },
+    {
+      "name": "existing_options_registration_still_uses_experimental_group_without_schema_changes",
+      "passed": true
+    },
+    {
+      "name": "enabled_and_mixed_pool_algorithms_and_category_mapping_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "mixed_all_preserves_every_enabled_combination_without_enabling_disabled_pools",
+      "passed": true,
+      "combinations": 2048,
+      "selections_per_combination": 2,
+      "evaluations": 4096
+    },
+    {
+      "name": "native_experimental_helper_covers_every_one_of_the_19_entrance_control_keys",
+      "passed": true,
+      "keys": [
+        "RSK_SHUFFLE_ENTRANCES",
+        "RSK_SHUFFLE_DUNGEON_ENTRANCES",
+        "RSK_SHUFFLE_BOSS_ENTRANCES",
+        "RSK_SHUFFLE_GANONS_TOWER_ENTRANCE",
+        "RSK_SHUFFLE_OVERWORLD_ENTRANCES",
+        "RSK_SHUFFLE_INTERIOR_ENTRANCES",
+        "RSK_SHUFFLE_THIEVES_HIDEOUT_ENTRANCES",
+        "RSK_SHUFFLE_GROTTO_ENTRANCES",
+        "RSK_SHUFFLE_OWL_DROPS",
+        "RSK_SHUFFLE_WARP_SONGS",
+        "RSK_SHUFFLE_OVERWORLD_SPAWNS",
+        "RSK_DECOUPLED_ENTRANCES",
+        "RSK_MIXED_ENTRANCE_POOLS",
+        "RSK_MIX_DUNGEON_ENTRANCES",
+        "RSK_MIX_BOSS_ENTRANCES",
+        "RSK_MIX_OVERWORLD_ENTRANCES",
+        "RSK_MIX_INTERIOR_ENTRANCES",
+        "RSK_MIX_THIEVES_HIDEOUT_ENTRANCES",
+        "RSK_MIX_GROTTO_ENTRANCES"
+      ]
+    },
+    {
+      "name": "native_setting_enum_names_order_and_values_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "experimental_native_scope_does_not_include_unrelated_controls",
+      "passed": true
+    },
+    {
+      "name": "every_native_setting_and_toggle_uses_the_shared_experimental_display_path",
+      "passed": true
+    },
+    {
+      "name": "native_widgets_receive_experimental_labels_and_tooltip_prefixes",
+      "passed": true
+    },
+    {
+      "name": "native_labels_keep_the_previous_widget_id_after_imgui_triple_hash",
+      "passed": true
+    },
+    {
+      "name": "native_widget_callbacks_cvars_options_visibility_disable_and_value_behavior_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "entire_native_option_cpp_diff_is_limited_to_the_experimental_helper_and_display_changes",
+      "passed": true
+    },
+    {
+      "name": "serialized_native_GetName_remains_byte_identical",
+      "passed": true
+    },
+    {
+      "name": "native_option_construction_API_and_inherited_defaults_are_unchanged",
+      "passed": true
+    },
+    {
+      "name": "entire_native_settings_cpp_diff_is_only_the_experimental_section_heading",
+      "passed": true
+    },
+    {
+      "name": "all_18_direct_native_controls_are_in_the_experimental_section_and_aggregate_toggle_is_covered",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_DUNGEON_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_DUNGEON_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_DUNGEON_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_BOSS_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_BOSS_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_BOSS_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_GANONS_TOWER_ENTRANCE_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_GANONS_TOWER_ENTRANCE_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_GANONS_TOWER_ENTRANCE_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OVERWORLD_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OVERWORLD_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OVERWORLD_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_INTERIOR_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_INTERIOR_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_INTERIOR_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_THIEVES_HIDEOUT_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_THIEVES_HIDEOUT_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_THIEVES_HIDEOUT_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_GROTTO_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_GROTTO_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_GROTTO_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OWL_DROPS_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OWL_DROPS_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OWL_DROPS_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_WARP_SONGS_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_WARP_SONGS_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_WARP_SONGS_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OVERWORLD_SPAWNS_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OVERWORLD_SPAWNS_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_SHUFFLE_OVERWORLD_SPAWNS_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_DECOUPLED_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_DECOUPLED_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_DECOUPLED_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIXED_ENTRANCE_POOLS_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIXED_ENTRANCE_POOLS_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIXED_ENTRANCE_POOLS_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_DUNGEON_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_DUNGEON_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_DUNGEON_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_BOSS_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_BOSS_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_BOSS_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_OVERWORLD_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_OVERWORLD_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_OVERWORLD_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_INTERIOR_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_INTERIOR_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_INTERIOR_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_THIEVES_HIDEOUT_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_THIEVES_HIDEOUT_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_THIEVES_HIDEOUT_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_GROTTO_ENTRANCES_has_one_unchanged_native_declaration",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_GROTTO_ENTRANCES_native_cvar_default_values_and_widget_type_unchanged",
+      "passed": true
+    },
+    {
+      "name": "RSK_MIX_GROTTO_ENTRANCES_uses_an_experimental_display_category",
+      "passed": true
+    },
+    {
+      "name": "native_spoiler_serialization_and_settings_name_lookup_still_use_unchanged_GetName",
+      "passed": true
+    },
+    {
+      "name": "all_reviewed_production_source_remained_unchanged_during_validation",
+      "passed": true
+    }
+  ]
+}

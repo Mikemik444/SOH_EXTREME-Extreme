@@ -14,6 +14,8 @@ struct ArchipelagoSaveSnapshot {
     std::string slot;
     SohExtreme::SaveConnectionIdentity identity;
     std::string settingsJson;
+    // Only item targets from completed hint text, scoped to this save identity.
+    std::string revealedHintTargetsJson;
     std::vector<uint64_t> fallbackNpcSpeechHashes;
     std::vector<int64_t> pendingLocations;
 };

@@ -1,0 +1,62 @@
+{
+  "validation": "SOH-EXTREME 1.8.2 native entrance capacity, routing, aliases and tracker",
+  "recorded_at_utc": "2026-10-17T21:13:11.660440+00:00",
+  "working_directory": "/workspace/scratch/8fddab5b8169",
+  "status": "passed",
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "commands": [
+    {
+      "command": "python source/tools/tests/test_entrance_runtime.py",
+      "exit_code": 0,
+      "wall_time_seconds": 2.058416321,
+      "stdout": "PASS: Spirit, Shadow and Water use their mapped rooms with paired returns.\nPASS: exact room and position delivery for 421 catalog door sides.\nPASS: reload, validation, savewarp, one-use recovery and crossing reports.\nPASS: all 719 routes accepted, 298 indexed rows retained, and 52 overworld routes return as coupled pairs.\nPASS: water aliases retain native destinations, canonical AP checks and paired recovery; non-AP and courtyard behavior preserved.\n"
+    },
+    {
+      "command": "python source/tools/tests/test_entrance_tracker.py",
+      "exit_code": 0,
+      "wall_time_seconds": 1.774590612,
+      "stdout": "PASS: all 719 catalog endpoints resolve; all 421 door labels and area/type bounds validated.\nPASS: all 298 indexed routes retained in all four groupings; duplicate one-way targets preserved; offsets and counts agree.\nPASS: unknown endpoints skipped safely; stale arrays cleared on rebuild.\n"
+    }
+  ],
+  "coverage": [
+    "Actual production entrance runtime compiled with engine IO stubs; aggregate shuffle enablement, exact mapped room/position delivery for all 421 catalog door sides and the reported Spirit/Shadow/Water sequence.",
+    "Coupled inverse returns, reload and savewarp behavior, malformed map atomic rejection, unchanged-map pending arrival preservation, single-use recovery, cancellation and completed-crossing report suppression.",
+    "All 719 catalog routes accepted, all 298 indexed rows retained with capacity derived from the shared 320-entry production header, and all 52 overworld routes exercised as changed coupled pairs, including DMT/Goron City and both Death Mountain Crater connections.",
+    "Actual native Entrance_OverrideNextIndex and the production water-alias initialization block: raw water entrance IDs select native destinations while canonical AP source IDs drive discovery, tracker reporting, checks and paired recovery; non-AP and courtyard exceptions preserved.",
+    "Actual production tracker functions: metadata for all 719 endpoints, labels and group/type bounds for all 421 room-door sides, all 298 indexed routes retained in all four groupings, duplicate one-way destinations preserved, group offsets/counts consistent, unknown entries skipped and rebuild tails cleared."
+  ],
+  "focused_review": {
+    "status": "no blocking issue found",
+    "spawn_lifecycle": "C declarations and definitions agree; BetterSaveMenu passes the requested age; load/exit reset pending requests; deferred spawn service runs after AP save ownership and safe-gameplay gates; applying slot data alone does not arm a teleport; unchanged routes and native arrays skip Entrance_Init during live AP gameplay, preserving grotto state.",
+    "save_format": "Entrance override storage and native consumers share ENTRANCE_OVERRIDES_MAX_COUNT. SaveManager uses field-wise JSON serialization and default initialization for missing extended array entries; no fixed raw-struct save ABI found. Increasing 296 to 320 accommodates all 298 current indexed routes and an empty tail.",
+    "generator_spawn_guard": "Saved Universal Tracker replay returns before fresh-spawn validation. Fresh default home-scene child/adult destinations are rejected. No additional random draws are introduced. Separate generator validation records accepted spawn IDs and actual-candidate RNG comparisons; no second full-map generation or new full-fill run was performed in this review."
+  },
+  "limitations": [
+    "Focused source-based C++ harnesses stub engine IO and do not run the complete game or simulate collision and physical gameplay.",
+    "The full native application build was unavailable because the supplied source omits build dependencies and engine headers/assets.",
+    "The tracker runner uses a small explicit native scene-metadata fixture; AP catalog metadata and tested production functions come from the current source.",
+    "The separate eight-group spawn lifecycle execution is recorded in tests/spawn_lifecycle_validation.json."
+  ],
+  "tested_source_sha256": {
+    "source/tools/tests/test_entrance_runtime.py": "c26086a4920ddc1b11f80134dea76903791ef6a6880a37e63732785da696299d",
+    "source/tools/tests/entrance_runtime_tests.cpp": "367b4ad366479c79720a34fbfc88180bbb052599d937c476f926f1b9637f40e9",
+    "source/tools/tests/test_entrance_tracker.py": "252b5201e9dfb0ce80906dbdc168565496015c03d3896062b4093e0402eb1fd4",
+    "source/soh/Network/Archipelago/EntranceRuntime.inc": "8fecaca8b7e27f9f0da4b3028d02d905fc9e7d6fe90c112a90c51fbf70620f3f",
+    "source/soh/Network/Archipelago/EntranceRouting.h": "7d78f34ace1fa403c8479798331f53278e6033ab1283a3b9198a15dcbcdb656a",
+    "source/soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a",
+    "source/soh/Network/Archipelago/SceneTransitionChecks.h": "8b4d0be3cc73907630124086a8f4485a6da71817a08ef179f754cd1676010f13",
+    "source/soh/Network/Archipelago/SceneTransitionData.inc": "b7b4aa8c04ba92c233a501a8dabd509bcc4c214fb4bb9146005a2d7020e68893",
+    "source/soh/Network/Archipelago/ArchipelagoClient.cpp": "17682bdd42c00da31b27a6fbcf2806dd40ac43e3bcafb80d50773fdc49d5fb76",
+    "source/soh/Enhancements/randomizer/randomizer_entrance.c": "f69919980ebc37d805d83ac465d49bcc0f0165b3a9da21385323ebce69a4a2af",
+    "source/soh/Enhancements/randomizer/randomizer_entrance.h": "dd0ae80bf799888ccb5519a2475f23c848aaf8547908d9bc1d62a08d511eef1c",
+    "source/soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp": "0943ff9dfddeac6fec3c35ee5acfbc955069057ba530609f9119e69785d7c021",
+    "source/soh/Enhancements/randomizer/randomizer_entrance_tracker.h": "85d03cb79aac8d7b5d18b5b95ded6bf3478dd04b233135d148aa2120ed20afd7",
+    "source/archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e"
+  },
+  "reviewed_source_sha256": {
+    "source/soh/Network/Archipelago/ArchipelagoC.h": "21045e1af5f30e4ac212269e32f6a84ed88fd10bb8d1739b79a71a3117c055d2",
+    "source/soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "source/soh/Enhancements/QoL/BetterSaveMenu.cpp": "eb4ae4bcc2ce1bdea4478b652d7e9c8ebdeb515798295692ac24101f95eb5842",
+    "source/archipelago/soh_extreme/EntranceRandomizer.py": "f69c936c6a12d237158b3aff28d8d36f98e2901d5d42ef8689a1e713a800396b"
+  }
+}

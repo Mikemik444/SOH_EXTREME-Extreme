@@ -1,0 +1,358 @@
+#include "CustomMessageEncoding.h"
+#include "CustomMessageFormatter.h"
+#include "CustomMessageInterfaceAddon.h"
+#include "CustomMessagePageBuffer.h"
+
+#include <array>
+#include <cstdint>
+#include <cstring>
+#include <functional>
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+using u8 = uint8_t;
+using u16 = uint16_t;
+using u32 = uint32_t;
+using Gfx = int;
+
+static size_t assertions = 0;
+static size_t cases = 0;
+#define CHECK(condition) do { ++assertions; if (!(condition)) throw std::runtime_error(#condition); } while (false)
+
+enum {
+    MSGMODE_TEXT_DISPLAYING,
+    MSGMODE_TEXT_AWAIT_NEXT,
+    MSGMODE_TEXT_NEXT_MSG,
+    MSGMODE_TEXT_DELAYED_BREAK,
+    MSGMODE_TEXT_CLOSING,
+    TEXTBOX_ENDTYPE_DEFAULT,
+    TEXTBOX_ICON_TRIANGLE,
+    MESSAGE_BOX_BREAK = 0x04,
+};
+struct Font {
+    uint64_t before = 0xA47A12DC79830061ULL;
+    char msgBuf[1280]{};
+    uint64_t after = 0xEDA38277B4951071ULL;
+    uint8_t charTexBuf[1]{};
+    uint32_t msgLength = 0;
+};
+struct MessageContext {
+    Font font;
+    uint32_t msgLength = 0;
+    uint16_t msgBufPos = 0;
+    uint16_t textId = 0;
+    uint8_t msgMode = 0;
+    uint8_t stateTimer = 0;
+    uint8_t textboxEndType = 0;
+    uint16_t textUnskippable = 0;
+};
+struct PlayState { MessageContext msgCtx; };
+static PlayState state;
+static PlayState* gPlayState = &state;
+static bool sTextboxSkipped = false;
+static bool pressedA = false;
+static int lastIcon = -1;
+static int errorCount = 0;
+static int gSfxDefaultPos, gSfxDefaultFreqAndVolScale, gSfxDefaultReverb;
+static int lastRequestedFormat = -1;
+static bool resetObservedInHook = false;
+static bool hookLoadsCustom = true;
+static bool hookSelectsCustom = true;
+static std::string hookText;
+
+enum MessageFormat { MF_AUTO_FORMAT };
+class CustomMessage {
+  public:
+    explicit CustomMessage(std::string text_) : text(std::move(text_)) {}
+    std::string GetForCurrentLanguage(MessageFormat format) const {
+        lastRequestedFormat = format;
+        return CustomMessageFormatting::Wrap(text, [](const std::string& token) -> size_t {
+            return token == " " ? 6 : 8 * token.size();
+        });
+    }
+    void LoadIntoFont();
+    unsigned type = 2, position = 3;
+    std::string text;
+};
+#define SPDLOG_ERROR(...) do { ++errorCount; } while (false)
+
+// Replaced with the unmodified production C wrappers and LoadIntoFont.
+@MANAGER_STREAM@
+
+extern "C" int CallPrepareFromC(char*, size_t, uint16_t*, uint32_t*);
+
+static void CheckCanaries() {
+    CHECK(state.msgCtx.font.before == 0xA47A12DC79830061ULL);
+    CHECK(state.msgCtx.font.after == 0xEDA38277B4951071ULL);
+    CHECK(state.msgCtx.msgLength == state.msgCtx.font.msgLength);
+    CHECK(state.msgCtx.msgLength < sizeof(state.msgCtx.font.msgBuf));
+}
+static void GameInteractor_ExecuteOnOpenText(u16*, bool* loadFromMessageTable) {
+    uint16_t position = 0;
+    uint32_t length = 0;
+    resetObservedInHook = !CallPrepareFromC(state.msgCtx.font.msgBuf, sizeof(state.msgCtx.font.msgBuf),
+                                           &position, &length);
+    if (hookLoadsCustom) CustomMessage(hookText).LoadIntoFont();
+    *loadFromMessageTable = !hookSelectsCustom;
+}
+static void NativeOpenText(u16 textId) {
+    // Production reset ordering immediately around the real hook invocation.
+@OPEN_RESET@
+    if (loadFromMessageTable) {
+        std::memcpy(state.msgCtx.font.msgBuf, "Vanilla\x02", 8);
+        state.msgCtx.msgLength = state.msgCtx.font.msgLength = 8;
+    }
+    state.msgCtx.textId = textId;
+    state.msgCtx.msgBufPos = 0;
+    state.msgCtx.msgMode = MSGMODE_TEXT_NEXT_MSG;
+}
+static void NativeDecodeRefill(PlayState* play) {
+    MessageContext* msgCtx = &play->msgCtx;
+    Font* font = &msgCtx->font;
+@DECODE_REFILL@
+}
+template <typename... Args> static void Audio_PlaySfxGeneral(Args...) {}
+static void Font_LoadMessageBoxIcon(Font*, u16 icon) { lastIcon = icon; }
+static bool Message_ShouldAdvance(PlayState*) { return pressedA; }
+
+static void NativeDrawBoxBreak(PlayState* play, Gfx** gfxP) {
+    MessageContext* msgCtx = &play->msgCtx;
+    Font* font = &msgCtx->font;
+    Gfx* gfx = *gfxP;
+    const u8 character = MESSAGE_BOX_BREAK;
+    switch (character) {
+@DRAW_BOX_BREAK@
+        default: break;
+    }
+}
+static void NativeAdvance(PlayState* play) {
+    MessageContext* msgCtx = &play->msgCtx;
+    switch (msgCtx->msgMode) {
+@UPDATE_DELAYED@
+@UPDATE_AWAIT_NEXT@
+        default: break;
+    }
+}
+
+@CLOSE_TEXTBOX@
+
+static size_t Boundary(const char* buffer, size_t length) {
+    const std::string page(buffer, length);
+    for (size_t position = 0; position < page.size();) {
+        if (CustomMessageEncoding::IsDecodeBoundary(static_cast<unsigned char>(page[position]))) return position;
+        position += CustomMessageEncoding::TokenLength(page, position);
+    }
+    throw std::runtime_error("Page lacks native terminal");
+}
+static void OpenCustom(const std::string& text, u16 textId = 0x04E3) {
+    hookText = text;
+    hookLoadsCustom = hookSelectsCustom = true;
+    NativeOpenText(textId);
+    CHECK(resetObservedInHook);
+    CHECK(lastRequestedFormat == MF_AUTO_FORMAT);
+    CHECK(state.msgCtx.font.charTexBuf[0] == 0x23);
+    NativeDecodeRefill(&state);
+    CheckCanaries();
+}
+static std::string CurrentPage() {
+    return std::string(state.msgCtx.font.msgBuf, state.msgCtx.font.msgLength);
+}
+static void PressNext(bool skip = false) {
+    auto& ctx = state.msgCtx;
+    const size_t boundary = Boundary(ctx.font.msgBuf, ctx.font.msgLength);
+    const unsigned char code = ctx.font.msgBuf[boundary];
+    CHECK(CustomMessageEncoding::IsPageBreak(code));
+    const u16 textId = ctx.textId;
+    if (code == 0x04) {
+        ctx.msgBufPos = static_cast<uint16_t>(boundary);
+        ctx.msgMode = MSGMODE_TEXT_DISPLAYING;
+        sTextboxSkipped = skip;
+        Gfx* gfx = nullptr;
+        NativeDrawBoxBreak(&state, &gfx);
+        if (!skip) {
+            CHECK(ctx.msgMode == MSGMODE_TEXT_AWAIT_NEXT);
+            CHECK(lastIcon == TEXTBOX_ICON_TRIANGLE);
+            pressedA = false;
+            const auto waitingPage = CurrentPage();
+            NativeAdvance(&state);
+            CHECK(ctx.msgMode == MSGMODE_TEXT_AWAIT_NEXT);
+            CHECK(CurrentPage() == waitingPage);
+            pressedA = true;
+            NativeAdvance(&state);
+        }
+    } else {
+        // The native delayed-break decoder has already consumed both bytes.
+        ctx.msgBufPos = static_cast<uint16_t>(boundary + 2);
+        ctx.msgMode = MSGMODE_TEXT_DELAYED_BREAK;
+        ctx.stateTimer = 2;
+        NativeAdvance(&state);
+        CHECK(ctx.msgMode == MSGMODE_TEXT_DELAYED_BREAK);
+        NativeAdvance(&state);
+    }
+    CHECK(ctx.msgMode == MSGMODE_TEXT_NEXT_MSG);
+    NativeDecodeRefill(&state);
+    CHECK(ctx.msgBufPos == 0);
+    CHECK(ctx.textId == textId);
+    CheckCanaries();
+}
+
+static void Run(const char* name, const std::function<void()>& test) {
+    CustomMessage_ResetTextBuffer();
+    state = PlayState{};
+    test();
+    ++cases;
+    std::cout << "PASS " << name << '\n';
+}
+int main() {
+    Run("native control operands and UTF-8 tokens", [] {
+        const std::array<unsigned char, 11> controls = {0x05,0x06,0x0C,0x0E,0x13,0x14,0x1E,0x07,0x11,0x12,0x15};
+        for (const auto control : controls) {
+            for (unsigned operand = 0; operand < 256; ++operand) {
+                const size_t size = CustomMessageEncoding::ControlLength(control);
+                const std::string token = std::string(1, control) + std::string(size - 1, operand);
+                CHECK(CustomMessageEncoding::TokenLength(token + "Z", 0) == size);
+                CHECK(CustomMessageEncoding::TokenLength(token, token.size()) == 0);
+                CHECK(CustomMessageEncoding::TokenLength(token.substr(0, size - 1), 0) == size - 1);
+            }
+        }
+        CHECK(CustomMessageEncoding::TokenLength("é", 0) == 2);
+        CHECK(CustomMessageEncoding::TokenLength("€", 0) == 3);
+        CHECK(CustomMessageEncoding::TokenLength("🌲", 0) == 4);
+        CHECK(CustomMessageEncoding::TokenLength(std::string("\xE2\x82", 2), 0) == 1);
+        CHECK(CustomMessageEncoding::TokenLength(std::string("\xE2" "A", 2), 0) == 1);
+    });
+    Run("full hint larger than 65535 bytes via native A pages", [] {
+        std::string text;
+        for (int page = 0; page < 5000; ++page) {
+            if (page != 0) text += '\x04';
+            text += "Lead " + std::to_string(page) + ": the whole name.";
+        }
+        const std::string expected = CustomMessage(text).GetForCurrentLanguage(MF_AUTO_FORMAT);
+        CHECK(expected.size() > 65535);
+        OpenCustom(text);
+        std::string recovered;
+        size_t pages = 0;
+        for (;;) {
+            const auto current = CurrentPage();
+            CHECK(current.size() <= CustomMessageFormatting::MaxPageDecodedBytes + 4);
+            recovered += current;
+            ++pages;
+            if (current.back() == '\x02') break;
+            PressNext();
+        }
+        CHECK(pages >= 5000);
+        CHECK(recovered == expected);
+    });
+    Run("B skip uses the same page refill without new text IDs", [] {
+        OpenCustom("First\x04" "Second\x04" "Last");
+        PressNext(true);
+        CHECK(CurrentPage() == "Second\x04");
+        PressNext(true);
+        CHECK(CurrentPage() == "Last\x02");
+    });
+    Run("delayed pages preserve their operand and advance exactly once", [] {
+        OpenCustom(std::string("First\x0C\x04", 7) + "Second");
+        CHECK(CurrentPage() == std::string("First\x0C\x04", 7));
+        PressNext();
+        CHECK(CurrentPage() == "Second\x02");
+    });
+    Run("control operands containing 04 are never phantom pages", [] {
+        const std::string first = std::string("\x05\x04\x13\x04\x12\x04\x04\x15\x04\x04\x04", 11) + "Lead\x04";
+        CustomMessagePageBuffer buffer;
+        std::array<char, 1280> bytes{};
+        uint32_t length = 0;
+        uint16_t position = 0;
+        CHECK(buffer.Load(first + "Rest\x02", bytes.data(), bytes.size(), length));
+        CHECK(std::string(bytes.data(), length) == first);
+        position = static_cast<uint16_t>(length);
+        CHECK(buffer.Prepare(bytes.data(), bytes.size(), position, length));
+        CHECK(std::string(bytes.data(), length) == "Rest\x02");
+    });
+    Run("EVENT and TEXTID remain the actor's final controls", [] {
+        for (const std::string& terminal : { std::string("\x0B", 1), std::string("\x07\x04\x02", 3) }) {
+            OpenCustom("First\x04" "Final" + terminal);
+            PressNext();
+            CHECK(CurrentPage() == "Final" + terminal);
+            // Language replay increments the native cursor once at page end.
+            state.msgCtx.msgBufPos = 6;
+            NativeDecodeRefill(&state);
+            CHECK(state.msgCtx.msgBufPos == 0);
+            CHECK(CurrentPage() == "Final" + terminal);
+        }
+    });
+    Run("reopening and switching language discard previous unread pages", [] {
+        OpenCustom("Old first\x04" "Old second\x04" "Old third");
+        PressNext();
+        OpenCustom("New first\x04" "New last");
+        PressNext();
+        CHECK(CurrentPage() == "New last\x02");
+        for (int replay = 0; replay < 6; ++replay) {
+            state.msgCtx.msgBufPos = static_cast<uint16_t>(CurrentPage().size());
+            NativeDecodeRefill(&state);
+            CHECK(CurrentPage() == "New last\x02");
+            CHECK(state.msgCtx.msgBufPos == 0);
+        }
+    });
+    Run("vanilla table selection and close clear prior custom stream", [] {
+        OpenCustom("Old first\x04" "Old rest");
+        hookLoadsCustom = false;
+        hookSelectsCustom = false;
+        NativeOpenText(0x1234);
+        CHECK(resetObservedInHook);
+        CHECK(CurrentPage() == "Vanilla\x02");
+        uint16_t position = 8;
+        uint32_t length = 0;
+        CHECK(!CallPrepareFromC(state.msgCtx.font.msgBuf, 1280, &position, &length));
+        OpenCustom("First\x04" "Rest");
+        Message_CloseTextbox(&state);
+        CHECK(state.msgCtx.msgMode == MSGMODE_TEXT_CLOSING);
+        CHECK(!CallPrepareFromC(state.msgCtx.font.msgBuf, 1280, &position, &length));
+    });
+    Run("hook which keeps vanilla loading cannot retain a custom stream", [] {
+        OpenCustom("Old first\x04" "Old rest");
+        hookText = "Unselected\x04" "Must not show";
+        hookLoadsCustom = true;
+        hookSelectsCustom = false;
+        NativeOpenText(0x1234);
+        uint16_t position = 8;
+        uint32_t length = 0;
+        CHECK(!CallPrepareFromC(state.msgCtx.font.msgBuf, 1280, &position, &length));
+        CHECK(CurrentPage() == "Vanilla\x02");
+    });
+    Run("superseding direct buffer writes cancel stale pages", [] {
+        OpenCustom("First\x04" "Stale");
+        std::memcpy(state.msgCtx.font.msgBuf, "Other\x02", 6);
+        uint16_t position = 6;
+        uint32_t length = 0;
+        CHECK(!CallPrepareFromC(state.msgCtx.font.msgBuf, 1280, &position, &length));
+        CHECK(std::string(state.msgCtx.font.msgBuf, 6) == "Other\x02");
+    });
+    Run("existing credits opcode mutation keeps later pages", [] {
+        OpenCustom("First\x04" "Last");
+        state.msgCtx.font.msgBuf[5] = '\x0C';
+        state.msgCtx.msgBufPos = 7;
+        NativeDecodeRefill(&state);
+        CHECK(CurrentPage() == "Last\x02");
+    });
+    Run("malformed and oversized raw pages never truncate into font memory", [] {
+        std::array<char, 1280> bytes;
+        bytes.fill('Q');
+        const auto original = bytes;
+        CustomMessagePageBuffer buffer;
+        uint32_t length = 0;
+        for (const std::string& invalid : {std::string("\x05", 1), std::string("\x07\x04", 2), std::string(1280, 'W')}) {
+            CHECK(!buffer.Load(invalid, bytes.data(), bytes.size(), length));
+            CHECK(bytes == original);
+            CHECK(length == 0);
+        }
+        CHECK(buffer.Load("", bytes.data(), bytes.size(), length));
+        CHECK(length == 1 && bytes[0] == '\x02');
+        CHECK(!CallPrepareFromC(bytes.data(), bytes.size(), nullptr, &length));
+        uint16_t position = 0;
+        CHECK(!CallPrepareFromC(bytes.data(), bytes.size(), &position, nullptr));
+    });
+    CHECK(errorCount == 0);
+    std::cout << "RESULT cases=" << cases << " assertions=" << assertions << "\n";
+}

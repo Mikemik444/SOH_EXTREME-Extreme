@@ -1,0 +1,108 @@
+{
+  "status": "passed",
+  "native": {
+    "cases": 13,
+    "assertions": 64
+  },
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "scope": "Actual source action functions, OC separation, collider transform, randomized draw and recovery hook bodies with engine shims; not a full native build or gameplay test.",
+  "output": [
+    "PASS small crate remains solid and unmovable through carry water and weapon attempts, then unlocks",
+    "PASS normal small crate carry and collision resume without reload",
+    "PASS large crate keeps dyna collision and discards locked roll hits until a new valid break",
+    "PASS small and silver rocks retain solid OC with no carry or damage until Rock Soul",
+    "PASS brown boulder rejects explosions with collision intact and breaks normally on unlock",
+    "PASS bronze boulder ignores missing-soul hits and resumes its normal two-hit break",
+    "PASS hidden Spirit ceiling boulder updates its real sphere and refuses a pending explosion until unlocked",
+    "PASS ordinary play and unshuffled souls retain normal object behavior",
+    "RESULT cases=8 assertions=50",
+    "PASS missing-soul randomized callbacks emit no models or sparkles",
+    "PASS receiving souls restores the existing callbacks without a reload",
+    "PASS disabled soul options and ordinary play keep all models",
+    "PASS acquired crates keep every existing contents texture category",
+    "PASS removed-boulder reward recovery cannot bypass missing Rock Soul",
+    "RESULT cases=5 assertions=14"
+  ],
+  "ap": {
+    "status": "passed",
+    "cases": [
+      {
+        "inventory": [],
+        "expected": false,
+        "routes": {
+          "native": false,
+          "physical_door": false,
+          "vendor": false
+        }
+      },
+      {
+        "inventory": [
+          "Rock / Boulder Soul"
+        ],
+        "expected": false,
+        "routes": {
+          "native": false,
+          "physical_door": false,
+          "vendor": false
+        }
+      },
+      {
+        "inventory": [
+          "Progressive Bomb Bag"
+        ],
+        "expected": false,
+        "routes": {
+          "native": false,
+          "physical_door": false,
+          "vendor": false
+        }
+      },
+      {
+        "inventory": [
+          "Progressive Bomb Bag",
+          "Rock / Boulder Soul"
+        ],
+        "expected": true,
+        "routes": {
+          "native": true,
+          "physical_door": true,
+          "vendor": true
+        }
+      },
+      {
+        "inventory": [
+          "Light Arrows",
+          "Progressive Bow",
+          "Progressive Magic Meter"
+        ],
+        "expected": true,
+        "routes": {
+          "native": true,
+          "physical_door": true,
+          "vendor": true
+        }
+      }
+    ],
+    "sunlight_disabled_without_soul": false,
+    "soul_disabled_with_explosives": true,
+    "scope": "Real AP rule compilation and local predicates; no new full-world fill or gameplay test."
+  },
+  "sources": {
+    "src/overlays/actors/ovl_Obj_Kibako/z_obj_kibako.c": "34a56de0faa975f52b537b0abf7e02fb522258e9c131f69f312a1b6c1b8110d7",
+    "src/overlays/actors/ovl_Obj_Kibako2/z_obj_kibako2.c": "d105cdae8d251675e14362e966c9232e93627a4584496fd46160fc0cd8ce7932",
+    "src/overlays/actors/ovl_En_Ishi/z_en_ishi.c": "211dff328abff5b88446b76f14aea9e0e0d42dfdf408ff97599c6964202945d1",
+    "src/overlays/actors/ovl_Obj_Bombiwa/z_obj_bombiwa.c": "22549397a392faef889dbed338924b54571e5625504e269b71841153c360b8f0",
+    "src/overlays/actors/ovl_Obj_Hamishi/z_obj_hamishi.c": "d942b5c1ad2db3e2857f4022882f434e2ee0af1e193e59fb292d526df0ee07f2",
+    "src/overlays/actors/ovl_Bg_Jya_Bombchuiwa/z_bg_jya_bombchuiwa.c": "2c706c7b4048b6c6c9bc35c51320dbe27a226b551d78241dae1433d348528e36",
+    "src/code/z_collision_check.c": "801ca4f23b45ac95073e98ce1872eb1bed3ca7cfa77221367772c282766ad98d",
+    "soh/Enhancements/randomizer/ShuffleRocks.cpp": "a5df6c0b7c90261ca901aa1afc01cd8c4b8acb3a36a40775e81ba1f508438764",
+    "soh/Enhancements/randomizer/ShuffleCrates.cpp": "6e6c06da4c997978cb7977ac691ec7c389201882290c4f89fbe4a3da6a024889",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "421de9155ef0ac453f58ad1168810805d3eef9f0176c2ff2f126f9820da21ec1",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "3be93704fb3cb92fdce195c6a4f8caaaf9391405c6503643a7dd44b4e935db36",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py": "b51f2cc06d0dc628814465f1010f86c013c197a8d93ed1031642ac49f97db673",
+    "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp": "f0d193ccbce88eb568b71df6d8fd0977e55760a72429b923679c0881771115cd"
+  }
+}

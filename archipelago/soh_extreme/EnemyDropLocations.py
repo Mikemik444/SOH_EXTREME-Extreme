@@ -4,7 +4,8 @@ immutable non-enemy controller identity and a fixed encounter slot. Enemies
 created by other enemies (including bosses) never get separate checks.
 Retired IDs remain reserved; no death-position or nearest-enemy matching.
 """
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+from .CheckDescriptions import check_name
 from typing import Optional
 
 @dataclass(frozen=True)
@@ -775,6 +776,8 @@ ENEMY_DROP_LOCATIONS = (
 
 
 
+# Canonical names change presentation only; every physical identity and rule field stays intact.
+ENEMY_DROP_LOCATIONS = tuple(replace(loc, name=check_name(loc.address, loc.name)) for loc in ENEMY_DROP_LOCATIONS)
 ENEMY_DROP_LOCATION_NAME_TO_ID = {loc.name: loc.address for loc in ENEMY_DROP_LOCATIONS}
 ENEMY_DROP_LOCATION_BY_NAME = {loc.name: loc for loc in ENEMY_DROP_LOCATIONS}
 

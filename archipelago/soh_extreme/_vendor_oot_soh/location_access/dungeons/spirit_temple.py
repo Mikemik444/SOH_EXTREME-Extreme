@@ -95,7 +95,8 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.SPIRIT_TEMPLE_CHILD_CLIMB, world, [
-        (Regions.SPIRIT_TEMPLE_CENTRAL_CHAMBER, lambda bundle: has_explosives(bundle) | (
+        (Regions.SPIRIT_TEMPLE_CENTRAL_CHAMBER, lambda bundle: (has_explosives(bundle) &
+            extreme_requirement(bundle, "shuffle_rock_boulder_soul", "Rock / Boulder Soul")) | (
             OptionFilter(SunlightArrows, True) & can_use(Items.LIGHT_ARROW, bundle)))
     ])
 

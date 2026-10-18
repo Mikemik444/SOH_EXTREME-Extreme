@@ -13,7 +13,7 @@ PROTOCOL = "SOHExtremeFinder1"
 # Release metadata for diagnostics; never require equal releases for display.
 # Keep the wire format stable across release bumps; change its identifier only
 # when the data layout changes and provide an explicit compatible decoder.
-VERSION = "1.8.0"
+VERSION = "1.8.8"
 TAG = "SOHExtremeUT"
 MAX_ENTRIES = 20000
 MAX_BYTES = 750000
@@ -92,7 +92,7 @@ def snapshot_rows(core, tracker_state, world, active: set[int], checked: set[int
                 raise ValueError('UT returned a non-active network check: '+str(name))
             if i in seen:raise ValueError('UT returned duplicate network check: '+str(name))
             seen.add(i)
-            label=str(loc.name)
+            label=getattr(world,"_er_labels",{}).get(i,str(loc.name))
             if i in aliases:label+=' ('+str(aliases[i])+')'
             if age_state is not None and hasattr(loc,'can_reach_as_age'):
                 # Keep transport-only use independent of AP's rule modules.

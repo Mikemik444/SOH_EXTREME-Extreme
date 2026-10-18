@@ -1,0 +1,138 @@
+{
+    "version":  "1.8.1",
+    "created_utc":  "2026-10-17T20:24:55.6544957Z",
+    "repository":  "E:\\test\\bb",
+    "status":  "preparing",
+    "files":  [
+                  {
+                      "path":  "archipelago/archipelago.json",
+                      "existed_before":  true,
+                      "original_sha256":  "8839d42f95ce512b0fdc9d1a6e15807a7ff648b6557b0679ecdb14ccf3e268eb",
+                      "patched_sha256":  "cc0b7aba2907c276fa2648ffce14a852d3a3cbd0cc9a6d288daa71e224f78b0f",
+                      "backup":  "originals/archipelago/archipelago.json"
+                  },
+                  {
+                      "path":  "archipelago/soh_extreme/EntranceRandomizer.py",
+                      "existed_before":  true,
+                      "original_sha256":  "1a31bbdd264b3490a21a68092029c2f0279036c71323fd8f630c35cf278c9193",
+                      "patched_sha256":  "73a75a8dd843d42566158ab381d46517abaf3bb4e88ff57a60b188a79b3af91b",
+                      "backup":  "originals/archipelago/soh_extreme/EntranceRandomizer.py"
+                  },
+                  {
+                      "path":  "archipelago/soh_extreme/archipelago.json",
+                      "existed_before":  true,
+                      "original_sha256":  "8839d42f95ce512b0fdc9d1a6e15807a7ff648b6557b0679ecdb14ccf3e268eb",
+                      "patched_sha256":  "cc0b7aba2907c276fa2648ffce14a852d3a3cbd0cc9a6d288daa71e224f78b0f",
+                      "backup":  "originals/archipelago/soh_extreme/archipelago.json"
+                  },
+                  {
+                      "path":  "archipelago/soh_extreme.apworld",
+                      "existed_before":  true,
+                      "original_sha256":  "b5cacfd8755db5447f66430a39c80d112c69031278095bede8e11c29ac466c02",
+                      "patched_sha256":  "5d14774da0be578ac8fe23d25dcb0d5ff7986007a3369d07e16b0c41b98b7169",
+                      "backup":  "originals/archipelago/soh_extreme.apworld"
+                  },
+                  {
+                      "path":  "soh/Enhancements/randomizer/Messages/EntranceHints.cpp",
+                      "existed_before":  true,
+                      "original_sha256":  "05d0b6ccd24d2b3f96c2988f0e1a75fe697b981d7408910fcf8983716ec7e552",
+                      "patched_sha256":  "e2e86b74dddd511aa3cc2eeb93426357e52e2a51a519222981a18f8e90fb78e0",
+                      "backup":  "originals/soh/Enhancements/randomizer/Messages/EntranceHints.cpp"
+                  },
+                  {
+                      "path":  "soh/Enhancements/randomizer/hook_handlers.cpp",
+                      "existed_before":  true,
+                      "original_sha256":  "e34aba91232eeed816a2127baa6bfcd04c3a8adeebace9ba7eb1d4fec4e74f52",
+                      "patched_sha256":  "7c6c4521f8dc2ccaa0d238be74a133be2546ed53848d99c5044af590c111c980",
+                      "backup":  "originals/soh/Enhancements/randomizer/hook_handlers.cpp"
+                  },
+                  {
+                      "path":  "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp",
+                      "existed_before":  true,
+                      "original_sha256":  "b6b1a9c474cca57c941723ddf6e435fd73a3a42e6bd717f89e29efd60efa7267",
+                      "patched_sha256":  "0943ff9dfddeac6fec3c35ee5acfbc955069057ba530609f9119e69785d7c021",
+                      "backup":  "originals/soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp"
+                  },
+                  {
+                      "path":  "soh/Enhancements/randomizer/randomizer_entrance_tracker.h",
+                      "existed_before":  true,
+                      "original_sha256":  "5cf5e77398ca925295083673b5b1d64bf5b8f9faf882ccc7c228bbf233a25be5",
+                      "patched_sha256":  "85d03cb79aac8d7b5d18b5b95ded6bf3478dd04b233135d148aa2120ed20afd7",
+                      "backup":  "originals/soh/Enhancements/randomizer/randomizer_entrance_tracker.h"
+                  },
+                  {
+                      "path":  "soh/Network/Archipelago/ArchipelagoC.h",
+                      "existed_before":  true,
+                      "original_sha256":  "dd9bb26fe4d846e6be0a28135cb4119da74485583790c462466ed4731189f4f4",
+                      "patched_sha256":  "9feb39b19e7936716932dd3481699ba88af3fcca7765edafeccb3ec3e8326268",
+                      "backup":  "originals/soh/Network/Archipelago/ArchipelagoC.h"
+                  },
+                  {
+                      "path":  "soh/Network/Archipelago/ArchipelagoClient.cpp",
+                      "existed_before":  true,
+                      "original_sha256":  "1a8c0b82ef35a3352d217111a8baf53fdc75565662cb1c3dc6f5e64289aae08e",
+                      "patched_sha256":  "f3ab815a36f1e43f1731da66c59ecded4b200bc620e728adabf7cf25039a7ba1",
+                      "backup":  "originals/soh/Network/Archipelago/ArchipelagoClient.cpp"
+                  },
+                  {
+                      "path":  "soh/Network/Archipelago/EntranceRuntime.inc",
+                      "existed_before":  true,
+                      "original_sha256":  "2cba337ba29f082297a418b58e884f7950a99e16362aa1b92eb6ec9133c6e3ab",
+                      "patched_sha256":  "4f32964ef108e3d0a7f9683dfc75e35f1d2607c3473dcc0a8b5c2461b62aa114",
+                      "backup":  "originals/soh/Network/Archipelago/EntranceRuntime.inc"
+                  },
+                  {
+                      "path":  "soh/SohExtremeVersion.h",
+                      "existed_before":  true,
+                      "original_sha256":  "1f8fdd7cc66565f4426c1270b0cf9b950717da6c54edce6d85a955c4f6466cf4",
+                      "patched_sha256":  "23bf137cd50f3cd1d66d59d2f2dd72a975a213fe13d4d465f194912141cfe3f3",
+                      "backup":  "originals/soh/SohExtremeVersion.h"
+                  },
+                  {
+                      "path":  "tools/tests/entrance_runtime_tests.cpp",
+                      "existed_before":  false,
+                      "original_sha256":  null,
+                      "patched_sha256":  "4985156782a860a0574d9dff3e0ba742137c26ada775d6a94762966ecdaa0d8d",
+                      "backup":  null
+                  },
+                  {
+                      "path":  "tools/tests/test_entrance_runtime.py",
+                      "existed_before":  false,
+                      "original_sha256":  null,
+                      "patched_sha256":  "9901f52b1015aec2e31661465b0a6759f0312d524f21260281b83246ef2c9323",
+                      "backup":  null
+                  },
+                  {
+                      "path":  "tools/tests/test_entrance_start.py",
+                      "existed_before":  false,
+                      "original_sha256":  null,
+                      "patched_sha256":  "9ba3b0555b675bf07eb9cbd6872c84bc753a8b52f78c6c976a6f768697e6aa48",
+                      "backup":  null
+                  },
+                  {
+                      "path":  "tools/tests/test_entrance_tracker.py",
+                      "existed_before":  false,
+                      "original_sha256":  null,
+                      "patched_sha256":  "f5e64a1aa01c15143825842e8b6b50a045f1935c2a6bde34901a7526a32e8456",
+                      "backup":  null
+                  },
+                  {
+                      "path":  "tools/tests/test_no_swim_recovery.py",
+                      "existed_before":  false,
+                      "original_sha256":  null,
+                      "patched_sha256":  "9b8bed7f4f0b8d8f594e060c4a7b0c855e0116706a7a6bebee99dfcd5beb3511",
+                      "backup":  null
+                  },
+                  {
+                      "path":  "tools/tests/validate_user_full_fill.py",
+                      "existed_before":  false,
+                      "original_sha256":  null,
+                      "patched_sha256":  "4912013e2d01133ecdf100e2edaf8266cd8919537201f1a973d9234316b7a69a",
+                      "backup":  null
+                  }
+              ],
+    "build_status":  "not_started",
+    "rollback_errors":  [
+
+                        ]
+}

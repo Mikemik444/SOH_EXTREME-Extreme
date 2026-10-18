@@ -27,7 +27,8 @@ def set_region_rules(world: "SohWorld") -> None:
         (EventLocations.KAK_BUG_ROCK, Events.CAN_ACCESS_BUGS, lambda bundle: True_()),
         (EventLocations.KAK_GATE_GUARD, Events.SOLD_KEATON_MASK,
          lambda bundle: is_child(bundle) & has_item(Events.CAN_BORROW_MASKS, bundle) & has_item(Items.CHILD_WALLET,
-                                                                                                    bundle)),
+                                                                                                    bundle)
+         & can_interact_path_blocker(bundle, "Hylian")),
     ])
 
     # Open Kak Gate from the start if open gate is on, otherwise create an event in Kak for it
@@ -39,7 +40,8 @@ def set_region_rules(world: "SohWorld") -> None:
     else:
         add_events(Regions.KAKARIKO_VILLAGE, world, [
             (EventLocations.KAK_GATE, Events.KAKARIKO_GATE_OPEN,
-             lambda bundle: (is_child(bundle) & has_item(Items.ZELDAS_LETTER, bundle))),
+             lambda bundle: (is_child(bundle) & has_item(Items.ZELDAS_LETTER, bundle)
+                             & can_interact_path_blocker(bundle, "Hylian"))),
         ])
 
     # Locations

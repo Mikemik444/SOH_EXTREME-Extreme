@@ -193,11 +193,14 @@ void ObjKibako_Idle(ObjKibako* this, PlayState* play) {
         // A soul-locked crate must still be a physical blocker.  Vanilla clears
         // OC1_TYPE_PLAYER while Link overlaps a carryable crate and only restores
         // it after he moves away.  With Crate Soul locking carry/break actions,
-        // that behavior can leave the visible crate permanently non-solid when
+        // that behavior can leave the hidden crate permanently non-solid when
         // the room loads with Link already intersecting it.  Force player OC on
         // for the locked state and keep the collider registered every frame.
         this->collider.base.acFlags &= ~AC_HIT;
         this->collider.base.ocFlags1 |= OC1_TYPE_PLAYER;
+        this->actor.colChkInfo.mass = MASS_IMMOVABLE;
+        this->actor.speedXZ = 0.0f;
+        this->actor.colChkInfo.displacement.x = this->actor.colChkInfo.displacement.z = 0.0f;
         Actor_MoveXZGravity(&this->actor);
         Actor_UpdateBgCheckInfo(play, &this->actor, 19.0f, 20.0f, 0.0f, 5);
         Collider_UpdateCylinder(&this->actor, &this->collider);
@@ -205,6 +208,9 @@ void ObjKibako_Idle(ObjKibako* this, PlayState* play) {
         return;
     }
 
+    // Restore the ordinary idle mass as soon as the soul arrives; the draw
+    // predicate is live too, so no actor respawn or scene reload is required.
+    this->actor.colChkInfo.mass = MASS_HEAVY;
     if (Actor_HasParent(&this->actor, play)) {
         ObjKibako_SetupHeld(this);
     } else if ((this->actor.bgCheckFlags & 0x20) && (this->actor.yDistToWater > 19.0f)) {

@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "seed_of_original_retained_graph": 1,
+  "starting_age": "child",
+  "scope": "Narrow actual production guard regression on the exact original trapped Fire Temple Corridor graph. Diagnostic placements cleared after their reports were preserved. No new graph or full fill.",
+  "child_spawn_destination": 8718,
+  "child_spawn_destination_name": "Fire Temple Fire Maze Main -> Fire Temple Corridor (door 8, room 10 to 9)",
+  "source_hashes_before": {
+    "EntranceRandomizer.py": "ab47455e9b84f434ba15402a67679bc80e1026d7127beb079d357e02cc9839ee",
+    "FrontierFill.py": "bee9dd5e923412bc7138d7e03a3f1f05a37b136b158c389b11b9e951ebf8ca30"
+  },
+  "source_hashes_after": {
+    "EntranceRandomizer.py": "ab47455e9b84f434ba15402a67679bc80e1026d7127beb079d357e02cc9839ee",
+    "FrontierFill.py": "bee9dd5e923412bc7138d7e03a3f1f05a37b136b158c389b11b9e951ebf8ca30"
+  },
+  "reloaded_guard_source": "/workspace/scratch/8fddab5b8169/ap-runtime/worlds/soh_extreme/EntranceRandomizer.py",
+  "preserved_evidence_hashes": {
+    "spawn_183_frontier_bundle_sequence_child.json": "d74c3a49d0e5503ba4c34608ddfebbd69859f474db1d939190c84e96f3794959",
+    "spawn_183_frontier_rejected_bundle_child.json": "39e1078a053a2294b1c7a2f32fdf99b63ca070f89b4df42288377bd62512dd53",
+    "spawn_183_frontier_nonmusic_component_child.json": "a1d91db3cef64519708e6faf9d998865adb735122f22d55850ef572f8803eae1"
+  },
+  "cleared_diagnostic_network_placements": [
+    {
+      "location": "Link's Pocket",
+      "item": "Shell Blade Soul",
+      "location_identity": 140152217390160,
+      "item_identity": 140152209523344
+    },
+    {
+      "location": "LW Near Shortcuts Grotto Chest",
+      "item": "Fish Soul",
+      "location_identity": 140152212779568,
+      "item_identity": 140152209520592
+    },
+    {
+      "location": "LW Near Shortcuts Grotto Fish",
+      "item": "Progressive Slingshot",
+      "location_identity": 140152212845344,
+      "item_identity": 140152209416528
+    },
+    {
+      "location": "LW Tunnel Grotto Beehive Left",
+      "item": "Grass / Bush Soul",
+      "location_identity": 140152212845488,
+      "item_identity": 140152209538512
+    },
+    {
+      "location": "Song from Impa",
+      "item": "Progressive Stick Capacity",
+      "location_identity": 140152217398224,
+      "item_identity": 140152209418256
+    },
+    {
+      "location": "Enemy Defeat: Water Temple Room 18 Shell Blade 1",
+      "item": "Shovel",
+      "location_identity": 140152211244192,
+      "item_identity": 140152209534576
+    },
+    {
+      "location": "Enemy Defeat: Water Temple Room 18 Shell Blade 2",
+      "item": "Butterfly Soul",
+      "location_identity": 140152211244288,
+      "item_identity": 140152209520304
+    },
+    {
+      "location": "Enemy Defeat: Water Temple Room 18 Shell Blade 3",
+      "item": "Progressive Bomb Bag",
+      "location_identity": 140152211244384,
+      "item_identity": 140152209415760
+    },
+    {
+      "location": "EXTREME Lw Tunnel Grotto Butterfly Fairy",
+      "item": "Open Chest",
+      "location_identity": 140152209321008,
+      "item_identity": 140152209511376
+    },
+    {
+      "location": "Scene Transition: LW Tunnel Grotto -> LW Tunnel Grotto Entry",
+      "item": "Beehive Soul",
+      "location_identity": 140152211099760,
+      "item_identity": 140152209536880
+    },
+    {
+      "location": "Dungeon Door: Fire Temple Corridor -> Fire Temple Fire Wall Chase (door 6, room 9 to 16)",
+      "item": "Bottle with Milk",
+      "location_identity": 140152211105952,
+      "item_identity": 140152209465968
+    },
+    {
+      "location": "Dungeon Door: Fire Temple Corridor -> Fire Temple Fire Maze Main (door 8, room 9 to 10)",
+      "item": "Skeleton Key",
+      "location_identity": 140152211106192,
+      "item_identity": 140152209463376
+    }
+  ],
+  "original_pool_objects_in_unswept_input_state": 4036,
+  "input_ocarina_count_before_and_after": 2,
+  "input_state_all_fields_unchanged": true,
+  "guard_result_physical_start_connected": false,
+  "private_probe_observation": {
+    "separate_state_object": true,
+    "remaining_ocarina_count": 0,
+    "addressed_network_rewards_swept": 0,
+    "event_locations_swept": [
+      "Kak Gate",
+      "LW Near Shortcuts Grotto Bug Grass",
+      "LW Near Shortcuts Grotto Butterfly Fairy",
+      "LW Near Shortcuts Grotto Puddle Fish",
+      "Triforce Hunt Completion"
+    ],
+    "target": "Hyrule Field"
+  },
+  "global_pool_objects_and_counts_unchanged": true,
+  "precollected_and_event_assignments_unchanged": true,
+  "entrance_graph_and_mapping_unchanged": true,
+  "rng_states_unchanged": true,
+  "source_and_prior_reports_unchanged": true,
+  "elapsed_seconds": 0.241
+}

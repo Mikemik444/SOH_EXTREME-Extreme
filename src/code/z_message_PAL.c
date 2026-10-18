@@ -9,6 +9,7 @@
 #include "textures/message_texture_static/message_texture_static.h"
 #include "soh/Enhancements/cosmetics/CosmeticsEditor.h"
 #include "soh/Enhancements/cosmetics/cosmeticsTypes.h"
+#include "soh/Enhancements/custom-message/CustomMessageInterfaceAddon.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 #include "soh/OTRGlobals.h"
@@ -187,6 +188,7 @@ u8 Message_ShouldAdvanceSilent(PlayState* play) {
 void Message_CloseTextbox(PlayState* play) {
     MessageContext* msgCtx = &play->msgCtx;
 
+    CustomMessage_ResetTextBuffer();
     if (msgCtx->msgLength != 0) {
         msgCtx->stateTimer = 2;
         msgCtx->msgMode = MSGMODE_TEXT_CLOSING;
@@ -1328,6 +1330,8 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
                 msgCtx->textPosX += CVarGetInteger(CVAR_ENHANCEMENT("TextSpacing"), 6);
                 break;
             case MESSAGE_BOX_BREAK:
+                CustomMessage_RecordDrawnPage(font->msgBuf, sizeof(font->msgBuf), i + 1,
+                                             msgCtx->decodedTextLen);
                 if (msgCtx->msgMode == MSGMODE_TEXT_DISPLAYING) {
                     if (!sTextboxSkipped) {
                         Audio_PlaySfxGeneral(0, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -1346,6 +1350,8 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
                 msgCtx->textPosX += msgCtx->msgBufDecoded[++i];
                 break;
             case MESSAGE_TEXTID:
+                CustomMessage_RecordDrawnPage(font->msgBuf, sizeof(font->msgBuf), i + 1,
+                                             msgCtx->decodedTextLen);
                 msgCtx->textboxEndType = TEXTBOX_ENDTYPE_HAS_NEXT;
                 if (msgCtx->msgMode == MSGMODE_TEXT_DISPLAYING) {
                     Audio_PlaySfxGeneral(0, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
@@ -1397,6 +1403,8 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
                 }
                 break;
             case MESSAGE_BOX_BREAK_DELAYED:
+                CustomMessage_RecordDrawnPage(font->msgBuf, sizeof(font->msgBuf), i + 1,
+                                             msgCtx->decodedTextLen);
                 if (msgCtx->msgMode == MSGMODE_TEXT_DISPLAYING) {
                     msgCtx->stateTimer = msgCtx->msgBufDecoded[++i];
                     msgCtx->msgMode = MSGMODE_TEXT_DELAYED_BREAK;
@@ -1512,6 +1520,8 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
                 }
                 break;
             case MESSAGE_END:
+                CustomMessage_RecordDrawnPage(font->msgBuf, sizeof(font->msgBuf), i + 1,
+                                             msgCtx->decodedTextLen);
                 if (msgCtx->msgMode == MSGMODE_TEXT_DISPLAYING) {
                     msgCtx->msgMode = MSGMODE_TEXT_DONE;
                     if (msgCtx->textboxEndType == TEXTBOX_ENDTYPE_DEFAULT) {
@@ -1546,6 +1556,8 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
                 *gfxP = gfx;
                 return;
             case MESSAGE_PERSISTENT:
+                CustomMessage_RecordDrawnPage(font->msgBuf, sizeof(font->msgBuf), i + 1,
+                                             msgCtx->decodedTextLen);
                 if (msgCtx->msgMode == MSGMODE_TEXT_DISPLAYING) {
                     Audio_PlaySfxGeneral(0, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                                          &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
@@ -1555,6 +1567,8 @@ void Message_DrawText(PlayState* play, Gfx** gfxP) {
                 *gfxP = gfx;
                 return;
             case MESSAGE_EVENT:
+                CustomMessage_RecordDrawnPage(font->msgBuf, sizeof(font->msgBuf), i + 1,
+                                             msgCtx->decodedTextLen);
                 if (msgCtx->msgMode == MSGMODE_TEXT_DISPLAYING) {
                     msgCtx->msgMode = MSGMODE_TEXT_DONE;
                     msgCtx->textboxEndType = TEXTBOX_ENDTYPE_EVENT;
@@ -2250,6 +2264,14 @@ void Message_Decode(PlayState* play) {
     f32 timeInSeconds;
     MessageContext* msgCtx = &play->msgCtx;
     Font* font = &play->msgCtx.font;
+    u32 customPageLength;
+
+    // A/skip and delayed breaks advance the native cursor before the next
+    // decode. Refill a complete custom page here without opening a new text ID.
+    if (CustomMessage_PrepareTextBuffer(font->msgBuf, sizeof(font->msgBuf), &msgCtx->msgBufPos,
+                                       &customPageLength)) {
+        msgCtx->msgLength = font->msgLength = customPageLength;
+    }
 
     // #region SOH [NTSC] - allow switching languages mid text
     sTextBoxNum++;
@@ -2688,7 +2710,13 @@ void Message_OpenText(PlayState* play, u16 textId) {
     s16 textBoxType;
 
     bool loadFromMessageTable = true;
+    // Also runs when switching language during a textbox: discard the previous
+    // stream before the hook loads the newly selected language.
+    CustomMessage_ResetTextBuffer();
     GameInteractor_ExecuteOnOpenText(&textId, &loadFromMessageTable);
+    if (loadFromMessageTable) {
+        CustomMessage_ResetTextBuffer();
+    }
 
     sDisplayNextMessageAsEnglish = false;
 

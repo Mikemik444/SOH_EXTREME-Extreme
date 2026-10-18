@@ -1,0 +1,83 @@
+#include <cstdarg>
+#include <cstdint>
+#include <cstdio>
+#include <string>
+#include <utility>
+
+using s16=int16_t;using s32=int32_t;
+struct GraphicsContext {};
+struct Actor { int id=0,params=0;struct{struct{float x=0,z=0;}pos;}home; };
+struct EnIshi { Actor actor; };struct ObjBombiwa { Actor actor; };struct ObjHamishi { Actor actor; };
+struct ObjKibako { Actor actor; };struct ObjKibako2 { struct{Actor actor;}dyna; };
+struct PlayState { struct{GraphicsContext*gfxCtx=nullptr;}state;int sceneNum=0; };
+struct CheckIdentity { int randomizerCheck=1; };
+using Gfx=int;
+enum GetItemCategory { ITEM_CATEGORY_MAJOR, ITEM_CATEGORY_SKULLTULA_TOKEN, ITEM_CATEGORY_SMALL_KEY,
+ITEM_CATEGORY_BOSS_KEY, ITEM_CATEGORY_HEALTH, ITEM_CATEGORY_LESSER, ITEM_CATEGORY_JUNK };
+using GetItemEntry=GetItemCategory;
+static bool rando=true,shuffleRock=true,shuffleCrate=true,hasRock=false,hasCrate=false,hasCheck=true,csmc=false;
+static int modelCalls=0,sparkleCalls=0,pickups=0;
+static GetItemCategory category=ITEM_CATEGORY_MAJOR;
+static PlayState state;static PlayState*gPlayState=&state;
+static CheckIdentity identity;
+enum { RSK_SHUFFLE_ROCK_SOUL, RSK_SHUFFLE_CRATE_SOUL, RAND_INF_ROCK_SOUL, RAND_INF_CRATE_SOUL, GI_NONE };
+#define IS_RANDO rando
+#define RAND_GET_OPTION(key) ((key)==RSK_SHUFFLE_ROCK_SOUL?shuffleRock:shuffleCrate)
+static bool Flags_GetRandomizerInf(int key){return key==RAND_INF_ROCK_SOUL?hasRock:hasCrate;}
+#define OPEN_DISPS(...) do{}while(false)
+#define CLOSE_DISPS(...) do{}while(false)
+#define gSPMatrix(...) do{}while(false)
+#define gDPSetPrimColor(...) do{}while(false)
+#define gSPDisplayList(...) (++modelCalls)
+#define Gfx_DrawDListOpa(...) (++modelCalls)
+#define CVAR_ENHANCEMENT(key) key
+#define CHECK_QUEST_ITEM(...) true
+static void Gfx_SetupDL_25Opa(GraphicsContext*){}
+static int CVarGetInteger(const char*key,int){return std::string(key)=="ChestSizeAndTextureMatchContents"?csmc:0;}
+static GetItemCategory Randomizer_AdjustItemCategory(GetItemEntry item){return item;}
+namespace Rando { struct Context {
+ static Context* GetInstance(){static Context c;return &c;}
+ GetItemEntry GetFinalGIEntry(int,bool,int){return category;}
+}; }
+struct ObjectExtension {
+ static ObjectExtension&GetInstance(){static ObjectExtension c;return c;}
+ template<class T>T*Get(Actor*){return hasCheck?&identity:nullptr;}
+};
+static bool Rock_RandomizerHoldsItem(CheckIdentity,PlayState*,bool){return hasCheck;}
+static CheckIdentity IdentifyRock(int,int,int){return identity;}
+static void Rock_RandomizerSpawnCollectible(Actor*,CheckIdentity,PlayState*){++pickups;}
+static void Sparkles(PlayState*,Actor*,bool,CheckIdentity){++sparkleCalls;}
+@ROCK_MISSING@
+@CRATE_MISSING@
+@ROCK_DRAWS@
+@CRATE_DRAWS@
+static void Recover(bool*should,...) {
+    va_list args;va_start(args,should);
+@RECOVERY_HOOK@
+    va_end(args);
+}
+static unsigned assertions=0,cases=0;
+#define CHECK(c) do{++assertions;if(!(c)){std::fprintf(stderr,"FAIL line %d: %s\n",__LINE__,#c);return 1;}}while(false)
+int main(){
+    EnIshi rock;ObjBombiwa brown;ObjHamishi bronze;ObjKibako small;ObjKibako2 large;
+    auto drawAll=[&]{EnIshi_RandomizerDraw(&rock.actor,&state);ObjBombiwa_RandomizerDraw(&brown.actor,&state);
+                    ObjHamishi_RandomizerDraw(&bronze.actor,&state);ObjKibako_RandomizerDraw(&small.actor,&state);
+                    ObjKibako2_RandomizerDraw(&large.dyna.actor,&state);};
+    drawAll();CHECK(modelCalls==0&&sparkleCalls==0);
+    ++cases;std::puts("PASS missing-soul randomized callbacks emit no models or sparkles");
+    hasRock=hasCrate=true;drawAll();CHECK(modelCalls==5&&sparkleCalls==3);
+    ++cases;std::puts("PASS receiving souls restores the existing callbacks without a reload");
+    hasRock=hasCrate=false;shuffleRock=shuffleCrate=false;drawAll();CHECK(modelCalls==10&&sparkleCalls==6);
+    shuffleRock=shuffleCrate=true;rando=false;drawAll();CHECK(modelCalls==15&&sparkleCalls==9);
+    ++cases;std::puts("PASS disabled soul options and ordinary play keep all models");
+    rando=true;hasRock=hasCrate=true;csmc=true;
+    for(int i=ITEM_CATEGORY_MAJOR;i<=ITEM_CATEGORY_JUNK;++i){category=static_cast<GetItemCategory>(i);
+        const int before=modelCalls;ObjKibako_RandomizerDraw(&small.actor,&state);ObjKibako2_RandomizerDraw(&large.dyna.actor,&state);
+        CHECK(modelCalls==before+2);}
+    ++cases;std::puts("PASS acquired crates keep every existing contents texture category");
+    hasRock=false;bool should=true;Recover(&should,&brown.actor);CHECK(!should&&pickups==0);
+    hasRock=true;should=true;Recover(&should,&brown.actor);CHECK(!should&&pickups==1);
+    hasRock=false;hasCheck=false;should=true;Recover(&should,&brown.actor);CHECK(should&&pickups==1);
+    ++cases;std::puts("PASS removed-boulder reward recovery cannot bypass missing Rock Soul");
+    std::printf("RESULT cases=%u assertions=%u\n",cases,assertions);
+}

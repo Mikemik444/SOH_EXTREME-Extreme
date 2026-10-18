@@ -46,10 +46,11 @@ def set_region_rules(world: "SohWorld") -> None:
         (Locations.ZD_CHEST, lambda bundle: is_child(
             bundle) & can_use(Items.STICKS, bundle)),
         (Locations.ZD_KING_ZORA_THAWED,
-         lambda bundle: is_adult(bundle) & has_item(LocalEvents.KING_ZORA_THAWED, bundle)),
+         lambda bundle: is_adult(bundle) & has_item(LocalEvents.KING_ZORA_THAWED, bundle)
+         & can_interact_path_blocker(bundle, "Zora")),
         (Locations.ZD_TRADE_PRESCRIPTION,
          lambda bundle: is_adult(bundle) & has_item(LocalEvents.KING_ZORA_THAWED, bundle) & can_use(
-             Items.PRESCRIPTION, bundle)),
+             Items.PRESCRIPTION, bundle) & can_interact_path_blocker(bundle, "Zora")),
         (Locations.ZD_GS_FROZEN_WATERFALL, lambda bundle: is_adult(bundle) & (hookshot_or_boomerang(bundle) | can_use_any([Items.FAIRY_SLINGSHOT, Items.FAIRY_BOW], bundle) | (can_use(Items.MAGIC_SINGLE, bundle) & (can_use_any([Items.MASTER_SWORD, Items.KOKIRI_SWORD, Items.BIGGORONS_SWORD], bundle))) | (can_do_trick(Tricks.ZD_GS, bundle) & can_jump_slash_except_hammer(bundle))) & can_get_nighttime_gs(bundle)),
         (Locations.ZD_FISH1, lambda bundle: is_child(bundle) & has_bottle(bundle)),
         (Locations.ZD_FISH2, lambda bundle: is_child(bundle) & has_bottle(bundle)),

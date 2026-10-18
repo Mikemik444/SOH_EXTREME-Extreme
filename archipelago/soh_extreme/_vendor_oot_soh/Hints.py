@@ -94,7 +94,10 @@ def CreateInGameHints(world: "SohWorld") -> dict:
         return dict(item=item.name, recipient=mw.player_name[item.player],
                     location="Starting inventory" if loc is None else loc.name,
                     finder=mw.player_name[finder], game=mw.game[finder],
-                    starting=loc is None)
+                    starting=loc is None, type="item",
+                    item_id=item.code, location_id=None if loc is None else loc.address,
+                    finding_player=finder, receiving_player=item.player,
+                    item_flags=int(item.classification) & 7)
     result = {}
     for key, mapping in GetNonlocalHintOptionMapping(world).items():
         if not mapping.option.value:
@@ -123,4 +126,6 @@ def CreateInGameHints(world: "SohWorld") -> dict:
             for index, key in enumerate(stones):
                 loc = candidates[index % len(candidates)]
                 result[key.value] = [record(loc.item, loc)]
+        from ..HintAreas import apply_area_hints
+        apply_area_hints(world, result, stones)
     return result

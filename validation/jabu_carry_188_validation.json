@@ -1,0 +1,657 @@
+{
+  "status": "passed",
+  "scope": "Local compiled source predicates only; no actual user seed/map or received-item snapshot supplied.",
+  "world_version": "1.8.8",
+  "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5",
+  "elapsed_seconds": 5.947,
+  "starting_hearts": 1,
+  "precollected": [
+    "Zelda's Letter",
+    "Weird Egg"
+  ],
+  "door_cases": [
+    {
+      "age": "child",
+      "inventory": "actual precollected only",
+      "allowed_doors": {
+        "8456": true,
+        "8458": false,
+        "8460": false,
+        "8462": false,
+        "8469": false,
+        "8471": false
+      }
+    },
+    {
+      "age": "child",
+      "local_event": "LOGIC_JABU_RUTO_IN_1F",
+      "allowed_door_ids": [
+        8456,
+        8469,
+        8471
+      ]
+    },
+    {
+      "age": "child",
+      "local_event": "LOGIC_JABU_WEST_TENTACLE",
+      "allowed_door_ids": [
+        8456,
+        8458,
+        8462
+      ]
+    },
+    {
+      "age": "child",
+      "local_event": "LOGIC_JABU_EAST_TENTACLE",
+      "allowed_door_ids": [
+        8456,
+        8460
+      ]
+    },
+    {
+      "age": "adult",
+      "inventory": "actual precollected only",
+      "allowed_doors": {
+        "8456": true,
+        "8458": false,
+        "8460": false,
+        "8462": false,
+        "8469": false,
+        "8471": false
+      }
+    },
+    {
+      "age": "adult",
+      "local_event": "LOGIC_JABU_RUTO_IN_1F",
+      "allowed_door_ids": [
+        8456,
+        8469,
+        8471
+      ]
+    },
+    {
+      "age": "adult",
+      "local_event": "LOGIC_JABU_WEST_TENTACLE",
+      "allowed_door_ids": [
+        8456,
+        8458,
+        8462
+      ]
+    },
+    {
+      "age": "adult",
+      "local_event": "LOGIC_JABU_EAST_TENTACLE",
+      "allowed_door_ids": [
+        8456,
+        8460
+      ]
+    }
+  ],
+  "tentacle_combat": [
+    {
+      "age": "child",
+      "items": [],
+      "can_kill_tentacle": false
+    },
+    {
+      "age": "child",
+      "items": [
+        "Boomerang"
+      ],
+      "can_kill_tentacle": false
+    },
+    {
+      "age": "child",
+      "items": [
+        "Boomerang",
+        "Jabu Jabu Tentacle Soul"
+      ],
+      "can_kill_tentacle": true
+    },
+    {
+      "age": "adult",
+      "items": [],
+      "can_kill_tentacle": false
+    },
+    {
+      "age": "adult",
+      "items": [
+        "Boomerang"
+      ],
+      "can_kill_tentacle": false
+    },
+    {
+      "age": "adult",
+      "items": [
+        "Boomerang",
+        "Jabu Jabu Tentacle Soul"
+      ],
+      "can_kill_tentacle": false
+    }
+  ],
+  "ruto_requirements": [
+    {
+      "age": "child",
+      "missing": "Progressive Scale",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "child",
+      "missing": "Grab / Power Bracelet",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "child",
+      "missing": "Speak Zora",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "child",
+      "missing": "NPC Soul",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "child",
+      "missing": "Climb",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "child",
+      "missing": null,
+      "ruto_can_reach_1f": true
+    },
+    {
+      "age": "adult",
+      "missing": "Progressive Scale",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "adult",
+      "missing": "Grab / Power Bracelet",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "adult",
+      "missing": "Speak Zora",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "adult",
+      "missing": "NPC Soul",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "adult",
+      "missing": "Climb",
+      "ruto_can_reach_1f": false
+    },
+    {
+      "age": "adult",
+      "missing": null,
+      "ruto_can_reach_1f": true
+    }
+  ],
+  "ruto_escape_cases": [
+    {
+      "age": "child",
+      "case": "no escape action",
+      "ruto_1f_event": false,
+      "physical_south_door": false,
+      "ledge_access": false,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "child",
+      "case": "climb and carried Ruto",
+      "ruto_1f_event": true,
+      "physical_south_door": true,
+      "ledge_access": true,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "child",
+      "case": "usable projectile",
+      "ruto_1f_event": true,
+      "physical_south_door": true,
+      "ledge_access": false,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "adult",
+      "case": "no escape action",
+      "ruto_1f_event": false,
+      "physical_south_door": false,
+      "ledge_access": false,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "adult",
+      "case": "climb and carried Ruto",
+      "ruto_1f_event": true,
+      "physical_south_door": true,
+      "ledge_access": true,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "adult",
+      "case": "usable projectile",
+      "ruto_1f_event": true,
+      "physical_south_door": true,
+      "ledge_access": false,
+      "ledge_lift_action": true
+    }
+  ],
+  "throw_object_cases": [
+    {
+      "age": "child",
+      "case": "no available object",
+      "physical_south_door": false,
+      "ledge_lift_action": false
+    },
+    {
+      "age": "child",
+      "case": "pot is available",
+      "physical_south_door": true,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "child",
+      "case": "Ruto is available",
+      "physical_south_door": true,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "child",
+      "case": "Ruto has no NPC Soul",
+      "physical_south_door": false,
+      "ledge_lift_action": false
+    },
+    {
+      "age": "child",
+      "case": "Ruto has no speech ability",
+      "physical_south_door": false,
+      "ledge_lift_action": false
+    },
+    {
+      "age": "child",
+      "case": "Ruto has not been met",
+      "physical_south_door": false,
+      "ledge_lift_action": false
+    },
+    {
+      "age": "adult",
+      "case": "no available object",
+      "physical_south_door": false,
+      "ledge_lift_action": false
+    },
+    {
+      "age": "adult",
+      "case": "pot is available",
+      "physical_south_door": true,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "adult",
+      "case": "Ruto is available",
+      "physical_south_door": true,
+      "ledge_lift_action": true
+    },
+    {
+      "age": "adult",
+      "case": "Ruto has no NPC Soul",
+      "physical_south_door": false,
+      "ledge_lift_action": false
+    },
+    {
+      "age": "adult",
+      "case": "Ruto has no speech ability",
+      "physical_south_door": false,
+      "ledge_lift_action": false
+    },
+    {
+      "age": "adult",
+      "case": "Ruto has not been met",
+      "physical_south_door": false,
+      "ledge_lift_action": false
+    }
+  ],
+  "stinger_soul_cases": [
+    {
+      "age": "child",
+      "Stinger Soul": false,
+      "Ruto combat can open Boomerang Chest": false
+    },
+    {
+      "age": "child",
+      "Stinger Soul": true,
+      "Ruto combat can open Boomerang Chest": true
+    },
+    {
+      "age": "adult",
+      "Stinger Soul": false,
+      "Ruto combat can open Boomerang Chest": false
+    },
+    {
+      "age": "adult",
+      "Stinger Soul": true,
+      "Ruto combat can open Boomerang Chest": true
+    }
+  ],
+  "carrier_corridor": {
+    "identity_ids": [
+      8452,
+      8453,
+      8456,
+      8457,
+      8470,
+      8471,
+      8472,
+      8473,
+      8476,
+      8477,
+      8490,
+      8491
+    ],
+    "all_checks_present": true,
+    "candidate_maps_checked": 20,
+    "shuffled_sources_rejected": [
+      8452,
+      8453,
+      8456,
+      8457,
+      8470,
+      8471,
+      8472,
+      8473,
+      8476,
+      8477,
+      8490,
+      8491
+    ]
+  },
+  "scrub": {
+    "name": "Jabu Jabus Belly Deku Scrub",
+    "address": 724,
+    "exists": true,
+    "price": 55,
+    "physical_route": {
+      "region": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "condition": "logic->HasItem(RG_BRONZE_SCALE) && (logic->IsChild || logic->HasItem(RG_SILVER_SCALE) || ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) || logic->CanUse(RG_IRON_BOOTS)) && logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    },
+    "cases": [
+      {
+        "age": "child",
+        "preconditions": {
+          "swim": false,
+          "speech_and_npc_soul": false,
+          "scrub_soul": false,
+          "stun_deku": false,
+          "physical_collection_route": false
+        }
+      },
+      {
+        "age": "adult",
+        "preconditions": {
+          "swim": false,
+          "speech_and_npc_soul": false,
+          "scrub_soul": false,
+          "stun_deku": false,
+          "physical_collection_route": false
+        }
+      }
+    ],
+    "positive_and_missing_item_cases": [
+      {
+        "age": "child",
+        "missing": null,
+        "physical_route": true,
+        "scrub_soul": true,
+        "collectible_in_room": true
+      },
+      {
+        "age": "child",
+        "missing": "Progressive Scale",
+        "physical_route": false,
+        "scrub_soul": true,
+        "collectible_in_room": false
+      },
+      {
+        "age": "child",
+        "missing": "Boomerang",
+        "physical_route": false,
+        "scrub_soul": true,
+        "collectible_in_room": false
+      },
+      {
+        "age": "child",
+        "missing": "Speak Deku",
+        "physical_route": false,
+        "scrub_soul": true,
+        "collectible_in_room": false
+      },
+      {
+        "age": "child",
+        "missing": "NPC Soul",
+        "physical_route": false,
+        "scrub_soul": true,
+        "collectible_in_room": false
+      },
+      {
+        "age": "child",
+        "missing": "Scrub Soul",
+        "physical_route": true,
+        "scrub_soul": false,
+        "collectible_in_room": false
+      },
+      {
+        "age": "adult",
+        "missing": null,
+        "physical_route": true,
+        "scrub_soul": true,
+        "collectible_in_room": true
+      },
+      {
+        "age": "adult",
+        "missing": "Progressive Scale",
+        "physical_route": false,
+        "scrub_soul": true,
+        "collectible_in_room": false
+      },
+      {
+        "age": "adult",
+        "missing": "Progressive Hookshot",
+        "physical_route": false,
+        "scrub_soul": true,
+        "collectible_in_room": false
+      },
+      {
+        "age": "adult",
+        "missing": "Speak Deku",
+        "physical_route": false,
+        "scrub_soul": true,
+        "collectible_in_room": false
+      },
+      {
+        "age": "adult",
+        "missing": "NPC Soul",
+        "physical_route": false,
+        "scrub_soul": true,
+        "collectible_in_room": false
+      },
+      {
+        "age": "adult",
+        "missing": "Scrub Soul",
+        "physical_route": true,
+        "scrub_soul": false,
+        "collectible_in_room": false
+      }
+    ]
+  },
+  "door_definitions": {
+    "8456": {
+      "id": 8456,
+      "index": "DOOR_2_4_0",
+      "category": "dungeon_doors",
+      "source": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "target": "RR_JABU_JABUS_BELLY_HOLES_ROOM",
+      "reverse": 8457,
+      "primary": true,
+      "scene": 2,
+      "source_scene": 2,
+      "check_id": 11202056,
+      "door": 4,
+      "side": 0,
+      "from_room": 7,
+      "room": 2,
+      "position": [
+        0,
+        -260,
+        -3983
+      ],
+      "rotation": 0,
+      "actor": 46,
+      "params": 63,
+      "anchor": 40,
+      "name": "Jabu Jabus Belly Forked Corridor -> Jabu Jabus Belly Holes Room (door 5, room 7 to 2)"
+    },
+    "8458": {
+      "id": 8458,
+      "index": "DOOR_2_5_0",
+      "category": "dungeon_doors",
+      "source": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST",
+      "target": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "reverse": 8459,
+      "primary": true,
+      "scene": 2,
+      "source_scene": 2,
+      "check_id": 11202058,
+      "door": 5,
+      "side": 0,
+      "from_room": 7,
+      "room": 12,
+      "position": [
+        -660,
+        -260,
+        -5183
+      ],
+      "rotation": -32768,
+      "actor": 46,
+      "params": 158,
+      "anchor": 40,
+      "name": "Jabu Jabus Belly To Fork North West -> Jabu Jabus Belly Fork North West (door 6, room 7 to 12)"
+    },
+    "8460": {
+      "id": 8460,
+      "index": "DOOR_2_6_0",
+      "category": "dungeon_doors",
+      "source": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH",
+      "target": "RR_JABU_JABUS_BELLY_FORK_NORTH",
+      "reverse": 8461,
+      "primary": true,
+      "scene": 2,
+      "source_scene": 2,
+      "check_id": 11202060,
+      "door": 6,
+      "side": 0,
+      "from_room": 7,
+      "room": 8,
+      "position": [
+        0,
+        -260,
+        -5303
+      ],
+      "rotation": -32768,
+      "actor": 46,
+      "params": 127,
+      "anchor": 40,
+      "name": "Jabu Jabus Belly To Fork North -> Jabu Jabus Belly Fork North (door 7, room 7 to 8)"
+    },
+    "8462": {
+      "id": 8462,
+      "index": "DOOR_2_7_0",
+      "category": "dungeon_doors",
+      "source": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_EAST",
+      "target": "RR_JABU_JABUS_BELLY_FORK_NORTH_EAST",
+      "reverse": 8463,
+      "primary": true,
+      "scene": 2,
+      "source_scene": 2,
+      "check_id": 11202062,
+      "door": 7,
+      "side": 0,
+      "from_room": 7,
+      "room": 11,
+      "position": [
+        660,
+        -260,
+        -5183
+      ],
+      "rotation": -32768,
+      "actor": 46,
+      "params": 127,
+      "anchor": 40,
+      "name": "Jabu Jabus Belly To Fork North East -> Jabu Jabus Belly Fork North East (door 8, room 7 to 11)"
+    },
+    "8469": {
+      "id": 8469,
+      "index": "DOOR_2_10_1",
+      "category": "dungeon_doors",
+      "source": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "target": "RR_JABU_JABUS_BELLY_FORK_WEST",
+      "reverse": 8468,
+      "primary": false,
+      "scene": 2,
+      "source_scene": 2,
+      "check_id": 11202069,
+      "door": 10,
+      "side": 1,
+      "from_room": 7,
+      "room": 10,
+      "position": [
+        -1060,
+        -260,
+        -4683
+      ],
+      "rotation": 16384,
+      "actor": 46,
+      "params": 184,
+      "anchor": 40,
+      "name": "Jabu Jabus Belly Forked Corridor -> Jabu Jabus Belly Fork West (door 11, room 7 to 10)"
+    },
+    "8471": {
+      "id": 8471,
+      "index": "DOOR_2_11_1",
+      "category": "dungeon_doors",
+      "source": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "target": "RR_JABU_JABUS_BELLY_FORK_EAST",
+      "reverse": 8470,
+      "primary": false,
+      "scene": 2,
+      "source_scene": 2,
+      "check_id": 11202071,
+      "door": 11,
+      "side": 1,
+      "from_room": 7,
+      "room": 9,
+      "position": [
+        1060,
+        -260,
+        -4683
+      ],
+      "rotation": -16384,
+      "actor": 46,
+      "params": 156,
+      "anchor": 40,
+      "name": "Jabu Jabus Belly Forked Corridor -> Jabu Jabus Belly Fork East (door 12, room 7 to 9)"
+    }
+  },
+  "source_sha256": {
+    "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp": "29a5a6ee5e75b50306322a82074461bc2a4fe6c16b509c82a1b15d5ccd1f1ff4",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "13e6cfdeeac346be56fee81e53016c78dea62115091cd7a85bdc7ce4d16174ea",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "e0b3d3d95884db53dbe31cc0cf4f63c3071d4d48ddac3c7b81bd611878ebb23d",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "f4135ea70f74c90b158e10da2c713733ce949d99917ab30f0c6b2e5ee32decbe",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "878d74429685a6e3cbf5263c1a93e35bade796121a648a7e3fbbe8f6edc3779e",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "4af0e23a8428cf7193ccd913524cbe8dd0ada4f1b012975ce0146dd1b15fc050"
+  }
+}

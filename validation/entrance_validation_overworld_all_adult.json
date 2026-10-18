@@ -1,0 +1,98 @@
+{
+  "yaml": "/workspace/scratch/8fddab5b8169/delivery/SOH-EXTREME-1.8.2-overworld-entrances/SOH-EXTREME.yaml",
+  "age": "adult",
+  "seed": 1802,
+  "fixed_spawns": false,
+  "elapsed_seconds": 65.59,
+  "mapping_endpoints": 711,
+  "accepted_swaps": 791,
+  "initial_checks": 3,
+  "initial_check_examples": [
+    "Link's Pocket",
+    "Song from Impa",
+    "Scene Transition: Colossus Deku Scrub Grotto -> Colossus Grotto Entry"
+  ],
+  "child_spawn": "LH Fishing Pond Entry -> Fishing Pond",
+  "adult_spawn": "Colossus Grotto Entry -> Colossus Deku Scrub Grotto",
+  "enabled_entrance_categories": [
+    "adult_spawn",
+    "bosses",
+    "child_spawn",
+    "dungeon_doors",
+    "dungeons",
+    "grottos",
+    "interiors",
+    "one_ways",
+    "overworld",
+    "owls",
+    "warp_songs"
+  ],
+  "raw_mixed_entrance_pools": [
+    "all"
+  ],
+  "expanded_mixed_categories": [
+    "adult_spawn",
+    "bosses",
+    "child_spawn",
+    "dungeon_doors",
+    "dungeons",
+    "grottos",
+    "interiors",
+    "one_ways",
+    "overworld",
+    "owls",
+    "warp_songs"
+  ],
+  "overworld_endpoints": 52,
+  "changed_overworld_endpoints": 50,
+  "overworld_examples": [
+    {
+      "source_id": 333,
+      "source": "Death Mountain Trail Middle Exit -> Goron City Upper Exit",
+      "target_id": 99,
+      "target": "MK Treasure Chest Game Entry -> Treasure Chest Game"
+    },
+    {
+      "source_id": 441,
+      "source": "Goron City Upper Exit -> Death Mountain Trail Middle Exit",
+      "target_id": 9627,
+      "target": "Gerudo Training Ground Central Maze -> Gerudo Training Ground Central Maze (door 14, room 8 side 2 to side 1)"
+    },
+    {
+      "source_id": 327,
+      "source": "Death Mountain Trail Top Exit -> Death Mountain Crater Upper Exit",
+      "target_id": 8364,
+      "target": "Dodongos Cavern Lobby Switch -> Dodongos Cavern Dodongo Room (door 23, room 0 to 4)"
+    },
+    {
+      "source_id": 445,
+      "source": "Death Mountain Crater Upper Exit -> Death Mountain Trail Top Exit",
+      "target_id": 405,
+      "target": "Graveyard Entrance -> Kakariko Southeast Exit"
+    },
+    {
+      "source_id": 582,
+      "source": "Goron City Darunia's Room Backdoor -> Death Mountain Crater Bridge Exit",
+      "target_id": 8848,
+      "target": "Water Temple Waterfall -> Water Temple Outside Waterfall (door 9, room 5 to 0)"
+    },
+    {
+      "source_id": 449,
+      "source": "Death Mountain Crater Bridge Exit -> Goron City Darunia's Room Backdoor",
+      "target_id": 2054,
+      "target": "DMC Upper Grotto -> DMC Upper Grotto Entry"
+    },
+    {
+      "source_id": 1250,
+      "source": "Lost Woods Tunnel Shortcut -> Goron City Tunnel Shortcut",
+      "target_id": 1814,
+      "target": "SFM Wolfos Grotto Entry -> SFM Wolfos Grotto"
+    },
+    {
+      "source_id": 1238,
+      "source": "Goron City Tunnel Shortcut -> Lost Woods Tunnel Shortcut",
+      "target_id": 960,
+      "target": "Bombchu Shop -> MK Bombchu Shop Entry"
+    }
+  ]
+}

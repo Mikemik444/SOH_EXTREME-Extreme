@@ -1,0 +1,20 @@
+{
+  "world_version": "1.8.4",
+  "package_created_utc": "2026-10-18T00:25:19Z",
+  "zip_entry_datetime_utc_components": [
+    2026,
+    10,
+    18,
+    0,
+    25,
+    18
+  ],
+  "zip_timestamp_resolution_seconds": 2,
+  "utc_modification_timestamp": 1792283119,
+  "extra_timestamp_fields": [
+    "0x5455 UTC modification time",
+    "0x000A NTFS modification/access/creation times"
+  ],
+  "timestamp_policy": "Every outer source-bundle entry uses this package creation time; the APWorld's internal deterministic metadata is unchanged.",
+  "build_requirement": "cmake --build build-vs --config Release --parallel 8 --clean-first"
+}

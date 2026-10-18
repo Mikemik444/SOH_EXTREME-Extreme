@@ -43,6 +43,20 @@ class SohAgeLogic(LogicMixin):
 
     def _soh_extreme_update_age_reachable_regions(self, player):
         self._soh_extreme_stale[player] = False
+        # Shuffled routes can discover an alternate-age or remote-region
+        # prerequisite after its dependent edge was already visited. Iterate
+        # both ages to a fixed point without granting an item/event to force
+        # another traversal. This also makes results independent of exit order.
+        while True:
+            before = (len(self._soh_extreme_child_reachable_regions[player]),
+                      len(self._soh_extreme_adult_reachable_regions[player]))
+            self._soh_extreme_expand_age_regions(player)
+            after = (len(self._soh_extreme_child_reachable_regions[player]),
+                     len(self._soh_extreme_adult_reachable_regions[player]))
+            if after == before:
+                break
+
+    def _soh_extreme_expand_age_regions(self, player):
         for age in [Ages.CHILD, Ages.ADULT]:
             self._soh_extreme_age[player] = age
             start = self.multiworld.get_region(

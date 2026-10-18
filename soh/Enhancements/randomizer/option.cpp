@@ -277,14 +277,49 @@ Option::Option(size_t key_, std::vector<std::string> options_, OptionCategory ca
     PopulateTextToNum();
 }
 
+static bool IsExperimentalEntranceOption(RandomizerSettingKey key) {
+    switch (key) {
+        case RSK_SHUFFLE_ENTRANCES:
+        case RSK_SHUFFLE_DUNGEON_ENTRANCES:
+        case RSK_SHUFFLE_BOSS_ENTRANCES:
+        case RSK_SHUFFLE_GANONS_TOWER_ENTRANCE:
+        case RSK_SHUFFLE_OVERWORLD_ENTRANCES:
+        case RSK_SHUFFLE_INTERIOR_ENTRANCES:
+        case RSK_SHUFFLE_THIEVES_HIDEOUT_ENTRANCES:
+        case RSK_SHUFFLE_GROTTO_ENTRANCES:
+        case RSK_SHUFFLE_OWL_DROPS:
+        case RSK_SHUFFLE_WARP_SONGS:
+        case RSK_SHUFFLE_OVERWORLD_SPAWNS:
+        case RSK_DECOUPLED_ENTRANCES:
+        case RSK_MIXED_ENTRANCE_POOLS:
+        case RSK_MIX_DUNGEON_ENTRANCES:
+        case RSK_MIX_BOSS_ENTRANCES:
+        case RSK_MIX_OVERWORLD_ENTRANCES:
+        case RSK_MIX_INTERIOR_ENTRANCES:
+        case RSK_MIX_THIEVES_HIDEOUT_ENTRANCES:
+        case RSK_MIX_GROTTO_ENTRANCES:
+            return true;
+        default:
+            return false;
+    }
+}
+
 void Option::AddWidget(WidgetPath& path) {
-    auto widget = SohGui::mSohMenu->AddWidget(path, this->GetName() + "##Randomizer", widgetType)
+    const bool experimental = (GetCategory() == OptionCategory::Setting || GetCategory() == OptionCategory::Toggle) &&
+                              IsExperimentalEntranceOption(GetKey());
+    // Keep the names used by existing spoiler/settings files and widget IDs.
+    // Only the visible label and tooltip carry the experimental status.
+    const std::string stableId = this->GetName() + "##Randomizer";
+    const std::string label = experimental ? this->GetName() + " (Experimental)###" + stableId : stableId;
+    auto widget = SohGui::mSohMenu->AddWidget(path, label, widgetType)
                       .Callback(callback)
-                      .PreFunc([this](WidgetInfo& info) {
+                      .PreFunc([this, experimental](WidgetInfo& info) {
                           info.isHidden = this->IsHidden();
                           info.options->disabled = this->disabled;
                           info.options->disabledTooltip = this->disabledText.c_str();
-                          info.options->tooltip = this->GetDescription();
+                          info.options->tooltip = experimental
+                              ? "Experimental entrance-randomizer setting.\n\n" + this->GetDescription()
+                              : this->GetDescription();
                           if (info.type == WIDGET_CVAR_SLIDER_INT) {
                               UIWidgets::IntSliderOptions* sliderOpts =
                                   (UIWidgets::IntSliderOptions*)info.options.get();

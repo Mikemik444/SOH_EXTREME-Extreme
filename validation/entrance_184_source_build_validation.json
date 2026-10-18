@@ -1,0 +1,477 @@
+{
+  "status": "passed",
+  "target_version": "1.8.4",
+  "build_helper_revision": 4,
+  "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+  "fixture_manifest_sha256": "4710e227dbeaff45c441e36764d6ccf8129587935b71c98eb7c065c3f17e088b",
+  "source_header_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+  "cmake_version": "cmake version 3.31.6",
+  "fixture_root": "/tmp/soh-source-build-87uab0dt",
+  "cases": [
+    {
+      "platform": "Unix",
+      "powershell": "7.6.7",
+      "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+      "fixture_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+      "build_exit_code": 0,
+      "executable_version_output": "1.8.4",
+      "executable_sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+      "source_last_write_utc": "2001-09-09T01:46:40.0000000Z",
+      "executable_last_write_utc": "2026-10-17T23:29:53.1641910Z",
+      "build_receipt": {
+        "version": "1.8.4",
+        "build_helper_revision": 4,
+        "source_repository": "/tmp/soh-source-build-87uab0dt/original_1_8_0/repository",
+        "cmake_home_directory": "/tmp/soh-source-build-87uab0dt/original_1_8_0/repository",
+        "build_directory": "/tmp/soh-source-build-87uab0dt/original_1_8_0/repository/build-vs",
+        "generator": "Unix Makefiles",
+        "configuration": "Release",
+        "clean_first": true,
+        "parallel_jobs": 8,
+        "cmake_executable": "/tmp/soh-entrance-build-cmake/cmake/data/bin/cmake",
+        "cmake_arguments": [
+          "--build",
+          "/tmp/soh-source-build-87uab0dt/original_1_8_0/repository/build-vs",
+          "--config",
+          "Release",
+          "--parallel",
+          "8",
+          "--clean-first"
+        ],
+        "started_utc": "2026-10-17T23:29:52.8016536Z",
+        "finished_utc": "2026-10-17T23:29:53.18356Z",
+        "exit_code": 0,
+        "build_log": "/tmp/soh-source-build-87uab0dt/original_1_8_0/repository/soh-extreme-builds/20261017-162952-build-b555b546/build-release.log",
+        "source_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+        "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+        "native_sources": [
+          {
+            "path": "soh/SohExtremeVersion.h",
+            "expected_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "installed_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "matches_manifest": true
+          }
+        ],
+        "all_native_sources_match_manifest": true,
+        "game_executable": {
+          "path": "/tmp/soh-source-build-87uab0dt/original_1_8_0/repository/build-vs/soh.exe",
+          "discovery": "build_log",
+          "modified_during_build": true,
+          "size_bytes": 16152,
+          "sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+          "last_write_utc": "2026-10-17T23:29:53.164191Z"
+        },
+        "game_launched_by_build_helper": false
+      },
+      "functions_loaded_from_helper": [
+        "Get-NormalizedPath",
+        "Test-SourceRepository",
+        "Find-SourceRepository",
+        "Get-SafeRelativePath",
+        "Join-SafePath",
+        "Get-Sha256",
+        "Assert-CopiedSourceFiles",
+        "Get-AcceptedZipContentSnapshots",
+        "Test-AcceptedZipContents",
+        "Read-BuildCache",
+        "Select-BuildCache",
+        "Find-CMake",
+        "Assert-ReleaseConfiguration",
+        "Find-GameExecutable",
+        "Write-BuildReceipt",
+        "Build-ExistingRelease"
+      ],
+      "source_copy_move_replace_calls": 0,
+      "limitations": [
+        "This compiles a minimal program including the real delivered native version header, not the complete game.",
+        "The CMake fixture uses Unix Makefiles and GCC; Windows MSBuild and Windows PowerShell 5.1 are not executed.",
+        "The main Windows OS check is bypassed. Two path helpers receive equivalent Unix separators."
+      ],
+      "name": "original_1_8_0",
+      "before": {
+        "version": "1.8.0",
+        "sha256": "e3e1bf063c0c5433094855a5037bcaae74525d409f528e927aeddd6cd9409e7c"
+      },
+      "source_header_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+      "source_timestamp_unchanged": true,
+      "compiled_executable_changed": true,
+      "build_log": "/tmp/soh-source-build-87uab0dt/original_1_8_0/helper.log"
+    },
+    {
+      "platform": "Unix",
+      "powershell": "7.6.7",
+      "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+      "fixture_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+      "build_exit_code": 0,
+      "executable_version_output": "1.8.4",
+      "executable_sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+      "source_last_write_utc": "2001-09-09T01:46:40.0000000Z",
+      "executable_last_write_utc": "2026-10-17T23:29:55.0042283Z",
+      "build_receipt": {
+        "version": "1.8.4",
+        "build_helper_revision": 4,
+        "source_repository": "/tmp/soh-source-build-87uab0dt/prior_1_8_1/repository",
+        "cmake_home_directory": "/tmp/soh-source-build-87uab0dt/prior_1_8_1/repository",
+        "build_directory": "/tmp/soh-source-build-87uab0dt/prior_1_8_1/repository/build-vs",
+        "generator": "Unix Makefiles",
+        "configuration": "Release",
+        "clean_first": true,
+        "parallel_jobs": 8,
+        "cmake_executable": "/tmp/soh-entrance-build-cmake/cmake/data/bin/cmake",
+        "cmake_arguments": [
+          "--build",
+          "/tmp/soh-source-build-87uab0dt/prior_1_8_1/repository/build-vs",
+          "--config",
+          "Release",
+          "--parallel",
+          "8",
+          "--clean-first"
+        ],
+        "started_utc": "2026-10-17T23:29:54.6247835Z",
+        "finished_utc": "2026-10-17T23:29:55.0214581Z",
+        "exit_code": 0,
+        "build_log": "/tmp/soh-source-build-87uab0dt/prior_1_8_1/repository/soh-extreme-builds/20261017-162954-build-c19fb1ef/build-release.log",
+        "source_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+        "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+        "native_sources": [
+          {
+            "path": "soh/SohExtremeVersion.h",
+            "expected_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "installed_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "matches_manifest": true
+          }
+        ],
+        "all_native_sources_match_manifest": true,
+        "game_executable": {
+          "path": "/tmp/soh-source-build-87uab0dt/prior_1_8_1/repository/build-vs/soh.exe",
+          "discovery": "build_log",
+          "modified_during_build": true,
+          "size_bytes": 16152,
+          "sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+          "last_write_utc": "2026-10-17T23:29:55.0042283Z"
+        },
+        "game_launched_by_build_helper": false
+      },
+      "functions_loaded_from_helper": [
+        "Get-NormalizedPath",
+        "Test-SourceRepository",
+        "Find-SourceRepository",
+        "Get-SafeRelativePath",
+        "Join-SafePath",
+        "Get-Sha256",
+        "Assert-CopiedSourceFiles",
+        "Get-AcceptedZipContentSnapshots",
+        "Test-AcceptedZipContents",
+        "Read-BuildCache",
+        "Select-BuildCache",
+        "Find-CMake",
+        "Assert-ReleaseConfiguration",
+        "Find-GameExecutable",
+        "Write-BuildReceipt",
+        "Build-ExistingRelease"
+      ],
+      "source_copy_move_replace_calls": 0,
+      "limitations": [
+        "This compiles a minimal program including the real delivered native version header, not the complete game.",
+        "The CMake fixture uses Unix Makefiles and GCC; Windows MSBuild and Windows PowerShell 5.1 are not executed.",
+        "The main Windows OS check is bypassed. Two path helpers receive equivalent Unix separators."
+      ],
+      "name": "prior_1_8_1",
+      "before": {
+        "version": "1.8.1",
+        "sha256": "1613010dfb032d2f390c5ddae76272e14ba8760167727a48c7b51308e9d8e3b2"
+      },
+      "source_header_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+      "source_timestamp_unchanged": true,
+      "compiled_executable_changed": true,
+      "build_log": "/tmp/soh-source-build-87uab0dt/prior_1_8_1/helper.log"
+    },
+    {
+      "platform": "Unix",
+      "powershell": "7.6.7",
+      "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+      "fixture_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+      "build_exit_code": 0,
+      "executable_version_output": "1.8.4",
+      "executable_sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+      "source_last_write_utc": "2001-09-09T01:46:40.0000000Z",
+      "executable_last_write_utc": "2026-10-17T23:29:56.8311320Z",
+      "build_receipt": {
+        "version": "1.8.4",
+        "build_helper_revision": 4,
+        "source_repository": "/tmp/soh-source-build-87uab0dt/prior_1_8_2/repository",
+        "cmake_home_directory": "/tmp/soh-source-build-87uab0dt/prior_1_8_2/repository",
+        "build_directory": "/tmp/soh-source-build-87uab0dt/prior_1_8_2/repository/build-vs",
+        "generator": "Unix Makefiles",
+        "configuration": "Release",
+        "clean_first": true,
+        "parallel_jobs": 8,
+        "cmake_executable": "/tmp/soh-entrance-build-cmake/cmake/data/bin/cmake",
+        "cmake_arguments": [
+          "--build",
+          "/tmp/soh-source-build-87uab0dt/prior_1_8_2/repository/build-vs",
+          "--config",
+          "Release",
+          "--parallel",
+          "8",
+          "--clean-first"
+        ],
+        "started_utc": "2026-10-17T23:29:56.4711562Z",
+        "finished_utc": "2026-10-17T23:29:56.8485323Z",
+        "exit_code": 0,
+        "build_log": "/tmp/soh-source-build-87uab0dt/prior_1_8_2/repository/soh-extreme-builds/20261017-162956-build-79525765/build-release.log",
+        "source_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+        "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+        "native_sources": [
+          {
+            "path": "soh/SohExtremeVersion.h",
+            "expected_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "installed_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "matches_manifest": true
+          }
+        ],
+        "all_native_sources_match_manifest": true,
+        "game_executable": {
+          "path": "/tmp/soh-source-build-87uab0dt/prior_1_8_2/repository/build-vs/soh.exe",
+          "discovery": "build_log",
+          "modified_during_build": true,
+          "size_bytes": 16152,
+          "sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+          "last_write_utc": "2026-10-17T23:29:56.831132Z"
+        },
+        "game_launched_by_build_helper": false
+      },
+      "functions_loaded_from_helper": [
+        "Get-NormalizedPath",
+        "Test-SourceRepository",
+        "Find-SourceRepository",
+        "Get-SafeRelativePath",
+        "Join-SafePath",
+        "Get-Sha256",
+        "Assert-CopiedSourceFiles",
+        "Get-AcceptedZipContentSnapshots",
+        "Test-AcceptedZipContents",
+        "Read-BuildCache",
+        "Select-BuildCache",
+        "Find-CMake",
+        "Assert-ReleaseConfiguration",
+        "Find-GameExecutable",
+        "Write-BuildReceipt",
+        "Build-ExistingRelease"
+      ],
+      "source_copy_move_replace_calls": 0,
+      "limitations": [
+        "This compiles a minimal program including the real delivered native version header, not the complete game.",
+        "The CMake fixture uses Unix Makefiles and GCC; Windows MSBuild and Windows PowerShell 5.1 are not executed.",
+        "The main Windows OS check is bypassed. Two path helpers receive equivalent Unix separators."
+      ],
+      "name": "prior_1_8_2",
+      "before": {
+        "version": "1.8.2",
+        "sha256": "452871070d6087574ea028221a7543b7b43c39eeab173eb802d82acfc83a39f3"
+      },
+      "source_header_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+      "source_timestamp_unchanged": true,
+      "compiled_executable_changed": true,
+      "build_log": "/tmp/soh-source-build-87uab0dt/prior_1_8_2/helper.log"
+    },
+    {
+      "platform": "Unix",
+      "powershell": "7.6.7",
+      "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+      "fixture_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+      "build_exit_code": 0,
+      "executable_version_output": "1.8.4",
+      "executable_sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+      "source_last_write_utc": "2001-09-09T01:46:40.0000000Z",
+      "executable_last_write_utc": "2026-10-17T23:29:58.6814859Z",
+      "build_receipt": {
+        "version": "1.8.4",
+        "build_helper_revision": 4,
+        "source_repository": "/tmp/soh-source-build-87uab0dt/prior_1_8_3/repository",
+        "cmake_home_directory": "/tmp/soh-source-build-87uab0dt/prior_1_8_3/repository",
+        "build_directory": "/tmp/soh-source-build-87uab0dt/prior_1_8_3/repository/build-vs",
+        "generator": "Unix Makefiles",
+        "configuration": "Release",
+        "clean_first": true,
+        "parallel_jobs": 8,
+        "cmake_executable": "/tmp/soh-entrance-build-cmake/cmake/data/bin/cmake",
+        "cmake_arguments": [
+          "--build",
+          "/tmp/soh-source-build-87uab0dt/prior_1_8_3/repository/build-vs",
+          "--config",
+          "Release",
+          "--parallel",
+          "8",
+          "--clean-first"
+        ],
+        "started_utc": "2026-10-17T23:29:58.3103228Z",
+        "finished_utc": "2026-10-17T23:29:58.7020152Z",
+        "exit_code": 0,
+        "build_log": "/tmp/soh-source-build-87uab0dt/prior_1_8_3/repository/soh-extreme-builds/20261017-162958-build-47d1ab4c/build-release.log",
+        "source_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+        "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+        "native_sources": [
+          {
+            "path": "soh/SohExtremeVersion.h",
+            "expected_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "installed_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "matches_manifest": true
+          }
+        ],
+        "all_native_sources_match_manifest": true,
+        "game_executable": {
+          "path": "/tmp/soh-source-build-87uab0dt/prior_1_8_3/repository/build-vs/soh.exe",
+          "discovery": "build_log",
+          "modified_during_build": true,
+          "size_bytes": 16152,
+          "sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+          "last_write_utc": "2026-10-17T23:29:58.6814859Z"
+        },
+        "game_launched_by_build_helper": false
+      },
+      "functions_loaded_from_helper": [
+        "Get-NormalizedPath",
+        "Test-SourceRepository",
+        "Find-SourceRepository",
+        "Get-SafeRelativePath",
+        "Join-SafePath",
+        "Get-Sha256",
+        "Assert-CopiedSourceFiles",
+        "Get-AcceptedZipContentSnapshots",
+        "Test-AcceptedZipContents",
+        "Read-BuildCache",
+        "Select-BuildCache",
+        "Find-CMake",
+        "Assert-ReleaseConfiguration",
+        "Find-GameExecutable",
+        "Write-BuildReceipt",
+        "Build-ExistingRelease"
+      ],
+      "source_copy_move_replace_calls": 0,
+      "limitations": [
+        "This compiles a minimal program including the real delivered native version header, not the complete game.",
+        "The CMake fixture uses Unix Makefiles and GCC; Windows MSBuild and Windows PowerShell 5.1 are not executed.",
+        "The main Windows OS check is bypassed. Two path helpers receive equivalent Unix separators."
+      ],
+      "name": "prior_1_8_3",
+      "before": {
+        "version": "1.8.3",
+        "sha256": "8cdb505f275c4a197c93ae408c10aec8af214a118e9d045c4ed97352a30cad30"
+      },
+      "source_header_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+      "source_timestamp_unchanged": true,
+      "compiled_executable_changed": true,
+      "build_log": "/tmp/soh-source-build-87uab0dt/prior_1_8_3/helper.log"
+    },
+    {
+      "platform": "Unix",
+      "powershell": "7.6.7",
+      "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+      "fixture_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+      "build_exit_code": 0,
+      "executable_version_output": "1.8.4",
+      "executable_sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+      "source_last_write_utc": "2001-09-09T01:46:40.0000000Z",
+      "executable_last_write_utc": "2026-10-17T23:30:00.7135561Z",
+      "build_receipt": {
+        "version": "1.8.4",
+        "build_helper_revision": 4,
+        "source_repository": "/tmp/soh-source-build-87uab0dt/already_copied_current_sources_over_old_executable/repository",
+        "cmake_home_directory": "/tmp/soh-source-build-87uab0dt/already_copied_current_sources_over_old_executable/repository",
+        "build_directory": "/tmp/soh-source-build-87uab0dt/already_copied_current_sources_over_old_executable/repository/build-vs",
+        "generator": "Unix Makefiles",
+        "configuration": "Release",
+        "clean_first": true,
+        "parallel_jobs": 8,
+        "cmake_executable": "/tmp/soh-entrance-build-cmake/cmake/data/bin/cmake",
+        "cmake_arguments": [
+          "--build",
+          "/tmp/soh-source-build-87uab0dt/already_copied_current_sources_over_old_executable/repository/build-vs",
+          "--config",
+          "Release",
+          "--parallel",
+          "8",
+          "--clean-first"
+        ],
+        "started_utc": "2026-10-17T23:30:00.3409521Z",
+        "finished_utc": "2026-10-17T23:30:00.7305604Z",
+        "exit_code": 0,
+        "build_log": "/tmp/soh-source-build-87uab0dt/already_copied_current_sources_over_old_executable/repository/soh-extreme-builds/20261017-163000-build-f0e471e5/build-release.log",
+        "source_manifest_sha256": "3721eeb1f4b3e654ad010e1511cc680673bd1ba38998ba3e2b3a5eeba0b10b89",
+        "build_helper_sha256": "f58572710ed6f4952996f8e28e870510e7764f9607b262f03d2f73f1153835cc",
+        "native_sources": [
+          {
+            "path": "soh/SohExtremeVersion.h",
+            "expected_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "installed_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+            "matches_manifest": true
+          }
+        ],
+        "all_native_sources_match_manifest": true,
+        "game_executable": {
+          "path": "/tmp/soh-source-build-87uab0dt/already_copied_current_sources_over_old_executable/repository/build-vs/soh.exe",
+          "discovery": "build_log",
+          "modified_during_build": true,
+          "size_bytes": 16152,
+          "sha256": "7a07f467a5002ef8f068a44f0edfd504cfdb2c9c4b0589e7154f8827e361816e",
+          "last_write_utc": "2026-10-17T23:30:00.7135561Z"
+        },
+        "game_launched_by_build_helper": false
+      },
+      "functions_loaded_from_helper": [
+        "Get-NormalizedPath",
+        "Test-SourceRepository",
+        "Find-SourceRepository",
+        "Get-SafeRelativePath",
+        "Join-SafePath",
+        "Get-Sha256",
+        "Assert-CopiedSourceFiles",
+        "Get-AcceptedZipContentSnapshots",
+        "Test-AcceptedZipContents",
+        "Read-BuildCache",
+        "Select-BuildCache",
+        "Find-CMake",
+        "Assert-ReleaseConfiguration",
+        "Find-GameExecutable",
+        "Write-BuildReceipt",
+        "Build-ExistingRelease"
+      ],
+      "source_copy_move_replace_calls": 0,
+      "limitations": [
+        "This compiles a minimal program including the real delivered native version header, not the complete game.",
+        "The CMake fixture uses Unix Makefiles and GCC; Windows MSBuild and Windows PowerShell 5.1 are not executed.",
+        "The main Windows OS check is bypassed. Two path helpers receive equivalent Unix separators."
+      ],
+      "name": "already_copied_current_sources_over_old_executable",
+      "before": {
+        "version": "1.8.0",
+        "sha256": "e3e1bf063c0c5433094855a5037bcaae74525d409f528e927aeddd6cd9409e7c"
+      },
+      "source_header_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+      "source_timestamp_unchanged": true,
+      "compiled_executable_changed": true,
+      "build_log": "/tmp/soh-source-build-87uab0dt/already_copied_current_sources_over_old_executable/helper.log"
+    }
+  ],
+  "source_verification_cases": [
+    {
+      "name": "exact_source_files",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "name": "same_apworld_contents_with_changed_zip_metadata",
+      "status": "passed",
+      "exit_code": 0
+    },
+    {
+      "name": "changed_apworld_contents_rejected",
+      "status": "passed",
+      "exit_code": 1
+    }
+  ],
+  "full_game_built": false,
+  "windows_execution": false,
+  "scope": "Actual delivered helper functions with one real native version header in a minimal compiled CMake target."
+}

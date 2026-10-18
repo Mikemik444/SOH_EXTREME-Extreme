@@ -29,27 +29,6 @@ static bool RockSoulMissing(void) {
     return IS_RANDO && RAND_GET_OPTION(RSK_SHUFFLE_ROCK_SOUL) && !Flags_GetRandomizerInf(RAND_INF_ROCK_SOUL);
 }
 
-static void BeginRockSoulTint(GraphicsContext* gfxCtx) {
-    if (!RockSoulMissing()) {
-        return;
-    }
-    // Keep the original texture/detail but make the locked obstacle visibly
-    // dark.  Grayscale is deterministic across the different rock materials.
-    OPEN_DISPS(gfxCtx);
-    gDPSetGrayscaleColor(POLY_OPA_DISP++, 22, 22, 22, 255);
-    gSPGrayscale(POLY_OPA_DISP++, true);
-    CLOSE_DISPS(gfxCtx);
-}
-
-static void EndRockSoulTint(GraphicsContext* gfxCtx) {
-    if (!RockSoulMissing()) {
-        return;
-    }
-    OPEN_DISPS(gfxCtx);
-    gSPGrayscale(POLY_OPA_DISP++, false);
-    CLOSE_DISPS(gfxCtx);
-}
-
 static void Sparkles(PlayState* play, Actor* actor, bool boulder, CheckIdentity rockIdentity) {
     GraphicsContext* __gfxCtx = play->state.gfxCtx;
     int csmc = CVarGetInteger(CVAR_ENHANCEMENT("ChestSizeAndTextureMatchContents"), 0);
@@ -99,13 +78,15 @@ static void Sparkles(PlayState* play, Actor* actor, bool boulder, CheckIdentity 
 }
 
 extern "C" void EnIshi_RandomizerDraw(Actor* thisx, PlayState* play) {
+    // Keep actor/collision live; the missing soul suppresses models and sparkles.
+    if (RockSoulMissing()) return;
+
     auto rockActor = ((EnIshi*)thisx);
     const auto rockIdentity = ObjectExtension::GetInstance().Get<CheckIdentity>(thisx);
 
     OPEN_DISPS(play->state.gfxCtx);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     CLOSE_DISPS(play->state.gfxCtx);
-    BeginRockSoulTint(play->state.gfxCtx);
     OPEN_DISPS(play->state.gfxCtx);
     if (rockActor->actor.params & 1) {
         gSPMatrix(POLY_OPA_DISP++, MATRIX_NEWMTX(play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -116,7 +97,6 @@ extern "C" void EnIshi_RandomizerDraw(Actor* thisx, PlayState* play) {
         gSPDisplayList(POLY_OPA_DISP++, (Gfx*)gFieldKakeraDL);
     }
     CLOSE_DISPS(play->state.gfxCtx);
-    EndRockSoulTint(play->state.gfxCtx);
 
     if (rockIdentity != nullptr && Rock_RandomizerHoldsItem(*rockIdentity, play, (rockActor->actor.params & 1) != 0)) {
         Sparkles(play, &rockActor->actor, !!(rockActor->actor.params & 1), *rockIdentity);
@@ -124,18 +104,19 @@ extern "C" void EnIshi_RandomizerDraw(Actor* thisx, PlayState* play) {
 }
 
 extern "C" void ObjBombiwa_RandomizerDraw(Actor* thisx, PlayState* play) {
+    // Keep actor/collision live; the missing soul suppresses models and sparkles.
+    if (RockSoulMissing()) return;
+
     auto rockActor = ((ObjBombiwa*)thisx);
     const auto rockIdentity = ObjectExtension::GetInstance().Get<CheckIdentity>(thisx);
 
     OPEN_DISPS(play->state.gfxCtx);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     CLOSE_DISPS(play->state.gfxCtx);
-    BeginRockSoulTint(play->state.gfxCtx);
     OPEN_DISPS(play->state.gfxCtx);
     gSPMatrix(POLY_OPA_DISP++, MATRIX_NEWMTX(play->state.gfxCtx), G_MTX_MODELVIEW | G_MTX_LOAD);
     gSPDisplayList(POLY_OPA_DISP++, (Gfx*)object_bombiwa_DL_0009E0);
     CLOSE_DISPS(play->state.gfxCtx);
-    EndRockSoulTint(play->state.gfxCtx);
 
     if (rockIdentity != nullptr && Rock_RandomizerHoldsItem(*rockIdentity, play, true)) {
         Sparkles(play, &rockActor->actor, true, *rockIdentity);
@@ -143,19 +124,20 @@ extern "C" void ObjBombiwa_RandomizerDraw(Actor* thisx, PlayState* play) {
 }
 
 extern "C" void ObjHamishi_RandomizerDraw(Actor* thisx, PlayState* play) {
+    // Keep actor/collision live; the missing soul suppresses models and sparkles.
+    if (RockSoulMissing()) return;
+
     auto rockActor = ((ObjHamishi*)thisx);
     const auto rockIdentity = ObjectExtension::GetInstance().Get<CheckIdentity>(thisx);
 
     OPEN_DISPS(play->state.gfxCtx);
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     CLOSE_DISPS(play->state.gfxCtx);
-    BeginRockSoulTint(play->state.gfxCtx);
     OPEN_DISPS(play->state.gfxCtx);
     gSPMatrix(POLY_OPA_DISP++, MATRIX_NEWMTX(play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
     gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 170, 130, 255);
     gSPDisplayList(POLY_OPA_DISP++, (Gfx*)gSilverRockDL);
     CLOSE_DISPS(play->state.gfxCtx);
-    EndRockSoulTint(play->state.gfxCtx);
 
     if (rockIdentity != nullptr && Rock_RandomizerHoldsItem(*rockIdentity, play, true)) {
         Sparkles(play, &rockActor->actor, true, *rockIdentity);
@@ -350,7 +332,11 @@ void RegisterShuffleRock() {
             if (Rock_RandomizerHoldsItem(rockIdentity, gPlayState, true)) {
                 // Preserve recovery after an event/previous break removed the
                 // obstacle, but only until the physical reward is collected.
-                Rock_RandomizerSpawnCollectible(rockActor, rockIdentity, gPlayState);
+                // An old removal switch must not bypass the missing soul.
+                // Keep the boulder until it can be broken and its reward earned.
+                if (!RockSoulMissing()) {
+                    Rock_RandomizerSpawnCollectible(rockActor, rockIdentity, gPlayState);
+                }
                 *should = false;
             }
         }

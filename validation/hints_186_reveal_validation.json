@@ -1,0 +1,42 @@
+{
+  "case_count": 14,
+  "cases": [
+    "classification_bits_not_item_spelling",
+    "area_and_starting_hints_have_no_item_provenance",
+    "unread_builders_never_record_or_send",
+    "frozen_target_survives_later_seed_snapshot",
+    "completion_records_only_progression_and_deduplicates",
+    "stale_save_and_starting_target_rejected",
+    "actual_new_file_priming_clears_old_journal_and_roundtrips_only_new_identity",
+    "reconnect_retry_stops_after_authoritative_confirmation",
+    "fresh_monotonic_progression_snapshot_only",
+    "local_found_state_and_shared_remote_identity",
+    "durable_full_text_journal_is_atomic_and_seed_scoped",
+    "legacy_local_exact_scout_match_only",
+    "snapshot_invalid_row_and_boundaries_are_atomic",
+    "actual_python_bridge_wire_contract"
+  ],
+  "status": "passed",
+  "scope": "Production target/header, reveal/snapshot/journal, and PrimeNewSaveMetadata methods; game/session IO isolated.",
+  "source_sha256": {
+    "soh/Network/Archipelago/ArchipelagoHintData.h": "02b498c2fb85878c24d1eac557e1e9fa5bc991a7966b585f85f83e3df7eea8ee",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "8dcb9c4728fda123a1b038a465224fe17a15dce9bbd8f68f574e8849330364fa",
+    "tools/tests/archipelago_hint_reveal_tests.cpp": "3b662d9985a16324a836c60dd2ddb06dc6d9845a331b7184d48dbeecbda46705",
+    "tools/tests/test_archipelago_hints.py": "640479f28cbd085df8fe348e09f5457fe95ba9c23ca4840934dbd57a92722786",
+    "soh/Network/Archipelago/ArchipelagoHintTarget.h": "4face49f1413e1efd39e4787e6ca078119e61f68259c3708636c6aab4046267c",
+    "soh/Network/Archipelago/ArchipelagoHintClient.inc": "135c702b3f3c87a14e542e9f408be683dd1cd425f7891a9dbc7f6b74212865fa",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "114ecb087b1ecf6ff30104427c3eb2abdaa8cc215262726f22e8c5d2e7efe21e",
+    "soh/Network/Archipelago/SaveConnectionIdentity.h": "68f748b8b1fec735d60060e8918300332cb486229d254a1152d0117a8393fad4"
+  },
+  "source_unchanged_during_test": true,
+  "json_header_sha256": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63",
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_sanitizer_enabled": false,
+  "native_textbox_pagination_tested_here": false,
+  "reveal_snapshot_journal_methods": true,
+  "actual_prime_new_save_metadata": true,
+  "save_metadata_worker_preservation": false
+}

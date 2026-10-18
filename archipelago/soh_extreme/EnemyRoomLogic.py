@@ -72,6 +72,10 @@ def parse(expression):
     expression = re.sub(r'ctx->GetTrial\((\w+)\)->IsSkipped\(\)', r'TrialSkipped(\1)', expression)
     expression = re.sub(r'ctx->GetOption\((\w+)\)\.Is\((\w+)\)', r'OptionIs(\1,\2)', expression)
     expression = expression.replace('ctx->GetTrickOption', 'Trick').replace('ctx->GetOption', 'Option')
+    expression = re.sub(r'areaTable\s*\[\s*(RR_\w+)\s*\]\s*\.\s*AnyAgeTime\s*\(',
+                        r'RegionAnyAgeTime(\1,', expression)
+    expression = re.sub(r'areaTable\s*\[\s*(RR_\w+)\s*\]\s*\.\s*(Child|Adult)\s*\(\s*\)',
+                        lambda match: 'Region' + match[2] + '(' + match[1] + ')', expression)
     expression = expression.replace('logic->', '').replace('Rando::', '').replace('(bool)', '').rstrip('; \t\r\n')
     expression = re.sub(r'\[\s*\]\s*\{\s*return\s+', 'Lambda(', expression)
     expression = re.sub(r';\s*\}', ')', expression)
@@ -144,6 +148,7 @@ CAPABILITIES = {
     'RG_SHOVEL':('shuffle_shovel','Shovel'), 'RG_NPC_SOUL':('shuffle_npc_soul','NPC Soul'),
     'RG_POT_SOUL':('shuffle_pot_soul','Pot Soul'),
     'RG_CRATE_SOUL':('shuffle_crate_soul','Crate Soul'),
+    'RG_ROCK_SOUL':('shuffle_rock_boulder_soul','Rock / Boulder Soul'),
 }
 SILVER = {
  'RG_SHADOW_SILVER_BLADES':'Shadow Silver: Blades', 'RG_SHADOW_SILVER_PIT':'Shadow Silver: Pit',
@@ -167,6 +172,8 @@ KEYS = {
  'SCENE_GERUDO_TRAINING_GROUND':'TRAINING_GROUND_SMALL_KEY', 'SCENE_INSIDE_GANONS_CASTLE':'GANONS_CASTLE_SMALL_KEY',
 }
 SIMPLE_HELPERS = {
+ 'CanOpenUnderwaterChest':'can_open_underwater_chest', 'CanCollectGrass':'can_collect_grass',
+ 'HookshotOrBoomerang':'hookshot_or_boomerang', 'CanStunDeku':'can_stun_deku',
  'CanDetonateBabyDodongo':'can_detonate_baby_dodongo',
  'CanInteractWithSkullKid':'can_interact_skull_kid',
  'HasExplosives':'has_explosives','BlastOrSmash':'blast_or_smash','BlueFire':'blue_fire',
@@ -234,6 +241,41 @@ class NativeAsAge(Rule, game="SOH-EXTREME"):
         def region_dependencies(self): return self.inner.region_dependencies()
         def explain_str(self,state=None): return "Native Spirit shared-key alternate-age requirement"
 
+
+@dataclasses.dataclass
+class NativeRegionAgeAccess(Rule, game="SOH-EXTREME"):
+    """Read an exact action site's age reachability without setting an event.
+
+    Temporary switches must be operable by the age taking the route. Checking
+    the real SohRegion also prevents IsChild/IsAdult's recursion guard from
+    mistaking the active age for proof that this other region is reachable.
+    """
+    region_name: str
+    adult: bool
+
+    def _instantiate(self, world):
+        return self.Resolved(region_name=self.region_name, adult=self.adult,
+                             player=world.player, caching_enabled=False)
+
+    class Resolved(Rule.Resolved):
+        region_name: str
+        adult: bool
+        force_recalculate: ClassVar[bool] = True
+
+        def _evaluate(self, state):
+            old=state._soh_extreme_age[self.player]
+            try:
+                state._soh_extreme_age[self.player]=Ages.ADULT if self.adult else Ages.CHILD
+                return state.can_reach_region(self.region_name,self.player)
+            finally:
+                state._soh_extreme_age[self.player]=old
+
+        def item_dependencies(self): return {}
+        def region_dependencies(self): return {self.region_name:{id(self)}}
+        def explain_str(self,state=None):
+            return "Reach " + self.region_name + (" as Adult Link" if self.adult else " as Child Link")
+
+
 SPIRIT_ACCESS = {
  'RR_SPIRIT_TEMPLE_SUN_BLOCK_CHEST_LEDGE':(
    'SpiritExplosiveKeyLogic() && (HasItem(RG_CLIMB) || CanUse(RG_LONGSHOT)) && HasItem(RG_POWER_BRACELET)',
@@ -296,6 +338,8 @@ class NativeRoomCompiler:
             return Or(And(as_rule(test),as_rule(self.node(n[2],rr))),as_rule(self.node(n[3],rr)))
         if kind=='compare':
             op,left,right=n[1:]
+            if left==('call','GetCheckPrice',()) and right==('call','GetWalletCapacity',()) and op=='<=':
+                return H.CanAffordSlot(self.location)
             v=self.node(right,rr)
             if left[0]=='call' and left[1] in ('WaterTimer','FireTimer'):
                 if op not in ('>=','>'):raise OptionError('Unexpected timer comparison')
@@ -306,6 +350,18 @@ class NativeRoomCompiler:
         name,args=n[1:]
         if name=='Lambda':return self.node(args[0],rr)
         if name=='AnyAgeTime':return self.latch(rr,args[0])
+        if name in ('RegionChild','RegionAdult'):
+            if len(args)!=1 or args[0][0]!='name' or args[0][1] not in GRAPH:
+                raise OptionError('Invalid age-qualified native region access')
+            return NativeRegionAgeAccess(str(NativeEnemyRegions[args[0][1]]),name=='RegionAdult')
+        if name=='RegionAnyAgeTime':
+            # A room-clear action on another platform must be performed there.
+            # Reuse the normal local-event latch so reachability, age, abilities
+            # and enemy souls are checked at that exact physical source region.
+            if (len(args)!=2 or args[0][0]!='name' or args[0][1] not in GRAPH
+                    or args[1][0:2]!=('call','Lambda')):
+                raise OptionError('Invalid region-qualified native action')
+            return self.latch(args[0][1],args[1])
         # Distribute conditional argument selection over the monotone call.
         for i,a in enumerate(args):
             if a[0]=='select':
@@ -319,6 +375,26 @@ class NativeRoomCompiler:
 
     def call(self,name,a,rr,raw=()):
         b=self.bundle(rr);o=self.world.options
+        if name=='CanOpenLargeChest':
+            return Has('Open Chest', 2 if o.shuffle_open_chest.value==2 else 1) if o.shuffle_open_chest.value else True_()
+        if name=='CanRead':return H.extreme_requirement(b,'shuffle_sign_soul','Sign Soul')
+        if name=='CanGetEnemyDrop':
+            more=list(a[1:])
+            if more:more[0]=EnemyDistance[more[0][3:]]
+            return H.can_get_enemy_drop(b,H.Enemies[a[0][3:]],*more)
+        if name=='CanBreakPots' and a:
+            dist=EnemyDistance[a[0][3:]];wet=len(a)>2 and a[2]
+            rule=False_()
+            methods=[('CLOSE',None),('SHORT_JUMPSLASH','KOKIRI_SWORD'),('SHORT_JUMPSLASH','MEGATON_HAMMER'),
+                     ('MASTER_SWORD_JUMPSLASH','MASTER_SWORD'),('LONG_JUMPSLASH','BIGGORONS_SWORD'),
+                     ('LONG_JUMPSLASH','GIANTS_KNIFE'),
+                     ('LONG_JUMPSLASH','STICKS'),('BOOMERANG','BOOMERANG'),('HOOKSHOT','HOOKSHOT'),
+                     ('LONGSHOT','LONGSHOT'),('FAR','FAIRY_SLINGSHOT'),('FAR','FAIRY_BOW')]
+            if not wet:methods.append(('BOMB_THROW','BOMB_BAG'))
+            for distance,item in methods:
+                if dist<=EnemyDistance[distance]:rule |= H.can_use(Items[item],b) if item else H.can_grab(b)
+            if len(a)>1 and a[1]:rule |= H.can_use(Items.BOMBCHUS_5,b)
+            return rule & H.extreme_requirement(b,'shuffle_pot_soul','Pot Soul')
         if name in SIMPLE_HELPERS:return getattr(H,SIMPLE_HELPERS[name])(b,*a)
         if name in FORMULAS:return self.expr(FORMULAS[name],rr)
         if name=='Get':
@@ -351,10 +427,13 @@ class NativeRoomCompiler:
             return bool(o.enable_all_tricks.value or str(H.Tricks[token]) in o.tricks_in_logic.value)
         if name=='Option':
             key={'RSK_MEDALLION_LOCKED_TRIALS':'medallion_locked_trials','RSK_SUNLIGHT_ARROWS':'sunlight_arrows',
-                 'RSK_SHUFFLE_CRATE_SOUL':'shuffle_crate_soul'}[a[0]]
+                 'RSK_SHUFFLE_NPC_SOUL':'shuffle_npc_soul','RSK_SHUFFLE_SPEAK':'shuffle_speak',
+                 'RSK_SHUFFLE_CRATE_SOUL':'shuffle_crate_soul',
+                 'RSK_SHUFFLE_ROCK_SOUL':'shuffle_rock_boulder_soul'}[a[0]]
             return bool(getattr(o,key).value)
         if name=='OptionIs':
-            if a==['RSK_SHUFFLE_DUNGEON_ENTRANCES','RO_DUNGEON_ENTRANCE_SHUFFLE_OFF']:return True
+            if a==['RSK_SHUFFLE_DUNGEON_ENTRANCES','RO_DUNGEON_ENTRANCE_SHUFFLE_OFF']:
+                return not bool(getattr(o,'shuffle_dungeon_entrances',False))
             raise OptionError('Unknown native option comparison '+repr(a))
         if name=='TrialSkipped':
             target=a[0].removeprefix('TK_').removesuffix('_TRIAL').lower()
@@ -365,6 +444,8 @@ class NativeRoomCompiler:
             return H.can_use_bunny_hood(b)
         if name=='SmallKeys':return H.small_keys(Items[KEYS[a[0]]],a[1],b)
         if name=='WaterLevel':return self.expr(WATER_FORMULAS[a[0]],rr)
+        if name=='CanGroundJumpslash':
+            return self.expr('Trick(RT_GROUND_JUMP_HARD) && CanStandingShield() && CanJumpslash() && (CanUse(RG_BOMB_BAG)'+(' || HasItem(RG_GORONS_BRACELET)' if a and a[0] else '')+')',rr)
         if name=='CanGroundJump':return H.can_ground_jump(b,*a)
         if name=='CanMiddairGroundJump':
             return self.expr('Trick(RT_GROUND_JUMP_HARD) && CanStandingShield() && CanUse(RG_HOVER_BOOTS) && (CanUse(RG_BOMB_BAG)'+(' || HasItem(RG_GORONS_BRACELET)' if a and a[0] else '')+')',rr)
@@ -383,6 +464,9 @@ class NativeRoomCompiler:
             if more:more[0]=EnemyDistance[more[0][3:]]
             if name=='CanKillEnemy':return H.can_kill_enemy(b,Enemies[enemy],*more)
             if name=='CanPassEnemy':return H.can_pass_enemy(b,Enemies[enemy],*more)
+            if enemy=='TORCH_SLUG':
+                grounded=a[2] if len(a)>2 else False
+                return H.can_kill_enemy(b,Enemies[enemy],*more) | (False_() if grounded else True_()) | self.expr('CanUse(RG_NUTS) || CanUse(RG_HOOKSHOT) || CanUse(RG_DINS_FIRE)',rr)
             if enemy=='BEAMOS':return True_() # native Beamos can be walked around
             raise OptionError('Unsupported avoidance '+enemy)
         if name in ('CanRecoilHover','CanRecoilHoverFromObject'):
@@ -404,6 +488,12 @@ class NativeRoomCompiler:
             if damage is not None and damage.current_key=='ohko':return fairy
             return fairy | H.hearts_at_least(b,2) | (H.has_item(Items.DOUBLE_DEFENSE,b)&H.hearts_at_least(b,1))
         if name in ('SpiritShared','SpiritCertainAccess'):
+            from .EntranceRandomizer import enabled
+            if enabled(self.world):
+                # The exact room graph already proves arrival as this age.
+                # Vanilla front/back key-path approximations cannot be reused
+                # after physical room doors have moved.
+                return as_rule(a[1]) if name=='SpiritShared' else True_()
             target=a[0]
             child_access,adult_access=(self.expr(v,rr) for v in SPIRIT_ACCESS[target])
             child=NativeAsAge(child_access,False)

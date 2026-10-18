@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "tests": 10,
+  "source_sha256": {
+    "archipelago/soh_extreme/HintAreas.py": "5652233d3cadf3549a01d05598b98317d3501045012128869b6ef96ef8955925",
+    "archipelago/soh_extreme/_vendor_oot_soh/Hints.py": "5f82f782215fe889d5d720a39621f4113abce83604ed84815f3485e628d33104",
+    "archipelago/soh_extreme/__init__.py": "242e128dbf15945cabec55b6a7176bb3e74ce697e56ba8a89f6b4a5829d83f63",
+    "tools/tests/test_hint_areas.py": "818157257a6531c122fc5bebccc1d55b0ea0cf7c33d7e87cab0f61a99cd7cbe7"
+  },
+  "source_unchanged_during_test": true,
+  "goal_engine": "Official Archipelago 0.6.7 CollectionState and MultiWorld.can_beat_game",
+  "proof_scope": "All physical player goals, including remote item recipients",
+  "production_region_catalog_exercised": true
+}

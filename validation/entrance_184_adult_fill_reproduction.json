@@ -1,0 +1,17 @@
+{
+  "status": "reproduced",
+  "scope": "Official AP 0.6.7 Main.main on the supplied YAML, forced adult starting age, seed1; generator failed before output.",
+  "world_version": "1.8.4",
+  "age": "adult",
+  "seed": 1,
+  "unplaced_items": 585,
+  "error": "FillError: No more spots to place 585 items. Remaining locations are invalid.",
+  "log_sha256": "06104ed1f2fc7488c5e64194ed86864109edcfbba5756296780be29b0d16b732",
+  "source_before_fix_sha256": {
+    "archipelago/soh_extreme/EntranceRandomizer.py": "50d8357cd3ae8823bf2e40364230514da1ae04b911c4296481ada2aad73d0047",
+    "archipelago/soh_extreme/FrontierFill.py": "bee9dd5e923412bc7138d7e03a3f1f05a37b136b158c389b11b9e951ebf8ca30",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "8907f40640caacfcb86e7e8bc4ba6752d0248c3fb29a2ce787969a3b707385c3",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "e0b3d3d95884db53dbe31cc0cf4f63c3071d4d48ddac3c7b81bd611878ebb23d"
+  },
+  "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5"
+}

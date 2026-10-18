@@ -1,5 +1,7 @@
 #include "CustomMessageManager.h"
+#include "CustomMessageFormatter.h"
 #include "CustomMessageInterfaceAddon.h"
+#include "CustomMessagePageBuffer.h"
 #include <algorithm>
 #include <stdint.h>
 #include <cstring>
@@ -216,27 +218,43 @@ void CustomMessage::SetTextBoxPosition(TextBoxPosition boxPos) {
     position = boxPos;
 }
 
+static bool MessageHasTerminalBefore(const std::string& text, size_t limit = std::string::npos) {
+    for (size_t pos = 0; pos < text.size() && pos < limit;) {
+        const auto code = static_cast<unsigned char>(text[pos]);
+        if (code == 0x02 || code == 0x07 || code == 0x0B) return true;
+        pos += CustomMessageEncoding::TokenLength(text, pos);
+    }
+    return false;
+}
+
 CustomMessage CustomMessage::operator+(const CustomMessage& right) const {
     std::vector<std::string> newColors = colors;
     SohUtils::AppendVector(newColors, right.GetColors());
     std::vector<bool> newCapital = capital;
     SohUtils::AppendVector(newCapital, right.GetCapital());
-    return CustomMessage(messages[LANGUAGE_ENG] + right.GetEnglish(MF_RAW),
+    CustomMessage result(messages[LANGUAGE_ENG] + right.GetEnglish(MF_RAW),
                          messages[LANGUAGE_GER] + right.GetGerman(MF_RAW),
                          messages[LANGUAGE_FRA] + right.GetFrench(MF_RAW), newColors, newCapital, type, position);
+    result.AddHintTargets(hintedItemTargets);
+    if (!MessageHasTerminalBefore(GetForCurrentLanguage(MF_RAW))) result.AddHintTargets(right.GetHintTargets());
+    return result;
 }
 
 CustomMessage CustomMessage::operator+(const std::string& right) const {
-    return CustomMessage(messages[LANGUAGE_ENG] + right, messages[LANGUAGE_GER] + right,
+    CustomMessage result(messages[LANGUAGE_ENG] + right, messages[LANGUAGE_GER] + right,
                          messages[LANGUAGE_FRA] + right);
+    result.AddHintTargets(hintedItemTargets);
+    return result;
 }
 
 void CustomMessage::operator+=(const CustomMessage& right) {
+    const bool visible = !MessageHasTerminalBefore(GetForCurrentLanguage(MF_RAW));
     messages[LANGUAGE_ENG] += right.GetEnglish(MF_RAW);
     messages[LANGUAGE_GER] += right.GetGerman(MF_RAW);
     messages[LANGUAGE_FRA] += right.GetFrench(MF_RAW);
     SohUtils::AppendVector(colors, right.GetColors());
     SohUtils::AppendVector(capital, right.GetCapital());
+    if (visible) AddHintTargets(right.GetHintTargets());
 }
 
 void CustomMessage::operator+=(const std::string& right) {
@@ -262,30 +280,60 @@ bool CustomMessage::operator!=(const CustomMessage& operand) const {
     return !operator==(operand);
 }
 
+namespace {
+CustomMessagePageBuffer sCustomMessagePageBuffer;
+std::vector<SohExtreme::HintTarget> sPendingHintTargets;
+}
+
+void CustomMessage_ResetTextBuffer() {
+    sCustomMessagePageBuffer.Clear();
+    sPendingHintTargets.clear();
+}
+
+int CustomMessage_PrepareTextBuffer(char* buffer, size_t capacity, uint16_t* position, uint32_t* length) {
+    if (position == nullptr || length == nullptr) {
+        return false;
+    }
+    return sCustomMessagePageBuffer.Prepare(buffer, capacity, *position, *length);
+}
+
+void CustomMessage_RecordDrawnPage(char* buffer, size_t capacity, uint16_t drawn, uint16_t decodedLength) {
+    if (sPendingHintTargets.empty() ||
+        !sCustomMessagePageBuffer.MarkDrawn(buffer, capacity, drawn, decodedLength)) {
+        return;
+    }
+    // Clear before the client callback: reentrant dialogue cannot reuse this
+    // message's targets, and subsequent draw frames cannot publish it twice.
+    auto revealed = std::move(sPendingHintTargets);
+    sPendingHintTargets.clear();
+    SohExtreme::RecordRevealedHintTargets(revealed);
+}
+
 void CustomMessage::LoadIntoFont() {
     MessageContext* msgCtx = &gPlayState->msgCtx;
     Font* font = &msgCtx->font;
-    char* buffer = font->msgBuf;
-    const size_t maxBufferSize = sizeof(font->msgBuf);
-    font->charTexBuf[0] = (type << 4) | position;
-    switch (gSaveContext.language) {
-        case LANGUAGE_FRA:
-            msgCtx->msgLength = font->msgLength =
-                static_cast<u32>(SohUtils::CopyStringToCharBuffer(buffer, GetFrench(MF_RAW), maxBufferSize));
-            break;
-        case LANGUAGE_GER:
-            msgCtx->msgLength = font->msgLength =
-                static_cast<u32>(SohUtils::CopyStringToCharBuffer(buffer, GetGerman(MF_RAW), maxBufferSize));
-            break;
-        case LANGUAGE_ENG:
-        default:
-            msgCtx->msgLength = font->msgLength =
-                static_cast<u32>(SohUtils::CopyStringToCharBuffer(buffer, GetEnglish(MF_RAW), maxBufferSize));
-            break;
+    uint32_t pageLength = 0;
+    sPendingHintTargets.clear();
+    // Reformat the selected language after all dynamic hint/item replacements.
+    // Already encoded messages keep their native controls and page boundaries.
+    if (!sCustomMessagePageBuffer.Load(GetForCurrentLanguage(MF_AUTO_FORMAT), font->msgBuf, sizeof(font->msgBuf),
+                                       pageLength)) {
+        SPDLOG_ERROR("Custom message has an invalid control or an oversized encoded page");
+        sCustomMessagePageBuffer.Load("This message could not be displayed.\x02", font->msgBuf,
+                                      sizeof(font->msgBuf), pageLength);
+    } else {
+        sPendingHintTargets = hintedItemTargets;
     }
+    font->charTexBuf[0] = (type << 4) | position;
+    msgCtx->msgLength = font->msgLength = pageLength;
 }
 
 void CustomMessage::Replace(std::string&& oldStr, std::string&& newStr) {
+    if (oldStr != newStr && GetForCurrentLanguage(MF_RAW).find(oldStr) != std::string::npos) {
+        // An arbitrary edit may remove the disclosed item. Builders attach
+        // provenance after substitutions, or explicitly retain cosmetic edits.
+        hintedItemTargets.clear();
+    }
     for (std::string& str : messages) {
         size_t position = str.find(oldStr);
         while (position != std::string::npos) {
@@ -296,6 +344,10 @@ void CustomMessage::Replace(std::string&& oldStr, std::string&& newStr) {
 }
 
 void CustomMessage::Replace(std::string&& oldStr, CustomMessage newMessage) {
+    const auto current = GetForCurrentLanguage(MF_RAW);
+    const size_t replaced = current.find(oldStr);
+    const bool visible = replaced != std::string::npos && !MessageHasTerminalBefore(current, replaced);
+    if (replaced != std::string::npos) hintedItemTargets.clear();
     for (uint8_t language = 0; language < LANGUAGE_MAX - 1; language++) {
         size_t position = messages[language].find(oldStr);
         std::string newMsg = newMessage.messages[language];
@@ -307,6 +359,7 @@ void CustomMessage::Replace(std::string&& oldStr, CustomMessage newMessage) {
             position = messages[language].find(oldStr);
         }
     }
+    if (visible) AddHintTargets(newMessage.GetHintTargets());
 }
 
 void CustomMessage::Format(ItemID iid) {
@@ -343,7 +396,6 @@ void CustomMessage::AutoFormat(ItemID iid) {
         str.insert(0, ITEM_OBTAINED(iid));
     }
     AutoFormat();
-    Replace(WAIT_FOR_INPUT(), WAIT_FOR_INPUT() + ITEM_OBTAINED(iid));
 }
 
 void CustomMessage::Clean() {
@@ -388,253 +440,74 @@ void CustomMessage::CleanString(std::string& str) const {
     }
 }
 
-static size_t NextLineLength(const std::string* textStr, const size_t lastNewline, bool hasIcon = false) {
-    const size_t maxLinePixelWidth = hasIcon ? 200 : 216;
-
-    size_t totalPixelWidth = 0;
-    size_t currentPos = lastNewline;
-
-    // Looping through the string from the lastNewline until the total
-    // width of counted characters exceeds the maximum pixels in a line.
-    size_t nextPosJump = 0;
-    while (totalPixelWidth < maxLinePixelWidth && currentPos < textStr->length()) {
-        // Skip over control codes
-        if (textStr->at(currentPos) == '%') {
-            nextPosJump = 2;
-        } else if (textStr->at(currentPos) == '\x13') {
-            nextPosJump = 2;
-        } else if (textStr->at(currentPos) == '@') {
-            nextPosJump = 1;
-            // Assume worst case for player name 12 * 8 (widest character * longest name length)
-            totalPixelWidth += 96;
-        } else if (textStr->at(currentPos) == '\x05') {
-            // Skip colour control characters.
-            nextPosJump = 2;
-        } else if (textStr->at(currentPos) == '\x1E') {
-            // For the high score char, we have to take the next Char, then use that to get a worst case scenario.
-            if (textStr->at(currentPos + 1) == '\x01') {
-                totalPixelWidth += 28;
-            }
-            nextPosJump = 2;
-        } else {
-            // Some characters only one byte while others are two bytes
-            // So check both possibilities when checking for a character
-            if (pixelWidthTable.count(textStr->substr(currentPos, 1))) {
-                totalPixelWidth += pixelWidthTable[textStr->substr(currentPos, 1)];
-                nextPosJump = 1;
-            } else if (pixelWidthTable.count(textStr->substr(currentPos, 2))) {
-                totalPixelWidth += pixelWidthTable[textStr->substr(currentPos, 2)];
-                nextPosJump = 2;
-            } else {
-                SPDLOG_DEBUG("Table does not contain " + textStr->substr(currentPos, 1) + "/" +
-                             textStr->substr(currentPos, 2));
-                SPDLOG_DEBUG("Full string: " + *textStr);
-                nextPosJump = 1;
-            }
-        }
-        currentPos += nextPosJump;
-    }
-    // return the total number of characters we looped through
-    if (totalPixelWidth > maxLinePixelWidth && textStr->at(currentPos - nextPosJump) != ' ') {
-        return currentPos - lastNewline - nextPosJump;
-    } else {
-        return currentPos - lastNewline;
-    }
-}
-
-size_t CustomMessage::FindNEWLINE(std::string& str, size_t lastNewline) const {
-    size_t newLine = str.find(NEWLINE()[0], lastNewline);
-    bool done;
-
-    // Bail out early
-    if (newLine == std::string::npos) {
-        return newLine;
-    }
-
-    do {
-        done = true;
-        if (newLine != 0) {
-            switch (str[newLine - 1]) {
-                case '\x05': // COLOR
-                case '\x06': // SHIFT
-                case '\x07': // TEXTID
-                case '\x0C': // BOX_BREAK_DELAYED
-                case '\x0E': // FADE
-                case '\x11': // FADE2
-                case '\x12': // SFX
-                case '\x13': // ITEM_ICON
-                case '\x14': // TEXT_SPEED
-                case '\x15': // BACKGROUND
-                case '\x1E': // POINTS/HIGH_SCORE
-                    done = false;
-                    break;
-                default:
-                    break;
-            }
-            if (newLine > 1) {
-                switch (str[newLine - 2]) {
-                    case '\x07': // TEXTID
-                    case '\x11': // FADE2
-                    case '\x12': // SFX
-                    case '\x15': // BACKGROUND
-                        done = false;
-                        break;
-                    default:
-                        break;
-                }
-                if (newLine > 2) {
-                    if (str[newLine - 3] == '\x15') { // BACKGROUND
-                        done = false;
-                    }
-                }
-            }
-        }
-        if (!done) {
-            newLine = str.find(NEWLINE()[0], newLine + 1);
-            if (newLine == std::string::npos) {
-                // if we reach the end of the string, quit now to save a loop
-                done = true;
-            }
-        }
-    } while (!done);
-
-    return newLine;
-}
-
-bool CustomMessage::AddBreakString(std::string& str, size_t pos, std::string breakString) const {
-    if (str[pos] == ' ' || str[pos] == '&') {
-        // don't add a break next to an existing newline
-        if (str[pos] != ' ' || (str[pos + 1] != '&' && str[pos + 1] != NEWLINE()[0])) {
-            str.replace(pos, 1, breakString);
-        }
-        return false;
-    } else {
-        if (pos <= str.size() - 1) {
-            // If the next char is a new textbox, it has priority, ignore whatever we are replacing it with
-            if (str[pos + 1] == '^') {
-                return false;
-                // otherwise, if it is a line break or space, replace it
-            } else if (str[pos + 1] == ' ' || str[pos + 1] == '&') {
-                // don't add a break next to an existing newline
-                if (str[pos + 1] != ' ' || (str[pos + 2] != '&' && str[pos + 2] != NEWLINE()[0])) {
-                    str.replace(pos + 1, 1, breakString);
-                }
-                return false;
-            }
-        }
-        // otherwise insert after it
-        str.insert(pos + 1, breakString);
-        return true;
-    }
-}
-
 void CustomMessage::AutoFormatString(std::string& str) const {
-    ReplaceAltarIcons(str);
-    ReplaceColors(str);
-    // insert newlines either manually or when encountering a '&'
-    size_t lastNewline = 0;
-    const bool hasIcon = str.find('\x13') != std::string::npos;
-    size_t lineLength = NextLineLength(&str, lastNewline, hasIcon);
-    size_t lineCount = 1;
-    size_t yesNo = str.find('\x1B', lastNewline);
-    while (lastNewline + lineLength < str.length() || yesNo != std::string::npos) {
-        const size_t carrot = str.find('^', lastNewline);
-        const size_t ampersand = str.find('&', lastNewline);
-        size_t waitForInput = str.find(WAIT_FOR_INPUT()[0], lastNewline);
-        size_t newLine = FindNEWLINE(str, lastNewline);
-        if (carrot < waitForInput) {
-            waitForInput = carrot;
+    // Encode one complete token at a time. A byte such as '&', '^', or '@'
+    // inside a color, item, SFX or TEXTID operand is data, never a directive.
+    std::string encoded;
+    encoded.reserve(str.size());
+    size_t colorIndex = 0;
+    bool colorOpen = false;
+    for (size_t pos = 0; pos < str.size();) {
+        const auto code = static_cast<unsigned char>(str[pos]);
+        const size_t length = CustomMessageEncoding::TokenLength(str, pos);
+        std::string token = str.substr(pos, length);
+        pos += length;
+        if (code < 0x20) {
+            encoded += token;
+            const size_t expected = CustomMessageEncoding::ControlLength(code);
+            if (length < expected) encoded.append(expected - length, '\0');
+            continue;
         }
-        if (ampersand < newLine) {
-            newLine = ampersand;
-        }
-        if (lineCount != 3 && yesNo < lastNewline + lineLength && yesNo < waitForInput && yesNo < newLine) {
-            if (lineCount >= 4) {
-                str.replace(yesNo, 1, "^&&\x1B");
-                lineCount = 3;
-                lastNewline = yesNo + 3;
-            } else {
-                while (lineCount < 3) {
-                    str.replace(yesNo, 1, "&\x1B");
-                    yesNo++;
-                    lineCount++;
-                }
-                lastNewline = yesNo;
+        if (token == "#") {
+            if (colorOpen) {
+                encoded += COLOR(QM_WHITE);
+                colorOpen = false;
+            } else if (colorIndex < colors.size()) {
+                encoded += COLOR(colors[colorIndex++]);
+                colorOpen = true;
             }
+            continue;
+        }
+        if (token == "%" && pos < str.size()) {
+            const auto color = percentColors.find(str.substr(pos, 1));
+            if (color != percentColors.end()) {
+                encoded += COLOR(color->second);
+                ++pos;
+                continue;
+            }
+        }
+        if (token == "$" && pos < str.size()) {
+            const auto icon = altarIcons.find(str.substr(pos, 1));
+            if (icon != altarIcons.end()) {
+                encoded += ITEM_OBTAINED(icon->second);
+                ++pos;
+                continue;
+            }
+        }
+        if (token == "&") encoded += NEWLINE();
+        else if (token == "^") encoded += WAIT_FOR_INPUT();
+        else if (token == "@") encoded += PLAYER_NAME();
+        else if (token == "_") encoded += ' ';
+        else if (const auto special = textBoxSpecialCharacters.find(token); special != textBoxSpecialCharacters.end()) {
+            encoded += special->second;
         } else {
-            if (lineCount < 4) {
-                // replace '&' first if it's within the newline range
-                if (newLine < lastNewline + lineLength) {
-                    lastNewline = newLine + 1;
-                    // or move the lastNewline cursor to the next line if a '^' is encountered
-                } else if (waitForInput < lastNewline + lineLength) {
-                    lastNewline = waitForInput + 1;
-                    lineCount = 0;
-                    // some lines need to be split but don't have spaces, look for periods instead
-                } else {
-                    const size_t lastBreak = str.find_last_of(".,!?- ", lastNewline + lineLength);
-                    // if none exist or we go backwards, we look forward for a something and allow the overflow
-                    if (lastBreak == std::string::npos || lastBreak < lastNewline) {
-                        const size_t nextBreak = str.find_first_of(".,!?- &^", lastNewline);
-                        if (str[nextBreak] == '^') {
-                            lastNewline = nextBreak + 1;
-                            lineCount = 0; // increments to 1 at the end
-                        } else if (str[nextBreak] == '&') {
-                            lastNewline = nextBreak + 1;
-                        } else {
-                            bool isAdded = AddBreakString(str, nextBreak, "&");
-                            lastNewline = nextBreak + 1 + isAdded;
-                        }
-                    } else {
-                        bool isAdded = AddBreakString(str, lastBreak, "&");
-                        lastNewline = lastBreak + 1 + isAdded;
-                    }
-                }
-                lineCount += 1;
-            } else {
-                const size_t lastColor = str.rfind("\x05"s, lastNewline + lineLength);
-                std::string colorText = "";
-                // check if we are on a non default colour, as ^ resets it, and readd if needed
-                if (lastColor != std::string::npos && str[lastColor + 1] != 0) {
-                    colorText = "\x05"s + str[lastColor + 1];
-                }
-                // replace '&' first if it's within the newline range
-                if (ampersand < lastNewline + lineLength) {
-                    str.replace(ampersand, 1, "^" + colorText);
-                    lastNewline = ampersand + 1;
-                    // or move the lastNewline cursor to the next line if a '^' is encountered.
-                } else if (carrot < lastNewline + lineLength) {
-                    lastNewline = carrot + 1;
-                    // some lines need to be split but don't have spaces, look for punctuation instead
-                } else {
-                    const size_t lastBreak = str.find_last_of(".,!?- &", lastNewline + lineLength);
-                    // if none exist or we go backwards, we look forward for a something and allow the overflow
-                    if (lastBreak == std::string::npos || lastBreak < lastNewline) {
-                        const size_t nextBreak = str.find_first_of(".,!?- &^", lastNewline);
-                        if (str[nextBreak] == '^') {
-                            lastNewline = nextBreak + 1;
-                        } else {
-                            bool isAdded = AddBreakString(str, nextBreak, "^" + colorText);
-                            lastNewline = nextBreak + 1 + isAdded;
-                        }
-                    } else {
-                        bool isAdded = AddBreakString(str, lastBreak, "^" + colorText);
-                        lastNewline = lastBreak + 1 + isAdded;
-                    }
-                }
-                lineCount = 1;
-            }
-            lineLength = NextLineLength(&str, lastNewline, hasIcon);
+            encoded += token;
         }
-        yesNo = str.find('\x1B', lastNewline);
     }
-    ReplaceSpecialCharacters(str);
-    ReplaceAltarIcons(str);
-    std::replace(str.begin(), str.end(), '&', NEWLINE()[0]);
-    std::replace(str.begin(), str.end(), '^', WAIT_FOR_INPUT()[0]);
-    std::replace(str.begin(), str.end(), '@', PLAYER_NAME()[0]);
-    std::replace(str.begin(), str.end(), '_', ' ');
-    str += MESSAGE_END();
+    auto widthOf = [](const std::string& token) -> size_t {
+        if (const auto width = pixelWidthTable.find(token); width != pixelWidthTable.end()) return width->second;
+        // Already encoded accented glyphs must measure the same way when a hint
+        // is formatted again while composing NPC dialogue or loading the font.
+        if (token.size() == 1) {
+            for (const auto& special : textBoxSpecialCharacters) {
+                if (token[0] == special.second) return pixelWidthTable.at(special.first);
+            }
+        }
+        // Unknown glyphs still consume native decoder/texture slots. Count them
+        // conservatively instead of allowing an arbitrarily long zero-width word.
+        return 12 * token.size();
+    };
+    str = CustomMessageFormatting::Wrap(encoded, widthOf);
 }
 
 void CustomMessage::InsertNumber(uint8_t num) {

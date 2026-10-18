@@ -12,17 +12,16 @@ void RegionTable_Init_ZorasDomain() {
         EVENT_ACCESS(LOGIC_STICK_ACCESS,         logic->IsChild && logic->CanBreakPots()),
         EVENT_ACCESS(LOGIC_FISH_ACCESS,          logic->IsChild),
         EVENT_ACCESS(LOGIC_KING_ZORA_THAWED,     logic->IsAdult && logic->BlueFire()),
-        // Reaching the child Domain is not enough to empty the letter bottle:
-        // King Zora must exist and Link must be able to talk to him.
+        // King Zora remains interactable while hidden, but the letter,
+        // child access and Zora language are still required to empty the bottle.
         EVENT_ACCESS(LOGIC_DELIVER_RUTOS_LETTER, logic->CanUse(RG_RUTOS_LETTER) && logic->IsChild && ctx->GetOption(RSK_ZORAS_FOUNTAIN).IsNot(RO_ZF_OPEN) &&
-                                               (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) &&
-                                               (!ctx->GetOption(RSK_SHUFFLE_SPEAK) || logic->HasItem(RG_SPEAK_ZORA))),
+                                               logic->CanSpeakToPathBlockingNpc(RG_SPEAK_ZORA)),
     }, {
         //Locations
         LOCATION(RC_ZD_DIVING_MINIGAME,                     logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_ZORA) && logic->IsChild),
         LOCATION(RC_ZD_CHEST,                               logic->IsChild && logic->CanUse(RG_STICKS) && logic->CanOpenLargeChest()),
-        LOCATION(RC_ZD_KING_ZORA_THAWED,                    logic->IsAdult && logic->Get(LOGIC_KING_ZORA_THAWED) && logic->HasItem(RG_SPEAK_ZORA)),
-        LOCATION(RC_ZD_TRADE_PRESCRIPTION,                  logic->IsAdult && logic->Get(LOGIC_KING_ZORA_THAWED) && logic->CanUse(RG_PRESCRIPTION)),
+        LOCATION(RC_ZD_KING_ZORA_THAWED,                    logic->IsAdult && logic->Get(LOGIC_KING_ZORA_THAWED) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_ZORA)),
+        LOCATION(RC_ZD_TRADE_PRESCRIPTION,                  logic->IsAdult && logic->Get(LOGIC_KING_ZORA_THAWED) && logic->CanUse(RG_PRESCRIPTION) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_ZORA)),
         //bad terrain blocks bomb throws, so "inWater" is enabled to simulate that. Chus are also awkward to aim, so might want to be removed as well
         //You normally need spin attack or RT_ZD_GS to kill with melee weapons, simulated by ED_SHORT_JUMPSLASH when that condition is met, as that prohibits hammer like those 2 do
         LOCATION(RC_ZD_GS_FROZEN_WATERFALL,                 logic->IsAdult && logic->CanKillEnemy(RE_GOLD_SKULLTULA, logic->CanUse(RG_MAGIC_SINGLE) || ctx->GetTrickOption(RT_ZD_GS) ? ED_SHORT_JUMPSLASH : ED_BOOMERANG, true, 1, false, true) && logic->CanGetNightTimeGS()),

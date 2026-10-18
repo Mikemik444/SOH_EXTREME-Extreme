@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "target_version": "1.8.4",
+  "cases": [
+    {
+      "timezone": "UTC0",
+      "exit_code": 0,
+      "modification_unix_seconds": 1792282470,
+      "matches_package_creation_time": true,
+      "content_preserved": true
+    },
+    {
+      "timezone": "UTC-14",
+      "exit_code": 0,
+      "modification_unix_seconds": 1792282470,
+      "matches_package_creation_time": true,
+      "content_preserved": true
+    },
+    {
+      "timezone": "UTC+12",
+      "exit_code": 0,
+      "modification_unix_seconds": 1792282470,
+      "matches_package_creation_time": true,
+      "content_preserved": true
+    }
+  ],
+  "unzip_version": "UnZip 6.00 of 20 April 2009, by Debian. Original by Info-ZIP.",
+  "package_created_utc": "2026-10-18T00:14:30Z",
+  "source_zip_writer_sha256": "9f159c057c4c56ccaceda68ba08403ab96547899627eade7c373b71fe08fb81e",
+  "source_header_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+  "central_utc_and_ntfs_fields_verified": true,
+  "scope": "Actual current outer ZIP writer and Info-ZIP extraction in three time zones. Windows Explorer extraction was not run; clean-first remains the rebuild guarantee.",
+  "format_references": [
+    "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+    "https://commons.apache.org/proper/commons-compress/xref/org/apache/commons/compress/archivers/zip/X5455_ExtendedTimestamp.html"
+  ]
+}

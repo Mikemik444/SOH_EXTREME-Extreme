@@ -9,9 +9,9 @@ void RegionTable_Init_Kakariko() {
         //Events
         EVENT_ACCESS(LOGIC_BUG_ACCESS,         logic->HasItem(RG_POWER_BRACELET)),
         //Open Gate setting is applied in RR_ROOT
-        EVENT_ACCESS(LOGIC_KAKARIKO_GATE_OPEN, logic->IsChild && logic->HasItem(RG_ZELDAS_LETTER)),
+        EVENT_ACCESS(LOGIC_KAKARIKO_GATE_OPEN, logic->IsChild && logic->HasItem(RG_ZELDAS_LETTER) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_HYLIAN)),
         //Needs wallet to be able to get another mask after selling Keaton
-        EVENT_ACCESS(LOGIC_SOLD_KEATON_MASK,   logic->IsChild && logic->Get(LOGIC_KAKARIKO_GATE_OPEN) && logic->HasItem(RG_KEATON_MASK) && logic->HasItem(RG_CHILD_WALLET) && logic->HasItem(RG_SPEAK_HYLIAN)),
+        EVENT_ACCESS(LOGIC_SOLD_KEATON_MASK,   logic->IsChild && logic->Get(LOGIC_KAKARIKO_GATE_OPEN) && logic->HasItem(RG_KEATON_MASK) && logic->HasItem(RG_CHILD_WALLET) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_HYLIAN)),
     }, {
         //Locations
         LOCATION(RC_SHEIK_IN_KAKARIKO,                     (logic->IsAdult && logic->HasItem(RG_FOREST_MEDALLION) && logic->HasItem(RG_FIRE_MEDALLION) && logic->HasItem(RG_WATER_MEDALLION)) && (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) && (!ctx->GetOption(RSK_SHUFFLE_SPEAK) || logic->HasItem(RG_SPEAK_HYLIAN))),

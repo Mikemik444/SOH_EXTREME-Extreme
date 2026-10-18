@@ -1,6 +1,8 @@
 #include "z_bg_jya_bombchuiwa.h"
 #include "overlays/effects/ovl_Effect_Ss_Kakera/z_eff_ss_kakera.h"
 #include "objects/object_jya_obj/object_jya_obj.h"
+extern bool MegaSoul_CanUseRock(void);
+
 #define FLAGS ACTOR_FLAG_ATTENTION_ENABLED
 
 void BgJyaBombchuiwa_Init(Actor* thisx, PlayState* play);
@@ -142,6 +144,16 @@ void BgJyaBombchuiwa_SetupWaitForExplosion(BgJyaBombchuiwa* this, PlayState* pla
 }
 
 void BgJyaBombchuiwa_WaitForExplosion(BgJyaBombchuiwa* this, PlayState* play) {
+    if (!MegaSoul_CanUseRock()) {
+        // The ceiling boulder still seals the light hole. Discard attacks and
+        // any pending fuse while keeping its collision registered.
+        this->collider.base.acFlags &= ~AC_HIT;
+        this->timer = 0;
+        CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+        CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
+        return;
+    }
+
     if ((this->collider.base.acFlags & AC_HIT) || (this->timer > 0)) {
         if (this->timer == 0) {
             OnePointCutscene_Init(play, 3410, -99, &this->actor, CAM_ID_MAIN);
@@ -187,9 +199,22 @@ void BgJyaBombchuiwa_SpawnLightRay(BgJyaBombchuiwa* this, PlayState* play) {
     }
 }
 
+// This sphere used to be updated only by Draw. Hidden soul blockers must
+// update collision without rendering, using the same actor transform.
+static void BgJyaBombchuiwa_UpdateCollider(BgJyaBombchuiwa* this) {
+    Actor* actor = &this->actor;
+    Matrix_Push();
+    Matrix_SetTranslateRotateYXZ(actor->world.pos.x, actor->world.pos.y + actor->shape.yOffset * actor->scale.y,
+                                 actor->world.pos.z, &actor->shape.rot);
+    Matrix_Scale(actor->scale.x, actor->scale.y, actor->scale.z, MTXMODE_APPLY);
+    Collider_UpdateSpheres(0, &this->collider);
+    Matrix_Pop();
+}
+
 void BgJyaBombchuiwa_Update(Actor* thisx, PlayState* play) {
     BgJyaBombchuiwa* this = (BgJyaBombchuiwa*)thisx;
 
+    if (this->drawFlags & 1) BgJyaBombchuiwa_UpdateCollider(this);
     if (this->actionFunc != NULL) {
         this->actionFunc(this, play);
     }
@@ -222,9 +247,10 @@ void BgJyaBombchuiwa_Draw(Actor* thisx, PlayState* play) {
     static Vec3s D_80894F94 = { 0, 0, 0 };
     BgJyaBombchuiwa* this = (BgJyaBombchuiwa*)thisx;
 
+    if (!MegaSoul_CanUseRock()) return;
+
     if (this->drawFlags & 1) {
         Gfx_DrawDListOpa(play, gBombchuiwaDL);
-        Collider_UpdateSpheres(0, &this->collider);
     }
 
     if (this->drawFlags & 2) {

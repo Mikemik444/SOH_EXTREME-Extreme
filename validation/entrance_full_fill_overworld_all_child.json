@@ -1,0 +1,188 @@
+{
+  "archipelago_version": "0.6.7",
+  "world_version": "1.8.2",
+  "yaml": "/workspace/scratch/8fddab5b8169/delivery/SOH-EXTREME-1.8.2-overworld-entrances/SOH-EXTREME.yaml",
+  "seed": 1802,
+  "age": "child",
+  "elapsed_seconds": 115.38,
+  "initial_network_checks": 9,
+  "initial_progression_checks": [
+    {
+      "location": "Link's Pocket",
+      "item": "Fish Soul"
+    },
+    {
+      "location": "DMT Freestanding PoH",
+      "item": "Bombchu Bag"
+    },
+    {
+      "location": "Scene Transition: Graveyard Entrance -> Kakariko Southeast Exit",
+      "item": "Flow of Time"
+    },
+    {
+      "location": "Scene Transition: Fishing Pond -> LH Fishing Pond Entry",
+      "item": "Speak Goron"
+    },
+    {
+      "location": "Dungeon Door: Deku Tree Slingshot Room -> Deku Tree 2F Middle Room (door 6, room 2 to 1)",
+      "item": "Progressive Stick Capacity"
+    }
+  ],
+  "child_spawn": "LH Fishing Pond Entry -> Fishing Pond",
+  "adult_spawn": "Fire Temple Loop Cage Switch -> Fire Temple Loop Flare Dancer (door 26, room 17 to 3)",
+  "enabled_entrance_categories": [
+    "adult_spawn",
+    "bosses",
+    "child_spawn",
+    "dungeon_doors",
+    "dungeons",
+    "grottos",
+    "interiors",
+    "one_ways",
+    "overworld",
+    "owls",
+    "warp_songs"
+  ],
+  "saved_mixed_entrance_pools": [
+    "all"
+  ],
+  "expanded_mixed_categories": [
+    "adult_spawn",
+    "bosses",
+    "child_spawn",
+    "dungeon_doors",
+    "dungeons",
+    "grottos",
+    "interiors",
+    "one_ways",
+    "overworld",
+    "owls",
+    "warp_songs"
+  ],
+  "native_overworld_flag": 1,
+  "exported_spawn_destinations": {
+    "187": 1119,
+    "642": 8754
+  },
+  "mapping_endpoints": 711,
+  "accepted_swaps": 790,
+  "overworld_endpoints": 52,
+  "changed_overworld_endpoints": 50,
+  "overworld_examples": [
+    {
+      "source_id": 333,
+      "source": "Death Mountain Trail Middle Exit -> Goron City Upper Exit",
+      "target_id": 99,
+      "target": "MK Treasure Chest Game Entry -> Treasure Chest Game"
+    },
+    {
+      "source_id": 441,
+      "source": "Goron City Upper Exit -> Death Mountain Trail Middle Exit",
+      "target_id": 9627,
+      "target": "Gerudo Training Ground Central Maze -> Gerudo Training Ground Central Maze (door 14, room 8 side 2 to side 1)"
+    },
+    {
+      "source_id": 327,
+      "source": "Death Mountain Trail Top Exit -> Death Mountain Crater Upper Exit",
+      "target_id": 8364,
+      "target": "Dodongos Cavern Lobby Switch -> Dodongos Cavern Dodongo Room (door 23, room 0 to 4)"
+    },
+    {
+      "source_id": 445,
+      "source": "Death Mountain Crater Upper Exit -> Death Mountain Trail Top Exit",
+      "target_id": 405,
+      "target": "Graveyard Entrance -> Kakariko Southeast Exit"
+    },
+    {
+      "source_id": 582,
+      "source": "Goron City Darunia's Room Backdoor -> Death Mountain Crater Bridge Exit",
+      "target_id": 8848,
+      "target": "Water Temple Waterfall -> Water Temple Outside Waterfall (door 9, room 5 to 0)"
+    },
+    {
+      "source_id": 449,
+      "source": "Death Mountain Crater Bridge Exit -> Goron City Darunia's Room Backdoor",
+      "target_id": 2054,
+      "target": "DMC Upper Grotto -> DMC Upper Grotto Entry"
+    },
+    {
+      "source_id": 1250,
+      "source": "Lost Woods Tunnel Shortcut -> Goron City Tunnel Shortcut",
+      "target_id": 1814,
+      "target": "SFM Wolfos Grotto Entry -> SFM Wolfos Grotto"
+    },
+    {
+      "source_id": 1238,
+      "source": "Goron City Tunnel Shortcut -> Lost Woods Tunnel Shortcut",
+      "target_id": 960,
+      "target": "Bombchu Shop -> MK Bombchu Shop Entry"
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "sphere_sizes": [
+      10,
+      4,
+      3,
+      2,
+      21,
+      6,
+      6,
+      30,
+      20,
+      42,
+      44,
+      35,
+      17,
+      140,
+      55,
+      17,
+      106,
+      112,
+      32,
+      10,
+      84,
+      38,
+      66,
+      42,
+      129,
+      71,
+      52,
+      44,
+      43,
+      11,
+      40,
+      138,
+      140,
+      122,
+      95,
+      138,
+      72,
+      36,
+      65,
+      376,
+      479,
+      237,
+      153,
+      97,
+      411,
+      185,
+      156,
+      60,
+      108,
+      49,
+      4,
+      18,
+      6
+    ],
+    "players": {
+      "1": {
+        "goal_met": true,
+        "full_accessibility": true,
+        "network_checks": 4036,
+        "checked": 4036
+      }
+    }
+  },
+  "scope": "Official Main.main through pre_output with full restrictive fill; no native gameplay run."
+}

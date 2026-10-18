@@ -1,0 +1,19 @@
+--- 1.8.4/EntranceRandomizer.py
++++ 1.8.5/EntranceRandomizer.py
+@@ -12,6 +12,7 @@
+ from rule_builder.rules import True_, And, Has, Or, Rule
+ from .EntranceOptions import ENTRANCE_OPTIONS
+ from .SceneTransitions import region_name
++from .CheckDescriptions import shuffled_check_label
+ from ._vendor_oot_soh.Enums import Regions, Items, Events, Ages
+ from ._vendor_oot_soh.Regions import SohRegion
+ from ._vendor_oot_soh import LogicHelpers as H
+@@ -503,7 +504,7 @@
+             edge.connect(world.get_region(region_name(ENDPOINTS[routes.get(id, id)]['target'])))
+         world.multiworld._all_state_cache = None
+         world._er_mapping = routes
+-        world._er_labels = {ENDPOINTS[k]["check_id"]: "Shuffled: "+ENDPOINTS[k]["name"].split(" -> ", 1)[0]+" -> "+ENDPOINTS[v]["name"].split(" -> ", 1)[-1]
++        world._er_labels = {ENDPOINTS[k]["check_id"]: shuffled_check_label(ENDPOINTS[k], ENDPOINTS[v])
+                             for k, v in routes.items() if ENDPOINTS[k]["check_id"]}
+     if world.using_ut:
+         saved = world.passthrough.get('entrance_randomizer', {})

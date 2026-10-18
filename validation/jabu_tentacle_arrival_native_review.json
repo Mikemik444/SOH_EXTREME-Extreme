@@ -1,0 +1,152 @@
+{
+  "status": "reviewed",
+  "reviewed_at_utc": "2026-10-18T21:52:24.037208+00:00",
+  "scope": "Targeted source review of Jabu three tentacle-branch shuffled arrivals and conservative reachability correction; no native collision simulation or game playthrough.",
+  "source_sha256": {
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "d4978e4bdcd765821fb4d85421681f3b6977eca5c19f3b0d5de105edd25e0a0f",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "8e07e4ed1ab99b6d4b877dc161bc25e679fd64ca187b9d3a813897631937ddd4",
+    "src/overlays/actors/ovl_En_Bx/z_en_bx.c": "feab1267f80d5c2651629f5b9d139009a2491e3770b5570bf69afc0834ccdf88",
+    "src/overlays/actors/ovl_En_Ba/z_en_ba.c": "4e930a233c7811403f0ca29c7a87c50ac1ed502bc224fbe59e3bc91eaeb49ae8",
+    "src/code/z_actor.c": "99ed54b7bb20bbdc782d27e679e4cd17a39b263a38b1acd074d4739048b49fef",
+    "soh/Enhancements/randomizer/logic.cpp": "b1f000b51516e2a0b2d19e567820f1035f3a003e20fe78b1d7113659e8ef6b76",
+    "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp": "29a5a6ee5e75b50306322a82074461bc2a4fe6c16b509c82a1b15d5ccd1f1ff4",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "13e6cfdeeac346be56fee81e53016c78dea62115091cd7a85bdc7ce4d16174ea",
+    "archipelago/soh_extreme/EnemyDropLocations.py": "c338d49208b732fbf366c305cb0dd1a84a1283f5708edb54a62cc10dbd9c3cf2",
+    "soh/assets/yml/ntsc_1-2/scenes/nonmq/bdan_room_7.yml": "d926fe22bddcb3c405b9e3d594620b780e855f1aaf79c69695e6093f57231cfd"
+  },
+  "reported_seed_evidence": {
+    "path": "tests/reported_seed_187_reproduction.json",
+    "sha256": "be52f550b3e71023860de9b4eb3dfd21e7aa6e64dad1376432328db6172e6e98",
+    "status": "reproduced",
+    "matching_placements": 4036,
+    "mismatched_placements": 0,
+    "route": {
+      "source_id": 606,
+      "source": "ToT Courtyard Gossip Stones Exit -> Market Temple Exit",
+      "target_id": 8459,
+      "target": "Jabu Jabus Belly Fork North West -> Jabu Jabus Belly To Fork North West (door 6, room 12 to 7)",
+      "target_region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST"
+    },
+    "initial_reported_progression_check": {
+      "id": 11202073,
+      "name": "Door: Jabu Jabu's Belly: Holes Lower Door Ledge -> Water Switch Room North",
+      "item": "Open Chest"
+    },
+    "sole_damage_escape_dependency": "Established by parent exact saved-map reachability probe and user report; the reproduction JSON itself lists the matching placements and initial checks."
+  },
+  "branch_arrivals": [
+    {
+      "branch": "NORTH_WEST",
+      "inside_arrival_id": 8458,
+      "inside_arrival_room": 12,
+      "corridor_arrival_id": 8459,
+      "corridor_arrival_room": 7,
+      "corridor_region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST",
+      "door_plane": [
+        -660,
+        -260,
+        -5183
+      ],
+      "door_rotation": -32768,
+      "corridor_arrival_yaw": 0,
+      "corridor_offset_direction": "60 units toward positive Z from the door plane, subject to native fixed-angle arithmetic and integer conversion",
+      "source_action_condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
+      "corridor_return_condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
+      "native_region_fragment_sha256": "6939284b970897407db81e1afd160ff40eb03e60b0cb9c7d347ea6a72a6e716f"
+    },
+    {
+      "branch": "NORTH",
+      "inside_arrival_id": 8460,
+      "inside_arrival_room": 8,
+      "corridor_arrival_id": 8461,
+      "corridor_arrival_room": 7,
+      "corridor_region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH",
+      "door_plane": [
+        0,
+        -260,
+        -5303
+      ],
+      "door_rotation": -32768,
+      "corridor_arrival_yaw": 0,
+      "corridor_offset_direction": "60 units toward positive Z from the door plane, subject to native fixed-angle arithmetic and integer conversion",
+      "source_action_condition": "logic->Get(LOGIC_JABU_EAST_TENTACLE)",
+      "corridor_return_condition": "logic->Get(LOGIC_JABU_EAST_TENTACLE)",
+      "native_region_fragment_sha256": "e9f0d202b2beabf1db2c8d947490741d07fe1f5b1a1b797234806fd55c5cdee0"
+    },
+    {
+      "branch": "NORTH_EAST",
+      "inside_arrival_id": 8462,
+      "inside_arrival_room": 11,
+      "corridor_arrival_id": 8463,
+      "corridor_arrival_room": 7,
+      "corridor_region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_EAST",
+      "door_plane": [
+        660,
+        -260,
+        -5183
+      ],
+      "door_rotation": -32768,
+      "corridor_arrival_yaw": 0,
+      "corridor_offset_direction": "60 units toward positive Z from the door plane, subject to native fixed-angle arithmetic and integer conversion",
+      "source_action_condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
+      "corridor_return_condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
+      "native_region_fragment_sha256": "fbb260465ebb657813f97caeacbc995b6e1312f97ca022f0c04c7bbeebdbafaf"
+    }
+  ],
+  "authored_killable_tentacles": [
+    {
+      "check_id": 9800099,
+      "scene": 2,
+      "room": 8,
+      "actor_id": 222,
+      "raw_params": 2561,
+      "kill_switch": 10,
+      "native_region": "RR_JABU_JABUS_BELLY_FORK_NORTH"
+    },
+    {
+      "check_id": 9800108,
+      "scene": 2,
+      "room": 10,
+      "actor_id": 222,
+      "raw_params": 2816,
+      "kill_switch": 11,
+      "native_region": "RR_JABU_JABUS_BELLY_FORK_WEST"
+    },
+    {
+      "check_id": 9800109,
+      "scene": 2,
+      "room": 11,
+      "actor_id": 222,
+      "raw_params": 3074,
+      "kill_switch": 12,
+      "native_region": "RR_JABU_JABUS_BELLY_FORK_NORTH_EAST"
+    }
+  ],
+  "source_proven_findings": [
+    "Catalog and generated native data agree on all six endpoint IDs, reverse pairs, rooms, sides, positions and door rotation. Corridor-side arrivals retain separate TO_FORK regions, not the central FORKED_CORRIDOR region.",
+    "The three corridor-side targets use room 7 and a 60-unit positive-Z door offset. Age does not alter this formula; policy permits both ages and does not force a different age.",
+    "EnBa death sets its authored permanent switch. EnBx initialization independently checks its own high-byte switch and removes the barrier only when that flag is set.",
+    "EnBx applies knockback based on its placement yaw or yaw toward Link, including during existing invincibility. TakeDamage checks survivability only and does not establish a path beyond the barrier.",
+    "All three final native/AP corridor-return predicates require the existing corresponding tentacle-removal event. The generic TakeDamage alternatives are removed; forward door-approach predicates retain the same events."
+  ],
+  "conservative_decision": {
+    "basis": "The exact uploaded placement set reproduces route 606 -> 8459 and an initial Open Chest behind a route depending on the generic damage escape; the user reports the adult barrier is impassable. Native source cannot certify that escape without placement/collision data.",
+    "changed_logic": "Require the authored WEST/EAST tentacle-clear event before crediting a direct TO_FORK arrival as access to central corridor.",
+    "claim": "This removes an unproven escape from default logic. It does not prove that every possible damage boost is physically impossible.",
+    "native_actor_anchor_or_flag_change": false
+  },
+  "unverified_geometry": [
+    "The source asset YAML supplies ROM offsets, not the placed EnBx actor list or collision polygons. Exact barrier positions, orientation, high-byte switch params and adult collider overlap with the 60-unit arrival anchor are not independently available.",
+    "The branch-to-control event mapping is existing authored native-room logic (NW and NE use WEST; N uses EAST). The killable tentacle within a room is not sufficient to infer which different room controls a corridor barrier.",
+    "No anchor relocation, guessed raw actor parameter, blanket adult restriction, switch grant, or temporary flag copy was introduced."
+  ],
+  "native_game_build": false,
+  "in_game_playthrough": false,
+  "related_frozen_validation": {
+    "path": "tests/scene_flag_lifecycle_validation.json",
+    "sha256": "fb39a1efdb5420c26ab33448216caece2e95bb032888e64e96366d22f57f3758",
+    "note": "Native permanent/temporary flag lifecycle and recorded replay tested separately; unchanged by these room-logic edits."
+  }
+}

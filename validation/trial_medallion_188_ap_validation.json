@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "test_cases": 13,
+  "expected_test_cases": 13,
+  "runtime": "Archipelago 0.6.8",
+  "runtime_path": "/workspace/scratch/8fddab5b8169/ap-runtime-068",
+  "source_hashes": {
+    "archipelago/soh_extreme/__init__.py": "6d40a36f703c595fe1567f8f483278cb2aeaff786285bdda412310dabf971db2",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "878d74429685a6e3cbf5263c1a93e35bade796121a648a7e3fbbe8f6edc3779e",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "13e6cfdeeac346be56fee81e53016c78dea62115091cd7a85bdc7ce4d16174ea",
+    "archipelago/soh_extreme/SceneTransitions.py": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "f4135ea70f74c90b158e10da2c713733ce949d99917ab30f0c6b2e5ee32decbe",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "e0b3d3d95884db53dbe31cc0cf4f63c3071d4d48ddac3c7b81bd611878ebb23d",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "4af0e23a8428cf7193ccd913524cbe8dd0ada4f1b012975ce0146dd1b15fc050",
+    "archipelago/soh_extreme/_vendor_oot_soh/Regions.py": "32d3934dc7dca6e16840533453ce2f9fe0b5337b88b208976ccd5183efdd6e6d",
+    "archipelago/soh_extreme/_vendor_oot_soh/RegionAgeAccess.py": "b7625d38befa593efd36fb1c6d721acac5e3a60331118742c7e19b5d3cb44db3",
+    "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp": "60c643f13eeb6f84505c847bd14a7d3488b74ea709c80bfef17878a16abcb516",
+    "soh/Enhancements/randomizer/MedallionLockedTrials.cpp": "51f8ca375aeee481664833e1d926c9d538e38b0a5af475fbcfa95548ec7f1f95",
+    "tools/tests/test_trial_medallion_logic.py": "e3064a159182b9cfb285ee54ad1017d1ca8887030794c3a13bdee550cf28355e"
+  },
+  "source_unchanged_during_tests": true,
+  "elapsed_seconds": 10.727,
+  "coverage": [
+    "All six trial door returns, matching/wrong/no medallion, both ages and disabled option.",
+    "Physical source and transition-check gates agree before and after destination rewiring.",
+    "Physical gates remain when transition checks are disabled; received item cache refresh.",
+    "Water Freezard and Shadow Bubble/Like Like clear alternatives require actual room access.",
+    "Exact ER collection proxies retain local item requirements without inherited entry medallions.",
+    "Non-ER silver routes preserve physical entry/local access; region-qualified actions reject malformed input."
+  ],
+  "native_build": false,
+  "in_game_playthrough": false,
+  "log": "test_all_six_reverse_doors_require_their_own_medallion_without_clear (__main__.TrialMedallionLogicTests.test_all_six_reverse_doors_require_their_own_medallion_without_clear) ... ok\ntest_arriving_inside_spirit_does_not_require_its_original_entry_medallion (__main__.TrialMedallionLogicTests.test_arriving_inside_spirit_does_not_require_its_original_entry_medallion) ... ok\ntest_disabled_medallion_option_keeps_all_reverse_doors_free (__main__.TrialMedallionLogicTests.test_disabled_medallion_option_keeps_all_reverse_doors_free) ... ok\ntest_forward_medallions_and_light_strength_gate_are_preserved (__main__.TrialMedallionLogicTests.test_forward_medallions_and_light_strength_gate_are_preserved) ... ok\ntest_medallion_receipt_and_removal_refresh_the_same_cached_state (__main__.TrialMedallionLogicTests.test_medallion_receipt_and_removal_refresh_the_same_cached_state) ... ok\ntest_native_export_and_catalog_identity_are_consistent (__main__.TrialMedallionLogicTests.test_native_export_and_catalog_identity_are_consistent) ... ok\ntest_non_er_silver_route_still_requires_the_physical_entry_path (__main__.TrialMedallionLogicTests.test_non_er_silver_route_still_requires_the_physical_entry_path) ... ok\ntest_physical_exit_rules_exist_with_transition_checks_disabled (__main__.TrialMedallionLogicTests.test_physical_exit_rules_exist_with_transition_checks_disabled) ... ok\ntest_region_qualified_actions_reject_unknown_regions_and_non_callbacks (__main__.TrialMedallionLogicTests.test_region_qualified_actions_reject_unknown_regions_and_non_callbacks) ... ok\ntest_shadow_reverse_requires_both_enemies_and_their_physical_platforms (__main__.TrialMedallionLogicTests.test_shadow_reverse_requires_both_enemies_and_their_physical_platforms) ... ok\ntest_spirit_local_checks_and_other_exit_keep_their_own_requirements (__main__.TrialMedallionLogicTests.test_spirit_local_checks_and_other_exit_keep_their_own_requirements) ... ok\ntest_spirit_source_gate_still_blocks_a_shuffled_water_destination (__main__.TrialMedallionLogicTests.test_spirit_source_gate_still_blocks_a_shuffled_water_destination) ... ok\ntest_water_reverse_can_clear_freezards_with_soul_and_usable_combat (__main__.TrialMedallionLogicTests.test_water_reverse_can_clear_freezards_with_soul_and_usable_combat) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 10.725s\n\nOK\n"
+}

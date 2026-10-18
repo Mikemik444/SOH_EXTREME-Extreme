@@ -35,6 +35,7 @@ typedef enum {
     ENTRANCE_GROUP_DESERT_COLOSSUS,
     ENTRANCE_GROUP_MARKET,
     ENTRANCE_GROUP_HYRULE_CASTLE,
+    ENTRANCE_GROUP_OTHER,
     SPOILER_ENTRANCE_GROUP_COUNT,
 } SpoilerEntranceGroup;
 
@@ -45,6 +46,7 @@ typedef enum {
     ENTRANCE_TYPE_FORTRESS,
     ENTRANCE_TYPE_GROTTO,
     ENTRANCE_TYPE_DUNGEON,
+    ENTRANCE_TYPE_ROOM_DOOR,
     ENTRANCE_TYPE_COUNT,
 } TrackerEntranceType;
 
@@ -75,7 +77,7 @@ typedef enum {
 } TrackerEntranceGroupingType;
 
 typedef struct {
-    uint8_t EntranceCount;
+    uint16_t EntranceCount;
     uint16_t GroupEntranceCounts[TRACKER_GROUP_TYPE_COUNT][SPOILER_ENTRANCE_GROUP_COUNT];
     uint16_t GroupOffsets[TRACKER_GROUP_TYPE_COUNT][SPOILER_ENTRANCE_GROUP_COUNT];
 } EntranceTrackingData;

@@ -282,9 +282,9 @@ void RegionTable_Init_WaterTemple() {
     });
 
     areaTable[RR_WATER_TEMPLE_3_JETS_NO_SWITCH] = Region("Water Temple 3 Jets Room No Switch", SCENE_WATER_TEMPLE, {}, {}, {
-        //Exits
+        // Flag 62 is temporary: the age taking this door must be able to reach its switch side again.
         ENTRANCE(RR_WATER_TEMPLE_3_JETS_SWITCH, logic->CanUse(RG_HOOKSHOT) || logic->CanRecoilHover(RECOIL_HAMMER_AND_SHIELD)),
-        ENTRANCE(RR_WATER_TEMPLE_CANAL_ALCOVE,  true),
+        ENTRANCE(RR_WATER_TEMPLE_CANAL_ALCOVE,  (logic->IsChild && areaTable[RR_WATER_TEMPLE_3_JETS_SWITCH].Child()) || (logic->IsAdult && areaTable[RR_WATER_TEMPLE_3_JETS_SWITCH].Adult())),
     });
 
     areaTable[RR_WATER_TEMPLE_CANAL_ALCOVE] = Region("Water Temple Canal Alcove", SCENE_WATER_TEMPLE, {}, {

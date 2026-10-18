@@ -1,0 +1,123 @@
+{
+  "status": "passed",
+  "scope": "Compiled final Finder presence helper and final route selection loop. Native Mido spawn function and exact Talon init kill-guard spans compiled with actor/flag/scene shims. No full native build or game UI run.",
+  "native_predicate_comparisons": 72,
+  "scene_selection_cases": [
+    {
+      "case": "Mido before story flags in forest",
+      "expected_scene": 0,
+      "actual_scene": 0
+    },
+    {
+      "case": "Mido before story flags in empty house",
+      "expected_scene": 0,
+      "actual_scene": 0
+    },
+    {
+      "case": "Mido after Deku conversation in forest",
+      "expected_scene": 1,
+      "actual_scene": 1
+    },
+    {
+      "case": "Mido after letter in forest",
+      "expected_scene": 1,
+      "actual_scene": 1
+    },
+    {
+      "case": "Mido Skip Child Zelda in forest",
+      "expected_scene": 1,
+      "actual_scene": 1
+    },
+    {
+      "case": "Mido adult before flags",
+      "expected_scene": 2,
+      "actual_scene": 2
+    },
+    {
+      "case": "Mido adult after flags",
+      "expected_scene": 2,
+      "actual_scene": 2
+    },
+    {
+      "case": "Talon sleeping in castle",
+      "expected_scene": 3,
+      "actual_scene": 3
+    },
+    {
+      "case": "Talon sleeping in empty ranch",
+      "expected_scene": 3,
+      "actual_scene": 3
+    },
+    {
+      "case": "Talon awake but not departed",
+      "expected_scene": 3,
+      "actual_scene": 3
+    },
+    {
+      "case": "Talon departed while player visits castle",
+      "expected_scene": 4,
+      "actual_scene": 4
+    },
+    {
+      "case": "Talon departed while player visits ranch",
+      "expected_scene": 4,
+      "actual_scene": 4
+    },
+    {
+      "case": "Talon Skip Child Zelda in castle",
+      "expected_scene": 4,
+      "actual_scene": 4
+    },
+    {
+      "case": "Talon adult before Kakariko departure",
+      "expected_scene": 5,
+      "actual_scene": 5
+    },
+    {
+      "case": "Talon adult departed Kakariko",
+      "expected_scene": -1,
+      "actual_scene": -1
+    }
+  ],
+  "fixture_scene_enum": {
+    "Kokiri Forest": 0,
+    "Mido's House": 1,
+    "Lost Woods": 2,
+    "Hyrule Castle": 3,
+    "Lon Lon Buildings": 4,
+    "Kakariko Guest House": 5
+  },
+  "skip_child_zelda_provenance": "Existing slot-data settings set StartingZeldasLetter=1 and ShuffleWeirdEgg=2; native save initialization sets Zelda-letter, Talon-woken and Talon-left-castle flags. Fixture flag set 22 represents those three flags.",
+  "talon_after_adult_departure": "Native EnTa_IdleAwakeInKakariko sets the return flag only through an actual conversation, so the permanent first-speech identity has already been fulfilled. An out-of-date row no longer points to the departed Kakariko actor; no new AP route or rule is introduced.",
+  "source_sha256": {
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "0c8645cd9389007f41a6be202b4f53054b6d2e0ec9fd4e6a208469d4bee20e63",
+    "src/overlays/actors/ovl_En_Md/z_en_md.c": "55a251abeea87779db994481bdc04c1055ea6889d99139c321b6ea488463b58a",
+    "src/overlays/actors/ovl_En_Ta/z_en_ta.c": "f521465ac9d6b3288263e046a1e8f562587f7f3cc1bb8b735e1fc1560cc925c8",
+    "soh/Network/Archipelago/NpcSpeechScenes.inc": "96c9c18245fbcc07e3e22ab683b111167d9fe00216d1f025148fb9c8f01837a9",
+    "soh/Network/Archipelago/TrackerScenes.h": "2cd9334b4202cf68923f68d9a8a5248ca320f49be88fc7c8f817b55d881d3ab2",
+    "soh/Enhancements/randomizer/savefile.cpp": "60573a5c6ad6df3312c2807de489de0efbc8c2189fa28b2b6365513e75dc3e5c",
+    "archipelago/soh_extreme/__init__.py": "242e128dbf15945cabec55b6a7176bb3e74ce697e56ba8a89f6b4a5829d83f63"
+  },
+  "fragment_sha256_lf": {
+    "FinderNpcSpeechScenePresent": "088dc991948333df9a6479e10ba7a30e2600efc9c987df012886920fcf913f5e",
+    "FinderRowScene_selection": "1ce031b04cfeca6e9357107b0af1a7c1d038174e142b7833b226a11154645006",
+    "EnMd_ShouldSpawn": "5addf51b3528449291067f0a04ee55f54f014baacacef097a8ac4c107491d15b",
+    "SCENE_KAKARIKO_CENTER_GUEST_HOUSE": "5385cb6e68f103d146d7d6fc02754c8d31907ab4daa9fb6e0812626538406db3",
+    "SCENE_HYRULE_CASTLE": "c1e6b74c5da6bb1716b60e327797eb97a682dbb195c27bb271354d3ed462c364",
+    "SCENE_LON_LON_BUILDINGS": "9d2faf3a743ff9ad7c3db09bc336ff4eeb168197d000ebd56e7f4c7293e87e6d"
+  },
+  "fixture_sha256": "301744bfa8b4a6e7ee24c5c238229e1ced6bc98eaacae75e2738217c9f3b2051",
+  "probe_sha256": "e2a46586d4238e205240f4725ea17f7819f1b3704d5211f8bdbd6aea8b225e48",
+  "compile_command": [
+    "g++",
+    "-std=c++17",
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-parameter",
+    "/workspace/scratch/8fddab5b8169/tests/finder_npc_scene_placement_fixture.cpp",
+    "-o",
+    "/workspace/scratch/8fddab5b8169/tests/finder_npc_scene_placement_fixture"
+  ],
+  "full_native_game_build": false,
+  "live_imgui_run": false
+}

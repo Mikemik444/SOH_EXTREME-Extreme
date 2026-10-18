@@ -1,0 +1,115 @@
+SOH-EXTREME 1.8.6 - Validation evidence and limits
+=================================================
+
+PASS for the scoped checks listed below. The aggregate report is
+validation/finder_hints_186_release_validation.json. It binds all 117 complete
+source replacements to final SHA-256 values, verifies 699 report/source
+hash entries, and records every current report hash. There are 76 files
+added or changed since 1.8.5. All prior replacement sources are retained.
+
+CURRENT CHECKS
+--------------
+Finder dropdowns: independent source/fragment review for automatic versus
+manual open/closed choices, stable keys and singleton headers. Native NPC
+placement grouping and King Zora fallback gates have their own scoped review.
+No live ImGui execution is claimed.
+
+The final scene grouping helper and route-selection loop pass 72 compiled
+comparisons with native Mido/Talon placement conditions and 15 selection cases,
+including before/after story flags and Skip Child Zelda. Actor/flag I/O is
+isolated; the entire game renderer was not compiled.
+
+Native hints: full-content, reveal/snapshot/journal and save-metadata suites
+compile actual production headers/methods with isolated session and worker I/O.
+ASan/UBSan runs check full UTF-8 names, >8 hint rows, long messages, exact typed
+progression flags, real Python wire data, malformed/stale/oversize rejection,
+pending retries, server confirmation, monotonic same-save merge, and identity
+reset. The actual new-file priming path is covered separately from save loading.
+The save integration source review verifies captured background serialization,
+restore order, and the native Return to Spawn lifecycle.
+
+Native paging: 21 cases / 78,920 assertions use the production formatter, stream,
+C bridge, message provenance, LoadIntoFont, and native draw/A/refill/reset/close
+bodies. C11/C++20 ABI link, buffer canaries, ASan and UBSan pass. A 5,000-page
+message larger than 65,535 bytes is reconstructed exactly. Only a fully drawn
+hint's ending can reveal its frozen targets. Leak sanitizer is disabled because
+process-task inspection is restricted in this environment.
+
+Hint transport: 21 focused official-AP protocol tests cover server hint decoding,
+exact IDs/flags, subscriptions/reconnect freshness, local reveals, own-item and
+group recipient permissions, replay/nonce boundaries, and progression filtering.
+No live server connection or end-to-end native session was performed.
+
+Area hints: 10 real AP CollectionState/can_beat_game tests cover necessary versus
+optional/redundant areas, remote recipients, withheld-event sweeps, physical and
+moving NPC groups, proof bounds, deterministic output and typed hint metadata.
+The two full fills below also record each final area's withheld IDs and proof.
+
+Soul objects: 13 native cases / 64 assertions exercise real crate/rock/boulder
+actions, OC separation, ceiling collision transforms, draw callbacks and item
+recovery hooks. Actual native-room compiler, physical Spirit doorway and vendor
+route predicates agree for missing/owned Rock Soul and Sunlight Arrows.
+
+NPC runtime: 8 cases / 191 assertions compile the exact policy, initialization,
+update and speech hooks, full Actor_Draw, native talk/screen-focus functions,
+Mido UpdateTalking/Update/BlockPath, cylinder positioning and OC separation.
+Every allowed placement and wrong variant is checked, including Kokiri param 3.
+These run with ASan/UBSan and engine I/O shims, not a native game process.
+
+NPC AP logic: 117 real AP cases across Skip Child Zelda off/on retain normal
+language, age, item and story gates for the exact invisible blocker roles.
+Ordinary NPC roles remain soul gated. Native language ownership and first-talk
+catalog/scene tables receive the matching scoped fixes.
+
+Lost Woods: 95 assertions across three actual AP worlds exercise all 89 enabled
+LW/bridge/grotto/theater checks plus NPC routes. The reported first-scale,
+explosives-only inventory cannot reach main LW. Separate bridge checks remain.
+Climb, soul + explosives, Silver Scale, full playable Minuet, missing instrument,
+submerged rupees, rock checks, grotto gates, and ER source-rule reuse are covered.
+The third world verifies innate Bronze plus first received Silver when Swim is
+not shuffled. This is AP rule execution, not extracted ROM geometry or gameplay.
+
+Experimental labels: 164 source/AST/AP-option assertions verify all 12 AP and
+19 native entrance controls, titles/tooltips, stable widget IDs, unchanged keys,
+serialization/defaults/values, and 4,096 mixed-all evaluations across all 2,048
+enabled-category combinations. Native rendered UI was not compiled or exercised.
+
+Full generation: official Main.main through pre_output, restrictive fill and
+final all-check/goal validation, seed 1, once for child and once for adult.
+Both reach all 4,036 checks. Initial child: 22 network / 20 physical.
+Initial adult: 17 network / 15 physical. Both can reach Hyrule Field.
+Each changes 52/52 overworld endpoints and exports coupled mappings and age spawn
+destinations. Only the YAML's configured starting items are precollected.
+Repeated final hint generation keeps placements and per-slot RNG unchanged.
+The official output-phase global-RNG guard stays active throughout those calls.
+These tests validate the two generated worlds, not every seed or action sequence.
+
+APWorld: the official 0.6.7 loader imports the actual ZIP without a loose world
+masking it, checks 118 entries / 117 package resources, all JSON, matching native/
+tracker/archive version 1.8.6, and unchanged protocol/catalog identities.
+
+Build helper: the shipped revision-4 PowerShell AST functions verify all 117
+copied files in a disposable fixture. The helper differs from 1.8.5 only in
+release strings. This runs on Linux PowerShell 7.6.7 with OS-check bypass and
+equivalent Unix path adaptations. No MSBuild or complete game compilation occurs.
+
+Cumulative packaging: every original/current source file is compared by bytes,
+and every previous replacement is retained. No original source is missing and
+no source change is outside the manifest. The YAML and both APWorld copies are
+identical. Finalization verifies every file, ZIP inventory and CRC. The final
+ZIP hash is recorded externally to avoid a self-referential checksum.
+
+HISTORICAL EVIDENCE
+------------------
+validation/previous_1.8.5/ retains the prior release summary and aggregate.
+Those are explicitly historical results for the earlier entrance, Jabu, label
+and build-workflow changes, not claims that those older suites were rerun here.
+
+REPRODUCTION
+------------
+Production-oriented regressions are included under tools/tests/. Additional
+release audit scripts and the Python/native wire fixture are in validation/.
+They require the full checkout, official AP 0.6.7 runtime/dependencies, and a
+supported C/C++ compiler. Some release scripts retain original workspace paths;
+adjust those paths for your local environment. README.txt gives the Windows
+source merge/build steps and the matching APWorld install location.

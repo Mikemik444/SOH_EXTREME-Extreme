@@ -29,6 +29,7 @@ static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<
 #include "soh/Enhancements/randomizer/randomizer_check_tracker.h"
 #include "soh/Enhancements/randomizer/savefile.h"
 #include "soh/Enhancements/randomizer/settings.h"
+#include "soh/Enhancements/randomizer/SoulActorAccess.h"
 #include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/Enhancements/randomizer/SeedContext.h"
 #include "soh/Enhancements/randomizer/static_data.h"
@@ -49,6 +50,8 @@ extern PlayState* gPlayState;
 
 extern "C" u16 Randomizer_Item_Give(PlayState* play, GetItemEntry giEntry);
 extern "C" void Save_SaveFile(void);
+
+#include "EntranceRuntime.inc"
 
 namespace {
 std::string NormalizeApLocationName(const std::string& value) {
@@ -668,6 +671,7 @@ std::string ArchipelagoClient::GetStatusText() const {
         case AP_ConnectionStatus::Connected: return "Connected - authenticating...";
         case AP_ConnectionStatus::Authenticated:
             if (currentSaveIsArchipelago && saveIdentityMismatch) return saveConnectionStatus;
+            if (!slotSettingsError.empty()) return slotSettingsError;
             if (!slotSettingsLoaded) return "Authenticated - loading AP settings...";
             if (!activeLocationsLoaded) return "Authenticated - loading AP locations...";
             if (!shopPricesLoaded) return "Authenticated - loading AP prices...";
@@ -679,6 +683,33 @@ std::string ArchipelagoClient::GetStatusText() const {
         case AP_ConnectionStatus::ConnectionRefused: return "Connection refused - check server/slot/password";
         default: return "Connecting...";
     }
+}
+
+std::string ArchipelagoClient::GetEntranceStatusText() const {
+    if (!slotSettingsError.empty()) return "Entrances: " + slotSettingsError;
+    const auto& routes = SohExtreme::EntranceRuntime::routing;
+    if (currentSaveIsArchipelago) {
+        if (!SohExtreme::EntranceRuntime::slotMapLoaded)
+            return "Entrances: waiting for this save's seed map";
+        if (!routes.Active()) return "Entrances: vanilla in this save's seed";
+        auto spawnName = [&routes](int source, const char* vanilla) {
+            if (!routes.Contains(source)) return std::string(vanilla) + " (not shuffled by this seed)";
+            const auto* destination = SohExtreme::EntranceEndpointById(routes.Destination(source));
+            if (!destination) return std::string("unavailable");
+            std::string name = destination->name;
+            const auto arrow = name.find(" -> ");
+            if (arrow != std::string::npos) name.erase(0, arrow + 4);
+            return name;
+        };
+        return "Entrances: " + std::to_string(routes.Routes().size()) + " routes loaded" +
+               "\nChild spawn: " + spawnName(ENTR_LINKS_HOUSE_CHILD_SPAWN, "Link's House") +
+               "\nAdult spawn: " + spawnName(ENTR_HYRULE_FIELD_10, "Temple of Time");
+    }
+    if (!slotSettingsLoaded) return "Entrances: waiting for AP seed settings";
+    const auto revision = slotSettings.find("EntranceRandomizerRevision");
+    if (revision == slotSettings.end() || revision->second == 0)
+        return "Entrances: vanilla in the connected server's seed";
+    return "Entrances: randomized map received; open this seed's Archipelago save";
 }
 
 bool ArchipelagoClient::ConnectionSettingsChanged() const {
@@ -822,6 +853,12 @@ void ArchipelagoClient::RegisterCallbacks() {
                 client.pendingFinderPayload = payload;
             }
         }
+        if (bounce.data.size() <= 8 * 1024 * 1024 &&
+            ExtractJsonString(bounce.data, "soh_extreme_tracker") == SohExtreme::kTrackerProtocol &&
+            ExtractJsonString(bounce.data, "kind") == "hint_snapshot") {
+            std::scoped_lock lock(client.queueMutex);
+            client.pendingHintPayload = bounce.data;
+        }
         if (BounceHasTag(bounce, "DeathLink")) {
             client.QueueDeathLink(ExtractJsonString(bounce.data, "source"),
                                   ExtractJsonString(bounce.data, "cause"));
@@ -889,6 +926,14 @@ void ArchipelagoClient::ResetFinderMirror() {
     pendingFinderNonce.clear();
     finderMirrorError.clear();
     finderNextRequest = 0.0;
+    pendingHintPayload.clear();
+    hintProducer.clear();
+    hintRevision = hintRequest = 0;
+    nextHintRequest = nextHintPublish = 0.0;
+    serverHintRows.clear();
+    hintSnapshotLoaded = false;
+    hintSyncStatus.clear();
+    RebuildHints();
 }
 
 void ArchipelagoClient::RefreshFinderMirror() {
@@ -1080,6 +1125,8 @@ void ArchipelagoClient::Enable() {
     shopPrices.clear();
     activeLocationsLoaded = false;
     slotSettingsLoaded = false;
+    slotSettingsError.clear();
+    rejectedSlotSettingsJson.clear();
     shopPricesLoaded = false;
     kakarikoGateOpen = false;
     deathLinkEnabled = false;
@@ -1159,6 +1206,8 @@ void ArchipelagoClient::Disable() {
     shopPrices.clear();
     activeLocationsLoaded = false;
     slotSettingsLoaded = false;
+    slotSettingsError.clear();
+    rejectedSlotSettingsJson.clear();
     shopPricesLoaded = false;
     kakarikoGateOpen = false;
     deathLinkEnabled = false;
@@ -1204,10 +1253,37 @@ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receiv
                                                const std::string& cachedSettingsJson,
                                                const SohExtreme::SaveConnectionIdentity& identity) {
     ResetRemotePresentations();
+    auto sameIdentity = [](const SohExtreme::SaveConnectionIdentity& a,
+                           const SohExtreme::SaveConnectionIdentity& b) {
+        return a.Valid() && b.Valid() && a.seed == b.seed && a.team == b.team && a.slot == b.slot;
+    };
+    // Return to Spawn reopens this same verified save. Keep the existing
+    // managed host/nonce while inventory and receipt state reload normally.
+    // A different file identity, connection, settings, or dead host still
+    // follows the complete reset path below.
+    std::string workerStatus;
+    const bool preserveTracker = currentSaveIsArchipelago && isArchipelagoSave &&
+        !saveIdentityMismatch && IsAuthenticated() && sameIdentity(saveConnectionIdentity, identity) &&
+        sameIdentity(connectedIdentity, identity) && saveSlot == slot && connectedSlot == slot &&
+        saveServer == server && connectedServer == server && slotSettingsLoaded &&
+        cachedSlotSettingsJson == cachedSettingsJson && connectedSettingsJson == cachedSettingsJson &&
+        finderWorkerStarted && finderWorker.IsRunning(workerStatus);
+    const bool preserveHintJournal = currentSaveIsArchipelago && isArchipelagoSave &&
+        sameIdentity(saveConnectionIdentity, identity);
+    if (!preserveHintJournal) {
+        std::scoped_lock lock(hintJournalMutex);
+        revealedHintTargets.clear();
+    }
     gCrossingJournal.Reset();
+    SohExtreme::EntranceRuntime::Reset();
     {
         std::scoped_lock lock(queueMutex);
-        ResetFinderMirror();
+        if (preserveTracker) {
+            finderNextRequest = 0.0;
+            nextHintRequest = 0.0;
+        } else {
+            ResetFinderMirror();
+        }
         currentSaveIsArchipelago = isArchipelagoSave;
         pendingLocationReports.clear();
         saveRuntimeSynchronized = false;
@@ -1231,16 +1307,34 @@ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receiv
         // offline load. Never keep another file's cursor or reset it on rebind.
         appliedItemCount = receivedItemCount;
         cachedSlotSettingsJson = cachedSettingsJson;
+        slotSettingsError.clear();
+        rejectedSlotSettingsJson.clear();
         if (!isArchipelagoSave) return;
         slotSettings.clear();
         slotSettingsLoaded = false;
         std::unordered_map<std::string, int64_t> parsed;
-        if (!cachedSettingsJson.empty() && ParseFlatStringIntObject(cachedSettingsJson, parsed)) {
-            for (const auto& [key, value] : parsed) {
-                if (value >= std::numeric_limits<int>::min() && value <= std::numeric_limits<int>::max())
+        if (!cachedSettingsJson.empty()) {
+            if (!ParseFlatStringIntObject(cachedSettingsJson, parsed)) {
+                slotSettingsError = "Saved AP settings could not be read. Connect to this save's original room.";
+            } else {
+                for (const auto& [key, value] : parsed) {
+                    if (value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max()) {
+                        slotSettingsError = "A saved AP setting is out of range. Connect to this save's original room.";
+                        break;
+                    }
                     slotSettings[key] = static_cast<int>(value);
+                }
+                SohExtreme::EntranceRouting validated;
+                std::string error;
+                if (slotSettingsError.empty() &&
+                    !SohExtreme::EntranceRuntime::Validate(slotSettings, validated, error))
+                    slotSettingsError = "Entrance map rejected: " + error;
+                slotSettingsLoaded = slotSettingsError.empty();
             }
-            slotSettingsLoaded = true;
+            if (!slotSettingsLoaded) {
+                slotSettings.clear();
+                SPDLOG_ERROR("[Archipelago] {}", slotSettingsError);
+            }
         }
         slotSettingsPendingApply.store(false);
         if (receivedItemCount == 0)
@@ -1506,6 +1600,15 @@ void ArchipelagoClient::PrimeNewSaveMetadata() {
     // creation.  Only stamp the durable AP identity/settings needed by SaveManager.
     std::scoped_lock lock(queueMutex);
 
+    // This method is called only when creating a new AP file. Completed-hint
+    // rows from a previous file must not enter this file's first snapshot.
+    // Ordinary same-save reloads retain their journal in LoadSaveMetadata.
+    {
+        std::scoped_lock hintLock(hintJournalMutex);
+        revealedHintTargets.clear();
+    }
+    nextHintPublish = 0.0;
+
     appliedItemCount = 0;
     pendingLocationReports.clear();
     awaitingMajorItemReceipt = false;
@@ -1521,6 +1624,7 @@ void ArchipelagoClient::PrimeNewSaveMetadata() {
     saveServer = connectedServer;
     saveSlot = connectedSlot;
     saveConnectionIdentity = connectedIdentity;
+    RebuildHints();
 
     CVarSetInteger(GetReceivedCountCVar().c_str(), 0);
     pendingItems.clear();
@@ -1787,8 +1891,16 @@ void ArchipelagoClient::DrainSlotData() {
 }
 
 void ArchipelagoClient::SetSlotSettingsFromJson(const std::string& raw) {
+    // Reconciliation runs every frame. Keep a rejected snapshot visible without
+    // reparsing or logging it repeatedly until the server supplies new settings.
+    if (!rejectedSlotSettingsJson.empty() && raw == rejectedSlotSettingsJson) return;
+    auto reject = [this, &raw](const std::string& message) {
+        slotSettingsError = message;
+        rejectedSlotSettingsJson = raw;
+    };
     std::unordered_map<std::string, int64_t> parsed;
     if (!ParseFlatStringIntObject(raw, parsed)) {
+        reject("The server's AP settings could not be read. Check the matching APWorld and reconnect.");
         SPDLOG_ERROR("[Archipelago] Invalid extreme_soh_cvars slot data");
         return;
     }
@@ -1797,6 +1909,7 @@ void ArchipelagoClient::SetSlotSettingsFromJson(const std::string& raw) {
     nextSettings.reserve(parsed.size());
     for (const auto& [key, value] : parsed) {
         if (value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max()) {
+            reject("An AP slot setting is out of range. Check the matching APWorld and reconnect.");
             SPDLOG_ERROR("[Archipelago] Slot setting {} is out of range", key);
             return;
         }
@@ -1816,6 +1929,16 @@ void ArchipelagoClient::SetSlotSettingsFromJson(const std::string& raw) {
         nextSettings.try_emplace("FishsanityAgeSplit", pond ? 1 : 0);
     }
 
+    // A complete settings snapshot is not ready until its entrance map can be
+    // installed. Reject before changing cached settings, CVars or file creation.
+    SohExtreme::EntranceRouting validated;
+    std::string entranceError;
+    if (!SohExtreme::EntranceRuntime::Validate(nextSettings, validated, entranceError)) {
+        reject("Entrance map rejected: " + entranceError);
+        SPDLOG_ERROR("[Archipelago] {}", slotSettingsError);
+        return;
+    }
+
     size_t loadedCount = 0;
     bool settingsChanged = false;
     {
@@ -1824,6 +1947,8 @@ void ArchipelagoClient::SetSlotSettingsFromJson(const std::string& raw) {
         slotSettings = std::move(nextSettings);
         cachedSlotSettingsJson = raw;
         slotSettingsLoaded = true;
+        slotSettingsError.clear();
+        rejectedSlotSettingsJson.clear();
         loadedCount = slotSettings.size();
     }
 
@@ -1907,6 +2032,16 @@ void ArchipelagoClient::ApplySlotSettings() {
         // from the previously connected save's AP-only CVars.
         slotSettings.try_emplace("SceneTransitionChecks", 0);
         slotSettings.try_emplace("SceneTransitionCatalogVersion", 0);
+        // Old seeds have no entrance mapping. Never inherit a previous AP
+        // save's native shuffle flags or the user's local randomizer menu.
+        for (const char* key : { "EntranceRandomizerRevision", "DecoupleEntrances",
+             "ShuffleInteriorsEntrances", "ShuffleThievesHideoutEntrances", "ShuffleDungeonsEntrances",
+             "ShuffleGanonTowerEntrance", "ShuffleBossEntrances", "ShuffleGrottosEntrances",
+             "ShuffleOverworldEntrances", "ShuffleOwlDrops", "ShuffleWarpSongs", "ShuffleOverworldSpawns",
+             "ShuffleDungeonDoors", "MixedEntrances", "MixDungeons", "MixBosses", "MixInteriors",
+             "MixOverworld", "MixGrottos" }) {
+            slotSettings.try_emplace(key, 0);
+        }
         // AP routes include Bunny Hood speed/jumps. Upgrade old cached/server
         // settings too; the effect still requires wearing the actual hood.
         slotSettings["BunnyHood"] = 1;
@@ -1982,6 +2117,11 @@ void ArchipelagoClient::ApplySlotSettings() {
     // menu indices into the live Context used by RAND_GET_OPTION.
     settings->UpdateAllOptions();
     settings->SetAllToContext();
+    if (!SohExtreme::EntranceRuntime::Apply(settingsSnapshot)) {
+        slotSettingsError = "The entrance map could not be installed. See the game log for the reported cause.";
+        return;
+    }
+    SPDLOG_INFO("[Archipelago] {}", GetEntranceStatusText());
 
     // AP is the authority for logic on an Archipelago save. Native trick flags are
     // stored separately from the normal option array, so a local SoH randomizer
@@ -2090,7 +2230,8 @@ bool ArchipelagoClient::IsReadyForFileSelect() const {
     // ownership + exact shop prices are the data that must exist before native
     // randomizer initialization.  Scout/model data can finish in the background;
     // actors refresh their concrete placement lazily before drawing/interaction.
-    return IsAuthenticated() && slotSettingsLoaded && activeLocationsLoaded && shopPricesLoaded;
+    return IsAuthenticated() && slotSettingsLoaded && slotSettingsError.empty() &&
+           activeLocationsLoaded && shopPricesLoaded;
 }
 
 void ArchipelagoClient::ApplyPostInitSlotState() {
@@ -2218,6 +2359,7 @@ ArchipelagoSaveSnapshot ArchipelagoClient::CaptureSaveSnapshot() const {
         snapshot.settingsJson = cachedSlotSettingsJson;
         snapshot.fallbackNpcSpeechHashes = fallbackNpcSpeechHashes;
         snapshot.pendingLocations.assign(pendingLocationReports.begin(), pendingLocationReports.end());
+        snapshot.revealedHintTargetsJson = GetRevealedHintTargetsJson();
         // A native check can be saved on the same frame it is collected, before
         // the deferred report reaches SendLocation(). Include that queue too.
         for (int64_t id : gDeferredLocationReports) {
@@ -2501,24 +2643,10 @@ int64_t ArchipelagoClient::ResolveApLocationForCheck(int32_t randomizerCheck) {
     return matched;
 }
 
-// AP names are external text, not native message formatting/control codes.
+// Merchant hint text and remote item presentations use the same literal-name
+// encoding as gossip hints. The native page stream handles the complete text.
 static std::string ApMessageName(const std::string& name) {
-    std::string result;
-    for (unsigned char c : name) {
-        if (c < 0x20 || c == 0x7f || c == '%' || c == '&' || c == '^' || c == '@' || c == '#') {
-            result += ' ';
-        } else {
-            result += static_cast<char>(c);
-        }
-    }
-    // The native textbox has a fixed buffer; leave room for wrapping/control bytes.
-    if (result.size() > 160) {
-        size_t end = 160;
-        while (end > 0 && (static_cast<unsigned char>(result[end]) & 0xc0) == 0x80) --end;
-        result.resize(end);
-        result += "...";
-    }
-    return result;
+    return SohExtreme::HintLiteral(name);
 }
 
 void ArchipelagoClient::DrainMessages() {
@@ -2528,15 +2656,10 @@ void ArchipelagoClient::DrainMessages() {
             if (!inGameHints.Load(static_cast<AP_SeedHintListMessage*>(message)->data))
                 SPDLOG_WARN("[Archipelago] Invalid in-game hint snapshot");
         } else if (message != nullptr && message->type == AP_MessageType::HintList) {
-            hints.clear();
-            for (const auto& row : static_cast<AP_HintListMessage*>(message)->hints) {
-                hints.push_back({ row.item, row.location, row.finder, row.recipient, row.entrance, row.found });
-            }
-            std::stable_sort(hints.begin(), hints.end(), [](const HintInfo& a, const HintInfo& b) {
-                if (a.found != b.found) return !a.found;
-                return a.item < b.item;
-            });
-            hintSnapshotLoaded = true;
+            // The installed APCpp snapshot has no verified item flags/IDs.
+            // The managed official AP client supplies typed progression hints
+            // through hint_snapshot; never classify these strings by spelling.
+            nextHintRequest = 0.0;
         } else if (message != nullptr) {
             const std::string line = message->text;
             {
@@ -2656,15 +2779,15 @@ std::string ArchipelagoClient::GetHintItemDescription(int32_t randomizerCheck) {
     if (location < 0 && activeLocationsLoaded) {
         // An unshuffled reward has no AP scout; its vanilla item is authoritative.
         auto* loc = Rando::StaticData::GetLocation(static_cast<RandomizerCheck>(randomizerCheck));
-        if (loc) return SohExtreme::HintLiteral(Rando::StaticData::RetrieveItem(loc->GetVanillaItem()).GetName().english, 80);
+        if (loc) return SohExtreme::HintLiteral(Rando::StaticData::RetrieveItem(loc->GetVanillaItem()).GetName().english);
     }
     const auto it = scoutedLocations.find(location);
     if (it == scoutedLocations.end()) return {};
     const auto& item = it->second;
     if (item.itemName.empty()) return {};
-    return SohExtreme::HintLiteral(item.itemName, 80) + " for " +
+    return SohExtreme::HintLiteral(item.itemName) + " for " +
            (item.playerName.empty() ? "Player " + std::to_string(item.playerId)
-                                    : SohExtreme::HintLiteral(item.playerName, 32));
+                                    : SohExtreme::HintLiteral(item.playerName));
 }
 
 std::string ArchipelagoClient::GetInGameHint(const std::string& key, int32_t stoneIndex) {
@@ -2687,9 +2810,9 @@ std::string ArchipelagoClient::GetInGameHint(const std::string& key, int32_t sto
     std::sort(candidates.begin(), candidates.end());
     const auto& item = scoutedLocations.at(candidates[static_cast<size_t>(stoneIndex) % candidates.size()]);
     return std::string(missingTarget ? "This seed did not store this hint's target. Another lead:^" : "") +
-           SohExtreme::HintLiteral(item.itemName, 80) + " for " +
-           SohExtreme::HintLiteral(item.playerName, 32) + " can be found at " +
-           SohExtreme::HintLiteral(item.locationName, 120) + " in your world.";
+           SohExtreme::HintLiteral(item.itemName) + " for " +
+           SohExtreme::HintLiteral(item.playerName) + " can be found at " +
+           SohExtreme::HintLiteral(item.locationName) + " in your world.";
 }
 
 std::string ArchipelagoClient::GetRemoteItemDescription(int32_t randomizerCheck) {
@@ -2718,6 +2841,8 @@ void ArchipelagoClient::EnsureLocationScouts() {
     DrainSlotData();
     RequestLocationScouts();
 }
+
+#include "ArchipelagoHintClient.inc"
 
 int32_t ArchipelagoClient::GetLocationDisplayItem(int64_t locationId) const {
     // AP-only enemy checks have no native RC/ItemLocation. Read the game-thread
@@ -3422,6 +3547,7 @@ void ArchipelagoClient::Update() {
     ServiceFinderWorker();
     if (!enabled.load()) return;
     DrainMessages();
+    ServiceHintBridge();
 
     // Title/file-select safety boundary. APCpp may stay connected so authentication
     // can complete, but NOTHING that mutates gameplay state is processed until the
@@ -3480,6 +3606,14 @@ void ArchipelagoClient::Update() {
     // Consume APCpp-published work only from the gameplay thread.
     if (IsAuthenticated() && slotSettingsLoaded && slotSettingsPendingApply.exchange(false)) {
         ApplySlotSettings();
+    }
+
+    // Load may have preceded uncached slot data. Ownership was verified above;
+    // finish that one request when gameplay can safely transition. Reconnects
+    // and ordinary settings refreshes do not arm another spawn request.
+    if (SohExtreme::EntranceRuntime::ServicePendingSpawn(SohExtreme::CanReceiveGameplayReward(gPlayState))) {
+        SPDLOG_INFO("[Archipelago] Applied pending load spawn from this save's verified entrance map");
+        return;
     }
 
     if (activeLocationsPendingRefresh.exchange(false)) {
@@ -3689,6 +3823,8 @@ void ArchipelagoClient::Update() {
         }
         SPDLOG_DEBUG("[Archipelago] Server confirms location {} checked", loc);
     }
+
+    if (!checked.empty()) RebuildHints();
 
     // Newly collected local checks are deferred out of the collection callback, but
     // only until the next normal gameplay update (typically one frame). This avoids
@@ -4092,7 +4228,8 @@ bool ArchipelagoClient::ShouldHighlightNpcSpeech(const Actor* actor) const {
         actor->init != nullptr || actor->draw == nullptr || actor->update == nullptr ||
         !RAND_GET_OPTION(RSK_NPC_SPEECH_SANITY) ||
         !CVarGetInteger(CVAR_RANDOMIZER_SETTING("NpcSpeechSanity"), 0)) return false;
-    if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !Flags_GetRandomizerInf(RAND_INF_NPC_SOUL)) return false;
+    if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !Flags_GetRandomizerInf(RAND_INF_NPC_SOUL) &&
+        !MegaSoul_IsPathBlockingNpc(actor)) return false;
 
     // The same immutable character identity as the first-talk hooks, including
     // moving NPCs, age variants, shopkeepers and the exact grotto scrub.
@@ -4260,6 +4397,10 @@ void ArchipelagoClient::CaptureSceneTransition() {
         gCrossingJournal.Reset();
         return;
     }
+    if (SohExtreme::EntranceRuntime::suppressTransitionChecks || SohExtreme::EntranceRuntime::crossingSource) {
+        gCrossingJournal.Reset();
+        return;
+    }
     const auto& back=gSaveContext.respawn[RESPAWN_MODE_RETURN];
     const int returnScene=back.entranceIndex>=0 && back.entranceIndex<ENTR_MAX
         ? gEntranceTable[back.entranceIndex].scene : -1;
@@ -4269,10 +4410,21 @@ void ArchipelagoClient::CaptureSceneTransition() {
 }
 
 void ArchipelagoClient::CompleteSceneTransition(int16_t scene) {
+    const bool recovery = SohExtreme::EntranceRuntime::suppressTransitionChecks;
+    const int64_t entranceCheck = SohExtreme::EntranceRuntime::Complete(scene);
+    if (recovery) {
+        // Save/death/water recovery did not cross a physical doorway. Suppress
+        // both AP routing and the ordinary scene journal for this transition.
+        gCrossingJournal.Reset();
+        return;
+    }
+    ReportTransition(entranceCheck);
     ReportTransition(gCrossingJournal.Arrive(scene));
 }
 
 void ArchipelagoClient::BeginDoorTransition(int door, int fromRoom, int toRoom, const Actor* actor, int side) {
+    SohExtreme::EntranceRuntime::BeginDoor(door, fromRoom, toRoom, actor, side);
+    if (SohExtreme::EntranceRuntime::openedDoor) { gCrossingJournal.Reset(); return; }
     if (!HasSceneTransitionChecks() || !IsGameplaySessionActive() || !actor || !gPlayState) return;
     const auto* crossing=SohExtreme::FindDoorCrossing(gPlayState->sceneNum,door,fromRoom,toRoom,
                                                     actor->world.pos.x,actor->world.pos.z,side);
@@ -4284,6 +4436,7 @@ void ArchipelagoClient::BeginDoorTransition(int door, int fromRoom, int toRoom, 
 }
 
 void ArchipelagoClient::AdvanceDoorTransition() {
+    SohExtreme::EntranceRuntime::AdvanceDoor();
     if (!IsGameplaySessionActive() || !gPlayState) { gCrossingJournal.Reset(); return; }
     const Player* player=GET_PLAYER(gPlayState);
     if (!player) return;
@@ -4399,7 +4552,8 @@ void ArchipelagoClient::RegisterHooks() {
             !CVarGetInteger(CVAR_RANDOMIZER_SETTING("NpcSpeechSanity"), 0)) return;
         // C-Up enemy information is Navi's dialogue, not an NPC conversation.
         if (actor->naviEnemyId != 0xFF && actor->textId == actor->naviEnemyId + 0x600) return;
-        if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !Flags_GetRandomizerInf(RAND_INF_NPC_SOUL)) return;
+        if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !Flags_GetRandomizerInf(RAND_INF_NPC_SOUL) &&
+            !MegaSoul_IsPathBlockingNpc(actor)) return;
         const auto* identity = SohExtreme::ResolveNpcSpeechIdentity(
             actor->id, gPlayState->sceneNum, actor->params, actor->room, LINK_IS_ADULT,
             static_cast<int>(actor->home.pos.x), static_cast<int>(actor->home.pos.y),

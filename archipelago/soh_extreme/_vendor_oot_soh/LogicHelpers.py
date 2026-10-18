@@ -171,6 +171,13 @@ def can_reach_zr_raised_ledge(bundle) -> Rule:
         is_adult(bundle) | (is_child(bundle) & can_grab(bundle) & has_animal_soul(bundle, "Cucco")))
 
 
+def can_interact_path_blocker(bundle, language: str) -> Rule:
+    """Normal language gate for the exact invisible, active path-blocker roles."""
+    mode = getattr(bundle[1].options, "shuffle_speak", None)
+    return (Has("Speak" if mode.value == 1 else "Speak " + language)
+            if mode is not None and mode.value else True_())
+
+
 def can_interact_npc(bundle, language: str) -> Rule:
     rule = extreme_requirement(bundle, "shuffle_npc_soul", "NPC Soul")
     mode = getattr(bundle[1].options, "shuffle_speak", None)

@@ -39,6 +39,7 @@ class Logic {
     bool CanUse(RandomizerGet itemName);
     bool HasProjectile(HasProjectileAge age);
     bool HasItem(RandomizerGet itemName);
+    bool CanSpeakToPathBlockingNpc(RandomizerGet language);
     bool ItemUseAllowed(RandomizerGet itemName);
     bool BAllowed();
     bool SmallKeys(SceneID scene, uint8_t requiredAmount);

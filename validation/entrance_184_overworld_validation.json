@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "world_version": "1.8.4",
+  "test_count": 27,
+  "process_exit_code": 0,
+  "source_sha256": {
+    "archipelago/soh_extreme/EntranceRandomizer.py": "c54da785a7e58bffcae20bc4391b77ee15575d0ebd5d8a04dfdc1fffa8fe1eaf",
+    "archipelago/soh_extreme/EntranceOptions.py": "608dcd904b417ef8c5154175e82408f2b45ec842ae738e2508a38a9887314234",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "9029d2652d291251fcdb6c97071f60ff07cfbec25d8ea557d826d9f85961030c",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "8907f40640caacfcb86e7e8bc4ba6752d0248c3fb29a2ce787969a3b707385c3",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "e0b3d3d95884db53dbe31cc0cf4f63c3071d4d48ddac3c7b81bd611878ebb23d",
+    "tools/tests/test_overworld_entrances.py": "222e7b006b5f00f7c2b9864cca9c6de5e3d75f9f20eef3f62a7e6d19d8f60582"
+  },
+  "log_sha256": "9dd7764ef00c8fafa1030ed638a95748ae2015436b84e84eddede8615d27cdff",
+  "scope": "Official AP graph regressions for overworld pools, coupled returns, mixed-all expansion, exact saved-map replay and disabled legacy options; no native gameplay."
+}

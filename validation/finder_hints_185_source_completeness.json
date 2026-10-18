@@ -1,0 +1,258 @@
+{
+  "status": "passed",
+  "version": "1.8.5",
+  "method": "byte-for-byte comparison of every original and current source file",
+  "original_archive_sha256": "854ffecebd1e01ffd16c5e2b5cd8b2c43648e84180d5be75055a32c65ef4f59b",
+  "previous_archive_sha256": "ed8ffb798577cb241f3aa9a98c4ee9204ca49c1a260e48bdc84d7f84d99eb4f8",
+  "original_source_files": 25035,
+  "current_source_files": 25061,
+  "complete_changed_source_files": 60,
+  "changed_since_1.8.4": {
+    "archipelago/archipelago.json": {
+      "change": "modified",
+      "previous_sha256": "2d2ed71287753db364809216037b846859f2c5eafdaec7d0e5baf62d558c7e81",
+      "sha256": "0bddc6071967491882315ec0db12cc2dd4dbb57d890f8108d288d5402f0784f8",
+      "size_bytes": 215
+    },
+    "archipelago/soh_extreme.apworld": {
+      "change": "modified",
+      "previous_sha256": "6eb17b4021bf849d82f692757429f874ee203ea155b41e80c88316b21c5f9111",
+      "sha256": "0b326a8ceec053d79495ca8b0bbf8cf9ad41178bf8aa440f7bd931cfc742c12a",
+      "size_bytes": 646541
+    },
+    "archipelago/soh_extreme/CheckDescriptions.json": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "962c67c679bfe44f7cb8b3204b9ea614f8ea2789807d5e695e2c768b362b2769",
+      "size_bytes": 505399
+    },
+    "archipelago/soh_extreme/CheckDescriptions.py": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "e985562d01393f3207c15e8ef41899b0539015ceebcd701358267d32dcd38b20",
+      "size_bytes": 2184
+    },
+    "archipelago/soh_extreme/EnemyDropLocations.py": {
+      "change": "modified",
+      "previous_sha256": "6b44da9ebbbbc76c583ba643a093ff5e92442adf068ee9e2080cc755b9058cd5",
+      "sha256": "c338d49208b732fbf366c305cb0dd1a84a1283f5708edb54a62cc10dbd9c3cf2",
+      "size_bytes": 135238
+    },
+    "archipelago/soh_extreme/EntranceRandomizer.py": {
+      "change": "modified",
+      "previous_sha256": "c54da785a7e58bffcae20bc4391b77ee15575d0ebd5d8a04dfdc1fffa8fe1eaf",
+      "sha256": "1d42a62d8119f0c894933c10809d95f7368d65ea854a688613e38d760fca4def",
+      "size_bytes": 33187
+    },
+    "archipelago/soh_extreme/SceneTransitions.py": {
+      "change": "modified",
+      "previous_sha256": "a6c7d30746e89eef10f3c02378206e9d900a4944eecb42f8ec5666755de08671",
+      "sha256": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+      "size_bytes": 4415
+    },
+    "archipelago/soh_extreme/TrackerMirror.py": {
+      "change": "modified",
+      "previous_sha256": "bd2b81a92f815ff3b2a7450f5bf8ba8247450e0c0608e9abc96aa753efe1a74a",
+      "sha256": "fb25a31f0c348061e69e0890dea3c062960aa5e75a78b4b4e1b2ff0925147967",
+      "size_bytes": 5527
+    },
+    "archipelago/soh_extreme/__init__.py": {
+      "change": "modified",
+      "previous_sha256": "ddc993e57bc220b6be0ef7a1fb9ea0d4553d0d105de0039c6f097d83f91bb156",
+      "sha256": "cf0da358b848b353d1430f7fe4d9d82dd030bdc318838cf2b658772a350d88f2",
+      "size_bytes": 284698
+    },
+    "archipelago/soh_extreme/archipelago.json": {
+      "change": "modified",
+      "previous_sha256": "2d2ed71287753db364809216037b846859f2c5eafdaec7d0e5baf62d558c7e81",
+      "sha256": "0bddc6071967491882315ec0db12cc2dd4dbb57d890f8108d288d5402f0784f8",
+      "size_bytes": 215
+    },
+    "soh/Enhancements/custom-message/CustomMessageEncoding.h": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "233c17b38525554de757cb977387a03ebd9c7629ac0026033ad4fe09bb37e783",
+      "size_bytes": 2197
+    },
+    "soh/Enhancements/custom-message/CustomMessageFormatter.h": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "0b52df4744f91a722fa9fbcec6ffdc9f8f05074ca61375f6593722ca11594638",
+      "size_bytes": 8698
+    },
+    "soh/Enhancements/custom-message/CustomMessageInterfaceAddon.h": {
+      "change": "modified",
+      "previous_sha256": "6d8021943ceffc1c64bbe6d9aa33fac9fca9d669ebe6420419aac41baea51775",
+      "sha256": "aa2abb449735b366973d70040dc0fc5256b730c84129fa6ccda3d3789863b8bb",
+      "size_bytes": 332
+    },
+    "soh/Enhancements/custom-message/CustomMessageManager.cpp": {
+      "change": "modified",
+      "previous_sha256": "2859cb79fbda9d83c7809361ee536cc6d172c8b0dd60fd93de83aa4ad90d31a5",
+      "sha256": "33aee9a99b08775c2f4831739ac808bbecf94dbe5cbb5f900bba91059a3ca4f6",
+      "size_bytes": 27489
+    },
+    "soh/Enhancements/custom-message/CustomMessageManager.h": {
+      "change": "modified",
+      "previous_sha256": "647cd3636c4c997be4e388cdd7f413c05471ff03fe0a84fb3beca8c3e9fee367",
+      "sha256": "0240def38e36aa3fda2b5262a7e73398ffcafbbe0c0f2803096d0d48a70a1ff3",
+      "size_bytes": 12589
+    },
+    "soh/Enhancements/custom-message/CustomMessagePageBuffer.h": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "85df2753d26e7a6911980510de6e2e7f4229665de9093f5f2c8c3d975859642a",
+      "size_bytes": 5429
+    },
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": {
+      "change": "modified",
+      "previous_sha256": "17387b5be280bf467738f3a5bf5f0c61bc45b80a7df777cacd05d36cd2e58e8d",
+      "sha256": "241ad4a81bccbaf4f3ccdf19af12c9688d625260e447a512906a57d66388375b",
+      "size_bytes": 202173
+    },
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": {
+      "change": "modified",
+      "previous_sha256": "476cd0a10a39ef0727a737f11b7818b8cf80c2bc7a84445d0b142c30bb8113bf",
+      "sha256": "0f5e1f40ed14685b9bbc0e9466878904dc9cc15788783bbcc4e0b7a77ba579a9",
+      "size_bytes": 238795
+    },
+    "soh/Network/Archipelago/ArchipelagoHintData.h": {
+      "change": "modified",
+      "previous_sha256": "f31edef2b43e6b87a5f61c5ce2c6de58cd9784ba7d2076eabd34c065af925a87",
+      "sha256": "c22ad0c882d57013f70125072b790a7d43f0c7cb15d3cbe2c06d1ffb0a2b597d",
+      "size_bytes": 2909
+    },
+    "soh/Network/Archipelago/CheckDescriptions.inc": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "5126a56fe1b66768703164d5a59280198e36720adf6d1dea6c44069dff42dcdf",
+      "size_bytes": 244503
+    },
+    "soh/Network/Archipelago/TrackerCheckLabels.h": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "e801ac4d413b233044fcd6c51344bd10f2288a6b8a45f2572130eb53913e081f",
+      "size_bytes": 6730
+    },
+    "soh/SohExtremeVersion.h": {
+      "change": "modified",
+      "previous_sha256": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+      "sha256": "87e54dc36e649388af5749c6d5713da93b53583a0a80799ff62a6f4e95062c50",
+      "size_bytes": 224
+    },
+    "soh/SohGui/SohMenuNetwork.cpp": {
+      "change": "modified",
+      "previous_sha256": "27ca7f8138a1ce17558c1ce7ebe68f947fbbe99688a0cba97b935690326410b4",
+      "sha256": "721eb97d0a1391741071b22c5560b5956cd2976a0391ff4a2080f03e2e5ac87e",
+      "size_bytes": 17397
+    },
+    "src/code/z_message_PAL.c": {
+      "change": "modified",
+      "previous_sha256": "bf3679c2929990d4241a884353c7c6df27e6c6e8c080e94fa3a052d9ee3dcc54",
+      "sha256": "9f378855f96bb2c048041ac91ef77a700738a0bd0d39fc5543b7c255a2e1bbca",
+      "size_bytes": 225160
+    },
+    "tools/generate_check_descriptions.py": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "14b7f7a69a6c21763baee6e4c202f328d8d00b7a157f5825ff9a26fd1d5e3557",
+      "size_bytes": 9230
+    },
+    "tools/tests/archipelago_hint_data_tests.cpp": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "2af777d4e50da99abea7bcf17672d56220f3df36df73230dc5c353237be42686",
+      "size_bytes": 12873
+    },
+    "tools/tests/custom_message_pagination_tests.cpp": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "f1b5bd8ae7a3d6486a8ade740c2b4bfba2880b60fa8e76c91b73d62afb204758",
+      "size_bytes": 9478
+    },
+    "tools/tests/test_archipelago_hints.py": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "270d109bb91d000c2dc8680beb9ad5f6c5edcef54a6a7b725bfd1398474cd02d",
+      "size_bytes": 4051
+    },
+    "tools/tests/test_check_descriptions.py": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "592f464e2a8879eacc5d019046e5f7e2d5332429771986cd8fb4444313e90b0f",
+      "size_bytes": 10465
+    },
+    "tools/tests/test_custom_message_pagination.py": {
+      "change": "added",
+      "previous_sha256": null,
+      "sha256": "a3e336093158848f4562c0a7d07d1ddd1b3d2c1c57d5504fe0b7c4950433c90e",
+      "size_bytes": 4256
+    }
+  },
+  "source_sha256": {
+    "archipelago/archipelago.json": "0bddc6071967491882315ec0db12cc2dd4dbb57d890f8108d288d5402f0784f8",
+    "archipelago/soh_extreme.apworld": "0b326a8ceec053d79495ca8b0bbf8cf9ad41178bf8aa440f7bd931cfc742c12a",
+    "archipelago/soh_extreme/CheckDescriptions.json": "962c67c679bfe44f7cb8b3204b9ea614f8ea2789807d5e695e2c768b362b2769",
+    "archipelago/soh_extreme/CheckDescriptions.py": "e985562d01393f3207c15e8ef41899b0539015ceebcd701358267d32dcd38b20",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "e0b3d3d95884db53dbe31cc0cf4f63c3071d4d48ddac3c7b81bd611878ebb23d",
+    "archipelago/soh_extreme/EnemyDropLocations.py": "c338d49208b732fbf366c305cb0dd1a84a1283f5708edb54a62cc10dbd9c3cf2",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "8907f40640caacfcb86e7e8bc4ba6752d0248c3fb29a2ce787969a3b707385c3",
+    "archipelago/soh_extreme/EntranceOptions.py": "608dcd904b417ef8c5154175e82408f2b45ec842ae738e2508a38a9887314234",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "1d42a62d8119f0c894933c10809d95f7368d65ea854a688613e38d760fca4def",
+    "archipelago/soh_extreme/Options.py": "bd645344d5ba66d65da4cbfc858a992896d32a29f5cfdf8691df80512bbff599",
+    "archipelago/soh_extreme/SceneTransitions.py": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "archipelago/soh_extreme/TrackerMirror.py": "fb25a31f0c348061e69e0890dea3c062960aa5e75a78b4b4e1b2ff0925147967",
+    "archipelago/soh_extreme/__init__.py": "cf0da358b848b353d1430f7fe4d9d82dd030bdc318838cf2b658772a350d88f2",
+    "archipelago/soh_extreme/archipelago.json": "0bddc6071967491882315ec0db12cc2dd4dbb57d890f8108d288d5402f0784f8",
+    "soh/Enhancements/QoL/BetterSaveMenu.cpp": "eb4ae4bcc2ce1bdea4478b652d7e9c8ebdeb515798295692ac24101f95eb5842",
+    "soh/Enhancements/custom-message/CustomMessageEncoding.h": "233c17b38525554de757cb977387a03ebd9c7629ac0026033ad4fe09bb37e783",
+    "soh/Enhancements/custom-message/CustomMessageFormatter.h": "0b52df4744f91a722fa9fbcec6ffdc9f8f05074ca61375f6593722ca11594638",
+    "soh/Enhancements/custom-message/CustomMessageInterfaceAddon.h": "aa2abb449735b366973d70040dc0fc5256b730c84129fa6ccda3d3789863b8bb",
+    "soh/Enhancements/custom-message/CustomMessageManager.cpp": "33aee9a99b08775c2f4831739ac808bbecf94dbe5cbb5f900bba91059a3ca4f6",
+    "soh/Enhancements/custom-message/CustomMessageManager.h": "0240def38e36aa3fda2b5262a7e73398ffcafbbe0c0f2803096d0d48a70a1ff3",
+    "soh/Enhancements/custom-message/CustomMessagePageBuffer.h": "85df2753d26e7a6911980510de6e2e7f4229665de9093f5f2c8c3d975859642a",
+    "soh/Enhancements/randomizer/Messages/EntranceHints.cpp": "e2e86b74dddd511aa3cc2eeb93426357e52e2a51a519222981a18f8e90fb78e0",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp": "8e5ac883b1541b070c33d5c202a98c5652d596ee83f35c3d29d09f2a49b2a1f4",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "241ad4a81bccbaf4f3ccdf19af12c9688d625260e447a512906a57d66388375b",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "f69919980ebc37d805d83ac465d49bcc0f0165b3a9da21385323ebce69a4a2af",
+    "soh/Enhancements/randomizer/randomizer_entrance.h": "dd0ae80bf799888ccb5519a2475f23c848aaf8547908d9bc1d62a08d511eef1c",
+    "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp": "0943ff9dfddeac6fec3c35ee5acfbc955069057ba530609f9119e69785d7c021",
+    "soh/Enhancements/randomizer/randomizer_entrance_tracker.h": "85d03cb79aac8d7b5d18b5b95ded6bf3478dd04b233135d148aa2120ed20afd7",
+    "soh/Network/Archipelago/ArchipelagoC.h": "21045e1af5f30e4ac212269e32f6a84ed88fd10bb8d1739b79a71a3117c055d2",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "0f5e1f40ed14685b9bbc0e9466878904dc9cc15788783bbcc4e0b7a77ba579a9",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "e89b21a665e77b33884c0ff79ddcea5d7209d8d01be053e20173d4bd6a2d2300",
+    "soh/Network/Archipelago/ArchipelagoHintData.h": "c22ad0c882d57013f70125072b790a7d43f0c7cb15d3cbe2c06d1ffb0a2b597d",
+    "soh/Network/Archipelago/CheckDescriptions.inc": "5126a56fe1b66768703164d5a59280198e36720adf6d1dea6c44069dff42dcdf",
+    "soh/Network/Archipelago/EntranceRouting.h": "080d2e8179f811050bc84bc32268522f80f0f88b19c6dd5ad7f6ed3df9bb92b4",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "da827319d9c16407e3d55508685bf76185b26f81125b864902ddc8536966fe2e",
+    "soh/Network/Archipelago/SceneTransitionChecks.h": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496",
+    "soh/Network/Archipelago/TrackerCheckLabels.h": "e801ac4d413b233044fcd6c51344bd10f2288a6b8a45f2572130eb53913e081f",
+    "soh/SohExtremeVersion.h": "87e54dc36e649388af5749c6d5713da93b53583a0a80799ff62a6f4e95062c50",
+    "soh/SohGui/SohMenuNetwork.cpp": "721eb97d0a1391741071b22c5560b5956cd2976a0391ff4a2080f03e2e5ac87e",
+    "src/code/z_message_PAL.c": "9f378855f96bb2c048041ac91ef77a700738a0bd0d39fc5543b7c255a2e1bbca",
+    "tools/generate_check_descriptions.py": "14b7f7a69a6c21763baee6e4c202f328d8d00b7a157f5825ff9a26fd1d5e3557",
+    "tools/tests/archipelago_hint_data_tests.cpp": "2af777d4e50da99abea7bcf17672d56220f3df36df73230dc5c353237be42686",
+    "tools/tests/custom_message_pagination_tests.cpp": "f1b5bd8ae7a3d6486a8ade740c2b4bfba2880b60fa8e76c91b73d62afb204758",
+    "tools/tests/entrance_runtime_tests.cpp": "367b4ad366479c79720a34fbfc88180bbb052599d937c476f926f1b9637f40e9",
+    "tools/tests/entrance_slot_bridge_tests.cpp": "b16585e96d903030ee2b89b9e1800e7dd98bd7eeb7ddb734fad1f1926ace718a",
+    "tools/tests/test_archipelago_hints.py": "270d109bb91d000c2dc8680beb9ad5f6c5edcef54a6a7b725bfd1398474cd02d",
+    "tools/tests/test_check_descriptions.py": "592f464e2a8879eacc5d019046e5f7e2d5332429771986cd8fb4444313e90b0f",
+    "tools/tests/test_custom_message_pagination.py": "a3e336093158848f4562c0a7d07d1ddd1b3d2c1c57d5504fe0b7c4950433c90e",
+    "tools/tests/test_entrance_runtime.py": "c26086a4920ddc1b11f80134dea76903791ef6a6880a37e63732785da696299d",
+    "tools/tests/test_entrance_settings.py": "0f382e22622c612dab726f8aef82dab914caf1fc28c650c825fe7073404b08cd",
+    "tools/tests/test_entrance_slot_bridge.py": "1ac4db4e5016471523520f2898954a211412bf8beb1a86aceeaa0fcef06120e9",
+    "tools/tests/test_entrance_spawn_lifecycle.py": "3b5e7142d21af48d7549697eefc7ca85142bb66f92438eec8876e4e18099973d",
+    "tools/tests/test_entrance_start.py": "1fcabffc774a7b73f436ccffd057c4c5c7ec356ef0a305f2bf9ed5dcceacd5f1",
+    "tools/tests/test_entrance_tracker.py": "252b5201e9dfb0ce80906dbdc168565496015c03d3896062b4093e0402eb1fd4",
+    "tools/tests/test_jabu_carry.py": "b69150bc7bad690252459e8421a1fdc76d8394320038dca688420e8e51b200a6",
+    "tools/tests/test_no_swim_recovery.py": "9b8bed7f4f0b8d8f594e060c4a7b0c855e0116706a7a6bebee99dfcd5beb3511",
+    "tools/tests/test_overworld_entrances.py": "222e7b006b5f00f7c2b9864cca9c6de5e3d75f9f20eef3f62a7e6d19d8f60582",
+    "tools/tests/test_spawn_placement.py": "78fdb3d865e0129bcddf6445ec42e792c3afc8c189409eaaabb6b257e0e7a4f7",
+    "tools/tests/validate_user_full_fill.py": "22d4b080028b1c01d721cccef6b5427909faf3a5a7cb82761ef704b99560c6d3"
+  },
+  "missing_original_files": [],
+  "unmanifested_source_changes": [],
+  "all_previous_replacement_files_retained": true,
+  "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5"
+}

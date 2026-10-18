@@ -21,26 +21,10 @@ static bool CrateSoulMissing(void) {
            !Flags_GetRandomizerInf(RAND_INF_CRATE_SOUL);
 }
 
-static void BeginCrateSoulTint(GraphicsContext* gfxCtx) {
-    if (!CrateSoulMissing()) {
-        return;
-    }
-    OPEN_DISPS(gfxCtx);
-    gDPSetGrayscaleColor(POLY_OPA_DISP++, 22, 22, 22, 255);
-    gSPGrayscale(POLY_OPA_DISP++, true);
-    CLOSE_DISPS(gfxCtx);
-}
-
-static void EndCrateSoulTint(GraphicsContext* gfxCtx) {
-    if (!CrateSoulMissing()) {
-        return;
-    }
-    OPEN_DISPS(gfxCtx);
-    gSPGrayscale(POLY_OPA_DISP++, false);
-    CLOSE_DISPS(gfxCtx);
-}
-
 extern "C" void ObjKibako2_RandomizerDraw(Actor* thisx, PlayState* play) {
+    // Rendering does not control the crate's collision or ability to unlock.
+    if (CrateSoulMissing()) return;
+
     GetItemCategory getItemCategory;
     auto crateActor = ((ObjKibako2*)thisx);
     bool csmc = CVarGetInteger(CVAR_ENHANCEMENT("ChestSizeAndTextureMatchContents"), 0);
@@ -48,18 +32,14 @@ extern "C" void ObjKibako2_RandomizerDraw(Actor* thisx, PlayState* play) {
 
     int isVanilla = !csmc || (requiresStoneAgony && !CHECK_QUEST_ITEM(QUEST_STONE_OF_AGONY));
 
-    BeginCrateSoulTint(play->state.gfxCtx);
-
     if (isVanilla) {
         Gfx_DrawDListOpa(play, (Gfx*)gLargeRandoCrateDL);
-        EndCrateSoulTint(play->state.gfxCtx);
         return;
     }
 
     const auto crateIdentity = ObjectExtension::GetInstance().Get<CheckIdentity>(thisx);
     if (crateIdentity == nullptr) {
         Gfx_DrawDListOpa(play, (Gfx*)gLargeRandoCrateDL);
-        EndCrateSoulTint(play->state.gfxCtx);
         return;
     }
 
@@ -92,10 +72,12 @@ extern "C" void ObjKibako2_RandomizerDraw(Actor* thisx, PlayState* play) {
             Gfx_DrawDListOpa(play, (Gfx*)gLargeJunkCrateDL);
             break;
     }
-    EndCrateSoulTint(play->state.gfxCtx);
 }
 
 extern "C" void ObjKibako_RandomizerDraw(Actor* thisx, PlayState* play) {
+    // Rendering does not control the crate's collision or ability to unlock.
+    if (CrateSoulMissing()) return;
+
     GetItemCategory getItemCategory;
     auto smallCrateActor = ((ObjKibako*)thisx);
     bool csmc = CVarGetInteger(CVAR_ENHANCEMENT("ChestSizeAndTextureMatchContents"), 0);
@@ -103,18 +85,14 @@ extern "C" void ObjKibako_RandomizerDraw(Actor* thisx, PlayState* play) {
 
     int isVanilla = !csmc || (requiresStoneAgony && !CHECK_QUEST_ITEM(QUEST_STONE_OF_AGONY));
 
-    BeginCrateSoulTint(play->state.gfxCtx);
-
     if (isVanilla) {
         Gfx_DrawDListOpa(play, (Gfx*)gSmallRandoCrateDL);
-        EndCrateSoulTint(play->state.gfxCtx);
         return;
     }
 
     const auto crateIdentity = ObjectExtension::GetInstance().Get<CheckIdentity>(thisx);
     if (crateIdentity == nullptr) {
         Gfx_DrawDListOpa(play, (Gfx*)gSmallRandoCrateDL);
-        EndCrateSoulTint(play->state.gfxCtx);
         return;
     }
 
@@ -147,7 +125,6 @@ extern "C" void ObjKibako_RandomizerDraw(Actor* thisx, PlayState* play) {
             Gfx_DrawDListOpa(play, (Gfx*)gSmallJunkCrateDL);
             break;
     }
-    EndCrateSoulTint(play->state.gfxCtx);
 }
 
 uint8_t ObjKibako2_RandomizerHoldsItem(ObjKibako2* crateActor, PlayState* play) {

@@ -1,0 +1,272 @@
+#include <assert.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+
+typedef int32_t s32;
+typedef int16_t s16;
+typedef uint16_t u16;
+typedef uint8_t u8;
+typedef float f32;
+typedef struct { float x, y, z; } Vec3f;
+typedef struct { int16_t x, y, z; } Vec3s;
+typedef struct { Vec3s center; int16_t radius; } Sphere16;
+typedef struct Actor {
+    int params, room, flags;
+    struct { Vec3f pos; Vec3s rot; } world, home;
+    struct { Vec3s rot; float yOffset; } shape;
+    Vec3f scale, velocity;
+    struct { u8 mass; Vec3f displacement; } colChkInfo;
+    float xzDistToPlayer, speedXZ, gravity, minVelocityY, yDistToWater;
+    unsigned bgCheckFlags;
+    struct Actor* parent;
+    void* draw;
+    bool alive;
+} Actor;
+typedef struct Collider {
+    unsigned acFlags, atFlags, ocFlags1, ocFlags2;
+    Actor* actor;
+    Actor* oc;
+} Collider;
+typedef struct ColliderInfo {
+    struct { uint32_t dmgFlags; } toucher;
+    struct ColliderInfo* acHitInfo;
+    unsigned ocElemFlags;
+} ColliderInfo;
+typedef struct { Collider base; ColliderInfo info; } ColliderCylinder;
+typedef struct {
+    struct { int limb; Sphere16 modelSphere, worldSphere; float scale; } dim;
+} ColliderJntSphElement;
+typedef struct { Collider base; int count; ColliderJntSphElement* elements; } ColliderJntSph;
+typedef struct { Actor actor; int bgId; } DynaPolyActor;
+typedef int CollisionCheckContext;
+typedef struct PlayState {
+    CollisionCheckContext colChkCtx;
+    struct { int dyna; } colCtx;
+    struct { struct { int num; } curRoom; } roomCtx;
+} PlayState;
+typedef struct EnIshi { Actor actor; ColliderCylinder collider; } EnIshi;
+typedef struct ObjBombiwa { Actor actor; ColliderCylinder collider; } ObjBombiwa;
+typedef struct ObjHamishi {
+    Actor actor; ColliderCylinder collider; int hitCount, shakeFrames; float shakePosSize, shakeRotSize;
+} ObjHamishi;
+typedef struct ObjKibako { Actor actor; ColliderCylinder collider; } ObjKibako;
+typedef struct ObjKibako2 {
+    DynaPolyActor dyna; ColliderCylinder collider; void (*actionFunc)(struct ObjKibako2*, PlayState*);
+} ObjKibako2;
+typedef struct BgJyaBombchuiwa {
+    Actor actor; void (*actionFunc)(struct BgJyaBombchuiwa*, PlayState*);
+    ColliderJntSph collider; ColliderJntSphElement colliderItems; float lightRayIntensity; s16 timer; u8 drawFlags;
+} BgJyaBombchuiwa;
+
+enum { MASS_HEAVY=254, MASS_IMMOVABLE=255, MASSTYPE_NORMAL, MASSTYPE_HEAVY, MASSTYPE_IMMOVABLE };
+enum { AC_HIT=1, AT_HIT=1, OC1_HIT=1, OC1_TYPE_PLAYER=2, OC1_NO_PUSH=4,
+       OC2_TYPE_PLAYER=1, OC2_HIT_PLAYER=2, OCELEM_HIT=1 };
+enum { ROCK_SMALL, ROCK_LARGE, RSK_SHUFFLE_ROCK_SOUL, RAND_INF_ROCK_SOUL, GI_NONE,
+       ACTOR_FLAG_UPDATE_CULLING_DISABLED, VB_ROCK_DROP_ITEM, MTXMODE_APPLY,
+       CAM_ID_MAIN, NA_SE_PL_PULL_UP_ROCK, NA_SE_PL_PULL_UP_BIGROCK, NA_SE_EV_WOODBOX_BREAK,
+       NA_SE_EV_WALL_BROKEN, NA_SE_SY_CORRECT_CHIME };
+#define IS_ZERO(x) (fabsf(x) < 0.00001f)
+#define SQ(x) ((x) * (x))
+static bool isRando=true, soulEnabled=true, rockOwned=false, crateOwned=false, explosion=false;
+#define IS_RANDO isRando
+static int Randomizer_GetSettingValue(int setting) { (void)setting; return soulEnabled; }
+static int Flags_GetRandomizerInf(int flag) { (void)flag; return rockOwned; }
+static bool MegaSoul_CanUseCrate(void) { return !isRando || !soulEnabled || crateOwned; }
+static bool MegaSoul_CanUseRock(void) { return !isRando || !soulEnabled || rockOwned; }
+static int acCount, ocCount, carryCount, liftCount, breakCount, dropCount, killCount, switchCount;
+static int colliderUpdates, shakeCount, cutsceneCount, cleanupCount, matrixDepth;
+static bool dynaEnabled;
+static void Collider_UpdateCylinder(Actor* a, ColliderCylinder* c) { ++colliderUpdates; c->base.actor=a; }
+static void CollisionCheck_SetAC(PlayState* p, CollisionCheckContext* ctx, Collider* c) { (void)p;(void)ctx;(void)c;++acCount; }
+static void CollisionCheck_SetOC(PlayState* p, CollisionCheckContext* ctx, Collider* c) { (void)p;(void)ctx;(void)c;++ocCount; }
+static void Actor_MoveXZGravity(Actor* a) {
+    a->world.pos.x += a->speedXZ+a->colChkInfo.displacement.x;
+    a->world.pos.z += a->speedXZ+a->colChkInfo.displacement.z;
+    a->velocity.y += a->gravity;
+    a->world.pos.y += a->velocity.y;
+}
+static void Actor_UpdateBgCheckInfo(PlayState* p, Actor* a, float x,float y,float z,int f) { (void)p;(void)a;(void)x;(void)y;(void)z;(void)f; }
+static bool Actor_HasParent(Actor* a, PlayState* p) { (void)p;return a->parent!=NULL; }
+static void ObjKibako_SetupHeld(ObjKibako* c) { (void)c;++liftCount; }
+static void ObjKibako_AirBreak(ObjKibako* c, PlayState* p) { (void)c;(void)p;++breakCount; }
+static void ObjKibako_WaterBreak(ObjKibako* c, PlayState* p) { (void)c;(void)p;++breakCount; }
+static void ObjKibako_SpawnCollectible(ObjKibako* c, PlayState* p) { (void)c;(void)p;++dropCount; }
+static void SoundSource_PlaySfxAtFixedWorldPos(PlayState* p, Vec3f* pos,int t,int s) { (void)p;(void)pos;(void)t;(void)s; }
+static void Actor_Kill(Actor* a) { a->alive=false;++killCount; }
+static void Actor_OfferCarry(Actor* a, PlayState* p) { (void)a;(void)p;++carryCount; }
+static void EnIshi_SetupLiftedUp(EnIshi* r) { (void)r;++liftCount; }
+static void EnIshi_SpawnBugs(EnIshi* r, PlayState* p) { (void)r;(void)p; }
+static void EnIshi_DropCollectible(EnIshi* r, PlayState* p) { (void)r;(void)p;++dropCount; }
+static void Fragment(EnIshi* r, PlayState* p) { (void)r;(void)p;++breakCount; }
+static void Dust(EnIshi* r, PlayState* p) { (void)r;(void)p; }
+static int sBreakSoundDurations[]={20,40}, sBreakSounds[]={0,0};
+static void (*sFragmentSpawnFuncs[])(EnIshi*,PlayState*)={Fragment,Fragment};
+static void (*sDustSpawnFuncs[])(EnIshi*,PlayState*)={Dust,Dust};
+static void Actor_OfferGetItem(Actor* a, PlayState* p,int i,float x,float y) { (void)a;(void)p;(void)i;(void)x;(void)y;++carryCount; }
+static void* func_80033684(PlayState* p,Actor* a) { (void)p;return explosion?a:NULL; }
+static void ObjBombiwa_Break(ObjBombiwa* r,PlayState* p) { (void)r;(void)p;++breakCount; }
+static void Flags_SetSwitch(PlayState* p,int flag) { (void)p;(void)flag;++switchCount; }
+static void Sfx_PlaySfxCentered(int s) { (void)s; }
+static void GameInteractor_Should(int event,bool original,void* a) { (void)event;(void)original;(void)a;++dropCount; }
+static void ObjHamishi_Shake(ObjHamishi* r) { (void)r;++shakeCount; }
+static void ObjHamishi_Break(ObjHamishi* r,PlayState* p) { (void)r;(void)p;++breakCount; }
+static void ObjKibako2_Break(ObjKibako2* c,PlayState* p) { (void)c;(void)p;++breakCount; }
+static void ObjKibako2_Kill(ObjKibako2* c,PlayState* p) { (void)c;(void)p;++killCount; }
+static void func_8003EC50(PlayState* p,int* ctx,int bg) { (void)p;(void)ctx;(void)bg;dynaEnabled=true; }
+static void func_8003EBF8(PlayState* p,int* ctx,int bg) { (void)p;(void)ctx;(void)bg;dynaEnabled=false; }
+static void OnePointCutscene_Init(PlayState* p,int id,int timer,Actor* a,int camera) { (void)p;(void)id;(void)timer;(void)a;(void)camera;++cutsceneCount; }
+static void BgJyaBombchuiwa_Break(BgJyaBombchuiwa* r,PlayState* p) { (void)r;(void)p;++breakCount; }
+static void BgJyaBombchuiwa_CleanUpAfterExplosion(BgJyaBombchuiwa* r,PlayState* p) { (void)p;r->actionFunc=NULL;r->drawFlags=4;++cleanupCount; }
+
+// Deterministic matrix shim for the exact native actor-transform calls. Test
+// actors rotate about Y, which covers the ceiling sphere's off-center model.
+static Vec3f matrixTranslation, matrixScale;
+static float matrixYaw;
+static void Matrix_Push(void) { ++matrixDepth; }
+static void Matrix_Pop(void) { --matrixDepth; }
+static void Matrix_SetTranslateRotateYXZ(float x,float y,float z,Vec3s* rot) {
+    matrixTranslation=(Vec3f){x,y,z};matrixYaw=rot->y*(3.14159265358979323846f/32768.0f);
+}
+static void Matrix_Scale(float x,float y,float z,int mode) { (void)mode;matrixScale=(Vec3f){x,y,z}; }
+static void Matrix_MultVec3f(Vec3f* model,Vec3f* world) {
+    const float x=model->x*matrixScale.x,z=model->z*matrixScale.z;
+    *world=(Vec3f){matrixTranslation.x+cosf(matrixYaw)*x+sinf(matrixYaw)*z,
+                  matrixTranslation.y+model->y*matrixScale.y,
+                  matrixTranslation.z-sinf(matrixYaw)*x+cosf(matrixYaw)*z};
+}
+
+@MASS_TYPES@
+@OC_COLLISION@
+@UPDATE_SPHERES@
+@SMALL_CRATE_IDLE@
+@LARGE_CRATE_IDLE@
+@ROCK_SOUL_HELPER@
+@ROCK_WAIT@
+@BOMB_BOULDER_UPDATE@
+@BRONZE_BOULDER_UPDATE@
+@CEILING_WAIT@
+@CEILING_COLLIDER@
+@CEILING_UPDATE@
+
+static unsigned assertions=0,cases=0;
+#define CHECK(c) do { ++assertions; if (!(c)) { fprintf(stderr,"FAIL line %d: %s\n",__LINE__,#c); return 1; } } while(0)
+static void reset(void) {
+    acCount=ocCount=carryCount=liftCount=breakCount=dropCount=killCount=switchCount=0;
+    colliderUpdates=shakeCount=cutsceneCount=cleanupCount=0;
+    isRando=soulEnabled=true;rockOwned=crateOwned=explosion=false;dynaEnabled=true;
+}
+static Actor actor(void) {
+    Actor a={0};a.alive=true;a.draw=(void*)1;a.xzDistToPlayer=20;a.scale=(Vec3f){.1f,.1f,.1f};return a;
+}
+static bool immovable_against_player(Actor* obstacle, Collider* collider) {
+    Actor player=actor();player.colChkInfo.mass=MASS_HEAVY;
+    Collider other={.actor=&player,.ocFlags2=OC2_TYPE_PLAYER};
+    ColliderInfo leftInfo={0},rightInfo={0};
+    Vec3f left={0},right={10,0,0};
+    collider->actor=obstacle;
+    obstacle->colChkInfo.displacement=(Vec3f){0};
+    CollisionCheck_SetOCvsOC(collider,&leftInfo,&left,&other,&rightInfo,&right,5);
+    return obstacle->colChkInfo.displacement.x==0 && obstacle->colChkInfo.displacement.z==0 &&
+           player.colChkInfo.displacement.x==5;
+}
+int main(void) {
+    PlayState play={0};ColliderInfo hit={.toucher={.dmgFlags=0x40000048}};
+    reset();
+    for (int path=0;path<3;++path) {
+        ObjKibako crate={.actor=actor()};crate.collider.info.acHitInfo=&hit;
+        crate.actor.colChkInfo.mass=MASS_HEAVY;
+        crate.actor.speedXZ=4;crate.actor.colChkInfo.displacement=(Vec3f){3,0,4};
+        if(path==0)crate.actor.parent=&crate.actor;
+        if(path==1){crate.actor.bgCheckFlags=0x20;crate.actor.yDistToWater=25;}
+        if(path==2)crate.collider.base.acFlags=AC_HIT;
+        ObjKibako_Idle(&crate,&play);
+        CHECK(crate.actor.alive && breakCount==0 && dropCount==0 && liftCount==0 && carryCount==0);
+        CHECK(crate.actor.colChkInfo.mass==MASS_IMMOVABLE);
+        CHECK(crate.actor.world.pos.x==0 && crate.actor.world.pos.z==0 && crate.actor.speedXZ==0);
+        CHECK(crate.collider.base.ocFlags1&OC1_TYPE_PLAYER);
+        CHECK(ocCount==path+1 && colliderUpdates==path+1);
+        CHECK(immovable_against_player(&crate.actor,&crate.collider.base));
+        crateOwned=true;
+        if(path==2)crate.collider.base.acFlags=AC_HIT;
+        ObjKibako_Idle(&crate,&play);
+        CHECK(crate.actor.colChkInfo.mass==MASS_HEAVY);
+        CHECK(path==0?liftCount==1:breakCount==1&&dropCount==1&&!crate.actor.alive);
+        reset();
+        // Match the loop's expected cumulative OC count after each reset.
+        ocCount=colliderUpdates=path+1;
+    }
+    ++cases;puts("PASS small crate remains solid and unmovable through carry water and weapon attempts, then unlocks");
+    reset();
+    ObjKibako small={.actor=actor()};small.actor.colChkInfo.mass=MASS_IMMOVABLE;
+    crateOwned=true;ObjKibako_Idle(&small,&play);
+    CHECK(carryCount==1 && acCount==1 && ocCount==1 && small.actor.colChkInfo.mass==MASS_HEAVY);
+    ++cases;puts("PASS normal small crate carry and collision resume without reload");
+    reset();
+    ObjKibako2 large={.dyna={.actor=actor(),.bgId=4}};large.collider.base.acFlags=AC_HIT;
+    large.dyna.actor.home.rot.z=1;explosion=true;dynaEnabled=false;
+    ObjKibako2_Idle(&large,&play);
+    CHECK(large.dyna.actor.alive && dynaEnabled && breakCount==0 && killCount==0);
+    CHECK(large.collider.base.acFlags==0 && large.dyna.actor.home.rot.z==0 && acCount==1);
+    crateOwned=true;explosion=false;ObjKibako2_Idle(&large,&play);
+    CHECK(breakCount==0 && dynaEnabled && large.dyna.actor.draw!=NULL);
+    large.dyna.actor.home.rot.z=1;ObjKibako2_Idle(&large,&play);
+    CHECK(breakCount==1 && !dynaEnabled && large.dyna.actor.draw==NULL && large.actionFunc==ObjKibako2_Kill);
+    ++cases;puts("PASS large crate keeps dyna collision and discards locked roll hits until a new valid break");
+    reset();
+    for (int type=ROCK_SMALL;type<=ROCK_LARGE;++type) {
+        EnIshi rock={.actor=actor()};rock.actor.params=type;rock.actor.colChkInfo.mass=@EN_ISHI_MASS@;
+        rock.actor.parent=&rock.actor;rock.collider.base.acFlags=AC_HIT;rock.collider.info.acHitInfo=&hit;
+        EnIshi_Wait(&rock,&play);
+        CHECK(rock.actor.alive && liftCount==0 && dropCount==0 && breakCount==0 && carryCount==0);
+        CHECK(acCount==type+1 && ocCount==type+1 && rock.collider.base.acFlags==0);
+        CHECK(immovable_against_player(&rock.actor,&rock.collider.base));
+    }
+    rockOwned=true;EnIshi rock={.actor=actor()};rock.collider.info.acHitInfo=&hit;
+    EnIshi_Wait(&rock,&play);CHECK(carryCount==1);
+    rock.collider.base.acFlags=AC_HIT;EnIshi_Wait(&rock,&play);
+    CHECK(breakCount==1 && dropCount==1 && !rock.actor.alive);
+    ++cases;puts("PASS small and silver rocks retain solid OC with no carry or damage until Rock Soul");
+    reset();
+    ObjBombiwa bomb={.actor=actor()};bomb.actor.colChkInfo.mass=@BOMBIWA_MASS@;
+    bomb.collider.base.acFlags=AC_HIT;bomb.collider.info.acHitInfo=&hit;explosion=true;
+    ObjBombiwa_Update(&bomb.actor,&play);
+    CHECK(bomb.actor.alive && breakCount==0 && dropCount==0 && switchCount==0 && acCount==1 && ocCount==1);
+    CHECK(immovable_against_player(&bomb.actor,&bomb.collider.base));
+    rockOwned=true;ObjBombiwa_Update(&bomb.actor,&play);
+    CHECK(!bomb.actor.alive && breakCount==1 && dropCount==1 && switchCount==1);
+    ++cases;puts("PASS brown boulder rejects explosions with collision intact and breaks normally on unlock");
+    reset();
+    ObjHamishi bronze={.actor=actor()};bronze.actor.colChkInfo.mass=@HAMISHI_MASS@;
+    bronze.collider.info.acHitInfo=&hit;bronze.collider.base.acFlags=AC_HIT;
+    ObjHamishi_Update(&bronze.actor,&play);
+    CHECK(bronze.actor.alive && bronze.hitCount==0 && shakeCount==0 && breakCount==0 && acCount==1 && ocCount==1);
+    CHECK(immovable_against_player(&bronze.actor,&bronze.collider.base));
+    rockOwned=true;
+    for(int strike=0;strike<2;++strike){bronze.collider.base.acFlags=AC_HIT;ObjHamishi_Update(&bronze.actor,&play);}
+    CHECK(!bronze.actor.alive && bronze.hitCount==2 && breakCount==1 && dropCount==1 && switchCount==1);
+    ++cases;puts("PASS bronze boulder ignores missing-soul hits and resumes its normal two-hit break");
+    reset();
+    BgJyaBombchuiwa ceiling={.actor=actor(),.timer=8,.drawFlags=3,.actionFunc=BgJyaBombchuiwa_WaitForExplosion};
+    ceiling.actor.world.pos=(Vec3f){100,400,200};ceiling.actor.shape.rot.y=0x4000;ceiling.actor.shape.yOffset=20;
+    ceiling.colliderItems.dim.modelSphere=(Sphere16){.center={-300,0,0},.radius=40};
+    ceiling.colliderItems.dim.scale=1;ceiling.collider.elements=&ceiling.colliderItems;ceiling.collider.count=1;
+    ceiling.collider.base.acFlags=AC_HIT;
+    BgJyaBombchuiwa_Update(&ceiling.actor,&play);
+    CHECK(ceiling.timer==0 && ceiling.collider.base.acFlags==0 && breakCount==0 && cutsceneCount==0 && cleanupCount==0);
+    CHECK(acCount==1 && ocCount==1 && matrixDepth==0);
+    CHECK(ceiling.colliderItems.dim.worldSphere.center.x==100 && ceiling.colliderItems.dim.worldSphere.center.y==402);
+    CHECK(ceiling.colliderItems.dim.worldSphere.center.z==230 && ceiling.colliderItems.dim.worldSphere.radius==40);
+    rockOwned=true;ceiling.collider.base.acFlags=AC_HIT;
+    for(int frame=0;frame<11;++frame)BgJyaBombchuiwa_Update(&ceiling.actor,&play);
+    CHECK(cutsceneCount==1 && breakCount==1 && cleanupCount==1 && ceiling.drawFlags==4 && matrixDepth==0);
+    ++cases;puts("PASS hidden Spirit ceiling boulder updates its real sphere and refuses a pending explosion until unlocked");
+    reset();
+    isRando=false;
+    EnIshi ordinary={.actor=actor()};EnIshi_Wait(&ordinary,&play);CHECK(carryCount==1);
+    isRando=true;soulEnabled=false;EnIshi_Wait(&ordinary,&play);CHECK(carryCount==2);
+    ++cases;puts("PASS ordinary play and unshuffled souls retain normal object behavior");
+    printf("RESULT cases=%u assertions=%u\n",cases,assertions);
+}

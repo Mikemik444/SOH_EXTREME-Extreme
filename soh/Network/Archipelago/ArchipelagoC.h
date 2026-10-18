@@ -28,6 +28,26 @@ bool Archipelago_IsCurrentSaveFile(void);
 bool Archipelago_HasSceneTransitionChecks(void);
 void Archipelago_CaptureSceneTransition(void);
 void Archipelago_BeginDoorTransition(int door, int fromRoom, int toRoom, const struct Actor* actor, int side);
+// Physical AP routing remains active without a server connection or menu CVar.
+bool Archipelago_EntranceShuffleActive(void);
+// Recovery restores a resolved position without reporting a physical crossing.
+void Archipelago_CancelEntranceTransition(void);
+bool Archipelago_EntranceReturnFromUnsafeArrival(void);
+void Archipelago_RecordEntrance(int source);
+// Real resolutions only. These guards never arm from a preview or name query.
+int Archipelago_ResolvedEntranceArrival(int target, int resolved);
+int Archipelago_EntranceTransitionLayer(int nextEntrance, int layer);
+bool Archipelago_EntranceBeforeSceneInit(void);
+bool Archipelago_EntranceAfterSceneConditions(void);
+int Archipelago_ResolveDoorArrival(int target, bool peek);
+int Archipelago_EntranceSpawnRoom(int scene, int room);
+bool Archipelago_EntranceSpawnPosition(int scene);
+const char* Archipelago_EntranceDestinationName(int source);
+int Archipelago_EntranceDestination(int source);
+bool Archipelago_EntranceSavewarp(void);
+// Actual spawn requests only; no preview calls. Missing slot maps are deferred.
+bool Archipelago_EntranceSavewarpForAge(int age);
+void Archipelago_CancelPendingEntranceSpawn(void);
 // Freeze passive outdoor time until Flow; explicit Sun's Song changes still run.
 bool Archipelago_ShouldFreezeTime(void);
 void Archipelago_InitSaveFile(void);

@@ -1,0 +1,25 @@
+{
+  "age": "adult",
+  "seed": 1801,
+  "elapsed_seconds": 70.95,
+  "mapping_endpoints": 659,
+  "accepted_swaps": 715,
+  "initial_checks": 53,
+  "initial_check_examples": [
+    "Link's Pocket",
+    "DMT Freestanding PoH",
+    "LW Gift From Saria",
+    "Song from Impa",
+    "Scene Transition: Market South Exit -> Market Entrance North Exit",
+    "Scene Transition: Market Entrance North Exit -> Market South Exit",
+    "Scene Transition: Hyrule Field Stairs Exit -> Kakariko Front Gate",
+    "Scene Transition: Kakariko Southeast Exit -> Graveyard Entrance",
+    "Scene Transition: Hyrule Field River Exit -> Zora's River Lower Exit",
+    "Scene Transition: Hyrule Field Rocky Path -> Gerudo Valley East Exit",
+    "Scene Transition: Market Castle Exit -> Castle Grounds South Exit",
+    "Scene Transition: Kakariko Guard Gate Exit -> Death Mountain Trail Bottom Exit"
+  ],
+  "child_spawn": "Spirit Temple Big Wall Base -> Spirit Temple Beamos Pits (door 15, room 23 to 17)",
+  "adult_spawn": "Death Mountain Crater Outside Temple -> Fire Temple Entrance",
+  "fixed_spawns": false
+}

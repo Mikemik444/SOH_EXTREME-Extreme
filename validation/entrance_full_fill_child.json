@@ -1,0 +1,111 @@
+{
+  "archipelago_version": "0.6.7",
+  "world_version": "1.8.1",
+  "seed": 1801,
+  "age": "child",
+  "elapsed_seconds": 95.5,
+  "initial_network_checks": 79,
+  "initial_progression_checks": [
+    {
+      "location": "Link's Pocket",
+      "item": "Iron Boots"
+    },
+    {
+      "location": "KF Bridge Rupee",
+      "item": "Boomerang"
+    },
+    {
+      "location": "Scene Transition: Kakariko Guard Gate Exit -> Death Mountain Trail Bottom Exit",
+      "item": "Ganon's Castle Silver: Fire"
+    },
+    {
+      "location": "Scene Transition: Hyrule Field Center Exit -> Lon Lon Ranch Entrance",
+      "item": "Triforce Piece"
+    },
+    {
+      "location": "Scene Transition: Lon Lon Ranch Entrance -> Hyrule Field Center Exit",
+      "item": "Ocarina C Right Button"
+    },
+    {
+      "location": "Scene Transition: Lost Woods Bridge East Exit -> Kokiri Forest Lower Exit",
+      "item": "Ganon's Castle Silver: Spirit"
+    },
+    {
+      "location": "EXTREME Gy Wonder Dampe Race 2",
+      "item": "Anubis Soul"
+    },
+    {
+      "location": "EXTREME Gy Wonder Dampe Race 3",
+      "item": "Ocarina C Up Button"
+    },
+    {
+      "location": "EXTREME Kf Wonder Training 1",
+      "item": "Eyeball Frog"
+    },
+    {
+      "location": "EXTREME Kf Wonder Training 2",
+      "item": "Progressive Prelude of Light"
+    },
+    {
+      "location": "Scene Transition: KF Mido's House Entry -> Mido's House",
+      "item": "Grass / Bush Soul"
+    },
+    {
+      "location": "Scene Transition: KF Saria's House Entry -> Saria's House",
+      "item": "Gold Skulltula Token"
+    }
+  ],
+  "child_spawn": "GY Near-Ledge Grave Entry -> Dampe's Grave",
+  "adult_spawn": "Kak Impa's House Back Entry -> Impa's House Back",
+  "validation": {
+    "passed": true,
+    "sphere_sizes": [
+      75,
+      163,
+      244,
+      112,
+      57,
+      184,
+      127,
+      133,
+      88,
+      22,
+      129,
+      125,
+      95,
+      55,
+      364,
+      273,
+      227,
+      59,
+      23,
+      15,
+      38,
+      21,
+      56,
+      31,
+      82,
+      398,
+      400,
+      401,
+      121,
+      74,
+      67,
+      72,
+      53,
+      62,
+      10,
+      19,
+      1
+    ],
+    "players": {
+      "1": {
+        "goal_met": true,
+        "full_accessibility": true,
+        "network_checks": 4036,
+        "checked": 4036
+      }
+    }
+  },
+  "scope": "Official Main.main through pre_output with full restrictive fill; no native gameplay run."
+}

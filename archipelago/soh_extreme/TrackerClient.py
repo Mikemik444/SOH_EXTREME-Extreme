@@ -1,7 +1,8 @@
-"""Read-only UT result publisher used by the game-owned, windowless host.
+"""UT result publisher and hint bridge for the game-owned, windowless host.
 
-TrackerGameContext supplies the actual upstream evaluation. This module only
-encodes its result, pins requests to the owning game and coalesces replies.
+TrackerGameContext supplies the actual upstream evaluation. The separate hint
+bridge relays server metadata and records only completed progression hints
+through the supported AP hint command; it never grants or checks locations.
 """
 from __future__ import annotations
 import asyncio
@@ -11,6 +12,7 @@ import sys
 import time
 import uuid
 from .TrackerMirror import PROTOCOL, VERSION, TAG, encode_snapshot, snapshot_rows
+from .HintBridge import HintBridge
 
 
 def make_context_class(base):
@@ -34,6 +36,12 @@ def make_context_class(base):
             self._mirror_live_clock = None
             self._mirror_live_time_flags = 0
             super().__init__(*args, **kwargs)
+            self._hint_bridge = HintBridge(self)
+
+        def reset_server_state(self):
+            if hasattr(self, "_hint_bridge"):
+                self._hint_bridge.reset()
+            super().reset_server_state()
 
         def make_gui(self):
             gui=super().make_gui()
@@ -41,6 +49,9 @@ def make_context_class(base):
             return gui
 
         def on_package(self, cmd, args):
+            # CommonClient has already decoded the packet and updated its
+            # authoritative metadata. Hints do not depend on UT evaluation.
+            self._hint_bridge.on_package(cmd, args)
             if cmd in ('RoomInfo','Connected','ConnectionRefused'):
                 self._mirror_subscription=None
                 self._mirror_last_state=None
@@ -54,6 +65,9 @@ def make_context_class(base):
             if cmd != 'Bounced' or self.game != 'SOH-EXTREME':return
             data=args.get('data')
             if not isinstance(data,dict) or data.get('soh_extreme_tracker') != PROTOCOL:return
+            if data.get('kind') in ('hint_request', 'hint_reveal'):
+                self._hint_bridge.on_bounce(data)
+                return
             if data.get('kind') != 'request' or data.get('slot') != self.slot:return
             nonce=data.get('nonce');request=data.get('request')
             if not isinstance(nonce,str) or not re.fullmatch(r'[a-f0-9]{32}',nonce):return
@@ -73,6 +87,7 @@ def make_context_class(base):
             sub=self._mirror_subscription
             if sub and sub[0]==nonce and request<sub[1]:return
             self._mirror_subscription=(nonce,request)
+            self._hint_bridge.on_bounce(data)
             # Only the game-owned worker accepts live equipment. Standalone UT
             # continues to show generation logic, including planned purchases.
             self._mirror_live_shields=shields if self._managed_nonce is not None else None
@@ -135,6 +150,7 @@ def make_context_class(base):
                 logging.getLogger('Client').exception('SOH-EXTREME tracker mirror send failed')
 
         async def disconnect(self, allow_autoreconnect=False):
+            await self._hint_bridge.close()
             self._mirror_subscription=None
             self._mirror_live_shields=None
             self._mirror_live_time=None
@@ -151,6 +167,10 @@ def make_context_class(base):
             if self._mirror_sender is not None and not self._mirror_sender.done():
                 self._mirror_sender.cancel()
             await super().disconnect(allow_autoreconnect)
+
+        async def shutdown(self):
+            await self._hint_bridge.close()
+            await super().shutdown()
     return SohExtremeTrackerContext
 
 

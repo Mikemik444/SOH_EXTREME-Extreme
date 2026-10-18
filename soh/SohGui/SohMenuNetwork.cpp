@@ -5,6 +5,8 @@
 #include "soh/util.h"
 #include <soh/Network/Sail/Sail.h>
 #include <soh/Network/Archipelago/ArchipelagoClient.h>
+#include <soh/Network/Archipelago/TrackerCheckLabels.h>
+#include <soh/SohExtremeVersion.h>
 #include <soh/Enhancements/randomizer/randomizerEnums/RandomizerInf.h>
 #include <soh/Network/CrowdControl/CrowdControl.h>
 
@@ -85,10 +87,14 @@ void SohMenu::AddMenuNetwork() {
             }
             Ship::Context::GetRawInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
         });
+    AddWidget(path, "SOH-EXTREME " SOH_EXTREME_VERSION, WIDGET_TEXT);
     AddWidget(path, "Status##Archipelago", WIDGET_TEXT).PreFunc([](WidgetInfo& info) {
         // Do not append an ImGui ##ID here: WIDGET_TEXT renders the string literally,
         // which is why the old menu visibly showed "##Archipelago".
         info.name = "Status: " + ArchipelagoClient::GetInstance().GetStatusText();
+    });
+    AddWidget(path, "Entrance map##Archipelago", WIDGET_TEXT).PreFunc([](WidgetInfo& info) {
+        info.name = ArchipelagoClient::GetInstance().GetEntranceStatusText();
     });
 
     AddWidget(path, "Collected Song Notes", WIDGET_SEPARATOR_TEXT);
@@ -167,21 +173,24 @@ void SohMenu::AddMenuNetwork() {
         static bool hideFound = false;
         filter.Draw("Search hints", -1.0f);
         ImGui::Checkbox("Hide found hints", &hideFound);
-        ImGui::TextWrapped("Known server hints update automatically. Use !hint in chat for server hint commands.");
+        ImGui::TextWrapped("Progression item hints you finish reading appear here, together with your server's "
+                           "progression hints. Way of the Hero and barren hints stay in-game.");
         const auto& hints = ap.GetHints();
         if (!ap.IsAuthenticated()) ImGui::TextDisabled("Connect to load your hints.");
         else if (!ap.HasHintSnapshot()) ImGui::TextDisabled("Loading server hints...");
-        else if (hints.empty()) ImGui::TextDisabled("No hints have been revealed for this slot yet.");
-        ImGui::Text("%zu known hints", hints.size());
+        else if (hints.empty()) ImGui::TextDisabled("No progression item hints have been revealed for this slot yet.");
+        ImGui::Text("%zu progression hints", hints.size());
         ImGui::BeginChild("##APHintList", ImVec2(0, ImGui::GetTextLineHeightWithSpacing() * 24.0f),
                           ImGuiChildFlags_Borders);
         for (const auto& hint : hints) {
             if (hideFound && hint.found) continue;
-            const std::string searchable = hint.item + " " + hint.recipient + " " + hint.location + " " + hint.finder;
+            const std::string displayLocation = SohExtreme::DescriptiveCheckName(hint.location);
+            const std::string searchable = hint.item + " " + hint.recipient + " " + displayLocation + " " +
+                hint.location + " " + hint.finder;
             if (!filter.PassFilter(searchable.c_str())) continue;
             ImGui::TextWrapped("%s: %s", hint.found ? "Found" : "Not found", hint.item.c_str());
             ImGui::TextWrapped("For %s", hint.recipient.c_str());
-            ImGui::TextWrapped("%s — %s's world", hint.location.c_str(), hint.finder.c_str());
+            ImGui::TextWrapped("%s — %s's world", displayLocation.c_str(), hint.finder.c_str());
             if (!hint.entrance.empty()) ImGui::TextWrapped("Entrance: %s", hint.entrance.c_str());
             ImGui::Separator();
         }

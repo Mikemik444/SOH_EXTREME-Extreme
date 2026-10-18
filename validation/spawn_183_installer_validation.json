@@ -1,0 +1,354 @@
+{
+  "status": "passed",
+  "created_utc": "2026-10-17T22:45:49.7649495Z",
+  "powershell_version": "7.6.7",
+  "powershell_edition": "Core",
+  "platform": "Unix",
+  "operating_system": "Unix 6.18.55.0",
+  "framework": ".NET 10.0.13",
+  "installer_sha256": "df1f6e775b5fc8b228f5c089ded374c2d0c4dbadefd4e7daf400df4c039ec732",
+  "manifest_sha256": "a30b316a8ccbdf3f77bec7aaa993175e6e0cd70cfe016936c57a280116d732bc",
+  "previous_packages": [
+    {
+      "name": "installer_revision_1_reference.zip",
+      "sha256": "e792d7f2c0d7041a95c0fb6e2a98dda473551fef44dc9664023f3c6b45a393d7"
+    },
+    {
+      "name": "SOH-EXTREME-1.8.1-coupled-entrances.zip",
+      "sha256": "218c080dc7fa755437fed4647409f362ba69ad1fd0fd4d9acabf19715d9a918e"
+    },
+    {
+      "name": "SOH-EXTREME-1.8.2-overworld-entrances.zip",
+      "sha256": "f7c9a3d7fcb942cbad6f1e719d2b178899b551ea4326018e51d6ab04a38975b8"
+    }
+  ],
+  "target_version": "1.8.3",
+  "functions_loaded_from_actual_installer_ast": [
+    "Get-NormalizedPath",
+    "Test-SourceRepository",
+    "Find-SourceRepository",
+    "Get-SafeRelativePath",
+    "Join-SafePath",
+    "Get-Sha256",
+    "Get-AcceptedZipContentSnapshots",
+    "Test-AcceptedZipContents",
+    "Read-PatchPlan",
+    "Save-RestoreManifest",
+    "Restore-AppliedFiles",
+    "Apply-PatchFiles",
+    "Read-BuildCache",
+    "Select-BuildCache",
+    "Find-CMake",
+    "Assert-ReleaseConfiguration",
+    "Find-GameExecutable",
+    "Build-ExistingRelease"
+  ],
+  "test_overrides": [
+    "Join-SafePath: native Unix directory separator; same root containment check."
+  ],
+  "limitations": [
+    "The installer main entry point and CMD wrapper are not executed.",
+    "This run does not compile or launch SOH-EXTREME.",
+    "PowerShell Core on Unix does not constitute a Windows PowerShell 5.1 execution test."
+  ],
+  "payload_file_count": 27,
+  "cases": [
+    {
+      "name": "plain null reproduces invalid backup path; typed null replaces correctly",
+      "status": "passed",
+      "seconds": 0.027,
+      "details": {
+        "legacy_error": "Exception calling \"Replace\" with \"3\" argument(s): \"The value cannot be an empty string. (Parameter 'path')\"",
+        "typed_null_target_verified": true
+      }
+    },
+    {
+      "name": "actual restore manifest creation and repeated atomic updates",
+      "status": "passed",
+      "seconds": 0.03,
+      "details": "Creation followed by two File.Replace updates succeeded."
+    },
+    {
+      "name": "all real payload files apply with verified backups and source hashes",
+      "status": "passed",
+      "seconds": 0.276,
+      "details": {
+        "applied": 27,
+        "verified_original_backups": 18,
+        "unrelated_sentinels_unchanged": 3
+      }
+    },
+    {
+      "name": "reapplying the real package is idempotent and skips every file",
+      "status": "passed",
+      "seconds": 0.127,
+      "details": "All 27 current hashes accepted; no source copies or extra backup created."
+    },
+    {
+      "name": "upgrade from installer_revision_1_reference.zip accepts its exact hashes",
+      "status": "passed",
+      "seconds": 0.197,
+      "details": {
+        "old_payload_files": 18,
+        "final_payload_files": 27,
+        "skipped": 5,
+        "replaced": 19,
+        "added": 3,
+        "newly_covered_original_paths": [
+          "archipelago/soh_extreme/EntranceOptions.py",
+          "archipelago/soh_extreme/Options.py",
+          "archipelago/soh_extreme/TrackerMirror.py",
+          "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+          "soh/Enhancements/randomizer/randomizer_entrance.c",
+          "soh/Enhancements/randomizer/randomizer_entrance.h"
+        ],
+        "expected_changed_paths": [
+          "archipelago/archipelago.json",
+          "archipelago/soh_extreme/EntranceOptions.py",
+          "archipelago/soh_extreme/EntranceRandomizer.py",
+          "archipelago/soh_extreme/Options.py",
+          "archipelago/soh_extreme/TrackerMirror.py",
+          "archipelago/soh_extreme/archipelago.json",
+          "archipelago/soh_extreme.apworld",
+          "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+          "soh/Enhancements/randomizer/hook_handlers.cpp",
+          "soh/Enhancements/randomizer/randomizer_entrance.c",
+          "soh/Enhancements/randomizer/randomizer_entrance.h",
+          "soh/Network/Archipelago/ArchipelagoC.h",
+          "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "soh/Network/Archipelago/EntranceRuntime.inc",
+          "soh/SohExtremeVersion.h",
+          "tools/tests/entrance_runtime_tests.cpp",
+          "tools/tests/test_entrance_runtime.py",
+          "tools/tests/test_entrance_tracker.py",
+          "tools/tests/validate_user_full_fill.py",
+          "tools/tests/test_entrance_spawn_lifecycle.py",
+          "tools/tests/test_overworld_entrances.py",
+          "tools/tests/test_spawn_placement.py"
+        ],
+        "actual_changed_paths": [
+          "archipelago/archipelago.json",
+          "archipelago/soh_extreme/EntranceOptions.py",
+          "archipelago/soh_extreme/EntranceRandomizer.py",
+          "archipelago/soh_extreme/Options.py",
+          "archipelago/soh_extreme/TrackerMirror.py",
+          "archipelago/soh_extreme/archipelago.json",
+          "archipelago/soh_extreme.apworld",
+          "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+          "soh/Enhancements/randomizer/hook_handlers.cpp",
+          "soh/Enhancements/randomizer/randomizer_entrance.c",
+          "soh/Enhancements/randomizer/randomizer_entrance.h",
+          "soh/Network/Archipelago/ArchipelagoC.h",
+          "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "soh/Network/Archipelago/EntranceRuntime.inc",
+          "soh/SohExtremeVersion.h",
+          "tools/tests/entrance_runtime_tests.cpp",
+          "tools/tests/test_entrance_runtime.py",
+          "tools/tests/test_entrance_spawn_lifecycle.py",
+          "tools/tests/test_entrance_tracker.py",
+          "tools/tests/test_overworld_entrances.py",
+          "tools/tests/test_spawn_placement.py",
+          "tools/tests/validate_user_full_fill.py"
+        ]
+      }
+    },
+    {
+      "name": "upgrade from SOH-EXTREME-1.8.1-coupled-entrances.zip accepts its exact hashes",
+      "status": "passed",
+      "seconds": 0.203,
+      "details": {
+        "old_payload_files": 19,
+        "final_payload_files": 27,
+        "skipped": 5,
+        "replaced": 19,
+        "added": 3,
+        "newly_covered_original_paths": [
+          "archipelago/soh_extreme/EntranceOptions.py",
+          "archipelago/soh_extreme/Options.py",
+          "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+          "soh/Enhancements/randomizer/randomizer_entrance.c",
+          "soh/Enhancements/randomizer/randomizer_entrance.h"
+        ],
+        "expected_changed_paths": [
+          "archipelago/archipelago.json",
+          "archipelago/soh_extreme/EntranceOptions.py",
+          "archipelago/soh_extreme/EntranceRandomizer.py",
+          "archipelago/soh_extreme/Options.py",
+          "archipelago/soh_extreme/TrackerMirror.py",
+          "archipelago/soh_extreme/archipelago.json",
+          "archipelago/soh_extreme.apworld",
+          "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+          "soh/Enhancements/randomizer/hook_handlers.cpp",
+          "soh/Enhancements/randomizer/randomizer_entrance.c",
+          "soh/Enhancements/randomizer/randomizer_entrance.h",
+          "soh/Network/Archipelago/ArchipelagoC.h",
+          "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "soh/Network/Archipelago/EntranceRuntime.inc",
+          "soh/SohExtremeVersion.h",
+          "tools/tests/entrance_runtime_tests.cpp",
+          "tools/tests/test_entrance_runtime.py",
+          "tools/tests/test_entrance_tracker.py",
+          "tools/tests/validate_user_full_fill.py",
+          "tools/tests/test_entrance_spawn_lifecycle.py",
+          "tools/tests/test_overworld_entrances.py",
+          "tools/tests/test_spawn_placement.py"
+        ],
+        "actual_changed_paths": [
+          "archipelago/archipelago.json",
+          "archipelago/soh_extreme/EntranceOptions.py",
+          "archipelago/soh_extreme/EntranceRandomizer.py",
+          "archipelago/soh_extreme/Options.py",
+          "archipelago/soh_extreme/TrackerMirror.py",
+          "archipelago/soh_extreme/archipelago.json",
+          "archipelago/soh_extreme.apworld",
+          "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+          "soh/Enhancements/randomizer/hook_handlers.cpp",
+          "soh/Enhancements/randomizer/randomizer_entrance.c",
+          "soh/Enhancements/randomizer/randomizer_entrance.h",
+          "soh/Network/Archipelago/ArchipelagoC.h",
+          "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "soh/Network/Archipelago/EntranceRuntime.inc",
+          "soh/SohExtremeVersion.h",
+          "tools/tests/entrance_runtime_tests.cpp",
+          "tools/tests/test_entrance_runtime.py",
+          "tools/tests/test_entrance_spawn_lifecycle.py",
+          "tools/tests/test_entrance_tracker.py",
+          "tools/tests/test_overworld_entrances.py",
+          "tools/tests/test_spawn_placement.py",
+          "tools/tests/validate_user_full_fill.py"
+        ]
+      }
+    },
+    {
+      "name": "upgrade from SOH-EXTREME-1.8.2-overworld-entrances.zip accepts its exact hashes",
+      "status": "passed",
+      "seconds": 0.271,
+      "details": {
+        "old_payload_files": 26,
+        "final_payload_files": 27,
+        "skipped": 19,
+        "replaced": 7,
+        "added": 1,
+        "newly_covered_original_paths": [],
+        "expected_changed_paths": [
+          "archipelago/archipelago.json",
+          "archipelago/soh_extreme/EntranceRandomizer.py",
+          "archipelago/soh_extreme/TrackerMirror.py",
+          "archipelago/soh_extreme/archipelago.json",
+          "archipelago/soh_extreme.apworld",
+          "soh/SohExtremeVersion.h",
+          "tools/tests/test_overworld_entrances.py",
+          "tools/tests/test_spawn_placement.py"
+        ],
+        "actual_changed_paths": [
+          "archipelago/archipelago.json",
+          "archipelago/soh_extreme/EntranceRandomizer.py",
+          "archipelago/soh_extreme/TrackerMirror.py",
+          "archipelago/soh_extreme/archipelago.json",
+          "archipelago/soh_extreme.apworld",
+          "soh/SohExtremeVersion.h",
+          "tools/tests/test_overworld_entrances.py",
+          "tools/tests/test_spawn_placement.py"
+        ]
+      }
+    },
+    {
+      "name": "mixed old and already-patched source versions are accepted",
+      "status": "passed",
+      "seconds": 0.067,
+      "details": {
+        "patched": 1,
+        "originals": 17,
+        "new_files": 9
+      }
+    },
+    {
+      "name": "repacked earlier APWorld contents are accepted, replaced, and backed up exactly",
+      "status": "passed",
+      "seconds": 0.714,
+      "details": [
+        {
+          "prior_package": "installer_revision_1_reference.zip",
+          "unchanged_world_files": 114,
+          "installation": {
+            "original_repacked_sha256": "9ae7125f88e7d78ce6ccb9f78ef8a2d92f78e49bd6febf165870a8a697598907",
+            "installed_sha256": "12110ecd286e24bcc84d54f0a445cbd9eb8a5da4401457ab105f065f7dd0d8ac",
+            "backed_up_actual_archive": true,
+            "restore_manifest_uses_actual_hash": true
+          }
+        },
+        {
+          "prior_package": "SOH-EXTREME-1.8.1-coupled-entrances.zip",
+          "unchanged_world_files": 114,
+          "installation": {
+            "original_repacked_sha256": "ce930c45b6a21535ce46d11f0e51d7d8df3b22a60f820083069774cb007edb13",
+            "installed_sha256": "12110ecd286e24bcc84d54f0a445cbd9eb8a5da4401457ab105f065f7dd0d8ac",
+            "backed_up_actual_archive": true,
+            "restore_manifest_uses_actual_hash": true
+          }
+        },
+        {
+          "prior_package": "SOH-EXTREME-1.8.2-overworld-entrances.zip",
+          "unchanged_world_files": 114,
+          "installation": {
+            "original_repacked_sha256": "3839dd421ae50fdf6eeb6239dfb1ceb1966c5c73875f82b94976f558d1ebef80",
+            "installed_sha256": "12110ecd286e24bcc84d54f0a445cbd9eb8a5da4401457ab105f065f7dd0d8ac",
+            "backed_up_actual_archive": true,
+            "restore_manifest_uses_actual_hash": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "repacked current APWorld contents are accepted and replaced with exact payload",
+      "status": "passed",
+      "seconds": 0.215,
+      "details": {
+        "unchanged_world_files": 114,
+        "installation": {
+          "original_repacked_sha256": "d10efdfa0855944b29ba49e0701389a410c91ef0ec3c33f141011e4fd8e1bb65",
+          "installed_sha256": "12110ecd286e24bcc84d54f0a445cbd9eb8a5da4401457ab105f065f7dd0d8ac",
+          "backed_up_actual_archive": true,
+          "restore_manifest_uses_actual_hash": true
+        }
+      }
+    },
+    {
+      "name": "changed uncompressed APWorld entry is rejected before any transaction",
+      "status": "passed",
+      "seconds": 0.111,
+      "details": {
+        "changed_entry": "soh_extreme/shared_logic.py",
+        "entry_name_and_length_preserved": true,
+        "source_copies": 0,
+        "transaction_started": false,
+        "error": "Your source file differs from all supported original and patched versions: archipelago/soh_extreme.apworld\nCurrent SHA-256: ae7fe37c416a817d9f9a8b6047ca381c06dac9de0ad36f1e2f653e808404cea2\nNo source files have been copied. Use the matching source checkout or request a patch for this updated file."
+      }
+    },
+    {
+      "name": "source mismatch fails full preflight before any copying",
+      "status": "passed",
+      "seconds": 0.078,
+      "details": "Your source file differs from all supported original and patched versions: soh/SohExtremeVersion.h\nCurrent SHA-256: 058885d368ca267318e76f77ecdf7784f5f8b58d558c62ba1b00f11c58f9dce7\nNo source files have been copied. Use the matching source checkout or request a patch for this updated file."
+    },
+    {
+      "name": "conflicting new-file contents cannot be overwritten",
+      "status": "passed",
+      "seconds": 0.092,
+      "details": "Conflicting user file preserved before transaction creation."
+    },
+    {
+      "name": "forced later copy failure rolls back all actual payload files",
+      "status": "passed",
+      "seconds": 0.26,
+      "details": {
+        "committed_before_failure": 27,
+        "originals_restored": 18,
+        "new_files_removed": 9,
+        "rollback_errors": 0,
+        "build_started": false
+      }
+    }
+  ],
+  "completed_utc": "2026-10-17T22:45:52.6990388Z"
+}

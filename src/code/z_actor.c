@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "soh/Enhancements/randomizer/EnemyDropBridge.h"
+#include "soh/Enhancements/randomizer/SoulActorAccess.h"
 #include "soh/Enhancements/randomizer/ActorDrawRecovery.h"
 #include "soh/Network/Archipelago/ArchipelagoC.h"
 
@@ -2872,6 +2873,10 @@ static void Actor_RecoverTruncatedButterflyDraw(Actor* actor) {
 void Actor_Draw(PlayState* play, Actor* actor) {
     FaultClient faultClient;
     Lights* lights;
+
+    // Keep soul-locked barriers alive without drawing their model, shadow, or
+    // check glow. Actor callbacks/attention remain available to their AI.
+    if (MegaSoul_ShouldHideActor(actor)) return;
 
     Actor_RecoverTruncatedButterflyDraw(actor);
 

@@ -1528,6 +1528,15 @@
         "gates": [
           "climb"
         ]
+      },
+      {
+        "region": "ZORAS_DOMAIN",
+        "age": "adult",
+        "time": "either",
+        "gates": [
+          "climb",
+          "blue_fire"
+        ]
       }
     ],
     "source_rows": 4
@@ -2258,7 +2267,15 @@
         "age": "child",
         "time": "either",
         "gates": [
-          "midos_house"
+          "before_child_zelda"
+        ]
+      },
+      {
+        "region": "KF_MIDOS_HOUSE",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "Zelda's Letter"
         ]
       },
       {
@@ -2857,6 +2874,14 @@
     ],
     "language": "Hylian",
     "routes": [
+      {
+        "region": "HC_MOAT",
+        "age": "child",
+        "time": "either",
+        "gates": [
+          "before_child_zelda"
+        ]
+      },
       {
         "region": "LLR_TALONS_HOUSE",
         "age": "child",

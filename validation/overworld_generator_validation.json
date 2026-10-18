@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "command": "PYTHONPATH=/workspace/scratch/8fddab5b8169/ap-deps:/workspace/scratch/8fddab5b8169/ap-runtime python /workspace/scratch/8fddab5b8169/tests/run_generator_regressions.py",
+  "working_directory": "/workspace/scratch/8fddab5b8169/ap-runtime",
+  "archipelago_version": "0.6.7",
+  "world_version": "1.8.2",
+  "tests_run": 37,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 11.059,
+  "source_sha256": {
+    "archipelago/soh_extreme/EntranceOptions.py": "d21679fc8ab3943cf423656b254e1171e46e6567596a2711d3a28d2c5a8fc094",
+    "archipelago/soh_extreme/Options.py": "bd645344d5ba66d65da4cbfc858a992896d32a29f5cfdf8691df80512bbff599",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "f69c936c6a12d237158b3aff28d8d36f98e2901d5d42ef8689a1e713a800396b",
+    "tools/tests/test_entrance_start.py": "9ba3b0555b675bf07eb9cbd6872c84bc753a8b52f78c6c976a6f768697e6aa48",
+    "tools/tests/test_overworld_entrances.py": "5feb7b5fa7719299d09640d3900eb2683f78d676a7aad75efbc596e3e4cb7a62"
+  },
+  "log": "/workspace/scratch/8fddab5b8169/tests/overworld_generator_regressions.log",
+  "entrance_mapping_revision": 1,
+  "seed_1802_spawn_assessment": [
+    {
+      "report": "entrance_full_fill_overworld_all_child.json",
+      "seed": 1802,
+      "starting_age": "child",
+      "accepted_spawn_targets": {
+        "187": 1119,
+        "642": 8754
+      },
+      "passes_new_home_exclusion": true
+    },
+    {
+      "report": "entrance_validation_overworld_all_adult.json",
+      "seed": 1802,
+      "starting_age": "adult",
+      "accepted_spawn_targets": {
+        "187": 1119,
+        "642": 1792
+      },
+      "passes_new_home_exclusion": true
+    }
+  ],
+  "full_fill_completed_before_home_exclusion_guard": true,
+  "full_fill_repeated": false,
+  "topology_preservation_evidence": [
+    "The spawn guard did not modify _candidate, its target order, or any random draws.",
+    "The new alternate-pool preflight is deterministic and draws no random values.",
+    "Both completed seed-1802 runs accepted nondefault child and adult spawn destinations.",
+    "Any earlier home proposal in those runs necessarily failed viability; otherwise it would have been the accepted final spawn.",
+    "Viability draws no random values and each checked candidate reapplies the full mapping with fresh reachability states.",
+    "Final regressions compare actual candidate outputs and RNG states for both an immediately valid alternate and a rejected home followed by a valid alternate."
+  ]
+}

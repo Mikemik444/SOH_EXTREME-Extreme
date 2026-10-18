@@ -291,22 +291,37 @@ static CustomMessage ArchipelagoHintMessage(RandomizerHint key, MessageFormat fo
         const auto& info = data->second;
         const auto index = id < info.hintKeys.size() ? id : 0;
         message = StaticData::hintTextTable[info.hintKeys[index]].GetHintMessage();
+        const auto selectedText = message.GetForCurrentLanguage(MF_RAW);
         std::vector<CustomMessage> items;
+        std::vector<SohExtreme::HintTarget> shownTargets;
+        size_t itemIndex = 0;
         for (const auto check : info.targetChecks) {
             auto item = ap.GetHintItemDescription(check);
+            const auto placeholder = "[[" + std::to_string(++itemIndex) + "]]";
+            if (!item.empty() && selectedText.find(placeholder) != std::string::npos) {
+                const auto targets = ap.GetHintItemTargets(check);
+                shownTargets.insert(shownTargets.end(), targets.begin(), targets.end());
+            }
             if (item.empty()) item = "an item (Archipelago details are still loading)";
             items.emplace_back(item);
         }
         message.InsertNames(items);
         if (info.num) message.InsertNumber(info.num);
         message.SetSingularPlural();
+        // Only placeholders used by this dialogue variant disclose a target.
+        // For example, HBA's later dialogue may mention just its second prize.
+        message.AddHintTargets(shownTargets);
     } else {
-        auto text = ap.GetInGameHint(StaticData::hintNames[key].GetEnglish(MF_CLEAN),
-                                   key < RH_GANONDORF_HINT ? static_cast<int32_t>(key) - 1 : -1);
+        const auto hintKey = StaticData::hintNames[key].GetEnglish(MF_CLEAN);
+        const int32_t stoneIndex = key < RH_GANONDORF_HINT ? static_cast<int32_t>(key) - 1 : -1;
+        auto text = ap.GetInGameHint(hintKey, stoneIndex);
+        const auto shownTargets = text.empty() ? std::vector<SohExtreme::HintTarget>{}
+                                               : ap.GetInGameHintTargets(hintKey, stoneIndex);
         if (text.empty() && key == RH_GANONDORF_JOKE)
             text = "You have what you need. Face Ganondorf!";
         if (text.empty()) text = "Archipelago hint details are still loading. Reconnect and read this hint again.";
         message = CustomMessage(text);
+        message.AddHintTargets(shownTargets);
         if (key == RH_ALTAR_CHILD) {
             if (!ctx->GetOption(RSK_TOT_ALTAR_HINT)) message = CustomMessage("");
             auto ending = ctx->GetOption(RSK_DOOR_OF_TIME).Is(RO_DOOROFTIME_OPEN) ? RHT_CHILD_ALTAR_TEXT_END_DOTOPEN :

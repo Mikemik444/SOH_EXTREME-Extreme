@@ -172,7 +172,7 @@ void ObjHamishi_Update(Actor* thisx, PlayState* play) {
 
     if (IS_RANDO && Randomizer_GetSettingValue(RSK_SHUFFLE_ROCK_SOUL) &&
         !Flags_GetRandomizerInf(RAND_INF_ROCK_SOUL)) {
-        // Keep this boulder solid/visible, but ignore hammer/explosive damage
+        // Keep this hidden boulder solid, but ignore hammer/explosive damage
         // until Rock/Boulder Soul is received.
         this->collider.base.acFlags &= ~AC_HIT;
         if (this->actor.xzDistToPlayer < 600.0f) {

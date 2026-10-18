@@ -50,9 +50,18 @@ static int RoomDebugOverriddenEntrance(int entrance) {
 }
 
 static std::string RoomDebugSceneExitText(int entrance, const std::string& prefix) {
-    const int destination = RoomDebugOverriddenEntrance(RoomDebugResolveExit(entrance));
+    const int source = RoomDebugResolveExit(entrance);
+    const int apDestination = Archipelago_EntranceDestination(source);
+    const int destination = apDestination != source ? apDestination : RoomDebugOverriddenEntrance(source);
     int scene = -1;
     std::string name;
+    if (const auto* endpoint = SohExtreme::EntranceEndpointById(destination); endpoint && endpoint->door >= 0) {
+        std::string label(endpoint->name);
+        const auto separator = label.find(" -> ");
+        if (separator != std::string::npos) label.erase(0, separator + 4);
+        return prefix + " -> " + label + "\nScene: " + SohUtils::GetSceneName(endpoint->scene) +
+               " | Room " + std::to_string(endpoint->room);
+    }
     const auto* data = EntranceTracker::GetEntranceData(destination);
     if (data) name = data->destination;
     for (const auto& row : roomDebugSceneTransitions) {

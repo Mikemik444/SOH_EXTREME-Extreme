@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "cases": {
+    "direction_inventory_flag_cases": 1152,
+    "reverse_clear_alternative_cases": 48,
+    "switch_side_rejections_despite_clear": 72,
+    "registration_and_unrelated_actor_cases": 4,
+    "switch_barred_reverse_trials": [
+      "Forest",
+      "Light",
+      "Fire",
+      "Spirit"
+    ],
+    "room_clear_reverse_trials": [
+      "Water",
+      "Shadow"
+    ],
+    "correct_medallion_removes_added_gate": true,
+    "wrong_medallion_does_not_unlock": true,
+    "both_age_profiles_checked": true
+  },
+  "source_sha256": {
+    "soh/Enhancements/randomizer/MedallionLockedTrials.cpp": "51f8ca375aeee481664833e1d926c9d538e38b0a5af475fbcfa95548ec7f1f95",
+    "src/overlays/actors/ovl_Door_Shutter/z_door_shutter.c": "bfe80a290982db02459b5952e1a57ce4242e45aec54e766884ba04e5bbaab970",
+    "src/overlays/actors/ovl_Door_Shutter/z_door_shutter.h": "7653304ada3ae7c761a324fa0315fd31e17497e1a61a8c3181e6a268bd464de6",
+    "src/code/z_actor.c": "99ed54b7bb20bbdc782d27e679e4cd17a39b263a38b1acd074d4739048b49fef",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e"
+  },
+  "test_sha256": {
+    "tools/tests/test_medallion_trial_native.py": "62d9fd299daa5d39f13cd53944dc03592d3a08acf99a28ec1d70c1061d107bea",
+    "tools/tests/medallion_trial_native_tests.cpp": "2738c31c99f018ca816d326daf213701cfdf7dcf181e123732841c14b431cea5"
+  },
+  "captured_fragment_sha256": {
+    "medallion_gate_types.inc": "f3a03ab0e0265debbc27d7603e70538588fde711428e3e864a8f803b22ad9e97",
+    "medallion_gate_hook.inc": "f5adf77223c2aa7ef3e7840484a7e51c1f15b82d437d1c36ca6c371c651a6376",
+    "medallion_gate_setup.inc": "bb4a0254334dc0e3c5cc245d7deb831b9409a0c86b85b57c98287d9d07b900ef",
+    "medallion_gate_clear.inc": "75a83f0e6e2a3b0ccfe224b04472e3bd2e35337ed19d1472892e15d4df386d9b",
+    "medallion_gate_switch.inc": "9407163a42b98060b577b66b3f592da2bb38493d4cf6de2fc31505eaed7b2edb",
+    "medallion_gate_placements.inc": "b2783166612d1892323025c905a2b80b6199fd7e46b5ed1adf69c7cbf1f35d69"
+  },
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_scanner": false,
+  "engine_io_isolated": true,
+  "native_game_build": false,
+  "in_game_playthrough": false,
+  "scope": "Actual native medallion hook and directional shutter decisions, with clear/tempclear/switch and inventory IO isolated; authored non-MQ door placements."
+}

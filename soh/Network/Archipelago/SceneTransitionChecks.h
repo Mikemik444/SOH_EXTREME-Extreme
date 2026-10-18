@@ -79,7 +79,12 @@ class CrossingJournal {
     void BeginDoor(const Crossing* crossing, float playerX, float playerZ, float sinYaw, float cosYaw) {
         door=crossing;
         nx=sinYaw; nz=cosYaw;
-        start=door ? (playerX-door->x)*nx+(playerZ-door->z)*nz : 0;
+        const float offset=door ? (playerX-door->x)*nx+(playerZ-door->z)*nz : 0;
+        // Shutters accept an open action even within one unit of the plane.
+        // Remember its side, not a minimum opening distance; the directed
+        // portal resolves the side if Link starts exactly on the plane.
+        startSide=!door ? 0.0f : offset>0.0f ? 1.0f : offset<0.0f ? -1.0f :
+                  door->side==1 ? 1.0f : -1.0f;
     }
     int64_t AdvanceDoor(int currentScene, int room, float x, float z, bool alive) {
         if (!door) return 0;
@@ -87,7 +92,7 @@ class CrossingJournal {
             door=nullptr; return 0;
         }
         const float now=(x-door->x)*nx+(z-door->z)*nz;
-        if (room==door->toRoom && std::fabs(start)>1.0f && std::fabs(now)>4.0f && now*start<0.0f) {
+        if (room==door->toRoom && std::fabs(now)>4.0f && now*startSide<0.0f) {
             const int64_t result=door->location;
             door=nullptr;
             return result;
@@ -97,6 +102,6 @@ class CrossingJournal {
   private:
     const Crossing* scene=nullptr;
     const Crossing* door=nullptr;
-    float nx=0, nz=0, start=0;
+    float nx=0, nz=0, startSide=0;
 };
 } // namespace SohExtreme

@@ -1,0 +1,75 @@
+{
+  "status": "reproduced",
+  "archipelago_version": "0.6.7",
+  "entrance_randomizer_sha256": "f69c936c6a12d237158b3aff28d8d36f98e2901d5d42ef8689a1e713a800396b",
+  "yaml_sha256": "119ddbd1d2e1f6d8e60e30edc33e2bc35e6d983cafdb61608bacb25198a18f9e",
+  "scope": "Official AP0.6.7 graph generation using unchanged delivered weighted YAML, with starting age forced as stated. Original candidate ordering and RNG preserved. Untried-target diagnostic runs only after the original exception. No full item fills or native gameplay.",
+  "conclusion": "Both seed1 starts fail the 50-proposal child-spawn limit although an untried alternate satisfies the existing actual-starting-state and full-inventory reachability predicates. This is a search failure with a legal solution, not evidence the user settings require relaxing.",
+  "runs": [
+    {
+      "seed": 1,
+      "starting_age": "child",
+      "status": "failed",
+      "exception": "OptionError: Could not place a playable alternate child spawn after 50 candidates. Try another generation seed, enable more destination pools, or adjust the configured starting inventory.",
+      "elapsed_seconds": 52.591,
+      "failed_category": "child_spawn",
+      "proposals": 50,
+      "unique_proposals": 48,
+      "eligible_target_count": 361,
+      "sampled_categories": {
+        "dungeon_doors": 33,
+        "grottos": 7,
+        "interiors": 5,
+        "one_ways": 1,
+        "dungeons": 2,
+        "bosses": 1,
+        "overworld": 1
+      },
+      "proposal_outcomes": {
+        "starting_state_failed": 30,
+        "full_reachability_failed": 20
+      },
+      "missed_playable_alternate": {
+        "target_id": 126,
+        "target": "MK Entrance Guard House Entry -> Guard House",
+        "starting_state_viable": true,
+        "fully_viable": true
+      },
+      "diagnostic_targets_checked": 13,
+      "detailed_report": "tests/spawn_183_seed1_child.json",
+      "detailed_report_sha256": "e712c9cc27b5b59f6a3b3843696ebce448daa98ee7a7a9c18c0864673581841f"
+    },
+    {
+      "seed": 1,
+      "starting_age": "adult",
+      "status": "failed",
+      "exception": "OptionError: Could not place a playable alternate child spawn after 50 candidates. Try another generation seed, enable more destination pools, or adjust the configured starting inventory.",
+      "elapsed_seconds": 54.945,
+      "failed_category": "child_spawn",
+      "proposals": 50,
+      "unique_proposals": 48,
+      "eligible_target_count": 361,
+      "sampled_categories": {
+        "dungeon_doors": 33,
+        "grottos": 7,
+        "interiors": 5,
+        "one_ways": 1,
+        "dungeons": 2,
+        "bosses": 1,
+        "overworld": 1
+      },
+      "proposal_outcomes": {
+        "full_reachability_failed": 50
+      },
+      "missed_playable_alternate": {
+        "target_id": 126,
+        "target": "MK Entrance Guard House Entry -> Guard House",
+        "starting_state_viable": true,
+        "fully_viable": true
+      },
+      "diagnostic_targets_checked": 13,
+      "detailed_report": "tests/spawn_183_seed1_adult.json",
+      "detailed_report_sha256": "8ae8462e581361400d2370e484a95d02e4ad1c4d1cafe6d9f1cf57c091704113"
+    }
+  ]
+}

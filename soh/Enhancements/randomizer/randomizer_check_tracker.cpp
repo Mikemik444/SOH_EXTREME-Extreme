@@ -13,7 +13,10 @@
 #include "CheckFinderState.h"
 #include "soh/Enhancements/nametag.h"
 #include "soh/Network/Archipelago/ArchipelagoClient.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
+#include "soh/Network/Archipelago/EntranceRouting.h"
 #include "soh/Network/Archipelago/TrackerScenes.h"
+#include "soh/Network/Archipelago/TrackerCheckLabels.h"
 #include "soh/Network/Archipelago/SceneTransitionChecks.h"
 #include "soh/util.h"
 #include "randomizer_grotto.h"
@@ -303,12 +306,14 @@ static int64_t GetPendingNpcSpeechLocation(RandomizerCheck rc) {
 static bool HasNpcSpeechInteractionItems(const NpcSpeechFinderEntry& entry) {
     auto ctx = Rando::Context::GetInstance();
     auto speechLogic = ctx->GetLogic();
-    if (ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) && !speechLogic->HasItem(RG_NPC_SOUL)) {
+    const bool pathBlocker = entry.rc == static_cast<int32_t>(RC_ZD_KING_ZORA_THAWED);
+    if (ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) && !pathBlocker && !speechLogic->HasItem(RG_NPC_SOUL)) {
         return false;
     }
     if (ctx->GetOption(RSK_SHUFFLE_SPEAK)) {
         if (entry.languageItem != RG_NONE) {
-            if (!speechLogic->HasItem(entry.languageItem)) {
+            if (!(pathBlocker ? speechLogic->CanSpeakToPathBlockingNpc(entry.languageItem)
+                              : speechLogic->HasItem(entry.languageItem))) {
                 return false;
             }
         } else if (!(speechLogic->HasItem(RG_SPEAK_DEKU) || speechLogic->HasItem(RG_SPEAK_GERUDO) ||
@@ -1782,6 +1787,26 @@ static SohExtreme::TrackerScene FinderNativeScene(RandomizerCheck rc) {
     return FinderScene(location->GetScene(), location->GetArea());
 }
 
+// Match the native actor's story-based placement before preferring a current
+// scene. Otherwise a completed castle visit can pull Talon's pending ranch
+// conversation into an empty castle, and a moved Mido can reappear outside.
+static bool FinderNpcSpeechScenePresent(int64_t id, int scene, int age) {
+    if (id == 10000094) { // EnMd_ShouldSpawn
+        const bool atHome = Flags_GetEventChkInf(EVENTCHKINF_SPOKE_TO_MIDO_AFTER_DEKU_TREES_DEATH) ||
+                            Flags_GetEventChkInf(EVENTCHKINF_OBTAINED_ZELDAS_LETTER);
+        if (scene == SCENE_KOKIRI_FOREST) return !atHome;
+        if (scene == SCENE_MIDOS_HOUSE) return age == 0 && atHome;
+    } else if (id == 10000118) { // EnTa_Init: castle, child ranch, adult Kakariko roles
+        const bool leftCastle = Flags_GetEventChkInf(EVENTCHKINF_TALON_RETURNED_FROM_CASTLE);
+        if (scene == SCENE_HYRULE_CASTLE) return !leftCastle;
+        if (scene == SCENE_LON_LON_BUILDINGS) return age == 0 && leftCastle;
+        if (scene == SCENE_KAKARIKO_CENTER_GUEST_HOUSE) {
+            return age == 1 && !Flags_GetEventChkInf(EVENTCHKINF_TALON_RETURNED_FROM_KAKARIKO);
+        }
+    }
+    return true;
+}
+
 static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClient& client,
                                                const SohExtreme::TrackerScene& current, int age, int time) {
     struct CrossingScene { int64_t location; int scene; RandomizerCheckArea area; int grotto; };
@@ -1838,6 +1863,7 @@ static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClie
         SohExtreme::TrackerScene best;
         int bestPriority = -1;
         for (const auto& route : conversation->second) {
+            if (!FinderNpcSpeechScenePresent(id, route.scene, age)) continue;
             const auto scene = route.check != RC_UNKNOWN_CHECK ? FinderNativeScene(route.check)
                 : FinderScene(route.scene, route.area, route.grotto);
             const int priority = SohExtreme::TrackerSceneRoutePriority(scene, current, route.age, route.time, age, time);
@@ -1887,6 +1913,16 @@ static std::string RoomDebugDestination(int index) {
         const float distance = (player->actor.world.pos.x - door.pos.x) * Math_SinS(door.rotY) +
                                (player->actor.world.pos.z - door.pos.z) * Math_CosS(door.rotY);
         side = distance > 0 ? 1 : 0;
+    }
+    const int sourceId = 0x2000 + gPlayState->sceneNum * 128 + index * 2 + side;
+    if (const char* label = Archipelago_EntranceDestinationName(sourceId)) {
+        const auto* target = SohExtreme::EntranceEndpointById(Archipelago_EntranceDestination(sourceId));
+        std::string destination(label);
+        const auto separator = destination.find(" -> ");
+        if (separator != std::string::npos) destination.erase(0, separator + 4);
+        return "Door " + std::to_string(index + 1) + " -> " + destination +
+               (target ? "\nScene: " + SohUtils::GetSceneName(target->scene) +
+                 (target->room >= 0 ? " | Room " + std::to_string(target->room) : "") : "");
     }
     for (const auto& row : roomDebugDoors) {
         if (row.scene != gPlayState->sceneNum || row.door != index ||
@@ -1975,7 +2011,11 @@ static void DrawRoomDebugSceneTransitions() {
                 (Archipelago_IsLocationActive(row.location) ? "Unchecked" : "Not a check in this seed");
             ImGui::TextWrapped("%s | %s | Entrance 0x%04X | AP %lld", row.kind, status, row.entrance,
                                static_cast<long long>(row.location));
-            ImGui::TextWrapped("Destination scene: %s (%d)", SohUtils::GetSceneName(row.target).c_str(), row.target);
+            if (const char* shuffled = Archipelago_EntranceDestinationName(row.entrance)) {
+                ImGui::TextWrapped("Shuffled destination: %s", shuffled);
+            } else {
+                ImGui::TextWrapped("Destination scene: %s (%d)", SohUtils::GetSceneName(row.target).c_str(), row.target);
+            }
             ImGui::Separator();
             ImGui::PopID();
         }
@@ -2026,6 +2066,21 @@ static void DrawRoomDebugWindow() {
     ImGui::End();
     UpdateRoomDebugLabels();
     UpdateRoomDebugWorldLabels();
+}
+
+// Automatic expansion follows the physical zone. Remember only deliberate
+// mouse/keyboard toggles so snapshot updates and zone changes cannot overwrite
+// sections the player chose to open or close. A clipped header returning false
+// is not a user action and must not become a manual close preference.
+template <typename Key>
+static bool DrawFinderDropdown(const std::string& label, const Key& key, bool automaticOpen,
+                               std::map<Key, bool>& manualChoices) {
+    const auto choice = manualChoices.find(key);
+    const bool open = choice != manualChoices.end() ? choice->second : automaticOpen;
+    ImGui::SetNextItemOpen(open, ImGuiCond_Always);
+    const bool expanded = ImGui::CollapsingHeader(label.c_str());
+    if (ImGui::IsItemToggledOpen()) manualChoices[key] = expanded;
+    return expanded;
 }
 
 static void DrawUniversalFinderMirror() {
@@ -2129,9 +2184,20 @@ static void DrawUniversalFinderMirror() {
     static bool currentFirst = true;
     static bool onlyCurrent = false;
     static ImGuiTextFilter filter;
+    static std::map<int, bool> regionDropdownChoices;
+    static std::map<std::array<int, 3>, bool> sceneDropdownChoices;
     ImGui::Checkbox("Current scene/region first", &currentFirst);
     ImGui::SameLine();
     ImGui::Checkbox("Only current scene", &onlyCurrent);
+    bool showRoomDoorNumbers = CVarGetInteger(CVAR_TRACKER_CHECK("ShowRoomDoorNumbers"), 0) != 0;
+    if (ImGui::Checkbox("Show room and door numbers", &showRoomDoorNumbers)) {
+        CVarSetInteger(CVAR_TRACKER_CHECK("ShowRoomDoorNumbers"), showRoomDoorNumbers);
+        Ship::Context::GetRawInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
+    }
+    if (ImGui::IsItemHovered()) {
+        ImGui::SetTooltip("Adds the physical check's room and door IDs. Door numbers match Room debug;\n"
+                          "descriptive room and transition names remain visible.");
+    }
     filter.Draw("Search scene/region/check");
     if (onlyCurrent && !sceneMappingsReady)
         ImGui::TextWrapped("Scene labels are synchronizing; showing all scenes until the mapping is ready.");
@@ -2143,7 +2209,9 @@ static void DrawUniversalFinderMirror() {
             if (filterAge && !SohExtreme::TrackerRowMatchesAge(row, adult)) return false;
             const std::string mapRegion = rowScene.area >= 0
                 ? RandomizerCheckObjects::GetRCAreaName(static_cast<RandomizerCheckArea>(rowScene.area)) : "";
-            const std::string text = mapRegion + " | " + rowScene.name + " | " + row.region + " | " + row.name;
+            const std::string displayName = SohExtreme::TrackerCheckLabel(row.id, row.name, showRoomDoorNumbers);
+            const std::string text = mapRegion + " | " + rowScene.name + " | " +
+                SohExtreme::CleanTrackerLabel(row.region) + " | " + displayName + " | " + row.name;
             return filter.PassFilter(text.c_str());
         });
     const auto regions = SohExtreme::GroupTrackerScenesByRegion(groups, current, currentFirst, [](int area) {
@@ -2154,10 +2222,22 @@ static void DrawUniversalFinderMirror() {
         if (regions.empty()) ImGui::TextUnformatted("No remaining in-logic checks match this view.");
         for (const auto& region : regions) {
             ImGui::PushID(region.area);
+            // Count scenes remaining in this view after filtering. Keep the
+            // region ID even when its heading is hidden so scene state persists.
+            const bool showRegionHeader = region.scenes.size() > 1;
             const std::string regionLabel = (region.currentRegion ? "[Current region] " : "") + region.name +
                 " (" + std::to_string(region.normal) + " in logic, " + std::to_string(region.glitched) + " glitched)###APMapRegion";
-            if (ImGui::CollapsingHeader(regionLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
-                ImGui::Indent();
+            bool regionAutomaticallyOpen = region.currentRegion || region.containsCurrentScene;
+            for (const auto* group : region.scenes) {
+                const std::array<int, 3> key = { region.area, group->scene.scene, group->scene.instance };
+                const auto choice = sceneDropdownChoices.find(key);
+                // A manually opened scene also keeps its automatic parent open
+                // after leaving the zone. An explicit parent close still wins.
+                if (choice != sceneDropdownChoices.end() && choice->second) regionAutomaticallyOpen = true;
+            }
+            if (!showRegionHeader || DrawFinderDropdown(regionLabel, region.area, regionAutomaticallyOpen,
+                                                         regionDropdownChoices)) {
+                if (showRegionHeader) ImGui::Indent();
                 for (const auto* group : region.scenes) {
                     // Map-region and scene identities remain stable as counts,
                     // inventory, age and the player's current location change.
@@ -2165,16 +2245,22 @@ static void DrawUniversalFinderMirror() {
                     ImGui::PushID(group->scene.instance);
                     const std::string label = (group->currentScene ? "[Current scene] " : "") + group->scene.name +
                         " (" + std::to_string(group->normal) + " in logic, " + std::to_string(group->glitched) + " glitched)###APScene";
-                    if (ImGui::CollapsingHeader(label.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+                    const std::array<int, 3> key = { region.area, group->scene.scene, group->scene.instance };
+                    if (DrawFinderDropdown(label, key, group->currentScene, sceneDropdownChoices)) {
                         ImGui::Indent();
                         for (const auto* row : group->rows) {
-                            const std::string line = (row->state == 2 ? "[Glitched] " : "") + row->name;
-                            ImGui::TextUnformatted(line.c_str());
+                            const std::string line = (row->state == 2 ? "[Glitched] " : "") +
+                                SohExtreme::TrackerCheckLabel(row->id, row->name, showRoomDoorNumbers);
+                            ImGui::TextWrapped("%s", line.c_str());
                             if (ImGui::IsItemHovered()) {
                                 ImGui::BeginTooltip();
                                 ImGui::Text("AP location ID: %lld", static_cast<long long>(row->id));
                                 ImGui::Text("Map region: %s", region.name.c_str());
-                                ImGui::TextUnformatted(row->region.c_str());
+                                ImGui::TextUnformatted(SohExtreme::CleanTrackerLabel(row->region).c_str());
+                                if (row->id >= 11211290 && row->id <= 11211307) {
+                                    ImGui::TextWrapped("Maze directions are relative to looking into the maze "
+                                                       "from its lobby entrance.");
+                                }
                                 ImGui::EndTooltip();
                             }
                         }
@@ -2183,7 +2269,7 @@ static void DrawUniversalFinderMirror() {
                     ImGui::PopID();
                     ImGui::PopID();
                 }
-                ImGui::Unindent();
+                if (showRegionHeader) ImGui::Unindent();
             }
             ImGui::PopID();
         }

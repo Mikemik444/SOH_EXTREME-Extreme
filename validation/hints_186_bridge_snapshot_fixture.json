@@ -1,0 +1,43 @@
+{
+  "soh_extreme_tracker": "SOHExtremeFinder1",
+  "kind": "hint_snapshot",
+  "slot": 1,
+  "nonce": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "producer": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "request": 1,
+  "revision": 1,
+  "rows": [
+    {
+      "finding_player": 1,
+      "location_id": 101,
+      "receiving_player": 2,
+      "item_id": 501,
+      "item_flags": 3,
+      "item": "Other Game Progression",
+      "location": "SOH Door",
+      "recipient": "Other Alias",
+      "finder": "Link Alias",
+      "item_game": "Other Game",
+      "location_game": "SOH-EXTREME",
+      "found": false,
+      "status": 0,
+      "entrance": "Door entrance"
+    },
+    {
+      "finding_player": 2,
+      "location_id": 201,
+      "receiving_player": 4,
+      "item_id": 501,
+      "item_flags": 1,
+      "item": "SOH Hookshot",
+      "location": "Other Game Location",
+      "recipient": "Linked Alias",
+      "finder": "Other Alias",
+      "item_game": "SOH-EXTREME",
+      "location_game": "Other Game",
+      "found": true,
+      "status": 40,
+      "entrance": "Door entrance"
+    }
+  ]
+}

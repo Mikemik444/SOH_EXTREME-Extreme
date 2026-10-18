@@ -1,0 +1,68 @@
+{
+    "version":  "1.8.3",
+    "created_utc":  "2026-10-17T22:53:07.3048343Z",
+    "repository":  "E:\\test\\bb",
+    "status":  "applied",
+    "files":  [
+                  {
+                      "path":  "archipelago/archipelago.json",
+                      "existed_before":  true,
+                      "original_sha256":  "bd7d793a715efa409bef8b0984440a9dbee9549f7d48cbcbc43210c7cc6a268c",
+                      "patched_sha256":  "9dc55f7b4e1c21343889d9e7728d301552e06e85b97a4c66b1fcfded5b6a6acc",
+                      "backup":  "originals/archipelago/archipelago.json"
+                  },
+                  {
+                      "path":  "archipelago/soh_extreme/EntranceRandomizer.py",
+                      "existed_before":  true,
+                      "original_sha256":  "f69c936c6a12d237158b3aff28d8d36f98e2901d5d42ef8689a1e713a800396b",
+                      "patched_sha256":  "ab47455e9b84f434ba15402a67679bc80e1026d7127beb079d357e02cc9839ee",
+                      "backup":  "originals/archipelago/soh_extreme/EntranceRandomizer.py"
+                  },
+                  {
+                      "path":  "archipelago/soh_extreme/TrackerMirror.py",
+                      "existed_before":  true,
+                      "original_sha256":  "18012b83e0f1a08ad58c9d37aae7a05d5bf2a4930b4ae8ed53518818f156f95f",
+                      "patched_sha256":  "1e38e01fff2574c1bf4bb46042efc08fef56e55709e097b718caf3ff695e5314",
+                      "backup":  "originals/archipelago/soh_extreme/TrackerMirror.py"
+                  },
+                  {
+                      "path":  "archipelago/soh_extreme/archipelago.json",
+                      "existed_before":  true,
+                      "original_sha256":  "bd7d793a715efa409bef8b0984440a9dbee9549f7d48cbcbc43210c7cc6a268c",
+                      "patched_sha256":  "9dc55f7b4e1c21343889d9e7728d301552e06e85b97a4c66b1fcfded5b6a6acc",
+                      "backup":  "originals/archipelago/soh_extreme/archipelago.json"
+                  },
+                  {
+                      "path":  "archipelago/soh_extreme.apworld",
+                      "existed_before":  true,
+                      "original_sha256":  "911370d24decece9f8dbff977ac621c96021928611b2ac432663fea1dd678d16",
+                      "patched_sha256":  "12110ecd286e24bcc84d54f0a445cbd9eb8a5da4401457ab105f065f7dd0d8ac",
+                      "backup":  "originals/archipelago/soh_extreme.apworld"
+                  },
+                  {
+                      "path":  "soh/SohExtremeVersion.h",
+                      "existed_before":  true,
+                      "original_sha256":  "86d673f802085f9d4646318969a36e09023269b4fb1eadac1539b1c4ef3877e8",
+                      "patched_sha256":  "b5c4522e6ecee5c61403f2fb7e3f1f57688fe6c99985f3f589a0948181948fd3",
+                      "backup":  "originals/soh/SohExtremeVersion.h"
+                  },
+                  {
+                      "path":  "tools/tests/test_overworld_entrances.py",
+                      "existed_before":  true,
+                      "original_sha256":  "5feb7b5fa7719299d09640d3900eb2683f78d676a7aad75efbc596e3e4cb7a62",
+                      "patched_sha256":  "222e7b006b5f00f7c2b9864cca9c6de5e3d75f9f20eef3f62a7e6d19d8f60582",
+                      "backup":  "originals/tools/tests/test_overworld_entrances.py"
+                  },
+                  {
+                      "path":  "tools/tests/test_spawn_placement.py",
+                      "existed_before":  false,
+                      "original_sha256":  null,
+                      "patched_sha256":  "1a50dd794cb59d18001ea04c0f6f996f5e8f3788966e1ea556583e66f3b0b438",
+                      "backup":  null
+                  }
+              ],
+    "build_status":  "not_started",
+    "rollback_errors":  [
+
+                        ]
+}

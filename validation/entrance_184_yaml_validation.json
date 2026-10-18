@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "target_version": "1.8.4",
+  "method": "byte_for_byte_equality",
+  "sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5",
+  "source": "SOH-EXTREME(20261017-230302).yaml",
+  "settings_changed": false,
+  "source_bytes": 64380
+}

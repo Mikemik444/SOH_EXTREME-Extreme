@@ -1,0 +1,36 @@
+{
+  "12_row_hint_bytes": 18357,
+  "8_row_hint_bytes": 12231,
+  "case_count": 12,
+  "cases": [
+    "long_utf8_literal_preserved",
+    "textbox_markers_are_literal",
+    "single_hint_exceeds_old_font_limit_without_truncation",
+    "eight_rows_keep_complete_names",
+    "more_than_eight_rows_are_preserved",
+    "loaded_fields_cannot_inject_native_directives",
+    "invalid_and_oversize_snapshots_preserve_previous_data",
+    "legacy_labels_and_clear_behavior",
+    "native_item_description_preserves_complete_item_and_recipient",
+    "native_supplied_hint_keeps_all_targets",
+    "native_older_seed_fallback_preserves_complete_fields",
+    "merchant_hints_and_remote_presentations_keep_complete_names"
+  ],
+  "single_hint_bytes": 1528,
+  "status": "passed",
+  "scope": "Production AP hint-data header and native hint-description methods; game/session IO isolated.",
+  "source_sha256": {
+    "soh/Network/Archipelago/ArchipelagoHintData.h": "c22ad0c882d57013f70125072b790a7d43f0c7cb15d3cbe2c06d1ffb0a2b597d",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "0f5e1f40ed14685b9bbc0e9466878904dc9cc15788783bbcc4e0b7a77ba579a9",
+    "tools/tests/archipelago_hint_data_tests.cpp": "2af777d4e50da99abea7bcf17672d56220f3df36df73230dc5c353237be42686",
+    "tools/tests/test_archipelago_hints.py": "270d109bb91d000c2dc8680beb9ad5f6c5edcef54a6a7b725bfd1398474cd02d"
+  },
+  "source_unchanged_during_test": true,
+  "json_header_sha256": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63",
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_sanitizer_enabled": false,
+  "native_textbox_pagination_tested_here": false
+}

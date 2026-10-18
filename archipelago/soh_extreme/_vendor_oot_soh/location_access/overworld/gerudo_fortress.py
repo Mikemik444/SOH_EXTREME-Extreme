@@ -24,7 +24,7 @@ def set_region_rules(world: "SohWorld") -> None:
          # The stock graph folds the gate-operator tower into Outskirts.
          # Opening the gate still needs the tower ladder and its Gerudo NPC.
          lambda bundle: is_adult(bundle) & has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
-         & can_climb(bundle) & can_interact_npc(bundle, "Gerudo")),
+         & can_climb(bundle) & can_interact_path_blocker(bundle, "Gerudo")),
     ])
     # Locations
     add_locations(Regions.GERUDO_FORTRESS_OUTSKIRTS, world, [
@@ -79,7 +79,7 @@ def set_region_rules(world: "SohWorld") -> None:
     add_events(Regions.GF_OUTSIDE_GTG, world, [
         (EventLocations.GTG_GATE, LocalEvents.GTG_GATE_OPEN,
          lambda bundle: (is_adult(bundle) & has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)) & has_item(
-             Items.CHILD_WALLET, bundle) & can_interact_npc(bundle, "Gerudo")),
+             Items.CHILD_WALLET, bundle) & can_interact_path_blocker(bundle, "Gerudo")),
     ])
     # Connections
     connect_regions(Regions.GF_OUTSIDE_GTG, world, [
@@ -335,7 +335,7 @@ def set_region_rules(world: "SohWorld") -> None:
          # The reverse arrival can reach the guard from outside; it does not
          # need the fortress-side ladder, but still requires the conversation.
          lambda bundle: is_adult(bundle) & has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
-         & can_interact_npc(bundle, "Gerudo")),
+         & can_interact_path_blocker(bundle, "Gerudo")),
     ])
     # Connections
     connect_regions(Regions.GF_OUTSIDE_GATE, world, [

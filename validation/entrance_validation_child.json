@@ -1,0 +1,25 @@
+{
+  "age": "child",
+  "seed": 1801,
+  "elapsed_seconds": 68.09,
+  "mapping_endpoints": 659,
+  "accepted_swaps": 715,
+  "initial_checks": 79,
+  "initial_check_examples": [
+    "Link's Pocket",
+    "DMT Freestanding PoH",
+    "Graveyard Dampe's Grave Rupee 1",
+    "Graveyard Dampe's Grave Rupee 2",
+    "Graveyard Dampe's Grave Rupee 3",
+    "KF Bridge Rupee",
+    "KF Behind Mido's House Rupee",
+    "KF South Grass West Rupee",
+    "KF South Grass East Rupee",
+    "KF North Grass West Rupee",
+    "KF North Grass East Rupee",
+    "KF Saria's Roof East Heart"
+  ],
+  "child_spawn": "GY Near-Ledge Grave Entry -> Dampe's Grave",
+  "adult_spawn": "Kak Impa's House Back Entry -> Impa's House Back",
+  "fixed_spawns": false
+}

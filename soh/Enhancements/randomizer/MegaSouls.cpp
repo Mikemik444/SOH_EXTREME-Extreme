@@ -20,6 +20,7 @@
 #include "soh/Enhancements/randomizer/EnemyDropBridge.h"
 #include "soh/Enhancements/randomizer/EnemySpawnCatalog.h"
 #include "soh/Enhancements/randomizer/FishingSoulAccess.h"
+#include "soh/Enhancements/randomizer/SoulActorAccess.h"
 
 extern "C" bool Archipelago_IsCurrentSaveActive(void);
 
@@ -55,6 +56,10 @@ extern "C" bool MegaSoul_ArePondFishPresent(void) {
 extern "C" bool MegaSoul_CanTalkToFishingOwner(void) {
     return MegaSoul_IsFishingOwnerPresent() &&
            (!IS_RANDO || !RAND_GET_OPTION(RSK_SHUFFLE_SPEAK) || MegaHas(RAND_INF_CAN_SPEAK_HYLIAN));
+}
+
+extern "C" bool MegaSoul_CanUseRock(void) {
+    return !IS_RANDO || !RAND_GET_OPTION(RSK_SHUFFLE_ROCK_SOUL) || MegaHas(RAND_INF_ROCK_SOUL);
 }
 
 extern "C" bool MegaSoul_CanUseCrate(void) {
@@ -95,7 +100,8 @@ static bool IsMegaCrateActor(s16 id) {
 }
 
 static bool IsMegaRockActor(s16 id) {
-    return id == ACTOR_EN_ISHI || id == ACTOR_OBJ_BOMBIWA || id == ACTOR_OBJ_HAMISHI;
+    return id == ACTOR_EN_ISHI || id == ACTOR_OBJ_BOMBIWA || id == ACTOR_OBJ_HAMISHI ||
+           id == ACTOR_BG_JYA_BOMBCHUIWA;
 }
 
 static bool IsMegaGrassActor(s16 id) {
@@ -264,6 +270,52 @@ static bool IsMegaNpcSoulActor(const Actor* actor) {
         default:
             return false;
     }
+}
+
+extern "C" bool MegaSoul_IsPathBlockingNpcPlacement(int16_t actorId, int16_t params, int16_t scene) {
+    switch (actorId) {
+        case ACTOR_EN_MD:   // Mido guards the forest routes.
+        case ACTOR_EN_KZ:   // King Zora blocks the fountain passage.
+        case ACTOR_EN_HEISHI1: // Courtyard patrols/search balls.
+        case ACTOR_EN_HEISHI3: // Castle sentinels.
+        case ACTOR_EN_GE2:  // Fortress patrols and capture.
+            return true;
+        case ACTOR_EN_KO:
+            return (params & 0xFF) == 3; // Kokiri Forest exit boy only.
+        case ACTOR_EN_HEISHI2:
+            return (params & 0xFF) == 2 || (params & 0xFF) == 5; // Castle/DMT gates.
+        case ACTOR_EN_GE1:
+            return (params & 0xFF) == 0 || (params & 0xFF) == 1 ||
+                   (params & 0xFF) == 0x46; // Gate, wasteland, training ground.
+        case ACTOR_EN_TA:
+            return scene == SCENE_HYRULE_CASTLE && params != 1 && params != 2;
+        default:
+            return false;
+    }
+}
+
+extern "C" bool MegaSoul_IsPathBlockingNpc(const Actor* actor) {
+    return actor != nullptr && MegaSoul_IsPathBlockingNpcPlacement(
+        actor->id, actor->params, gPlayState != nullptr ? gPlayState->sceneNum : -1);
+}
+
+static void UpdateHiddenNpcFocus(Actor* actor) {
+    // Several NPCs normally update their focus in the head-limb draw callback.
+    // Keep a world-relative talk/target point while their model is not drawn.
+    // This does not change talk distance, language, or quest requirements.
+    float height = 60.0f;
+    if (actor->id == ACTOR_EN_MD || actor->id == ACTOR_EN_KO) height = 50.0f;
+    else if (actor->id == ACTOR_EN_KZ) height = 100.0f;
+    else if (actor->id == ACTOR_EN_HEISHI2) height = 70.0f;
+    Actor_SetFocus(actor, height);
+}
+
+extern "C" bool MegaSoul_ShouldHideActor(const Actor* actor) {
+    if (!IS_RANDO || actor == nullptr) return false;
+    if (IsMegaCrateActor(actor->id) && !MegaSoul_CanUseCrate()) return true;
+    if (IsMegaRockActor(actor->id) && !MegaSoul_CanUseRock()) return true;
+    return MegaSoul_IsPathBlockingNpc(actor) && RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) &&
+           !MegaHas(RAND_INF_NPC_SOUL);
 }
 
 static int GetEnemySoulMode() {
@@ -1091,7 +1143,7 @@ static void RegisterMegaSouls() {
             return;
         }
         if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !MegaHas(RAND_INF_NPC_SOUL) &&
-            IsMegaNpcSoulActor(talkActor)) {
+            IsMegaNpcSoulActor(talkActor) && !MegaSoul_IsPathBlockingNpc(talkActor)) {
             *should = false;
         }
     });
@@ -1130,14 +1182,17 @@ static void RegisterMegaSouls() {
     COND_HOOK(ShouldActorUpdate, shouldRegister, [](void* actorRef, bool* should) {
         Actor* actor = static_cast<Actor*>(actorRef);
 
-        // NPC Soul is existential. We still allow init so scene scripts can
-        // register safely, but while the Soul is missing the NPC is completely
-        // inert in addition to being invisible.
+        // Path guards retain AI, per-frame collision, attention and dialogue.
+        // Other missing-soul NPCs keep their existing inactive behavior.
         if (actor->id != ACTOR_FISHING &&
             RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !MegaHas(RAND_INF_NPC_SOUL) &&
             IsMegaNpcSoulActor(actor)) {
-            *should = false;
-            return;
+            if (MegaSoul_IsPathBlockingNpc(actor)) {
+                UpdateHiddenNpcFocus(actor);
+            } else {
+                *should = false;
+                return;
+            }
         }
 
         if (IsMegaEnemySoulGone(actor)) {
@@ -1194,7 +1249,7 @@ static void RegisterMegaSouls() {
 
         // Scrubs use existential Soul behavior: without Scrub Soul they do not
         // exist in the scene at all. Unlike crates and rocks/boulders there is
-        // no black-tainted locked model for scrubs.
+        // no hidden solid blocker for scrubs.
         if (RAND_GET_OPTION(RSK_SHUFFLE_BUSINESS_SCRUB_SOUL) &&
             !MegaHas(RAND_INF_BUSINESS_SCRUB_SOUL) && IsMegaScrubActor(actor->id)) {
             *result = false;
@@ -1241,7 +1296,7 @@ static void RegisterMegaSouls() {
         // Crates intentionally remain in the scene without Crate Soul, matching
         // Rock/Boulder Soul semantics. Obj_Kibako/Obj_Kibako2 already call
         // MegaSoul_CanUseCrate(), so they stay solid but cannot be lifted or
-        // broken until the soul is owned. ShuffleCrates.cpp dark-taints them.
+        // broken until the soul is owned. The render gate also hides their shadows.
         // Soul semantics are existential: without Grass/Bush Soul, both grass
         // and bush actors are absent from the scene.
         if (RAND_GET_OPTION(RSK_SHUFFLE_GRASS_SOUL) && !MegaHas(RAND_INF_GRASS_SOUL) &&
@@ -1403,7 +1458,7 @@ static void RegisterMegaSouls() {
     });
 
     // NPCs are scene-sensitive, so do not cancel their initialization. Hiding them after init
-    // keeps scripts and room bookkeeping alive while the NPC Soul talk/logic gates prevent use.
+    // keeps scripts and room bookkeeping alive. Path guards also retain their interactions.
     // Fishing is a combined NPC/scene controller and gates its model/dialog in z_fishing.c.
     // Other NPCs retain their existing re-entry restoration behavior.
     COND_HOOK(OnActorInit, shouldRegister, [](void* actorRef) {
@@ -1414,8 +1469,14 @@ static void RegisterMegaSouls() {
         if (actor->id != ACTOR_FISHING &&
             RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !MegaHas(RAND_INF_NPC_SOUL) &&
             IsMegaNpcSoulActor(actor)) {
-            actor->draw = nullptr;
-            actor->flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
+            if (MegaSoul_IsPathBlockingNpc(actor)) {
+                // Keep the original callback, including delayed model loading.
+                // Actor_Draw hides it without interfering with actor state.
+                UpdateHiddenNpcFocus(actor);
+            } else {
+                actor->draw = nullptr;
+                actor->flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
+            }
         }
 
         // Identity was captured in Actor_Spawn before actor-specific init could

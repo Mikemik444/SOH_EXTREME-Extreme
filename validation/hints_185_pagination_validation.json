@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "scope": "native custom-message formatting and bounded page layout",
+  "full_native_game_build": false,
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "cases": [
+    "unbroken wide name preserves every character",
+    "narrow glyphs respect native decoder and texture capacity",
+    "long prose preserves names and suffixes beyond the old font buffer",
+    "explicit and encoded line and page boundaries",
+    "colors icons text speed and quick text survive automatic pages",
+    "operand bytes are never interpreted as markup or page controls",
+    "native accented text survives repeated formatting",
+    "runtime file names and scores reserve their expanded size",
+    "two-choice prompt remains on the final page at line three",
+    "three-choice prompt remains on line two",
+    "actor event and existing terminators remain intact",
+    "colored placeholders and trailing punctuation",
+    "deterministic mixed markup and repeat-format regression corpus"
+  ],
+  "source_sha256": {
+    "soh/Enhancements/custom-message/CustomMessageManager.cpp": "33aee9a99b08775c2f4831739ac808bbecf94dbe5cbb5f900bba91059a3ca4f6",
+    "soh/Enhancements/custom-message/CustomMessageManager.h": "0240def38e36aa3fda2b5262a7e73398ffcafbbe0c0f2803096d0d48a70a1ff3",
+    "soh/Enhancements/custom-message/CustomMessageEncoding.h": "233c17b38525554de757cb977387a03ebd9c7629ac0026033ad4fe09bb37e783",
+    "soh/Enhancements/custom-message/CustomMessageFormatter.h": "0b52df4744f91a722fa9fbcec6ffdc9f8f05074ca61375f6593722ca11594638",
+    "tools/tests/custom_message_pagination_tests.cpp": "f1b5bd8ae7a3d6486a8ade740c2b4bfba2880b60fa8e76c91b73d62afb204758",
+    "tools/tests/test_custom_message_pagination.py": "a3e336093158848f4562c0a7d07d1ddd1b3d2c1c57d5504fe0b7c4950433c90e"
+  },
+  "stdout": "PASS unbroken wide name preserves every character\nPASS narrow glyphs respect native decoder and texture capacity\nPASS long prose preserves names and suffixes beyond the old font buffer\nPASS explicit and encoded line and page boundaries\nPASS colors icons text speed and quick text survive automatic pages\nPASS operand bytes are never interpreted as markup or page controls\nPASS native accented text survives repeated formatting\nPASS runtime file names and scores reserve their expanded size\nPASS two-choice prompt remains on the final page at line three\nPASS three-choice prompt remains on line two\nPASS actor event and existing terminators remain intact\nPASS colored placeholders and trailing punctuation\nPASS deterministic mixed markup and repeat-format regression corpus\nRESULT cases=13 largest_pages=56\n"
+}

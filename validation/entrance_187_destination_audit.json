@@ -1,0 +1,1008 @@
+{
+  "status": "passed_source_destination_audit",
+  "version": "1.8.7",
+  "coverage": {
+    "catalog_endpoints": 719,
+    "native_direct": 232,
+    "grotto_loads": 33,
+    "grotto_returns": 33,
+    "room_doors": 421,
+    "normal_layer_resolutions": 2876,
+    "approved_normal_scenes": 90,
+    "declared_catalog_scenes": 83,
+    "all_current_endpoints_source_audited": true,
+    "all_current_endpoints_in_game_playtested": false,
+    "declared_cutscene_debug_or_unknown_destination_count": 0,
+    "direct_native_group_lengths": {
+      "4": 204,
+      "5": 7,
+      "6": 10,
+      "7": 5,
+      "9": 2,
+      "10": 1,
+      "11": 1,
+      "14": 1,
+      "16": 1
+    },
+    "compiled_native_endpoint_rows_verified": 719
+  },
+  "policy_file": "source/archipelago/soh_extreme/EntranceDestinationPolicy.json",
+  "policy_encoding": {
+    "revision": 1,
+    "canonical_catalog_sha256": "244c43515fcd5a5c8486e050cf45cd724529728413862331445f62b13a1f7742",
+    "row_hash": "SHA256(json.dumps(original_catalog_row,sort_keys=True,separators=(comma,colon),ensure_ascii=True).encode(utf-8))",
+    "catalog_hash": "Same encoding over the complete catalog sorted by integer id.",
+    "age_bits": {
+      "child": 1,
+      "adult": 2
+    },
+    "native_fields": [
+      "id",
+      "nativeIndex",
+      "kind",
+      "sourceAgeMask",
+      "arrivalAgeMask",
+      "normalLayers[4]"
+    ],
+    "normal_layers": [
+      "child_day",
+      "child_night",
+      "adult_day",
+      "adult_night"
+    ]
+  },
+  "verified_invariants": [
+    "Every direct catalog ID is the first index of a native entrance layer group. No direct endpoint selects a raw cutscene-layer offset.",
+    "All 2876 resolver-layer pairs stay in known reviewed normal scenes. All 232 direct groups have four ordinary age/time rows.",
+    "All 421 room-door endpoints exactly match DungeonDoorCatalog check ID, transition index, source/target regions, source/target scene, door, side, room numbers, actor, params, position and rotation. Every normal anchor layer remains in the declared dungeon scene.",
+    "The virtual grotto ID sets exactly cover native table offsets0..32 for both loads0x700..0x720 and returns0x800..0x820. Load content/source scene and return room/angle/position are recorded from native resolver tables.",
+    "The reviewed manifest rejects additions, unknown IDs, altered catalog metadata, changed native scene/spawn facts, changed grotto coordinates, and removed runtime table repairs. It does not infer validity merely from an integer being inside the native table.",
+    "Ordinary native boss rooms, houses, warp pads, and playable age/time scene variants remain approved when represented by current catalog endpoints. Transition animation/title-card flags do not classify playability.",
+    "All 719 actual C++ EntranceRandomizerData.inc rows match the AP catalog ID, reverse, scenes, check ID, door/side/rooms, anchor, coordinates, rotation and name. Native-only stale endpoint metadata is rejected by the generator."
+  ],
+  "runtime_aliases": [
+    {
+      "id": 642,
+      "native_index": 642,
+      "template": 1524,
+      "normal_layers": [
+        {
+          "scene": 67,
+          "spawn": 7
+        },
+        {
+          "scene": 67,
+          "spawn": 7
+        },
+        {
+          "scene": 67,
+          "spawn": 7
+        },
+        {
+          "scene": 67,
+          "spawn": 7
+        }
+      ]
+    },
+    {
+      "id": 1000,
+      "native_index": 1000,
+      "template": 832,
+      "normal_layers": [
+        {
+          "scene": 95,
+          "spawn": 2
+        },
+        {
+          "scene": 95,
+          "spawn": 2
+        },
+        {
+          "scene": 100,
+          "spawn": 2
+        },
+        {
+          "scene": 100,
+          "spawn": 2
+        }
+      ]
+    }
+  ],
+  "child_blue_warp_repairs": [
+    {
+      "id": 1380,
+      "template": 1270,
+      "original_layers": [
+        {
+          "scene": 97,
+          "spawn": 5
+        },
+        {
+          "scene": 97,
+          "spawn": 5
+        },
+        {
+          "scene": 97,
+          "spawn": 5
+        },
+        {
+          "scene": 97,
+          "spawn": 5
+        }
+      ],
+      "ap_normal_layers": [
+        {
+          "scene": 97,
+          "spawn": 4
+        },
+        {
+          "scene": 97,
+          "spawn": 4
+        },
+        {
+          "scene": 97,
+          "spawn": 5
+        },
+        {
+          "scene": 97,
+          "spawn": 5
+        }
+      ]
+    },
+    {
+      "id": 1408,
+      "template": 1384,
+      "original_layers": [
+        {
+          "scene": 83,
+          "spawn": 8
+        },
+        {
+          "scene": 83,
+          "spawn": 8
+        },
+        {
+          "scene": 83,
+          "spawn": 8
+        },
+        {
+          "scene": 83,
+          "spawn": 8
+        }
+      ],
+      "ap_normal_layers": [
+        {
+          "scene": 83,
+          "spawn": 7
+        },
+        {
+          "scene": 83,
+          "spawn": 7
+        },
+        {
+          "scene": 83,
+          "spawn": 8
+        },
+        {
+          "scene": 83,
+          "spawn": 8
+        }
+      ]
+    },
+    {
+      "id": 1544,
+      "template": 1536,
+      "original_layers": [
+        {
+          "scene": 86,
+          "spawn": 3
+        },
+        {
+          "scene": 86,
+          "spawn": 3
+        },
+        {
+          "scene": 86,
+          "spawn": 3
+        },
+        {
+          "scene": 86,
+          "spawn": 3
+        }
+      ],
+      "ap_normal_layers": [
+        {
+          "scene": 86,
+          "spawn": 2
+        },
+        {
+          "scene": 86,
+          "spawn": 2
+        },
+        {
+          "scene": 86,
+          "spawn": 3
+        },
+        {
+          "scene": 86,
+          "spawn": 3
+        }
+      ]
+    },
+    {
+      "id": 1548,
+      "template": 1540,
+      "original_layers": [
+        {
+          "scene": 87,
+          "spawn": 9
+        },
+        {
+          "scene": 87,
+          "spawn": 9
+        },
+        {
+          "scene": 87,
+          "spawn": 9
+        },
+        {
+          "scene": 87,
+          "spawn": 9
+        }
+      ],
+      "ap_normal_layers": [
+        {
+          "scene": 87,
+          "spawn": 8
+        },
+        {
+          "scene": 87,
+          "spawn": 8
+        },
+        {
+          "scene": 87,
+          "spawn": 9
+        },
+        {
+          "scene": 87,
+          "spawn": 9
+        }
+      ]
+    },
+    {
+      "id": 1552,
+      "template": 497,
+      "original_layers": [
+        {
+          "scene": 92,
+          "spawn": 8
+        },
+        {
+          "scene": 92,
+          "spawn": 8
+        },
+        {
+          "scene": 92,
+          "spawn": 8
+        },
+        {
+          "scene": 92,
+          "spawn": 8
+        }
+      ],
+      "ap_normal_layers": [
+        {
+          "scene": 92,
+          "spawn": 5
+        },
+        {
+          "scene": 92,
+          "spawn": 5
+        },
+        {
+          "scene": 92,
+          "spawn": 8
+        },
+        {
+          "scene": 92,
+          "spawn": 8
+        }
+      ]
+    }
+  ],
+  "age_restrictions": {
+    "source_masks": {
+      "187": 1,
+      "638": 1,
+      "642": 2,
+      "1364": 1
+    },
+    "arrival_masks": {
+      "832": 1,
+      "1000": 2,
+      "2060": 1
+    },
+    "evidence": "Native entrance.cpp ValidateWorld explicitly forbids child OGC fairy exit, adult HC fairy exit, and adult HC storms grotto return. Dedicated child/adult spawn and child owl source variants supply only hard source-age restrictions. Shared interior returns remain source mask3. Other dungeon/boss/door destinations are not broadly age-banned.",
+    "generation_requirement": "Use actual per-map age reachability to rule out forbidden arrivals, including disabled/identity pools; masks alone cannot model shared interior reachability."
+  },
+  "prohibited_native_entries": {
+    "row_count": 62,
+    "present_in_current_catalog": [],
+    "groups": [
+      {
+        "base": 20,
+        "base_name": "ENTR_UNUSED_6E",
+        "entries": [
+          {
+            "index": 20,
+            "name": "ENTR_UNUSED_6E",
+            "scene": 110,
+            "spawn": 0,
+            "reason": "undefined SCENE_ID_MAX / SCENE_UNUSED_6E"
+          },
+          {
+            "index": 21,
+            "name": "ENTR_UNUSED_6E_1",
+            "scene": 110,
+            "spawn": 0,
+            "reason": "undefined SCENE_ID_MAX / SCENE_UNUSED_6E"
+          },
+          {
+            "index": 22,
+            "name": "ENTR_UNUSED_6E_2",
+            "scene": 110,
+            "spawn": 0,
+            "reason": "undefined SCENE_ID_MAX / SCENE_UNUSED_6E"
+          },
+          {
+            "index": 23,
+            "name": "ENTR_UNUSED_6E_3",
+            "scene": 110,
+            "spawn": 0,
+            "reason": "undefined SCENE_ID_MAX / SCENE_UNUSED_6E"
+          }
+        ]
+      },
+      {
+        "base": 24,
+        "base_name": "ENTR_SASATEST_0",
+        "entries": [
+          {
+            "index": 24,
+            "name": "ENTR_SASATEST_0",
+            "scene": 108,
+            "spawn": 0,
+            "reason": "debug sasatest"
+          },
+          {
+            "index": 25,
+            "name": "ENTR_SASATEST_0_1",
+            "scene": 108,
+            "spawn": 0,
+            "reason": "debug sasatest"
+          },
+          {
+            "index": 26,
+            "name": "ENTR_SASATEST_0_2",
+            "scene": 108,
+            "spawn": 0,
+            "reason": "debug sasatest"
+          },
+          {
+            "index": 27,
+            "name": "ENTR_SASATEST_0_3",
+            "scene": 108,
+            "spawn": 0,
+            "reason": "debug sasatest"
+          }
+        ]
+      },
+      {
+        "base": 28,
+        "base_name": "ENTR_SYOTES_0",
+        "entries": [
+          {
+            "index": 28,
+            "name": "ENTR_SYOTES_0",
+            "scene": 104,
+            "spawn": 0,
+            "reason": "debug syotes"
+          },
+          {
+            "index": 29,
+            "name": "ENTR_SYOTES_0_1",
+            "scene": 104,
+            "spawn": 0,
+            "reason": "debug syotes"
+          },
+          {
+            "index": 30,
+            "name": "ENTR_SYOTES_0_2",
+            "scene": 104,
+            "spawn": 0,
+            "reason": "debug syotes"
+          },
+          {
+            "index": 31,
+            "name": "ENTR_SYOTES_0_3",
+            "scene": 104,
+            "spawn": 0,
+            "reason": "debug syotes"
+          }
+        ]
+      },
+      {
+        "base": 32,
+        "base_name": "ENTR_SYOTES2_0",
+        "entries": [
+          {
+            "index": 32,
+            "name": "ENTR_SYOTES2_0",
+            "scene": 105,
+            "spawn": 0,
+            "reason": "debug syotes2"
+          },
+          {
+            "index": 33,
+            "name": "ENTR_SYOTES2_0_1",
+            "scene": 105,
+            "spawn": 0,
+            "reason": "debug syotes2"
+          },
+          {
+            "index": 34,
+            "name": "ENTR_SYOTES2_0_2",
+            "scene": 105,
+            "spawn": 0,
+            "reason": "debug syotes2"
+          },
+          {
+            "index": 35,
+            "name": "ENTR_SYOTES2_0_3",
+            "scene": 105,
+            "spawn": 0,
+            "reason": "debug syotes2"
+          }
+        ]
+      },
+      {
+        "base": 36,
+        "base_name": "ENTR_TESTROOM_0",
+        "entries": [
+          {
+            "index": 36,
+            "name": "ENTR_TESTROOM_0",
+            "scene": 109,
+            "spawn": 0,
+            "reason": "debug testroom"
+          },
+          {
+            "index": 37,
+            "name": "ENTR_TESTROOM_0_1",
+            "scene": 109,
+            "spawn": 0,
+            "reason": "debug testroom"
+          },
+          {
+            "index": 38,
+            "name": "ENTR_TESTROOM_0_2",
+            "scene": 109,
+            "spawn": 0,
+            "reason": "debug testroom"
+          },
+          {
+            "index": 39,
+            "name": "ENTR_TESTROOM_0_3",
+            "scene": 109,
+            "spawn": 0,
+            "reason": "debug testroom"
+          }
+        ]
+      },
+      {
+        "base": 71,
+        "base_name": "ENTR_SUTARU_0",
+        "entries": [
+          {
+            "index": 71,
+            "name": "ENTR_SUTARU_0",
+            "scene": 106,
+            "spawn": 0,
+            "reason": "debug sutaru"
+          },
+          {
+            "index": 72,
+            "name": "ENTR_SUTARU_0_1",
+            "scene": 106,
+            "spawn": 0,
+            "reason": "debug sutaru"
+          },
+          {
+            "index": 73,
+            "name": "ENTR_SUTARU_0_2",
+            "scene": 106,
+            "spawn": 0,
+            "reason": "debug sutaru"
+          },
+          {
+            "index": 74,
+            "name": "ENTR_SUTARU_0_3",
+            "scene": 106,
+            "spawn": 0,
+            "reason": "debug sutaru"
+          }
+        ]
+      },
+      {
+        "base": 107,
+        "base_name": "ENTR_CHAMBER_OF_THE_SAGES_0",
+        "entries": [
+          {
+            "index": 107,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_0",
+            "scene": 68,
+            "spawn": 0,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 108,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_0_1",
+            "scene": 68,
+            "spawn": 0,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 109,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_0_2",
+            "scene": 68,
+            "spawn": 0,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 110,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_0_3",
+            "scene": 68,
+            "spawn": 0,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 111,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_0_4",
+            "scene": 68,
+            "spawn": 0,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 112,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_0_5",
+            "scene": 68,
+            "spawn": 0,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 113,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_0_6",
+            "scene": 68,
+            "spawn": 0,
+            "reason": "cutscene-only Chamber of the Sages"
+          }
+        ]
+      },
+      {
+        "base": 118,
+        "base_name": "ENTR_HAIRAL_NIWA2_0",
+        "entries": [
+          {
+            "index": 118,
+            "name": "ENTR_HAIRAL_NIWA2_0",
+            "scene": 107,
+            "spawn": 0,
+            "reason": "debug courtyard"
+          },
+          {
+            "index": 119,
+            "name": "ENTR_HAIRAL_NIWA2_0_1",
+            "scene": 107,
+            "spawn": 0,
+            "reason": "debug courtyard"
+          },
+          {
+            "index": 120,
+            "name": "ENTR_HAIRAL_NIWA2_0_2",
+            "scene": 107,
+            "spawn": 0,
+            "reason": "debug courtyard"
+          },
+          {
+            "index": 121,
+            "name": "ENTR_HAIRAL_NIWA2_0_3",
+            "scene": 107,
+            "spawn": 0,
+            "reason": "debug courtyard"
+          }
+        ]
+      },
+      {
+        "base": 148,
+        "base_name": "ENTR_TEST01_0",
+        "entries": [
+          {
+            "index": 148,
+            "name": "ENTR_TEST01_0",
+            "scene": 101,
+            "spawn": 0,
+            "reason": "debug test01"
+          },
+          {
+            "index": 149,
+            "name": "ENTR_TEST01_0_1",
+            "scene": 101,
+            "spawn": 0,
+            "reason": "debug test01"
+          },
+          {
+            "index": 150,
+            "name": "ENTR_TEST01_0_2",
+            "scene": 101,
+            "spawn": 0,
+            "reason": "debug test01"
+          },
+          {
+            "index": 151,
+            "name": "ENTR_TEST01_0_3",
+            "scene": 101,
+            "spawn": 0,
+            "reason": "debug test01"
+          }
+        ]
+      },
+      {
+        "base": 160,
+        "base_name": "ENTR_CUTSCENE_MAP_0",
+        "entries": [
+          {
+            "index": 160,
+            "name": "ENTR_CUTSCENE_MAP_0",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 161,
+            "name": "ENTR_CUTSCENE_MAP_0_1",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 162,
+            "name": "ENTR_CUTSCENE_MAP_0_2",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 163,
+            "name": "ENTR_CUTSCENE_MAP_0_3",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 164,
+            "name": "ENTR_CUTSCENE_MAP_0_4",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 165,
+            "name": "ENTR_CUTSCENE_MAP_0_5",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 166,
+            "name": "ENTR_CUTSCENE_MAP_0_6",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 167,
+            "name": "ENTR_CUTSCENE_MAP_0_7",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 168,
+            "name": "ENTR_CUTSCENE_MAP_0_8",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 169,
+            "name": "ENTR_CUTSCENE_MAP_0_9",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 170,
+            "name": "ENTR_CUTSCENE_MAP_0_10",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 171,
+            "name": "ENTR_CUTSCENE_MAP_0_11",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          },
+          {
+            "index": 172,
+            "name": "ENTR_CUTSCENE_MAP_0_12",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          }
+        ]
+      },
+      {
+        "base": 182,
+        "base_name": "ENTR_DEPTH_TEST_0",
+        "entries": [
+          {
+            "index": 182,
+            "name": "ENTR_DEPTH_TEST_0",
+            "scene": 103,
+            "spawn": 0,
+            "reason": "debug depth test"
+          }
+        ]
+      },
+      {
+        "base": 718,
+        "base_name": "ENTR_CHAMBER_OF_THE_SAGES_1",
+        "entries": [
+          {
+            "index": 718,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_1",
+            "scene": 68,
+            "spawn": 1,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 719,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_1_1",
+            "scene": 68,
+            "spawn": 1,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 720,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_1_2",
+            "scene": 68,
+            "spawn": 1,
+            "reason": "cutscene-only Chamber of the Sages"
+          },
+          {
+            "index": 721,
+            "name": "ENTR_CHAMBER_OF_THE_SAGES_1_3",
+            "scene": 68,
+            "spawn": 1,
+            "reason": "cutscene-only Chamber of the Sages"
+          }
+        ]
+      },
+      {
+        "base": 746,
+        "base_name": "ENTR_TEST_SHOOTING_GALLERY_0",
+        "entries": [
+          {
+            "index": 751,
+            "name": "ENTR_TEST_CUTSCENE_MAP_0_5",
+            "scene": 71,
+            "spawn": 0,
+            "reason": "cutscene-only cinematic map"
+          }
+        ]
+      },
+      {
+        "base": 1312,
+        "base_name": "ENTR_BESITU_0",
+        "entries": [
+          {
+            "index": 1312,
+            "name": "ENTR_BESITU_0",
+            "scene": 102,
+            "spawn": 0,
+            "reason": "debug besitu"
+          },
+          {
+            "index": 1313,
+            "name": "ENTR_BESITU_0_1",
+            "scene": 102,
+            "spawn": 0,
+            "reason": "debug besitu"
+          },
+          {
+            "index": 1314,
+            "name": "ENTR_BESITU_0_2",
+            "scene": 102,
+            "spawn": 0,
+            "reason": "debug besitu"
+          },
+          {
+            "index": 1315,
+            "name": "ENTR_BESITU_0_3",
+            "scene": 102,
+            "spawn": 0,
+            "reason": "debug besitu"
+          }
+        ]
+      }
+    ],
+    "additional_debug_base": {
+      "id": 746,
+      "name": "ENTR_TEST_SHOOTING_GALLERY_0",
+      "scene": 66,
+      "evidence": "z_select.c Debug submenu identifies Shooting Gallery Duplicate. Native index0x2EF in the same group is SCENE_CUTSCENE_MAP."
+    }
+  },
+  "unsupported_is_not_synonymous_with_invalid": [
+    {
+      "scene": 79,
+      "name": "SCENE_GANON_BOSS",
+      "resource": "ganon_demo_scene",
+      "reason": "Playable final boss despite demo in resource filename; not a random destination in this catalog."
+    },
+    {
+      "scenes": [
+        14,
+        15,
+        26
+      ],
+      "reason": "Playable final collapse sequence scenes; excluded from current random destination manifest without removing vanilla sequence behavior."
+    },
+    {
+      "scenes": [
+        25,
+        53,
+        69,
+        70,
+        74
+      ],
+      "reason": "Other ordinary/story-specific scenes absent this catalog; do not label them globally cutscene-only. New randomized endpoints require their own explicit review."
+    }
+  ],
+  "stale_setup_issue": {
+    "status": "confirmed pre-fix source issue; native integration separately repairs it",
+    "selection_rule": "If current cutsceneIndex>=0xFFF0, Play_Init chooses sceneLayer=4+(cutsceneIndex&0xF); nextCutsceneIndex0xFFEF preserves the current index. FFFD is specially normalized to0 first.",
+    "examples": [
+      {
+        "endpoint": 12,
+        "cutscene": 65524,
+        "layer": 8,
+        "effective_index": 20,
+        "scene": 110,
+        "result": "Undefined SCENE_UNUSED_6E"
+      },
+      {
+        "endpoint": 12,
+        "cutscene": 65528,
+        "layer": 12,
+        "effective_index": 24,
+        "scene": 108,
+        "result": "Debug SASATEST"
+      },
+      {
+        "endpoint": 1552,
+        "cutscene": 65520,
+        "layer": 4,
+        "effective_index": 1556,
+        "scene": null,
+        "result": "One past the1556-row native table"
+      }
+    ],
+    "full_pre_fix_enumeration": "tests/entrance_186_destination_stale_setup_risks.json",
+    "enumeration_note": "Hypothetical inherited-state combinations, not1462 observed in-game failures. Enumerates all719 native resolver bases and15 non-normal current cutscene values (FFF0..FFFF exceptFFFD).",
+    "required_runtime_contract": "Mark actual AP-resolved arrivals, validate actual age and reviewed table row, and constrain those arrivals to ordinary scene setups without applying that normalization indiscriminately to vanilla story cinematics."
+  },
+  "code_evidence_anchors": [
+    {
+      "file": "src/code/z_scene_table.c",
+      "symbols": [
+        "gEntranceTable",
+        "DEFINE_ENTRANCE"
+      ],
+      "fact": "Native table is assembled directly from tables/entrance_table.h."
+    },
+    {
+      "file": "src/code/z_play.c",
+      "symbols": [
+        "Play_Init",
+        "Play_SpawnScene"
+      ],
+      "fact": "Normal scene layers0..3 are chosen by age/time, with Hyrule Field and Kokiri Forest story-state swaps confined to those same normal pairs."
+    },
+    {
+      "file": "src/code/z_scene.c",
+      "symbols": [
+        "Scene_CommandSpawnList",
+        "Scene_CommandEntranceList",
+        "Scene_CommandAlternateHeaderList"
+      ],
+      "fact": "Native scene spawn arrays and alternate headers ultimately resolve physical spawn actor and room; those extracted arrays are absent from supplied snapshot."
+    },
+    {
+      "file": "src/code/z_demo.c",
+      "symbols": [
+        "Cutscene_HandleConditionalTriggers",
+        "Cutscene_HandleEntranceTriggers",
+        "Cutscene_Command_Terminator"
+      ],
+      "fact": "Story cutscenes explicitly select cinematic maps or scene cutscene layers; these flows are distinct from ordinary shuffled entrance destinations."
+    },
+    {
+      "file": "src/overlays/gamestates/ovl_select/z_select.c",
+      "symbols": [
+        "Debug (Use with caution)",
+        "Shooting Gallery Duplicate"
+      ],
+      "fact": "Test/debug entries are explicitly identified by native debug-menu source."
+    },
+    {
+      "file": "soh/Enhancements/randomizer/randomizer_entrance.c",
+      "symbols": [
+        "Entrance_SeparateAdultSpawnAndPrelude",
+        "Entrance_SeparateOGCFairyFountainExit",
+        "Entrance_ReplaceChildTempleWarps"
+      ],
+      "fact": "Intentional aliases and AP-active child blue-warp repairs supply the reviewed scene/spawn contract."
+    },
+    {
+      "file": "soh/Enhancements/randomizer/randomizer_grotto.c",
+      "symbols": [
+        "grottoLoadTable",
+        "grottoReturnTable",
+        "Grotto_OverrideSpecialEntrance"
+      ],
+      "fact": "Virtual grotto endpoints resolve through exact native load and respawn-return metadata."
+    },
+    {
+      "file": "soh/Enhancements/randomizer/entrance.cpp",
+      "symbols": [
+        "ValidateWorld",
+        "childForbidden",
+        "adultForbidden"
+      ],
+      "fact": "Three exact destination-age restrictions are grounded in the native entrance solver."
+    }
+  ],
+  "limits": [
+    "This is complete source-level resolver and catalog coverage, not a ROM/OTR spawn-array or collision-geometry audit or719-endpoint gameplay playtest.",
+    "The supplied snapshot lacks include/tables and extracted scene arrays. Native headers came from the previously retrieved official HarbourMasters develop branch fixture; exact URLs and content hashes are pinned in policy provenance. A full local checkout can be validated offline using --native-include-root.",
+    "Runtime setup/age checks and preservation of coupled returns are implemented and tested by the native/AP integration tasks, separately from this generator audit."
+  ],
+  "validation_report": "tests/entrance_187_destination_policy_validation.json",
+  "source_hashes": {
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "d4978e4bdcd765821fb4d85421681f3b6977eca5c19f3b0d5de105edd25e0a0f",
+    "tools/generate_entrance_destination_policy.py": "9b94e1a5e274891937c7ba7405ebabcc89761bcbce244e16a3504c8784aa319c",
+    "tools/tests/test_entrance_destination_policy.py": "a9d4f43513b5b4cb485a87c019675efd9b291057a1e2ce7618a74bb3b801c5d3",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a"
+  },
+  "native_header_hashes": {
+    "entrance_table.h": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa",
+    "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c",
+    "z64scene.h": "c3a66f466d91220d1d2c0b27182a651f1db97e073a8df808b7374242376c7757"
+  }
+}

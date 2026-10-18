@@ -1,0 +1,117 @@
+[
+  {
+    "source": "RR_BOTW_ENTRYWAY",
+    "target": "KAK_WELL",
+    "condition": "true"
+  },
+  {
+    "source": "RR_DEKU_TREE_ENTRYWAY",
+    "target": "KF_OUTSIDE_DEKU_TREE",
+    "condition": "true"
+  },
+  {
+    "source": "RR_DEKU_TREE_BOSS_ROOM",
+    "target": "KF_OUTSIDE_DEKU_TREE",
+    "condition": "logic->Get(LOGIC_DEKU_TREE_CLEAR)"
+  },
+  {
+    "source": "RR_DODONGOS_CAVERN_ENTRYWAY",
+    "target": "DEATH_MOUNTAIN_TRAIL",
+    "condition": "true"
+  },
+  {
+    "source": "RR_DODONGOS_CAVERN_BOSS_ROOM",
+    "target": "DEATH_MOUNTAIN_TRAIL",
+    "condition": "logic->Get(LOGIC_DODONGOS_CAVERN_CLEAR)"
+  },
+  {
+    "source": "RR_FIRE_TEMPLE_ENTRYWAY",
+    "target": "DMC_CENTRAL_LOCAL",
+    "condition": "true"
+  },
+  {
+    "source": "RR_FIRE_TEMPLE_BOSS_ROOM",
+    "target": "DMC_CENTRAL_LOCAL",
+    "condition": "logic->Get(LOGIC_FIRE_TEMPLE_CLEAR)"
+  },
+  {
+    "source": "RR_FOREST_TEMPLE_ENTRYWAY",
+    "target": "SACRED_FOREST_MEADOW",
+    "condition": "true"
+  },
+  {
+    "source": "RR_FOREST_TEMPLE_BOSS_ROOM",
+    "target": "SACRED_FOREST_MEADOW",
+    "condition": "logic->Get(LOGIC_FOREST_TEMPLE_CLEAR)"
+  },
+  {
+    "source": "RR_GANONS_CASTLE_ENTRYWAY",
+    "target": "CASTLE_GROUNDS_FROM_GANONS_CASTLE",
+    "condition": "true"
+  },
+  {
+    "source": "RR_GERUDO_TRAINING_GROUND_ENTRYWAY",
+    "target": "GF_EXITING_GTG",
+    "condition": "true"
+  },
+  {
+    "source": "RR_ICE_CAVERN_ENTRYWAY",
+    "target": "ZF_LEDGE",
+    "condition": "true"
+  },
+  {
+    "source": "RR_JABU_JABUS_BELLY_ENTRYWAY",
+    "target": "ZORAS_FOUNTAIN",
+    "condition": "true"
+  },
+  {
+    "source": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+    "target": "ZORAS_FOUNTAIN",
+    "condition": "logic->Get(LOGIC_JABU_JABUS_BELLY_CLEAR)"
+  },
+  {
+    "source": "RR_SHADOW_TEMPLE_ENTRYWAY",
+    "target": "GRAVEYARD_WARP_PAD_REGION",
+    "condition": "true"
+  },
+  {
+    "source": "RR_SHADOW_TEMPLE_BOSS_ROOM",
+    "target": "GRAVEYARD_WARP_PAD_REGION",
+    "condition": "logic->Get(LOGIC_SHADOW_TEMPLE_CLEAR)"
+  },
+  {
+    "source": "RR_SPIRIT_TEMPLE_ENTRYWAY",
+    "target": "DESERT_COLOSSUS_OUTSIDE_TEMPLE",
+    "condition": "true"
+  },
+  {
+    "source": "RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD",
+    "target": "DESERT_COLOSSUS",
+    "condition": "ctx->GetOption(RSK_SHUFFLE_DUNGEON_ENTRANCES).Is(RO_DUNGEON_ENTRANCE_SHUFFLE_OFF) && logic->HasItem(RG_POWER_BRACELET) &&\n                                                     logic->CanUse(RG_CRAWL) && logic->SmallKeys(SCENE_SPIRIT_TEMPLE, 4) && logic->CanKillEnemy(RE_IRON_KNUCKLE)"
+  },
+  {
+    "source": "RR_SPIRIT_TEMPLE_OUTER_RIGHT_HAND",
+    "target": "DESERT_COLOSSUS",
+    "condition": "SpiritCertainAccess(RR_SPIRIT_TEMPLE_OUTER_RIGHT_HAND)"
+  },
+  {
+    "source": "RR_SPIRIT_TEMPLE_OUTER_LEFT_HAND",
+    "target": "DESERT_COLOSSUS",
+    "condition": "true"
+  },
+  {
+    "source": "RR_SPIRIT_TEMPLE_BOSS_ROOM",
+    "target": "DESERT_COLOSSUS",
+    "condition": "logic->Get(LOGIC_SPIRIT_TEMPLE_CLEAR)"
+  },
+  {
+    "source": "RR_WATER_TEMPLE_ENTRYWAY",
+    "target": "LH_FROM_WATER_TEMPLE",
+    "condition": "true"
+  },
+  {
+    "source": "RR_WATER_TEMPLE_BOSS_ROOM",
+    "target": "LAKE_HYLIA",
+    "condition": "logic->Get(LOGIC_WATER_TEMPLE_CLEAR)"
+  }
+]

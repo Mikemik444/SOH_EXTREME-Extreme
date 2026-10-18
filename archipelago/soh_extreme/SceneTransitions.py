@@ -10,10 +10,12 @@ from Options import OptionError
 from ._vendor_oot_soh import LogicHelpers as H
 from ._vendor_oot_soh.Enums import Regions, Items
 from ._vendor_oot_soh.Locations import SohLocation
+from .CheckDescriptions import check_name
 
 CATALOG_VERSION = 2
 CATALOG = tuple(e for filename in ('SceneTransitionCatalog.json','DungeonDoorCatalog.json')
                 for e in json.loads(files(__package__).joinpath(filename).read_text(encoding='utf-8')))
+CATALOG = tuple(dict(entry, name=check_name(entry['id'], entry['name'])) for entry in CATALOG)
 NAME_TO_ID = {e['name']: e['id'] for e in CATALOG}
 
 def active_entries(world):

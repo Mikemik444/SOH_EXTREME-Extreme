@@ -20,6 +20,24 @@ CATALOG = tuple(json.loads(files(__package__).joinpath("NpcSpeechCatalog.json").
 NAME_TO_ID = {e["name"]: e["id"] for e in CATALOG}
 BY_NAME = {e["name"]: e for e in CATALOG}
 LANGUAGES = ("Deku", "Gerudo", "Goron", "Hylian", "Kokiri", "Zora")
+# Exact catalogue identities matching MegaSoul_IsPathBlockingNpcPlacement.
+# Talon is handled per route: only his Hyrule Castle role blocks a path.
+PATH_BLOCKER_CONVERSATIONS = frozenset({
+    10000022,  # Gerudo Valley bridge guard (EnGe1 type 0)
+    10000024,  # Gerudo Fortress gate guard (EnGe1 type 0)
+    10000025,  # Gerudo Training Ground guard (EnGe1 type 0x46)
+    10000028,  # Gerudo Fortress gate operator (EnGe1 type 1)
+    10000055,  # Hyrule Castle gate guard (EnHeishi2 type 2)
+    10000061,  # Kakariko mountain gate guard (EnHeishi2 type 5)
+    10000065,  # King Zora
+    10000069,  # Kokiri Forest exit boy (EnKo type 3)
+    10000094,  # Mido
+})
+
+
+def is_path_blocker_route(entry, route):
+    return entry["id"] in PATH_BLOCKER_CONVERSATIONS or (
+        entry["id"] == 10000118 and route["region"] == "HC_MOAT" and route["age"] == "child")
 
 
 @dataclass
@@ -57,8 +75,6 @@ def conversation_rule(world, entry, scrub_region=None):
     rules = []
     if any(match[0] == "ACTOR_EN_SKJ" for match in entry["matches"]):
         rules.append(H.can_interact_skull_kid((Regions.LOST_WOODS, world)))
-    if o.shuffle_npc_soul.value:
-        rules.append(Has("NPC Soul"))
     if o.shuffle_speak.value == 1:
         rules.append(Has("Speak"))
     elif o.shuffle_speak.value == 2:
@@ -68,6 +84,8 @@ def conversation_rule(world, entry, scrub_region=None):
     if entry.get("native_rc"):
         # Native identity carries the exact grotto/dungeon parent. No money,
         # wallet, shop stock, or reward-specific requirements for a conversation.
+        if o.shuffle_npc_soul.value:
+            rules.append(Has("NPC Soul"))
         region = Regions(scrub_region)
         b = (region, world)
         rules.append(H.can_stun_deku(b))
@@ -84,6 +102,10 @@ def conversation_rule(world, entry, scrub_region=None):
         return And(*rules)
     alternatives = []
     for route in routes:
+        # Skip Child Zelda completes these one-time castle/forest conversations.
+        # Their repeatable alternatives elsewhere retain their own physical gates.
+        if "before_child_zelda" in route["gates"] and o.skip_child_zelda.value:
+            continue
         # Fast mode pre-rescues carpenters 1/2/3; free mode pre-rescues all
         # four. Only actors still in prison provide a prison conversation.
         # Keep every identity: pre-rescued carpenters can be met in the tent
@@ -102,6 +124,8 @@ def conversation_rule(world, entry, scrub_region=None):
         gates = [ConversationRegion(str(region)),
                  H.is_child(b) if route["age"] == "child" else H.is_adult(b)
                  if route["age"] == "adult" else (H.is_child(b) | H.is_adult(b))]
+        if o.shuffle_npc_soul.value and not is_path_blocker_route(entry, route):
+            gates.append(Has("NPC Soul"))
         if route["time"] != "either":
             gates.append(H.at_day(b) if route["time"] == "day" else H.at_night(b))
         if entry['id'] == 10000012 and route['region'] == 'THE_GRAVEYARD':
@@ -110,6 +134,8 @@ def conversation_rule(world, entry, scrub_region=None):
             if gate == "climb":
                 if o.shuffle_climb.value: gates.append(Has("Climb"))
             elif gate == "swim": gates.append(H.can_swim(b))
+            elif gate == "blue_fire": gates.append(H.blue_fire(b))
+            elif gate == "before_child_zelda": pass  # Presence filtered above.
             elif gate == "reflect": gates.append(H.can_reflect_nuts(b))
             elif gate == "Deku Scrub Soul":
                 if o.shuffle_enemy_soul.value:
@@ -139,6 +165,7 @@ def conversation_rule(world, entry, scrub_region=None):
 
 
 def display_region(location):
+    if hasattr(location, "_er_display_region"): return location._er_display_region
     entry = BY_NAME.get(location.name)
     if entry and entry["routes"]:
         return str(Regions[entry["routes"][0]["region"]])

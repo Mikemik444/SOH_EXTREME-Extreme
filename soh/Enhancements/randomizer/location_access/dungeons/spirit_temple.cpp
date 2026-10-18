@@ -145,7 +145,7 @@ void RegionTable_Init_SpiritTemple() {
     }, {
         //Exits
         ENTRANCE(RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F,   true),
-        ENTRANCE(RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD, logic->HasExplosives() || (ctx->GetOption(RSK_SUNLIGHT_ARROWS) && logic->CanUse(RG_LIGHT_ARROWS))),
+        ENTRANCE(RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD, (logic->HasExplosives() && (!ctx->GetOption(RSK_SHUFFLE_ROCK_SOUL) || logic->HasItem(RG_ROCK_SOUL))) || (ctx->GetOption(RSK_SUNLIGHT_ARROWS) && logic->CanUse(RG_LIGHT_ARROWS))),
     });
 
     areaTable[RR_SPIRIT_TEMPLE_ADULT_SIDE_HUB] = Region("Spirit Temple Adult Side Hub", SCENE_SPIRIT_TEMPLE, {}, {}, {
@@ -742,7 +742,7 @@ void RegionTable_Init_SpiritTemple() {
         //Implies CanKillEnemy(RE_LIKE_LIKE)
         LOCATION(RC_SPIRIT_TEMPLE_MQ_CHILD_CLIMB_NORTH_CHEST, SpiritShared(RR_SPIRIT_TEMPLE_MQ_SUN_ON_FLOOR, []{return logic->CanKillEnemy(RE_BEAMOS) && logic->HasItem(RG_OPEN_CHEST);})),
         //Sunlights only temp spawn this chest, which is unintuitive/a bug.
-        LOCATION(RC_SPIRIT_TEMPLE_MQ_CHILD_CLIMB_SOUTH_CHEST, SpiritShared(RR_SPIRIT_TEMPLE_MQ_SUN_ON_FLOOR, []{return (logic->HasExplosives() || logic->SunlightArrows()) && logic->CanUse(RG_HOOKSHOT) && logic->HasItem(RG_OPEN_CHEST);})),
+        LOCATION(RC_SPIRIT_TEMPLE_MQ_CHILD_CLIMB_SOUTH_CHEST, SpiritShared(RR_SPIRIT_TEMPLE_MQ_SUN_ON_FLOOR, []{return ((logic->HasExplosives() && (!ctx->GetOption(RSK_SHUFFLE_ROCK_SOUL) || logic->HasItem(RG_ROCK_SOUL))) || logic->SunlightArrows()) && logic->CanUse(RG_HOOKSHOT) && logic->HasItem(RG_OPEN_CHEST);})),
     }, {
         //Exits
         ENTRANCE(RR_SPIRIT_TEMPLE_MQ_UNDER_LIKE_LIKE,  logic->CanHitSwitch()),

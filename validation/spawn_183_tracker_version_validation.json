@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "test": "standalone_build_release_version_parity",
+  "versions": {
+    "archive_manifest": "1.8.3",
+    "loose_manifest": "1.8.3",
+    "loose_tracker_version": "1.8.3",
+    "loose_tracker_literal": "1.8.3",
+    "packaged_tracker_version": "1.8.3",
+    "native_header_version": "1.8.3"
+  },
+  "archive_sha256": "12110ecd286e24bcc84d54f0a445cbd9eb8a5da4401457ab105f065f7dd0d8ac",
+  "loose_tracker_path": "/workspace/scratch/8fddab5b8169/source/archipelago/soh_extreme/TrackerMirror.py",
+  "packaged_tracker_origin": "/workspace/scratch/8fddab5b8169/ap-runtime/custom_worlds/soh_extreme.apworld/soh_extreme/TrackerMirror.py",
+  "packaged_tracker_loader": "zipimporter",
+  "native_header_path": "/workspace/scratch/8fddab5b8169/source/soh/SohExtremeVersion.h",
+  "literal_version_field_preserved": true,
+  "tracker_crlf_lines": 108,
+  "tracker_bare_lf_lines": 0,
+  "tracker_sha256": "1e38e01fff2574c1bf4bb46042efc08fef56e55709e097b718caf3ff695e5314",
+  "generation_run": false
+}

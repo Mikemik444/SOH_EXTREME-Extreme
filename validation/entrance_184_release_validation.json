@@ -1,0 +1,269 @@
+{
+  "status": "passed",
+  "world_version": "1.8.4",
+  "layout": "complete_source_files",
+  "source_sha256": {
+    "archipelago/archipelago.json": "2d2ed71287753db364809216037b846859f2c5eafdaec7d0e5baf62d558c7e81",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "e0b3d3d95884db53dbe31cc0cf4f63c3071d4d48ddac3c7b81bd611878ebb23d",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "8907f40640caacfcb86e7e8bc4ba6752d0248c3fb29a2ce787969a3b707385c3",
+    "archipelago/soh_extreme/EntranceOptions.py": "608dcd904b417ef8c5154175e82408f2b45ec842ae738e2508a38a9887314234",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "c54da785a7e58bffcae20bc4391b77ee15575d0ebd5d8a04dfdc1fffa8fe1eaf",
+    "archipelago/soh_extreme/Options.py": "bd645344d5ba66d65da4cbfc858a992896d32a29f5cfdf8691df80512bbff599",
+    "archipelago/soh_extreme/TrackerMirror.py": "bd2b81a92f815ff3b2a7450f5bf8ba8247450e0c0608e9abc96aa753efe1a74a",
+    "archipelago/soh_extreme/archipelago.json": "2d2ed71287753db364809216037b846859f2c5eafdaec7d0e5baf62d558c7e81",
+    "archipelago/soh_extreme.apworld": "6eb17b4021bf849d82f692757429f874ee203ea155b41e80c88316b21c5f9111",
+    "soh/Enhancements/QoL/BetterSaveMenu.cpp": "eb4ae4bcc2ce1bdea4478b652d7e9c8ebdeb515798295692ac24101f95eb5842",
+    "soh/Enhancements/randomizer/Messages/EntranceHints.cpp": "e2e86b74dddd511aa3cc2eeb93426357e52e2a51a519222981a18f8e90fb78e0",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp": "8e5ac883b1541b070c33d5c202a98c5652d596ee83f35c3d29d09f2a49b2a1f4",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "f69919980ebc37d805d83ac465d49bcc0f0165b3a9da21385323ebce69a4a2af",
+    "soh/Enhancements/randomizer/randomizer_entrance.h": "dd0ae80bf799888ccb5519a2475f23c848aaf8547908d9bc1d62a08d511eef1c",
+    "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp": "0943ff9dfddeac6fec3c35ee5acfbc955069057ba530609f9119e69785d7c021",
+    "soh/Enhancements/randomizer/randomizer_entrance_tracker.h": "85d03cb79aac8d7b5d18b5b95ded6bf3478dd04b233135d148aa2120ed20afd7",
+    "soh/Network/Archipelago/ArchipelagoC.h": "21045e1af5f30e4ac212269e32f6a84ed88fd10bb8d1739b79a71a3117c055d2",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "476cd0a10a39ef0727a737f11b7818b8cf80c2bc7a84445d0b142c30bb8113bf",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "e89b21a665e77b33884c0ff79ddcea5d7209d8d01be053e20173d4bd6a2d2300",
+    "soh/Network/Archipelago/EntranceRouting.h": "080d2e8179f811050bc84bc32268522f80f0f88b19c6dd5ad7f6ed3df9bb92b4",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "da827319d9c16407e3d55508685bf76185b26f81125b864902ddc8536966fe2e",
+    "soh/Network/Archipelago/SceneTransitionChecks.h": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496",
+    "soh/SohExtremeVersion.h": "e44c3386eaa46e3a464de11fcce3270051347b88e854b4ff07052e8f9ffa339d",
+    "soh/SohGui/SohMenuNetwork.cpp": "27ca7f8138a1ce17558c1ce7ebe68f947fbbe99688a0cba97b935690326410b4",
+    "tools/tests/entrance_runtime_tests.cpp": "367b4ad366479c79720a34fbfc88180bbb052599d937c476f926f1b9637f40e9",
+    "tools/tests/entrance_slot_bridge_tests.cpp": "b16585e96d903030ee2b89b9e1800e7dd98bd7eeb7ddb734fad1f1926ace718a",
+    "tools/tests/test_entrance_runtime.py": "c26086a4920ddc1b11f80134dea76903791ef6a6880a37e63732785da696299d",
+    "tools/tests/test_entrance_settings.py": "0f382e22622c612dab726f8aef82dab914caf1fc28c650c825fe7073404b08cd",
+    "tools/tests/test_entrance_slot_bridge.py": "1ac4db4e5016471523520f2898954a211412bf8beb1a86aceeaa0fcef06120e9",
+    "tools/tests/test_entrance_spawn_lifecycle.py": "3b5e7142d21af48d7549697eefc7ca85142bb66f92438eec8876e4e18099973d",
+    "tools/tests/test_entrance_start.py": "1fcabffc774a7b73f436ccffd057c4c5c7ec356ef0a305f2bf9ed5dcceacd5f1",
+    "tools/tests/test_entrance_tracker.py": "252b5201e9dfb0ce80906dbdc168565496015c03d3896062b4093e0402eb1fd4",
+    "tools/tests/test_jabu_carry.py": "b69150bc7bad690252459e8421a1fdc76d8394320038dca688420e8e51b200a6",
+    "tools/tests/test_no_swim_recovery.py": "9b8bed7f4f0b8d8f594e060c4a7b0c855e0116706a7a6bebee99dfcd5beb3511",
+    "tools/tests/test_overworld_entrances.py": "222e7b006b5f00f7c2b9864cca9c6de5e3d75f9f20eef3f62a7e6d19d8f60582",
+    "tools/tests/test_spawn_placement.py": "78fdb3d865e0129bcddf6445ec42e792c3afc8c189409eaaabb6b257e0e7a4f7",
+    "tools/tests/validate_user_full_fill.py": "22d4b080028b1c01d721cccef6b5427909faf3a5a7cb82761ef704b99560c6d3"
+  },
+  "native_windows_build_or_gameplay_run": false,
+  "evidence_files": [
+    "entrance_184_adult_fill_reproduction.json",
+    "entrance_184_adult_fill_reproduction.log",
+    "entrance_184_bridge_adult.log",
+    "entrance_184_bridge_adult_cvars.json",
+    "entrance_184_bridge_adult_report.json",
+    "entrance_184_bridge_adult_slot_data.json",
+    "entrance_184_bridge_child.log",
+    "entrance_184_bridge_child_cvars.json",
+    "entrance_184_bridge_child_report.json",
+    "entrance_184_bridge_child_slot_data.json",
+    "entrance_184_export_bridge.py",
+    "entrance_184_full_fill_adult.json",
+    "entrance_184_full_fill_adult.log",
+    "entrance_184_full_fill_child.json",
+    "entrance_184_full_fill_child.log",
+    "entrance_184_installer_build_probe.ps1",
+    "entrance_184_installer_timestamp_reproduction.json",
+    "entrance_184_native_dependencies_provenance.json",
+    "entrance_184_overworld_regressions.log",
+    "entrance_184_overworld_validation.json",
+    "entrance_184_release_evidence.py",
+    "entrance_184_reproduce_installer_build.py",
+    "entrance_184_run_full_fill.py",
+    "entrance_184_settings_validation.json",
+    "entrance_184_settings_validation.log",
+    "entrance_184_spawn_placement_regression.py",
+    "entrance_184_spawn_placement_regressions.log",
+    "entrance_184_spawn_placement_validation.json",
+    "jabu_184_carry_validation.json",
+    "jabu_184_carry_validation.log",
+    "jabu_184_native_bridge_validation.json"
+  ],
+  "evidence_sha256": {
+    "entrance_184_adult_fill_reproduction.json": "2df878b4389f21544fc65a57414671f8cb4f59d0eea4c1fdad487ded61cc8d57",
+    "entrance_184_adult_fill_reproduction.log": "06104ed1f2fc7488c5e64194ed86864109edcfbba5756296780be29b0d16b732",
+    "entrance_184_bridge_adult.log": "fe28e4123b1d51ca6f6db06cd653ee0a28a586e68851c3a5c5c4e10eec619089",
+    "entrance_184_bridge_adult_cvars.json": "37d64eda229a74a4db50a08eab86044859f166dce9626ee97b12d08cf9fd5f84",
+    "entrance_184_bridge_adult_report.json": "51b419ca9e554eb44a4f7a0bb676542a7e1592378b994d87dfa3340dcf76114e",
+    "entrance_184_bridge_adult_slot_data.json": "088f7f95151d23414551df727643baea4b64c551eaf5f3dc461368f2bcf19ab4",
+    "entrance_184_bridge_child.log": "2465540ee2956f09309a409935a30c78a4decf88cba7a7c09cfa0bc5d5891712",
+    "entrance_184_bridge_child_cvars.json": "4baea23d2a68d2a3202504e69b25da4363006febe53fa929656915a0d1fc2eec",
+    "entrance_184_bridge_child_report.json": "26556dbf765ef7dd63fb699e06b740d75bfceb3a742cb5e4531e4048bd094573",
+    "entrance_184_bridge_child_slot_data.json": "9a47bd4fc6d5580f1038ec09facdf53ca4562c9068d8a3983113256bccdb39c4",
+    "entrance_184_export_bridge.py": "e342133ba7659effb08bf92d8c8612b176f21eb0ebd182ca5ada070eef797916",
+    "entrance_184_full_fill_adult.json": "238896e66da9be5e1b9bb7451562d07675479fc743ea3e773e03fd92d8169640",
+    "entrance_184_full_fill_adult.log": "2a1aa48b45a304ede48773554dc0ff5f88f07315f4b3e83ae84e85c08c15761d",
+    "entrance_184_full_fill_child.json": "977054e0003a5d30aff6422e625f40a3878c28fd0c947fc63ca58350564afd8a",
+    "entrance_184_full_fill_child.log": "e72aa1c7a7537f803177cec26ddce7271f3a8b325b710f4237520635afd2c928",
+    "entrance_184_installer_build_probe.ps1": "221591734a2a25a0bbbffb09a7bea91427675a75ebc2437a2b9ac83a59a7cd72",
+    "entrance_184_installer_timestamp_reproduction.json": "347abd9a9fd5e8621841ae96fbcaae5b0f65043ce793acd9bb128dc2e20607d4",
+    "entrance_184_native_dependencies_provenance.json": "03c1d6051d8a066e4c891b3f3dbaaa3772625f42ef26df857110cbc0cd33a00a",
+    "entrance_184_overworld_regressions.log": "9dd7764ef00c8fafa1030ed638a95748ae2015436b84e84eddede8615d27cdff",
+    "entrance_184_overworld_validation.json": "56ae4afe5e85d836bc1d48f4def1ddf997698cca21fa1d44d9d263f33e8ce63e",
+    "entrance_184_release_evidence.py": "790e8b6b29f2cc234c1a96affbaad8b12c1dd8ec6c8a0becf32f0c5a7529cadf",
+    "entrance_184_reproduce_installer_build.py": "a3a70aec16fd8a7ed8afbceb458147eb5bab40ff93d107ccbeb995c3c7e536d3",
+    "entrance_184_run_full_fill.py": "381b1cdf83251326fbf0e8704b91e9ef05448639a6c38d2b0ddf834ade382cae",
+    "entrance_184_settings_validation.json": "6ba836b43c5f397607b24a3942f94d3d8b65965d0bcffb2ebc0a4e3d0e2baaa5",
+    "entrance_184_settings_validation.log": "e1c6973842515f8f758895af4a690d0fd1095f06f3c1b1e396fd88f496b52f04",
+    "entrance_184_spawn_placement_regression.py": "c22613abe9d0a206177d768384cae97c5fc530f8c919263fbc11734270266337",
+    "entrance_184_spawn_placement_regressions.log": "612fa54e52ddb9a7726eec00f05d119395cec46b15528c6594bd9f1aa7b85a84",
+    "entrance_184_spawn_placement_validation.json": "0d05878973745d0a8911c0bdd84208bd67a539395dfc541fbc2c7631f647845c",
+    "jabu_184_carry_validation.json": "f02bdea13fa3072f05ff20e7232a41ef2e9cd6931146bea5443f40c918944916",
+    "jabu_184_carry_validation.log": "52f72cab8b2c63a5cdf357776a960287bb8172245093e470c7c717121c0671b9",
+    "jabu_184_native_bridge_validation.json": "aa4fbe1be0a53eafbac6e124a91c42ca28153ad06ca098724a42f935fda078da"
+  },
+  "packaging_evidence_sha256": {
+    "entrance_184_apworld_validation.json": "96a01b6cc31e13efebe56db7e2f95c9cf119689d743da3827b0c9dea8324a0a0",
+    "entrance_184_tracker_version_validation.json": "0dc958d912f9cf984522aa910e39a4d01f3ec5ed9f7935b54e8b7dce2f94bada",
+    "entrance_184_source_build_validation.json": "234d245516251b4869a8c44ffa9b6528ab5687c2338938906730d89c31aed9d3",
+    "entrance_184_yaml_validation.json": "ff9a7ed39007da0cb2e01dea5a630300d9a15b2c318d48e8fe4c199afaca7bce",
+    "entrance_184_generator_scope.json": "95b5edacee665bf819e342c4d4e4c9237cce76b2d27e93af5c91b228b51f4907",
+    "entrance_184_source_completeness.json": "72f1077c994a82a5cd4d9c35acc13d51d19eff19df008c89db3d73e4bb7e866a",
+    "entrance_184_source_zip_validation.json": "772a162559e4a48c282f346da6d019258d4fb870bbd7212c051dc06c2cc28201"
+  },
+  "fixture_provenance_files": [],
+  "changed_generator_files": {
+    "soh_extreme/DungeonLocationRoutes.json": {
+      "before_sha256": "1e4f21a7caebab10156d385fdd0ae0e1f0c18bd08bb267ea9d94d6bad3582ba7",
+      "after_sha256": "e0b3d3d95884db53dbe31cc0cf4f63c3071d4d48ddac3c7b81bd611878ebb23d"
+    },
+    "soh_extreme/EnemyRoomGraph.json": {
+      "before_sha256": "258dd121e5821465a7695d8276a21ed71137fde21f01d88d95a25e92f60f1791",
+      "after_sha256": "8907f40640caacfcb86e7e8bc4ba6752d0248c3fb29a2ce787969a3b707385c3"
+    },
+    "soh_extreme/EntranceOptions.py": {
+      "before_sha256": "d21679fc8ab3943cf423656b254e1171e46e6567596a2711d3a28d2c5a8fc094",
+      "after_sha256": "608dcd904b417ef8c5154175e82408f2b45ec842ae738e2508a38a9887314234"
+    },
+    "soh_extreme/EntranceRandomizer.py": {
+      "before_sha256": "ab47455e9b84f434ba15402a67679bc80e1026d7127beb079d357e02cc9839ee",
+      "after_sha256": "c54da785a7e58bffcae20bc4391b77ee15575d0ebd5d8a04dfdc1fffa8fe1eaf"
+    }
+  },
+  "full_fills": {
+    "child": {
+      "seed": 1,
+      "goal_met": true,
+      "full_accessibility": true,
+      "network_checks": 4036,
+      "checked": 4036,
+      "initial_network_checks": 22,
+      "initial_physical_checks": 20,
+      "initial_hyrule_field_reachable": true,
+      "precollected_items": [
+        "Zelda's Letter",
+        "Weird Egg"
+      ],
+      "initial_progression_checks": [
+        {
+          "location": "Link's Pocket",
+          "item": "Triforce Piece"
+        },
+        {
+          "location": "Song from Impa",
+          "item": "Progressive Slingshot"
+        },
+        {
+          "location": "EXTREME Hf Wonder Bridge 1",
+          "item": "Wolfos Soul"
+        },
+        {
+          "location": "EXTREME Hf Wonder Bridge 3",
+          "item": "Guard House Key"
+        },
+        {
+          "location": "Ganon's Castle Spirit Trial Heart",
+          "item": "Lizalfos and Dinolfos Soul"
+        },
+        {
+          "location": "Scene Transition: Lon Lon Ranch Entrance -> Hyrule Field Center Exit",
+          "item": "Progressive Scale"
+        },
+        {
+          "location": "Scene Transition: Water Temple Entrance -> Lake Hylia Outside Temple",
+          "item": "Gohma Larva Soul"
+        },
+        {
+          "location": "Scene Transition: TH Kitchen Corridor Upper -> GF Above GTG",
+          "item": "Heart Container"
+        },
+        {
+          "location": "Scene Transition: Kak Shooting Gallery -> Kak Shooting Gallery Entry",
+          "item": "Progressive Nut Capacity"
+        },
+        {
+          "location": "Dungeon Door: Forest Temple Lower Block Push Floor -> Forest Temple West Hallway Doormat (door 3, room 11 to 5)",
+          "item": "Fishing Hole Key"
+        }
+      ],
+      "child_spawn": "Hyrule Field Center Exit -> Lon Lon Ranch Entrance",
+      "adult_spawn": "Zora's Domain Behind King Zora -> Zora's Fountain Tunnel Exit",
+      "changed_overworld_endpoints": 52,
+      "source_unchanged_during_run": true
+    },
+    "adult": {
+      "seed": 1,
+      "goal_met": true,
+      "full_accessibility": true,
+      "network_checks": 4036,
+      "checked": 4036,
+      "initial_network_checks": 17,
+      "initial_physical_checks": 15,
+      "initial_hyrule_field_reachable": true,
+      "precollected_items": [
+        "Zelda's Letter",
+        "Weird Egg"
+      ],
+      "initial_progression_checks": [
+        {
+          "location": "Link's Pocket",
+          "item": "Triforce Piece"
+        },
+        {
+          "location": "Song from Impa",
+          "item": "Progressive Scale"
+        },
+        {
+          "location": "Ganon's Castle Spirit Trial Heart",
+          "item": "Bubble Soul"
+        },
+        {
+          "location": "Scene Transition: Lon Lon Ranch Entrance -> Hyrule Field Center Exit",
+          "item": "Moblin Soul"
+        },
+        {
+          "location": "Scene Transition: Water Temple Entrance -> Lake Hylia Outside Temple",
+          "item": "Gohma Larva Soul"
+        },
+        {
+          "location": "Scene Transition: TH Kitchen Corridor Upper -> GF Above GTG",
+          "item": "Gold Skulltula Token"
+        },
+        {
+          "location": "Scene Transition: Kak Shooting Gallery -> Kak Shooting Gallery Entry",
+          "item": "Progressive Nut Capacity"
+        },
+        {
+          "location": "Dungeon Door: Forest Temple Lower Block Push Floor -> Forest Temple West Hallway Doormat (door 3, room 11 to 5)",
+          "item": "Shovel"
+        }
+      ],
+      "child_spawn": "Zora's Domain Behind King Zora -> Zora's Fountain Tunnel Exit",
+      "adult_spawn": "Hyrule Field Center Exit -> Lon Lon Ranch Entrance",
+      "changed_overworld_endpoints": 52,
+      "source_unchanged_during_run": true
+    }
+  },
+  "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5",
+  "source_completeness": {
+    "manifest_covers_every_modified_or_added_source_file": true,
+    "current_files_compared": 25048,
+    "complete_changed_source_files": 38,
+    "missing_original_files": []
+  },
+  "native_scope": "Compiled production parser/readiness/status, complete entrance initializer and lookup, cached/late/save-menu spawn, and native door/check dispatch; engine I/O is isolated, with address/undefined sanitizers.",
+  "diagnostic_scope": "The earlier timestamp-skipped native builds and the adult item-fill failure are reproduced pre-fix failures, not successful generation or Windows gameplay evidence.",
+  "limits": [
+    "No complete Windows game build, MSBuild run, or in-game playthrough was performed here.",
+    "The source-only clean build helper was exercised in minimal real CMake/GCC fixtures using PowerShell Core on Unix.",
+    "The user's exact earlier seed map, received-item snapshot, and launched executable were not available for inspection.",
+    "Native map validation does not enforce that every enabled category is present in an otherwise valid partially supplied revision-1 map."
+  ]
+}

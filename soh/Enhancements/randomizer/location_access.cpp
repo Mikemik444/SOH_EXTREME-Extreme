@@ -3,6 +3,7 @@
 #include "soh/Enhancements/randomizer/static_data.h"
 #include "soh/Enhancements/randomizer/SeedContext.h"
 #include "soh/Enhancements/randomizer/entrance.h"
+#include "soh/Enhancements/randomizer/SoulActorAccess.h"
 #include "soh/Enhancements/debugger/performanceTimer.h"
 
 #include <fstream>
@@ -219,10 +220,11 @@ static bool MegaSoulAllowsLocation(RandomizerCheck rc) {
         return false;
     }
 
-    // Gate checks whose owning actor is an NPC. This keeps playthrough
-    // generation and the check tracker in sync with the barren-world runtime
-    // rule that hides NPC actors until NPC Soul is obtained.
+    // Path-blocking placements remain active and interactable while hidden.
+    // Other NPC checks still need the actor's soul; scene/params keep different
+    // roles of shared actor types (Talon, guards, Kokiri) distinct.
     if (ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) && MegaIsNpcLocationActor(loc->GetActorID()) &&
+        !MegaSoul_IsPathBlockingNpcPlacement(loc->GetActorID(), loc->GetActorParams(), loc->GetScene()) &&
         !logic->HasItem(RG_NPC_SOUL)) {
         return false;
     }

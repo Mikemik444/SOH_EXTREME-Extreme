@@ -53,11 +53,16 @@ void BuildHintStoneMessage(uint16_t* textId, bool* loadFromMessageTable) {
     } else {
         msg = ReadHintMessage(stoneHint, MF_AUTO_FORMAT);
     }
+    // This cosmetic cleanup does not change the disclosed item targets.
+    const auto shownTargets = msg.GetHintTargets();
     // Remove "Buy " if present.
     msg.Replace("Buy ", "");
     msg.Replace("Acheter: ", "");
     msg.Replace(" kaufen ", "");
     msg.Replace(" kaufen", "");
+    // Replace invalidates provenance when text changes. Restore the frozen
+    // batch after this known-safe removal of merchant wording.
+    if (msg.GetHintTargets().empty()) msg.AddHintTargets(shownTargets);
     msg.LoadIntoFont();
     *loadFromMessageTable = false;
 }

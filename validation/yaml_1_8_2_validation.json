@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "yaml": "/workspace/scratch/8fddab5b8169/delivery/SOH-EXTREME-1.8.2-overworld-entrances/SOH-EXTREME.yaml",
+  "sha256": "119ddbd1d2e1f6d8e60e30edc33e2bc35e6d983cafdb61608bacb25198a18f9e",
+  "original_sha256": "df167540c046e3804136e55a0b79e81bd6b394f5308ebab5ebda4752b5c5a32f",
+  "semantic_changes": [
+    {
+      "option": "mixed_entrance_pools",
+      "before": [
+        "interiors",
+        "dungeons",
+        "grottos",
+        "bosses",
+        "one_ways",
+        "owls",
+        "warp_songs",
+        "child_spawn",
+        "adult_spawn",
+        "dungeon_doors"
+      ],
+      "after": [
+        "all"
+      ]
+    },
+    {
+      "option": "shuffle_overworld_entrances",
+      "before": null,
+      "after": {
+        "false": 0,
+        "true": 50
+      }
+    }
+  ],
+  "all_other_weights_and_player_settings_preserved": true,
+  "child_and_adult_spawn_enabled": true,
+  "encoding": "UTF-8 with BOM",
+  "line_endings": "CRLF"
+}

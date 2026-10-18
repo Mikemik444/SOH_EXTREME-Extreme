@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "utc": "2026-10-18T12:44:39.596858+00:00",
+  "compiler": "g++ -std=c++20 -Wall -Wextra -Werror -pedantic, UBSan halt on error",
+  "counts": {
+    "descriptions": 1493,
+    "doors": 421,
+    "enemy_rows_with_room": 740,
+    "other_rows": 332
+  },
+  "catalog_kinds": {
+    "enemy": 747,
+    "entrance": 259,
+    "grotto_load": 33,
+    "grotto_exit": 33,
+    "door": 421
+  },
+  "shared_catalog_generation_check": "tools/generate_check_descriptions.py --check passed",
+  "source_unchanged_during_validation": true,
+  "coverage": [
+    "Unique canonical descriptions with no internal room/door IDs",
+    "Every legacy/current name resolves by ID and exact registered name",
+    "Custom aliases and all six supported age suffixes preserved",
+    "Optional physical source room and door numbers",
+    "Legacy shuffled destination source/arrival number separation",
+    "Current canonical shuffled labels",
+    "EXTREME prefix cleanup",
+    "Same-room directional door suffix parsing",
+    "Unknown cross-game hint names unchanged",
+    "Unknown future numeric door details preserved when requested"
+  ],
+  "examples": {
+    "11202051": "Door: Jabu Jabu's Belly: Beginning -> Lift Room",
+    "11202067": "Door: Jabu Jabu's Belly: Lift Room -> Near Boss Room",
+    "11211290": "Door: Gerudo Training Ground: Central Maze - Outer Left Entrance Passage, Rightward",
+    "9800000": "Enemy Defeat: Deku Tree Lobby 3F - Skulltula 1"
+  },
+  "limitations": [
+    "Main game and ImGui renderer not compiled or run; header compiled standalone with actual shared catalog"
+  ],
+  "sha256": {
+    "soh/Network/Archipelago/TrackerCheckLabels.h": "e801ac4d413b233044fcd6c51344bd10f2288a6b8a45f2572130eb53913e081f",
+    "soh/Network/Archipelago/CheckDescriptions.inc": "5126a56fe1b66768703164d5a59280198e36720adf6d1dea6c44069dff42dcdf",
+    "archipelago/soh_extreme/CheckDescriptions.json": "962c67c679bfe44f7cb8b3204b9ea614f8ea2789807d5e695e2c768b362b2769",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "241ad4a81bccbaf4f3ccdf19af12c9688d625260e447a512906a57d66388375b",
+    "soh/SohGui/SohMenuNetwork.cpp": "721eb97d0a1391741071b22c5560b5956cd2976a0391ff4a2080f03e2e5ac87e"
+  }
+}

@@ -4741,7 +4741,7 @@
       {
         "target": "RR_GANONS_CASTLE_MAIN",
         "region": "RR_GANONS_CASTLE_FOREST_TRIAL_WOLFOS_ROOM",
-        "condition": "true",
+        "condition": "!ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_FOREST_MEDALLION)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\ganons_castle.cpp",
         "line": 71
       },
@@ -4860,7 +4860,7 @@
       {
         "target": "RR_GANONS_CASTLE_MAIN",
         "region": "RR_GANONS_CASTLE_FIRE_TRIAL_OPEN_DOOR",
-        "condition": "true",
+        "condition": "!ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_FIRE_MEDALLION)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\ganons_castle.cpp",
         "line": 122
       }
@@ -4973,7 +4973,7 @@
       {
         "target": "RR_GANONS_CASTLE_MAIN",
         "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
-        "condition": "true",
+        "condition": "!ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_WATER_MEDALLION) || AnyAgeTime([]{return logic->CanKillEnemy(RE_FREEZARD, ED_CLOSE, true, 2);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\ganons_castle.cpp",
         "line": 210
       },
@@ -5108,7 +5108,7 @@
       {
         "target": "RR_GANONS_CASTLE_MAIN",
         "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_START",
-        "condition": "true",
+        "condition": "!ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_SHADOW_MEDALLION) || (AnyAgeTime([]{return logic->CanKillEnemy(RE_GREEN_BUBBLE);}) && areaTable[RR_GANONS_CASTLE_SHADOW_TRIAL_POTS_PLATFORM].AnyAgeTime([]{return logic->CanKillEnemy(RE_LIKE_LIKE);}))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\ganons_castle.cpp",
         "line": 262
       },
@@ -5393,7 +5393,7 @@
       {
         "target": "RR_GANONS_CASTLE_MAIN",
         "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
-        "condition": "true",
+        "condition": "!ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_SPIRIT_MEDALLION)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\ganons_castle.cpp",
         "line": 375
       },
@@ -5497,7 +5497,7 @@
       {
         "target": "RR_GANONS_CASTLE_MAIN",
         "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
-        "condition": "true",
+        "condition": "!ctx->GetOption(RSK_MEDALLION_LOCKED_TRIALS) || logic->HasItem(RG_LIGHT_MEDALLION)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\ganons_castle.cpp",
         "line": 422
       },
@@ -6861,30 +6861,30 @@
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
         "condition": "(logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)) && logic->HasItem(RG_CLIMB)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 92
+        "line": 94
       },
       {
         "target": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
         "condition": "logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 93
+        "line": 95
       },
       {
         "target": "RR_JABU_JABUS_BELLY_HOLES_LOWER_DOOR_LEDGE",
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 94
+        "line": 96
       }
     ],
     "events": [
       {
         "event": "LOGIC_JABU_RUTO_IN_1F",
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
-        "condition": "logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SPEAK_ZORA) && logic->HasItem(RG_POWER_BRACELET)",
+        "condition": "logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SPEAK_ZORA) && logic->HasItem(RG_POWER_BRACELET) && (logic->HasItem(RG_CLIMB) || logic->CanHitSwitch(ED_BOMB_THROW))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 85
+        "line": 87
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
@@ -6898,26 +6898,26 @@
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
         "condition": "logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 102
+        "line": 104
       },
       {
         "target": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
         "condition": "(logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)) && logic->HasItem(RG_CLIMB)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 103
+        "line": 105
       },
       {
         "target": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
-        "condition": "logic->CanHitSwitch(ED_BOMB_THROW)",
+        "condition": "logic->CanHitSwitch(ED_BOMB_THROW) || ((logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)) && logic->HasItem(RG_CLIMB) && logic->HasItem(RG_POWER_BRACELET) && (logic->HasItem(RG_POT_SOUL) || (logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_SPEAK_ZORA))))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 105
+        "line": 109
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 97
+    "line": 99
   },
   "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE": {
     "name": "Jabu Jabus Belly Water Switch Room Ledge",
@@ -6927,21 +6927,21 @@
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 122
+        "line": 126
       },
       {
         "target": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 123
+        "line": 127
       },
       {
         "target": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
-        "condition": "logic->HasItem(RG_POWER_BRACELET)",
+        "condition": "logic->HasItem(RG_POWER_BRACELET) && (logic->HasItem(RG_POT_SOUL) || (logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_SPEAK_ZORA)))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 125
+        "line": 129
       }
     ],
     "events": [
@@ -6950,11 +6950,11 @@
         "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
         "condition": "logic->CanBreakPots()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 110
+        "line": 114
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 108
+    "line": 112
   },
   "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR": {
     "name": "Jabu Jabus Belly Forked Corridor",
@@ -6964,47 +6964,47 @@
         "region": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 130
+        "line": 134
       },
       {
         "target": "RR_JABU_JABUS_BELLY_FORK_WEST",
         "region": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "condition": "logic->Get(LOGIC_JABU_RUTO_IN_1F)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 131
+        "line": 135
       },
       {
         "target": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST",
         "region": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 132
+        "line": 136
       },
       {
         "target": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH",
         "region": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 133
+        "line": 137
       },
       {
         "target": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_EAST",
         "region": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 134
+        "line": 138
       },
       {
         "target": "RR_JABU_JABUS_BELLY_FORK_EAST",
         "region": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "condition": "logic->Get(LOGIC_JABU_RUTO_IN_1F)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 135
+        "line": 139
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 128
+    "line": 132
   },
   "RR_JABU_JABUS_BELLY_FORK_WEST": {
     "name": "Jabu Jabus Belly Fork West",
@@ -7014,7 +7014,7 @@
         "region": "RR_JABU_JABUS_BELLY_FORK_WEST",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 146
+        "line": 150
       }
     ],
     "events": [
@@ -7023,11 +7023,11 @@
         "region": "RR_JABU_JABUS_BELLY_FORK_WEST",
         "condition": "logic->CanKillEnemy(RE_TENTACLE, ED_BOOMERANG)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 140
+        "line": 144
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 138
+    "line": 142
   },
   "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST": {
     "name": "Jabu Jabus Belly To Fork North West",
@@ -7035,21 +7035,21 @@
       {
         "target": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST",
-        "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE) || logic->TakeDamage()",
+        "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 152
+        "line": 156
       },
       {
         "target": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
         "region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST",
         "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 153
+        "line": 157
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 150
+    "line": 154
   },
   "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST": {
     "name": "Jabu Jabus Belly Fork North West",
@@ -7059,12 +7059,12 @@
         "region": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
         "condition": "AnyAgeTime([]{return logic->CanKillEnemy(RE_SHABOM, ED_CLOSE, false, 9);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 162
+        "line": 166
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 156
+    "line": 160
   },
   "RR_JABU_JABUS_BELLY_TO_FORK_NORTH": {
     "name": "Jabu Jabus Belly To Fork North",
@@ -7072,21 +7072,21 @@
       {
         "target": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH",
-        "condition": "logic->Get(LOGIC_JABU_EAST_TENTACLE) || logic->TakeDamage()",
+        "condition": "logic->Get(LOGIC_JABU_EAST_TENTACLE)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 168
+        "line": 172
       },
       {
         "target": "RR_JABU_JABUS_BELLY_FORK_NORTH",
         "region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH",
         "condition": "logic->Get(LOGIC_JABU_EAST_TENTACLE)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 169
+        "line": 173
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 166
+    "line": 170
   },
   "RR_JABU_JABUS_BELLY_FORK_NORTH": {
     "name": "Jabu Jabus Belly Fork North",
@@ -7094,9 +7094,9 @@
       {
         "target": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH",
         "region": "RR_JABU_JABUS_BELLY_FORK_NORTH",
-        "condition": "logic->Get(LOGIC_JABU_NORTH_TENTACLE)",
+        "condition": "logic->Get(LOGIC_JABU_NORTH_TENTACLE) && AnyAgeTime([]{return logic->CanKillEnemy(RE_BARI, ED_CLOSE, true, 4);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 178
+        "line": 182
       }
     ],
     "events": [
@@ -7105,11 +7105,11 @@
         "region": "RR_JABU_JABUS_BELLY_FORK_NORTH",
         "condition": "logic->CanKillEnemy(RE_TENTACLE, ED_BOOMERANG)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 174
+        "line": 178
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 172
+    "line": 176
   },
   "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_EAST": {
     "name": "Jabu Jabus Belly To Fork North East",
@@ -7117,21 +7117,21 @@
       {
         "target": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
         "region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_EAST",
-        "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE) || logic->TakeDamage()",
+        "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 184
+        "line": 188
       },
       {
         "target": "RR_JABU_JABUS_BELLY_FORK_NORTH_EAST",
         "region": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_EAST",
         "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 185
+        "line": 189
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 182
+    "line": 186
   },
   "RR_JABU_JABUS_BELLY_FORK_NORTH_EAST": {
     "name": "Jabu Jabus Belly Fork North East",
@@ -7141,7 +7141,7 @@
         "region": "RR_JABU_JABUS_BELLY_FORK_NORTH_EAST",
         "condition": "logic->Get(LOGIC_JABU_EAST_TENTACLE)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 193
+        "line": 197
       }
     ],
     "events": [
@@ -7150,11 +7150,11 @@
         "region": "RR_JABU_JABUS_BELLY_FORK_NORTH_EAST",
         "condition": "logic->CanKillEnemy(RE_TENTACLE, ED_BOOMERANG)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 190
+        "line": 194
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 188
+    "line": 192
   },
   "RR_JABU_JABUS_BELLY_FORK_EAST": {
     "name": "Jabu Jabus Belly Fork East",
@@ -7164,12 +7164,12 @@
         "region": "RR_JABU_JABUS_BELLY_FORK_EAST",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 202
+        "line": 206
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 196
+    "line": 200
   },
   "RR_JABU_JABUS_BELLY_BIGOCTO_LEDGE": {
     "name": "Jabu Jabus Belly Big Octo Ledge",
@@ -7179,19 +7179,19 @@
         "region": "RR_JABU_JABUS_BELLY_BIGOCTO_LEDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 212
+        "line": 216
       },
       {
         "target": "RR_JABU_JABUS_BELLY_BIGOCTO",
         "region": "RR_JABU_JABUS_BELLY_BIGOCTO_LEDGE",
         "condition": "logic->Get(LOGIC_JABU_RUTO_IN_1F) && AnyAgeTime([]{return logic->CanKillEnemy(RE_BIG_OCTO);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 213
+        "line": 217
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 205
+    "line": 209
   },
   "RR_JABU_JABUS_BELLY_BIGOCTO": {
     "name": "Jabu Jabus Belly Big Octo",
@@ -7201,19 +7201,19 @@
         "region": "RR_JABU_JABUS_BELLY_BIGOCTO",
         "condition": "logic->Get(LOGIC_JABU_RUTO_IN_1F) && AnyAgeTime([]{return logic->CanKillEnemy(RE_BIG_OCTO);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 218
+        "line": 222
       },
       {
         "target": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
         "region": "RR_JABU_JABUS_BELLY_BIGOCTO",
         "condition": "logic->Get(LOGIC_JABU_RUTO_IN_1F) && AnyAgeTime([]{return logic->CanKillEnemy(RE_BIG_OCTO);})",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 219
+        "line": 223
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 216
+    "line": 220
   },
   "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO": {
     "name": "Jabu Jabus Belly Above Big Octo",
@@ -7223,14 +7223,14 @@
         "region": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
         "condition": "logic->TakeDamage()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 234
+        "line": 238
       },
       {
         "target": "RR_JABU_JABUS_BELLY_JIGGLIES_ROOM",
         "region": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 235
+        "line": 239
       }
     ],
     "events": [
@@ -7239,18 +7239,18 @@
         "region": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
         "condition": "logic->CanBreakPots()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 224
+        "line": 228
       },
       {
         "event": "LOGIC_NUT_ACCESS",
         "region": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
         "condition": "logic->CanBreakPots()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 225
+        "line": 229
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 222
+    "line": 226
   },
   "RR_JABU_JABUS_BELLY_JIGGLIES_ROOM": {
     "name": "Jabu Jabus Belly Jigglies Room",
@@ -7260,19 +7260,19 @@
         "region": "RR_JABU_JABUS_BELLY_JIGGLIES_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 240
+        "line": 244
       },
       {
         "target": "RR_JABU_JABUS_BELLY_JIGGLIES_LEDGE",
         "region": "RR_JABU_JABUS_BELLY_JIGGLIES_ROOM",
         "condition": "logic->CanUse(RG_BOOMERANG) || (logic->IsAdult && logic->CanGroundJump())",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 241
+        "line": 245
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 238
+    "line": 242
   },
   "RR_JABU_JABUS_BELLY_JIGGLIES_LEDGE": {
     "name": "Jabu Jabus Belly Jigglies Ledge",
@@ -7282,19 +7282,19 @@
         "region": "RR_JABU_JABUS_BELLY_JIGGLIES_LEDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 246
+        "line": 250
       },
       {
         "target": "RR_JABU_JABUS_BELLY_LIFT_UPPER",
         "region": "RR_JABU_JABUS_BELLY_JIGGLIES_LEDGE",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 247
+        "line": 251
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 244
+    "line": 248
   },
   "RR_JABU_JABUS_BELLY_LIFT_UPPER": {
     "name": "Jabu Jabus Belly Lift Upper",
@@ -7304,14 +7304,14 @@
         "region": "RR_JABU_JABUS_BELLY_LIFT_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 255
+        "line": 259
       },
       {
         "target": "RR_JABU_JABUS_BELLY_JIGGLIES_ROOM",
         "region": "RR_JABU_JABUS_BELLY_LIFT_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 256
+        "line": 260
       }
     ],
     "events": [
@@ -7320,11 +7320,11 @@
         "region": "RR_JABU_JABUS_BELLY_LIFT_UPPER",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 252
+        "line": 256
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 250
+    "line": 254
   },
   "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM": {
     "name": "Jabu Jabus Belly Near Boss Room",
@@ -7334,19 +7334,19 @@
         "region": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 265
+        "line": 269
       },
       {
         "target": "RR_JABU_JABUS_BELLY_BOSS_ENTRYWAY",
         "region": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
         "condition": "(logic->HasItem(RG_CLIMB) && logic->CanUse(RG_BOOMERANG)) ||\n                                                    (ctx->GetTrickOption(RT_JABU_NEAR_BOSS_RANGED) && (logic->CanUse(logic->HasItem(RG_CLIMB) ? RG_HOOKSHOT : RG_LONGSHOT) || logic->CanUse(RG_FAIRY_BOW) || logic->CanUse(RG_FAIRY_SLINGSHOT))) ||\n                                                    (ctx->GetTrickOption(RT_JABU_NEAR_BOSS_EXPLOSIVES) && (logic->CanUse(RG_BOMBCHU_5) || (logic->CanUse(RG_HOVER_BOOTS) && logic->CanUse(RG_BOMB_BAG) && logic->HasItem(RG_CLIMB))))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 266
+        "line": 270
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 259
+    "line": 263
   },
   "RR_JABU_JABUS_BELLY_BOSS_ENTRYWAY": {
     "name": "Jabu Jabus Belly Boss Entryway",
@@ -7356,12 +7356,12 @@
         "region": "RR_JABU_JABUS_BELLY_BOSS_ENTRYWAY",
         "condition": "true",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 616
+        "line": 620
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 614
+    "line": 618
   },
   "RR_JABU_JABUS_BELLY_BOSS_EXIT": {
     "name": "Jabu Jabus Belly Boss Exit",
@@ -7371,19 +7371,19 @@
         "region": "RR_JABU_JABUS_BELLY_BOSS_EXIT",
         "condition": "ctx->GetDungeon(JABU_JABUS_BELLY)->IsVanilla()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 621
+        "line": 625
       },
       {
         "target": "RR_JABU_JABUS_BELLY_MQ_NEAR_BOSS_ROOM",
         "region": "RR_JABU_JABUS_BELLY_BOSS_EXIT",
         "condition": "ctx->GetDungeon(JABU_JABUS_BELLY)->IsMQ()",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 622
+        "line": 626
       }
     ],
     "events": [],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 619
+    "line": 623
   },
   "RR_JABU_JABUS_BELLY_BOSS_ROOM": {
     "name": "Jabu Jabus Belly Boss Room",
@@ -7393,14 +7393,14 @@
         "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
         "condition": "false",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 640
+        "line": 644
       },
       {
         "target": "RR_ZORAS_FOUNTAIN",
         "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
         "condition": "logic->Get(LOGIC_JABU_JABUS_BELLY_CLEAR)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 641
+        "line": 645
       }
     ],
     "events": [
@@ -7409,11 +7409,11 @@
         "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
         "condition": "logic->CanKillEnemy(RE_BARINADE)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\jabujabus_belly.cpp",
-        "line": 627
+        "line": 631
       }
     ],
     "file": "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp",
-    "line": 625
+    "line": 629
   },
   "RR_SHADOW_TEMPLE_ENTRYWAY": {
     "name": "Shadow Temple Entryway",
@@ -8805,7 +8805,7 @@
       {
         "target": "RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD",
         "region": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
-        "condition": "logic->HasExplosives() || (ctx->GetOption(RSK_SUNLIGHT_ARROWS) && logic->CanUse(RG_LIGHT_ARROWS))",
+        "condition": "(logic->HasExplosives() && (!ctx->GetOption(RSK_SHUFFLE_ROCK_SOUL) || logic->HasItem(RG_ROCK_SOUL))) || (ctx->GetOption(RSK_SUNLIGHT_ARROWS) && logic->CanUse(RG_LIGHT_ARROWS))",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\spirit_temple.cpp",
         "line": 148
       }
@@ -10735,7 +10735,7 @@
       {
         "target": "RR_WATER_TEMPLE_CANAL_ALCOVE",
         "region": "RR_WATER_TEMPLE_3_JETS_NO_SWITCH",
-        "condition": "true",
+        "condition": "(logic->IsChild && areaTable[RR_WATER_TEMPLE_3_JETS_SWITCH].Child()) || (logic->IsAdult && areaTable[RR_WATER_TEMPLE_3_JETS_SWITCH].Adult())",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
         "line": 287
       }

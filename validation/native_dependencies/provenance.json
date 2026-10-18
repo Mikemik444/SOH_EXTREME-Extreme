@@ -1,0 +1,44 @@
+[
+  {
+    "name": "json.hpp",
+    "url": "https://raw.githubusercontent.com/nlohmann/json/v3.12.0/single_include/nlohmann/json.hpp",
+    "size": 953436,
+    "sha256": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63"
+  },
+  {
+    "name": "entrance_table.h",
+    "url": "https://raw.githubusercontent.com/HarbourMasters/Shipwright/develop/soh/include/tables/entrance_table.h",
+    "size": 229151,
+    "sha256": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa"
+  },
+  {
+    "name": "scene_table.h",
+    "url": "https://raw.githubusercontent.com/HarbourMasters/Shipwright/develop/soh/include/tables/scene_table.h",
+    "size": 10997,
+    "sha256": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c"
+  },
+  {
+    "name": "z64transition.h",
+    "url": "https://raw.githubusercontent.com/HarbourMasters/Shipwright/develop/soh/include/z64transition.h",
+    "size": 2192,
+    "sha256": "d19f093c6b9936a77ba62edbc348f9d3fc7f926bb52658d073b49138471f2163"
+  },
+  {
+    "name": "z64scene.h",
+    "url": "https://raw.githubusercontent.com/HarbourMasters/Shipwright/develop/soh/include/z64scene.h",
+    "size": 14158,
+    "sha256": "c3a66f466d91220d1d2c0b27182a651f1db97e073a8df808b7374242376c7757"
+  },
+  {
+    "name": "z64.h",
+    "url": "https://raw.githubusercontent.com/HarbourMasters/Shipwright/develop/soh/include/z64.h",
+    "size": 79179,
+    "sha256": "2b542e7be12e20e49034c17db444bf1de489d4161bb333d3bcd73bc32c34ea71"
+  },
+  {
+    "name": "z64save.h",
+    "url": "https://raw.githubusercontent.com/HarbourMasters/Shipwright/develop/soh/include/z64save.h",
+    "size": 40315,
+    "sha256": "ba9f4092650d8e9cafd72e8185375c332cd69ab7c5b836841853fc7965531ae5"
+  }
+]

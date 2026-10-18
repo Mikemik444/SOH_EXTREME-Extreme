@@ -1,0 +1,163 @@
+SOH-EXTREME 1.8.4 validation scope
+=================================
+
+This bundle contains complete edited files in their original source folders,
+the matching APWorld, the latest user YAML, and a source-only build helper.
+The final packager verifies every included source file against its source and
+SOURCE_FILES.json entry, verifies the APWorld's complete stored file set, and
+checks ZIP contents and CRCs after packaging.
+
+The source completeness audit compares every current source file byte-for-byte
+with the original haha.zip and also detects removed original files. Every
+modified or added production file and regression test must be in SOURCE_FILES.
+Only version-control and Python cache intermediates are excluded; downloaded
+native harness dependencies live outside the source tree. Unchanged files are
+audited without duplicating the entire original repository in the deliverable.
+
+Every outer ZIP entry uses the package creation time recorded in
+validation/entrance_184_package_creation.json, at ZIP's two-second timestamp
+precision. The final archive is reopened and its entry timestamps, exact file
+inventory, bytes, and CRCs are verified. Clean-first remains the build guarantee.
+Standard UTC and NTFS timestamp metadata also record that creation time for
+extractors that support them. A real extraction regression passes in three time
+zones (UTC, UTC+14, UTC-12) with the extracted source modification time matching
+the package time. Windows Explorer extraction was not run here.
+
+REPRODUCED BUILD WORKFLOW DEFECT
+------------------------------
+validation/entrance_184_installer_timestamp_reproduction.json records four cases
+using the actual earlier apply/build functions, PowerShell 7.6.7, CMake 3.31.6,
+GCC, and Unix Makefiles. A minimal C++ target included the real native version
+header. After the 1.8.3 files were copied with their archived timestamps, the
+build returned success while the executable and its SHA-256 stayed unchanged.
+The cases started from original 1.8.0, 1.8.1, 1.8.2, and already-copied current
+sources with an old executable. This reproduces an actual workflow defect; the
+user's installed executable and its build log were not available for inspection.
+
+CLEAN BUILD HELPER REGRESSION
+----------------------------
+validation/entrance_184_source_build_validation.json records five real CMake fixture
+builds using the actual delivered BUILD_RELEASE.ps1 functions. Original 1.8.0,
+prior 1.8.1/1.8.2/1.8.3, and already-copied current sources with an old executable
+all rebuilt to the real 1.8.4 native version header. Each executable changed,
+its exact path was found from the build log, and its SHA-256 was recorded in the
+receipt. Old source timestamps remained unchanged. Static parsing also verified
+that the build helper has no File.Copy, File.Move, or File.Replace source calls.
+Three source-preflight cases also passed: exact copied files, a current APWorld
+whose ZIP metadata/order/compression changed while its contents stayed identical,
+and rejection of an APWorld whose stored contents were modified.
+
+The fixture validates the copied-source verification and clean-first build
+workflow. It compiles a minimal program, not the complete game. The PowerShell
+main Windows OS check is bypassed in this Unix fixture, and two path helpers use
+equivalent Unix separators. Windows PowerShell 5.1 and MSBuild were not run.
+
+NATIVE SETTINGS, CACHES, AND READINESS
+-----------------------------------
+The settings test compiles verbatim production parsing, slot ingestion,
+readiness, entrance status, and route validation against real exported child
+and adult seed fixtures. Each fixture supplies 1,028 native settings and 719
+routes. For each fixture, 28 invalid input forms are rejected both without a
+cache and with an accepted cache present. The tests also repeat each rejected
+snapshot for 120 frames, preserve the good cache, recover with corrected data,
+accept legacy all-off settings, and inspect the installed-map status text.
+
+The final native bridge uses the complete production C Entrance_Init and lookup
+paths, with engine I/O isolated for the harness. Both fixtures pass 232 native
+scene lookups and 14 dynamic exits, grotto handling, coupled return endpoints,
+and child/adult cached loading, late settings arrival, and save-menu returns.
+All 52 overworld directions change in both exported maps. The actual JSON
+parser and production native functions are compiled with address and undefined
+behavior sanitizers. Source, test, fixture, and public dependency hashes are
+recorded. These are compiled harness tests, not an in-game playthrough.
+
+Advertised randomized entrance settings reject missing/unsupported map
+revisions, empty maps, and malformed entries. Genuine legacy all-off settings
+remain accepted. Validation does not enforce that a partially supplied revision-1
+map contains every enabled category; the real exported fixture maps are checked
+in full by the bridge and export tests.
+
+JABU REGRESSION
+---------------
+The final native bridge covers all 421 catalog door directions in both fixtures.
+Per fixture it checks 421 ordinary accepted openings, 307 near-plane openings,
+155 exact-plane openings, all 12 protected local carrier directions with 30
+check-dispatch cases, 3,532 canceled/dead/partial crossing rejections, and 853
+wrong-arrival rejections. The tests use the production player/door predicates
+and the revised scene-transition dispatcher. Keeping carrier-critical doors
+local preserves their native Ruto-carry room crossings and their checks.
+
+The Jabu AP regression checks 20 candidate entrance maps and all 12 fixed carrier
+directions, including rejection of moved protected routes. It verifies parity
+between the authored native Jabu formulas and the AP JSON rules, with both-age
+negative and positive cases for Ruto's first-floor event, the water-room exit,
+required throwable objects, tentacle combat, the Boomerang Chest's Stinger Soul,
+and the scrub's physical route and stun/speech/soul prerequisites. The recorded
+scrub predicate retains its wallet-capacity check. The test retains the
+tentacle/event locks and confirms the scrub location remains in the world.
+The user's exact previous seed map and received-item state were not available.
+
+CURRENT COMPLETE GENERATOR FILLS
+-------------------------------
+Both current seed-1 tests passed the official Archipelago 0.6.7 Main.main item
+fill through pre_output. The current 1.8.4 source and the byte-identical supplied
+YAML were used, with the two tests fixing only the starting-age choice so both
+possible age results were covered. The reports record the individual run times.
+Each reached the goal with full accessibility and all 4,036 of 4,036 network
+checks.
+
+Before item collection, the child run had 22 reachable network checks, including
+20 physical checks. The adult run had 17, including 15 physical checks. Both had
+a route to Hyrule Field at the selected starting age. Their precollected lists
+contained exactly Zelda's Letter and Weird Egg, with no extra starting grants.
+Independent pre-fill export fixtures confirmed those same physical-check counts,
+the Hyrule Field route, and unchanged precollected inventories. All 52 overworld
+directions changed in each map, and mixed pool "all" included the enabled pools.
+
+An earlier 1.8.4 adult seed-1 generation exposed an item-placement deadlock with
+585 items remaining. That failure is retained as diagnostic evidence. The final
+entrance guard rejects isolated randomized starts that need future progression
+items before reaching Hyrule Field, and preserves the field route through later
+entrance swaps. Its actual starting state includes configured starting items
+and actually reachable local prefilled rewards, with no future unplaced items
+assumed. The current passed runs use that final guard. They do not rely on adding
+starting items or modifying FrontierFill.
+
+The final validation/entrance_184_spawn_placement_validation.json records 58
+spawn/entrance tests passed without failures, errors, or skips. It uses the actual
+AP state and age-aware source rules to check configured-inventory field access,
+usable returns, progression checks,
+candidate rollback, exhausted-pool failures, coupled/mixed/overworld routes,
+saved-map replay, and Water Temple rejection for either mapped age when Swim
+is shuffled and absent from that actual starting state. Both final exported maps
+have Swim absent and both age spawns outside Water Temple. Their CVar/slot bytes
+are identical to the
+fixtures used by the final compiled native bridge and settings tests; the final
+aggregate rechecks every recorded native source, test, fixture, and dependency
+hash against the current files.
+
+APWORLD, YAML, AND GENERATOR SCOPE
+--------------------------------
+The official Archipelago 0.6.7 ZIP loader checks the packaged APWorld and all
+contained package files/resources. Native, APWorld, and tracker release labels
+must agree at 1.8.4. Entrance mapping revision and world data compatibility are
+checked alongside source/archive correspondence.
+
+The included YAML must match the latest supplied attachment byte-for-byte.
+No setting edits or starting item grants are permitted as a generation shortcut.
+
+The generator scope report compares the complete APWorld content with the
+delivered 1.8.3 archive. It identifies every changed logic/resource file and
+separates release-label changes from identical files. The full child/adult seed-1
+fills from 1.8.3 are retained under validation/previous_1_8_3 with their original
+reports and logs. They demonstrate what passed for that exact older release;
+current source changes require the current reports listed by the release audit.
+
+LIMITS
+------
+No complete Windows SOH-EXTREME executable was built here, and no game was
+launched or played here. The supplied snapshot lacks the root CMake project and
+external build dependencies required for that full build. Native harnesses and
+the real CMake build fixture provide focused evidence; the build receipt and
+visible in-game entrance status are the next observable checks on the user's
+actual Windows build and selected save/server seed.

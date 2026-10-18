@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "target_release": "1.8.2",
+  "recorded_utc": "2026-10-17T21:08:25.333692+00:00",
+  "command": [
+    "python",
+    "tools/tests/test_entrance_spawn_lifecycle.py"
+  ],
+  "working_directory": "/workspace/scratch/8fddab5b8169/source",
+  "exit_code": 0,
+  "passed_groups": 8,
+  "compiler": "/usr/bin/g++",
+  "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "compiler_flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "stdout": "PASS: cached child loads reuse the chosen exact room and clear the opening cutscene.\nPASS: save-to-spawn resolves the explicitly selected age without stale room state.\nPASS: late verified map completes one safe load warp, reports no traversal, and never rewarps on reconnect.\nPASS: deferred explicit-age request survives the old scene's teardown.\nPASS: known disabled maps preserve native behavior and cannot arm later relocation.\nPASS: exit/save switch clear requests; rejected slot maps cannot consume or replace them.\nPASS: duplicate live maps preserve real grotto state and custom arrival; reset/non-gameplay tables rebuild.\nPASS: ordinary native randomizer and non-randomizer saves keep their existing spawn paths.\n",
+  "production_functions_executed": [
+    "EntranceRuntime::Apply",
+    "EntranceRuntime::SavewarpForAge",
+    "EntranceRuntime::ServicePendingSpawn",
+    "EntranceRuntime::Reset",
+    "Archipelago_EntranceSavewarp",
+    "Archipelago_EntranceSavewarpForAge",
+    "Archipelago_CancelPendingEntranceSpawn",
+    "BetterSaveMenu::GetAgeSpawnEntrance",
+    "Grotto_InitExitAndLoadLists",
+    "ArchipelagoClient::CaptureSceneTransition",
+    "ArchipelagoClient::CompleteSceneTransition"
+  ],
+  "callsite_checks": [
+    "Actual OnLoadGame spawn gate compiled",
+    "Update pending-spawn service follows current-save/seed-identity gate",
+    "Update passes CanReceiveGameplayReward safety decision",
+    "OnExitGame cancels pending spawn",
+    "LoadSaveMetadata resets entrance runtime"
+  ],
+  "source_hashes": [
+    {
+      "path": "soh/Network/Archipelago/EntranceRuntime.inc",
+      "sha256": "8fecaca8b7e27f9f0da4b3028d02d905fc9e7d6fe90c112a90c51fbf70620f3f"
+    },
+    {
+      "path": "soh/Network/Archipelago/EntranceRouting.h",
+      "sha256": "7d78f34ace1fa403c8479798331f53278e6033ab1283a3b9198a15dcbcdb656a"
+    },
+    {
+      "path": "soh/Network/Archipelago/EntranceRandomizerData.inc",
+      "sha256": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a"
+    },
+    {
+      "path": "soh/Network/Archipelago/SceneTransitionChecks.h",
+      "sha256": "8b4d0be3cc73907630124086a8f4485a6da71817a08ef179f754cd1676010f13"
+    },
+    {
+      "path": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+      "sha256": "17682bdd42c00da31b27a6fbcf2806dd40ac43e3bcafb80d50773fdc49d5fb76"
+    },
+    {
+      "path": "soh/Network/Archipelago/ArchipelagoC.h",
+      "sha256": "21045e1af5f30e4ac212269e32f6a84ed88fd10bb8d1739b79a71a3117c055d2"
+    },
+    {
+      "path": "soh/Enhancements/randomizer/hook_handlers.cpp",
+      "sha256": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76"
+    },
+    {
+      "path": "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+      "sha256": "eb4ae4bcc2ce1bdea4478b652d7e9c8ebdeb515798295692ac24101f95eb5842"
+    },
+    {
+      "path": "soh/Enhancements/randomizer/randomizer_entrance.c",
+      "sha256": "f69919980ebc37d805d83ac465d49bcc0f0165b3a9da21385323ebce69a4a2af"
+    },
+    {
+      "path": "soh/Enhancements/randomizer/randomizer_entrance.h",
+      "sha256": "dd0ae80bf799888ccb5519a2475f23c848aaf8547908d9bc1d62a08d511eef1c"
+    },
+    {
+      "path": "soh/Enhancements/randomizer/randomizer_grotto.c",
+      "sha256": "69865c227f5fee6578c382b694bdb87c6ce4d59a9273bd663eb1000cd8e5afc8"
+    },
+    {
+      "path": "soh/Enhancements/randomizer/randomizer_grotto.h",
+      "sha256": "b049586ec0cc4127d4a26a87a6c30eac97449c84f4c0612b3a4ed28ab91fd56a"
+    },
+    {
+      "path": "soh/Enhancements/randomizer/randomizerTypes.h",
+      "sha256": "dc86b56177c188419a7b00f600f3f91e45f491dce16989f677cd6dbc609bd2aa"
+    },
+    {
+      "path": "tools/tests/entrance_runtime_tests.cpp",
+      "sha256": "367b4ad366479c79720a34fbfc88180bbb052599d937c476f926f1b9637f40e9"
+    },
+    {
+      "path": "tools/tests/test_entrance_spawn_lifecycle.py",
+      "sha256": "3b5e7142d21af48d7549697eefc7ca85142bb66f92438eec8876e4e18099973d"
+    }
+  ],
+  "limitations": [
+    "Linux C++ fixture with isolated engine IO; not a full game build or playthrough.",
+    "Native spawn fallback and scene IO are fixture stubs; actual AP routing and save-menu resolver are compiled.",
+    "No Windows PowerShell or Windows game execution is claimed."
+  ]
+}

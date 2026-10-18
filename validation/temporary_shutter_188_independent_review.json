@@ -1,0 +1,399 @@
+{
+  "review_kind": "independent read-only source review",
+  "production_edits": false,
+  "test_execution": false,
+  "native_build": false,
+  "in_game_playthrough": false,
+  "concrete_new_defect_found": false,
+  "source_hashes": {
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "878d74429685a6e3cbf5263c1a93e35bade796121a648a7e3fbbe8f6edc3779e",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "13e6cfdeeac346be56fee81e53016c78dea62115091cd7a85bdc7ce4d16174ea",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "f4135ea70f74c90b158e10da2c713733ce949d99917ab30f0c6b2e5ee32decbe",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/__init__.py": "6d40a36f703c595fe1567f8f483278cb2aeaff786285bdda412310dabf971db2",
+    "archipelago/soh_extreme/_vendor_oot_soh/Regions.py": "32d3934dc7dca6e16840533453ce2f9fe0b5337b88b208976ccd5183efdd6e6d",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "4af0e23a8428cf7193ccd913524cbe8dd0ada4f1b012975ce0146dd1b15fc050",
+    "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp": "3d68e72e5b3c940e189c2273853ded3f33255830fce026aa2c4753fb49c5895b",
+    "soh/Enhancements/randomizer/location_access/dungeons/forest_temple.cpp": "403cbe3fa1656ee7ffb81f181817ad98e7c4a6c7636ba226dc4e79249735e0ea",
+    "soh/Enhancements/randomizer/location_access/dungeons/water_temple.cpp": "54d302676cc88a99c7cbc735499576a1c077552371dc037467aec050cb1850be",
+    "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp": "f0d193ccbce88eb568b71df6d8fd0977e55760a72429b923679c0881771115cd",
+    "soh/Enhancements/randomizer/location_access/dungeons/fire_temple.cpp": "1734b315c35f67f0ab07c7f8973e0105771f0a0ad1bcf484e3d3bc3981e52e9d",
+    "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp": "29a5a6ee5e75b50306322a82074461bc2a4fe6c16b509c82a1b15d5ccd1f1ff4",
+    "src/overlays/actors/ovl_Door_Shutter/z_door_shutter.c": "bfe80a290982db02459b5952e1a57ce4242e45aec54e766884ba04e5bbaab970",
+    "src/overlays/actors/ovl_En_Ru1/z_en_ru1.c": "a666bbcde49878bf4cadc45c12fb36e5ba92aa62a255401140f8c59e492535a2",
+    "src/overlays/actors/ovl_Bg_Bdan_Objects/z_bg_bdan_objects.c": "917660ff031845ab03dc375699806cdce42e5e77826a0baead22c2a493913f0a",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76"
+  },
+  "reference_runtime_hashes": {
+    "BaseClasses.py": "bdbbcfe5fd50fa0ab95f676a68a65944851b599643ddc5f870d4bb9c0d36b545",
+    "rule_builder/rules.py": "b845f0c2b2ec56bbb00634506009bb5d45722574d3402eb39bc95224e27363e5",
+    "rule_builder/cached_world.py": "75ea6dae7fe2de21ff2d3736503cd26ccdc29aa221461cf90cc033ac23cd6a2f",
+    "worlds/AutoWorld.py": "e721dfefd6bfe012ea8d9d6757bcbbc2721dc0afe4d72d60394e5cd4dc92215d"
+  },
+  "water_8877_review": {
+    "native_exported_condition_equal": true,
+    "exact_same_age_target_region_required": true,
+    "native_region_age_getter_restores_age_in_finally": true,
+    "getter_cache_disabled_and_force_recalculate_propagates_to_parent_rules": true,
+    "source_dependencies_registered_on_replacement_er_edges": true,
+    "bfs_indirect_retry_uses_each_ages_blocked_set": true,
+    "bfs_notifies_reached_region_before_retry": true,
+    "temporary_switch_not_materialized_as_item": true,
+    "recursion_reason": "SohRegion marks its per-age graph nonstale before BFS; nested target-region queries read the in-progress age reachability set. The age-qualified getter restores the caller age even on exceptions."
+  },
+  "temporary_shutter_inventory": [
+    {
+      "endpoint": 8205,
+      "check": 11200013,
+      "scene": 0,
+      "switch_flag": 60,
+      "source_region": "RR_DEKU_TREE_COMPASS_ROOM",
+      "target_region": "RR_DEKU_TREE_LOBBY_3F",
+      "condition_source": "native room graph",
+      "condition": "logic->HasFireSourceWithTorch() || logic->CanUse(RG_FAIRY_BOW)",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8355,
+      "check": 11201059,
+      "scene": 1,
+      "switch_flag": 34,
+      "source_region": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
+      "target_region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+      "condition_source": "native room graph",
+      "condition": "true",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8357,
+      "check": 11201061,
+      "scene": 1,
+      "switch_flag": 34,
+      "source_region": "RR_DODONGOS_CAVERN_ARMOS_ROOM",
+      "target_region": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
+      "condition_source": "catalog physical override",
+      "condition": "IsAdult || (HasItem(RG_POWER_BRACELET) && HasItem(RG_CLIMB)) || CanUse(RG_HOOKSHOT)",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8359,
+      "check": 11201063,
+      "scene": 1,
+      "switch_flag": 54,
+      "source_region": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "target_region": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
+      "condition_source": "catalog physical override",
+      "condition": "HasItem(RG_POWER_BRACELET)",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8365,
+      "check": 11201069,
+      "scene": 1,
+      "switch_flag": 33,
+      "source_region": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
+      "target_region": "RR_DODONGOS_CAVERN_LOBBY_SWITCH",
+      "condition_source": "native room graph",
+      "condition": "logic->HasFireSourceWithTorch()",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8451,
+      "check": 11202051,
+      "scene": 2,
+      "switch_flag": 59,
+      "source_region": "RR_JABU_JABUS_BELLY_BEGINNING",
+      "target_region": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "condition_source": "native room graph",
+      "condition": "logic->CanUseProjectile()",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8467,
+      "check": 11202067,
+      "scene": 2,
+      "switch_flag": 58,
+      "source_region": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "target_region": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
+      "condition_source": "native room graph",
+      "condition": "(logic->Get(LOGIC_JABU_LOWERED_PATH) || ((ctx->GetTrickOption(RT_JABU_BOSS_HOVER) || logic->BunnyHood()) && logic->CanUse(RG_HOVER_BOOTS))) && logic->HasItem(RG_POWER_BRACELET)",
+      "direct_any_age_latch": false,
+      "native_events": [
+        "LOGIC_JABU_LOWERED_PATH"
+      ]
+    },
+    {
+      "endpoint": 8469,
+      "check": 11202069,
+      "scene": 2,
+      "switch_flag": 56,
+      "source_region": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "target_region": "RR_JABU_JABUS_BELLY_FORK_WEST",
+      "condition_source": "native room graph",
+      "condition": "logic->Get(LOGIC_JABU_RUTO_IN_1F)",
+      "direct_any_age_latch": false,
+      "native_events": [
+        "LOGIC_JABU_RUTO_IN_1F"
+      ]
+    },
+    {
+      "endpoint": 8477,
+      "check": 11202077,
+      "scene": 2,
+      "switch_flag": 60,
+      "source_region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
+      "target_region": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "condition_source": "native room graph",
+      "condition": "logic->CanHitSwitch(ED_BOMB_THROW) || ((logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)) && logic->HasItem(RG_CLIMB) && logic->HasItem(RG_POWER_BRACELET) && (logic->HasItem(RG_POT_SOUL) || (logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_SPEAK_ZORA))))",
+      "direct_any_age_latch": false,
+      "native_events": [
+        "LOGIC_JABU_RUTO_IN_B1"
+      ]
+    },
+    {
+      "endpoint": 8609,
+      "check": 11203105,
+      "scene": 3,
+      "switch_flag": 37,
+      "source_region": "RR_FOREST_TEMPLE_LOBBY",
+      "target_region": "RR_FOREST_TEMPLE_NE_COURTYARD_LOWER",
+      "condition_source": "native room graph",
+      "condition": "logic->CanUse(RG_FAIRY_BOW) || logic->CanUse(RG_FAIRY_SLINGSHOT)",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8625,
+      "check": 11203121,
+      "scene": 3,
+      "switch_flag": 43,
+      "source_region": "RR_FOREST_TEMPLE_FALLING_ROOM",
+      "target_region": "RR_FOREST_TEMPLE_GREEN_POE_ROOM",
+      "condition_source": "native room graph",
+      "condition": "true",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8745,
+      "check": 11204137,
+      "scene": 4,
+      "switch_flag": 60,
+      "source_region": "RR_FIRE_TEMPLE_NARROW_PATH_ROOM",
+      "target_region": "RR_FIRE_TEMPLE_FIRE_WALL_CAGE",
+      "condition_source": "native room graph",
+      "condition": "logic->CanHitEyeTargets()",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8753,
+      "check": 11204145,
+      "scene": 4,
+      "switch_flag": 59,
+      "source_region": "RR_FIRE_TEMPLE_FIRE_MAZE_PLATFORMS",
+      "target_region": "RR_FIRE_TEMPLE_SOT_CAGE_UPPER_DOOR",
+      "condition_source": "native room graph",
+      "condition": "logic->CanUse(RG_MEGATON_HAMMER)",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8765,
+      "check": 11204157,
+      "scene": 4,
+      "switch_flag": 61,
+      "source_region": "RR_FIRE_TEMPLE_BASE_OF_COLLAPSING_STAIRS",
+      "target_region": "RR_FIRE_TEMPLE_ABOVE_FIRE_MAZE",
+      "condition_source": "native room graph",
+      "condition": "logic->Get(LOGIC_FIRE_HIT_STAIRS) && (logic->IsAdult || logic->Get(LOGIC_FIRE_CHILD_AT_TOP_OF_STAIRS)) && logic->HasItem(RG_POWER_BRACELET) && (!ctx->GetOption(RSK_SHUFFLE_CRATE_SOUL) || logic->HasItem(RG_CRATE_SOUL))",
+      "direct_any_age_latch": false,
+      "native_events": [
+        "LOGIC_FIRE_HIT_STAIRS",
+        "LOGIC_FIRE_CHILD_AT_TOP_OF_STAIRS"
+      ]
+    },
+    {
+      "endpoint": 8857,
+      "check": 11205145,
+      "scene": 5,
+      "switch_flag": 62,
+      "source_region": "RR_WATER_TEMPLE_3_JETS_SWITCH",
+      "target_region": "RR_WATER_TEMPLE_BLOCK_ROOM_STAIRS",
+      "condition_source": "native room graph",
+      "condition": "true",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8863,
+      "check": 11205151,
+      "scene": 5,
+      "switch_flag": 57,
+      "source_region": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
+      "target_region": "RR_WATER_TEMPLE_PILLAR_2F",
+      "condition_source": "native room graph",
+      "condition": "logic->HasFireSourceWithTorch() || logic->CanUse(RG_FAIRY_BOW)",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8877,
+      "check": 11205165,
+      "scene": 5,
+      "switch_flag": 62,
+      "source_region": "RR_WATER_TEMPLE_3_JETS_NO_SWITCH",
+      "target_region": "RR_WATER_TEMPLE_CANAL_ALCOVE",
+      "condition_source": "native room graph",
+      "condition": "(logic->IsChild && areaTable[RR_WATER_TEMPLE_3_JETS_SWITCH].Child()) || (logic->IsAdult && areaTable[RR_WATER_TEMPLE_3_JETS_SWITCH].Adult())",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8879,
+      "check": 11205167,
+      "scene": 5,
+      "switch_flag": 56,
+      "source_region": "RR_WATER_TEMPLE_SIDE_TOWER_1F",
+      "target_region": "RR_WATER_TEMPLE_TORCH_ROOM",
+      "condition_source": "native room graph",
+      "condition": "logic->WaterLevel(WL_LOW) && (logic->HasFireSourceWithTorch() || logic->CanUse(RG_FAIRY_BOW))",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8881,
+      "check": 11205169,
+      "scene": 5,
+      "switch_flag": 63,
+      "source_region": "RR_WATER_TEMPLE_HIGH_EMBLEM",
+      "target_region": "RR_WATER_TEMPLE_JET_LIFT_3F",
+      "condition_source": "catalog physical override",
+      "condition": "CanHitSwitch(ED_BOMB_THROW)",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8977,
+      "check": 11206161,
+      "scene": 6,
+      "switch_flag": 36,
+      "source_region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "target_region": "RR_SPIRIT_TEMPLE_SKULLTULA_STAIRS",
+      "condition_source": "native room graph",
+      "condition": "logic->HasItem(RG_POWER_BRACELET) || logic->SunlightArrows()",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8985,
+      "check": 11206169,
+      "scene": 6,
+      "switch_flag": 53,
+      "source_region": "RR_SPIRIT_TEMPLE_4F_CENTRAL",
+      "target_region": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "condition_source": "native room graph",
+      "condition": "logic->CanUse(RG_ZELDAS_LULLABY)",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 8995,
+      "check": 11206179,
+      "scene": 6,
+      "switch_flag": 47,
+      "source_region": "RR_SPIRIT_TEMPLE_4_ARMOS",
+      "target_region": "RR_SPIRIT_TEMPLE_CHEST_STAIRS",
+      "condition_source": "native room graph",
+      "condition": "true",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 9005,
+      "check": 11206189,
+      "scene": 6,
+      "switch_flag": 36,
+      "source_region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "target_region": "RR_SPIRIT_TEMPLE_EMPTY_STAIRS",
+      "condition_source": "native room graph",
+      "condition": "logic->HasItem(RG_POWER_BRACELET) || logic->SunlightArrows()",
+      "direct_any_age_latch": false,
+      "native_events": []
+    },
+    {
+      "endpoint": 9009,
+      "check": 11206193,
+      "scene": 6,
+      "switch_flag": 35,
+      "source_region": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
+      "target_region": "RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD",
+      "condition_source": "native room graph",
+      "condition": "(logic->HasExplosives() && (!ctx->GetOption(RSK_SHUFFLE_ROCK_SOUL) || logic->HasItem(RG_ROCK_SOUL))) || (ctx->GetOption(RSK_SUNLIGHT_ARROWS) && logic->CanUse(RG_LIGHT_ARROWS))",
+      "direct_any_age_latch": false,
+      "native_events": []
+    }
+  ],
+  "focused_free_predicates": {
+    "8355": "Shares native switch34 with8357. Both catalog doorway centers are at y531. The supplied assets do not include the switch actor position or actionable surface geometry; the stricter8357 approach alone does not establish which condition belongs on8355.",
+    "8625": "Native source exposes a free local Falling Room approach. Switch43 actor position/type is not present in supplied assets, so no additional item gate is justified solely by the shutter flag.",
+    "8857": "Already originates in the 3 Jets Switch subregion. The opposite8877 source is separated from that action site and now checks same-age reachability.",
+    "8995": "Native source exposes a free 4 Armos local approach. Switch47 actor position/type is not present in supplied assets, so no additional item gate is justified solely by the shutter flag."
+  },
+  "event_dependency_review": [
+    "All24 selected direct source predicates are free of AnyAgeTime and RegionAnyAgeTime calls. Current weapon, song, strength, soul and age checks are retained.",
+    "Jabu8467 refers to lowered-platform access but separately requires Grab;8477 separately requires a current-age switch shot or the full local carrying/climb route.",
+    "Jabu8469 uses Ruto availability. EnRu1 func_80AEE2F8 records INFTABLE_140 when she stands on switch0x38; func_80AEFF94 can respawn that Ruto from the record. A Player-hook-only replay inventory is insufficient to conclude that Ruto availability is lost on reload.",
+    "Fire8765 refers to collapsed stairs and child access to their top; it separately requires Grab and Crate Soul for the actual floor-switch action. It does not latch temporary switch61.",
+    "Water8879 requires a water-level route and a currently usable torch/fire/bow action; the temporary door flag itself is not latched."
+  ],
+  "limits": [
+    "This review does not certify missing scene actor layouts or geometry. No additional gate was invented from a switch flag alone.",
+    "The API and BFS conclusions are source review; sibling focused runtime tests and root full-fill tests provide execution coverage."
+  ],
+  "reference_runtime_version": "0.6.8",
+  "reference_runtime_path": "/workspace/scratch/8fddab5b8169/ap-runtime-068",
+  "reference_runtime_method_ast_parity_with_067": {
+    "CollectionState.can_reach_region": true,
+    "World._register_rule_indirects": true,
+    "CachedRuleBuilderWorld.reached_region": true,
+    "NestedRule.Resolved.__post_init__": true
+  },
+  "final_jabu_delta_review": [
+    {
+      "source": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST",
+      "target": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
+      "native_exported_parity": true,
+      "generic_damage_bypass_removed": true
+    },
+    {
+      "source": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH",
+      "target": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "condition": "logic->Get(LOGIC_JABU_EAST_TENTACLE)",
+      "native_exported_parity": true,
+      "generic_damage_bypass_removed": true
+    },
+    {
+      "source": "RR_JABU_JABUS_BELLY_TO_FORK_NORTH_EAST",
+      "target": "RR_JABU_JABUS_BELLY_FORKED_CORRIDOR",
+      "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE)",
+      "native_exported_parity": true,
+      "generic_damage_bypass_removed": true
+    }
+  ],
+  "related_medallion_regression": {
+    "report": "/workspace/scratch/8fddab5b8169/tests/trial_medallion_188_ap_validation.json",
+    "passed": true,
+    "test_cases": 13,
+    "runtime": "Archipelago 0.6.8",
+    "elapsed_seconds": 10.727,
+    "report_sha256": "14e361e7e69a690da5a0c1983f50f400cfc6a00374935390b84daa7592adca14"
+  }
+}

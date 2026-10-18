@@ -81,8 +81,10 @@ void RegionTable_Init_JabuJabusBelly() {
 
     areaTable[RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH] = Region("Jabu Jabus Belly Water Switch Room North", SCENE_JABU_JABU, {
         //Events
-        //RANDOTODO check how doorsanity handles ruto
-        EVENT_ACCESS(LOGIC_JABU_RUTO_IN_1F, logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SPEAK_ZORA) && logic->HasItem(RG_POWER_BRACELET)),
+        // Bringing Ruto up also needs a way to open the water-room exit:
+        // a ranged switch hit, or the climb/throw route from its ledge.
+        // AP keeps the essential carry doors as native room transitions.
+        EVENT_ACCESS(LOGIC_JABU_RUTO_IN_1F, logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_SPEAK_ZORA) && logic->HasItem(RG_POWER_BRACELET) && (logic->HasItem(RG_CLIMB) || logic->CanHitSwitch(ED_BOMB_THROW))),
     }, {
         //Locations
         LOCATION(RC_JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM, logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)),
@@ -102,7 +104,9 @@ void RegionTable_Init_JabuJabusBelly() {
         ENTRANCE(RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH, logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)),
         ENTRANCE(RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE, (logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)) && logic->HasItem(RG_CLIMB)),
         //Adult can barely reach it with BGS, but it's finnicky enough to be a trick, and too niche to be worth adding yet (only relevant in doorsanity)
-        ENTRANCE(RR_JABU_JABUS_BELLY_LIFT_ROOM,               logic->CanHitSwitch(ED_BOMB_THROW)),
+        // This physical door also opens after reaching the ledge and throwing
+        // a pot or Ruto. Include that route in its traversal check predicate.
+        ENTRANCE(RR_JABU_JABUS_BELLY_LIFT_ROOM,               logic->CanHitSwitch(ED_BOMB_THROW) || ((logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOVER_BOOTS)) && logic->HasItem(RG_CLIMB) && logic->HasItem(RG_POWER_BRACELET) && (logic->HasItem(RG_POT_SOUL) || (logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_SPEAK_ZORA))))),
     });
 
     areaTable[RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE] = Region("Jabu Jabus Belly Water Switch Room Ledge", SCENE_JABU_JABU, {
@@ -122,7 +126,7 @@ void RegionTable_Init_JabuJabusBelly() {
         ENTRANCE(RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH, true),
         ENTRANCE(RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH, true),
         //Assumes RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH access
-        ENTRANCE(RR_JABU_JABUS_BELLY_LIFT_ROOM,               logic->HasItem(RG_POWER_BRACELET)),
+        ENTRANCE(RR_JABU_JABUS_BELLY_LIFT_ROOM,               logic->HasItem(RG_POWER_BRACELET) && (logic->HasItem(RG_POT_SOUL) || (logic->Get(LOGIC_JABU_RUTO_IN_B1) && logic->HasItem(RG_SPEAK_ZORA)))),
     });
 
     areaTable[RR_JABU_JABUS_BELLY_FORKED_CORRIDOR] = Region("Jabu Jabus Belly Forked Corridor", SCENE_JABU_JABU, {}, {}, {
@@ -146,10 +150,10 @@ void RegionTable_Init_JabuJabusBelly() {
         ENTRANCE(RR_JABU_JABUS_BELLY_FORKED_CORRIDOR, true),
     });
 
-    // this handles spawning in tentacle
+    // Direct arrivals still need the barrier cleared; taking damage does not guarantee passage.
     areaTable[RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST] = Region("Jabu Jabus Belly To Fork North West", SCENE_JABU_JABU, {}, {}, {
         //Exits
-        ENTRANCE(RR_JABU_JABUS_BELLY_FORKED_CORRIDOR, logic->Get(LOGIC_JABU_WEST_TENTACLE) || logic->TakeDamage()),
+        ENTRANCE(RR_JABU_JABUS_BELLY_FORKED_CORRIDOR, logic->Get(LOGIC_JABU_WEST_TENTACLE)),
         ENTRANCE(RR_JABU_JABUS_BELLY_FORK_NORTH_WEST, logic->Get(LOGIC_JABU_WEST_TENTACLE)),
     });
 
@@ -162,10 +166,10 @@ void RegionTable_Init_JabuJabusBelly() {
         ENTRANCE(RR_JABU_JABUS_BELLY_TO_FORK_NORTH_WEST, AnyAgeTime([]{return logic->CanKillEnemy(RE_SHABOM, ED_CLOSE, false, 9);})),
     });
 
-    // this handles spawning in tentacle
+    // Direct arrivals still need the barrier cleared; taking damage does not guarantee passage.
     areaTable[RR_JABU_JABUS_BELLY_TO_FORK_NORTH] = Region("Jabu Jabus Belly To Fork North", SCENE_JABU_JABU, {}, {}, {
         //Exits
-        ENTRANCE(RR_JABU_JABUS_BELLY_FORKED_CORRIDOR, logic->Get(LOGIC_JABU_EAST_TENTACLE) || logic->TakeDamage()),
+        ENTRANCE(RR_JABU_JABUS_BELLY_FORKED_CORRIDOR, logic->Get(LOGIC_JABU_EAST_TENTACLE)),
         ENTRANCE(RR_JABU_JABUS_BELLY_FORK_NORTH,      logic->Get(LOGIC_JABU_EAST_TENTACLE)),
     });
 
@@ -174,14 +178,14 @@ void RegionTable_Init_JabuJabusBelly() {
         EVENT_ACCESS(LOGIC_JABU_NORTH_TENTACLE, logic->CanKillEnemy(RE_TENTACLE, ED_BOOMERANG)),
     }, {}, {
         //Exits
-        //implied logic->CanKillEnemy(RE_BARI)
-        ENTRANCE(RR_JABU_JABUS_BELLY_TO_FORK_NORTH, logic->Get(LOGIC_JABU_NORTH_TENTACLE)),
+        // The room-clear shutter also requires the four Biri, whose soul is separate from the tentacle.
+        ENTRANCE(RR_JABU_JABUS_BELLY_TO_FORK_NORTH, logic->Get(LOGIC_JABU_NORTH_TENTACLE) && AnyAgeTime([]{return logic->CanKillEnemy(RE_BARI, ED_CLOSE, true, 4);})),
     });
 
-    // this handles spawning in tentacle
+    // Direct arrivals still need the barrier cleared; taking damage does not guarantee passage.
     areaTable[RR_JABU_JABUS_BELLY_TO_FORK_NORTH_EAST] = Region("Jabu Jabus Belly To Fork North East", SCENE_JABU_JABU, {}, {}, {
         //Exits
-        ENTRANCE(RR_JABU_JABUS_BELLY_FORKED_CORRIDOR, logic->Get(LOGIC_JABU_WEST_TENTACLE) || logic->TakeDamage()),
+        ENTRANCE(RR_JABU_JABUS_BELLY_FORKED_CORRIDOR, logic->Get(LOGIC_JABU_WEST_TENTACLE)),
         ENTRANCE(RR_JABU_JABUS_BELLY_FORK_NORTH_EAST, logic->Get(LOGIC_JABU_WEST_TENTACLE)),
     });
 
@@ -196,7 +200,7 @@ void RegionTable_Init_JabuJabusBelly() {
     areaTable[RR_JABU_JABUS_BELLY_FORK_EAST] = Region("Jabu Jabus Belly Fork East", SCENE_JABU_JABU, {}, {
         //Locations
         //We can kill the Stingers with ruto
-        LOCATION(RC_JABU_JABUS_BELLY_BOOMERANG_CHEST, (logic->Get(LOGIC_JABU_RUTO_IN_1F) || logic->CanKillEnemy(RE_STINGER, ED_CLOSE, true, 4)) && logic->CanOpenLargeChest()),
+        LOCATION(RC_JABU_JABUS_BELLY_BOOMERANG_CHEST, logic->HasEnemySoul(RE_STINGER) && (logic->Get(LOGIC_JABU_RUTO_IN_1F) || logic->CanKillEnemy(RE_STINGER, ED_CLOSE, true, 4)) && logic->CanOpenLargeChest()),
     }, {
         //Exits
         ENTRANCE(RR_JABU_JABUS_BELLY_FORKED_CORRIDOR, true),

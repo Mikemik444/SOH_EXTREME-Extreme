@@ -1789,6 +1789,9 @@ void EntranceShuffler::ApplyEntranceOverrides() {
         Entrance* entrance = entranceMap[entranceOverride.index];
         Entrance* overrideEntrance = entranceMap[entranceOverride.override];
 
+        // AP room-door targets use a separate exact graph in Universal Tracker.
+        // They have no native scene-entrance object; never dereference a missing row.
+        if (!entrance || !overrideEntrance) continue;
         entrance->Disconnect();
         entrance->Connect(overrideEntrance->GetOriginalConnectedRegionKey());
         entrance->SetAsShuffled();

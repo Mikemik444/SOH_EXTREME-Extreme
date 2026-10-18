@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "tests_run": 21,
+  "failures": 0,
+  "errors": 0,
+  "scope": "Focused server hint metadata, reveal command authorization, transport and lifecycle checks",
+  "limitations": "No live AP server or complete native game/UI execution in this test.",
+  "source_sha256": {
+    "archipelago/soh_extreme/HintBridge.py": "e00318acd27bb0d1662caa02ef6acbdc248bcc84c30687f4d6129620feca71e1",
+    "archipelago/soh_extreme/TrackerClient.py": "9000860b0ae6aada834d40721ec178ff75257159e7c395252169094120796e58",
+    "tools/tests/test_hint_bridge.py": "1404773cf9da13007b53c7ec72243359e13734c63aa1792c702a0829866ea40c"
+  }
+}

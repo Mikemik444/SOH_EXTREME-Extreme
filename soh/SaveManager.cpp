@@ -298,6 +298,7 @@ void SaveManager::LoadRandomizer() {
     std::string archipelagoServer;
     std::string archipelagoSlot;
     std::string archipelagoSettingsJson;
+    std::string archipelagoRevealedHintTargetsJson;
     SohExtreme::SaveConnectionIdentity archipelagoIdentity;
     int archipelagoMetadataVersion = 0;
     SaveManager::Instance->LoadData("archipelagoMetadataVersion", archipelagoMetadataVersion, 0);
@@ -306,6 +307,7 @@ void SaveManager::LoadRandomizer() {
     SaveManager::Instance->LoadData("archipelagoServer", archipelagoServer, std::string{});
     SaveManager::Instance->LoadData("archipelagoSlot", archipelagoSlot, std::string{});
     SaveManager::Instance->LoadData("archipelagoSettingsJson", archipelagoSettingsJson, std::string{});
+    SaveManager::Instance->LoadData("archipelagoRevealedHintTargets", archipelagoRevealedHintTargetsJson, std::string{});
     SaveManager::Instance->LoadData("archipelagoSeedName", archipelagoIdentity.seed, std::string{});
     SaveManager::Instance->LoadData("archipelagoTeam", archipelagoIdentity.team, -1);
     SaveManager::Instance->LoadData("archipelagoSlotId", archipelagoIdentity.slot, -1);
@@ -323,6 +325,9 @@ void SaveManager::LoadRandomizer() {
     ArchipelagoClient::GetInstance().LoadSaveMetadata(archipelagoSave, archipelagoReceivedItemCount,
                                                        archipelagoServer, archipelagoSlot, archipelagoSettingsJson, archipelagoIdentity);
     ArchipelagoClient::GetInstance().LoadFallbackNpcSpeechHashes(archipelagoFallbackNpcSpeechHashes);
+    // The client validates both bounds and seed/team/slot after metadata load.
+    // Old readHints flags cannot prove that every page was actually displayed.
+    ArchipelagoClient::GetInstance().LoadRevealedHintTargetsJson(archipelagoRevealedHintTargetsJson);
     size_t pendingLocationCount = 0;
     std::vector<int64_t> pendingLocations;
     SaveManager::Instance->LoadData("archipelagoPendingLocationCount", pendingLocationCount, (size_t)0);
@@ -541,7 +546,7 @@ void SaveManager::SaveRandomizer(SaveContext* saveContext, int sectionID, bool f
 
     SaveManager::Instance->SaveData("pendingIceTrapCount", saveContext->ship.pendingIceTrapCount);
 
-    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 4);
+    SaveManager::Instance->SaveData("archipelagoMetadataVersion", 5);
     SaveManager::Instance->SaveData("archipelagoSave", lightweightArchipelagoSave);
     if (lightweightArchipelagoSave) {
         const auto& archipelago = *gSavingArchipelagoSnapshot;
@@ -555,6 +560,7 @@ void SaveManager::SaveRandomizer(SaveContext* saveContext, int sectionID, bool f
         // It is restored before scene actor initialization on the next load, eliminating
         // the race where local menu values were visible until networking finished.
         SaveManager::Instance->SaveData("archipelagoSettingsJson", archipelago.settingsJson);
+        SaveManager::Instance->SaveData("archipelagoRevealedHintTargets", archipelago.revealedHintTargetsJson);
 
         SaveManager::Instance->SaveData("archipelagoPendingLocationCount", archipelago.pendingLocations.size());
         SaveManager::Instance->SaveArray("archipelagoPendingLocations", archipelago.pendingLocations.size(),

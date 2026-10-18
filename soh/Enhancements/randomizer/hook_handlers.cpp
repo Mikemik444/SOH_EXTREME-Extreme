@@ -8,6 +8,7 @@
 #include "soh/Enhancements/randomizer/fishsanity.h"
 #include "soh/Enhancements/randomizer/static_data.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
+#include "soh/Enhancements/GameplayDeliverySafety.h"
 #include "soh/SohGui/ImGuiUtils.h"
 #include "soh/Notification/Notification.h"
 #include "soh/SaveManager.h"
@@ -2159,7 +2160,7 @@ void RandomizerOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_l
             s16 originalEntrance = (s16)va_arg(args, int);
 
             // In Entrance rando, if our respawnFlag is set for a grotto return, we don't want the void out to happen
-            if (*should == true && RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES)) {
+            if (*should == true && (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES) || Archipelago_EntranceShuffleActive())) {
                 // Check for dungeon special entrances that are randomized to a new location
                 if (std::find(entrPersistTempFlags.begin(), entrPersistTempFlags.end(), originalEntrance) !=
                         entrPersistTempFlags.end() &&
@@ -2231,9 +2232,13 @@ void RandomizerOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_l
     va_end(args);
 }
 
+static void RandomizerResetNoSwimRecovery();
+static void RandomizerBeginNoSwimScene();
+
 void RandomizerOnSceneInitHandler(int16_t sceneNum) {
+    RandomizerBeginNoSwimScene();
     // ENTRTODO: Move all entrance rando handling to a dedicated file
-    if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES)) {
+    if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES) || Archipelago_EntranceShuffleActive()) {
         // In ER, override roomNum to load based on scene and spawn during scene init
         if (gSaveContext.respawnFlag <= 0) {
             s8 origRoom = gPlayState->roomCtx.curRoom.num;
@@ -2294,7 +2299,7 @@ void RandomizerOnSceneInitHandler(int16_t sceneNum) {
 
 void RandomizerAfterSceneCommandsHandler(int16_t sceneNum) {
     // ENTRTODO: Move all entrance rando handling to a dedicated file
-    if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES)) {
+    if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES) || Archipelago_EntranceShuffleActive()) {
         Entrance_OverrideWeatherState();
     }
 }
@@ -2678,7 +2683,7 @@ void RandomizerOnActorInitHandler(void* actorRef) {
     }
 
     // In ER, once Link has spawned we know the scene has loaded, so we can sanitize the last known entrance type
-    if (actor->id == ACTOR_PLAYER && RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES)) {
+    if (actor->id == ACTOR_PLAYER && (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES) || Archipelago_EntranceShuffleActive())) {
         Grotto_SanitizeEntranceType();
     }
 }
@@ -2756,7 +2761,7 @@ void RandomizerOnActorUpdateHandler(void* refActor) {
 // In ER, warp songs lead to their shuffled entrance rather than their warp pad. Every warp path commits its
 // destination through Environment_WarpSongLeave, so that is the one place the override has to happen.
 void RandomizerOnWarpSongLeaveHandler() {
-    if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES)) {
+    if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES) || Archipelago_EntranceShuffleActive()) {
         Entrance_SetWarpSongEntrance();
     }
 }
@@ -2795,6 +2800,217 @@ std::unordered_map<s32, SpecialRespawnInfo> swimSpecialRespawnInfo = {
       { { -1580.0f, 150.0f, 1670.0f }, 8000 } },
 };
 
+// Keep a confirmed dry position separately from the game's entrance respawn.
+// A shuffled room arrival can have a normal dungeon entrance as its scene
+// anchor; that anchor is not the room or side that the player actually entered.
+struct NoSwimRecoveryState {
+    RespawnData lastDryPoint{};
+    s16 lastDryScene = -1;
+    s32 lastDryAge = -1;
+    uint64_t sceneVisit = 0;
+    uint64_t lastDryVisit = 0;
+    bool hasDryPoint = false;
+    bool triedArrivalReturn = false;
+    bool triedKnownRespawn = false;
+    bool triedGrottoReload = false;
+    bool triedNativeVoid = false;
+    bool triedAgeSpawn = false;
+};
+
+static NoSwimRecoveryState noSwimRecovery;
+
+static void RandomizerResetNoSwimRecovery() {
+    noSwimRecovery = {};
+}
+
+static void RandomizerBeginNoSwimScene() {
+    ++noSwimRecovery.sceneVisit;
+}
+
+static void RandomizerStartNoSwimTransition(s16 entrance) {
+    // entrance is already resolved. Sending it through Entrance_OverrideNextIndex
+    // a second time would turn a rescue into another shuffled traversal.
+    gPlayState->nextEntranceIndex = entrance;
+    gPlayState->transitionTrigger = TRANS_TRIGGER_START;
+    gPlayState->transitionType = TRANS_TYPE_FADE_BLACK;
+    gSaveContext.nextTransitionType = TRANS_TYPE_FADE_BLACK;
+    gSaveContext.nextCutsceneIndex = 0xFFEF;
+    gSaveContext.cutsceneTrigger = 0;
+    gSaveContext.entranceSpeed = 0.0f;
+}
+
+static void RandomizerRememberDryPosition(Player* player) {
+    if (!SohExtreme::CanReceiveGameplayReward(gPlayState) || !SohExtreme::IsPlayerOnDryGround(player) ||
+        player->actor.floorBgId != BGCHECK_SCENE || gPlayState->roomCtx.status != 0 ||
+        gPlayState->sceneNum == SCENE_GROTTOS || gPlayState->sceneNum == SCENE_FAIRYS_FOUNTAIN ||
+        gSaveContext.entranceIndex < 0 || gSaveContext.entranceIndex >= ENTRANCE_TABLE_SIZE) {
+        return;
+    }
+
+    // A position on a movable block/platform is unsafe after room reload. Only
+    // static, grounded, non-water gameplay positions can become recovery points.
+    auto& point = noSwimRecovery.lastDryPoint;
+    point = {};
+    point.entranceIndex = gSaveContext.entranceIndex;
+    point.roomIndex = gPlayState->roomCtx.curRoom.num;
+    point.playerParams = 0x0DFF;
+    point.pos = player->actor.world.pos;
+    point.yaw = player->actor.shape.rot.y;
+    point.data = 1;
+    point.tempSwchFlags = gPlayState->actorCtx.flags.tempSwch;
+    point.tempCollectFlags = gPlayState->actorCtx.flags.tempCollect;
+    noSwimRecovery.lastDryScene = gPlayState->sceneNum;
+    noSwimRecovery.lastDryAge = gSaveContext.linkAge;
+    noSwimRecovery.lastDryVisit = noSwimRecovery.sceneVisit;
+    noSwimRecovery.hasDryPoint = true;
+    noSwimRecovery.triedArrivalReturn = false;
+    noSwimRecovery.triedKnownRespawn = false;
+    noSwimRecovery.triedGrottoReload = false;
+    noSwimRecovery.triedNativeVoid = false;
+    noSwimRecovery.triedAgeSpawn = false;
+}
+
+static bool RandomizerRestoreDryPosition() {
+    if (!noSwimRecovery.hasDryPoint || noSwimRecovery.lastDryAge != gSaveContext.linkAge) {
+        return false;
+    }
+
+    RespawnData point = noSwimRecovery.lastDryPoint;
+    const bool currentVisit = noSwimRecovery.lastDryScene == gPlayState->sceneNum &&
+                              noSwimRecovery.lastDryVisit == noSwimRecovery.sceneVisit;
+    // If water level/state changed since this point was recorded, never retry
+    // the same failed point indefinitely. Fresh dry gameplay will rearm it.
+    noSwimRecovery.hasDryPoint = false;
+    if (currentVisit) {
+        point.tempSwchFlags = gPlayState->actorCtx.flags.tempSwch;
+        point.tempCollectFlags = gPlayState->actorCtx.flags.tempCollect;
+    }
+
+    Archipelago_CancelEntranceTransition();
+    // This only normalizes grotto bookkeeping; it does not apply the shuffled
+    // route table. The stored index is an actual scene entrance, not a door ID.
+    Grotto_OverrideSpecialEntrance(point.entranceIndex);
+    gSaveContext.respawn[RESPAWN_MODE_DOWN] = point;
+    if (currentVisit) {
+        // Voluntarily entering water still has the normal void-out cost.
+        gSaveContext.respawnFlag = 1;
+    } else {
+        // A forced submerged arrival never offered a dry position to stand on.
+        // Restore the previous scene/room without damaging the player again.
+        gSaveContext.respawn[RESPAWN_MODE_RETURN] = point;
+        gSaveContext.respawnFlag = 2;
+    }
+    RandomizerStartNoSwimTransition(point.entranceIndex);
+    return true;
+}
+
+static bool RandomizerTryKnownDryRespawn() {
+    // AP room endpoints reuse vanilla scene anchors. A Water Temple anchor
+    // cannot justify moving an arbitrary shuffled room to the main entrance.
+    if (Archipelago_EntranceShuffleActive() || noSwimRecovery.triedKnownRespawn ||
+        gSaveContext.entranceIndex < 0 || gSaveContext.entranceIndex >= ENTRANCE_TABLE_SIZE) {
+        return false;
+    }
+    const auto it = swimSpecialRespawnInfo.find(gSaveContext.entranceIndex);
+    if (it == swimSpecialRespawnInfo.end()) {
+        return false;
+    }
+    const auto& entrance = gEntranceTable[gSaveContext.entranceIndex];
+    if (gPlayState->sceneNum != entrance.scene ||
+        gPlayState->roomCtx.curRoom.num != gPlayState->setupEntranceList[entrance.spawn].room) {
+        return false;
+    }
+    noSwimRecovery.triedKnownRespawn = true;
+    Archipelago_CancelEntranceTransition();
+    Play_SetupRespawnPoint(gPlayState, RESPAWN_MODE_DOWN, 0x0DFF);
+    gSaveContext.respawn[RESPAWN_MODE_DOWN].pos = it->second.pos;
+    gSaveContext.respawn[RESPAWN_MODE_DOWN].yaw = it->second.yaw;
+    gSaveContext.respawnFlag = 1;
+    RandomizerStartNoSwimTransition(gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex);
+    return true;
+}
+
+static void RandomizerRecoverWithoutSwim() {
+    // Grottos have their own content/return state and do not refresh DOWN on
+    // entry. Reload their actual entry once before considering a source return.
+    if (gPlayState->sceneNum == SCENE_GROTTOS && !noSwimRecovery.triedGrottoReload) {
+        noSwimRecovery.triedGrottoReload = true;
+        Archipelago_CancelEntranceTransition();
+        gSaveContext.respawnFlag = 0;
+        RandomizerStartNoSwimTransition(gSaveContext.entranceIndex);
+        return;
+    }
+    if (RandomizerRestoreDryPosition()) {
+        return;
+    }
+    if (!noSwimRecovery.triedArrivalReturn) {
+        noSwimRecovery.triedArrivalReturn = true;
+        // The AP runtime consumes the actual completed source and resolves its
+        // reverse once. This rescue never records a physical traversal check.
+        if (Archipelago_EntranceReturnFromUnsafeArrival()) {
+            return;
+        }
+    }
+    if (RandomizerTryKnownDryRespawn()) {
+        return;
+    }
+    if (!Archipelago_EntranceShuffleActive() && !noSwimRecovery.triedNativeVoid) {
+        noSwimRecovery.triedNativeVoid = true;
+        Archipelago_CancelEntranceTransition();
+        Play_TriggerVoidOut(gPlayState);
+        Grotto_ForceGrottoReturnOnSpecialEntrance();
+        return;
+    }
+    if (!noSwimRecovery.triedAgeSpawn) {
+        noSwimRecovery.triedAgeSpawn = true;
+        Archipelago_CancelEntranceTransition();
+        const s16 currentEntrance = gSaveContext.entranceIndex;
+        s16 destination;
+        if (Archipelago_EntranceSavewarp()) {
+            destination = gSaveContext.entranceIndex;
+            // Savewarp selects the next scene; the scene still being torn down
+            // must retain its own current entrance until that transition ends.
+            gSaveContext.entranceIndex = currentEntrance;
+        } else {
+            gSaveContext.respawnFlag = 0;
+            const s16 spawn = LINK_IS_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_HYRULE_FIELD_10;
+            destination = Grotto_OverrideSpecialEntrance(Entrance_GetOverride(spawn));
+        }
+        RandomizerStartNoSwimTransition(destination);
+        return;
+    }
+
+    // Legacy seeds can start at a submerged door before any dry history exists.
+    // A second unsafe spawn must have a finite escape, independent of all maps.
+    // Use the ordinary dry doorway inside Link's House, with no item grants,
+    // entrance-check report, or Swim override. New seeds validate their starts.
+    SPDLOG_WARN("[Randomizer] Unsafe water arrival and age spawn have no dry recovery; returning to Link's House");
+    Notification::Emit({ .message = "Unsafe water spawn: returned to Link's House. Swim is still required." });
+    Archipelago_CancelEntranceTransition();
+    Grotto_OverrideSpecialEntrance(ENTR_LINKS_HOUSE_1);
+    gSaveContext.respawnFlag = 0;
+    RandomizerStartNoSwimTransition(ENTR_LINKS_HOUSE_1);
+}
+
+static void RandomizerUpdateNoSwimRecovery() {
+    if (!gPlayState || Flags_GetRandomizerInf(RAND_INF_CAN_SWIM) ||
+        gSaveContext.health <= 0 || gSaveContext.gameMode != GAMEMODE_NORMAL ||
+        gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
+        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF ||
+        gPlayState->transitionMode != TRANS_MODE_OFF || GameInteractor::IsGameplayPaused()) {
+        return;
+    }
+    Player* player = GET_PLAYER(gPlayState);
+    if (!player) {
+        return;
+    }
+    if (player->stateFlags1 & PLAYER_STATE1_IN_WATER) {
+        RandomizerRecoverWithoutSwim();
+    } else {
+        RandomizerRememberDryPosition(player);
+    }
+}
+
 f32 triforcePieceScale;
 
 void RandomizerOnPlayerUpdateHandler() {
@@ -2802,39 +3018,7 @@ void RandomizerOnPlayerUpdateHandler() {
     // completing the song event. Run in gameplay, not during scene teardown.
     CompleteArchipelagoOcarinaSong();
 
-    // Swim is required for all water contact in EXTREME. Iron Boots do not
-    // bypass the ability; retain the existing safe entrance/Water Temple reset.
-    if ((GET_PLAYER(gPlayState)->stateFlags1 & PLAYER_STATE1_IN_WATER) && !Flags_GetRandomizerInf(RAND_INF_CAN_SWIM) &&
-        gPlayState->transitionTrigger == TRANS_TRIGGER_OFF) {
-        // if you void out in water temple without swim you get instantly kicked out to prevent softlocks
-        if (gPlayState->sceneNum == SCENE_WATER_TEMPLE) {
-            GameInteractor::RawAction::TeleportPlayer(
-                Entrance_OverrideNextIndex(ENTR_LAKE_HYLIA_OUTSIDE_TEMPLE)); // lake hylia from water temple
-        } else {
-            auto respawn = swimSpecialRespawnInfo.find(gSaveContext.entranceIndex);
-            if (respawn != swimSpecialRespawnInfo.end()) {
-                Play_SetupRespawnPoint(gPlayState, RESPAWN_MODE_DOWN, 0xDFF);
-                if (gPlayState->sceneNum == gEntranceTable[gSaveContext.entranceIndex].scene) {
-                    gSaveContext.respawn[RESPAWN_MODE_DOWN].roomIndex =
-                        gPlayState->setupEntranceList[gEntranceTable[gSaveContext.entranceIndex].spawn].room;
-                }
-                gSaveContext.respawn[RESPAWN_MODE_DOWN].pos = respawn->second.pos;
-                gSaveContext.respawn[RESPAWN_MODE_DOWN].yaw = respawn->second.yaw;
-            }
-
-            if (gPlayState->sceneNum == SCENE_GROTTOS) {
-                // RESPAWN_MODE_DOWN isn't refreshed on grotto entry, reload grotto instead
-                gPlayState->nextEntranceIndex = gSaveContext.entranceIndex;
-                gPlayState->transitionTrigger = TRANS_TRIGGER_START;
-                gPlayState->transitionType = TRANS_TYPE_FADE_BLACK;
-                gSaveContext.nextTransitionType = TRANS_TYPE_FADE_BLACK;
-                gSaveContext.respawnFlag = 0;
-            } else {
-                Play_TriggerVoidOut(gPlayState);
-                Grotto_ForceGrottoReturnOnSpecialEntrance();
-            }
-        }
-    }
+    RandomizerUpdateNoSwimRecovery();
 
     if (!GameInteractor::IsGameplayPaused()) {
         // Warp to credits once item queue has drained to avoid losing queued items
@@ -2893,6 +3077,8 @@ void RandomizerOnPlayDestroyHandler() {
 }
 
 void RandomizerOnExitGameHandler(int32_t fileNum) {
+    RandomizerResetNoSwimRecovery();
+    Archipelago_CancelPendingEntranceSpawn();
     // When going from a rando save to a vanilla save within the same game instance
     // we need to reset the entrance table back to its vanilla state
     Entrance_ResetEntranceTable();
@@ -2902,7 +3088,7 @@ void RandomizerOnKaleidoscopeUpdateHandler(int16_t inDungeonScene) {
     static uint16_t prevKaleidoState = 0;
 
     // In ER, handle overriding the game over respawn entrance and dealing with death warp to from grottos
-    if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES)) {
+    if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES) || Archipelago_EntranceShuffleActive()) {
         if (prevKaleidoState == 0x10 && gPlayState->pauseCtx.state == 0x11 && gPlayState->pauseCtx.promptChoice == 0) {
             // Needs to be called before Play_TriggerRespawn when transitioning from state 0x10 to 0x11
             Entrance_SetGameOverEntrance();
@@ -2945,6 +3131,8 @@ static void RandomizerRegisterHooks() {
 
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnLoadGame>([](int32_t fileNum) {
         ShipInit::Init("IS_RANDO");
+        RandomizerResetNoSwimRecovery();
+        Archipelago_CancelPendingEntranceSpawn();
 
         randomizerQueuedChecks = std::queue<RandomizerCheck>();
         randomizerQueuedCheck = RC_UNKNOWN_CHECK;
@@ -2995,8 +3183,10 @@ static void RandomizerRegisterHooks() {
         // Setup the modified entrance table and entrance shuffle table for rando
         Entrance_Init();
 
-        // Handle randomized spawn positions after the save context has been setup from load
-        if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES)) {
+        // Handle randomized spawn positions after the save context has been setup from load.
+        // An AP file with uncached slot data still records its one pending load
+        // request; the verified map may arrive after this OnLoadGame callback.
+        if (RAND_GET_OPTION(RSK_SHUFFLE_ENTRANCES) || Archipelago_IsCurrentSaveFile()) {
             Entrance_SetSavewarpEntrance();
         }
 

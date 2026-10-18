@@ -1,0 +1,1270 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: King Zora",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: King Zora",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Kokiri Forest Exit Boy",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Kokiri Forest Exit Boy",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Valley Bridge Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Valley Bridge Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Hyrule Castle Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Hyrule Castle Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Fortress Gate Guard",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Fortress Gate Guard",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Training Ground Guard",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Training Ground Guard",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Fortress Gate Operator",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Fortress Gate Operator",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Kakariko Mountain Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Kakariko Mountain Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: King Zora",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: King Zora",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: King Zora",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Climb"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Talon",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Talon",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Talon",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Valley Cucco Keeper",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Archery Host",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "NPC Speech: Gerudo Fortress Ground Resident",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Mido From Outside Deku Tree",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Mido From Outside Deku Tree",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "ZD Deliver Ruto's Letter",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "ZD Deliver Ruto's Letter",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Kak Gate",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Kak Gate",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Kak Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Kak Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "GF Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "GF Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "GF Gate Outside",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "GF Gate Outside",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "GTG Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "GTG Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "ZD King Zora Thawed",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "ZD King Zora Thawed",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "ZD Trade Prescription",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "ZD Trade Prescription",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Kokiri Sword"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Buy Deku Shield"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Kak Gate",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Zelda's Letter"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "Kak Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "GTG Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Gerudo Membership Card"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "GTG Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Progressive Wallet"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "ZD Trade Prescription",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Prescription"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "ZD Diving Minigame",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "check": "HC Malon Egg",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 0,
+      "entrance": "Hyrule Castle Grounds -> HC Past Gate",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 0,
+      "entrance": "HC Moat -> HC Drain Ledge",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: King Zora",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: King Zora",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Kokiri Forest Exit Boy",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Kokiri Forest Exit Boy",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Valley Bridge Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Valley Bridge Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Hyrule Castle Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Hyrule Castle Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Fortress Gate Guard",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Fortress Gate Guard",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Training Ground Guard",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Training Ground Guard",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Fortress Gate Operator",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Fortress Gate Operator",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Kakariko Mountain Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Kakariko Mountain Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: King Zora",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: King Zora",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: King Zora",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Climb"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Talon",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Talon",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Talon",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Valley Cucco Keeper",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Archery Host",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "NPC Speech: Gerudo Fortress Ground Resident",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Mido From Outside Deku Tree",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Mido From Outside Deku Tree",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "ZD Deliver Ruto's Letter",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "ZD Deliver Ruto's Letter",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Kak Gate",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Kak Gate",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Kak Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Kak Gate Guard",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Hylian"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "GF Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "GF Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "GF Gate Outside",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "GF Gate Outside",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "GTG Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "GTG Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Gerudo"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "ZD King Zora Thawed",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "ZD King Zora Thawed",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "ZD Trade Prescription",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "ZD Trade Prescription",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Zora"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Kokiri Sword"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Buy Deku Shield"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Kak Gate",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Zelda's Letter"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "Kak Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "GTG Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Gerudo Membership Card"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "GTG Gate",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Progressive Wallet"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "ZD Trade Prescription",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Prescription"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "check": "ZD Diving Minigame",
+      "age": "child",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "skip_child_zelda": 1,
+      "entrance": "Hyrule Castle Grounds -> HC Past Gate",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "skip_child_zelda": 1,
+      "entrance": "HC Moat -> HC Drain Ledge",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    }
+  ],
+  "cases": 117,
+  "worlds": [
+    {
+      "skip_child_zelda": 0,
+      "location_count": 4498
+    },
+    {
+      "skip_child_zelda": 1,
+      "location_count": 4496
+    }
+  ],
+  "elapsed_seconds": 9.891,
+  "scope": "Actual AP 0.6.7 source worlds through set_rules; isolated age-specific interaction gates with complete inventory minus the named items. No full item fill, native build or gameplay.",
+  "source_sha256": {
+    "archipelago/soh_extreme/NpcSpeech.py": "396c07d2529772f7556ac8129d9dfcc140bc119a4c6fadab076105747e9f75c7",
+    "archipelago/soh_extreme/NpcSpeechCatalog.json": "19804e7b6d2b00f7c01f0364e89c1c93753c8c7da02bb9dbb5454fc58b8898c7",
+    "archipelago/soh_extreme/NativeLogic.py": "90a999af8612f0168b298ec0025ea08a55a075e852fbd757a7100bdc555e1c2f",
+    "archipelago/soh_extreme/NativeLogicAlternatives.py": "bb807f8393cbab971fe01049fbd1c4fab0a5a877eadf9994798a36b30f966784",
+    "archipelago/soh_extreme/NativeAbilityAudit.py": "da749431e951bea9e525120f4dcaf137d1d348f1531ae324ae4df3e72074ca1b",
+    "archipelago/soh_extreme/__init__.py": "242e128dbf15945cabec55b6a7176bb3e74ce697e56ba8a89f6b4a5829d83f63",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "4af0e23a8428cf7193ccd913524cbe8dd0ada4f1b012975ce0146dd1b15fc050",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py": "eed3091f549b1cb7be027e5a970333ede71352f58c744d4da2dcb7e70c637c0e",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py": "4aabd1781a25ee11c508fed54b6a1c0015729962873db07b65a7813ddb015aa6",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py": "46b43dbb0f590aa9625b4dce2d86d4dda822fd5713833f98c205fb652e276729",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py": "5ad5ad681d3c3c4ff3be94ac50d387b3c213b9b8edb851c55d6c1dc9fe89e5ef",
+    "soh/Enhancements/randomizer/logic.h": "d437e9ba99785fd5e61c5013b0eeef6df4d6384f7ae464e670234709aaf56cfd",
+    "soh/Enhancements/randomizer/logic.cpp": "b1f000b51516e2a0b2d19e567820f1035f3a003e20fe78b1d7113659e8ef6b76",
+    "soh/Enhancements/randomizer/location_access.cpp": "05cb692901e4d82e0916e803bce1a8ac8a35df22be25f726c929b57044ae335a",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "0c8645cd9389007f41a6be202b4f53054b6d2e0ec9fd4e6a208469d4bee20e63",
+    "soh/Enhancements/randomizer/location_access/overworld/castle_grounds.cpp": "e220cf8de4961e30f17b15ffdf0c61fad94ab5ded69a721db6fc16134e9f915e",
+    "soh/Enhancements/randomizer/location_access/overworld/gerudo_fortress.cpp": "c9ec697fde8bb181bbf61c9f6b44661c5dbd4c50b09885480b0fbe0d4f6ed76a",
+    "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp": "abddd754a411752d760c02e65d3bae5feb97f3896362cf91ae58bc78bd40bdb2",
+    "soh/Enhancements/randomizer/location_access/overworld/kokiri_forest.cpp": "96046feda6c2b7b5c36a429fc093a60b3e5f172cd31365490dff535bb36809c0",
+    "soh/Enhancements/randomizer/location_access/overworld/zoras_domain.cpp": "ad0b2005d1c332798d032830d8c7e796938278f1a9e4335f1dcf52b54176249d",
+    "soh/Network/Archipelago/NpcSpeechScenes.inc": "96c9c18245fbcc07e3e22ab683b111167d9fe00216d1f025148fb9c8f01837a9",
+    "soh/Network/Archipelago/NpcSpeechAreas.inc": "3cef63696b1208b9e9b20bdd540f83c012641d07abcd65ed83c4fb8bb91482ef"
+  },
+  "yaml": "/workspace/scratch/8fddab5b8169/upload/SOH-EXTREME(20261017-230302).yaml",
+  "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5",
+  "seed": 186,
+  "probe_source": "/workspace/scratch/8fddab5b8169/source/tools/tests/validate_npc_path_blockers.py",
+  "probe_sha256": "cf8ca35773227fb22ae9148e9fb5a966063efd590c6e4bc4a62513e68d2c5d74",
+  "loaded_world_source": "/workspace/scratch/8fddab5b8169/ap-runtime/worlds/soh_extreme/__init__.py"
+}

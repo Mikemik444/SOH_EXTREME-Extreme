@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/8fddab5b8169/source/tools/tests/test_no_swim_recovery.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.69,
+  "stdout": "No-Swim recovery: all 12 regression groups passed\n",
+  "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.628s\n\nOK\n",
+  "source_sha256": {
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "8fecaca8b7e27f9f0da4b3028d02d905fc9e7d6fe90c112a90c51fbf70620f3f",
+    "tools/tests/test_no_swim_recovery.py": "9b8bed7f4f0b8d8f594e060c4a7b0c855e0116706a7a6bebee99dfcd5beb3511"
+  },
+  "scope": "Actual production no-swim recovery helpers and gameplay safety predicate with isolated engine input/output; no full game build."
+}

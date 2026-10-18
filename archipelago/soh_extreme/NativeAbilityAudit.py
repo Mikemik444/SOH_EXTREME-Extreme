@@ -31,6 +31,7 @@ NATIVE_EXACT_SPEAK_BY_AP_ID = {
     94: 'Goron',
     108: 'Zora',
     110: 'Zora',
+    740: 'Zora',
     115: 'Hylian',
     116: 'Hylian',
     117: 'Hylian',

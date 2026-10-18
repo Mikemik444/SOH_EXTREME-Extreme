@@ -1,0 +1,2 @@
+These are historical 1.8.5 results, retained as prior-release provenance.
+Current 1.8.6 results are in the parent validation folder.

@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "name": "all 719 reviewed endpoints and 2876 normal layer facts match",
+      "status": "passed",
+      "rejected": false
+    },
+    {
+      "name": "native output regenerates exactly",
+      "status": "passed",
+      "rejected": false
+    },
+    {
+      "name": "unknown endpoint in a normal scene is not auto-approved",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "debug endpoint rejected before manifest comparison",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "debug duplicate entry in an ordinary scene is prohibited",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "coordinated catalog and native door position edits require manifest review",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "native-only stale door position is rejected",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "native grotto return position changes are detected",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "changed normal age-layer scene invalidates door anchor",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "cutscene-only age-layer scene is prohibited",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "removed runtime alias cannot leave policy claiming copied rows",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "AP-only pools must still repair all child temple blue warps",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "stale native policy is rejected",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "zero age mask is rejected",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "duplicate reviewed endpoint is rejected",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "cutscene scene cannot be manually added to positive scene list",
+      "status": "passed",
+      "rejected": true
+    },
+    {
+      "name": "reviewed age masks preserve shared interior source ages",
+      "status": "passed",
+      "rejected": false
+    }
+  ],
+  "case_count": 17,
+  "endpoint_count": 719,
+  "normal_layer_resolution_count": 2876,
+  "scope": "Production Python generator and actual native table/catalog inputs; no ROM/renderer/gameplay execution.",
+  "source_hashes": {
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "d4978e4bdcd765821fb4d85421681f3b6977eca5c19f3b0d5de105edd25e0a0f",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a",
+    "archipelago/soh_extreme/DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "2526d38fee5eef4d9fbcd4a62297078ffd404eceb6d3791932373180bc1e7205",
+    "soh/Enhancements/randomizer/randomizer_grotto.c": "c24197093d1ba4324c518ff919d00e5f04748b51cd7a5951bbe31cc72a7924a3",
+    "tools/generate_entrance_destination_policy.py": "9b94e1a5e274891937c7ba7405ebabcc89761bcbce244e16a3504c8784aa319c",
+    "tools/tests/test_entrance_destination_policy.py": "a9d4f43513b5b4cb485a87c019675efd9b291057a1e2ce7618a74bb3b801c5d3"
+  },
+  "header_hashes": {
+    "entrance_table.h": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa",
+    "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c"
+  }
+}

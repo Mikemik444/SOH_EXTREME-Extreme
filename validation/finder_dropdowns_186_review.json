@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "version": "1.8.6",
+  "scope": "Final source review and exact CRLF function-byte comparison to the independently reviewed dropdown snapshot. Whole renderer also contains separately checked King Zora legacy-speech access and Mido/Talon scene-placement changes. No full native build or live ImGui input test.",
+  "source_sha256": {
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "0c8645cd9389007f41a6be202b4f53054b6d2e0ec9fd4e6a208469d4bee20e63"
+  },
+  "previous_source_sha256": "241ad4a81bccbaf4f3ccdf19af12c9688d625260e447a512906a57d66388375b",
+  "reviewed_dropdown_snapshot_sha256": "08fc4f9973c4b104890e23d006ed06a210945d0b58dd6a2a69c314f0085e3bcf",
+  "reconstruction": {
+    "archive": "/workspace/scratch/8fddab5b8169/delivery/SOH-EXTREME-1.8.5-source-files.zip",
+    "archive_sha256": "bde17f3b51730bccf9aaa091647176824c626edf466553a89cac5c668f47b920",
+    "member": "soh/Enhancements/randomizer/randomizer_check_tracker.cpp",
+    "delta": "/workspace/scratch/8fddab5b8169/tests/finder_dropdowns_186_source_delta.txt",
+    "delta_sha256": "c92308b29987bce28f90c1a1d447934301f4072e51f768cf36324f3456b3adbb",
+    "reconstructed_hash_matches_previous_review": true
+  },
+  "changes_confined_to_ap_finder_rendering": false,
+  "dropdown_functions_identical_to_reviewed_snapshot": {
+    "DrawFinderDropdown": {
+      "identical": true,
+      "sha256_crlf": "94fc0417c38e0060df42ae4a5996e75ef7ae1790c20144c146f3878899871aba"
+    },
+    "DrawUniversalFinderMirror": {
+      "identical": true,
+      "sha256_crlf": "a8d02f5f8bcdc643c352a6ef84cc94aa88fac04952f64ea46e19e63a8aadbc82"
+    }
+  },
+  "manual_state_declarations_identical": true,
+  "manual_state_declarations": [
+    "    static std::map<int, bool> regionDropdownChoices;",
+    "    static std::map<std::array<int, 3>, bool> sceneDropdownChoices;"
+  ],
+  "original_crlf_preserved": true,
+  "reviewed_behavior": [
+    "Untouched region/scene headers open for current physical zone and close after leaving.",
+    "Only an actual mouse or keyboard toggle creates a manual preference.",
+    "Clipped headers do not record false as a manual close.",
+    "Manual open/closed choices persist during the running game session, including Finder reopen and refresh.",
+    "A manually opened displayed child keeps its otherwise automatic parent open.",
+    "An explicit manual parent close wins over automatic expansion.",
+    "Stable area/scene/instance keys survive count/name/filter and singleton-heading changes.",
+    "Skipped singleton headers do not leave pending SetNextItemOpen state for another widget.",
+    "Descriptive labels, room/door number toggle, singleton-heading behavior and dropdown body are byte-identical to the previously reviewed dropdown snapshot."
+  ],
+  "separately_reviewed_changes": [
+    {
+      "helper": "HasNpcSpeechInteractionItems",
+      "sha256_crlf": "926152e483b3a852f9441727dca6c1db58028eb79897aa49c59f0d01cdc7ede3",
+      "change": "Only the King Zora legacy RC-based speech entry uses the path-blocker soul exception and raw owned-language helper. Ordinary entries retain NPC Soul and language gates.",
+      "validation": "Separate exact native-source review plus rerun of the AP interaction model in npc_blockers_186_reusable_validation.json; this is not a compiled native UI/helper execution."
+    },
+    {
+      "helper": "FinderNpcSpeechScenePresent",
+      "sha256_crlf": "1fbad9b92cc3e03c1ef8589ae473305d878d63e08af1356faab460db4ca85022",
+      "change": "Filters Talon/Mido candidate scenes using native placement/story flags before current-scene priority. Skip Child Zelda flags correctly select child ranch and Mido house.",
+      "validation": "finder_npc_scene_placement_validation.json: 72 compiled native-predicate comparisons and 15 exact scene-selection cases."
+    }
+  ],
+  "all_other_renderer_bytes_identical_to_reviewed_snapshot": true,
+  "followup_delta": "tests/finder_dropdowns_186_followup_source_delta.txt",
+  "validation_reports": {
+    "npc_blockers_186_reusable_validation.json": "272ea9903b68d8a59c142c8523e42fc96ab5e1dcf3bff871501e5054f0d959fc",
+    "finder_npc_scene_placement_validation.json": "1765ad439248cba352d9980b57f5e030f8dafc30fc6a3b5e93a84d81d1cf9209"
+  },
+  "full_native_game_build": false,
+  "live_imgui_run": false
+}

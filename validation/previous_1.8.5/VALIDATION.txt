@@ -1,0 +1,109 @@
+SOH-EXTREME 1.8.5 - Validation evidence and limits
+=================================================
+
+Current result: PASS for the checks below. No full native game build or live
+gameplay/ImGui verification was performed in this environment.
+
+The authoritative current aggregate is:
+  validation/finder_hints_185_release_validation.json
+It binds every delivered source file to SHA-256 and verifies the source hashes
+recorded by each focused report. SOURCE_FILES.json lists complete replacement
+files, sizes, and hashes. This release contains 60 cumulative source files,
+including 30 files added or changed since 1.8.4. All prior replacements remain.
+
+1. CHECK FINDER AND NATIVE AP HINT LABELS
+   check_finder_descriptive_labels_validation.json
+   Compiled C++20 with warnings as errors and UBSan; all 1,493 descriptions
+   (421 room doors, 747 enemies, 325 scene/grotto transitions) checked.
+   Covers legacy/current names, physical number toggle, age annotations,
+   shuffled labels, prefix cleanup, and unknown cross-game hint preservation.
+   Shared generator output passes --check. Renderer integration was reviewed;
+   the full game/ImGui renderer was not compiled or run.
+
+2. ACTUAL AP LOCATION NAMES AND EXISTING LOGIC
+   check_names_185_validation.json
+   Official Archipelago 0.6.7; 4,199 canonical names and 4,199 unique numeric IDs.
+   1,160 aliases tested independently from the canonical datapackage. Both ages
+   constructed 4,044 checks before entrance randomization. All 16 inventory/age
+   reachability cases matched the pre-name-change snapshot by numeric ID.
+   Parent regions, rule classes, item and region dependencies, and physical
+   fields remain identical. Legacy ExcludeLocations, PriorityLocations, and
+   StartLocationHints pass AP validation; restored tracker sets normalize too.
+   All 421 door identity/cross-dungeon arrival labels were exercised.
+
+3. COMPLETE NATIVE HINT CONTENT
+   hints_185_full_content_validation.json
+   Twelve compiled cases with ASan/UBSan use the actual hint-data header,
+   native client description methods, and shared merchant-name helper.
+   A 1,528-byte single hint, 12,231-byte eight-row hint, and 18,357-byte twelve-row
+   hint keep all content. UTF-8, literal controls, malformed/oversize snapshots,
+   legacy fallback, and merchant text are covered. Session IO is isolated.
+
+4. TEXTBOX FORMATTING AND CONTINUATION
+   hints_185_pagination_validation.json
+   Thirteen compiled cases plus 200 deterministic mixed-markup fixtures use
+   the actual formatter and extracted production normalization/pixel tables.
+   ASan/UBSan checks complete text, unbroken names, line width, four-line pages,
+   decoded-byte and glyph capacities, UTF-8, operands, color/icon carry, repeat
+   formatting, choice alignment, and native EVENT/TEXTID endings.
+
+   hint_page_buffer_validation.json
+   Twelve cases and 73,652 assertions run production stream/formatter headers,
+   C wrappers, LoadIntoFont, and extracted native open/decode/A/delayed/close
+   fragments with minimal engine state. C11/C++20 ABI links, ASan/UBSan, and
+   font-buffer canaries pass. 5,000 pages exceeding 65,535 encoded bytes are
+   reconstructed exactly. Reopening, language switching, vanilla messages,
+   direct buffer replacement, delayed pages, and actor continuations are covered.
+   These are scoped native-code fixtures, not a complete-game build.
+   Leak sanitizer is disabled because process-task inspection is restricted.
+
+5. COMPLETE GENERATION WITH THE SUPPLIED YAML
+   hints_finder_185_full_fill_child.json
+   hints_finder_185_full_fill_adult.json
+   Official Main.main through pre_output, full restrictive fill, seed 1 with
+   each starting age selected explicitly. Both runs complete the goal and all
+   4,036 network checks. Child begins with 22 network/20 physical checks;
+   adult begins with 17 network/15 physical checks. The selected age can reach
+   Hyrule Field. Only Zelda's Letter and Weird Egg are precollected.
+   The enabled categories expand mixed pool "all" correctly; the native overworld
+   flag is on; 52/52 overworld endpoints change. Child/adult alternate spawn
+   destinations are exported. Source hashes remain unchanged during each run.
+   This validates these two fills, not every seed or native action sequence.
+
+6. APWORLD, VERSIONS, AND BUILD PREFLIGHT
+   finder_hints_185_apworld_validation.json
+   finder_hints_185_version_validation.json
+   The official loader imports the ZIP with no loose world masking it; all
+   115 package files and JSON resources are present within 116 archive entries.
+   Native, tracker, loose, and archive manifests agree on version 1.8.5.
+
+   finder_hints_185_source_build_validation.json
+   Actual shipped PowerShell helper functions verify all 60 copied files in a
+   disposable fixture. Source remains unchanged. Both helper files are exactly
+   the 1.8.4 revision-4 files with only release strings changed to 1.8.5.
+   PowerShell 7.6.7 runs on Linux with an OS-check bypass and two equivalent path
+   adaptations; no Windows MSBuild, full game, or compilation occurs here.
+
+7. CUMULATIVE SOURCE COMPLETENESS
+   finder_hints_185_source_completeness.json
+   Every original and current source file was compared byte-for-byte. No
+   original files are missing and no changed source is outside the manifest.
+   The latest user YAML is preserved byte-for-byte. Both APWorld copies match.
+   Packaging verifies source bytes, full ZIP entry inventory, and CRC checks.
+   Final ZIP hash is recorded externally to avoid a self-referential checksum.
+
+HISTORICAL EVIDENCE
+-------------------
+validation/previous_1.8.4/ contains explicitly historical validation for the
+prior entrance/Jabu fixes and revision-4 clean-build workflow. These results
+are not presented as reruns on the current release. The current entrance
+randomizer delta changes only descriptive label construction; the exact delta
+is in check_names_185_entrance_label_delta.txt.
+
+REPRODUCTION NOTES
+------------------
+Permanent production-oriented tests are included under tools/tests/. Other
+focused harnesses, logs, and the before-name-change snapshot are in validation/.
+Some harnesses retain the original workspace-relative paths in their reports
+and require the full checkout, official AP 0.6.7 runtime/dependencies, and a C++
+compiler to rerun. Adjust those workspace paths for your environment.

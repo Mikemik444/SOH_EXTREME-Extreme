@@ -1,0 +1,4812 @@
+{
+  "182": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "(ctx->GetTrickOption(RT_LENS_BOTW) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "189": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "(ctx->GetTrickOption(RT_LENS_BOTW) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "183": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "logic->HasExplosives() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "184": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "logic->HasExplosives() && (ctx->GetTrickOption(RT_LENS_BOTW) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "193": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "(logic->Get(LOGIC_BOTW_LOWERED_WATER) && logic->HasItem(RG_OPEN_CHEST)) || logic->CanOpenUnderwaterChest()"
+    }
+  ],
+  "185": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "(logic->Get(LOGIC_BOTW_LOWERED_WATER) && logic->HasItem(RG_OPEN_CHEST)) || logic->CanOpenUnderwaterChest()"
+    },
+    {
+      "region": "RR_BOTW_BEHIND_MOAT",
+      "condition": "(logic->Get(LOGIC_BOTW_LOWERED_WATER)  && logic->HasItem(RG_OPEN_CHEST)) || logic->CanOpenUnderwaterChest()"
+    }
+  ],
+  "995": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "996": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "998": [
+    {
+      "region": "RR_BOTW_PERIMETER",
+      "condition": "(logic->CanBreakPots() && logic->Get(LOGIC_BOTW_LOWERED_WATER)) || logic->CanUse(RG_BOOMERANG)"
+    }
+  ],
+  "188": [
+    {
+      "region": "RR_BOTW_MIDDLE",
+      "condition": "(logic->CanPassEnemy(RE_BIG_SKULLTULA) || logic->TakeDamage()) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "992": [
+    {
+      "region": "RR_BOTW_HIDDEN_POTS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "993": [
+    {
+      "region": "RR_BOTW_HIDDEN_POTS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "994": [
+    {
+      "region": "RR_BOTW_HIDDEN_POTS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "190": [
+    {
+      "region": "RR_BOTW_HIDDEN_PITS_ROOM",
+      "condition": "(ctx->GetTrickOption(RT_LENS_BOTW) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "997": [
+    {
+      "region": "RR_BOTW_HIDDEN_PITS_ROOM",
+      "condition": "logic->CanBreakPots() && (ctx->GetTrickOption(RT_LENS_BOTW) || logic->CanUse(RG_LENS_OF_TRUTH))"
+    }
+  ],
+  "191": [
+    {
+      "region": "RR_BOTW_LOCKED_CAGE",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "564": [
+    {
+      "region": "RR_BOTW_LOCKED_CAGE",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+    }
+  ],
+  "187": [
+    {
+      "region": "RR_BOTW_PIT_CAGE",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "562": [
+    {
+      "region": "RR_BOTW_SKULL_WALL_ROOM",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+    }
+  ],
+  "563": [
+    {
+      "region": "RR_BOTW_INVISIBLE_PATH",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+    }
+  ],
+  "186": [
+    {
+      "region": "RR_BOTW_CRYPT",
+      "condition": "logic->HasFireSourceWithTorch() || logic->CanUse(RG_FAIRY_BOW)"
+    }
+  ],
+  "1730": [
+    {
+      "region": "RR_BOTW_CRYPT",
+      "condition": "logic->HasFireSourceWithTorch() || logic->CanUse(RG_FAIRY_BOW)"
+    }
+  ],
+  "1731": [
+    {
+      "region": "RR_BOTW_CRYPT",
+      "condition": "true"
+    }
+  ],
+  "195": [
+    {
+      "region": "RR_BOTW_DEAD_HAND_ROOM",
+      "condition": "logic->CanKillEnemy(RE_DEAD_HAND) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "194": [
+    {
+      "region": "RR_BOTW_DEAD_HAND_ROOM",
+      "condition": "(ctx->GetTrickOption(RT_LENS_BOTW) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "980": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "981": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "982": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "983": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "984": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "985": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "986": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "987": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "988": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "989": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "990": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "991": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1986": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanUse(RG_SUNS_SONG)"
+    }
+  ],
+  "2257": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2258": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2259": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "9700003": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->BlastOrSmash()"
+    },
+    {
+      "region": "RR_BOTW_B3_BOMB_FLOWERS",
+      "condition": "logic->HasItem(RG_GORONS_BRACELET)"
+    }
+  ],
+  "9700004": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->BlastOrSmash()"
+    },
+    {
+      "region": "RR_BOTW_B3_BOMB_FLOWERS",
+      "condition": "logic->HasItem(RG_GORONS_BRACELET)"
+    }
+  ],
+  "9700005": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->BlastOrSmash() || logic->CanUse(RG_DINS_FIRE) || (logic->CanUse(RG_STICKS) && ctx->GetTrickOption(RT_BOTW_BASEMENT)) ||\n                                                                          (ctx->GetTrickOption(RT_BOULDER_COLLISION) && logic->CanUse(RG_FAIRY_BOW))"
+    },
+    {
+      "region": "RR_BOTW_B3_BOMB_FLOWERS",
+      "condition": "logic->CanDetonateUprightBombFlower()"
+    }
+  ],
+  "9700006": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->BlastOrSmash()"
+    },
+    {
+      "region": "RR_BOTW_B3_BOMB_FLOWERS",
+      "condition": "logic->HasItem(RG_GORONS_BRACELET)"
+    }
+  ],
+  "9700007": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->BlastOrSmash()"
+    },
+    {
+      "region": "RR_BOTW_B3_BOMB_FLOWERS",
+      "condition": "logic->HasItem(RG_GORONS_BRACELET)"
+    }
+  ],
+  "9700008": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->BlastOrSmash()"
+    },
+    {
+      "region": "RR_BOTW_B3_BOMB_FLOWERS",
+      "condition": "logic->HasItem(RG_GORONS_BRACELET)"
+    }
+  ],
+  "9700001": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "logic->CanClimbLadder()"
+    },
+    {
+      "region": "RR_BOTW_LADDER_DOOR",
+      "condition": "true"
+    }
+  ],
+  "9700002": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "true"
+    }
+  ],
+  "9700009": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "true"
+    }
+  ],
+  "9700010": [
+    {
+      "region": "RR_BOTW_B3_OOZE",
+      "condition": "true"
+    }
+  ],
+  "9700000": [
+    {
+      "region": "RR_BOTW_LADDER_DOOR",
+      "condition": "true"
+    }
+  ],
+  "2248": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2249": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2250": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2251": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2252": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2253": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2254": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2255": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2256": [
+    {
+      "region": "RR_BOTW_B3_BLOCKED_GRASS",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "192": [
+    {
+      "region": "RR_BOTW_B3_CHEST_AREA",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "1725": [
+    {
+      "region": "RR_BOTW_B3_PLATFORM",
+      "condition": "true"
+    }
+  ],
+  "1726": [
+    {
+      "region": "RR_BOTW_B3_PLATFORM",
+      "condition": "true"
+    }
+  ],
+  "1727": [
+    {
+      "region": "RR_BOTW_B3_PLATFORM",
+      "condition": "true"
+    }
+  ],
+  "1728": [
+    {
+      "region": "RR_BOTW_B3_PLATFORM",
+      "condition": "true"
+    }
+  ],
+  "1729": [
+    {
+      "region": "RR_BOTW_B3_PLATFORM",
+      "condition": "true"
+    }
+  ],
+  "1690": [
+    {
+      "region": "RR_DEKU_TREE_LOBBY",
+      "condition": "logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT)"
+    },
+    {
+      "region": "RR_DEKU_TREE_LOBBY_2F",
+      "condition": "true"
+    }
+  ],
+  "2218": [
+    {
+      "region": "RR_DEKU_TREE_LOBBY",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2219": [
+    {
+      "region": "RR_DEKU_TREE_LOBBY",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2220": [
+    {
+      "region": "RR_DEKU_TREE_LOBBY",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "140": [
+    {
+      "region": "RR_DEKU_TREE_LOBBY_2F",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "2221": [
+    {
+      "region": "RR_DEKU_TREE_LOBBY_2F",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2222": [
+    {
+      "region": "RR_DEKU_TREE_LOBBY_2F",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "1691": [
+    {
+      "region": "RR_DEKU_TREE_LOBBY_3F",
+      "condition": "logic->CanPassEnemy(RE_BIG_SKULLTULA)"
+    }
+  ],
+  "142": [
+    {
+      "region": "RR_DEKU_TREE_SLINGSHOT_ROOM",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "141": [
+    {
+      "region": "RR_DEKU_TREE_SLINGSHOT_ROOM",
+      "condition": "(logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "2223": [
+    {
+      "region": "RR_DEKU_TREE_SLINGSHOT_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2224": [
+    {
+      "region": "RR_DEKU_TREE_SLINGSHOT_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2225": [
+    {
+      "region": "RR_DEKU_TREE_SLINGSHOT_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2226": [
+    {
+      "region": "RR_DEKU_TREE_SLINGSHOT_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "143": [
+    {
+      "region": "RR_DEKU_TREE_COMPASS_ROOM",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "144": [
+    {
+      "region": "RR_DEKU_TREE_COMPASS_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "536": [
+    {
+      "region": "RR_DEKU_TREE_COMPASS_ROOM",
+      "condition": "logic->CanAttack()"
+    }
+  ],
+  "2227": [
+    {
+      "region": "RR_DEKU_TREE_COMPASS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2228": [
+    {
+      "region": "RR_DEKU_TREE_COMPASS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "145": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_LOWER",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "538": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_LOWER",
+      "condition": "logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_SHORT_JUMPSLASH)"
+    }
+  ],
+  "537": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_LOWER",
+      "condition": "logic->CanKillEnemy(RE_GOLD_SKULLTULA, ctx->GetTrickOption(RT_DEKU_MQ_COMPASS_GS) ? ED_SHORT_JUMPSLASH : ED_BOMB_THROW) && (logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT) || logic->CanUse(RG_BOOMERANG))"
+    }
+  ],
+  "2229": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_LOWER",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2230": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_LOWER",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2231": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_SCRUB_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2232": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_SCRUB_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2233": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_SCRUB_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2234": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_SCRUB_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2235": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_WATER_ROOM_BACK",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2236": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_WATER_ROOM_BACK",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2237": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_TORCH_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2238": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_TORCH_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2239": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2240": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_BACK_LOBBY",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "539": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_BACK_ROOM",
+      "condition": "logic->HookshotOrBoomerang()"
+    }
+  ],
+  "1693": [
+    {
+      "region": "RR_DEKU_TREE_BASEMENT_UPPER",
+      "condition": "ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid()"
+    },
+    {
+      "region": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "condition": "logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_IRON_BOOTS) || logic->CanUse(RG_BOOMERANG) || ((logic->CanUse(RG_HOVER_BOOTS) || logic->IsAdult) && (ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid()))"
+    }
+  ],
+  "1692": [
+    {
+      "region": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "condition": "logic->IsAdult || (logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_IRON_BOOTS) || logic->CanUse(RG_BOOMERANG) || (ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid()))"
+    }
+  ],
+  "1694": [
+    {
+      "region": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "condition": "logic->IsAdult || (logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_IRON_BOOTS) || logic->CanUse(RG_BOOMERANG) || (ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid()))"
+    }
+  ],
+  "2241": [
+    {
+      "region": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass() && logic->HasFireSourceWithTorch()"
+    }
+  ],
+  "2242": [
+    {
+      "region": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass() && logic->HasFireSourceWithTorch()"
+    }
+  ],
+  "2243": [
+    {
+      "region": "RR_DEKU_TREE_OUTSIDE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass() && logic->HasFireSourceWithTorch()"
+    }
+  ],
+  "2": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_DEKU_TREE_CLEAR)"
+    }
+  ],
+  "153": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_DEKU_TREE_CLEAR)"
+    }
+  ],
+  "2337": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2338": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2339": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2340": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2341": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2342": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2343": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "2344": [
+    {
+      "region": "RR_DEKU_TREE_BOSS_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "154": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOBBY",
+      "condition": "(logic->CanBreakMudWalls() || logic->HasItem(RG_GORONS_BRACELET)) && logic->CanOpenLargeChest();"
+    }
+  ],
+  "717": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOBBY",
+      "condition": "(logic->CanStunDeku() || logic->HasItem(RG_GORONS_BRACELET)) && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "1904": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOBBY",
+      "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->HasItem(RG_GORONS_BRACELET); }) && logic->CallGossipFairy()"
+    }
+  ],
+  "1905": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOBBY",
+      "condition": "AnyAgeTime([]{return logic->CanBreakMudWalls() || logic->HasItem(RG_GORONS_BRACELET); }) && logic->CanUse(RG_SONG_OF_STORMS)"
+    }
+  ],
+  "545": [
+    {
+      "region": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "condition": "logic->ReachScarecrow() || (logic->IsAdult && logic->CanUse(RG_LONGSHOT)) || (ctx->GetTrickOption(RT_DC_SCARECROW_GS) && logic->HasItem(RG_POWER_BRACELET) && (logic->IsAdult || logic->CanUse(RG_LONGSHOT)) && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA))"
+    }
+  ],
+  "939": [
+    {
+      "region": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "940": [
+    {
+      "region": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "941": [
+    {
+      "region": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "942": [
+    {
+      "region": "RR_DODONGOS_CAVERN_SE_CORRIDOR",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "544": [
+    {
+      "region": "RR_DODONGOS_CAVERN_SE_ROOM",
+      "condition": "logic->CanAttack()"
+    }
+  ],
+  "943": [
+    {
+      "region": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "944": [
+    {
+      "region": "RR_DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "935": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "936": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "937": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "938": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1695": [
+    {
+      "region": "RR_DODONGOS_CAVERN_LOWER_LIZALFOS",
+      "condition": "true"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "condition": "true"
+    }
+  ],
+  "945": [
+    {
+      "region": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "946": [
+    {
+      "region": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "947": [
+    {
+      "region": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "948": [
+    {
+      "region": "RR_DODONGOS_CAVERN_DODONGO_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "716": [
+    {
+      "region": "RR_DODONGOS_CAVERN_NEAR_DODONGO_ROOM",
+      "condition": "logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "546": [
+    {
+      "region": "RR_DODONGOS_CAVERN_STAIRS_LOWER",
+      "condition": "ctx->GetTrickOption(RT_DC_ALCOVE_GS) && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT)"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT) || (logic->Get(LOGIC_DC_LIFT_PLATFORM) && logic->HasItem(RG_CLIMB) && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG))"
+    }
+  ],
+  "547": [
+    {
+      "region": "RR_DODONGOS_CAVERN_STAIRS_LOWER",
+      "condition": "ctx->GetTrickOption(RT_DC_VINES_GS) && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT)"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+      "condition": "(logic->HasItem(RG_CLIMB) && logic->HasItem(RG_POWER_BRACELET)) || logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+    }
+  ],
+  "949": [
+    {
+      "region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "950": [
+    {
+      "region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "951": [
+    {
+      "region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "952": [
+    {
+      "region": "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "155": [
+    {
+      "region": "RR_DODONGOS_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "2244": [
+    {
+      "region": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "955": [
+    {
+      "region": "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "156": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1696": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
+      "condition": "logic->HasItem(RG_POWER_BRACELET)"
+    }
+  ],
+  "2245": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "956": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "718": [
+    {
+      "region": "RR_DODONGOS_CAVERN_2F_SIDE_ROOM",
+      "condition": "logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "719": [
+    {
+      "region": "RR_DODONGOS_CAVERN_2F_SIDE_ROOM",
+      "condition": "logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "953": [
+    {
+      "region": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "954": [
+    {
+      "region": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "2246": [
+    {
+      "region": "RR_DODONGOS_CAVERN_FIRST_SLINGSHOT_ROOM",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "1697": [
+    {
+      "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "condition": "true"
+    }
+  ],
+  "1698": [
+    {
+      "region": "RR_DODONGOS_CAVERN_UPPER_LIZALFOS",
+      "condition": "true"
+    }
+  ],
+  "957": [
+    {
+      "region": "RR_DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "958": [
+    {
+      "region": "RR_DODONGOS_CAVERN_SECOND_SLINGSHOT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "157": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "158": [
+    {
+      "region": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
+      "condition": "logic->CanBreakMudWalls() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700098": [
+    {
+      "region": "RR_DODONGOS_CAVERN_FAR_BRIDGE",
+      "condition": "logic->CanRead()"
+    }
+  ],
+  "2247": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOSS_AREA",
+      "condition": "logic->CanCollectGrass()"
+    }
+  ],
+  "548": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BACK_ROOM",
+      "condition": "logic->CanAttack()"
+    }
+  ],
+  "959": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BACK_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "960": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BACK_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "961": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BACK_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "962": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BACK_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "165": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOSS_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "166": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_DODONGOS_CAVERN_CLEAR)"
+    }
+  ],
+  "3": [
+    {
+      "region": "RR_DODONGOS_CAVERN_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_DODONGOS_CAVERN_CLEAR)"
+    }
+  ],
+  "227": [
+    {
+      "region": "RR_FIRE_TEMPLE_NEAR_BOSS_ROOM",
+      "condition": "logic->FireTimer() >= 16 && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1018": [
+    {
+      "region": "RR_FIRE_TEMPLE_NEAR_BOSS_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1019": [
+    {
+      "region": "RR_FIRE_TEMPLE_NEAR_BOSS_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1020": [
+    {
+      "region": "RR_FIRE_TEMPLE_NEAR_BOSS_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1021": [
+    {
+      "region": "RR_FIRE_TEMPLE_NEAR_BOSS_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "578": [
+    {
+      "region": "RR_FIRE_TEMPLE_LOOP_5_TILE_ROOM",
+      "condition": "logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_CLOSE)"
+    }
+  ],
+  "228": [
+    {
+      "region": "RR_FIRE_TEMPLE_LOOP_FLARE_DANCER",
+      "condition": "AnyAgeTime([]{return logic->CanKillEnemy(RE_FLARE_DANCER);}) && (logic->IsAdult || logic->CanGroundJump() || logic->CanUse(RG_HOOKSHOT)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "229": [
+    {
+      "region": "RR_FIRE_TEMPLE_LOOP_GORON_CAGE",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "1022": [
+    {
+      "region": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "condition": "logic->CanBreakPots() && logic->FireTimer() >= 32"
+    }
+  ],
+  "1023": [
+    {
+      "region": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "condition": "logic->CanBreakPots() && logic->FireTimer() >= 32"
+    }
+  ],
+  "1024": [
+    {
+      "region": "RR_FIRE_TEMPLE_BIG_LAVA_ROOM",
+      "condition": "logic->CanBreakPots() && logic->FireTimer() >= 32"
+    }
+  ],
+  "230": [
+    {
+      "region": "RR_FIRE_TEMPLE_1F_CURVED_CAGE",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "579": [
+    {
+      "region": "RR_FIRE_TEMPLE_8_TILE_ROOM",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, logic->IsAdult ? ED_CLOSE : ED_BOOMERANG) ||\n                                                      logic->CanGroundJumpslash()"
+    }
+  ],
+  "231": [
+    {
+      "region": "RR_FIRE_TEMPLE_STRAIGHTFORWARD_CAGE",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1703": [
+    {
+      "region": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE",
+      "condition": "true"
+    }
+  ],
+  "1704": [
+    {
+      "region": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE",
+      "condition": "true"
+    }
+  ],
+  "1705": [
+    {
+      "region": "RR_FIRE_TEMPLE_LAVA_GEYSER_GRATE",
+      "condition": "true"
+    }
+  ],
+  "235": [
+    {
+      "region": "RR_FIRE_TEMPLE_SHORTCUT_CLIMB",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "232": [
+    {
+      "region": "RR_FIRE_TEMPLE_BOULDER_MAZE_LOWER",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "580": [
+    {
+      "region": "RR_FIRE_TEMPLE_BOULDER_MAZE_LOWER",
+      "condition": "logic->HasExplosives() && (logic->IsAdult || logic->HookshotOrBoomerang() || logic->CanGroundJumpslash())"
+    }
+  ],
+  "233": [
+    {
+      "region": "RR_FIRE_TEMPLE_3F_CURVED_CAGE",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1706": [
+    {
+      "region": "RR_FIRE_TEMPLE_NARROW_PATH_ROOM",
+      "condition": "true"
+    }
+  ],
+  "1707": [
+    {
+      "region": "RR_FIRE_TEMPLE_NARROW_PATH_ROOM",
+      "condition": "true"
+    }
+  ],
+  "1708": [
+    {
+      "region": "RR_FIRE_TEMPLE_NARROW_PATH_ROOM",
+      "condition": "true"
+    }
+  ],
+  "1709": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE",
+      "condition": "logic->FireTimer() >= 24 && (logic->IsAdult || logic->CanUse(RG_BOOMERANG))"
+    },
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_WALL_SIDE_DOOR",
+      "condition": "logic->FireTimer() >= 8 && logic->CanUse(RG_HOVER_BOOTS)"
+    }
+  ],
+  "1710": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE",
+      "condition": "logic->FireTimer() >= 24 && (logic->IsAdult || logic->CanUse(RG_BOOMERANG))"
+    },
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_WALL_SIDE_DOOR",
+      "condition": "logic->FireTimer() >= 8 && logic->CanUse(RG_HOVER_BOOTS)"
+    }
+  ],
+  "1711": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_WALL_CHASE",
+      "condition": "logic->FireTimer() >= 16"
+    }
+  ],
+  "234": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_WALL_CAGE",
+      "condition": "logic->FireTimer() >= 8 && logic->CanOpenLargeChest()"
+    }
+  ],
+  "236": [
+    {
+      "region": "RR_FIRE_TEMPLE_BOULDER_MAZE_UPPER",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "581": [
+    {
+      "region": "RR_FIRE_TEMPLE_GS_CLIMB_4F",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT)"
+    },
+    {
+      "region": "RR_FIRE_TEMPLE_GS_CLIMB_5F",
+      "condition": "logic->CanKillEnemy(RE_GOLD_SKULLTULA, logic->HasItem(RG_CLIMB) ? ED_SHORT_JUMPSLASH : ED_BOMB_THROW)"
+    }
+  ],
+  "237": [
+    {
+      "region": "RR_FIRE_TEMPLE_5F_RUINS",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "582": [
+    {
+      "region": "RR_FIRE_TEMPLE_5F_RUINS",
+      "condition": "logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_BOMB_THROW)"
+    }
+  ],
+  "1025": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1026": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1027": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1028": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_MAZE_MAIN",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "238": [
+    {
+      "region": "RR_FIRE_TEMPLE_CAGELESS_CHEST_ROOM",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "240": [
+    {
+      "region": "RR_FIRE_TEMPLE_SOT_CAGE_SWITCH",
+      "condition": "(logic->CanUse(RG_SONG_OF_TIME) || ctx->GetTrickOption(RT_VISIBLE_COLLISION)) && logic->CanUse(RG_MEGATON_HAMMER) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1029": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_MAZE_PAST_WALL",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1030": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_MAZE_PAST_WALL",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1031": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_MAZE_PAST_WALL",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1032": [
+    {
+      "region": "RR_FIRE_TEMPLE_FIRE_MAZE_PAST_WALL",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "239": [
+    {
+      "region": "RR_FIRE_TEMPLE_NARROW_STAIRS",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "1554": [
+    {
+      "region": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS",
+      "condition": "logic->CanBreakSmallCrates()"
+    }
+  ],
+  "1555": [
+    {
+      "region": "RR_FIRE_TEMPLE_TOP_OF_COLLAPSING_STAIRS",
+      "condition": "logic->CanBreakSmallCrates()"
+    }
+  ],
+  "253": [
+    {
+      "region": "RR_FIRE_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_FIRE_TEMPLE_CLEAR)"
+    }
+  ],
+  "6": [
+    {
+      "region": "RR_FIRE_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_FIRE_TEMPLE_CLEAR)"
+    }
+  ],
+  "201": [
+    {
+      "region": "RR_FOREST_TEMPLE_TREES",
+      "condition": "(logic->HasItem(RG_CLIMB) || logic->CanUse(RG_LONGSHOT)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "568": [
+    {
+      "region": "RR_FOREST_TEMPLE_TREES",
+      "condition": "(logic->HasItem(RG_CLIMB) || logic->CanUse(RG_LONGSHOT)) && \n                                                    (logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_BOOMERANG) || ((logic->IsAdult || ctx->GetTrickOption(RT_BOMB_DETONATION)) && logic->CanUse(RG_BOMB_BAG)) ||\n                                                     (ctx->GetTrickOption(RT_FOREST_FIRST_GS) && logic->CanJumpslashExceptHammer()))"
+    }
+  ],
+  "569": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOBBY",
+      "condition": "logic->HookshotOrBoomerang()"
+    }
+  ],
+  "999": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOBBY",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1000": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOBBY",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1001": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOBBY",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1002": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOBBY",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1003": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOBBY",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1004": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOBBY",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "202": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOWER_STALFOS",
+      "condition": "logic->Get(LOGIC_FOREST_CLEAR_BETWEEN_JOELLE_AND_BETH) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1005": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOWER_STALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1006": [
+    {
+      "region": "RR_FOREST_TEMPLE_LOWER_STALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "571": [
+    {
+      "region": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER",
+      "condition": "logic->CanUse(RG_LONGSHOT)"
+    },
+    {
+      "region": "RR_FOREST_TEMPLE_NW_COURTYARD_UPPER",
+      "condition": "logic->HookshotOrBoomerang()"
+    }
+  ],
+  "1699": [
+    {
+      "region": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER",
+      "condition": "logic->CanUse(RG_BOOMERANG) && ctx->GetTrickOption(RT_FOREST_COURTYARD_HEARTS_BOOMERANG)"
+    },
+    {
+      "region": "RR_FOREST_TEMPLE_NW_COURTYARD_UPPER",
+      "condition": "true"
+    }
+  ],
+  "1700": [
+    {
+      "region": "RR_FOREST_TEMPLE_NW_COURTYARD_LOWER",
+      "condition": "logic->CanUse(RG_BOOMERANG) && ctx->GetTrickOption(RT_FOREST_COURTYARD_HEARTS_BOOMERANG)"
+    },
+    {
+      "region": "RR_FOREST_TEMPLE_NW_COURTYARD_UPPER",
+      "condition": "true"
+    }
+  ],
+  "570": [
+    {
+      "region": "RR_FOREST_TEMPLE_NE_COURTYARD_LOWER",
+      "condition": "logic->CanUse(RG_HOOKSHOT) || (ctx->GetTrickOption(RT_FOREST_COURTYARD_EAST_GS) && logic->CanUse(RG_BOOMERANG))"
+    },
+    {
+      "region": "RR_FOREST_TEMPLE_NE_COURTYARD_SCARECROW_LEDGE",
+      "condition": "logic->CanUse(RG_FAIRY_BOW) || logic->CanUse(RG_FAIRY_SLINGSHOT) || logic->CanUse(RG_DINS_FIRE) || logic->HasExplosives()"
+    }
+  ],
+  "203": [
+    {
+      "region": "RR_FOREST_TEMPLE_NE_COURTYARD_ISLAND",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "204": [
+    {
+      "region": "RR_FOREST_TEMPLE_MAP_ROOM",
+      "condition": "logic->CanKillEnemy(RE_BLUE_BUBBLE) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "205": [
+    {
+      "region": "RR_FOREST_TEMPLE_SEWER",
+      "condition": "logic->CanOpenUnderwaterChest() && logic->WaterTimer() >= 8"
+    },
+    {
+      "region": "RR_FOREST_TEMPLE_DRAINED_SEWER",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1702": [
+    {
+      "region": "RR_FOREST_TEMPLE_SEWER",
+      "condition": "logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8"
+    },
+    {
+      "region": "RR_FOREST_TEMPLE_DRAINED_SEWER",
+      "condition": "true"
+    }
+  ],
+  "1701": [
+    {
+      "region": "RR_FOREST_TEMPLE_SEWER",
+      "condition": "logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8"
+    },
+    {
+      "region": "RR_FOREST_TEMPLE_DRAINED_SEWER",
+      "condition": "true"
+    }
+  ],
+  "208": [
+    {
+      "region": "RR_FOREST_TEMPLE_FLOORMASTER_ROOM",
+      "condition": "logic->CanDamage() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "206": [
+    {
+      "region": "RR_FOREST_TEMPLE_MIDDLE_BLOCK_PUSH_ROOM",
+      "condition": "logic->CanHitEyeTargets() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "207": [
+    {
+      "region": "RR_FOREST_TEMPLE_NW_HALLWAY_STRAIGHTENED",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "209": [
+    {
+      "region": "RR_FOREST_TEMPLE_RED_POE_ROOM",
+      "condition": "logic->Get(LOGIC_FOREST_JOELLE) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "210": [
+    {
+      "region": "RR_FOREST_TEMPLE_UPPER_STALFOS",
+      "condition": "logic->Get(LOGIC_FOREST_CLEAR_BETWEEN_JOELLE_AND_BETH) && logic->CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 3) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1009": [
+    {
+      "region": "RR_FOREST_TEMPLE_UPPER_STALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1010": [
+    {
+      "region": "RR_FOREST_TEMPLE_UPPER_STALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1011": [
+    {
+      "region": "RR_FOREST_TEMPLE_UPPER_STALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1012": [
+    {
+      "region": "RR_FOREST_TEMPLE_UPPER_STALFOS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "211": [
+    {
+      "region": "RR_FOREST_TEMPLE_BLUE_POE_ROOM",
+      "condition": "logic->Get(LOGIC_FOREST_BETH) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1013": [
+    {
+      "region": "RR_FOREST_TEMPLE_BLUE_POE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1014": [
+    {
+      "region": "RR_FOREST_TEMPLE_BLUE_POE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1015": [
+    {
+      "region": "RR_FOREST_TEMPLE_BLUE_POE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1016": [
+    {
+      "region": "RR_FOREST_TEMPLE_FROZEN_EYE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1017": [
+    {
+      "region": "RR_FOREST_TEMPLE_FROZEN_EYE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "212": [
+    {
+      "region": "RR_FOREST_TEMPLE_FALLING_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1007": [
+    {
+      "region": "RR_FOREST_TEMPLE_GREEN_POE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1008": [
+    {
+      "region": "RR_FOREST_TEMPLE_GREEN_POE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "213": [
+    {
+      "region": "RR_FOREST_TEMPLE_BASEMENT",
+      "condition": "logic->HasItem(RG_POWER_BRACELET) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "572": [
+    {
+      "region": "RR_FOREST_TEMPLE_BASEMENT",
+      "condition": "logic->HasItem(RG_POWER_BRACELET) && logic->HookshotOrBoomerang()"
+    }
+  ],
+  "226": [
+    {
+      "region": "RR_FOREST_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_FOREST_TEMPLE_CLEAR)"
+    }
+  ],
+  "5": [
+    {
+      "region": "RR_FOREST_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_FOREST_TEMPLE_CLEAR)"
+    }
+  ],
+  "726": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "727": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "728": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "725": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "1836": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "true"
+    }
+  ],
+  "1837": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "true"
+    }
+  ],
+  "1838": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "true"
+    }
+  ],
+  "1839": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "true"
+    }
+  ],
+  "1840": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "true"
+    }
+  ],
+  "1841": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "true"
+    }
+  ],
+  "1842": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "true"
+    }
+  ],
+  "1843": [
+    {
+      "region": "RR_GANONS_CASTLE_DEKU_SCRUBS",
+      "condition": "true"
+    }
+  ],
+  "396": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_WOLFOS_ROOM",
+      "condition": "logic->CanKillEnemy(RE_WOLFOS) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700114": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700110": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM",
+      "condition": "(ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid()) || (logic->CanMiddairGroundJump()                                                     )"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM_MIDDLE",
+      "condition": "logic->IsAdult || logic->CanUse(RG_HOOKSHOT)"
+    }
+  ],
+  "9700106": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM_MIDDLE",
+      "condition": "true"
+    }
+  ],
+  "9700116": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM_MIDDLE",
+      "condition": "true"
+    }
+  ],
+  "9700113": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_BEAMOS_ROOM_FINAL_DOOR",
+      "condition": "true"
+    }
+  ],
+  "1101": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1102": [
+    {
+      "region": "RR_GANONS_CASTLE_FOREST_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1744": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 16"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 16"
+    }
+  ],
+  "9700115": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 16"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 8"
+    }
+  ],
+  "9700103": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 16"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 16"
+    }
+  ],
+  "9700102": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 32 && (logic->CanUse(RG_GOLDEN_GAUNTLETS) || logic->BunnyHovers())"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 32 && (logic->CanUse(RG_GOLDEN_GAUNTLETS) || logic->BunnyHovers())"
+    }
+  ],
+  "9700100": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 8"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 16"
+    }
+  ],
+  "9700145": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_OPEN",
+      "condition": "logic->FireTimer() >= 24 && logic->CanUse(RG_GOLDEN_GAUNTLETS)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FROM_BARRED",
+      "condition": "(logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->FireTimer() >= 24 && logic->CanUse(RG_GOLDEN_GAUNTLETS)"
+    }
+  ],
+  "1103": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1104": [
+    {
+      "region": "RR_GANONS_CASTLE_FIRE_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "397": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "398": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700135": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700137": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700138": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700139": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700140": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700141": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700142": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700143": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700144": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700136": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700119": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700120": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700121": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700122": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700124": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700127": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700128": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700129": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700130": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700131": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700132": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700133": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700134": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700125": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700126": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700118": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLUE_FIRE_ROOM",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "1107": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLOCK_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "9700123": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_BLOCK_ROOM_SWITCH",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "1105": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1106": [
+    {
+      "region": "RR_GANONS_CASTLE_WATER_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "399": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_START",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_SOT_PLATFORM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1108": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_POTS_PLATFORM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1109": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_POTS_PLATFORM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "400": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_CHEST_PLATFORM",
+      "condition": "logic->Get(LOGIC_SHADOW_TRIAL_LATE_CHEST) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1741": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_CHEST_PLATFORM",
+      "condition": "ctx->GetTrickOption(RT_LENS_GANON) || logic->CanUse(RG_LENS_OF_TRUTH) || logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_RUSTED_SWITCH",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_END",
+      "condition": "ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->BunnyHovers()"
+    }
+  ],
+  "1742": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_CHEST_PLATFORM",
+      "condition": "ctx->GetTrickOption(RT_LENS_GANON) || logic->CanUse(RG_LENS_OF_TRUTH) || logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_RUSTED_SWITCH",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_END",
+      "condition": "(ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanUse(RG_HOVER_BOOTS)) || logic->CanUse(RG_BOOMERANG)"
+    }
+  ],
+  "1743": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_CHEST_PLATFORM",
+      "condition": "ctx->GetTrickOption(RT_LENS_GANON) || logic->CanUse(RG_LENS_OF_TRUTH) || logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_RUSTED_SWITCH",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_END",
+      "condition": "(ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && (logic->CanUse(RG_HOVER_BOOTS)|| logic->BunnyHood())) || logic->CanUse(RG_BOOMERANG)"
+    }
+  ],
+  "1110": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1111": [
+    {
+      "region": "RR_GANONS_CASTLE_SHADOW_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1989": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "logic->CanUse(RG_SUNS_SONG)"
+    }
+  ],
+  "1745": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700099": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "(ctx->GetTrickOption(RT_GANON_SPIRIT_TRIAL_HOOKSHOT) && logic->CanJumpslash() && logic->HasItem(RG_POWER_BRACELET)) || logic->CanUse(RG_HOOKSHOT)"
+    }
+  ],
+  "9700109": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700107": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700101": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700108": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEAMOS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "409": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_BEFORE_SWITCH",
+      "condition": "(logic->CanJumpslash() || logic->HasExplosives() || logic->CanUse(RG_GIANTS_KNIFE)) && logic->HasItem(RG_OPEN_CHEST)"
+    },
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_AFTER_SWITCH",
+      "condition": "logic->CanHitSwitch() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "410": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_AFTER_SWITCH",
+      "condition": "(ctx->GetTrickOption(RT_LENS_GANON) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1112": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1113": [
+    {
+      "region": "RR_GANONS_CASTLE_SPIRIT_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "401": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "402": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "403": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "404": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "405": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "406": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "407": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_CHESTS_ROOM",
+      "condition": "(ctx->GetTrickOption(RT_LENS_GANON) || logic->CanUse(RG_LENS_OF_TRUTH)) && (logic->CanKillEnemy(RE_BIG_SKULLTULA) && logic->CanKillEnemy(RE_KEESE, ED_CLOSE, true, 3)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "408": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_TRIFORCE_ROOM",
+      "condition": "logic->CanUse(RG_ZELDAS_LULLABY) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1114": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "9700112": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700111": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700117": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "logic->CanUse(RG_HOOKSHOT) || (logic->IsAdult && logic->CanGroundJump())"
+    }
+  ],
+  "9700105": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700104": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_BOULDER_ROOM",
+      "condition": "true"
+    }
+  ],
+  "1115": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots() && (ctx->GetTrickOption(RT_LENS_GANON) || logic->CanUse(RG_LENS_OF_TRUTH))"
+    }
+  ],
+  "1116": [
+    {
+      "region": "RR_GANONS_CASTLE_LIGHT_TRIAL_FINAL_ROOM",
+      "condition": "logic->CanBreakPots() && (ctx->GetTrickOption(RT_LENS_GANON) || logic->CanUse(RG_LENS_OF_TRUTH))"
+    }
+  ],
+  "424": [
+    {
+      "region": "RR_GANONS_TOWER_FLOOR_2",
+      "condition": "logic->CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1117": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1118": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1119": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1120": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1121": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1122": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1123": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1124": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1125": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1126": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1127": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1128": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1129": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1130": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1131": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1132": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1133": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1134": [
+    {
+      "region": "RR_GANONS_TOWER_POT_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "357": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LOBBY",
+      "condition": "logic->CanHitEyeTargets() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "358": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LOBBY",
+      "condition": "logic->CanHitEyeTargets() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1988": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LOBBY",
+      "condition": "logic->CanUse(RG_SONG_OF_STORMS)"
+    }
+  ],
+  "359": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_SAND_ROOM",
+      "condition": "logic->CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2, true) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700209": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700212": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700217": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "logic->CanUse(logic->IsAdult ? RG_HOOKSHOT : RG_LONGSHOT) || ctx->GetTrickOption(RT_GTG_WITHOUT_HOOKSHOT)"
+    }
+  ],
+  "9700210": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700220": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_BOULDER_ROOM",
+      "condition": "true"
+    }
+  ],
+  "374": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE",
+      "condition": "logic->SmallKeys(SCENE_GERUDO_TRAINING_GROUND, 3) && (ctx->GetTrickOption(RT_LENS_GTG) || logic->CanUse(RG_LENS_OF_TRUTH)) && (logic->CanUse(RG_HOOKSHOT) || logic->HasItem(RG_CLIMB)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "375": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE",
+      "condition": "logic->SmallKeys(SCENE_GERUDO_TRAINING_GROUND, 4) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "376": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE",
+      "condition": "logic->SmallKeys(SCENE_GERUDO_TRAINING_GROUND, 6) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "377": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE",
+      "condition": "logic->SmallKeys(SCENE_GERUDO_TRAINING_GROUND, 7) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "378": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE",
+      "condition": "logic->SmallKeys(SCENE_GERUDO_TRAINING_GROUND, 9) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "370": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE_RIGHT",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "371": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE_RIGHT",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "369": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE_RIGHT",
+      "condition": "true"
+    }
+  ],
+  "9700218": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_CENTRAL_MAZE_RIGHT",
+      "condition": "true"
+    },
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "condition": "logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood() || logic->CanUse(RG_SONG_OF_TIME) || logic->IsChild"
+    },
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM_UPPER_LEDGE",
+      "condition": "true"
+    }
+  ],
+  "360": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_HEAVY_BLOCK_ROOM",
+      "condition": "logic->CanKillEnemy(RE_WOLFOS, ED_CLOSE, true, 4, true) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "361": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM",
+      "condition": "logic->CanKillEnemy(RE_LIKE_LIKE) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "362": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM",
+      "condition": "logic->CanKillEnemy(RE_LIKE_LIKE) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "363": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM",
+      "condition": "(ctx->GetTrickOption(RT_LENS_GTG) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->CanPassEnemy(RE_LIKE_LIKE) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "364": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LIKE_LIKE_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700199": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_EYE_STATUE_UPPER",
+      "condition": "logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood() || (logic->IsAdult && ctx->GetTrickOption(RT_GTG_STATUE_JUMP))"
+    }
+  ],
+  "366": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_ABOVE_MAZE",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "365": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_EYE_STATUE_LOWER",
+      "condition": "logic->Get(LOGIC_GTG_CLEARED_EYE_STATUE) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "367": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM",
+      "condition": "logic->CanAttack() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "368": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM",
+      "condition": "(logic->CanUse(RG_MEGATON_HAMMER) || (logic->TakeDamage() && ctx->GetTrickOption(RT_FIRE_RINGS))) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700200": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_HAMMER_ROOM",
+      "condition": "logic->CanUse(RG_FAIRY_BOW)"
+    }
+  ],
+  "9700215": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700214": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700208": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM",
+      "condition": "logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood() || logic->CanUse(RG_SONG_OF_TIME) || logic->IsChild"
+    }
+  ],
+  "9700221": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM_UPPER_LEDGE",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    }
+  ],
+  "372": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->HasItem(RG_GTG_SILVER_WATER) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700213": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 16"
+    }
+  ],
+  "9700207": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && ((logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 16) || logic->HasItem(RG_GOLDEN_SCALE))"
+    }
+  ],
+  "9700211": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 16"
+    }
+  ],
+  "9700219": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanUse(RG_IRON_BOOTS) && (logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOOKSHOT)) && logic->WaterTimer() >= 16"
+    }
+  ],
+  "9700216": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_UNDERWATER",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 16"
+    }
+  ],
+  "373": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_DINALFOS",
+      "condition": "logic->CanKillEnemy(RE_BEAMOS) && logic->CanKillEnemy(RE_DINOLFOS, ED_CLOSE, true, 2, true) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1739": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_DINALFOS",
+      "condition": "true"
+    }
+  ],
+  "1740": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_DINALFOS",
+      "condition": "true"
+    }
+  ],
+  "9700198": [
+    {
+      "region": "RR_GERUDO_TRAINING_GROUND_DINALFOS",
+      "condition": "logic->CanUse(RG_FAIRY_BOW)"
+    }
+  ],
+  "1987": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->CanUse(RG_SONG_OF_STORMS)"
+    }
+  ],
+  "1732": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->BlueFire() || (ctx->GetTrickOption(RT_VISIBLE_COLLISION) && logic->CanJumpslash())"
+    }
+  ],
+  "9700396": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700397": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700399": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700400": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "true"
+    }
+  ],
+  "9700401": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "true"
+    }
+  ],
+  "9700432": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "true"
+    }
+  ],
+  "9700428": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700429": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700431": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700398": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "9700427": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "9700430": [
+    {
+      "region": "RR_ICE_CAVERN_BEGINNING",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "618": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->HookshotOrBoomerang()"
+    }
+  ],
+  "1093": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1094": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1095": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1096": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1097": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "9700394": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "true"
+    }
+  ],
+  "9700392": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700390": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700391": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700393": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700473": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700474": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700475": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700472": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "9700476": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "9700426": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700477": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "true"
+    }
+  ],
+  "9700462": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "true"
+    }
+  ],
+  "9700402": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "true"
+    }
+  ],
+  "9700395": [
+    {
+      "region": "RR_ICE_CAVERN_HUB",
+      "condition": "logic->IsAdult"
+    }
+  ],
+  "349": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "logic->BlueFire() && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1100": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "(logic->CanBreakPots() && logic->BlueFire()) || logic->HasExplosives() ||\n                                                              (ctx->GetTrickOption(RT_VISIBLE_COLLISION) && (logic->CanJumpslash())) ||\n                                                              (ctx->GetTrickOption(RT_ITEM_EXTENSION) && logic->CanUse(RG_HOOKSHOT))"
+    }
+  ],
+  "1733": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "true"
+    }
+  ],
+  "1734": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "true"
+    }
+  ],
+  "1735": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700437": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700438": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700439": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700440": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700441": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700434": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700435": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700436": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700443": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "9700442": [
+    {
+      "region": "RR_ICE_CAVERN_MAP_ROOM",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "350": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "(logic->IsChild || logic->CanClearStalagmite() || ctx->GetTrickOption(RT_ICE_STALAGMITE_CLIP)) && logic->BlueFire() && logic->CanOpenLargeChest()"
+    }
+  ],
+  "351": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "(logic->CanClearStalagmite() || ctx->GetTrickOption(RT_ICE_STALAGMITE_CLIP)) && logic->BlueFire()"
+    }
+  ],
+  "619": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->HookshotOrBoomerang()"
+    }
+  ],
+  "9700404": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700405": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700406": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700407": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700408": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700417": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite() || ctx->GetTrickOption(RT_ICE_STALAGMITE_CLIP)"
+    }
+  ],
+  "9700418": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite() || ctx->GetTrickOption(RT_ICE_STALAGMITE_CLIP)"
+    }
+  ],
+  "9700409": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700410": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700411": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700412": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700413": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700414": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700419": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700420": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700421": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700422": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700423": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700424": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700425": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700416": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "(logic->CanClearStalagmite() || ctx->GetTrickOption(RT_ICE_STALAGMITE_CLIP)) && logic->BlueFire()"
+    }
+  ],
+  "9700415": [
+    {
+      "region": "RR_ICE_CAVERN_COMPASS_ROOM",
+      "condition": "(logic->IsChild || logic->CanClearStalagmite() || ctx->GetTrickOption(RT_ICE_STALAGMITE_CLIP)) && logic->BlueFire()"
+    }
+  ],
+  "620": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->HookshotOrBoomerang() || (ctx->GetTrickOption(RT_ICE_BLOCK_GS) && logic->IsAdult && logic->CanUse(RG_HOVER_BOOTS) && logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_SHORT_JUMPSLASH))"
+    },
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "ctx->GetTrickOption(RT_ICE_BLOCK_GS) && logic->IsAdult && logic->CanUse(RG_HOVER_BOOTS) && logic->BlueFire() && logic->HasItem(RG_POWER_BRACELET)"
+    }
+  ],
+  "1736": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM_NOOKS",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME)"
+    }
+  ],
+  "1737": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM_NOOKS",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME)"
+    }
+  ],
+  "1738": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM_NOOKS",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME)"
+    }
+  ],
+  "9700466": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700463": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700465": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700464": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700467": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700468": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700469": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700470": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700433": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700444": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->IsAdult || logic->HasItem(RG_POWER_BRACELET) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()"
+    }
+  ],
+  "9700461": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM",
+      "condition": "logic->IsAdult || logic->HasItem(RG_POWER_BRACELET) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()"
+    }
+  ],
+  "9700471": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM_NOOKS",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "9700460": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM_NOOKS",
+      "condition": "true"
+    }
+  ],
+  "9700403": [
+    {
+      "region": "RR_ICE_CAVERN_BLOCK_ROOM_NOOKS",
+      "condition": "logic->BlueFire() || (ctx->GetTrickOption(RT_VISIBLE_COLLISION) && logic->CanJumpslash())"
+    }
+  ],
+  "9700448": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700449": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700450": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700451": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700452": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700453": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700454": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700455": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700456": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700457": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700458": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "9700459": [
+    {
+      "region": "RR_ICE_CAVERN_AFTER_BLOCK_ROOM",
+      "condition": "logic->CanClearStalagmite()"
+    }
+  ],
+  "1098": [
+    {
+      "region": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM",
+      "condition": "logic->CanBreakPots() && logic->BlueFire()"
+    }
+  ],
+  "1099": [
+    {
+      "region": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM",
+      "condition": "logic->CanBreakPots() && logic->BlueFire()"
+    }
+  ],
+  "9700445": [
+    {
+      "region": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "9700446": [
+    {
+      "region": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "9700447": [
+    {
+      "region": "RR_ICE_CAVERN_BEFORE_FINAL_ROOM",
+      "condition": "logic->BlueFire()"
+    }
+  ],
+  "352": [
+    {
+      "region": "RR_ICE_CAVERN_FINAL_ROOM",
+      "condition": "AnyAgeTime([]{return logic->CanKillEnemy(RE_WOLFOS);}) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "20": [
+    {
+      "region": "RR_ICE_CAVERN_FINAL_ROOM",
+      "condition": "(AnyAgeTime([]{return logic->CanKillEnemy(RE_WOLFOS);}) && logic->HasItem(RG_OPEN_CHEST)) && (!ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) || logic->HasItem(RG_NPC_SOUL)) && (!ctx->GetOption(RSK_SHUFFLE_SPEAK) || logic->HasItem(RG_SPEAK_HYLIAN))"
+    }
+  ],
+  "724": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "condition": "logic->HasItem(RG_BRONZE_SCALE) && (logic->IsChild || logic->HasItem(RG_SILVER_SCALE) || ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) || logic->CanUse(RG_IRON_BOOTS)) && logic->CanStunDeku() && logic->HasItem(RG_SPEAK_DEKU) && GetCheckPrice() <= GetWalletCapacity()"
+    }
+  ],
+  "1552": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "condition": "logic->CanBreakSmallCrates()"
+    }
+  ],
+  "1553": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_LIFT_ROOM",
+      "condition": "logic->CanBreakSmallCrates()"
+    }
+  ],
+  "555": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "condition": "logic->HookshotOrBoomerang()"
+    }
+  ],
+  "556": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_HOLES_BASEMENT",
+      "condition": "logic->HookshotOrBoomerang()"
+    },
+    {
+      "region": "RR_JABU_JABUS_BELLY_BIGOCTO_LEDGE",
+      "condition": "logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_SHORT_JUMPSLASH)"
+    }
+  ],
+  "975": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_B1_JIGGLY",
+      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots() && (ctx->GetTrickOption(RT_JABU_B1_CUBE_HOVER) || logic->BunnyHood()) && logic->CanUse(RG_HOVER_BOOTS))"
+    }
+  ],
+  "976": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_B1_JIGGLY",
+      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots() && (ctx->GetTrickOption(RT_JABU_B1_CUBE_HOVER) || logic->BunnyHood()) && logic->CanUse(RG_HOVER_BOOTS))"
+    }
+  ],
+  "977": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_B1_JIGGLY",
+      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots() && (ctx->GetTrickOption(RT_JABU_B1_CUBE_HOVER) || logic->BunnyHood()) && logic->CanUse(RG_HOVER_BOOTS))"
+    }
+  ],
+  "978": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_B1_JIGGLY",
+      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots() && (ctx->GetTrickOption(RT_JABU_B1_CUBE_HOVER) || logic->BunnyHood()) && logic->CanUse(RG_HOVER_BOOTS))"
+    }
+  ],
+  "979": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_B1_JIGGLY",
+      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots() && (ctx->GetTrickOption(RT_JABU_B1_CUBE_HOVER) || logic->BunnyHood()) && logic->CanUse(RG_HOVER_BOOTS))"
+    }
+  ],
+  "554": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_NORTH",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+    },
+    {
+      "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_SOUTH",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+    },
+    {
+      "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
+      "condition": "logic->HasItem(RG_POWER_BRACELET) && (logic->HasItem(RG_BRONZE_SCALE) || (logic->IsAdult && logic->CanUse(RG_HOVER_BOOTS))) ||\n                                                                                                                   \n                                                           logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_BOMB_THROW)"
+    }
+  ],
+  "972": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "973": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "974": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_WATER_SWITCH_ROOM_LEDGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "168": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_FORK_WEST",
+      "condition": "logic->Get(LOGIC_JABU_WEST_TENTACLE) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "169": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_FORK_NORTH_WEST",
+      "condition": "logic->CanKillEnemy(RE_SHABOM, ED_CLOSE, false, 9) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "167": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_FORK_EAST",
+      "condition": "logic->HasEnemySoul(RE_STINGER) && (logic->Get(LOGIC_JABU_RUTO_IN_1F) || logic->CanKillEnemy(RE_STINGER, ED_CLOSE, true, 4)) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "963": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "964": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "965": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_ABOVE_BIGOCTO",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "557": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_NEAR_BOSS_ROOM",
+      "condition": "logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_BOMB_THROW) && (logic->HasItem(RG_CLIMB) || logic->HookshotOrBoomerang())"
+    }
+  ],
+  "966": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "967": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "968": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "969": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "970": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "971": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "181": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_JABU_JABUS_BELLY_CLEAR)"
+    }
+  ],
+  "4": [
+    {
+      "region": "RR_JABU_JABUS_BELLY_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_JABU_JABUS_BELLY_CLEAR)"
+    }
+  ],
+  "9700602": [
+    {
+      "region": "RR_SHADOW_TEMPLE_BEGINNING",
+      "condition": "logic->CanRead()"
+    }
+  ],
+  "1057": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_START",
+      "condition": "logic->CanBreakPots()"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1058": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_START",
+      "condition": "logic->CanBreakPots()"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1059": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_END",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1060": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_END",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1061": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_END",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1056": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_END",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "271": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM",
+      "condition": "logic->CanKillEnemy(RE_REDEAD) && logic->CanKillEnemy(RE_KEESE) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1062": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1063": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WHISPERING_WALLS_SIDE_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "272": [
+    {
+      "region": "RR_SHADOW_TEMPLE_DEAD_HAND",
+      "condition": "logic->CanKillEnemy(RE_DEAD_HAND) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1983": [
+    {
+      "region": "RR_SHADOW_TEMPLE_FIRST_BEAMOS",
+      "condition": "logic->CanUse(RG_SONG_OF_STORMS)"
+    }
+  ],
+  "273": [
+    {
+      "region": "RR_SHADOW_TEMPLE_COMPASS_ROOM",
+      "condition": "logic->CanKillEnemy(RE_GIBDO) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "274": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "logic->HasItem(RG_SHADOW_SILVER_BLADES) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700596": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "true"
+    }
+  ],
+  "9700600": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "(logic->IsAdult && (logic->CanUse(RG_HOVER_BOOTS) || logic->CanGroundJump())) || logic->CanUse(RG_HOOKSHOT) || logic->BunnyHood()"
+    }
+  ],
+  "9700594": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "true"
+    }
+  ],
+  "9700604": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "true"
+    }
+  ],
+  "9700599": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPINNING_BLADES",
+      "condition": "true"
+    }
+  ],
+  "1984": [
+    {
+      "region": "RR_SHADOW_TEMPLE_UPPER_HUGE_PIT",
+      "condition": "logic->CanUse(RG_SONG_OF_STORMS)"
+    }
+  ],
+  "9700595": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true"
+    }
+  ],
+  "9700598": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true"
+    }
+  ],
+  "9700590": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true"
+    }
+  ],
+  "9700591": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true"
+    }
+  ],
+  "9700605": [
+    {
+      "region": "RR_SHADOW_TEMPLE_LOWER_HUGE_PIT",
+      "condition": "true"
+    }
+  ],
+  "277": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "599": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) || (logic->IsAdult && logic->CanGroundJumpslash())"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA_UPPER",
+      "condition": "ctx->GetTrickOption(RT_SHADOW_UMBRELLA_GS) && logic->CanUse(RG_HOVER_BOOTS) && logic->CanStandingShield() && logic->CanUse(RG_MASTER_SWORD)"
+    }
+  ],
+  "1064": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1065": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1066": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "9700601": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA",
+      "condition": "logic->CanRead()"
+    }
+  ],
+  "278": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA_UPPER",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "279": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA_UPPER",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1067": [
+    {
+      "region": "RR_SHADOW_TEMPLE_STONE_UMBRELLA_UPPER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "275": [
+    {
+      "region": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "condition": "logic->CanKillEnemy(RE_LIKE_LIKE) && logic->CanKillEnemy(RE_KEESE) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "276": [
+    {
+      "region": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "condition": "logic->CanKillEnemy(RE_LIKE_LIKE) && logic->CanKillEnemy(RE_KEESE) && (ctx->GetTrickOption(RT_LENS_SHADOW) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "598": [
+    {
+      "region": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "condition": "AnyAgeTime([]{return logic->CanKillEnemy(RE_LIKE_LIKE) && logic->CanKillEnemy(RE_KEESE);}) && ((logic->IsAdult && logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_SHORT_JUMPSLASH)) || logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG))"
+    }
+  ],
+  "1716": [
+    {
+      "region": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "condition": "(logic->CanUse(RG_SONG_OF_TIME) && logic->IsAdult) || logic->CanUse(RG_BOOMERANG)"
+    }
+  ],
+  "1717": [
+    {
+      "region": "RR_SHADOW_TEMPLE_INVISIBLE_SPINNING_BLADES",
+      "condition": "(logic->CanUse(RG_SONG_OF_TIME) && logic->IsAdult) || logic->CanUse(RG_BOOMERANG)"
+    }
+  ],
+  "9700606": [
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_S_DOOR",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_W_DOOR",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_CORNER_PLATFORM",
+      "condition": "(logic->BunnyHovers() && logic->CanJumpslash()) || logic->CanUse(RG_HOOKSHOT) || logic->CanRecoilHover(RECOIL_SWORD_AND_SHIELD)"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_DOOR_PLATFORM",
+      "condition": "logic->CanUse(RG_LONGSHOT)"
+    }
+  ],
+  "9700592": [
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_S_DOOR",
+      "condition": "logic->CanUse(RG_LONGSHOT)"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_DOOR_PLATFORM",
+      "condition": "(logic->BunnyHovers() && logic->CanJumpslash()) || logic->CanUse(RG_LONGSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)"
+    }
+  ],
+  "280": [
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "condition": "logic->CanKillEnemy(RE_REDEAD) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700593": [
+    {
+      "region": "RR_SHADOW_TEMPLE_FLOOR_SPIKES_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700597": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_CORNER_PLATFORM",
+      "condition": "true"
+    }
+  ],
+  "9700589": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_CORNER_PLATFORM",
+      "condition": "ctx->GetTrickOption(RT_LENS_SHADOW) || logic->CanUse(RG_LENS_OF_TRUTH) || logic->CanUse(RG_HOVER_BOOTS) || logic->CanUse(RG_GORON_TUNIC) || logic->TakeDamage()"
+    },
+    {
+      "region": "RR_SHADOW_TEMPLE_SPIKES_DOOR_PLATFORM",
+      "condition": "true"
+    }
+  ],
+  "281": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SKULL_JAR",
+      "condition": "logic->CanUse(RG_BOMB_BAG) || logic->HasItem(RG_GORONS_BRACELET) || (ctx->GetTrickOption(RT_SHADOW_FREESTANDING_KEY) && logic->CanUse(RG_BOMBCHU_5))"
+    }
+  ],
+  "600": [
+    {
+      "region": "RR_SHADOW_TEMPLE_SKULL_JAR",
+      "condition": "logic->CanKillEnemy(RE_GOLD_SKULLTULA)"
+    }
+  ],
+  "282": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WIND_TUNNEL_HINT_ROOM",
+      "condition": "logic->CanKillEnemy(RE_REDEAD) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1985": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WIND_TUNNEL_HINT_ROOM",
+      "condition": "logic->CanUse(RG_SUNS_SONG)"
+    }
+  ],
+  "283": [
+    {
+      "region": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT",
+      "condition": "logic->CanKillEnemy(RE_GIBDO, ED_CLOSE, true, 2) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "284": [
+    {
+      "region": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT",
+      "condition": "(ctx->GetTrickOption(RT_LENS_SHADOW) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasExplosives() && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1068": [
+    {
+      "region": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1069": [
+    {
+      "region": "RR_SHADOW_TEMPLE_ROOM_TO_BOAT",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "601": [
+    {
+      "region": "RR_SHADOW_TEMPLE_DOCK",
+      "condition": "logic->CanUse(RG_LONGSHOT)"
+    }
+  ],
+  "1718": [
+    {
+      "region": "RR_SHADOW_TEMPLE_DOCK",
+      "condition": "logic->ReachDistantScarecrow()"
+    }
+  ],
+  "1719": [
+    {
+      "region": "RR_SHADOW_TEMPLE_DOCK",
+      "condition": "logic->ReachDistantScarecrow()"
+    }
+  ],
+  "1073": [
+    {
+      "region": "RR_SHADOW_TEMPLE_BEYOND_BOAT",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1074": [
+    {
+      "region": "RR_SHADOW_TEMPLE_BEYOND_BOAT",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1720": [
+    {
+      "region": "RR_SHADOW_TEMPLE_CHASM_SCARECROW",
+      "condition": "true"
+    }
+  ],
+  "1721": [
+    {
+      "region": "RR_SHADOW_TEMPLE_CHASM_SCARECROW",
+      "condition": "true"
+    }
+  ],
+  "1075": [
+    {
+      "region": "RR_SHADOW_TEMPLE_ACROSS_CHASM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1076": [
+    {
+      "region": "RR_SHADOW_TEMPLE_ACROSS_CHASM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1722": [
+    {
+      "region": "RR_SHADOW_TEMPLE_BROKEN_PILLAR",
+      "condition": "true"
+    }
+  ],
+  "287": [
+    {
+      "region": "RR_SHADOW_TEMPLE_X_CROSS",
+      "condition": "(ctx->GetTrickOption(RT_LENS_SHADOW) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->CanKillEnemy(RE_FLOORMASTER) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1071": [
+    {
+      "region": "RR_SHADOW_TEMPLE_X_CROSS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1072": [
+    {
+      "region": "RR_SHADOW_TEMPLE_X_CROSS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "602": [
+    {
+      "region": "RR_SHADOW_TEMPLE_THREE_SKULL_JARS",
+      "condition": "logic->HasItem(RG_GORONS_BRACELET) || logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_SHORT_JUMPSLASH)"
+    }
+  ],
+  "9700603": [
+    {
+      "region": "RR_SHADOW_TEMPLE_THREE_SKULL_JARS",
+      "condition": "logic->CanUse(RG_FAIRY_BOW)"
+    }
+  ],
+  "285": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WOODEN_SPIKES",
+      "condition": "logic->CanUse(RG_DINS_FIRE) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "286": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WOODEN_SPIKES",
+      "condition": "logic->CanUse(RG_DINS_FIRE) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1070": [
+    {
+      "region": "RR_SHADOW_TEMPLE_WOODEN_SPIKES",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "308": [
+    {
+      "region": "RR_SHADOW_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_SHADOW_TEMPLE_CLEAR)"
+    }
+  ],
+  "8": [
+    {
+      "region": "RR_SHADOW_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_SHADOW_TEMPLE_CLEAR)"
+    }
+  ],
+  "1077": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_FOYER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1078": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_FOYER",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "9700619": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_FOYER",
+      "condition": "logic->CanRead()"
+    }
+  ],
+  "9700620": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_FOYER",
+      "condition": "logic->CanRead()"
+    }
+  ],
+  "309": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SWITCH_BRIDGE_NORTH",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1079": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_1F_ANUBIS",
+      "condition": "true"
+    }
+  ],
+  "1080": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_1F_ANUBIS",
+      "condition": "true"
+    }
+  ],
+  "1081": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_1F_ANUBIS",
+      "condition": "true"
+    }
+  ],
+  "1082": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_1F_ANUBIS",
+      "condition": "true"
+    }
+  ],
+  "310": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "logic->Get(LOGIC_SPIRIT_SILVER_RUPEE_BRIDGE_TORCHES) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "608": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "logic->HasItem(RG_SPIRIT_SILVER_CHILD) && logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_BOMB_THROW) && logic->HasItem(RG_CLIMB)"
+    },
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_SOUTH",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+    }
+  ],
+  "9700622": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT)"
+    }
+  ],
+  "9700623": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "true"
+    }
+  ],
+  "9700610": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "true"
+    }
+  ],
+  "9700609": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT)"
+    }
+  ],
+  "9700621": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_RUPEE_BRIDGE_NORTH",
+      "condition": "true"
+    }
+  ],
+  "1556": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_CHILD_BOXES",
+      "condition": "logic->CanBreakSmallCrates()"
+    }
+  ],
+  "1557": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_CHILD_BOXES",
+      "condition": "logic->CanBreakSmallCrates()"
+    }
+  ],
+  "609": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F, []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG);}, false,\n                                                                     RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F, []{return logic->CanKillEnemy(RE_GOLD_SKULLTULA, logic->TakeDamage() ? ED_SHORT_JUMPSLASH : ED_BOMB_THROW);})"
+    },
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F, []{return logic->CanKillEnemy(RE_GOLD_SKULLTULA, logic->TakeDamage() ? ED_SHORT_JUMPSLASH : ED_BOMB_THROW);}, false,\n                                                                        RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F, []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG);})"
+    }
+  ],
+  "1083": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_1F, []{return logic->CanBreakPots();})"
+    }
+  ],
+  "311": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F, []{return logic->CanHitSwitch(ED_BOMB_THROW) && logic->HasItem(RG_OPEN_CHEST);})"
+    }
+  ],
+  "312": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SUN_ON_FLOOR_2F, []{return logic->CanHitSwitch(ED_BOMB_THROW) && logic->HasItem(RG_OPEN_CHEST);})"
+    }
+  ],
+  "327": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SAND_PIT",
+      "condition": "logic->CanUse(RG_ZELDAS_LULLABY) && (logic->CanUse(RG_HOOKSHOT) || logic->CanRecoilHover(RECOIL_HAMMER)) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "9700607": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_ABOVE_BOULDERS",
+      "condition": "logic->CanUse(RG_HOVER_BOOTS) || logic->CanJumpslash() || logic->CanUse(RG_LONGSHOT) || logic->BunnyHood()"
+    }
+  ],
+  "612": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "logic->CanUse(RG_SONG_OF_TIME) && logic->CanKillEnemy(RE_GOLD_SKULLTULA)"
+    }
+  ],
+  "9700616": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "true"
+    }
+  ],
+  "9700618": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "true"
+    }
+  ],
+  "9700617": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "true"
+    }
+  ],
+  "9700615": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOULDERS",
+      "condition": "true"
+    }
+  ],
+  "328": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_PAST_BOULDERS",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1981": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_PAST_BOULDERS",
+      "condition": "logic->CanUse(RG_SUNS_SONG)"
+    }
+  ],
+  "329": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM, []{return logic->HasItem(RG_OPEN_CHEST) && (logic->HasItem(RG_POWER_BRACELET) || logic->SunlightArrows());})"
+    }
+  ],
+  "330": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_2F_MIRROR_ROOM, []{return logic->HasItem(RG_OPEN_CHEST) && (logic->HasItem(RG_POWER_BRACELET) || logic->SunlightArrows());})"
+    }
+  ],
+  "313": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD, []{return logic->HasFireSourceWithTorch() || (ctx->GetTrickOption(RT_SPIRIT_MAP_CHEST) && logic->CanUse(RG_FAIRY_BOW));}, false,\n                                                          RR_SPIRIT_TEMPLE_STATUE_ROOM_ADULT, []{return logic->HasFireSourceWithTorch();},\n                                                          RR_SPIRIT_TEMPLE_STATUE_ROOM,       []{return logic->HasFireSource();}) && logic->CanOpenLargeChest()"
+    },
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM,       []{return logic->HasFireSource();}, false,\n                                                                      RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD, []{return logic->HasFireSourceWithTorch() || (ctx->GetTrickOption(RT_SPIRIT_MAP_CHEST) && logic->CanUse(RG_FAIRY_BOW));}) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "611": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD, []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT);}, false,\n                                                          RR_SPIRIT_TEMPLE_INNER_WEST_HAND,   []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ctx->GetTrickOption(RT_SPIRIT_WEST_LEDGE) ? ED_BOOMERANG : ED_HOOKSHOT);},\n                                                          RR_SPIRIT_TEMPLE_GS_LEDGE,          []{return logic->CanKillEnemy(RE_GOLD_SKULLTULA);})"
+    },
+    {
+      "region": "RR_SPIRIT_TEMPLE_INNER_WEST_HAND",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_INNER_WEST_HAND,   []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ctx->GetTrickOption(RT_SPIRIT_WEST_LEDGE) ? ED_BOOMERANG : ED_HOOKSHOT);}, false,\n                                                         RR_SPIRIT_TEMPLE_GS_LEDGE,          []{return logic->CanKillEnemy(RE_GOLD_SKULLTULA);},\n                                                         RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD, []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT);})"
+    },
+    {
+      "region": "RR_SPIRIT_TEMPLE_GS_LEDGE",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_GS_LEDGE, []{return logic->CanKillEnemy(RE_GOLD_SKULLTULA);}, false,\n                                                         RR_SPIRIT_TEMPLE_INNER_WEST_HAND,   []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ctx->GetTrickOption(RT_SPIRIT_WEST_LEDGE) ? ED_BOOMERANG : ED_HOOKSHOT);},\n                                                         RR_SPIRIT_TEMPLE_STATUE_ROOM_CHILD, []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT);})"
+    }
+  ],
+  "1086": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM,       []{return logic->CanBreakPots();})"
+    }
+  ],
+  "1087": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM,       []{return logic->CanBreakPots();})"
+    }
+  ],
+  "1088": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM,       []{return logic->CanBreakPots();})"
+    }
+  ],
+  "1089": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM,       []{return logic->CanBreakPots();})"
+    }
+  ],
+  "1090": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM,       []{return logic->CanBreakPots();})"
+    }
+  ],
+  "1091": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_STATUE_ROOM",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_STATUE_ROOM,       []{return logic->CanBreakPots();})"
+    }
+  ],
+  "9700614": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700608": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700611": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "9700613": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_ROOM",
+      "condition": "true"
+    }
+  ],
+  "314": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_CHEST_LEDGE",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SUN_BLOCK_CHEST_LEDGE, \n                                                                     []{return logic->HasFireSource() || \n                                                                               (logic->HasItem(RG_SPIRIT_SILVER_SUN) &&\n                                                                                (logic->CanUse(RG_STICKS) || (ctx->GetTrickOption(RT_SPIRIT_SUN_CHEST) && logic->CanUse(RG_FAIRY_BOW))));}) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "9700612": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SUN_BLOCK_CHEST_LEDGE",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SUN_BLOCK_CHEST_LEDGE, []{return true;}, true)"
+    }
+  ],
+  "610": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SKULLTULA_STAIRS",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SKULLTULA_STAIRS, []{return logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG);})"
+    }
+  ],
+  "1084": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SKULLTULA_STAIRS",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SKULLTULA_STAIRS, []{return logic->CanBreakPots();})"
+    }
+  ],
+  "1085": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_SKULLTULA_STAIRS",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_SKULLTULA_STAIRS, []{return logic->CanBreakPots();})"
+    }
+  ],
+  "326": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_OUTER_RIGHT_HAND",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_OUTER_RIGHT_HAND, []{return logic->CanOpenLargeChest();})"
+    }
+  ],
+  "332": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_INNER_LEFT_HAND",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_INNER_LEFT_HAND, []{return logic->CanUse(RG_ZELDAS_LULLABY) && (logic->HasItem(RG_CLIMB) || logic->CanUse(RG_HOOKSHOT)) && logic->HasItem(RG_OPEN_CHEST);})"
+    }
+  ],
+  "331": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_INNER_LEFT_HAND",
+      "condition": "SpiritShared(RR_SPIRIT_TEMPLE_INNER_LEFT_HAND, []{return logic->CanUse(RG_ZELDAS_LULLABY) && logic->HasItem(RG_OPEN_CHEST) &&\n                                                                                                                                                               ((logic->IsAdult && (ctx->GetTrickOption(RT_SPIRIT_STATUE_JUMP) || logic->BunnyHood())) || logic->CanUse(RG_HOOKSHOT) || logic->CanUse(RG_HOVER_BOOTS));})"
+    }
+  ],
+  "1092": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_POT_STAIRS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1982": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_4_ARMOS",
+      "condition": "logic->HasExplosives() && logic->CanUse(RG_SUNS_SONG)"
+    }
+  ],
+  "333": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_4_ARMOS_SIDE_ROOM",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "335": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_CHEST_STAIRS",
+      "condition": "(ctx->GetTrickOption(RT_LENS_SPIRIT) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "334": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_CHEST_STAIRS",
+      "condition": "(ctx->GetTrickOption(RT_LENS_SPIRIT) || logic->CanUse(RG_LENS_OF_TRUTH)) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "344": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_OUTER_LEFT_HAND",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "1723": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BIG_WALL_UPPER",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    }
+  ],
+  "1724": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BIG_WALL_UPPER",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    }
+  ],
+  "345": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_FAKE_DOORS_ROOM",
+      "condition": "((logic->TakeDamage() && ctx->GetTrickOption(RT_FIRE_RINGS)) || \n                                                  (AnyAgeTime([]{return logic->CanHitEyeTargets() && logic->CanAvoidEnemy(RE_TORCH_SLUG, ED_CLOSE, true, 4);}) \n                                                   && logic->CanUse(RG_HOOKSHOT))) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "346": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BIG_MIRROR_CAVE",
+      "condition": "((logic->IsAdult && logic->CanUse(RG_MIRROR_SHIELD)) || logic->SunlightArrows()) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "348": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_SPIRIT_TEMPLE_CLEAR)"
+    }
+  ],
+  "9": [
+    {
+      "region": "RR_SPIRIT_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_SPIRIT_TEMPLE_CLEAR)"
+    }
+  ],
+  "1033": [
+    {
+      "region": "RR_WATER_TEMPLE_3F_CENTRAL_A",
+      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots(ED_BOOMERANG, false, true) && logic->HasItem(RG_GOLDEN_SCALE))"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_2F_CENTRAL_H",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
+      "condition": "logic->CanBreakPots()"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_LOOP_3F_A",
+      "condition": "logic->CanUse(RG_BOMBCHU_5) && (logic->HasItem(RG_GOLDEN_SCALE) || logic->CanUse(RG_IRON_BOOTS))"
+    }
+  ],
+  "1034": [
+    {
+      "region": "RR_WATER_TEMPLE_3F_CENTRAL_A",
+      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots(ED_BOOMERANG, false, true) && logic->HasItem(RG_GOLDEN_SCALE))"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_2F_CENTRAL_H",
+      "condition": "logic->CanUse(RG_HOOKSHOT)"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
+      "condition": "logic->CanBreakPots()"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_LOOP_3F_A",
+      "condition": "logic->CanUse(RG_BOMBCHU_5) && (logic->HasItem(RG_GOLDEN_SCALE) || logic->CanUse(RG_IRON_BOOTS))"
+    }
+  ],
+  "1037": [
+    {
+      "region": "RR_WATER_TEMPLE_SIDE_TOWER_1F",
+      "condition": "(logic->WaterLevel(WL_LOW) && logic->CanBreakPots()) || (logic->CanUse(RG_HOOKSHOT) && logic->CanUse(RG_IRON_BOOTS))"
+    }
+  ],
+  "1038": [
+    {
+      "region": "RR_WATER_TEMPLE_SIDE_TOWER_1F",
+      "condition": "(logic->WaterLevel(WL_LOW) && logic->CanBreakPots()) || (logic->CanUse(RG_HOOKSHOT) && logic->CanUse(RG_IRON_BOOTS))"
+    }
+  ],
+  "255": [
+    {
+      "region": "RR_WATER_TEMPLE_4_SPIKES_ROOM",
+      "condition": "AnyAgeTime([]{return logic->CanKillEnemy(RE_SPIKE, ED_CLOSE, true, 4);}) && logic->CanOpenLargeChest()"
+    }
+  ],
+  "256": [
+    {
+      "region": "RR_WATER_TEMPLE_CRACKED_WALL",
+      "condition": "(logic->WaterLevel(WL_LOW_OR_MID) || logic->CanOpenUnderwaterChest()) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "257": [
+    {
+      "region": "RR_WATER_TEMPLE_TORCH_ROOM",
+      "condition": "AnyAgeTime([]{return (logic->WaterLevel(WL_LOW) && logic->CanKillEnemy(RE_SHELL_BLADE, ED_CLOSE, true, 3) && logic->HasItem(RG_OPEN_CHEST)) ||\n                                                                                           logic->CanOpenUnderwaterChest();})"
+    }
+  ],
+  "589": [
+    {
+      "region": "RR_WATER_TEMPLE_BOULDERS_SOUTH",
+      "condition": "logic->CanUse(RG_LONGSHOT)"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_CANAL_ALCOVE",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) ||\n                                                                                                      \n                                                                                                                                                  \n                                                         (((logic->IsAdult && logic->CanUse(RG_HOVER_BOOTS)) || logic->BunnyHovers() || logic->CanMiddairGroundJump()) &&\n                                                                                                        \n                                                          (logic->HasItem(RG_BRONZE_SCALE) || (ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid())) &&\n                                                                                                               \n                                                                                                                                                     \n                                                                                                                                                                                                    \n                                                          (logic->CanKillEnemy(RE_GOLD_SKULLTULA, logic->HasItem(RG_BRONZE_SCALE) && (logic->IsAdult || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()) ? ED_SHORT_JUMPSLASH : logic->IsAdult ? ED_BOMB_THROW : ED_BOOMERANG)))"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_BOULDER_CANAL",
+      "condition": "(logic->IsAdult && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)) || \n                                                                        (logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT))"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_BEHIND_CANAL",
+      "condition": "logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT) && logic->WaterTimer() >= 8"
+    }
+  ],
+  "1048": [
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_ROOM_TARGET",
+      "condition": "logic->CanBreakPots(ED_HOOKSHOT, false, true) && logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_ROOM",
+      "condition": "(logic->CanBreakPots(ED_LONGSHOT, true, true) && logic->HasItem(RG_BRONZE_SCALE)) ||\n                                                                                                                                                                   \n                                                              (logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT) && logic->WaterTimer() >= 8)"
+    }
+  ],
+  "1049": [
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_ROOM_TARGET",
+      "condition": "logic->CanBreakPots(ED_HOOKSHOT, false, true) && logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_ROOM",
+      "condition": "(logic->CanBreakPots(ED_LONGSHOT, true, true) && logic->HasItem(RG_BRONZE_SCALE)) ||\n                                                              (logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT) && logic->WaterTimer() >= 8)"
+    }
+  ],
+  "258": [
+    {
+      "region": "RR_WATER_TEMPLE_BOSS_KEY_ROOM",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "1054": [
+    {
+      "region": "RR_WATER_TEMPLE_BOSS_KEY_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1055": [
+    {
+      "region": "RR_WATER_TEMPLE_BOSS_KEY_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "588": [
+    {
+      "region": "RR_WATER_TEMPLE_GS_CAGE",
+      "condition": "(logic->IsAdult && (logic->HasItem(RG_POWER_BRACELET) || logic->CanKillEnemy(RE_GOLD_SKULLTULA))) || \n                                                    logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) || logic->CanGroundJumpslash()"
+    }
+  ],
+  "1044": [
+    {
+      "region": "RR_WATER_TEMPLE_GS_CAGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1045": [
+    {
+      "region": "RR_WATER_TEMPLE_GS_CAGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1046": [
+    {
+      "region": "RR_WATER_TEMPLE_GS_CAGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1047": [
+    {
+      "region": "RR_WATER_TEMPLE_GS_CAGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "263": [
+    {
+      "region": "RR_WATER_TEMPLE_DRAGON_ROOM",
+      "condition": "logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_OPEN_CHEST) &&\n                                               ((logic->CanUse(RG_HOOKSHOT) && logic->CanUse(RG_IRON_BOOTS)) ||\n                                                (((logic->IsAdult && ctx->GetTrickOption(RT_WATER_ADULT_DRAGON)) || (logic->IsChild && ctx->GetTrickOption(RT_WATER_CHILD_DRAGON))) &&\n                                                 logic->CanHitSwitch(ED_BOOMERANG, true) && (logic->HasItem(RG_SILVER_SCALE) || (logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8))))"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_ABOVE_DRAGON",
+      "condition": "logic->IsAdult && logic->CanHitSwitch(ED_LONGSHOT) && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_OPEN_CHEST) &&\n                                                ((ctx->GetTrickOption(RT_WATER_ADULT_DRAGON) && (logic->HasItem(RG_SILVER_SCALE) || (logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8))) ||\n                                                 ctx->GetTrickOption(RT_WATER_DRAGON_JUMP_DIVE))"
+    }
+  ],
+  "590": [
+    {
+      "region": "RR_WATER_TEMPLE_PILLAR_2F",
+      "condition": "logic->CanUse(RG_LONGSHOT);"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_PILLAR_H",
+      "condition": "logic->HasItem(RG_BRONZE_SCALE) && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+    }
+  ],
+  "259": [
+    {
+      "region": "RR_WATER_TEMPLE_PILLAR_B1",
+      "condition": "logic->CanUse(RG_HOOKSHOT) && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "254": [
+    {
+      "region": "RR_WATER_TEMPLE_JET_CHEST_ROOM",
+      "condition": "logic->CanUseProjectile() && logic->CanOpenLargeChest()"
+    }
+  ],
+  "1039": [
+    {
+      "region": "RR_WATER_TEMPLE_JET_CHEST_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1040": [
+    {
+      "region": "RR_WATER_TEMPLE_JET_CHEST_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1041": [
+    {
+      "region": "RR_WATER_TEMPLE_JET_CHEST_ROOM",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "260": [
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_LOOP_BACK",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1042": [
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_LOOP_BACK",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1043": [
+    {
+      "region": "RR_WATER_TEMPLE_BLOCK_LOOP_BACK",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "591": [
+    {
+      "region": "RR_WATER_TEMPLE_WATERFALL",
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_LONGSHOT) ||\n                                                           (ctx->GetTrickOption(RT_WATER_RANG_FALLING_PLATFORM_GS) && logic->CanUse(RG_BOOMERANG)) ||\n                                                           (ctx->GetTrickOption(RT_WATER_HOOKSHOT_FALLING_PLATFORM_GS) && logic->IsAdult && logic->CanUse(RG_HOOKSHOT))"
+    }
+  ],
+  "1052": [
+    {
+      "region": "RR_WATER_TEMPLE_LIKE_LIKE_SPIKES",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1053": [
+    {
+      "region": "RR_WATER_TEMPLE_LIKE_LIKE_SPIKES",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "261": [
+    {
+      "region": "RR_WATER_TEMPLE_SOT_PIT_ROOM",
+      "condition": "logic->CanOpenLargeChest()"
+    }
+  ],
+  "592": [
+    {
+      "region": "RR_WATER_TEMPLE_RIVER",
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT) && logic->WaterTimer() >= 8)"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_RIVER_PLATFORM",
+      "condition": "ctx->GetTrickOption(RT_WATER_RIVER_GS) && logic->IsAdult && logic->CanKillEnemy(RE_GOLD_SKULLTULA, ED_FAR) && logic->CanUse(RG_LONGSHOT)"
+    }
+  ],
+  "1712": [
+    {
+      "region": "RR_WATER_TEMPLE_RIVER",
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->HasItem(RG_BRONZE_SCALE)"
+    }
+  ],
+  "1713": [
+    {
+      "region": "RR_WATER_TEMPLE_RIVER",
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->HasItem(RG_BRONZE_SCALE)"
+    }
+  ],
+  "1714": [
+    {
+      "region": "RR_WATER_TEMPLE_RIVER",
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->HasItem(RG_BRONZE_SCALE)"
+    }
+  ],
+  "1715": [
+    {
+      "region": "RR_WATER_TEMPLE_RIVER",
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->HasItem(RG_BRONZE_SCALE)"
+    }
+  ],
+  "1050": [
+    {
+      "region": "RR_WATER_TEMPLE_RIVER_PLATFORM",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_RIVER_POTS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1051": [
+    {
+      "region": "RR_WATER_TEMPLE_RIVER_PLATFORM",
+      "condition": "logic->CanUse(RG_BOOMERANG)"
+    },
+    {
+      "region": "RR_WATER_TEMPLE_RIVER_POTS",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "262": [
+    {
+      "region": "RR_WATER_TEMPLE_ABOVE_DRAGON",
+      "condition": "logic->HasItem(RG_OPEN_CHEST)"
+    }
+  ],
+  "1035": [
+    {
+      "region": "RR_WATER_TEMPLE_RISING_TARGET_LEDGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "1036": [
+    {
+      "region": "RR_WATER_TEMPLE_RISING_TARGET_LEDGE",
+      "condition": "logic->CanBreakPots()"
+    }
+  ],
+  "270": [
+    {
+      "region": "RR_WATER_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_WATER_TEMPLE_CLEAR)"
+    }
+  ],
+  "7": [
+    {
+      "region": "RR_WATER_TEMPLE_BOSS_ROOM",
+      "condition": "logic->Get(LOGIC_WATER_TEMPLE_CLEAR)"
+    }
+  ]
+}

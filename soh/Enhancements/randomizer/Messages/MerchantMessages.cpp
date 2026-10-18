@@ -12,6 +12,7 @@
 #include "soh/ObjectExtension/ObjectExtension.h"
 #include "soh/Enhancements/randomizer/randomizer.h"
 #include "soh/Network/Archipelago/ArchipelagoC.h"
+#include "soh/Network/Archipelago/ArchipelagoClient.h"
 
 extern "C" {
 #include <macros.h>
@@ -34,6 +35,7 @@ void BuildMerchantMessage(CustomMessage& msg, RandomizerCheck rc, bool mysteriou
     std::string color = Rando::StaticData::RetrieveItem(static_cast<RandomizerGet>(rgid)).GetColor();
     // Shop lists want a bare name, everyone else speaks in sentences and wants an article
     bool inShop = Rando::StaticData::GetLocation(rc)->IsShop();
+    bool showsItem = !mysterious;
     if (mysterious) {
         itemName = Rando::StaticData::hintTextTable[RHT_MYSTERIOUS_ITEM_CAPITAL].GetHintMessage();
         if (!inShop) {
@@ -50,6 +52,7 @@ void BuildMerchantMessage(CustomMessage& msg, RandomizerCheck rc, bool mysteriou
         color = "%g";
     } else if (rgid == RG_AP_REMOTE_IMPORTANT || rgid == RG_AP_REMOTE_NORMAL) {
         const char* description = Archipelago_GetRemoteItemDescription(static_cast<int32_t>(rc));
+        showsItem = description != nullptr && description[0] != '\0';
         itemName = CustomMessage(description != nullptr && description[0] != '\0'
                                      ? description : "an Archipelago item");
         color = rgid == RG_AP_REMOTE_IMPORTANT ? "%g" : "%w";
@@ -61,6 +64,11 @@ void BuildMerchantMessage(CustomMessage& msg, RandomizerCheck rc, bool mysteriou
     }
     msg.Replace("[[color]]", color);
     msg.InsertNames({ itemName, CustomMessage(std::to_string(location->GetPrice())) });
+    // The offer is an item hint only when it actually names the item. Merely
+    // building a mysterious offer must not disclose its AP placement.
+    if (showsItem) {
+        msg.AddHintTargets(ArchipelagoClient::GetInstance().GetHintItemTargets(rc));
+    }
 }
 
 void BuildBeanGuyMessage(uint16_t* textId, bool* loadFromMessageTable) {

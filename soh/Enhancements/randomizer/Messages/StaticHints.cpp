@@ -156,6 +156,7 @@ void BuildSkulltulaPeopleMessage(uint16_t* textId, bool* loadFromMessageTable) {
     msg.InsertNames({ ap.IsGameplaySessionActive()
         ? CustomMessage(apItem.empty() ? "an item (Archipelago details are still loading)" : apItem)
         : item.GetHint().GetHintMessage() });
+    if (ap.IsGameplaySessionActive() && !apItem.empty()) msg.AddHintTargets(ap.GetHintItemTargets(rc));
     msg.AutoFormat();
     msg.LoadIntoFont();
     *loadFromMessageTable = false;
@@ -179,6 +180,7 @@ void Build100SkullsHintMessage(uint16_t* textId, bool* loadFromMessageTable) {
     msg.InsertNames({ ap.IsGameplaySessionActive()
         ? CustomMessage(apItem.empty() ? "an item (Archipelago details are still loading)" : apItem)
         : item.GetHint().GetHintMessage() });
+    if (ap.IsGameplaySessionActive() && !apItem.empty()) msg.AddHintTargets(ap.GetHintItemTargets(rc));
     msg.AutoFormat();
     msg.LoadIntoFont();
     *loadFromMessageTable = false;

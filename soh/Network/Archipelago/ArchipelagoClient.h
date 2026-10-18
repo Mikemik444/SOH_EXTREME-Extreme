@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <deque>
+#include <map>
 #include <mutex>
 #include <string>
 #include <unordered_map>
@@ -35,6 +36,8 @@ class ArchipelagoClient {
     bool IsAuthenticated() const;
     bool IsConnectionRefused() const;
     std::string GetStatusText() const;
+    // Game-thread menu query: reports this save's installed map and fixed spawns.
+    std::string GetEntranceStatusText() const;
 
     void SendLocation(int64_t locationId, bool notifyRemote = false);
     void ReportCheck(int32_t randomizerCheck);
@@ -74,6 +77,15 @@ class ArchipelagoClient {
     // Game-thread only. No chat commands, hint purchases, or remote scouting.
     std::string GetInGameHint(const std::string& key, int32_t stoneIndex = -1);
     std::string GetHintItemDescription(int32_t randomizerCheck);
+    // Game-thread-only provenance, frozen with the text until its final page is drawn.
+    // Live hint/scout stores are also game-thread-owned; adjacent text/target
+    // getters cannot be interleaved by a network callback or SeedHints update.
+    std::vector<SohExtreme::HintTarget> GetHintItemTargets(int32_t randomizerCheck);
+    std::vector<SohExtreme::HintTarget> GetInGameHintTargets(const std::string& key, int32_t stoneIndex = -1);
+    void RecordRevealedHintTargets(const std::vector<SohExtreme::HintTarget>& targets);
+    std::string GetRevealedHintTargetsJson() const;
+    bool LoadRevealedHintTargetsJson(const std::string& raw);
+    const std::string& GetHintSyncStatus() const { return hintSyncStatus; }
     bool IsReadyForFileSelect() const;
     void ApplySlotSettings();
     void EnforceSlotSettings();
@@ -125,6 +137,15 @@ class ArchipelagoClient {
     SohExtreme::InGameHintData inGameHints;
     std::vector<HintInfo> hints;
     bool hintSnapshotLoaded = false;
+    SohExtreme::HintTarget MakeHintTarget(int64_t locationId) const;
+    void RebuildHints();
+    void ServiceHintBridge();
+    mutable std::mutex hintJournalMutex;
+    std::map<std::pair<int, int64_t>, SohExtreme::HintTarget> revealedHintTargets;
+    std::vector<SohExtreme::ServerHintRecord> serverHintRows;
+    std::string pendingHintPayload, hintProducer, hintSyncStatus;
+    uint64_t hintRequest = 0, hintRevision = 0;
+    double nextHintRequest = 0.0, nextHintPublish = 0.0;
     std::deque<int64_t> remotePresentations;
     std::unordered_set<int64_t> presentedRemoteLocations;
     std::string remotePickupDescription;
@@ -231,6 +252,8 @@ class ArchipelagoClient {
     std::unordered_map<int64_t, uint16_t> shopPrices;
     bool activeLocationsLoaded = false;
     bool slotSettingsLoaded = false;
+    std::string slotSettingsError;
+    std::string rejectedSlotSettingsJson;
     bool shopPricesLoaded = false;
     bool kakarikoGateOpen = false;
     bool deathLinkEnabled = false;

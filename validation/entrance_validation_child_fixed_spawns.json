@@ -1,0 +1,16 @@
+{
+  "age": "child",
+  "seed": 1801,
+  "elapsed_seconds": 72.14,
+  "mapping_endpoints": 657,
+  "accepted_swaps": 713,
+  "initial_checks": 3,
+  "initial_check_examples": [
+    "Link's Pocket",
+    "Song from Impa",
+    "Scene Transition: Link's House -> KF Link's House Entry"
+  ],
+  "child_spawn": "CHILD_SPAWN -> KF_LINKS_HOUSE",
+  "adult_spawn": "ADULT_SPAWN -> TEMPLE_OF_TIME",
+  "fixed_spawns": true
+}

@@ -1,0 +1,144 @@
+{
+  "passed": true,
+  "runtime": "Archipelago 0.6.7",
+  "scope": "Complete source world setup and actual rules; no randomized entrance generation, fill, or native launch.",
+  "cases": [
+    {
+      "case": "vanilla_spawn_identity_returns",
+      "mapping": {},
+      "safe": true,
+      "restricted_physical_sources_reachable": {
+        "832": {
+          "child": true,
+          "adult": false
+        },
+        "1000": {
+          "child": false,
+          "adult": true
+        },
+        "2060": {
+          "child": true,
+          "adult": false
+        }
+      }
+    },
+    {
+      "case": "adult_spawn_hc_fairy_while_interiors_disabled",
+      "mapping": {
+        "642": 1400
+      },
+      "safe": false,
+      "restricted_physical_sources_reachable": {
+        "832": {
+          "child": true,
+          "adult": true
+        },
+        "1000": {
+          "child": false,
+          "adult": true
+        },
+        "2060": {
+          "child": true,
+          "adult": true
+        }
+      }
+    },
+    {
+      "case": "child_spawn_ogc_fairy_while_interiors_disabled",
+      "mapping": {
+        "187": 1218
+      },
+      "safe": false,
+      "restricted_physical_sources_reachable": {
+        "832": {
+          "child": true,
+          "adult": false
+        },
+        "1000": {
+          "child": true,
+          "adult": true
+        },
+        "2060": {
+          "child": true,
+          "adult": false
+        }
+      }
+    },
+    {
+      "case": "adult_spawn_hc_storms_while_grottos_disabled",
+      "mapping": {
+        "642": 1804
+      },
+      "safe": false,
+      "restricted_physical_sources_reachable": {
+        "832": {
+          "child": true,
+          "adult": true
+        },
+        "1000": {
+          "child": false,
+          "adult": true
+        },
+        "2060": {
+          "child": true,
+          "adult": true
+        }
+      }
+    },
+    {
+      "case": "correct_age_fairy_arrivals",
+      "mapping": {
+        "187": 1400,
+        "642": 1218
+      },
+      "safe": true,
+      "restricted_physical_sources_reachable": {
+        "832": {
+          "child": true,
+          "adult": false
+        },
+        "1000": {
+          "child": false,
+          "adult": true
+        },
+        "2060": {
+          "child": true,
+          "adult": false
+        }
+      }
+    },
+    {
+      "case": "safe_identity_after_rejected_candidate",
+      "mapping": {},
+      "safe": true,
+      "restricted_physical_sources_reachable": {
+        "832": {
+          "child": true,
+          "adult": false
+        },
+        "1000": {
+          "child": false,
+          "adult": true
+        },
+        "2060": {
+          "child": true,
+          "adult": false
+        }
+      }
+    }
+  ],
+  "case_count": 6,
+  "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5",
+  "source_hashes": {
+    "archipelago/soh_extreme/EntranceRandomizer.py": "f4135ea70f74c90b158e10da2c713733ce949d99917ab30f0c6b2e5ee32decbe",
+    "archipelago/soh_extreme/EntranceSafety.py": "2f8812b1ad2ae1b070e70e55e146e7e7fe188c92d6a883e41d807edea54f5608",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/__init__.py": "242e128dbf15945cabec55b6a7176bb3e74ce697e56ba8a89f6b4a5829d83f63",
+    "archipelago/soh_extreme/_vendor_oot_soh/RegionAgeAccess.py": "b7625d38befa593efd36fb1c6d721acac5e3a60331118742c7e19b5d3cb44db3",
+    "archipelago/soh_extreme/_vendor_oot_soh/Regions.py": "32d3934dc7dca6e16840533453ce2f9fe0b5337b88b208976ccd5183efdd6e6d",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py": "eed3091f549b1cb7be027e5a970333ede71352f58c744d4da2dcb7e70c637c0e"
+  },
+  "source_unchanged_during_probe": true,
+  "elapsed_seconds": 6.656
+}

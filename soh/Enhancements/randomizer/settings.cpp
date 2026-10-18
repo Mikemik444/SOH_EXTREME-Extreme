@@ -1976,7 +1976,7 @@ void Settings::CreateOptions() {
     mOptionGroups[RSG_MENU_COLUMN_AREA_ACCESS] =
         OptionGroup::SubGroup("", { &mOptionGroups[RSG_MENU_SECTION_AREA_ACCESS] }, WidgetContainerType::COLUMN);
     mOptionGroups[RSG_MENU_SECTION_ENTRANCES] = OptionGroup::SubGroup(
-        "Entrances",
+        "Entrances (Experimental)",
         { &mOptions[RSK_SHUFFLE_DUNGEON_ENTRANCES], &mOptions[RSK_SHUFFLE_BOSS_ENTRANCES],
           &mOptions[RSK_SHUFFLE_GANONS_TOWER_ENTRANCE], &mOptions[RSK_SHUFFLE_OVERWORLD_ENTRANCES],
           &mOptions[RSK_SHUFFLE_INTERIOR_ENTRANCES], &mOptions[RSK_SHUFFLE_THIEVES_HIDEOUT_ENTRANCES],

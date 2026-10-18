@@ -10,6 +10,7 @@
 
 #include "randomizer_entrance.h"
 #include "randomizer_grotto.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/OTRGlobals.h"
 #include "soh/SaveManager.h"
 #include <string.h>
@@ -107,7 +108,8 @@ static void Entrance_SeparateAdultSpawnAndPrelude() {
 
 // Fix Adult dungeon blue warps as Child by assigning the child values for the warp pads
 static void Entrance_ReplaceChildTempleWarps() {
-    if (Randomizer_GetSettingValue(RSK_SHUFFLE_DUNGEON_ENTRANCES) != RO_DUNGEON_ENTRANCE_SHUFFLE_OFF ||
+    if (Archipelago_EntranceShuffleActive() ||
+        Randomizer_GetSettingValue(RSK_SHUFFLE_DUNGEON_ENTRANCES) != RO_DUNGEON_ENTRANCE_SHUFFLE_OFF ||
         Randomizer_GetSettingValue(RSK_SHUFFLE_BOSS_ENTRANCES) != RO_BOSS_ROOM_ENTRANCE_SHUFFLE_OFF) {
         // Forest Temple
         gEntranceTable[ENTR_SACRED_FOREST_MEADOW_FOREST_TEMPLE_BLUE_WARP] =
@@ -292,12 +294,25 @@ s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
         return nextEntranceIndex;
     }
 
-    Entrance_SetEntranceDiscovered(nextEntranceIndex, false);
-    EntranceTracker_SetLastEntranceOverride(nextEntranceIndex);
+    // Land and water variants share one physical HF <-> Zora's River route.
+    // Keep the raw index for the native lookup (and its vanilla water spawn),
+    // but use the catalog identity for AP checks, recovery history and tracking.
+    s16 sourceIndex = nextEntranceIndex;
+    if (Archipelago_EntranceShuffleActive()) {
+        if (sourceIndex == ENTR_ZORAS_RIVER_3) {
+            sourceIndex = ENTR_ZORAS_RIVER_WEST_EXIT;
+        } else if (sourceIndex == ENTR_HYRULE_FIELD_14) {
+            sourceIndex = ENTR_HYRULE_FIELD_RIVER_EXIT;
+        }
+    }
+    Archipelago_RecordEntrance(sourceIndex);
+    Entrance_SetEntranceDiscovered(sourceIndex, false);
+    EntranceTracker_SetLastEntranceOverride(sourceIndex);
     return Grotto_OverrideSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
 }
 
 s16 Entrance_OverrideDynamicExit(s16 dynamicExitIndex) {
+    Archipelago_RecordEntrance(dynamicExitList[dynamicExitIndex]);
     Entrance_SetEntranceDiscovered(dynamicExitList[dynamicExitIndex], false);
     EntranceTracker_SetLastEntranceOverride(dynamicExitList[dynamicExitIndex]);
     return Grotto_OverrideSpecialEntrance(Entrance_GetOverride(dynamicExitList[dynamicExitIndex]));
@@ -327,6 +342,7 @@ u32 Entrance_SceneAndSpawnAre(u8 scene, u8 spawn) {
 
 // Properly respawn the player after a game over, accounting for dungeon entrance randomizer
 void Entrance_SetGameOverEntrance(void) {
+    if (Archipelago_EntranceSavewarp()) return;
     s16 scene = gPlayState->sceneNum;
 
     // When in a boss room and boss shuffle is on, use the boss scene to find the death warp entrance
@@ -372,6 +388,7 @@ void Entrance_SetGameOverEntrance(void) {
 
 // Properly savewarp the player accounting for dungeon entrance randomizer.
 void Entrance_SetSavewarpEntrance(void) {
+    if (Archipelago_EntranceSavewarp()) return;
     s16 scene = gSaveContext.savedSceneNum;
 
     // When in a boss room and boss shuffle is on, use the boss scene to find the savewarp entrance
@@ -665,6 +682,7 @@ void Entrance_OverrideGerudoGuardCapture(void) {
 }
 
 void Entrance_OverrideSpawnScene(s32 sceneNum, s32 spawn) {
+    if (Archipelago_EntranceSpawnPosition(sceneNum)) return;
     // Copy the actorEntry properties to avoid modifying the original cached pointer
     // Then assign a pointer of our modified actoreEntry back
     modifiedLinkActorEntry.id = gPlayState->linkActorEntry->id;
@@ -717,6 +735,8 @@ void Entrance_OverrideSpawnScene(s32 sceneNum, s32 spawn) {
 }
 
 s32 Entrance_OverrideSpawnSceneRoom(s32 sceneNum, s32 spawn, s32 roomNum) {
+    const s32 apRoom = Archipelago_EntranceSpawnRoom(sceneNum, roomNum);
+    if (apRoom != roomNum) return apRoom;
     if (Randomizer_GetSettingValue(RSK_SHUFFLE_BOSS_ENTRANCES) != RO_BOSS_ROOM_ENTRANCE_SHUFFLE_OFF) {
         // Repair the authentically bugged scene/spawn info for leaving Barinade's boss room -> Jabu Jabu's belly
         // to load the correct room outside Barniade's boss room

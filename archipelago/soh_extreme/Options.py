@@ -1,6 +1,7 @@
 from dataclasses import dataclass, fields
 from Options import Toggle, Choice, Range, OptionGroup
 from ._vendor_oot_soh.Options import SohOptions, soh_option_groups
+from .EntranceOptions import *
 
 class ShuffleRoll(Toggle):
     """Shuffle the ability to roll."""
@@ -233,6 +234,18 @@ class ShuffleButterflyFairies(Toggle):
 
 @dataclass
 class SohExtremeOptions(SohOptions):
+    shuffle_overworld_entrances: ShuffleOverworldEntrances
+    shuffle_interior_entrances: ShuffleInteriorEntrances
+    shuffle_dungeon_entrances: ShuffleDungeonEntrances
+    shuffle_grotto_entrances: ShuffleGrottoEntrances
+    shuffle_boss_entrances: ShuffleBossEntrances
+    shuffle_one_way_entrances: ShuffleOneWayEntrances
+    shuffle_owl_drops: ShuffleOwlDrops
+    shuffle_warp_songs: ShuffleWarpSongs
+    shuffle_child_spawn: ShuffleChildSpawn
+    shuffle_adult_spawn: ShuffleAdultSpawn
+    shuffle_dungeon_doors: ShuffleDungeonDoors
+    mixed_entrance_pools: MixedEntrancePools
     shuffle_rocks: ShuffleRocks
     shuffle_boulders: ShuffleBoulders
     shuffle_bushes: ShuffleBushes
@@ -290,6 +303,7 @@ class SohExtremeOptions(SohOptions):
 _base_option_groups = [group for group in soh_option_groups if group.name != "Item & Location Options"]
 
 extreme_option_groups = list(_base_option_groups) + [
+    ENTRANCE_GROUP,
     OptionGroup("SOH-EXTREME Fork Location Shuffles", [
         ShuffleRocks, ShuffleBoulders, ShuffleBushes, ShuffleIcicles, ShuffleRedIce,
         ShuffleSigns, ShuffleBeggar, ShuffleChestMinigame, ShuffleWonderItems,

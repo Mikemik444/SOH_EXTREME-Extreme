@@ -442,7 +442,23 @@ void Play_Init(GameState* thisx) {
         gSaveContext.nightFlag = 0;
     }
 
+    // A mapped arrival must discard the source's cutscene setup before normal
+    // story hooks run. Legitimate newly scheduled destination cutscenes remain.
+    if (!Archipelago_EntranceBeforeSceneInit()) {
+        gSaveContext.entranceIndex = 0;
+        play->state.running = false;
+        SET_NEXT_GAMESTATE(&play->state, Opening_Init, OpeningContext);
+        GameInteractor_ExecuteOnExitGame(gSaveContext.fileNum);
+        return;
+    }
     Cutscene_HandleConditionalTriggers(play);
+    if (!Archipelago_EntranceAfterSceneConditions()) {
+        gSaveContext.entranceIndex = 0;
+        play->state.running = false;
+        SET_NEXT_GAMESTATE(&play->state, Opening_Init, OpeningContext);
+        GameInteractor_ExecuteOnExitGame(gSaveContext.fileNum);
+        return;
+    }
 
     if (gSaveContext.gameMode != GAMEMODE_NORMAL || gSaveContext.cutsceneIndex >= 0xFFF0) {
         gSaveContext.nayrusLoveTimer = 0;
@@ -783,6 +799,8 @@ void Play_Update(PlayState* play) {
                         if (gSaveContext.cutsceneIndex >= 0xFFF0) {
                             sceneLayer = SCENE_LAYER_CUTSCENE_FIRST + (gSaveContext.cutsceneIndex & 0xF);
                         }
+
+                        sceneLayer = Archipelago_EntranceTransitionLayer(play->nextEntranceIndex, sceneLayer);
 
                         // fade out bgm if "continue bgm" flag is not set
                         if (!(gEntranceTable[play->nextEntranceIndex + sceneLayer].field &

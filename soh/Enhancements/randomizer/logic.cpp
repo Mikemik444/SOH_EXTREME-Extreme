@@ -22,6 +22,23 @@ extern "C" PlayState* gPlayState;
 
 namespace Rando {
 
+// Path blockers keep their normal conversations while NPC Soul only hides
+// their rendering. Do not use this for ordinary NPC, shop, or scrub checks.
+bool Logic::CanSpeakToPathBlockingNpc(RandomizerGet language) {
+    switch (language) {
+        case RG_SPEAK_DEKU:
+        case RG_SPEAK_GERUDO:
+        case RG_SPEAK_GORON:
+        case RG_SPEAK_HYLIAN:
+        case RG_SPEAK_KOKIRI:
+        case RG_SPEAK_ZORA:
+            return !ctx->GetOption(RSK_SHUFFLE_SPEAK) ||
+                   CheckRandoInf(StaticData::RandoGetToRandInf.at(language));
+        default:
+            return false;
+    }
+}
+
 bool Logic::HasItem(RandomizerGet itemName) {
     switch (itemName) {
         case RG_FAIRY_OCARINA:

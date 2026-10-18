@@ -1,0 +1,325 @@
+{
+  "status": "passed",
+  "reviewed_at_utc": "2026-10-18T14:00:02.165793+00:00",
+  "scope": "Read-only source integration review of the AP save snapshot/journal plumbing and actual Return to Spawn/native game lifecycle. No new native build, runtime gameplay session, network calls, or mirrored tests were performed.",
+  "checks": [
+    {
+      "id": "owned_background_snapshot",
+      "status": "passed_source_review",
+      "finding": "SaveSection copies SaveContext, then captures all AP persistence fields on the game thread. SaveFileThreaded receives ArchipelagoSaveSnapshot by value. Its thread-local const pointer refers to that job-owned parameter during section serialization and is cleared before return. The journal and identity are read from the same captured value, not the live Client.",
+      "evidence": [
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 1497,
+          "source_excerpt": "memcpy(saveContext, &gSaveContext, sizeof(gSaveContext));"
+        },
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 1501,
+          "source_excerpt": "auto archipelagoSaveSnapshot = ArchipelagoClient::GetInstance().CaptureSaveSnapshot();"
+        },
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 1507,
+          "source_excerpt": "std::bind(&SaveManager::SaveFileThreaded, this, fileNum, saveContext, sectionID, archipelagoSaveSnapshot)"
+        },
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 1398,
+          "source_excerpt": "gSavingArchipelagoSnapshot = &archipelagoSaveSnapshot;"
+        },
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 563,
+          "source_excerpt": "SaveManager::Instance->SaveData(\"archipelagoRevealedHintTargets\", archipelago.revealedHintTargetsJson);"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 2362,
+          "source_excerpt": "snapshot.revealedHintTargetsJson = GetRevealedHintTargetsJson();"
+        }
+      ]
+    },
+    {
+      "id": "metadata_precedes_journal_restore",
+      "status": "passed_source_review",
+      "finding": "LoadRandomizer reads the exact saved journal field and seed/team/slot values, calls LoadSaveMetadata with that identity, then calls LoadRevealedHintTargetsJson. The Client validates every target against the restored identity before changing the journal.",
+      "evidence": [
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 325,
+          "source_excerpt": "ArchipelagoClient::GetInstance().LoadSaveMetadata(archipelagoSave, archipelagoReceivedItemCount,"
+        },
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 330,
+          "source_excerpt": "ArchipelagoClient::GetInstance().LoadRevealedHintTargetsJson(archipelagoRevealedHintTargetsJson);"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoHintClient.inc",
+          "line": 171,
+          "source_excerpt": "target.seed != saveConnectionIdentity.seed || team != saveConnectionIdentity.team ||\n            slot != saveConnectionIdentity.slot || !saveConnectionIdentity.Valid()) return false;"
+        }
+      ]
+    },
+    {
+      "id": "older_missing_field_and_invalid_journal",
+      "status": "passed_source_review",
+      "finding": "The loader defaults an absent old-save journal field to an empty string. Nonthrowing JSON parsing returns a non-array, and the Client returns false before modifying the map. This safely yields no restored entries for a fresh load and leaves newer in-memory entries intact on a same-identity reload. Oversized or malformed arrays are rejected before merge. Native readHints keys are not replayed as proof of fully displayed text.",
+      "evidence": [
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 310,
+          "source_excerpt": "SaveManager::Instance->LoadData(\"archipelagoRevealedHintTargets\", archipelagoRevealedHintTargetsJson, std::string{});"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoHintClient.inc",
+          "line": 160,
+          "source_excerpt": "if (raw.size() > 8 * 1024 * 1024) return false;\n    const auto rows = nlohmann::json::parse(raw, nullptr, false);\n    if (!rows.is_array() || rows.size() > 20000) return false;"
+        },
+        {
+          "file": "soh/Enhancements/randomizer/randomizer_hint_tracker.cpp",
+          "line": 171,
+          "source_excerpt": "readHints = std::move(loaded);"
+        }
+      ]
+    },
+    {
+      "id": "return_to_spawn_keeps_newer_completed_hints",
+      "status": "passed_source_review",
+      "finding": "LoadSaveMetadata preserves revealedHintTargets whenever both old and loaded saves are AP saves with the same valid seed/team/slot, independently of network/worker health. The journal loader merges the saved map into the live map; it does not replace or clear newer completed hint targets.",
+      "evidence": [
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 1271,
+          "source_excerpt": "const bool preserveHintJournal = currentSaveIsArchipelago && isArchipelagoSave &&\n        sameIdentity(saveConnectionIdentity, identity);"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoHintClient.inc",
+          "line": 181,
+          "source_excerpt": "revealedHintTargets.merge(next);"
+        }
+      ]
+    },
+    {
+      "id": "verified_worker_preservation_conditions",
+      "status": "passed_source_review",
+      "finding": "Worker reuse requires the same valid save/live seed/team/slot, address, slot name, cached/live settings, authentication, and running worker. That branch requests refreshed snapshots without ResetFinderMirror. ReconcileSaveConnection only rebinds/reset when the address or identity requires it; normal same-save reload does not change wasAuthenticated. Real reconnects, title-screen visits, changed identities/settings, or a failed worker intentionally retain reset behavior.",
+      "evidence": [
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 1265,
+          "source_excerpt": "const bool preserveTracker = currentSaveIsArchipelago && isArchipelagoSave &&"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 1281,
+          "source_excerpt": "if (preserveTracker) {\n            finderNextRequest = 0.0;\n            nextHintRequest = 0.0;"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 769,
+          "source_excerpt": "if (saveServer != connectedServer || !saveConnectionIdentity.Valid()) {"
+        }
+      ]
+    },
+    {
+      "id": "native_reload_lifecycle_has_no_transient_title_reset",
+      "status": "passed_source_review",
+      "finding": "BeginSaveMenuReload synchronously calls Sram_OpenSave -> Save_LoadFile -> LoadFile -> LoadRandomizer, without a Client reset in the Context/InitFile reset path. BetterSaveMenu then emits exit/load hooks and selects Play_Init. The exit hook waits for save jobs; the randomizer lifecycle hooks reset entrance/recovery state and do not reset the AP journal/worker. The Client is registered only at startup, not on IS_RANDO. GameState_Update invokes AP frame hooks while the current PlayState exists. RunFrame destroys the old PlayState and initializes the next PlayState before its next GameState_Update, so no AP update observes the brief null gPlayState between Play_Destroy and Play_Init.",
+      "evidence": [
+        {
+          "file": "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+          "line": 99,
+          "source_excerpt": "static void BeginSaveMenuReload(PlayState* play, bool returnToSpawn, int8_t age = -1)"
+        },
+        {
+          "file": "src/code/z_sram.c",
+          "line": 75,
+          "source_excerpt": "void Sram_OpenSave()"
+        },
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 3085,
+          "source_excerpt": "extern \"C\" void Save_LoadFile(void)"
+        },
+        {
+          "file": "soh/Enhancements/QoL/BetterSaveMenu.cpp",
+          "line": 221,
+          "source_excerpt": "SET_NEXT_GAMESTATE(&play->state, Play_Init, PlayState);"
+        },
+        {
+          "file": "soh/SaveManager.cpp",
+          "line": 137,
+          "source_excerpt": "[this](uint32_t fileNum) { ThreadPoolWait(); }"
+        },
+        {
+          "file": "soh/Enhancements/randomizer/hook_handlers.cpp",
+          "line": 3079,
+          "source_excerpt": "void RandomizerOnExitGameHandler(int32_t fileNum)"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 4662,
+          "source_excerpt": "static RegisterShipInitFunc initArchipelagoClient(InitArchipelagoClient);"
+        },
+        {
+          "file": "src/code/game.c",
+          "line": 356,
+          "source_excerpt": "GameInteractor_ExecuteOnGameFrameUpdate();"
+        },
+        {
+          "file": "src/code/graph.c",
+          "line": 468,
+          "source_excerpt": "GameState_Init(gGameState, runFrameContext.ovl->init, &runFrameContext.gfxCtx);"
+        },
+        {
+          "file": "src/code/graph.c",
+          "line": 498,
+          "source_excerpt": "GameState_Destroy(gGameState);"
+        },
+        {
+          "file": "src/code/z_play.c",
+          "line": 245,
+          "source_excerpt": "gPlayState = NULL;"
+        },
+        {
+          "file": "src/code/z_play.c",
+          "line": 385,
+          "source_excerpt": "gPlayState = play;"
+        }
+      ]
+    },
+    {
+      "id": "actual_new_file_creation_journal_reset",
+      "status": "passed_source_review_and_existing_native_regression",
+      "finding": "The actual Sram_InitSave -> Archipelago_InitSaveFile -> PrimeNewSaveMetadata creation path now resets completed-hint history before the first CaptureSaveSnapshot, preventing mixed-identity journal serialization. The fix is restricted to creation; Return to Spawn retains same-save newer hints and the managed worker lifetime.",
+      "evidence": [
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 1607,
+          "source_excerpt": "std::scoped_lock hintLock(hintJournalMutex);\n        revealedHintTargets.clear();"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 1626,
+          "source_excerpt": "saveConnectionIdentity = connectedIdentity;\n    RebuildHints();"
+        },
+        {
+          "file": "tools/tests/archipelago_hint_reveal_tests.cpp",
+          "line": 172,
+          "source_excerpt": "run(\"actual_new_file_priming_clears_old_journal_and_roundtrips_only_new_identity\", [] {"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "actual_new_file_prime_retains_old_identity_journal",
+      "status": "resolved_and_regression_validated",
+      "impact": "Creating an AP file for another seed/slot in the same process can persist journal targets from the prior identity. The all-or-nothing journal loader later rejects that mixed array, losing restored valid new hints.",
+      "actual_path": "Sram_InitSave -> Archipelago_InitSaveFile -> PrimeNewSaveMetadata -> Save_SaveFile -> CaptureSaveSnapshot",
+      "reason": "PrimeNewSaveMetadata changes the save identity without clearing revealedHintTargets. Enable/Disable and native InitFile retain the journal. GetRevealedHintTargetsJson serializes every retained row.",
+      "requested_resolution": "Clear journal under hintJournalMutex when priming a genuinely new file, refresh the merged hint list/publication timer, and add a production-fragment test for the actual PrimeNewSaveMetadata method. Preserve same-save merge/reuse behavior.",
+      "owner": "/root/hint_text_review",
+      "evidence": [
+        {
+          "file": "src/code/z_sram.c",
+          "line": 265,
+          "source_excerpt": "Archipelago_InitSaveFile();"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 1596,
+          "source_excerpt": "void ArchipelagoClient::PrimeNewSaveMetadata()"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 4804,
+          "source_excerpt": "client.PrimeNewSaveMetadata();"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoHintClient.inc",
+          "line": 146,
+          "source_excerpt": "std::string ArchipelagoClient::GetRevealedHintTargetsJson() const"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 1607,
+          "source_excerpt": "std::scoped_lock hintLock(hintJournalMutex);\n        revealedHintTargets.clear();"
+        },
+        {
+          "file": "soh/Network/Archipelago/ArchipelagoClient.cpp",
+          "line": 1626,
+          "source_excerpt": "saveConnectionIdentity = connectedIdentity;\n    RebuildHints();"
+        },
+        {
+          "file": "tools/tests/archipelago_hint_reveal_tests.cpp",
+          "line": 172,
+          "source_excerpt": "run(\"actual_new_file_priming_clears_old_journal_and_roundtrips_only_new_identity\", [] {"
+        }
+      ],
+      "resolution": "PrimeNewSaveMetadata now clears revealedHintTargets under hintJournalMutex at genuine new-file creation, resets nextHintPublish, and rebuilds hints after stamping the new identity. Same-save LoadSaveMetadata preservation and LoadRevealedHintTargetsJson merge are unchanged.",
+      "source_before_fix_sha256": "5c1c73383d90f96f55028ee52e0195c5777f79367d05e1ef42049b2518f71559",
+      "regression": "The actual extracted production PrimeNewSaveMetadata method is compiled in the reveal harness. Its new-file case tests both same-room and different seed/team/slot creation, then serializes/restores only a newly revealed target.",
+      "regression_report": "tests/hints_186_reveal_validation.json"
+    }
+  ],
+  "existing_compiled_validation": [
+    {
+      "report": "tests/hints_186_reveal_validation.json",
+      "status": "passed",
+      "case_count": 14,
+      "scope": "Production target/header, reveal/snapshot/journal, and PrimeNewSaveMetadata methods; game/session IO isolated.",
+      "final_report_source_hashes_match_current_files": true,
+      "run_by": "/root/hint_text_review",
+      "not_rerun_by_integration_reviewer": true
+    },
+    {
+      "report": "tests/hints_186_save_metadata_validation.json",
+      "status": "passed",
+      "case_count": 8,
+      "scope": "Complete production LoadSaveMetadata method; worker/engine IO isolated.",
+      "final_report_source_hashes_match_current_files": true,
+      "run_by": "/root/hint_text_review",
+      "not_rerun_by_integration_reviewer": true
+    },
+    {
+      "report": "tests/hints_186_full_content_validation.json",
+      "status": "passed",
+      "case_count": 12,
+      "scope": "Production AP hint-data header and native hint-description methods; game/session IO isolated.",
+      "final_report_source_hashes_match_current_files": true,
+      "run_by": "/root/hint_text_review",
+      "not_rerun_by_integration_reviewer": true
+    }
+  ],
+  "source_sha256": {
+    "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h": "7edfad27f1c9fb67b30ec167c1694a0a7c00e2b0b8dfb96f1912570a1e593d4a",
+    "soh/SaveManager.h": "fc915f7516d36959d5a5674219e01d27b3c68543f43ed8bd1ac2d0d853edaa6e",
+    "soh/SaveManager.cpp": "86b26f0c8805984b26e739b9912e74cc70e5c2cafb932bb93df15ec57e8bb5d6",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "114ecb087b1ecf6ff30104427c3eb2abdaa8cc215262726f22e8c5d2e7efe21e",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "8dcb9c4728fda123a1b038a465224fe17a15dce9bbd8f68f574e8849330364fa",
+    "soh/Network/Archipelago/ArchipelagoHintClient.inc": "135c702b3f3c87a14e542e9f408be683dd1cd425f7891a9dbc7f6b74212865fa",
+    "soh/Network/Archipelago/SaveConnectionIdentity.h": "68f748b8b1fec735d60060e8918300332cb486229d254a1152d0117a8393fad4",
+    "soh/Enhancements/QoL/BetterSaveMenu.cpp": "eb4ae4bcc2ce1bdea4478b652d7e9c8ebdeb515798295692ac24101f95eb5842",
+    "src/code/z_sram.c": "3d860e102c09115bb444c96511a399c32589dec276bc8f1ae000e58af3411803",
+    "src/code/game.c": "6b7756445bf5aa32b5804232d8f28713a3772e55bbb54ff87462914fc99279ad",
+    "src/code/graph.c": "ef39247153d1e33bf3498c2630c85fa73590db37b023a8849dd87fe743e0147c",
+    "src/code/z_play.c": "d1ae7d72f190fccf82cd6b03a644866ad471801637dbc2d0eac1b7a178ae81e9",
+    "soh/Enhancements/game-interactor/GameInteractor_Hooks.cpp": "3f1593fc1ccf5689fce8767638685dc189410900d8ba17adaf570cdf40fb47bd",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/randomizer/randomizer_hint_tracker.cpp": "e0804c8254195eb8fdf0cd554a97361d1c0206a90051a4f538783a4380bc4283",
+    "soh/Enhancements/randomizer/SeedContext.cpp": "1bd5a84bc4666dbac26518ad75960656af5c323c36eb9b59cac7679f34d6e891",
+    "soh/ShipInit.hpp": "68f2d1640e89976490638849801e6856b54961c1b5872086bc0badf476e5e68d",
+    "tools/tests/archipelago_hint_reveal_tests.cpp": "3b662d9985a16324a836c60dd2ddb06dc6d9845a331b7184d48dbeecbda46705",
+    "tools/tests/test_archipelago_hints.py": "640479f28cbd085df8fe348e09f5457fe95ba9c23ca4840934dbd57a92722786"
+  },
+  "unresolved_findings": 0,
+  "production_files_modified_by_reviewer": false,
+  "limits": [
+    "This report is a source integration review, not a full native build or end-to-end gameplay/network test.",
+    "Compiled method validation was performed separately by the client owner and is referenced with matching final source hashes.",
+    "Worker preservation assumes the same verified live connection/settings and a healthy running worker; actual reconnects, changed identity/settings, and failed workers intentionally reset."
+  ]
+}
