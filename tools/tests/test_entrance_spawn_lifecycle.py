@@ -250,7 +250,7 @@ def main():
     assert "ServicePendingSpawn(SohExtreme::CanReceiveGameplayReward(gPlayState))" in update
     assert "Archipelago_CancelPendingEntranceSpawn();" in between(
         hooks, "void RandomizerOnExitGameHandler(", "void RandomizerOnKaleidoscopeUpdateHandler(")
-    assert "SohExtreme::EntranceRuntime::Reset();" in between(
+    assert "SohExtreme::EntranceRuntime::Reset(preserveRequestedDungeonReturn);" in between(
         client, "void ArchipelagoClient::LoadSaveMetadata(", "void ArchipelagoClient::BeginItemReplay(")
     with tempfile.TemporaryDirectory(prefix="soh-spawn-lifecycle-") as directory:
         work = Path(directory)

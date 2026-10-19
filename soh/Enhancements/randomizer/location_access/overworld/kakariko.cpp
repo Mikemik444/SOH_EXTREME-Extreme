@@ -163,7 +163,7 @@ void RegionTable_Init_Kakariko() {
 
     areaTable[RR_KAK_CARPENTER_BOSS_HOUSE] = Region("Kak Carpenter Boss House", SCENE_KAKARIKO_CENTER_GUEST_HOUSE, {
         //Events
-        EVENT_ACCESS(LOGIC_WAKE_UP_ADULT_TALON, logic->IsAdult && logic->CanUse(RG_POCKET_EGG)),
+        EVENT_ACCESS(LOGIC_WAKE_UP_ADULT_TALON, logic->IsAdult && logic->CanUse(RG_POCKET_EGG) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_HYLIAN)),
     }, {}, {
         //Exits
         ENTRANCE(RR_KAKARIKO_VILLAGE, true),

@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "cases": 298,
+  "assertions": 538,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "source_sha256": {
+    "soh/Enhancements/randomizer/logic.cpp": "f991fa69cb82afee069dc105047084fb957f80f154a8da246ec4276a647826c6",
+    "soh/Enhancements/randomizer/location_access.cpp": "c88b45b421f025de43db4867f93dfac5c7b5b87c98422b12fc814be7d8129826",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "126b60bc1fccdb2675d4399ea1ba47b092a551d6611fdf64e03a33afb256f52c",
+    "soh/Enhancements/randomizer/location_access/overworld/lost_woods.cpp": "0424c329b007497fe79a37592712fece17613468ad2281198b9a3709da0ca07e"
+  },
+  "template_sha256": "1f47fab9120b66a48e487755da4509ff9a0d648bc193ee7de283895cdc7f9497",
+  "probe_sha256": "c3d6cf972babdd9b1c31b1ae8b93192f3ba8c5b593f2b9f73e0b14e823a4f785",
+  "elapsed_seconds": 2.22,
+  "captured_functions": {
+    "NPC_LOGIC_HELPER": "Logic::CanSpeakToPathBlockingNpc",
+    "NPC_ACTOR_CLASSIFICATION": "MegaIsNpcLocationActor",
+    "ANIMAL_ACTOR_CLASSIFICATION": "MegaIsAnimalLocationActor",
+    "LOCATION_LANGUAGE": "MegaSpeakItemForLocation",
+    "LOCATION_SPEAK": "MegaHasSpeakForLocation",
+    "LOCATION_SOUL_GATE": "MegaSoulAllowsLocation",
+    "FIRST_TALK_GATE": "HasNpcSpeechInteractionItems"
+  },
+  "captured_entrance_expressions": {
+    "MIDO_FORWARD_ROUTE": "logic->IsChild || (logic->CanUse(RG_SARIAS_SONG) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_KOKIRI)) || ctx->GetTrickOption(RT_LW_MIDO_BACKFLIP)",
+    "MIDO_REVERSE_ROUTE": "logic->IsChild || (logic->CanUse(RG_SARIAS_SONG) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_KOKIRI))"
+  },
+  "scope": "Actual native NPC interaction helper, location actor classification and Soul gate, language selector, legacy first-talk Finder gate, and both native Mido entrance expressions compiled unchanged. Option/inventory and static location storage are engine IO shims. No full native build, collision simulation or gameplay.",
+  "output": [
+    "RESULT cases=298 assertions=538"
+  ]
+}

@@ -22,6 +22,12 @@ static CustomMessage saveMsg = CustomMessage(
 static CustomMessage continueOverworldMsg = CustomMessage(
     "\x08 Continue?&&" + CustomMessage::TWO_WAY_CHOICE() + "%gContinue&Return to Spawn%w\x09", TEXTBOX_TYPE_BLUE);
 static CustomMessage continueDungeonMsg =
+    CustomMessage("\x08 Continue?&" + CustomMessage::THREE_WAY_CHOICE() + "%gContinue&Go to Dungeon Spawn&Return to Spawn%w\x09",
+                  TEXTBOX_TYPE_BLUE);
+static CustomMessage continuePreviousSceneMsg =
+    CustomMessage("\x08 Continue?&" + CustomMessage::THREE_WAY_CHOICE() + "%gContinue&Return to Previous Scene&Return to Spawn%w\x09",
+                  TEXTBOX_TYPE_BLUE);
+static CustomMessage continueSavedSceneMsg =
     CustomMessage("\x08 Continue?&" + CustomMessage::THREE_WAY_CHOICE() + "%gContinue&Restart&Return to Spawn%w\x09",
                   TEXTBOX_TYPE_BLUE);
 static CustomMessage spawnAsChildMsg = CustomMessage(
@@ -91,15 +97,21 @@ bool IsSceneDungeon(int16_t scene) {
 
 static void StartContinuePrompt(PlayState* play) {
     play->pauseCtx.unk_1EC = 4;
-    Message_StartTextbox(play, IsSceneDungeon(gSaveContext.savedSceneNum) ||
-        CVarGetInteger(CVAR_ENHANCEMENT("RememberSaveLocation"), 0) ?
-        TEXT_CONTINUE_DUNGEON_MSG : TEXT_CONTINUE_OVERWORLD_MSG, NULL);
+    const int returnMode = Archipelago_EntranceDungeonReturnMode();
+    const bool showDungeonAction = returnMode == AP_DUNGEON_RETURN_PREVIOUS_SCENE ||
+        (returnMode != AP_DUNGEON_RETURN_NO_PREVIOUS_SCENE &&
+         (IsSceneDungeon(gSaveContext.savedSceneNum) || CVarGetInteger(CVAR_ENHANCEMENT("RememberSaveLocation"), 0)));
+    // A new randomized spawn has no previous scene. Keep Continue/Return to
+    // Spawn available instead of displaying a history action with no target.
+    Message_StartTextbox(play, showDungeonAction ? TEXT_CONTINUE_DUNGEON_MSG : TEXT_CONTINUE_OVERWORLD_MSG, NULL);
 }
 
 static void BeginSaveMenuReload(PlayState* play, bool returnToSpawn, int8_t age = -1) {
     Audio_PlaySfxGeneral(NA_SE_SY_PIECE_OF_HEART, &gSfxDefaultPos, 4, &gSfxDefaultFreqAndVolScale,
                          &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
     Play_SaveSceneFlags(play);
+    if (returnToSpawn) Archipelago_EntranceCancelDungeonReturn();
+    else Archipelago_EntranceRequestDungeonReturn();
     Sram_OpenSave();
     pendingSpawnAge = age;
     gSaveContext.ship.resetToSpawn = returnToSpawn;
@@ -109,7 +121,7 @@ static void BeginSaveMenuReload(PlayState* play, bool returnToSpawn, int8_t age 
 
 static void ChooseSaveMenuSpawn(PlayState* play) {
     if (CanRevertToDefaultAge()) {
-        // A separate prompt preserves Continue/Restart in the three-choice menu.
+        // Keep the dungeon/history return separate from the age-spawn choice.
         play->pauseCtx.unk_1EC = 8;
         Message_StartTextbox(play, TEXT_RETURN_TO_SPAWN_AGE_MSG, NULL);
     } else {
@@ -170,14 +182,14 @@ void HandleSaveMenu(bool* should, PlayState* play) {
                         func_800F64E0(0);
                         break;
                     case 1: {
-                        // Reset (Dungeon) / Return to Spawn (Overworld)
+                        // Dungeon/history return, or Spawn in the two-choice prompt.
                         const bool returnToSpawn = play->msgCtx.textId == TEXT_CONTINUE_OVERWORLD_MSG;
                         if (returnToSpawn) ChooseSaveMenuSpawn(play);
                         else BeginSaveMenuReload(play, false);
                         break;
                     }
                     case 2:
-                        // Reset to Spawn (Dungeon)
+                        // Return to the selected age's assigned spawn.
                         ChooseSaveMenuSpawn(play);
                         break;
                 }
@@ -248,6 +260,8 @@ void RegisterBetterSave() {
     saveMsg.Format();
     continueOverworldMsg.Format();
     continueDungeonMsg.Format();
+    continuePreviousSceneMsg.Format();
+    continueSavedSceneMsg.Format();
     spawnAsChildMsg.Format();
     spawnAsAdultMsg.Format();
 
@@ -266,7 +280,10 @@ void RegisterBetterSave() {
 
     COND_ID_HOOK(OnOpenText, TEXT_CONTINUE_DUNGEON_MSG, CVAR_BETTERSAVE_VALUE,
                  [](uint16_t* textId, bool* loadFromMessageTable) {
-                     continueDungeonMsg.LoadIntoFont();
+                     const int returnMode = Archipelago_EntranceDungeonReturnMode();
+                     if (returnMode == AP_DUNGEON_RETURN_PREVIOUS_SCENE) continuePreviousSceneMsg.LoadIntoFont();
+                     else if (IsSceneDungeon(gSaveContext.savedSceneNum)) continueDungeonMsg.LoadIntoFont();
+                     else continueSavedSceneMsg.LoadIntoFont();
                      *loadFromMessageTable = false;
                      return;
                  });

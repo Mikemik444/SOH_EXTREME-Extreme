@@ -42,6 +42,8 @@ int16_t Entrance_OverrideNextIndex(int16_t nextEntranceIndex);
 int16_t Entrance_PeekNextIndexOverride(int16_t nextEntranceIndex);
 int16_t Entrance_OverrideDynamicExit(int16_t dynamicExitIndex);
 uint32_t Entrance_SceneAndSpawnAre(uint8_t scene, uint8_t spawn);
+int16_t Entrance_GetDungeonSpawn(int16_t scene);
+uint8_t Entrance_IsBossScene(int16_t scene);
 void Entrance_SetGameOverEntrance(void);
 void Entrance_SetSavewarpEntrance(void);
 void Entrance_SetWarpSongEntrance(void);

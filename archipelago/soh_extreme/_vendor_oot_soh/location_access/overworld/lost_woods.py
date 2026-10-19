@@ -110,9 +110,12 @@ def set_region_rules(world: "SohWorld") -> None:
          lambda bundle: has_item(Items.SILVER_SCALE, bundle) | can_use(Items.IRON_BOOTS, bundle) | (can_do_trick(
              Tricks.LOST_WOOD_NAVI_DIVE, bundle) & is_child(bundle) & has_item(Items.BRONZE_SCALE,
                                                                                    bundle) & can_jump_slash(bundle))),
+        # Adult Mido retains blocking collision without NPC Soul. The song
+        # approach needs the real NPC and the follow-up Kokiri conversation.
         (Regions.LW_BEYOND_MIDO,
-         lambda bundle: is_child(bundle) | can_use(Items.SARIAS_SONG, bundle) | can_do_trick(Tricks.LW_MIDO_BACKFLIP,
-                                                                                               bundle)),
+         lambda bundle: is_child(bundle)
+         | (can_use(Items.SARIAS_SONG, bundle) & can_interact_npc(bundle, "Kokiri"))
+         | can_do_trick(Tricks.LW_MIDO_BACKFLIP, bundle)),
         (Regions.LW_NEAR_SHORTCUTS_GROTTO, lambda bundle: blast_or_smash(bundle)),
     ])
 
@@ -158,8 +161,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.LW_BEYOND_MIDO, world, [
         (Regions.LW_FOREST_EXIT, lambda bundle: True_()),
-        (Regions.LOST_WOODS, lambda bundle: is_child(
-            bundle) | can_use(Items.SARIAS_SONG, bundle)),
+        (Regions.LOST_WOODS, lambda bundle: is_child(bundle)
+         | (can_use(Items.SARIAS_SONG, bundle) & can_interact_npc(bundle, "Kokiri"))),
         (Regions.SFM_ENTRYWAY, lambda bundle: True_()),
         # The theater is a Shovel-gated grotto, including its traversal checks.
         (Regions.DEKU_THEATER, lambda bundle: extreme_requirement(bundle, "shuffle_shovel", "Shovel")),

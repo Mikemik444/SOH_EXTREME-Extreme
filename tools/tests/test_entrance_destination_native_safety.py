@@ -103,7 +103,7 @@ def main():
     harness = harness.replace("    int savedSceneNum = SCENE_TEMPLE_OF_TIME;",
         "    int savedSceneNum = SCENE_TEMPLE_OF_TIME;\n"
         "    int nextDayTime = 0xFFFF, dayTime = 0x8000, skyboxTime = 0, nightFlag = 0;\n"
-        "    int nayrusLoveTimer = 0, sceneLayer = 0, fileNum = 0;")
+        "    int nayrusLoveTimer = 0, sceneLayer = 0;")
     harness = harness.replace("    int sceneNum = SCENE_TEMPLE_OF_TIME;",
         "    int sceneNum = SCENE_TEMPLE_OF_TIME;\n"
         "    struct { int lastPlayedSong = 0; } msgCtx;")

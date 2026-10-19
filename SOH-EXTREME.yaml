@@ -1579,6 +1579,11 @@ SOH-EXTREME:
     'false': 0
     'true': 50
 
+  # Choose all, or replace it with song keys such as zeldas_lullaby and bolero_of_fire.
+  # Only listed songs become Progressive song items when Individual Notes is enabled.
+  song_note_songs:
+    - all
+
   song_note_shuffle:
     'off': 0
     individual_notes: 50

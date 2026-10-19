@@ -13,7 +13,7 @@ PROTOCOL = "SOHExtremeFinder1"
 # Release metadata for diagnostics; never require equal releases for display.
 # Keep the wire format stable across release bumps; change its identifier only
 # when the data layout changes and provide an explicit compatible decoder.
-VERSION = "1.8.8"
+VERSION = "1.8.9"
 TAG = "SOHExtremeUT"
 MAX_ENTRIES = 20000
 MAX_BYTES = 750000

@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "cases": 75,
+  "assertions": 1183,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "scope": "Actual soul policy/hooks, draw/talk/get-item/targeting, Kokiri exit boy update/movement, adult Lost Woods Mido update/blocking/talk/ocarina functions, all six collider registration functions, OC separation, and five dynamic collision query loops. Engine I/O and geometric narrow-phase helpers are shimmed; no full native build, ROM collision simulation, or gameplay test.",
+  "output": [
+    "PASS 25 NPC placements: only the Kokiri Forest exit boy and adult Lost Woods Mido retain collision; none can interact while hidden; existing actors restore on Soul acquisition",
+    "PASS all 25 placements reject normal and automatic talk, pending talk callbacks, exchanges, gifts, carrying and lock-on; normal offers resume when owned",
+    "PASS all six native AT, AC, OC and indexed registration paths reject invisible NPC colliders and restore live",
+    "PASS crates and regular rocks have no collision in every query; silver, brown, bronze and ceiling boulders remain solid and unbreakable until their Soul",
+    "PASS actual Kokiri exit boy update retains deferred loading, 80-unit blocking movement and solid OC, skips all talk/trade callbacks, and restores normally",
+    "PASS Lost Woods Mido collision and live blocking AI are limited to adult Link",
+    "PASS actual adult Lost Woods Mido update keeps 60-unit blocking movement and immovable OC, rejects pending talk/ocarina/move-aside flags, and restores normal song/dialogue progression live",
+    "PASS invisible Mido cancels a stale actor-owned ocarina state without dialogue, sound, reward or passage flag",
+    "PASS restoration preserves originally disabled attention/auto-talk and follows live option changes",
+    "PASS null actor/scene and ordinary-game paths remain safe",
+    "PASS separate animal/scrub/skulltula classification, Sign Soul speech, and the fishing pond controller remain intact",
+    "RESULT cases=75 assertions=1183"
+  ],
+  "sources": {
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "db261c49d61e58216611dde7e84ce9daeee9797aa08ca554eef41960194689bd",
+    "soh/Enhancements/randomizer/SoulActorAccess.h": "541c8b81d444d2953291a37a6a12c7d2d7b8796a74eddaf9ee85e382c2f8b303",
+    "src/code/z_actor.c": "0a89295fddefb6c8b01de6e76acabcec144fba7954007e42a89c1bdd4d5bfb22",
+    "src/code/z_collision_check.c": "eae84670ec25d611aa4cb848b3aa4a4e45ac1b54939b8e3789b1ac1e81d1a36c",
+    "src/overlays/actors/ovl_En_Ko/z_en_ko.c": "f180e198e0399dc6d5770490105add42c1cc7c9c0ccc256527d9f603785f35d9",
+    "src/overlays/actors/ovl_En_Md/z_en_md.c": "ec63b03ede19b69de8a8bd7826441deffc546abdaf4f1eb74e507a5e70e5c40d",
+    "src/code/z_bgcheck.c": "c6ff3556647d60f70b7fb8d771c2471ba442345b48b74c0ee8afb6e5ed6b651e",
+    "tools/tests/test_soul_npc_blockers.py": "b2cadb05dc486d16a7f3e8b4a2e374e2b2ed4d7d5b25232d4e7e0a90d428ff10",
+    "tools/tests/test_soul_object_blockers.py": "a21f4e28154fef749960f04aa6ce8ab0824b1a4697ca5602460d4b0b38852aee",
+    "tools/tests/soul_object_validation/npc_fixture.cpp.in": "37752db535d4a6fc5e137695cf710e281390434aa67e28386e25242d343f950d"
+  }
+}

@@ -1,7 +1,8 @@
 from dataclasses import dataclass, fields
-from Options import Toggle, Choice, Range, OptionGroup
+from Options import Toggle, Choice, Range, OptionGroup, OptionSet
 from ._vendor_oot_soh.Options import SohOptions, soh_option_groups
 from .EntranceOptions import *
+from .SongNotes import SONG_NOTE_KEYS, normalize_song_selection
 
 class ShuffleRoll(Toggle):
     """Shuffle the ability to roll."""
@@ -109,18 +110,38 @@ class NpcSpeechSanity(Toggle):
     display_name = "NPC Speech Sanity"
 
 class SongNoteShuffle(Choice):
-    """Replace complete songs with 74 Progressive song items in the normal pool.
+    """Split the songs selected by Song Note Songs into Progressive song items.
 
     Collect the required copies of Progressive [Song]: 6 for most songs,
-    8 for Bolero, 5 for Serenade, and 7 for Nocturne. Playing still
-    requires an Ocarina and its shuffled buttons. While enabled, whole-song
-    placement modes (vanilla/song locations/dungeon rewards) do not apply to
-    the notes. Explicitly starting with a song grants its complete note group.
+    8 for Bolero, 5 for Serenade, and 7 for Nocturne. Playing still requires
+    an Ocarina and its shuffled buttons. Selected songs' notes use the normal
+    item pool; unselected songs keep the ordinary Shuffle Songs placement mode.
+    Starting with a selected song grants its complete note group. Selecting
+    all splits all twelve songs into the existing 74 Progressive song copies.
     """
     display_name = "Song Note Shuffle"
     option_off = 0
     option_individual_notes = 1
     default = 0
+
+class SongNoteSongs(OptionSet):
+    """Songs to split when Song Note Shuffle is Individual Notes.
+
+    Use all for every song, or a list of song names. Accepted keys:
+    zeldas_lullaby, eponas_song, sarias_song, suns_song, song_of_time,
+    song_of_storms, minuet_of_forest, bolero_of_fire, serenade_of_water,
+    requiem_of_spirit, nocturne_of_shadow, prelude_of_light.
+    Full names such as Zelda's Lullaby are also accepted. Unselected songs
+    remain complete songs; an empty list splits none. This list is ignored
+    when Song Note Shuffle is off. All overrides any additional listed songs.
+    """
+    display_name = "Song Note Songs"
+    valid_keys = frozenset({"all", *SONG_NOTE_KEYS})
+    default = frozenset({"all"})
+
+    def __init__(self, value, random_str=None):
+        super().__init__(normalize_song_selection(value), random_str)
+
 
 class ShuffleFlowOfTime(Toggle):
     """Freeze normal time progression until Flow of Time is collected.
@@ -282,6 +303,7 @@ class SohExtremeOptions(SohOptions):
     scene_transition_checks: SceneTransitionChecks
     npc_speech_sanity: NpcSpeechSanity
     song_note_shuffle: SongNoteShuffle
+    song_note_songs: SongNoteSongs
     shuffle_flow_of_time: ShuffleFlowOfTime
     frozen_starting_time: FrozenStartingTime
     time_speed_after_unlock: TimeSpeedAfterUnlock
@@ -316,7 +338,7 @@ extreme_option_groups = list(_base_option_groups) + [
         ShuffleSignSoul, ShuffleSkulltulaSoul, ShuffleBusinessScrubSoul, ShuffleShovel, ShuffleBeanSouls,
     ]),
     OptionGroup("SOH-EXTREME World Features", [
-        ShuffleEnemyDrops, SceneTransitionChecks, NpcSpeechSanity, SongNoteShuffle, ShuffleFlowOfTime, FrozenStartingTime, TimeSpeedAfterUnlock,
+        ShuffleEnemyDrops, SceneTransitionChecks, NpcSpeechSanity, SongNoteShuffle, SongNoteSongs, ShuffleFlowOfTime, FrozenStartingTime, TimeSpeedAfterUnlock,
     ]),
     OptionGroup("SOH-EXTREME Traps & Links", [
         DeathLink, TrapLink, ExtremeTrapPool, ExtremeIceTraps, ExtremeFireTraps, ExtremeSlowTraps,

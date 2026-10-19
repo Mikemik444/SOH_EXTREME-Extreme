@@ -8,6 +8,7 @@
 #include "objects/object_md/object_md.h"
 #include "overlays/actors/ovl_En_Elf/z_en_elf.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
+#include "soh/Enhancements/randomizer/SoulActorAccess.h"
 
 #define FLAGS                                                                                  \
     (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_FRIENDLY | ACTOR_FLAG_UPDATE_CULLING_DISABLED | \
@@ -525,6 +526,11 @@ void EnMd_UpdateTalking(EnMd* this, PlayState* play) {
     s16 canUpdateTalking;
     s16 yawDiff;
 
+    if (!MegaSoul_CanInteractWithActor(&this->actor)) {
+        this->interactInfo.talkState = NPC_TALK_STATE_IDLE;
+        return;
+    }
+
     if (this->actor.xzDistToPlayer < 170.0f) {
         yawDiff = (f32)this->actor.yawTowardsPlayer - this->actor.shape.rot.y;
         absYawDiff = ABS(yawDiff);
@@ -699,7 +705,11 @@ void EnMd_BlockPath(EnMd* this, PlayState* play) {
     f32 temp;
     Actor* actorToBlock = &GET_PLAYER(play)->actor;
     s16 yaw;
+    s32 canInteract = MegaSoul_CanInteractWithActor(&this->actor);
 
+    if (!canInteract) {
+        this->interactInfo.talkState = NPC_TALK_STATE_IDLE;
+    }
     EnMd_UpdateAnimSequence_WithTalking(this);
 
     if (this->interactInfo.talkState == NPC_TALK_STATE_IDLE) {
@@ -716,6 +726,12 @@ void EnMd_BlockPath(EnMd* this, PlayState* play) {
 
         temp = fabsf((f32)this->actor.yawTowardsPlayer - yaw) * 0.001f * 3.0f;
         this->skelAnime.playSpeed = CLAMP(temp, 1.0f, 3.0f);
+    }
+
+    // Invisible Lost Woods Mido may block the path, but cannot accept talk or
+    // an ocarina performance, move aside, or set the completed-interaction flag.
+    if (!canInteract) {
+        return;
     }
 
     if ((GameInteractor_Should(VB_MOVE_MIDO_IN_KOKIRI_FOREST, this->interactInfo.talkState == NPC_TALK_STATE_ACTION,
@@ -765,6 +781,17 @@ void EnMd_BlockPath(EnMd* this, PlayState* play) {
 
 void EnMd_ListenToOcarina(EnMd* this, PlayState* play) {
     Player* player = GET_PLAYER(play);
+
+    if (!MegaSoul_CanInteractWithActor(&this->actor)) {
+        this->interactInfo.talkState = NPC_TALK_STATE_IDLE;
+        this->actionFunc = EnMd_BlockPath;
+        if (player->unk_6A8 == &this->actor) {
+            player->unk_6A8 = NULL;
+            player->stateFlags2 &= ~(PLAYER_STATE2_ATTEMPT_PLAY_FOR_ACTOR | PLAYER_STATE2_PLAY_FOR_ACTOR |
+                                     PLAYER_STATE2_NEAR_OCARINA_ACTOR);
+        }
+        return;
+    }
 
     if (play->msgCtx.ocarinaMode >= OCARINA_MODE_04) {
         this->actionFunc = EnMd_BlockPath;

@@ -306,14 +306,12 @@ static int64_t GetPendingNpcSpeechLocation(RandomizerCheck rc) {
 static bool HasNpcSpeechInteractionItems(const NpcSpeechFinderEntry& entry) {
     auto ctx = Rando::Context::GetInstance();
     auto speechLogic = ctx->GetLogic();
-    const bool pathBlocker = entry.rc == static_cast<int32_t>(RC_ZD_KING_ZORA_THAWED);
-    if (ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) && !pathBlocker && !speechLogic->HasItem(RG_NPC_SOUL)) {
+    if (ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) && !speechLogic->HasItem(RG_NPC_SOUL)) {
         return false;
     }
     if (ctx->GetOption(RSK_SHUFFLE_SPEAK)) {
         if (entry.languageItem != RG_NONE) {
-            if (!(pathBlocker ? speechLogic->CanSpeakToPathBlockingNpc(entry.languageItem)
-                              : speechLogic->HasItem(entry.languageItem))) {
+            if (!speechLogic->HasItem(entry.languageItem)) {
                 return false;
             }
         } else if (!(speechLogic->HasItem(RG_SPEAK_DEKU) || speechLogic->HasItem(RG_SPEAK_GERUDO) ||

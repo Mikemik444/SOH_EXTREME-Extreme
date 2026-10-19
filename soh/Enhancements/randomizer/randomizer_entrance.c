@@ -80,6 +80,32 @@ static DungeonEntranceInfo dungeons[] = {
     // clang-format on
 };
 
+// Physical dungeon entryways are already resolved destinations. Save-menu
+// dungeon returns must not pass these through the shuffle table a second time.
+s16 Entrance_GetDungeonSpawn(s16 scene) {
+    for (size_t i = 0; i < SHUFFLEABLE_BOSS_COUNT; ++i) {
+        if (scene == dungeons[i].scene || scene == dungeons[i].bossScene) return dungeons[i].entryway;
+    }
+    switch (scene) {
+        case SCENE_BOTTOM_OF_THE_WELL: return ENTR_BOTTOM_OF_THE_WELL_ENTRANCE;
+        case SCENE_ICE_CAVERN: return ENTR_ICE_CAVERN_ENTRANCE;
+        case SCENE_GERUDO_TRAINING_GROUND: return ENTR_GERUDO_TRAINING_GROUND_ENTRANCE;
+        case SCENE_INSIDE_GANONS_CASTLE: return ENTR_INSIDE_GANONS_CASTLE_ENTRANCE;
+        case SCENE_GANONS_TOWER:
+        case SCENE_GANONDORF_BOSS:
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+        case SCENE_GANON_BOSS:
+        case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+            return ENTR_GANONS_TOWER_0;
+        default: return -1;
+    }
+}
+
+u8 Entrance_IsBossScene(s16 scene) {
+    return scene >= SCENE_DEKU_TREE_BOSS && scene <= SCENE_SHADOW_TEMPLE_BOSS;
+}
+
 static bool hasCopiedEntranceTable = false;
 static bool hasModifiedEntranceTable = false;
 
@@ -342,6 +368,7 @@ u32 Entrance_SceneAndSpawnAre(u8 scene, u8 spawn) {
 
 // Properly respawn the player after a game over, accounting for dungeon entrance randomizer
 void Entrance_SetGameOverEntrance(void) {
+    if (Archipelago_EntranceGameOverDungeonReturn()) return;
     if (Archipelago_EntranceSavewarp()) return;
     s16 scene = gPlayState->sceneNum;
 
@@ -388,6 +415,7 @@ void Entrance_SetGameOverEntrance(void) {
 
 // Properly savewarp the player accounting for dungeon entrance randomizer.
 void Entrance_SetSavewarpEntrance(void) {
+    if (Archipelago_EntranceRestoreDungeonReturn()) return;
     if (Archipelago_EntranceSavewarp()) return;
     s16 scene = gSaveContext.savedSceneNum;
 

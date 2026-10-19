@@ -96,8 +96,8 @@ function Assert-CopiedSourceFiles {
     $manifestPath = Join-Path $script:PackageRoot 'SOURCE_FILES.json'
     $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
     if ($null -eq $manifest -or $null -eq $manifest.PSObject.Properties['version'] -or
-        $null -eq $manifest.PSObject.Properties['files'] -or [string]$manifest.version -ne '1.8.8') {
-        throw 'The source manifest is missing required fields or is not version 1.8.8.'
+        $null -eq $manifest.PSObject.Properties['files'] -or [string]$manifest.version -ne '1.8.9') {
+        throw 'The source manifest is missing required fields or is not version 1.8.9.'
     }
     $files = @($manifest.files)
     if ($files.Count -eq 0) { throw 'The source manifest contains no files.' }
@@ -120,9 +120,9 @@ function Assert-CopiedSourceFiles {
             $snapshots = @(Get-AcceptedZipContentSnapshots -Relative $relative -Snapshots @($entry.zip_contents))
             if (Test-AcceptedZipContents -Path $source -Snapshots $snapshots) { continue }
         }
-        throw "The updated source file does not match version 1.8.8: $source`nExtract the included source directories into this repository before building."
+        throw "The updated source file does not match version 1.8.9: $source`nExtract the included source directories into this repository before building."
     }
-    Write-Host ('Verified ' + $files.Count + ' source files for version 1.8.8.') -ForegroundColor Green
+    Write-Host ('Verified ' + $files.Count + ' source files for version 1.8.9.') -ForegroundColor Green
 }
 
 function Get-AcceptedZipContentSnapshots {
@@ -428,7 +428,7 @@ function Write-BuildReceipt {
         }
     }
     $receipt = [ordered]@{
-        version = '1.8.8'; build_helper_revision = 4
+        version = '1.8.9'; build_helper_revision = 4
         source_repository = Get-NormalizedPath $Repository
         cmake_home_directory = [string]$Cache.Values['CMAKE_HOME_DIRECTORY']
         build_directory = $Cache.Directory; generator = $Cache.Generator
@@ -521,7 +521,7 @@ function Build-ExistingRelease {
 
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT) { throw 'This build helper is for Windows.' }
-    Write-Host 'SOH-EXTREME 1.8.8 - clean Release rebuild (build helper revision 4)' -ForegroundColor Cyan
+    Write-Host 'SOH-EXTREME 1.8.9 - clean Release rebuild (build helper revision 4)' -ForegroundColor Cyan
     Write-Host 'Close the game and finish any active build before continuing.'
     $repository = Find-SourceRepository
     Write-Host ('Source repository: ' + $repository)

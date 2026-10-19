@@ -37,12 +37,11 @@ dungeon_reward_song_locations: list[Locations] = [
     Locations.GERUDO_TRAINING_GROUND_MAZE_PATH_FINAL_CHEST # todo MQ ice arrow chest
 ]
 
-def individual_notes_enabled(world: "SohWorld") -> bool:
-    """Whole-song placement modes do not prefill twelve songs in note mode.
-
-    The 74 distinct notes occupy ordinary item-pool slots. Reserving twelve
-    song slots as well would both bypass completion and miscount pool capacity.
-    """
+def individual_notes_enabled(world: "SohWorld", song: Items | str) -> bool:
+    """Selected songs use ordinary pool slots instead of whole-song prefill."""
+    selection = getattr(world, "song_uses_individual_notes", None)
+    if selection is not None:
+        return selection(str(song))
     option = getattr(world.options, "song_note_shuffle", None)
     return option is not None and bool(option.value)
 
@@ -77,20 +76,20 @@ def get_shuffled_songs(world: "SohWorld") -> set[Items]:
 
 def get_prefill_songs(world: "SohWorld") -> list[Items]:
     # Do not prefill songs anywhere in particular
-    if individual_notes_enabled(world) or world.options.shuffle_songs in ("off", "anywhere"):
+    if world.options.shuffle_songs in ("off", "anywhere"):
         return list()
     
     pre_fill_songs = list[Items]()
     included_songs = get_shuffled_songs(world)
     for song in song_vanilla_locations.values():
-        if song not in included_songs:
+        if song not in included_songs or individual_notes_enabled(world, song):
             continue
         pre_fill_songs.append(song)
 
     return list(pre_fill_songs)
 
 def reserve_song_locations(world: "SohWorld") -> None:
-    if individual_notes_enabled(world) or world.options.shuffle_songs in ("off", "anywhere"):
+    if not get_prefill_songs(world):
         return
     
     if world.options.shuffle_songs == "song_locations":
@@ -104,13 +103,11 @@ def remove_song_reservations(world: "SohWorld") -> None:
     world.reserved_pre_fill_locations = [loc for loc in world.reserved_pre_fill_locations if loc not in song_locations]
 
 def pre_fill_songs(world: "SohWorld") -> None:
-    # Do not prefill songs anywhere in particular
-    if individual_notes_enabled(world) or world.options.shuffle_songs in ("off", "anywhere"):
-        return
-    
-    remove_song_reservations(world)
-
     songs = get_prefill_songs(world)
+    if not songs:
+        return
+
+    remove_song_reservations(world)
     song_locations = list[Locations]()
 
     if world.options.shuffle_songs == "song_locations":

@@ -20,24 +20,8 @@ CATALOG = tuple(json.loads(files(__package__).joinpath("NpcSpeechCatalog.json").
 NAME_TO_ID = {e["name"]: e["id"] for e in CATALOG}
 BY_NAME = {e["name"]: e for e in CATALOG}
 LANGUAGES = ("Deku", "Gerudo", "Goron", "Hylian", "Kokiri", "Zora")
-# Exact catalogue identities matching MegaSoul_IsPathBlockingNpcPlacement.
-# Talon is handled per route: only his Hyrule Castle role blocks a path.
-PATH_BLOCKER_CONVERSATIONS = frozenset({
-    10000022,  # Gerudo Valley bridge guard (EnGe1 type 0)
-    10000024,  # Gerudo Fortress gate guard (EnGe1 type 0)
-    10000025,  # Gerudo Training Ground guard (EnGe1 type 0x46)
-    10000028,  # Gerudo Fortress gate operator (EnGe1 type 1)
-    10000055,  # Hyrule Castle gate guard (EnHeishi2 type 2)
-    10000061,  # Kakariko mountain gate guard (EnHeishi2 type 5)
-    10000065,  # King Zora
-    10000069,  # Kokiri Forest exit boy (EnKo type 3)
-    10000094,  # Mido
-})
-
-
-def is_path_blocker_route(entry, route):
-    return entry["id"] in PATH_BLOCKER_CONVERSATIONS or (
-        entry["id"] == 10000118 and route["region"] == "HC_MOAT" and route["age"] == "child")
+# Every real conversation needs NPC Soul when it is shuffled. The Kokiri
+# exit boy retains blocking collision while hidden, but has no talk exception.
 
 
 @dataclass
@@ -124,7 +108,7 @@ def conversation_rule(world, entry, scrub_region=None):
         gates = [ConversationRegion(str(region)),
                  H.is_child(b) if route["age"] == "child" else H.is_adult(b)
                  if route["age"] == "adult" else (H.is_child(b) | H.is_adult(b))]
-        if o.shuffle_npc_soul.value and not is_path_blocker_route(entry, route):
+        if o.shuffle_npc_soul.value:
             gates.append(Has("NPC Soul"))
         if route["time"] != "either":
             gates.append(H.at_day(b) if route["time"] == "day" else H.at_night(b))

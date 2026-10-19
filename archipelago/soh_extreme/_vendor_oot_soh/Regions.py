@@ -434,10 +434,10 @@ def place_locked_items(world: "SohWorld") -> None:
         # the ungated castle front simply because this starting reward moved.
 
         
-    if world.options.shuffle_songs == "off" and not individual_notes_enabled(world):
+    if world.options.shuffle_songs == "off":
+        included_songs = get_shuffled_songs(world)
         for location, song in song_vanilla_locations.items():
-            included_songs = get_shuffled_songs(world)
-            if song not in included_songs:
+            if song not in included_songs or individual_notes_enabled(world, song):
                 continue
             place_locked_item(location, song, world)
 

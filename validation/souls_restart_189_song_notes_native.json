@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "cases": 38,
+  "assertions": 7005,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "scope": "Actual native tracker selection/render bodies, slot default helper, custom CVar apply loop, and unchanged progressive/legacy note receipt/completion functions; ImGui, CVar, and save/notification I/O are shimmed. Not a complete native build or gameplay test.",
+  "output": [
+    "PASS each of 12 single-song selections renders only that row, its correct total and original 74-flag offsets, even with all skipped songs collected",
+    "PASS all, empty and noncontiguous selections preserve original flag/glyph offsets and sum only the selected songs",
+    "PASS old slots default all when enabled and zero when off; explicit subsets/zero survive; applying another slot replaces stale cached CVars",
+    "PASS AP legacy fallback, explicit zero with old note flags, delayed native settings, high-bit masking and nonrandomizer behavior",
+    "PASS native saves ignore AP song masks and keep their original all-song and legacy-note visibility",
+    "PASS unchanged progressive receipts fill the selected song's original flags, unlock only after its complete sequence, cap duplicates and preserve other full songs",
+    "PASS legacy individual-note IDs retain all 74 flags and complete every song; unrelated item IDs are rejected",
+    "RESULT cases=38 assertions=7005"
+  ],
+  "sources": {
+    "soh/Enhancements/randomizer/randomizer_item_tracker.cpp": "8619209002721886d8c66eac9157448cdb8644916812d109d286eed3c679c9f3",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "4d28f7846873a9967585d1517485ac018e37baa45c5d2b52616ebb691aeaf5b7",
+    "soh/Enhancements/randomizer/randomizerEnums/RandomizerInf.h": "f989d8117c1dabdddb46b835d750b7cfc8b67740413653ab4b4deaa40f4427f5",
+    "soh/Enhancements/randomizer/randomizerEnums/RandomizerGet.h": "86bfc9bf1ee8ba8a51c4d1ac4e2626c016ee5501fd32a389f72577e6c1e2e109",
+    "soh/cvar_prefixes.h": "7365f94ba25ee97ff119c1775b30dc4f7450ab46fe5bbe6a37ef6be5eba798d2",
+    "tools/tests/test_song_note_selection_native.py": "d46662f2fa519aa9e3433b8a7d86c8244c159bcddfe67d20d3d9e93b5c609eaa",
+    "tools/tests/song_note_selection_native_tests.cpp.in": "d1c3d28d263dd478d7ef3a77b2cbf839454c1c100ceef8d4abfc26c6ca48a405"
+  },
+  "tested_function_sha256": {
+    "TRACKER": "52e47c78c69f82d20b8da9288223d484e3e85a75223ffc4a45adab651f9fe54b",
+    "LEGACY_DEFAULTS": "8b297974f789b67f952bd02f8dc0c34b12f08144289704c90520a9c7f280049e",
+    "RECEIPTS": "edd27468b8b84f1e8e856a0a5c54d054c945894d2a228a8658bb359be3573c70",
+    "SONG_TABLE": "0257adb2d0703263e5f1a05491d65b407a0980e78c67f99b0e01c49841c384dc",
+    "QUEST_ENUM": "7f2ebca845752b5259a2738684043cbaeb2fdd6735561d01af358c91a3dcfa94",
+    "ITEM_CONSTANTS": "2b07eee0a02de21e1cc72979c5377cb979212cb21333cbb73c4d5a26cecc2962",
+    "CVAR_WRITER": "d578d310507e2fea1a88bf64b2a220bc9f1879a3101b8170c51c77b256425251"
+  },
+  "normal_song_icon_renderer_sha256": "6014ce46e6e8977fc8f1fa1662d465c3cba6f24601a27cee33d0952e429feeb8"
+}

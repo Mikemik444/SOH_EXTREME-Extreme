@@ -5,6 +5,7 @@
  */
 
 #include "z_en_ko.h"
+#include "soh/Enhancements/randomizer/SoulActorAccess.h"
 #include "objects/object_fa/object_fa.h"
 #include "objects/object_os_anime/object_os_anime.h"
 #include "objects/object_km1/object_km1.h"
@@ -1297,7 +1298,15 @@ void EnKo_Update(Actor* thisx, PlayState* play) {
 
     this->actionFunc(this, play);
 
-    func_80A9877C(this, play);
+    if (MegaSoul_CanInteractWithActor(&this->actor)) {
+        func_80A9877C(this, play);
+    } else {
+        // The hidden exit boy only moves to block the forest exit. Do not run
+        // talk/trade/tracking callbacks or expose a target/automatic talk offer.
+        this->interactInfo.talkState = NPC_TALK_STATE_IDLE;
+        this->actor.flags &= ~(ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED | ACTOR_FLAG_TALK);
+        this->actor.isTargeted = false;
+    }
     collider = &this->collider;
     Collider_UpdateCylinder(&this->actor, collider);
     CollisionCheck_SetOC(play, &play->colChkCtx, &collider->base);

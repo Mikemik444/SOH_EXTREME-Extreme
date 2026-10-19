@@ -1,6 +1,7 @@
 // Included once by ArchipelagoClient.cpp, on the gameplay thread.
 #include "EntranceRouting.h"
 #include <array>
+#include <cmath>
 #include "soh/Enhancements/randomizer/entrance.h"
 #include "soh/Enhancements/randomizer/randomizer_entrance.h"
 #include "soh/Enhancements/randomizer/randomizer_grotto.h"
@@ -21,6 +22,30 @@ bool suppressTransitionChecks = false;
 int pendingSpawnAge = -1;
 bool slotMapLoaded = false;
 
+// Runtime checkpoints contain position only. Scene switches, timed puzzles,
+// clear flags, carried actors and inventory still follow normal scene reloads.
+struct SceneReturnPoint {
+    bool valid = false;
+    int scene = -1, room = -1, age = -1, file = -1, target = -1;
+    Vec3f position{};
+    s16 yaw = 0;
+    int dungeonEntrance = -1;
+};
+SceneReturnPoint roomEntry;
+SceneReturnPoint previousScene;
+SceneReturnPoint departingScene;
+SceneReturnPoint restartArrival;
+bool dungeonReturnArrival = false;
+int returnedDungeonOwner = -1;
+struct PendingDungeonReturn {
+    bool valid = false, previous = false;
+    int entrance = -1, age = -1, file = -1;
+    SceneReturnPoint point, origin;
+    std::map<int, int> routes;
+};
+PendingDungeonReturn pendingDungeonReturn;
+const EntranceDestinationPolicy* sceneArrivalPolicy = nullptr;
+
 // A real resolved AP transition owns one arrival. Peeks and Finder labels never
 // arm this marker, and a changed map/save or canceled transition discards it.
 struct PendingArrival {
@@ -34,16 +59,24 @@ PendingArrival pendingArrival;
 
 void CancelTransition() {
     pendingArrival = {};
+    restartArrival = {};
+    dungeonReturnArrival = false;
+    returnedDungeonOwner = -1;
     suppressTransitionChecks = false;
     arrival = crossingSource = crossingTarget = openedDoor = nullptr;
     lastArrivalSource = lastArrivalTarget = nullptr;
     doorJournal.Reset();
 }
 
-void Reset() {
+void Reset(bool preserveRequestedDungeonReturn = false) {
     routing.Reset();
     slotMapLoaded = false;
     pendingSpawnAge = -1;
+    roomEntry = previousScene = departingScene = {};
+    sceneArrivalPolicy = nullptr;
+    // Only LoadSaveMetadata may preserve an explicitly requested same-save,
+    // same-seed, same-settings reload. Ordinary file loads always clear it.
+    if (!preserveRequestedDungeonReturn) pendingDungeonReturn = {};
     CancelTransition();
 }
 
@@ -127,6 +160,20 @@ int TransitionLayer(int nextEntrance, int layer) {
 }
 
 bool BeforeSceneInit() {
+    const int linkAge = LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT;
+    if ((roomEntry.scene >= 0 && (roomEntry.age != linkAge || roomEntry.file != gSaveContext.fileNum)) ||
+        (previousScene.valid && (previousScene.age != linkAge || previousScene.file != gSaveContext.fileNum))) {
+        roomEntry = previousScene = {};
+    }
+    if (roomEntry.scene >= 0) departingScene = roomEntry;
+    else if (departingScene.age != linkAge || departingScene.file != gSaveContext.fileNum) departingScene = {};
+    returnedDungeonOwner = restartArrival.valid ? restartArrival.dungeonEntrance : -1;
+    roomEntry = {};
+    sceneArrivalPolicy = nullptr;
+    // Game over assigns a respawn flag after resolving this explicit return.
+    // It must not restore the departed scene's temporary flags, including on
+    // AP saves with entrance shuffle disabled and no shuffled arrival marker.
+    if (dungeonReturnArrival && Archipelago_IsCurrentSaveFile()) gSaveContext.respawnFlag = 0;
     if (!pendingArrival.target) return true;
     if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || gSaveContext.gameMode != GAMEMODE_NORMAL ||
         pendingArrival.resolvedIndex < 0 || gSaveContext.entranceIndex != pendingArrival.resolvedIndex) {
@@ -144,6 +191,7 @@ bool BeforeSceneInit() {
         if (!RecoverRejectedArrival("native scene/spawn does not match the verified destination")) return false;
     }
     ClearIncomingCutscene();
+    sceneArrivalPolicy = pendingArrival.target;
     pendingArrival.prepared = true;
     return true;
 }
@@ -158,6 +206,10 @@ bool AfterSceneConditions() {
         gSaveContext.entranceIndex != pendingArrival.resolvedIndex) {
         pendingArrival = {};
         arrival = nullptr;
+        restartArrival = {};
+        dungeonReturnArrival = false;
+        returnedDungeonOwner = -1;
+        sceneArrivalPolicy = nullptr;
         return true;
     }
     // Normal engine setup selects only one of these four verified layers,
@@ -209,8 +261,17 @@ bool Apply(const std::unordered_map<std::string, int>& settings) {
         SPDLOG_ERROR("[Archipelago] Randomizer context unavailable for entrance routing");
         return false;
     }
-    const bool sameRoutes = routing.Routes() == next.Routes();
-    if (!sameRoutes) CancelTransition();
+    const bool sameRoutes = routing.Routes() == next.Routes() &&
+                            routing.UsesPreviousSceneReturn() == next.UsesPreviousSceneReturn();
+    if (!sameRoutes) {
+        CancelTransition();
+        roomEntry = previousScene = departingScene = {};
+        sceneArrivalPolicy = nullptr;
+        // A menu request survives only its own table reinstall and semantics.
+        if (pendingDungeonReturn.routes != next.Routes() ||
+            pendingDungeonReturn.previous != next.UsesPreviousSceneReturn())
+            pendingDungeonReturn = {};
+    }
     routing = std::move(next);
     slotMapLoaded = true;
     // This derived option has NO CVar. SetAllToContext therefore resets it to
@@ -331,11 +392,26 @@ int ResolveDoor(int target, bool peek) {
 }
 
 int SpawnRoom(int scene, int room) {
+    if (Archipelago_IsCurrentSaveFile() && restartArrival.valid && CrossingScene(restartArrival.scene) == CrossingScene(scene))
+        return restartArrival.room;
     return Archipelago_IsCurrentSaveFile() && arrival && arrival->scene == scene ? arrival->room : room;
 }
 
 bool SpawnPosition(int scene) {
-    if (!Archipelago_IsCurrentSaveFile() || !arrival || arrival->scene != scene || !gPlayState || !gPlayState->linkActorEntry) return false;
+    if (!Archipelago_IsCurrentSaveFile() || !gPlayState || !gPlayState->linkActorEntry) return false;
+    if (restartArrival.valid && CrossingScene(restartArrival.scene) == CrossingScene(scene)) {
+        spawnEntry = *gPlayState->linkActorEntry;
+        spawnEntry.pos.x = static_cast<s16>(restartArrival.position.x);
+        spawnEntry.pos.y = static_cast<s16>(restartArrival.position.y);
+        spawnEntry.pos.z = static_cast<s16>(restartArrival.position.z);
+        spawnEntry.rot.y = restartArrival.yaw;
+        spawnEntry.params = 0x0DFF;
+        gPlayState->linkActorEntry = &spawnEntry;
+        restartArrival = {};
+        arrival = nullptr;
+        return true;
+    }
+    if (!arrival || arrival->scene != scene) return false;
     spawnEntry = *gPlayState->linkActorEntry;
     const s16 yaw = static_cast<s16>(arrival->yaw + (arrival->side ? 0x8000 : 0));
     spawnEntry.pos.x = static_cast<s16>(arrival->x + Math_SinS(yaw) * 60.0f);
@@ -353,6 +429,7 @@ int64_t Complete(int scene) {
     const auto* target = crossingTarget;
     crossingSource = crossingTarget = nullptr;
     openedDoor = nullptr; doorJournal.Reset();
+    dungeonReturnArrival = false;
     const bool arrived = !suppressTransitionChecks && source && target &&
                          CrossingScene(target->scene) == CrossingScene(scene);
     suppressTransitionChecks = false;
@@ -384,11 +461,200 @@ bool ReturnFromUnsafeArrival() {
     gPlayState->transitionType = TRANS_TYPE_FADE_BLACK_FAST;
     return true;
 }
+bool ReturnPolicyMatches(const EntranceDestinationPolicy* policy, int scene, int nativeIndex) {
+    if (!EntranceDestinationAllowsAge(policy, CurrentArrivalAge()) ||
+        !ArrivalTableMatches(policy) || policy->nativeIndex != nativeIndex) return false;
+    const int firstLayer = LINK_IS_CHILD ? 0 : 2;
+    return CrossingScene(policy->normalLayers[firstLayer].scene) == CrossingScene(scene) ||
+           CrossingScene(policy->normalLayers[firstLayer + 1].scene) == CrossingScene(scene);
+}
+
+bool ReturnPointIsCurrent(const SceneReturnPoint& point) {
+    return Archipelago_IsCurrentSaveFile() && point.valid && point.file == gSaveContext.fileNum &&
+           point.age == (LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT);
+}
+
+// Called after Link/room initialization and after a native room change commits.
+// Play_SetupRespawnPoint can instead run at a death position, so it is not used
+// as evidence that Link successfully entered a room.
+void RecordRoomEntry() {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        gSaveContext.gameMode != GAMEMODE_NORMAL || gSaveContext.cutsceneIndex >= 0xFFF0 ||
+        gSaveContext.health <= 0 || gPlayState->roomCtx.curRoom.num < 0 ||
+        gPlayState->roomCtx.curRoom.num >= gPlayState->numRooms) return;
+    const auto* player = GET_PLAYER(gPlayState);
+    if (!player) return;
+    const auto& pos = player->actor.world.pos;
+    for (float axis : {pos.x, pos.y, pos.z}) {
+        if (!std::isfinite(axis) || axis < -32768.0f || axis > 32767.0f) return;
+    }
+    const auto matches = [&](const EntranceDestinationPolicy* policy) {
+        return ReturnPolicyMatches(policy, gPlayState->sceneNum, gSaveContext.entranceIndex);
+    };
+    const auto* policy = sceneArrivalPolicy;
+    if (!matches(policy)) {
+        policy = EntranceDestinationById(gSaveContext.entranceIndex);
+        if (!matches(policy)) {
+            policy = nullptr;
+            for (const auto& row : kEntranceEndpoints) {
+                const auto* candidate = EntranceDestinationById(row.id);
+                // Shared grotto bases do not identify their contents/return.
+                // Only an actual resolved grotto arrival may select those.
+                if (candidate && candidate->kind != kEntranceGrottoLoad &&
+                    candidate->kind != kEntranceGrottoReturn && matches(candidate)) {
+                    policy = candidate;
+                    break;
+                }
+            }
+        }
+    }
+    int dungeonEntrance = Entrance_GetDungeonSpawn(gPlayState->sceneNum);
+    if (policy && Entrance_IsBossScene(gPlayState->sceneNum)) {
+        if (returnedDungeonOwner >= 0) {
+            dungeonEntrance = returnedDungeonOwner;
+        } else if (ReturnPointIsCurrent(roomEntry) && roomEntry.scene == gPlayState->sceneNum) {
+            dungeonEntrance = roomEntry.dungeonEntrance;
+        } else if (ReturnPointIsCurrent(departingScene) && departingScene.dungeonEntrance >= 0) {
+            // A shuffled boss belongs to the dungeon Link actually came from.
+            dungeonEntrance = departingScene.dungeonEntrance;
+        } else {
+            const auto* boss = EntranceEndpointById(policy->id);
+            const auto* back = boss && boss->reverse >= 0 ?
+                EntranceEndpointById(routing.Destination(boss->reverse)) : nullptr;
+            if (back && !Entrance_IsBossScene(back->scene)) {
+                const int sourceDungeon = Entrance_GetDungeonSpawn(back->scene);
+                if (sourceDungeon >= 0) dungeonEntrance = sourceDungeon;
+            }
+        }
+    }
+    returnedDungeonOwner = -1;
+    if (departingScene.scene >= 0 && departingScene.file == gSaveContext.fileNum &&
+        departingScene.age == (LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT) &&
+        CrossingScene(departingScene.scene) != CrossingScene(gPlayState->sceneNum)) {
+        previousScene = ReturnPointIsCurrent(departingScene) ? departingScene : SceneReturnPoint{};
+    }
+    departingScene = {};
+    sceneArrivalPolicy = policy;
+    // Remember that a distinct normal scene was entered even if its scripted
+    // entry is not a reviewed return destination (for example Ganondorf).
+    // Entering it may return to the prior Tower, but leaving it must not keep
+    // an older scene mislabeled as the immediate previous scene.
+    roomEntry = {policy != nullptr, gPlayState->sceneNum, gPlayState->roomCtx.curRoom.num,
+                 LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT, gSaveContext.fileNum,
+                 policy ? policy->id : -1, pos, player->actor.shape.rot.y, dungeonEntrance};
+}
+
+int DungeonReturnMode() {
+    if (!Archipelago_IsCurrentSaveFile() || !routing.UsesPreviousSceneReturn())
+        return AP_DUNGEON_RETURN_SPAWN;
+    if (gPlayState && ReturnPointIsCurrent(previousScene) &&
+        CrossingScene(previousScene.scene) != CrossingScene(gPlayState->sceneNum))
+        return AP_DUNGEON_RETURN_PREVIOUS_SCENE;
+    return AP_DUNGEON_RETURN_NO_PREVIOUS_SCENE;
+}
+
+PendingDungeonReturn BuildDungeonReturn() {
+    PendingDungeonReturn request;
+    if (!Archipelago_IsCurrentSaveFile() || !gPlayState) return request;
+    const int mode = DungeonReturnMode();
+    if (mode == AP_DUNGEON_RETURN_NO_PREVIOUS_SCENE) return request;
+    request.previous = mode == AP_DUNGEON_RETURN_PREVIOUS_SCENE;
+    if (request.previous) {
+        request.point = previousScene;
+    } else {
+        request.entrance = ReturnPointIsCurrent(roomEntry) && roomEntry.scene == gPlayState->sceneNum ?
+            roomEntry.dungeonEntrance : Entrance_GetDungeonSpawn(gPlayState->sceneNum);
+        if (request.entrance < 0) return {};
+    }
+    request.valid = true;
+    request.origin = roomEntry;
+    request.age = LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT;
+    request.file = gSaveContext.fileNum;
+    request.routes = routing.Routes();
+    return request;
+}
+
+bool ApplyDungeonReturn(const PendingDungeonReturn& request) {
+    if (!request.valid || !Archipelago_IsCurrentSaveFile() || request.file != gSaveContext.fileNum ||
+        request.age != (LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT) ||
+        request.routes != routing.Routes()) return false;
+    const EntranceDestinationPolicy* policy = nullptr;
+    if (request.previous) {
+        if (!routing.UsesPreviousSceneReturn() || !ReturnPointIsCurrent(request.point)) return false;
+        policy = EntranceDestinationById(request.point.target);
+        if (!EntranceDestinationAllowsAge(policy, CurrentArrivalAge()) || !ArrivalTableMatches(policy)) return false;
+    } else if (routing.Active()) {
+        // Use the native dungeon entryway, already resolved. Adult arrivals in
+        // child dungeons can share a reviewed room-door anchor; the policy is
+        // checked without applying that door's custom room/position.
+        for (const auto& candidate : kEntranceDestinationPolicies) {
+            if (candidate.nativeIndex == request.entrance &&
+                EntranceDestinationAllowsAge(&candidate, CurrentArrivalAge()) && ArrivalTableMatches(&candidate)) {
+                policy = &candidate;
+                break;
+            }
+        }
+        if (!policy) return false;
+    }
+    CancelTransition();
+    pendingSpawnAge = -1;
+    suppressTransitionChecks = true;
+    dungeonReturnArrival = true;
+    gSaveContext.respawnFlag = 0;
+    ClearIncomingCutscene();
+    if (request.previous) {
+        ArmArrival(-1, request.point.target);
+        // A saved physical endpoint is already resolved. Do not shuffle it
+        // again. The native resolver restores the correct shared-grotto ID.
+        gSaveContext.entranceIndex = Grotto_OverrideSpecialEntrance(static_cast<s16>(request.point.target));
+        restartArrival = request.point;
+        arrival = nullptr;
+    } else {
+        gSaveContext.entranceIndex = request.entrance;
+        if (policy) {
+            ArmArrival(-1, policy->id);
+            ResolvedArrival(policy->id, request.entrance);
+        }
+    }
+    gSaveContext.respawnFlag = 0;
+    roomEntry = request.origin;
+    return true;
+}
+
+bool RequestDungeonReturn() {
+    pendingDungeonReturn = BuildDungeonReturn();
+    pendingSpawnAge = -1;
+    return pendingDungeonReturn.valid;
+}
+
+bool RestoreDungeonReturn() {
+    if (!pendingDungeonReturn.valid) return false;
+    if (!slotMapLoaded) return true; // Complete the request when its own map arrives.
+    const auto request = std::move(pendingDungeonReturn);
+    pendingDungeonReturn = {};
+    return ApplyDungeonReturn(request);
+}
+
+bool GameOverDungeonReturn() {
+    pendingDungeonReturn = {};
+    return ApplyDungeonReturn(BuildDungeonReturn());
+}
+
+void CancelDungeonReturn() {
+    pendingDungeonReturn = {};
+    restartArrival = {};
+    dungeonReturnArrival = false;
+    returnedDungeonOwner = -1;
+    roomEntry = previousScene = departingScene = {};
+    sceneArrivalPolicy = nullptr;
+}
+
 // Resolves an actual spawn request, not a UI preview. Both load and the save
 // menu use this path so an age change cannot retain the previous age's room.
 bool SavewarpForAge(int age) {
     if (!Archipelago_IsCurrentSaveFile() || (age != LINK_AGE_CHILD && age != LINK_AGE_ADULT)) return false;
     pendingSpawnAge = -1;
+    CancelDungeonReturn();
     // A verified legacy/disabled map is different from slot data not loaded yet.
     // It must retain ordinary native savewarp behavior without a future request.
     if (slotMapLoaded && !routing.Active()) return false;
@@ -410,6 +676,25 @@ bool SavewarpForAge(int age) {
 }
 
 bool ServicePendingSpawn(bool safeToTransition) {
+    if (pendingDungeonReturn.valid) {
+        if (!Archipelago_IsCurrentSaveFile() || pendingDungeonReturn.file != gSaveContext.fileNum ||
+            pendingDungeonReturn.age != (LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT)) {
+            pendingDungeonReturn = {};
+            return false;
+        }
+        if (!safeToTransition || !slotMapLoaded || !gPlayState || !gPlayState->state.running ||
+            gSaveContext.gameMode != GAMEMODE_NORMAL || gSaveContext.health <= 0 ||
+            gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
+            gPlayState->transitionTrigger != TRANS_TRIGGER_OFF) return false;
+        const int currentEntrance = gSaveContext.entranceIndex;
+        if (!RestoreDungeonReturn()) return false;
+        const int destination = gSaveContext.entranceIndex;
+        gSaveContext.entranceIndex = currentEntrance;
+        gPlayState->nextEntranceIndex = destination;
+        gPlayState->transitionTrigger = TRANS_TRIGGER_START;
+        gPlayState->transitionType = TRANS_TYPE_FADE_BLACK_FAST;
+        return true;
+    }
     if (pendingSpawnAge < 0) return false;
     if (!Archipelago_IsCurrentSaveFile()) {
         pendingSpawnAge = -1;
@@ -483,6 +768,28 @@ extern "C" const char* Archipelago_EntranceDestinationName(int source) {
 
 extern "C" int Archipelago_EntranceDestination(int source) {
     return Archipelago_IsCurrentSaveFile() ? SohExtreme::EntranceRuntime::routing.Destination(source) : source;
+}
+
+extern "C" void Archipelago_EntranceRecordRoomEntry(void) {
+    SohExtreme::EntranceRuntime::RecordRoomEntry();
+}
+extern "C" int Archipelago_EntranceDungeonReturnMode(void) {
+    return SohExtreme::EntranceRuntime::DungeonReturnMode();
+}
+extern "C" bool Archipelago_EntranceRequestDungeonReturn(void) {
+    return SohExtreme::EntranceRuntime::RequestDungeonReturn();
+}
+extern "C" bool Archipelago_EntranceRestoreDungeonReturn(void) {
+    return SohExtreme::EntranceRuntime::RestoreDungeonReturn();
+}
+extern "C" bool Archipelago_EntranceGameOverDungeonReturn(void) {
+    return SohExtreme::EntranceRuntime::GameOverDungeonReturn();
+}
+extern "C" bool Archipelago_EntranceDungeonReturnInProgress(void) {
+    return Archipelago_IsCurrentSaveFile() && SohExtreme::EntranceRuntime::dungeonReturnArrival;
+}
+extern "C" void Archipelago_EntranceCancelDungeonReturn(void) {
+    SohExtreme::EntranceRuntime::CancelDungeonReturn();
 }
 
 extern "C" bool Archipelago_EntranceSavewarpForAge(int age) {

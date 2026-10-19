@@ -10,6 +10,7 @@
 #include "randomizer_item_tracker.h"
 #include "randomizer_tracker_windows.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "soh/Enhancements/randomizer/dungeon.h"
 #include "soh/Enhancements/randomizer/item.h"
 #include "soh/Enhancements/randomizer/randomizerEnums.h"
@@ -2131,29 +2132,41 @@ void ItemTrackerWindow::Draw() {
     ImGui::PopFont();
 }
 
-static bool SongNoteTrackingActive() {
+static uint16_t SongNoteTrackingMask() {
     if (!IS_RANDO) {
-        return false;
+        return 0;
     }
 
-    if (RAND_GET_OPTION(RSK_SONG_NOTE_SHUFFLE)) {
-        return true;
+    const bool notesEnabled = RAND_GET_OPTION(RSK_SONG_NOTE_SHUFFLE).Get() != 0;
+    if (Archipelago_IsCurrentSaveActive()) {
+        // The slot owns its selected songs, including an explicitly empty set.
+        // Old AP slots without this key used every song when notes were enabled.
+        return static_cast<uint16_t>(CVarGetInteger(CVAR_RANDOMIZER_SETTING("SongNoteSongMask"),
+                                                   notesEnabled ? 0x0FFF : 0)) & 0x0FFF;
     }
 
-    // AP saves can receive note flags before the native setting cache has been
-    // refreshed. If any individual note exists, keep the tracker visible.
+    if (notesEnabled) {
+        return 0x0FFF;
+    }
+
+    // Preserve native/legacy save behavior independently of AP-only CVars.
     for (int i = 0; i < 74; ++i) {
         if (Flags_GetRandomizerInf(static_cast<RandomizerInf>(
                 static_cast<int>(RAND_INF_SONG_NOTE_0) + i))) {
-            return true;
+            return 0x0FFF;
         }
     }
 
-    return false;
+    return 0;
+}
+
+static bool SongNoteTrackingActive() {
+    return SongNoteTrackingMask() != 0;
 }
 
 static void DrawSongNoteProgress() {
-    if (!SongNoteTrackingActive()) {
+    const uint16_t songMask = SongNoteTrackingMask();
+    if (songMask == 0) {
         return;
     }
 
@@ -2181,9 +2194,20 @@ static void DrawSongNoteProgress() {
     ImGui::SeparatorText("Song Notes");
 
     int offset = 0;
+    int songIndex = 0;
     int totalHave = 0;
+    int totalRequired = 0;
 
     for (const auto& song : songs) {
+        const bool selected = (songMask & (1u << songIndex)) != 0;
+        ++songIndex;
+        if (!selected) {
+            // Receipt/save IDs stay in their original 74-note layout. A hidden
+            // row must still advance past its flags before the next song.
+            offset += song.count;
+            continue;
+        }
+        totalRequired += song.count;
         int haveCount = 0;
         for (int i = 0; i < song.count; ++i) {
             if (Flags_GetRandomizerInf(static_cast<RandomizerInf>(
@@ -2214,7 +2238,7 @@ static void DrawSongNoteProgress() {
     }
 
     ImGui::Separator();
-    ImGui::Text("Total Song Notes: %d / 74", totalHave);
+    ImGui::Text("Total Song Notes: %d / %d", totalHave, totalRequired);
 }
 
 void ItemTrackerWindow::DrawElement() {

@@ -375,16 +375,13 @@ void EnIshi_Wait(EnIshi* this, PlayState* play) {
     s32 pad;
     s16 type = this->actor.params & 1;
 
-    // Rock/Boulder Soul keeps the rock physically present, but makes it inert.
-    // Do not offer lifting and do not accept damaging hits until the Soul exists.
+    // Hidden regular rocks are non-solid. Large silver boulders retain their
+    // object collision; neither form accepts hits or lifting before its Soul.
     if (!EnIshi_HasRockSoul()) {
         this->collider.base.acFlags &= ~AC_HIT;
-        if (this->actor.xzDistToPlayer < 600.0f) {
+        if (type == ROCK_LARGE && this->actor.xzDistToPlayer < 400.0f) {
             Collider_UpdateCylinder(&this->actor, &this->collider);
-            CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
-            if (this->actor.xzDistToPlayer < 400.0f) {
-                CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
-            }
+            CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
         }
         return;
     }

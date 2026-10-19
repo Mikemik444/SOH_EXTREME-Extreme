@@ -1,0 +1,74 @@
+SOH-EXTREME 1.8.8 - Validation evidence and limits
+=================================================
+
+The aggregate report is validation/trial_shortcut_188_release_validation.json.
+It binds all 136 replacement source files to final SHA-256 values,
+verifies 726 report/source/test entries and 101
+fixture/runtime entries, and records each current evidence report's hash.
+18 files changed or were added since the immutable 1.8.7 release.
+
+EXECUTED CURRENT TESTS
+---------------------
+trial_medallion_188_ap_validation.json:
+  13 AP test methods with all-six-trial, both-age and inventory subcases;
+  source/check/rewiring parity, disabled settings, receipt/removal cache
+  refresh, legitimate room clears and exact local collection routes.
+entrance_blockers_188_ap_validation.json:
+  Actual AP graph tests of tentacle-side arrivals, current age, enemy Souls,
+  separate north-room Biri clear, timed Water switch approach, search order,
+  and shortcut traversal/pool coverage: 22 test methods on AP 0.6.8.
+jabu_carry_188_validation.json:
+  Retained Ruto transport, local carrier doors and required actions.
+trial_shortcut_188_core_regressions.json:
+  40 retained tests of initial physical access, paired pools, all expansion,
+  age/Swim/item restrictions and restoration of saved maps.
+medallion_trial_native_validation.json:
+  Actual medallion hook and directional shutter functions compiled with
+  ASan/UBSan: 1,152 inventory/option/age/flag/direction cases plus 4
+  registration/unrelated cases. The 48 clear alternatives and 72 switch-side
+  rejections are subsets, not additional cases.
+scene_flag_lifecycle_validation.json:
+  382 native storage, save/restore, room cleanup, shutter, timer, respawn,
+  recorded-action replay and scene-scoping cases. Player-init replay is
+  distinguished from actor-context
+  clearing, and other actor initialization may also reconstruct saved state.
+trial_shortcut_188_full_fill_child.json / adult.json:
+  Official AP 0.6.8 Main.main through complete restrictive fill and
+  pre_output. Each reaches all 4,036 network checks and the goal, with a
+  usable starting physical route and Hyrule Field access. Both final hint
+  payloads are deterministic without changing placements or RNG.
+trial_shortcut_188_apworld_validation.json / version_validation.json:
+  Official ZIP-world loading, resource/byte parity and 1.8.8 version checks.
+trial_shortcut_188_source_build_validation.json:
+  Actual shipped revision-4 helper source preflight under PowerShell7 on
+  Linux. This is source verification, not a Windows compile.
+
+SOURCE REVIEW AND DIAGNOSTIC EVIDENCE
+------------------------------------
+temporary_shutter_188_independent_review.json:
+  Read-only review of all 24 temporary shutter source predicates, explicit
+  current-age region access, indirect dependencies and cache invalidation.
+  Free native predicates were not given guessed item gates without layout
+  evidence. Ruto/object state is distinguished from a bare temporary flag.
+jabu_tentacle_arrival_native_review.json:
+  Six Jabu branch endpoint/native records, room/side/offset/age parity and
+  native/AP blocker conditions. Geometry and actual movement are unverified.
+reported_seed_187_reproduction.json:
+  The uploaded old seed recreated on official AP 0.6.8 with immutable 1.8.7:
+  all 4,036 placements match. This diagnoses the old source; it is not a
+  passing validation of that source's physical route.
+archipelago_068_runtime_provenance.json:
+  Official 0.6.8 archive URL, archive digest and extracted runtime hashes.
+
+LIMITS
+------
+No full Windows game build, native UI run, live AP session or in-game
+playthrough was performed. The uploaded source lacks the root CMake project,
+complete dependencies and extracted ROM collision assets. Extracted native
+functions run with engine I/O isolated. Jabu damage-escape removal is a
+conservative correction to an unsupported route assumption backed by the
+exact reproduced dependency and the user's blocked adult arrival.
+The two full fills validate the corrected logic model for those seeds.
+Existing generated placements and servers require a fresh generation.
+Historical 1.8.7 validation remains under validation/previous_1.8.7 and is
+not relabeled as current execution evidence.

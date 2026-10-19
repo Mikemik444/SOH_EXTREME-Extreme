@@ -115,7 +115,6 @@ static void ObjHamishi_Shake(ObjHamishi* r) { (void)r;++shakeCount; }
 static void ObjHamishi_Break(ObjHamishi* r,PlayState* p) { (void)r;(void)p;++breakCount; }
 static void ObjKibako2_Break(ObjKibako2* c,PlayState* p) { (void)c;(void)p;++breakCount; }
 static void ObjKibako2_Kill(ObjKibako2* c,PlayState* p) { (void)c;(void)p;++killCount; }
-static void func_8003EC50(PlayState* p,int* ctx,int bg) { (void)p;(void)ctx;(void)bg;dynaEnabled=true; }
 static void func_8003EBF8(PlayState* p,int* ctx,int bg) { (void)p;(void)ctx;(void)bg;dynaEnabled=false; }
 static void OnePointCutscene_Init(PlayState* p,int id,int timer,Actor* a,int camera) { (void)p;(void)id;(void)timer;(void)a;(void)camera;++cutsceneCount; }
 static void BgJyaBombchuiwa_Break(BgJyaBombchuiwa* r,PlayState* p) { (void)r;(void)p;++breakCount; }
@@ -184,51 +183,47 @@ int main(void) {
         if(path==2)crate.collider.base.acFlags=AC_HIT;
         ObjKibako_Idle(&crate,&play);
         CHECK(crate.actor.alive && breakCount==0 && dropCount==0 && liftCount==0 && carryCount==0);
-        CHECK(crate.actor.colChkInfo.mass==MASS_IMMOVABLE);
+        CHECK(crate.actor.colChkInfo.mass==MASS_HEAVY);
         CHECK(crate.actor.world.pos.x==0 && crate.actor.world.pos.z==0 && crate.actor.speedXZ==0);
-        CHECK(crate.collider.base.ocFlags1&OC1_TYPE_PLAYER);
-        CHECK(ocCount==path+1 && colliderUpdates==path+1);
-        CHECK(immovable_against_player(&crate.actor,&crate.collider.base));
+        CHECK(acCount==0 && ocCount==0 && colliderUpdates==0);
         crateOwned=true;
         if(path==2)crate.collider.base.acFlags=AC_HIT;
         ObjKibako_Idle(&crate,&play);
         CHECK(crate.actor.colChkInfo.mass==MASS_HEAVY);
         CHECK(path==0?liftCount==1:breakCount==1&&dropCount==1&&!crate.actor.alive);
         reset();
-        // Match the loop's expected cumulative OC count after each reset.
-        ocCount=colliderUpdates=path+1;
     }
-    ++cases;puts("PASS small crate remains solid and unmovable through carry water and weapon attempts, then unlocks");
+    ++cases;puts("PASS hidden small crate has no AC or OC, carry, water-break or weapon-break interaction; soul unlocks normal actions");
     reset();
-    ObjKibako small={.actor=actor()};small.actor.colChkInfo.mass=MASS_IMMOVABLE;
+    ObjKibako small={.actor=actor()};small.actor.colChkInfo.mass=MASS_HEAVY;
     crateOwned=true;ObjKibako_Idle(&small,&play);
     CHECK(carryCount==1 && acCount==1 && ocCount==1 && small.actor.colChkInfo.mass==MASS_HEAVY);
     ++cases;puts("PASS normal small crate carry and collision resume without reload");
     reset();
     ObjKibako2 large={.dyna={.actor=actor(),.bgId=4}};large.collider.base.acFlags=AC_HIT;
-    large.dyna.actor.home.rot.z=1;explosion=true;dynaEnabled=false;
+    large.dyna.actor.home.rot.z=1;explosion=true;dynaEnabled=true;
     ObjKibako2_Idle(&large,&play);
     CHECK(large.dyna.actor.alive && dynaEnabled && breakCount==0 && killCount==0);
-    CHECK(large.collider.base.acFlags==0 && large.dyna.actor.home.rot.z==0 && acCount==1);
+    CHECK(large.collider.base.acFlags==0 && large.dyna.actor.home.rot.z==0 && acCount==0);
     crateOwned=true;explosion=false;ObjKibako2_Idle(&large,&play);
     CHECK(breakCount==0 && dynaEnabled && large.dyna.actor.draw!=NULL);
     large.dyna.actor.home.rot.z=1;ObjKibako2_Idle(&large,&play);
     CHECK(breakCount==1 && !dynaEnabled && large.dyna.actor.draw==NULL && large.actionFunc==ObjKibako2_Kill);
-    ++cases;puts("PASS large crate keeps dyna collision and discards locked roll hits until a new valid break");
+    ++cases;puts("PASS hidden large crate does not mutate dyna enable flags or accept attack/roll hits; shared query gate owns collision");
     reset();
     for (int type=ROCK_SMALL;type<=ROCK_LARGE;++type) {
         EnIshi rock={.actor=actor()};rock.actor.params=type;rock.actor.colChkInfo.mass=@EN_ISHI_MASS@;
         rock.actor.parent=&rock.actor;rock.collider.base.acFlags=AC_HIT;rock.collider.info.acHitInfo=&hit;
         EnIshi_Wait(&rock,&play);
         CHECK(rock.actor.alive && liftCount==0 && dropCount==0 && breakCount==0 && carryCount==0);
-        CHECK(acCount==type+1 && ocCount==type+1 && rock.collider.base.acFlags==0);
-        CHECK(immovable_against_player(&rock.actor,&rock.collider.base));
+        CHECK(acCount==0 && ocCount==type && rock.collider.base.acFlags==0);
+        if(type==ROCK_LARGE) CHECK(immovable_against_player(&rock.actor,&rock.collider.base));
     }
     rockOwned=true;EnIshi rock={.actor=actor()};rock.collider.info.acHitInfo=&hit;
     EnIshi_Wait(&rock,&play);CHECK(carryCount==1);
     rock.collider.base.acFlags=AC_HIT;EnIshi_Wait(&rock,&play);
     CHECK(breakCount==1 && dropCount==1 && !rock.actor.alive);
-    ++cases;puts("PASS small and silver rocks retain solid OC with no carry or damage until Rock Soul");
+    ++cases;puts("PASS small rocks have no AC or OC while silver boulders retain solid OC; neither can be carried or broken without Soul");
     reset();
     ObjBombiwa bomb={.actor=actor()};bomb.actor.colChkInfo.mass=@BOMBIWA_MASS@;
     bomb.collider.base.acFlags=AC_HIT;bomb.collider.info.acHitInfo=&hit;explosion=true;

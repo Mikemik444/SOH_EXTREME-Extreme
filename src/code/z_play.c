@@ -624,6 +624,7 @@ void Play_Init(GameState* thisx) {
     Actor_InitPlayerHorse(play, GET_PLAYER(play));
     AnimationContext_Update(play, &play->animationCtx);
     gSaveContext.respawnFlag = 0;
+    Archipelago_EntranceRecordRoomEntry();
 
     // #region SOH [Stats]
     if (gSaveContext.ship.stats.sceneNum != gPlayState->sceneNum) {
@@ -2119,7 +2120,11 @@ void Play_LoadToLastEntrance(PlayState* play) {
     gSaveContext.respawnFlag = -1;
     play->transitionTrigger = TRANS_TRIGGER_START;
 
-    if ((play->sceneNum == SCENE_GANONS_TOWER_COLLAPSE_INTERIOR) ||
+    if (Archipelago_EntranceDungeonReturnInProgress()) {
+        // This explicit dungeon/history destination has already been resolved.
+        // The final-battle escape fallback must not replace it or grant an item.
+        play->nextEntranceIndex = gSaveContext.entranceIndex;
+    } else if ((play->sceneNum == SCENE_GANONS_TOWER_COLLAPSE_INTERIOR) ||
         (play->sceneNum == SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR) ||
         (play->sceneNum == SCENE_INSIDE_GANONS_CASTLE_COLLAPSE) || (play->sceneNum == SCENE_GANON_BOSS)) {
         play->nextEntranceIndex = ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_0;

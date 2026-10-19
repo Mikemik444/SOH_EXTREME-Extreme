@@ -3,6 +3,7 @@
 #include "overlays/effects/ovl_Effect_Ss_HitMark/z_eff_ss_hitmark.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include <assert.h>
+#include "soh/Enhancements/randomizer/SoulActorAccess.h"
 
 typedef s32 (*ColChkResetFunc)(PlayState*, Collider*);
 typedef void (*ColChkBloodFunc)(PlayState*, Collider*, Vec3f*);
@@ -1184,7 +1185,8 @@ s32 CollisionCheck_SetAT(PlayState* play, CollisionCheckContext* colChkCtx, Coll
     }
     assert(collider->shape <= COLSHAPE_QUAD);
     sATResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
+    if (!MegaSoul_CanInteractWithActor(collider->actor) ||
+        (collider->actor != NULL && collider->actor->update == NULL)) {
         return -1;
     }
     if (colChkCtx->colATCount >= COLLISION_CHECK_AT_MAX) {
@@ -1217,7 +1219,8 @@ s32 CollisionCheck_SetAT_SAC(PlayState* play, CollisionCheckContext* colChkCtx, 
     }
 
     sATResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
+    if (!MegaSoul_CanInteractWithActor(collider->actor) ||
+        (collider->actor != NULL && collider->actor->update == NULL)) {
         return -1;
     }
     if (colChkCtx->sacFlags & 1) {
@@ -1262,7 +1265,8 @@ s32 CollisionCheck_SetAC(PlayState* play, CollisionCheckContext* colChkCtx, Coll
     }
     assert(collider->shape <= COLSHAPE_QUAD);
     sACResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
+    if (!MegaSoul_CanInteractWithActor(collider->actor) ||
+        (collider->actor != NULL && collider->actor->update == NULL)) {
         return -1;
     }
     if (colChkCtx->colACCount >= COLLISION_CHECK_AC_MAX) {
@@ -1295,7 +1299,8 @@ s32 CollisionCheck_SetAC_SAC(PlayState* play, CollisionCheckContext* colChkCtx, 
     }
 
     sACResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
+    if (!MegaSoul_CanInteractWithActor(collider->actor) ||
+        (collider->actor != NULL && collider->actor->update == NULL)) {
         return -1;
     }
     if (colChkCtx->sacFlags & 1) {
@@ -1342,7 +1347,8 @@ s32 CollisionCheck_SetOC(PlayState* play, CollisionCheckContext* colChkCtx, Coll
     assert(collider->shape <= COLSHAPE_QUAD);
 
     sOCResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
+    if (MegaSoul_ShouldDisableActorCollision(collider->actor) ||
+        (collider->actor != NULL && collider->actor->update == NULL)) {
         return -1;
     }
     if (colChkCtx->colOCCount >= COLLISION_CHECK_OC_MAX) {
@@ -1375,7 +1381,8 @@ s32 CollisionCheck_SetOC_SAC(PlayState* play, CollisionCheckContext* colChkCtx, 
 
     assert(collider->shape <= COLSHAPE_QUAD);
     sOCResetFuncs[collider->shape](play, collider);
-    if (collider->actor != NULL && collider->actor->update == NULL) {
+    if (MegaSoul_ShouldDisableActorCollision(collider->actor) ||
+        (collider->actor != NULL && collider->actor->update == NULL)) {
         return -1;
     }
     if (colChkCtx->sacFlags & 1) {

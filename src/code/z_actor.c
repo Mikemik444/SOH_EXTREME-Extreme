@@ -1971,7 +1971,7 @@ u32 Attention_ActorIsInRange(Actor* actor, f32 arg1) {
 }
 
 s32 Attention_ShouldReleaseLockOn(Actor* actor, Player* player, s32 flag) {
-    if ((actor->update == NULL) || !(actor->flags & ACTOR_FLAG_ATTENTION_ENABLED)) {
+    if (!MegaSoul_CanInteractWithActor(actor) || (actor->update == NULL) || !(actor->flags & ACTOR_FLAG_ATTENTION_ENABLED)) {
         return true;
     }
 
@@ -1993,6 +1993,11 @@ s32 Attention_ShouldReleaseLockOn(Actor* actor, Player* player, s32 flag) {
 }
 
 u32 Actor_ProcessTalkRequest(Actor* actor, PlayState* play) {
+    if (!MegaSoul_CanInteractWithActor(actor)) {
+        actor->flags &= ~ACTOR_FLAG_TALK;
+        return false;
+    }
+
     if (actor->flags & ACTOR_FLAG_TALK) {
         actor->flags &= ~ACTOR_FLAG_TALK;
         return true;
@@ -2003,6 +2008,8 @@ u32 Actor_ProcessTalkRequest(Actor* actor, PlayState* play) {
 
 s32 Actor_OfferTalkExchange(Actor* actor, PlayState* play, f32 arg2, f32 arg3, u32 exchangeItemId) {
     Player* player = GET_PLAYER(play);
+
+    if (!MegaSoul_CanInteractWithActor(actor)) return false;
 
     // This is convoluted but it seems like it must be a single if statement to match
     if ((player->actor.flags & ACTOR_FLAG_TALK) || ((exchangeItemId != EXCH_ITEM_NONE) && Player_InCsMode(play)) ||
@@ -2118,6 +2125,8 @@ s32 GiveItemEntryWithoutActor(PlayState* play, GetItemEntry getItemEntry) {
 s32 GiveItemEntryFromActor(Actor* actor, PlayState* play, GetItemEntry getItemEntry, f32 xzRange, f32 yRange) {
     Player* player = GET_PLAYER(play);
 
+    if (!MegaSoul_CanInteractWithActor(actor)) return false;
+
     if (!(player->stateFlags1 &
           (PLAYER_STATE1_DEAD | PLAYER_STATE1_CHARGING_SPIN_ATTACK | PLAYER_STATE1_HANGING_OFF_LEDGE |
            PLAYER_STATE1_CLIMBING_LEDGE | PLAYER_STATE1_JUMPING | PLAYER_STATE1_FREEFALL | PLAYER_STATE1_FIRST_PERSON |
@@ -2164,6 +2173,8 @@ s32 GiveItemEntryFromActorWithFixedRange(Actor* actor, PlayState* play, GetItemE
 // If you're doing something for randomizer, you're probably looking for GiveItemEntryFromActor
 s32 Actor_OfferGetItem(Actor* actor, PlayState* play, s32 getItemId, f32 xzRange, f32 yRange) {
     Player* player = GET_PLAYER(play);
+
+    if (!MegaSoul_CanInteractWithActor(actor)) return false;
 
     if (!(player->stateFlags1 &
           (PLAYER_STATE1_DEAD | PLAYER_STATE1_CHARGING_SPIN_ATTACK | PLAYER_STATE1_HANGING_OFF_LEDGE |
@@ -3753,7 +3764,7 @@ void Attention_FindActorInCategory(PlayState* play, ActorContext* actorCtx, Play
     sp84 = player->focusActor;
 
     while (actor != NULL) {
-        if ((actor->update != NULL) && ((Player*)actor != player) &&
+        if (MegaSoul_CanInteractWithActor(actor) && (actor->update != NULL) && ((Player*)actor != player) &&
             CHECK_FLAG_ALL(actor->flags, ACTOR_FLAG_ATTENTION_ENABLED)) {
 
             // This block below is for determining the closest actor to player in determining the volume
@@ -4490,6 +4501,12 @@ s32 Npc_UpdateTalking(PlayState* play, Actor* actor, s16* talkState, f32 interac
                       NpcUpdateTalkStateFunc updateTalkState) {
     s16 x;
     s16 y;
+
+    if (!MegaSoul_CanInteractWithActor(actor)) {
+        actor->flags &= ~ACTOR_FLAG_TALK;
+        *talkState = NPC_TALK_STATE_IDLE;
+        return false;
+    }
 
     if (Actor_ProcessTalkRequest(actor, play)) {
         *talkState = NPC_TALK_STATE_TALKING;

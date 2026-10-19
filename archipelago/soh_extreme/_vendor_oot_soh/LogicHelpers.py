@@ -172,10 +172,8 @@ def can_reach_zr_raised_ledge(bundle) -> Rule:
 
 
 def can_interact_path_blocker(bundle, language: str) -> Rule:
-    """Normal language gate for the exact invisible, active path-blocker roles."""
-    mode = getattr(bundle[1].options, "shuffle_speak", None)
-    return (Has("Speak" if mode.value == 1 else "Speak " + language)
-            if mode is not None and mode.value else True_())
+    """Compatibility helper: blocking collision never grants an NPC interaction."""
+    return can_interact_npc(bundle, language)
 
 
 def can_interact_npc(bundle, language: str) -> Rule:
@@ -550,9 +548,9 @@ def can_play_song(song: StrEnum, bundle: tuple[Regions, "SohWorld"]) -> Rule:
     # note group when Individual Notes is enabled. The instrument and physical
     # buttons remain independent prerequisites even after that song is unlocked.
     world = bundle[1]
-    note_mode = getattr(world.options, "song_note_shuffle", None)
+    from .SongShuffle import individual_notes_enabled
     learned = has_item(song, bundle)
-    if note_mode is not None and note_mode.value:
+    if individual_notes_enabled(world, song):
         # Do not let a stale or manually supplied full-song event bypass a
         # missing note. Completion, instrument, and buttons are independent.
         learned &= SongNotesComplete(str(song))

@@ -71,7 +71,8 @@ void RegionTable_Init_LostWoods() {
         ENTRANCE(RR_GC_WOODS_WARP,            true),
         ENTRANCE(RR_LW_BRIDGE,                (logic->IsAdult && (logic->BeanPlanted(LOGIC_PLANT_LOST_WOODS_BRIDGE_BEAN) || (ctx->GetTrickOption(RT_LW_BRIDGE) && logic->CanJumpslash()))) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood() || logic->CanUse(RG_LONGSHOT)),
         ENTRANCE(RR_ZR_FROM_SHORTCUT,         logic->HasItem(RG_SILVER_SCALE) || logic->CanUse(RG_IRON_BOOTS) || (ctx->GetTrickOption(RT_LOST_WOOD_NAVI_DIVE) && logic->IsChild && logic->HasItem(RG_BRONZE_SCALE) && logic->CanJumpslash())),
-        ENTRANCE(RR_LW_BEYOND_MIDO,           logic->IsChild || logic->CanUse(RG_SARIAS_SONG) || ctx->GetTrickOption(RT_LW_MIDO_BACKFLIP)),
+        // Adult Mido still blocks while hidden; playing his song must lead to a real Kokiri conversation.
+        ENTRANCE(RR_LW_BEYOND_MIDO,           logic->IsChild || (logic->CanUse(RG_SARIAS_SONG) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_KOKIRI)) || ctx->GetTrickOption(RT_LW_MIDO_BACKFLIP)),
         ENTRANCE(RR_LW_NEAR_SHORTCUTS_GROTTO, AnyAgeTime([]{return logic->CanBreakRocks();})),
     });   
     
@@ -116,7 +117,7 @@ void RegionTable_Init_LostWoods() {
     }, {
         //Exits
         ENTRANCE(RR_LW_FOREST_EXIT,   true),
-        ENTRANCE(RR_THE_LOST_WOODS,   logic->IsChild || logic->CanUse(RG_SARIAS_SONG)),
+        ENTRANCE(RR_THE_LOST_WOODS,   logic->IsChild || (logic->CanUse(RG_SARIAS_SONG) && logic->CanSpeakToPathBlockingNpc(RG_SPEAK_KOKIRI))),
         ENTRANCE(RR_SFM_ENTRYWAY,     true),
         ENTRANCE(RR_DEKU_THEATER,     !ctx->GetOption(RSK_SHUFFLE_SHOVEL) || logic->HasItem(RG_SHOVEL)),
         ENTRANCE(RR_LW_SCRUBS_GROTTO, AnyAgeTime([]{return logic->CanBreakRocks();})),

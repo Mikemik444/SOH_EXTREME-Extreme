@@ -1,0 +1,1300 @@
+{
+  "status": "passed",
+  "cases": 70,
+  "worlds": [
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ]
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Speak Kokiri"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Speak Kokiri"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 0,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Speak"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Speak"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 1,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "sarias_song"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 0,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 0,
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Speak Kokiri"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "Lost Woods -> LW Beyond Mido",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [],
+      "expected": true,
+      "actual": true
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Speak Kokiri"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "adult",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": false,
+      "actual": false
+    },
+    {
+      "shuffle_npc_soul": 1,
+      "shuffle_speak": 2,
+      "song_note_shuffle": 1,
+      "song_note_songs": [
+        "all"
+      ],
+      "tricks_in_logic": [
+        "LW Mido Backflip"
+      ],
+      "entrance": "LW Beyond Mido -> Lost Woods",
+      "age": "child",
+      "missing": [
+        "NPC Soul",
+        "Speak Kokiri",
+        "Progressive Saria's Song",
+        "Song Note 13",
+        "Song Note 14",
+        "Song Note 15",
+        "Song Note 16",
+        "Song Note 17",
+        "Song Note 18",
+        "Saria's Song",
+        "Progressive Ocarina"
+      ],
+      "expected": true,
+      "actual": true
+    }
+  ],
+  "runtime_version": "0.6.8",
+  "source_sha256": {
+    "archipelago/soh_extreme/__init__.py": "3710795c8155f3d858a909d8c8859e8a5bb4c05f32699cfa1746994df42c851c",
+    "archipelago/soh_extreme/NpcSpeech.py": "f7b2ae3be88e3faa9155020be66dff987b5ea27f6aba84ceaa2a297508c5104a",
+    "archipelago/soh_extreme/NpcSpeechCatalog.json": "19804e7b6d2b00f7c01f0364e89c1c93753c8c7da02bb9dbb5454fc58b8898c7",
+    "archipelago/soh_extreme/NativeLogic.py": "4236768cebce5c2733de4bbd78d9144c5fe06ba4413f92d5b3ef8931e50bb4d1",
+    "archipelago/soh_extreme/NativeLogicAlternatives.py": "5ed0727d181ed4ca69d2341429e77bebabd75481c1a2b111cc3e41e5d028bdea",
+    "archipelago/soh_extreme/NativeAbilityAudit.py": "da749431e951bea9e525120f4dcaf137d1d348f1531ae324ae4df3e72074ca1b",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "2ebd7532c3ea6e749830ea6c6eb2c225c6edd3d03ae9018df472fbff23180ec9",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py": "a6e55599384c500b3855953ce00b34fa49e7f3a6a5ff3ac7f123082a1a83dfbc",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py": "4aabd1781a25ee11c508fed54b6a1c0015729962873db07b65a7813ddb015aa6",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py": "aba25472a8b89bf5d5ecc692cb7a4ebe3eece3da81af1ddf5f1de7902a83dc97",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py": "d27d86750b4c20545d673e1c0d93ae3079beb87acab98b4c2b0f2f0d90045c90",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py": "eb3a6d78b8ddbe16ec545f6b66f0683b686571fffd193d6b7c6721e0057c67fb",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py": "5ad5ad681d3c3c4ff3be94ac50d387b3c213b9b8edb851c55d6c1dc9fe89e5ef",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lon_lon_ranch.py": "843a4a344002ef2c264a23e5354d82722dbf78e7c49b4b50a8dfaf355b92414b",
+    "soh/Enhancements/randomizer/logic.h": "d437e9ba99785fd5e61c5013b0eeef6df4d6384f7ae464e670234709aaf56cfd",
+    "soh/Enhancements/randomizer/logic.cpp": "f991fa69cb82afee069dc105047084fb957f80f154a8da246ec4276a647826c6",
+    "soh/Enhancements/randomizer/location_access.cpp": "c88b45b421f025de43db4867f93dfac5c7b5b87c98422b12fc814be7d8129826",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "126b60bc1fccdb2675d4399ea1ba47b092a551d6611fdf64e03a33afb256f52c",
+    "soh/Enhancements/randomizer/location_access/overworld/castle_grounds.cpp": "e220cf8de4961e30f17b15ffdf0c61fad94ab5ded69a721db6fc16134e9f915e",
+    "soh/Enhancements/randomizer/location_access/overworld/gerudo_fortress.cpp": "c9ec697fde8bb181bbf61c9f6b44661c5dbd4c50b09885480b0fbe0d4f6ed76a",
+    "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp": "58aac6e1ac2448f0aae98af6f1bfb6c0afd583372513ba0bd0650135c89224d2",
+    "soh/Enhancements/randomizer/location_access/overworld/kokiri_forest.cpp": "96046feda6c2b7b5c36a429fc093a60b3e5f172cd31365490dff535bb36809c0",
+    "soh/Enhancements/randomizer/location_access/overworld/lost_woods.cpp": "0424c329b007497fe79a37592712fece17613468ad2281198b9a3709da0ca07e",
+    "soh/Enhancements/randomizer/location_access/overworld/zoras_domain.cpp": "f6dd18185025c6bcf837d429a1e9b8af09a523c94402c89a2a2223a6f55987aa",
+    "soh/Enhancements/randomizer/location_access/overworld/lon_lon_ranch.cpp": "4b5aa70fb213a85a3885208e022116d613ee8d4d064aa5478a514c3797f4fafb",
+    "src/overlays/actors/ovl_En_Md/z_en_md.c": "ec63b03ede19b69de8a8bd7826441deffc546abdaf4f1eb74e507a5e70e5c40d",
+    "src/overlays/actors/ovl_En_Ta/z_en_ta.c": "f521465ac9d6b3288263e046a1e8f562587f7f3cc1bb8b735e1fc1560cc925c8",
+    "src/overlays/actors/ovl_Bg_Relay_Objects/z_bg_relay_objects.c": "5c3ebed4ca69995cca914dabce9d35a16b7bc4527fa75c4e4ec18255ca1eeaaf",
+    "soh/Network/Archipelago/NpcSpeechScenes.inc": "96c9c18245fbcc07e3e22ab683b111167d9fe00216d1f025148fb9c8f01837a9",
+    "soh/Network/Archipelago/NpcSpeechAreas.inc": "3cef63696b1208b9e9b20bdd540f83c012641d07abcd65ed83c4fb8bb91482ef",
+    "archipelago/soh_extreme/SongNotes.py": "533836d57a4c241f5217d8245aa81437db515bf85dff1e94f0cafcb1fe0daac5",
+    "archipelago/soh_extreme/_vendor_oot_soh/SongShuffle.py": "f313382c9a0e3378db31359203e63fccdd1c1277852fd1b5d860e88c385138cf",
+    "archipelago/soh_extreme/Options.py": "23922e35d731ae63fa40c1b6b15b17c2f9f3ec542b4de4c5baf3626d1669a7de"
+  },
+  "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5",
+  "loaded_world_source": "/workspace/scratch/8fddab5b8169/ap-runtime-068/worlds/soh_extreme/__init__.py",
+  "probe_sha256": "c4b947158d0ac4a0b0be870c7f36f5051e4aa9e130574d660380947ab11ea63e",
+  "shared_probe_sha256": "1d5fc13cbe5777a0ee8c8a89cacef9829793f6e78e231a65f6041c66a8c467e0",
+  "elapsed_seconds": 40.137,
+  "scope": "Actual AP source worlds through set_rules. Both Mido passage directions, both ages, all speech modes, Soul disabled control, selected/all progressive song modes, instrument requirement, and enabled forward backflip. No full fill, native collision simulation or gameplay."
+}

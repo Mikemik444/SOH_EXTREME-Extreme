@@ -12,8 +12,8 @@ void RegionTable_Init_ZorasDomain() {
         EVENT_ACCESS(LOGIC_STICK_ACCESS,         logic->IsChild && logic->CanBreakPots()),
         EVENT_ACCESS(LOGIC_FISH_ACCESS,          logic->IsChild),
         EVENT_ACCESS(LOGIC_KING_ZORA_THAWED,     logic->IsAdult && logic->BlueFire()),
-        // King Zora remains interactable while hidden, but the letter,
-        // child access and Zora language are still required to empty the bottle.
+        // King Zora must be present to accept the letter. Walking through his
+        // empty position does not perform the exchange or empty its bottle.
         EVENT_ACCESS(LOGIC_DELIVER_RUTOS_LETTER, logic->CanUse(RG_RUTOS_LETTER) && logic->IsChild && ctx->GetOption(RSK_ZORAS_FOUNTAIN).IsNot(RO_ZF_OPEN) &&
                                                logic->CanSpeakToPathBlockingNpc(RG_SPEAK_ZORA)),
     }, {

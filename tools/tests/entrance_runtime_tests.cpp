@@ -9,6 +9,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "../../soh/Network/Archipelago/ArchipelagoC.h"
 #include "captured_entrance_capacity.h"
 #include "captured_overworld_endpoints.h"
 #include "../../soh/Network/Archipelago/SceneTransitionChecks.h"
@@ -24,7 +25,7 @@ struct ActorEntry { Vec3s pos, rot; s16 params = 0; };
 struct Player { Actor actor; } player;
 struct PlayState {
     struct { bool running = true; } state;
-    int sceneNum = 52;
+    int sceneNum = 52, numRooms = 64;
     struct { int state = 0; } gameOverCtx;
     struct { struct { int num = 0; } curRoom; } roomCtx;
     ActorEntry* linkActorEntry = nullptr;
@@ -32,7 +33,7 @@ struct PlayState {
 } play, *gPlayState = &play;
 struct SaveContext {
     int health = 48, gameMode = 0, respawnFlag = 0, cutsceneIndex = 0, nextCutsceneIndex = 0, entranceIndex = 187;
-    int cutsceneTrigger = 0;
+    int cutsceneTrigger = 0, fileNum = 0;
     struct { int tempSwchFlags = 0, tempCollectFlags = 0, entranceIndex = 0, data = 0; } respawn[4];
 } gSaveContext;
 enum {
@@ -74,6 +75,8 @@ EntranceOverride overrides[ENTRANCE_OVERRIDES_MAX_COUNT]{};
 EntranceOverride* Randomizer_GetEntranceOverrides() { return overrides; }
 int entranceInitializations = 0;
 std::map<s16, s16> entranceOverrideTable;
+s16 Entrance_GetDungeonSpawn(s16) { return -1; }
+uint8_t Entrance_IsBossScene(s16) { return 0; }
 void Entrance_Init() {
     ++entranceInitializations;
     entranceOverrideTable.clear();

@@ -1,0 +1,303 @@
+{
+  "status": "passed",
+  "version": "1.8.8",
+  "utc": "2026-10-18T22:00:34.928757+00:00",
+  "layout": "complete_source_files",
+  "complete_replacement_source_files": 136,
+  "changed_or_added_since_1.8.7": 18,
+  "source_sha256": {
+    "archipelago/archipelago.json": "a00c573d0cd177e192c369562f09dbbd94af63e74db24453b483715167c0a0d7",
+    "archipelago/soh_extreme.apworld": "64eedc3812cc436cb4f8d6c0fdc62641551a136ca6d3ac7d7d13ff2be829486f",
+    "archipelago/soh_extreme/CheckDescriptions.json": "962c67c679bfe44f7cb8b3204b9ea614f8ea2789807d5e695e2c768b362b2769",
+    "archipelago/soh_extreme/CheckDescriptions.py": "e985562d01393f3207c15e8ef41899b0539015ceebcd701358267d32dcd38b20",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "e0b3d3d95884db53dbe31cc0cf4f63c3071d4d48ddac3c7b81bd611878ebb23d",
+    "archipelago/soh_extreme/EnemyDropLocations.py": "c338d49208b732fbf366c305cb0dd1a84a1283f5708edb54a62cc10dbd9c3cf2",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "13e6cfdeeac346be56fee81e53016c78dea62115091cd7a85bdc7ce4d16174ea",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "878d74429685a6e3cbf5263c1a93e35bade796121a648a7e3fbbe8f6edc3779e",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3",
+    "archipelago/soh_extreme/EntranceOptions.py": "cccd2b897ccbab29a0e5270993c99ca7ee7c66e3859f7f6e436da7603abd4a45",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "f4135ea70f74c90b158e10da2c713733ce949d99917ab30f0c6b2e5ee32decbe",
+    "archipelago/soh_extreme/EntranceSafety.py": "2f8812b1ad2ae1b070e70e55e146e7e7fe188c92d6a883e41d807edea54f5608",
+    "archipelago/soh_extreme/HintAreas.py": "5652233d3cadf3549a01d05598b98317d3501045012128869b6ef96ef8955925",
+    "archipelago/soh_extreme/HintBridge.py": "e00318acd27bb0d1662caa02ef6acbdc248bcc84c30687f4d6129620feca71e1",
+    "archipelago/soh_extreme/NativeAbilityAudit.py": "da749431e951bea9e525120f4dcaf137d1d348f1531ae324ae4df3e72074ca1b",
+    "archipelago/soh_extreme/NativeLogic.py": "90a999af8612f0168b298ec0025ea08a55a075e852fbd757a7100bdc555e1c2f",
+    "archipelago/soh_extreme/NativeLogicAlternatives.py": "bb807f8393cbab971fe01049fbd1c4fab0a5a877eadf9994798a36b30f966784",
+    "archipelago/soh_extreme/NpcSpeech.py": "396c07d2529772f7556ac8129d9dfcc140bc119a4c6fadab076105747e9f75c7",
+    "archipelago/soh_extreme/NpcSpeechCatalog.json": "19804e7b6d2b00f7c01f0364e89c1c93753c8c7da02bb9dbb5454fc58b8898c7",
+    "archipelago/soh_extreme/Options.py": "bd645344d5ba66d65da4cbfc858a992896d32a29f5cfdf8691df80512bbff599",
+    "archipelago/soh_extreme/SceneTransitions.py": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "archipelago/soh_extreme/TrackerClient.py": "9000860b0ae6aada834d40721ec178ff75257159e7c395252169094120796e58",
+    "archipelago/soh_extreme/TrackerMirror.py": "c2642adcc69b1633f0b27ff1f4694debc5b1d5e2baf4169984b6414b2d3bdee1",
+    "archipelago/soh_extreme/__init__.py": "6d40a36f703c595fe1567f8f483278cb2aeaff786285bdda412310dabf971db2",
+    "archipelago/soh_extreme/_vendor_oot_soh/Hints.py": "5f82f782215fe889d5d720a39621f4113abce83604ed84815f3485e628d33104",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "4af0e23a8428cf7193ccd913524cbe8dd0ada4f1b012975ce0146dd1b15fc050",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py": "b51f2cc06d0dc628814465f1010f86c013c197a8d93ed1031642ac49f97db673",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py": "eed3091f549b1cb7be027e5a970333ede71352f58c744d4da2dcb7e70c637c0e",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py": "4aabd1781a25ee11c508fed54b6a1c0015729962873db07b65a7813ddb015aa6",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py": "46b43dbb0f590aa9625b4dce2d86d4dda822fd5713833f98c205fb652e276729",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py": "5ad5ad681d3c3c4ff3be94ac50d387b3c213b9b8edb851c55d6c1dc9fe89e5ef",
+    "archipelago/soh_extreme/archipelago.json": "a00c573d0cd177e192c369562f09dbbd94af63e74db24453b483715167c0a0d7",
+    "soh/Enhancements/QoL/BetterSaveMenu.cpp": "eb4ae4bcc2ce1bdea4478b652d7e9c8ebdeb515798295692ac24101f95eb5842",
+    "soh/Enhancements/custom-message/CustomMessageEncoding.h": "233c17b38525554de757cb977387a03ebd9c7629ac0026033ad4fe09bb37e783",
+    "soh/Enhancements/custom-message/CustomMessageFormatter.h": "0b52df4744f91a722fa9fbcec6ffdc9f8f05074ca61375f6593722ca11594638",
+    "soh/Enhancements/custom-message/CustomMessageInterfaceAddon.h": "1fd9041cebc57e1ce477f5a5a6b116dda722723cf8799fa0ce5c0a5ee49dc8e0",
+    "soh/Enhancements/custom-message/CustomMessageManager.cpp": "810ca285b1b9bc29af97c21b249d3949923ce784db33658c69d610eec86a4b14",
+    "soh/Enhancements/custom-message/CustomMessageManager.h": "465a71d411226072d0c6e4d0006806c5d16d2eabee2937ec3fac37e671282acf",
+    "soh/Enhancements/custom-message/CustomMessagePageBuffer.h": "2ec70c546ce168de4312cf958ff0ed251facfc61ced16af4b545f83a4ce59e40",
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "d1d3af82330dbbe5e130916c820d80e92a35134a29c3097acbb415efe67ffd40",
+    "soh/Enhancements/randomizer/Messages/EntranceHints.cpp": "e2e86b74dddd511aa3cc2eeb93426357e52e2a51a519222981a18f8e90fb78e0",
+    "soh/Enhancements/randomizer/Messages/GossipStoneHints.cpp": "63b13c56a64019da7c274b531997da477b123e005f9ad0c594b119980eb11e80",
+    "soh/Enhancements/randomizer/Messages/MerchantMessages.cpp": "0fee23c02366ae5be72dd95ed576c743487ba5fdf56ebb5e4d62d3c7ea30c328",
+    "soh/Enhancements/randomizer/Messages/StaticHints.cpp": "3d59289c5d85df8bea4e6f5b1376df3b0c33ec94d04e235c861e0de386979e06",
+    "soh/Enhancements/randomizer/ShuffleCrates.cpp": "6e6c06da4c997978cb7977ac691ec7c389201882290c4f89fbe4a3da6a024889",
+    "soh/Enhancements/randomizer/ShuffleRocks.cpp": "a5df6c0b7c90261ca901aa1afc01cd8c4b8acb3a36a40775e81ba1f508438764",
+    "soh/Enhancements/randomizer/SoulActorAccess.h": "93f8b6022cfa8e1385dd08498214cc3a149956911c6b88d0bde072f37ee39646",
+    "soh/Enhancements/randomizer/hint.cpp": "76e5d1163882cf4ec239e67854d68d9f6543173fc274deb24200c78824db4ddb",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/randomizer/location_access.cpp": "05cb692901e4d82e0916e803bce1a8ac8a35df22be25f726c929b57044ae335a",
+    "soh/Enhancements/randomizer/location_access/dungeons/ganons_castle.cpp": "60c643f13eeb6f84505c847bd14a7d3488b74ea709c80bfef17878a16abcb516",
+    "soh/Enhancements/randomizer/location_access/dungeons/jabujabus_belly.cpp": "29a5a6ee5e75b50306322a82074461bc2a4fe6c16b509c82a1b15d5ccd1f1ff4",
+    "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp": "f0d193ccbce88eb568b71df6d8fd0977e55760a72429b923679c0881771115cd",
+    "soh/Enhancements/randomizer/location_access/dungeons/water_temple.cpp": "54d302676cc88a99c7cbc735499576a1c077552371dc037467aec050cb1850be",
+    "soh/Enhancements/randomizer/location_access/overworld/castle_grounds.cpp": "e220cf8de4961e30f17b15ffdf0c61fad94ab5ded69a721db6fc16134e9f915e",
+    "soh/Enhancements/randomizer/location_access/overworld/gerudo_fortress.cpp": "c9ec697fde8bb181bbf61c9f6b44661c5dbd4c50b09885480b0fbe0d4f6ed76a",
+    "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp": "abddd754a411752d760c02e65d3bae5feb97f3896362cf91ae58bc78bd40bdb2",
+    "soh/Enhancements/randomizer/location_access/overworld/kokiri_forest.cpp": "96046feda6c2b7b5c36a429fc093a60b3e5f172cd31365490dff535bb36809c0",
+    "soh/Enhancements/randomizer/location_access/overworld/zoras_domain.cpp": "ad0b2005d1c332798d032830d8c7e796938278f1a9e4335f1dcf52b54176249d",
+    "soh/Enhancements/randomizer/logic.cpp": "b1f000b51516e2a0b2d19e567820f1035f3a003e20fe78b1d7113659e8ef6b76",
+    "soh/Enhancements/randomizer/logic.h": "d437e9ba99785fd5e61c5013b0eeef6df4d6384f7ae464e670234709aaf56cfd",
+    "soh/Enhancements/randomizer/option.cpp": "405dfa91239fd24ad3933a44d39c488c3b4de9d8ef34dcbd90288629759d6cb6",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "0c8645cd9389007f41a6be202b4f53054b6d2e0ec9fd4e6a208469d4bee20e63",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "2526d38fee5eef4d9fbcd4a62297078ffd404eceb6d3791932373180bc1e7205",
+    "soh/Enhancements/randomizer/randomizer_entrance.h": "dd0ae80bf799888ccb5519a2475f23c848aaf8547908d9bc1d62a08d511eef1c",
+    "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp": "0943ff9dfddeac6fec3c35ee5acfbc955069057ba530609f9119e69785d7c021",
+    "soh/Enhancements/randomizer/randomizer_entrance_tracker.h": "85d03cb79aac8d7b5d18b5b95ded6bf3478dd04b233135d148aa2120ed20afd7",
+    "soh/Enhancements/randomizer/randomizer_grotto.c": "c24197093d1ba4324c518ff919d00e5f04748b51cd7a5951bbe31cc72a7924a3",
+    "soh/Enhancements/randomizer/settings.cpp": "0e78095dcf662f161ffadf06110368592e1a8acdffb905e4e8f9dfea3110d6c8",
+    "soh/Network/Archipelago/ArchipelagoC.h": "3aa055f1d3075ce3dd18025698baf9b592f014b50c3980098d0520cd2c92e840",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "8dcb9c4728fda123a1b038a465224fe17a15dce9bbd8f68f574e8849330364fa",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "114ecb087b1ecf6ff30104427c3eb2abdaa8cc215262726f22e8c5d2e7efe21e",
+    "soh/Network/Archipelago/ArchipelagoHintClient.inc": "135c702b3f3c87a14e542e9f408be683dd1cd425f7891a9dbc7f6b74212865fa",
+    "soh/Network/Archipelago/ArchipelagoHintData.h": "02b498c2fb85878c24d1eac557e1e9fa5bc991a7966b585f85f83e3df7eea8ee",
+    "soh/Network/Archipelago/ArchipelagoHintTarget.h": "4face49f1413e1efd39e4787e6ca078119e61f68259c3708636c6aab4046267c",
+    "soh/Network/Archipelago/ArchipelagoSaveSnapshot.h": "7edfad27f1c9fb67b30ec167c1694a0a7c00e2b0b8dfb96f1912570a1e593d4a",
+    "soh/Network/Archipelago/CheckDescriptions.inc": "5126a56fe1b66768703164d5a59280198e36720adf6d1dea6c44069dff42dcdf",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "d4978e4bdcd765821fb4d85421681f3b6977eca5c19f3b0d5de105edd25e0a0f",
+    "soh/Network/Archipelago/EntranceDestinationPolicy.h": "ad437810079db56bdcdfc30e3fa688ec5a32cfbb0c00c7e16f46b6fb724427a0",
+    "soh/Network/Archipelago/EntranceRouting.h": "15f03937754760681db8e199ce3b50fe74bdf3fe6f400efd88f0182626b95564",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "8e07e4ed1ab99b6d4b877dc161bc25e679fd64ca187b9d3a813897631937ddd4",
+    "soh/Network/Archipelago/NpcSpeechAreas.inc": "3cef63696b1208b9e9b20bdd540f83c012641d07abcd65ed83c4fb8bb91482ef",
+    "soh/Network/Archipelago/NpcSpeechScenes.inc": "96c9c18245fbcc07e3e22ab683b111167d9fe00216d1f025148fb9c8f01837a9",
+    "soh/Network/Archipelago/SceneTransitionChecks.h": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496",
+    "soh/Network/Archipelago/TrackerCheckLabels.h": "e801ac4d413b233044fcd6c51344bd10f2288a6b8a45f2572130eb53913e081f",
+    "soh/SaveManager.cpp": "86b26f0c8805984b26e739b9912e74cc70e5c2cafb932bb93df15ec57e8bb5d6",
+    "soh/SohExtremeVersion.h": "93dea6b08be0ebbb4ff3361d245d7d2c7366e1a864b73274f3194e9f6b43c5fd",
+    "soh/SohGui/SohMenuNetwork.cpp": "23ee4fed5e03c28a9d1f7236ea2f5e31a4cdef1f7c975a707cc68ae3fcf8d373",
+    "src/code/z_actor.c": "99ed54b7bb20bbdc782d27e679e4cd17a39b263a38b1acd074d4739048b49fef",
+    "src/code/z_message_PAL.c": "96ac88bd73a009dd250c85bd4457c850e143a7053fbf9b92066fcf79bb776680",
+    "src/code/z_play.c": "640fcbae23a2b6a6175c0497233d34bd282ded9db25dee0217ba8796b3deb84f",
+    "src/overlays/actors/ovl_Bg_Jya_Bombchuiwa/z_bg_jya_bombchuiwa.c": "2c706c7b4048b6c6c9bc35c51320dbe27a226b551d78241dae1433d348528e36",
+    "src/overlays/actors/ovl_Obj_Hamishi/z_obj_hamishi.c": "d942b5c1ad2db3e2857f4022882f434e2ee0af1e193e59fb292d526df0ee07f2",
+    "src/overlays/actors/ovl_Obj_Kibako/z_obj_kibako.c": "34a56de0faa975f52b537b0abf7e02fb522258e9c131f69f312a1b6c1b8110d7",
+    "src/overlays/actors/ovl_Obj_Kibako2/z_obj_kibako2.c": "d105cdae8d251675e14362e966c9232e93627a4584496fd46160fc0cd8ce7932",
+    "tools/generate_check_descriptions.py": "14b7f7a69a6c21763baee6e4c202f328d8d00b7a157f5825ff9a26fd1d5e3557",
+    "tools/generate_entrance_destination_policy.py": "9b94e1a5e274891937c7ba7405ebabcc89761bcbce244e16a3504c8784aa319c",
+    "tools/tests/archipelago_hint_data_tests.cpp": "2af777d4e50da99abea7bcf17672d56220f3df36df73230dc5c353237be42686",
+    "tools/tests/archipelago_hint_reveal_tests.cpp": "3b662d9985a16324a836c60dd2ddb06dc6d9845a331b7184d48dbeecbda46705",
+    "tools/tests/archipelago_save_metadata_tests.cpp": "ad1ca578382f93037f13a948fd44cda6239ef4e6a27d54ad7c906ea84c0285ca",
+    "tools/tests/custom_message_pagination_tests.cpp": "f1b5bd8ae7a3d6486a8ade740c2b4bfba2880b60fa8e76c91b73d62afb204758",
+    "tools/tests/entrance_destination_safety_tests.cpp": "949c4cbac9b8630f8a9dabafbeadffd378e1bc301e931cc2babd95f028f9c093",
+    "tools/tests/entrance_runtime_tests.cpp": "37be9bb3199a2bb2c52c197f02ebdfae84cf9bda8e007a68821880cb4b984f50",
+    "tools/tests/entrance_slot_bridge_tests.cpp": "274b99191ac154bea754cb0d40713ee3568e1382dc70dd79981140d95630cca5",
+    "tools/tests/medallion_trial_native_tests.cpp": "2738c31c99f018ca816d326daf213701cfdf7dcf181e123732841c14b431cea5",
+    "tools/tests/scene_flag_lifecycle_tests.cpp": "ccd5c6b398f05a08a43e8cff2c385c47a3e2e13595063256dc0b550ab621111a",
+    "tools/tests/soul_object_validation/draw_fixture.cpp.in": "b5e322550ea8f0949bce384c01ad6235ed6c926fd1edb1cec7662e66da7d8cd7",
+    "tools/tests/soul_object_validation/native_fixture.c.in": "f5a76480dde8d8a59c2b175487aa1512f0932431f304d4fe6c5280f804168221",
+    "tools/tests/soul_object_validation/npc_fixture.cpp.in": "6fb6a9dae1ba307cf352c594b62204699d53d15e7508b5891bb1d9a067a3f6e7",
+    "tools/tests/test_archipelago_hints.py": "640479f28cbd085df8fe348e09f5457fe95ba9c23ca4840934dbd57a92722786",
+    "tools/tests/test_check_descriptions.py": "592f464e2a8879eacc5d019046e5f7e2d5332429771986cd8fb4444313e90b0f",
+    "tools/tests/test_custom_message_pagination.py": "a3e336093158848f4562c0a7d07d1ddd1b3d2c1c57d5504fe0b7c4950433c90e",
+    "tools/tests/test_entrance_blockers.py": "582c810a461a7412f46a82855c22b13fd1d85ef223c2169efb8a6693cc7b57fb",
+    "tools/tests/test_entrance_destination_native_safety.py": "b0bd757a08fc15d8195293a46d45b14dd762be45e5779f437d3fe01ea725555f",
+    "tools/tests/test_entrance_destination_policy.py": "a9d4f43513b5b4cb485a87c019675efd9b291057a1e2ce7618a74bb3b801c5d3",
+    "tools/tests/test_entrance_destination_safety.py": "94ebc214d4ac23f50e1fba492f77d61e6170aa366f3d4ca859f4990a81971518",
+    "tools/tests/test_entrance_runtime.py": "c26086a4920ddc1b11f80134dea76903791ef6a6880a37e63732785da696299d",
+    "tools/tests/test_entrance_settings.py": "0f382e22622c612dab726f8aef82dab914caf1fc28c650c825fe7073404b08cd",
+    "tools/tests/test_entrance_slot_bridge.py": "184345ca542034a1d5a55f68a321a2d6e2674ef3fc1a54472695f04cb7c33ecd",
+    "tools/tests/test_entrance_spawn_lifecycle.py": "9161390dc6e5d2585153ccc44286e56d0b7fbb046405e318d3ef26d784253252",
+    "tools/tests/test_entrance_start.py": "1fcabffc774a7b73f436ccffd057c4c5c7ec356ef0a305f2bf9ed5dcceacd5f1",
+    "tools/tests/test_entrance_tracker.py": "252b5201e9dfb0ce80906dbdc168565496015c03d3896062b4093e0402eb1fd4",
+    "tools/tests/test_hint_areas.py": "818157257a6531c122fc5bebccc1d55b0ea0cf7c33d7e87cab0f61a99cd7cbe7",
+    "tools/tests/test_hint_bridge.py": "1404773cf9da13007b53c7ec72243359e13734c63aa1792c702a0829866ea40c",
+    "tools/tests/test_jabu_carry.py": "b69150bc7bad690252459e8421a1fdc76d8394320038dca688420e8e51b200a6",
+    "tools/tests/test_lost_woods_access.py": "6ed02d5bd8c419a4242f1ed6b2272fc1df05628be2872f7e42b8ee28572d720f",
+    "tools/tests/test_medallion_trial_native.py": "62d9fd299daa5d39f13cd53944dc03592d3a08acf99a28ec1d70c1061d107bea",
+    "tools/tests/test_no_swim_recovery.py": "9b8bed7f4f0b8d8f594e060c4a7b0c855e0116706a7a6bebee99dfcd5beb3511",
+    "tools/tests/test_overworld_entrances.py": "222e7b006b5f00f7c2b9864cca9c6de5e3d75f9f20eef3f62a7e6d19d8f60582",
+    "tools/tests/test_scene_flag_lifecycle.py": "1a030c56b990128b38a332adb75c1b94a940c20f622ccfb9444350770b09ca73",
+    "tools/tests/test_soul_npc_blockers.py": "d00321297a2dea01b0daba5f5e5ad1080e64f191c8e4aaaad85a6774a01f0853",
+    "tools/tests/test_soul_object_blockers.py": "5da96aa5943bda16e0821c7d761907a59ecb1a8c6934e9f662cc7a0aaaf42fb0",
+    "tools/tests/test_spawn_placement.py": "78fdb3d865e0129bcddf6445ec42e792c3afc8c189409eaaabb6b257e0e7a4f7",
+    "tools/tests/test_trial_medallion_logic.py": "e3064a159182b9cfb285ee54ad1017d1ca8887030794c3a13bdee550cf28355e",
+    "tools/tests/validate_npc_path_blockers.py": "cf8ca35773227fb22ae9148e9fb5a966063efd590c6e4bc4a62513e68d2c5d74",
+    "tools/tests/validate_user_full_fill.py": "eb4cb7024ed932b712a08b1bddbb04898cd7103198200adeb4782ecdd0e9058c"
+  },
+  "apworld_sha256": "64eedc3812cc436cb4f8d6c0fdc62641551a136ca6d3ac7d7d13ff2be829486f",
+  "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5",
+  "manifest_sha256": "4ac8b6b1b11aba920179e8778eea385dbd0ebfbbcca058a47587c678bc0adaef",
+  "build_helpers_sha256": {
+    "BUILD_RELEASE.cmd": "985a56320107298bd3feaae48b26accbafe2aebd95c3ccde28c5e1c37b88d99a",
+    "BUILD_RELEASE.ps1": "ac1f1df4afe1f25a24bee5cec5d701939c426541ca81ca697ec6eb75cdc7fdfb"
+  },
+  "verified_report_source_hash_entries": 726,
+  "verified_fixture_and_runtime_hash_entries": 101,
+  "current_reports": {
+    "trial_medallion_188_ap_validation.json": {
+      "status": true,
+      "sha256": "14e361e7e69a690da5a0c1983f50f400cfc6a00374935390b84daa7592adca14"
+    },
+    "medallion_trial_native_validation.json": {
+      "status": "passed",
+      "sha256": "f80087e2cb8c9a03072e2a5d1110f6c1c446b83761e4be7086371716765c3354"
+    },
+    "entrance_blockers_188_ap_validation.json": {
+      "status": "passed",
+      "sha256": "c3a605c2e25484aad4155cbec05dbdd2c7ac0ab834be6879afed8faf1ed41a34"
+    },
+    "scene_flag_lifecycle_validation.json": {
+      "status": "passed",
+      "sha256": "fb39a1efdb5420c26ab33448216caece2e95bb032888e64e96366d22f57f3758"
+    },
+    "temporary_shutter_188_independent_review.json": {
+      "status": "completed_source_review",
+      "sha256": "9af91c0fe765c448d9a359c328819bc64425abf43ba41afe24fd6f6fdfab57f8"
+    },
+    "jabu_tentacle_arrival_native_review.json": {
+      "status": "reviewed",
+      "sha256": "eff703849b7c083e1eff60b33d0f78991b4c8731fa6d297e26ec6424a75bbd0d"
+    },
+    "trial_shortcut_188_core_regressions.json": {
+      "status": "passed",
+      "sha256": "954a0e7fe8c4bad37a19cc52d9d28c795f142972249d2bfa07a56b9f904d93cb"
+    },
+    "jabu_carry_188_validation.json": {
+      "status": "passed",
+      "sha256": "bd22c460993fbfc55d78bcb313eb228893f55bdf3dd9e440a74694100c30f659"
+    },
+    "trial_shortcut_188_full_fill_child.json": {
+      "status": "passed",
+      "sha256": "f60ea92adc0187854d86239cacfaa6934e9d7f1097f67a299d23f4f35573faeb"
+    },
+    "trial_shortcut_188_full_fill_adult.json": {
+      "status": "passed",
+      "sha256": "0dc3cd479b7771e6ea2b733725cab1d4659c23e446947c99d1e765a05b4f804c"
+    },
+    "trial_shortcut_188_apworld_validation.json": {
+      "status": "passed",
+      "sha256": "5e5334a9d5d261bbd079809474f21bae60cd43a1681b5abf976c99c92d680793"
+    },
+    "trial_shortcut_188_version_validation.json": {
+      "status": "passed",
+      "sha256": "7d89b95d40c94591b5319d2e06a909544c4e09affe5fdac3067c3d58f1401f6c"
+    },
+    "trial_shortcut_188_source_build_validation.json": {
+      "status": "passed",
+      "sha256": "48c6a197fea224621406be20a990af58d577dcdd54b5f52b139d7b32a203af6d"
+    },
+    "trial_shortcut_188_source_completeness.json": {
+      "status": "passed",
+      "sha256": "598ef74d9d1c890afc5d44432e210ce0ef8f49dbceb18e2f941bb5fe05df290e"
+    }
+  },
+  "reported_seed_reproduction": {
+    "generation_seed": 75502037396837836795,
+    "original_world_version": "1.8.7",
+    "runtime": "Archipelago 0.6.8",
+    "matching_placements": 4036,
+    "mismatched_placements": 0,
+    "report_sha256": "be52f550b3e71023860de9b4eb3dfd21e7aa6e64dad1376432328db6172e6e98",
+    "spoiler_sha256": "ea1198f828f26bd92a782f631ff5052fb390fca11c3027dfc3b5485a33ac5ba1"
+  },
+  "full_fills": {
+    "child": {
+      "seed": 18801,
+      "network_checks": 4036,
+      "goal_met": true,
+      "initial_network_checks": 62,
+      "initial_physical_checks": 60,
+      "initial_hyrule_field_reachable": true,
+      "child_spawn": "HF Near Market Boulder Grotto Entry -> HF Near Market Boulder Grotto",
+      "adult_spawn": "Goron City Darunia's Room Backdoor -> Death Mountain Crater Bridge Exit",
+      "changed_overworld_endpoints": 52,
+      "hint_kinds": {
+        "item": 57,
+        "woth": 4,
+        "barren": 4
+      }
+    },
+    "adult": {
+      "seed": 75502037396837836795,
+      "network_checks": 4036,
+      "goal_met": true,
+      "initial_network_checks": 31,
+      "initial_physical_checks": 29,
+      "initial_hyrule_field_reachable": true,
+      "child_spawn": "Hyrule Field Center Exit -> Lon Lon Ranch Entrance",
+      "adult_spawn": "ZD Shop Entry -> Zora Shop",
+      "changed_overworld_endpoints": 48,
+      "hint_kinds": {
+        "item": 57,
+        "barren": 4,
+        "woth": 4
+      }
+    }
+  },
+  "native_medallion_cases": {
+    "direction_inventory_flag_cases": 1152,
+    "reverse_clear_alternative_cases": 48,
+    "switch_side_rejections_despite_clear": 72,
+    "registration_and_unrelated_actor_cases": 4,
+    "switch_barred_reverse_trials": [
+      "Forest",
+      "Light",
+      "Fire",
+      "Spirit"
+    ],
+    "room_clear_reverse_trials": [
+      "Water",
+      "Shadow"
+    ],
+    "correct_medallion_removes_added_gate": true,
+    "wrong_medallion_does_not_unlock": true,
+    "both_age_profiles_checked": true
+  },
+  "native_scene_flag_cases": {
+    "switch_storage_and_hook_cases": 64,
+    "cross_scene_and_same_scene_return_cases": 64,
+    "ordinary_room_flag_mask_cases": 64,
+    "authored_temporary_shutter_direction_cases": 96,
+    "explicit_respawn_cases": 5,
+    "resettable_timer_cases": 12,
+    "observed_missing_unset_notifications": 48,
+    "recorded_switch_scene_scoping_cases": 56,
+    "unrecorded_shutter_flags_stay_reset_cases": 18,
+    "cleanup_order_and_clear_promotion_cases": 3,
+    "permanent_source_flags_survive_return": true,
+    "destination_flags_are_not_inherited_from_source": true,
+    "room_cleanup_keeps_switches_32_through_55": true,
+    "actor_context_initialization_resets_all_temporary_switches": true,
+    "player_init_replays_only_recorded_scene_switches": true,
+    "timers_can_unset_saved_range_switches": true
+  },
+  "limitations": [
+    "The uploaded snapshot lacks the root CMake project, full native build dependencies, and extracted ROM collision assets.",
+    "No complete Windows game build, live AP session, ImGui run, or in-game playthrough was performed.",
+    "Native fixtures execute extracted production functions with engine I/O isolated.",
+    "Jabu damage-escape removal is a conservative logic correction supported by the reproduced dependency and user-observed blockage; it is not a collision simulation.",
+    "Temporary-switch inventory and source review do not prove every room's switch approach geometry.",
+    "Two full fills validate these seeds under the corrected AP logic model, not every possible seed.",
+    "Old servers and generated placements retain their existing data; regenerate with the updated APWorld.",
+    "Prior cumulative features are retained; separate 1.8.7 validation is historical unless rerun here."
+  ]
+}

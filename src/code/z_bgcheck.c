@@ -5,6 +5,7 @@
 #include "soh/ResourceManagerHelpers.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 #include <assert.h>
+#include "soh/Enhancements/randomizer/SoulActorAccess.h"
 
 #define SS_NULL 0xFFFF
 
@@ -3106,7 +3107,8 @@ f32 BgCheck_RaycastFloorDyna(DynaRaycast* dynaRaycast) {
     *dynaRaycast->bgId = BGCHECK_SCENE;
 
     for (i = 0; i < BG_ACTOR_MAX; i++) {
-        if (!(dynaRaycast->colCtx->dyna.bgActorFlags[i] & 1)) {
+        if (!(dynaRaycast->colCtx->dyna.bgActorFlags[i] & 1) ||
+            MegaSoul_ShouldDisableActorCollision(dynaRaycast->colCtx->dyna.bgActors[i].actor)) {
             continue;
         }
 
@@ -3412,7 +3414,8 @@ s32 BgCheck_SphVsDynaWall(CollisionContext* colCtx, u16 xpFlags, f32* outX, f32*
     resultPos = *pos;
 
     for (i = 0; i < BG_ACTOR_MAX; i++) {
-        if (!(colCtx->dyna.bgActorFlags[i] & 1)) {
+        if (!(colCtx->dyna.bgActorFlags[i] & 1) ||
+            MegaSoul_ShouldDisableActorCollision(colCtx->dyna.bgActors[i].actor)) {
             continue;
         }
         if ((colCtx->dyna.bgActors + i)->actor == actor) {
@@ -3531,7 +3534,8 @@ s32 BgCheck_CheckDynaCeiling(CollisionContext* colCtx, u16 xpFlags, f32* outY, V
     resultY = tempY;
 
     for (i = 0; i < BG_ACTOR_MAX; i++) {
-        if (!(colCtx->dyna.bgActorFlags[i] & 1)) {
+        if (!(colCtx->dyna.bgActorFlags[i] & 1) ||
+            MegaSoul_ShouldDisableActorCollision(colCtx->dyna.bgActors[i].actor)) {
             continue;
         }
         if (actor == colCtx->dyna.bgActors[i].actor) {
@@ -3666,7 +3670,8 @@ s32 BgCheck_CheckLineAgainstDyna(CollisionContext* colCtx, u16 xpFlags, Vec3f* p
     f32 by;
 
     for (i = 0; i < BG_ACTOR_MAX; i++) {
-        if (colCtx->dyna.bgActorFlags[i] & 1) {
+        if ((colCtx->dyna.bgActorFlags[i] & 1) &&
+            !MegaSoul_ShouldDisableActorCollision(colCtx->dyna.bgActors[i].actor)) {
             if (actor != colCtx->dyna.bgActors[i].actor) {
                 ay = posA->y;
                 by = posB->y;
@@ -3770,7 +3775,8 @@ s32 BgCheck_SphVsFirstDynaPoly(CollisionContext* colCtx, u16 xpFlags, CollisionP
     Sphere16 testSphere;
 
     for (i = 0; i < BG_ACTOR_MAX; i++) {
-        if (!(colCtx->dyna.bgActorFlags[i] & 1)) {
+        if (!(colCtx->dyna.bgActorFlags[i] & 1) ||
+            MegaSoul_ShouldDisableActorCollision(colCtx->dyna.bgActors[i].actor)) {
             continue;
         }
         if (colCtx->dyna.bgActors[i].actor == actor) {

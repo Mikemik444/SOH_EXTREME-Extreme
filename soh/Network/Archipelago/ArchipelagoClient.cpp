@@ -1,4 +1,4 @@
-﻿#include "ArchipelagoClient.h"
+#include "ArchipelagoClient.h"
 #include "NpcSpeechIdentity.h"
 #include "SceneTransitionChecks.h"
 #include "TrackerWorkerConfig.h"
@@ -1274,8 +1274,11 @@ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receiv
         std::scoped_lock lock(hintJournalMutex);
         revealedHintTargets.clear();
     }
+    const bool preserveRequestedDungeonReturn = currentSaveIsArchipelago && isArchipelagoSave &&
+        sameIdentity(saveConnectionIdentity, identity) && saveServer == server && saveSlot == slot &&
+        cachedSlotSettingsJson == cachedSettingsJson;
     gCrossingJournal.Reset();
-    SohExtreme::EntranceRuntime::Reset();
+    SohExtreme::EntranceRuntime::Reset(preserveRequestedDungeonReturn);
     {
         std::scoped_lock lock(queueMutex);
         if (preserveTracker) {
@@ -2014,6 +2017,14 @@ void ArchipelagoClient::SetShopPricesFromJson(const std::string& raw) {
     SPDLOG_INFO("[Archipelago] Loaded {} exact AP shop prices", shopPrices.size());
 }
 
+static void ApplyLegacySongNoteMask(std::unordered_map<std::string, int>& settings) {
+    const auto songNotes = settings.find("SongNoteShuffle");
+    const bool enabled = songNotes != settings.end() && songNotes->second != 0;
+    // Defaults come from this slot, never the previously loaded AP/native save.
+    // Preserve an explicit selection (including zero) from current generators.
+    settings.try_emplace("SongNoteSongMask", enabled ? 0x0FFF : 0);
+}
+
 void ArchipelagoClient::ApplySlotSettings() {
     slotSettingsPendingApply.store(false);
     std::unordered_map<std::string, int> settingsSnapshot;
@@ -2038,13 +2049,15 @@ void ArchipelagoClient::ApplySlotSettings() {
              "ShuffleInteriorsEntrances", "ShuffleThievesHideoutEntrances", "ShuffleDungeonsEntrances",
              "ShuffleGanonTowerEntrance", "ShuffleBossEntrances", "ShuffleGrottosEntrances",
              "ShuffleOverworldEntrances", "ShuffleOwlDrops", "ShuffleWarpSongs", "ShuffleOverworldSpawns",
-             "ShuffleDungeonDoors", "MixedEntrances", "MixDungeons", "MixBosses", "MixInteriors",
+             "ShuffleDungeonDoors", "EntrancePoolPolicyRevision", "EntranceMixedPoolMask", "DungeonDoorMixedOutside",
+             "MixedEntrances", "MixDungeons", "MixBosses", "MixInteriors",
              "MixOverworld", "MixGrottos" }) {
             slotSettings.try_emplace(key, 0);
         }
         // AP routes include Bunny Hood speed/jumps. Upgrade old cached/server
         // settings too; the effect still requires wearing the actual hood.
         slotSettings["BunnyHood"] = 1;
+        ApplyLegacySongNoteMask(slotSettings);
         settingsSnapshot = slotSettings;
     }
 

@@ -17,6 +17,7 @@
 #include <string.h>
 #include <unordered_map>
 #include <vector>
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include "json.hpp"
 
 using u8 = uint8_t;
@@ -68,6 +69,7 @@ struct TransitionActorEntry {
 struct PlayState {
     struct { bool running = true; } state;
     int sceneNum = SCENE_TEMPLE_OF_TIME;
+    int numRooms = 64;
     struct { int state = 0; } gameOverCtx;
     struct { struct { int num = 0; } curRoom; } roomCtx;
     struct { TransitionActorEntry* list = nullptr; int numActors = 0; } transiActorCtx;
@@ -79,6 +81,7 @@ struct SaveContext {
     int cutsceneTrigger = 0;
     int entranceIndex = ENTR_LINKS_HOUSE_CHILD_SPAWN, nextTransitionType = 0;
     int savedSceneNum = SCENE_TEMPLE_OF_TIME;
+    int fileNum = 0;
     struct {
         int tempSwchFlags = 0, tempCollectFlags = 0, entranceIndex = 0, data = 0;
         int roomIndex = 0, playerParams = 0, yaw = 0;

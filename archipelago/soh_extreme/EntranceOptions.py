@@ -71,6 +71,9 @@ class ShuffleAdultSpawn(Toggle):
 class ShuffleDungeonDoors(Toggle):
     """Experimental. Shuffle physical dungeon room doors. Keys, switches and combat requirements
     remain on the source door. Two-way doors always have a paired return.
+    Unless dungeon_doors is mixed with another enabled entrance category, room
+    doors only connect to rooms in the same dungeon. This also applies to
+    forward-only shutters when one-way entrance shuffle is enabled.
     Six Jabu-Jabu doors needed to carry Ruto keep their normal room connections
     and traversal checks, so her rescue and puzzle routes remain playable.
     Logic conservatively requires a dungeon's complete small-key set (or its
@@ -83,9 +86,13 @@ class ShuffleDungeonDoors(Toggle):
 class MixedEntrancePools(OptionSet):
     """Experimental. Categories that share destinations. Only enabled categories participate.
     Use all to mix every enabled category; disabled shuffles stay disabled.
-    Include dungeon_doors to mix room doors with scene entrances. One-way categories
-    use this pool as destinations without creating reverse routes or consuming a
-    two-way destination. An empty set keeps categories separate. Destinations
+    Include dungeon_doors with another enabled category to let room doors leave
+    their dungeon. An empty set, disabled categories, or dungeon_doors alone
+    keeps room doors inside each individual dungeon. Mixing room doors with an
+    outside category changes the pause-menu return to the previous scene;
+    dungeon-only pools retain the dungeon-spawn return.
+    One-way categories use this pool as destinations without creating reverse
+    routes or consuming a two-way destination. Destinations
     use reviewed normal scene setups; cutscene-only, debug, and unused entries
     are excluded. Age-specific physical returns are checked in the mixed graph.
     """

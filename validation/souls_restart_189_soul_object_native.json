@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "native": {
+    "cases": 13,
+    "assertions": 57
+  },
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "scope": "Actual source action functions, OC separation, collider transform, randomized draw and recovery hook bodies with engine shims; not a full native build or gameplay test.",
+  "output": [
+    "PASS hidden small crate has no AC or OC, carry, water-break or weapon-break interaction; soul unlocks normal actions",
+    "PASS normal small crate carry and collision resume without reload",
+    "PASS hidden large crate does not mutate dyna enable flags or accept attack/roll hits; shared query gate owns collision",
+    "PASS small rocks have no AC or OC while silver boulders retain solid OC; neither can be carried or broken without Soul",
+    "PASS brown boulder rejects explosions with collision intact and breaks normally on unlock",
+    "PASS bronze boulder ignores missing-soul hits and resumes its normal two-hit break",
+    "PASS hidden Spirit ceiling boulder updates its real sphere and refuses a pending explosion until unlocked",
+    "PASS ordinary play and unshuffled souls retain normal object behavior",
+    "RESULT cases=8 assertions=43",
+    "PASS missing-soul randomized callbacks emit no models or sparkles",
+    "PASS receiving souls restores the existing callbacks without a reload",
+    "PASS disabled soul options and ordinary play keep all models",
+    "PASS acquired crates keep every existing contents texture category",
+    "PASS removed-boulder reward recovery cannot bypass missing Rock Soul",
+    "RESULT cases=5 assertions=14"
+  ],
+  "sources": {
+    "src/overlays/actors/ovl_Obj_Kibako/z_obj_kibako.c": "02035d7632d4f4d5c18c7ed2b88eff31b38e71b4e6d201dfde082431f5806b6c",
+    "src/overlays/actors/ovl_Obj_Kibako2/z_obj_kibako2.c": "81cb3b4a2b67699d1ab6be5791152164947d4cebd3968d22b14e615309825727",
+    "src/overlays/actors/ovl_En_Ishi/z_en_ishi.c": "2494c74a321773e440d5e65459fa599ff138f2002d4d42885f747f7406835028",
+    "src/overlays/actors/ovl_Obj_Bombiwa/z_obj_bombiwa.c": "22549397a392faef889dbed338924b54571e5625504e269b71841153c360b8f0",
+    "src/overlays/actors/ovl_Obj_Hamishi/z_obj_hamishi.c": "d942b5c1ad2db3e2857f4022882f434e2ee0af1e193e59fb292d526df0ee07f2",
+    "src/overlays/actors/ovl_Bg_Jya_Bombchuiwa/z_bg_jya_bombchuiwa.c": "2c706c7b4048b6c6c9bc35c51320dbe27a226b551d78241dae1433d348528e36",
+    "src/code/z_collision_check.c": "eae84670ec25d611aa4cb848b3aa4a4e45ac1b54939b8e3789b1ac1e81d1a36c",
+    "src/code/z_bgcheck.c": "c6ff3556647d60f70b7fb8d771c2471ba442345b48b74c0ee8afb6e5ed6b651e",
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "db261c49d61e58216611dde7e84ce9daeee9797aa08ca554eef41960194689bd",
+    "soh/Enhancements/randomizer/SoulActorAccess.h": "541c8b81d444d2953291a37a6a12c7d2d7b8796a74eddaf9ee85e382c2f8b303",
+    "soh/Enhancements/randomizer/ShuffleRocks.cpp": "a5df6c0b7c90261ca901aa1afc01cd8c4b8acb3a36a40775e81ba1f508438764",
+    "soh/Enhancements/randomizer/ShuffleCrates.cpp": "6e6c06da4c997978cb7977ac691ec7c389201882290c4f89fbe4a3da6a024889",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "13e6cfdeeac346be56fee81e53016c78dea62115091cd7a85bdc7ce4d16174ea",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "878d74429685a6e3cbf5263c1a93e35bade796121a648a7e3fbbe8f6edc3779e",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py": "b51f2cc06d0dc628814465f1010f86c013c197a8d93ed1031642ac49f97db673",
+    "soh/Enhancements/randomizer/location_access/dungeons/spirit_temple.cpp": "f0d193ccbce88eb568b71df6d8fd0977e55760a72429b923679c0881771115cd",
+    "tools/tests/test_soul_object_blockers.py": "a21f4e28154fef749960f04aa6ce8ab0824b1a4697ca5602460d4b0b38852aee",
+    "tools/tests/soul_object_validation/native_fixture.c.in": "6ec2c0afa9da2773597321eb33254578864c25cc0c74167869f7bcc986670a32",
+    "tools/tests/soul_object_validation/draw_fixture.cpp.in": "b5e322550ea8f0949bce384c01ad6235ed6c926fd1edb1cec7662e66da7d8cd7"
+  }
+}

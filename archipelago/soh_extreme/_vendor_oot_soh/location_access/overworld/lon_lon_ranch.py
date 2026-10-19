@@ -13,10 +13,14 @@ def set_region_rules(world: "SohWorld") -> None:
     # Lon Lon Ranch
     # Events
     add_events(Regions.LON_LON_RANCH, world, [
-        (EventLocations.LLR_TALON_RACE, Events.FREED_EPONA, lambda bundle: (has_item(Items.CHILD_WALLET, bundle)
-         | OptionFilter(SkipEponaRace, True)) & can_play_song(Items.EPONAS_SONG, bundle) & is_adult(bundle) & at_day(bundle)),
+        # Ingo's race and Malon's time trial require the actual host. The
+        # explicit Skip Epona Race option keeps its existing free-Epona route.
+        (EventLocations.LLR_TALON_RACE, Events.FREED_EPONA, lambda bundle: ((has_item(Items.CHILD_WALLET, bundle)
+         & can_interact_npc(bundle, "Hylian")) | OptionFilter(SkipEponaRace, True))
+         & can_play_song(Items.EPONAS_SONG, bundle) & is_adult(bundle) & at_day(bundle)),
         (EventLocations.LLR_TIME_TRIAL, Events.GOTTEN_LINKS_COW, lambda bundle: has_item(Items.CHILD_WALLET,
-         bundle) & can_play_song(Items.EPONAS_SONG, bundle) & is_adult(bundle) & at_day(bundle)),
+         bundle) & can_interact_npc(bundle, "Hylian") & can_play_song(Items.EPONAS_SONG, bundle)
+         & is_adult(bundle) & at_day(bundle)),
     ])
     # Locations
     add_locations(Regions.LON_LON_RANCH, world, [

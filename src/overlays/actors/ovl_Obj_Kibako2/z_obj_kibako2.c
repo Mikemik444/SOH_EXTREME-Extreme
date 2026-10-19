@@ -148,16 +148,10 @@ void ObjKibako2_Destroy(Actor* thisx, PlayState* play) {
 
 void ObjKibako2_Idle(ObjKibako2* this, PlayState* play) {
     if (!MegaSoul_CanUseCrate()) {
-        // Large crates use dynamic-poly collision.  Soul-locked crates are meant
-        // to remain hidden, solid blockers, so explicitly keep their dyna
-        // collision enabled while suppressing break hits.  This also repairs a
-        // crate if another path temporarily disabled its bg collision state.
+        // The shared dyna query gate removes floors, walls and ceiling collision
+        // without changing this actor's original collision-enabled state.
         this->collider.base.acFlags &= ~AC_HIT;
         this->dyna.actor.home.rot.z = 0; // Discard a blocked rolling hit too.
-        func_8003EC50(play, &play->colCtx.dyna, this->dyna.bgId);
-        if (this->dyna.actor.xzDistToPlayer < 600.0f) {
-            CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
-        }
         return;
     }
 

@@ -220,11 +220,9 @@ static bool MegaSoulAllowsLocation(RandomizerCheck rc) {
         return false;
     }
 
-    // Path-blocking placements remain active and interactable while hidden.
-    // Other NPC checks still need the actor's soul; scene/params keep different
-    // roles of shared actor types (Talon, guards, Kokiri) distinct.
+    // Every NPC check needs the actor's soul. The invisible Kokiri exit boy
+    // retains collision solely to block the path and cannot be interacted with.
     if (ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) && MegaIsNpcLocationActor(loc->GetActorID()) &&
-        !MegaSoul_IsPathBlockingNpcPlacement(loc->GetActorID(), loc->GetActorParams(), loc->GetScene()) &&
         !logic->HasItem(RG_NPC_SOUL)) {
         return false;
     }

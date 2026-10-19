@@ -33,6 +33,20 @@ inline bool IsLocalCarrierDoor(int id) {
     }
 }
 
+// The catalog's dungeon/boss pools include both halves of a paired entrance.
+// In particular a dungeon's outside exit is still a dungeon-pool endpoint.
+// Scene 12 is Thieves' Hideout (interior pool), not a dungeon pool member.
+inline bool IsDungeonPoolEndpoint(int id) {
+    const auto* row = EntranceEndpointById(id);
+    if (!row) return false;
+    if (row->door >= 0) return true;
+    const auto dungeonScene = [](int scene) {
+        return (scene >= 0 && scene <= 11) || scene == 13 || (scene >= 17 && scene <= 24);
+    };
+    const auto* back = EntranceEndpointById(row->reverse);
+    return dungeonScene(row->scene) || (back && dungeonScene(back->scene));
+}
+
 // Slot data is authoritative. Neither a local menu nor a reconnect rerolls it.
 // Validation is atomic: malformed maps never leave a half-applied route table.
 class EntranceRouting {
@@ -60,6 +74,7 @@ class EntranceRouting {
                 return false;
             }
             routes.clear();
+            previousSceneReturn = false;
             return true;
         }
         if (version->second != 1) { error = "Unsupported entrance mapping revision"; return false; }
@@ -104,18 +119,53 @@ class EntranceRouting {
                 error = "Entrance pairs are decoupled"; return false;
             }
         }
+        const auto value = [&](const char* key) {
+            const auto it = settings.find(key);
+            return it == settings.end() ? 0 : it->second;
+        };
+        const int poolRevision = value("EntrancePoolPolicyRevision");
+        const int mixedMask = value("EntranceMixedPoolMask");
+        const int mixedOutside = value("DungeonDoorMixedOutside");
+        constexpr int dungeonMask = (1 << 2) | (1 << 4) | (1 << 10);
+        constexpr int doorMask = 1 << 10;
+        constexpr int allMask = (1 << 11) - 1;
+        const bool selectedOutside = (mixedMask & doorMask) != 0 &&
+                                     (mixedMask & (allMask ^ dungeonMask)) != 0;
+        if (poolRevision < 0 || poolRevision > 1 || mixedMask < 0 || (mixedMask & ~allMask) != 0 ||
+            (mixedOutside != 0 && mixedOutside != 1) ||
+            ((poolRevision != 0 || mixedMask != 0 || mixedOutside != 0) &&
+             (mixedOutside != static_cast<int>(selectedOutside) ||
+              ((mixedMask & doorMask) != 0 && value("ShuffleDungeonDoors") == 0)))) {
+            error = "Invalid dungeon entrance mixed-pool policy";
+            return false;
+        }
+        previousSceneReturn = selectedOutside;
+        // Cached older seeds omit the effective pool mask. Their actual paired
+        // routes identify cross-category door mixing without interpreting the
+        // old broad MixedEntrances flag as dungeon-door participation.
+        if (poolRevision == 0 && mixedMask == 0 && mixedOutside == 0) {
+            for (const auto& [source, target] : next) {
+                const auto* endpoint = EntranceEndpointById(source);
+                if (endpoint->door >= 0 && !IsDungeonPoolEndpoint(target)) {
+                    previousSceneReturn = true;
+                    break;
+                }
+            }
+        }
         routes = std::move(next);
         return true;
     }
-    void Reset() { routes.clear(); }
+    void Reset() { routes.clear(); previousSceneReturn = false; }
     int Destination(int source) const {
         const auto it = routes.find(source);
         return it == routes.end() ? source : it->second;
     }
     bool Contains(int source) const { return routes.contains(source); }
     bool Active() const { return !routes.empty(); }
+    bool UsesPreviousSceneReturn() const { return Active() && previousSceneReturn; }
     const std::map<int, int>& Routes() const { return routes; }
   private:
     std::map<int, int> routes;
+    bool previousSceneReturn = false;
 };
 } // namespace SohExtreme

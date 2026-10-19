@@ -1,0 +1,167 @@
+#include <array>
+#include <cassert>
+#include <cstdarg>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#define CVAR_PREFIX_RANDOMIZER_SETTING "native.Randomizer"
+#include "soh/cvar_prefixes.h"
+#define RANDO_ENUM_BEGIN(name) enum name {
+#define RANDO_ENUM_ITEM(name) name,
+#define RANDO_ENUM_END(name) };
+#include "soh/Enhancements/randomizer/randomizerEnums/RandomizerInf.h"
+#include "soh/Enhancements/randomizer/randomizerEnums/RandomizerGet.h"
+#undef RANDO_ENUM_BEGIN
+#undef RANDO_ENUM_ITEM
+#undef RANDO_ENUM_END
+static_assert(RAND_INF_SONG_NOTE_73==RAND_INF_SONG_NOTE_0+73);
+@ITEM_CONSTANTS@
+@QUEST_ENUM@
+static bool isRando=true,isAp=true,nativeNotesEnabled=true;
+static std::array<bool,74> noteFlags{};
+static std::vector<int> noteReads;
+static std::unordered_map<std::string,int> cvars;
+static struct{struct{uint32_t questItems=0;}inventory;}gSaveContext;
+#define IS_RANDO isRando
+struct OptionValue{bool value;int Get()const{return value?1:0;}explicit operator bool()const{return value;}};
+#define RAND_GET_OPTION(key) OptionValue{nativeNotesEnabled}
+static bool Archipelago_IsCurrentSaveActive(){return isAp;}
+static int CVarGetInteger(const char*key,int fallback){const auto it=cvars.find(key);return it==cvars.end()?fallback:it->second;}
+static void CVarSetInteger(const char*key,int value){cvars[key]=value;}
+static bool Flags_GetRandomizerInf(RandomizerInf flag){
+    const int i=flag-RAND_INF_SONG_NOTE_0;assert(i>=0&&i<74);noteReads.push_back(i);return noteFlags[i];
+}
+static void Flags_SetRandomizerInf(RandomizerInf flag){
+    const int i=flag-RAND_INF_SONG_NOTE_0;assert(i>=0&&i<74);noteFlags[i]=true;
+}
+struct Row{std::string name;int have=0,required=0;};
+static std::vector<Row> rows;
+static std::vector<bool> glyphOwned;
+static int separators=0,totalHave=-1,totalRequired=-1,notifications=0;
+namespace ImGui {
+static void SeparatorText(const char*){++separators;}
+static void Separator(){++separators;}
+static void SameLine(){}
+static void Text(const char*fmt,...){
+    va_list args;va_start(args,fmt);
+    if(std::strcmp(fmt,"Progressive %s - %d/%d")==0){
+        Row row;row.name=va_arg(args,const char*);row.have=va_arg(args,int);row.required=va_arg(args,int);rows.push_back(row);
+    }else if(std::strcmp(fmt,"Total Song Notes: %d / %d")==0){
+        totalHave=va_arg(args,int);totalRequired=va_arg(args,int);
+    }else if(std::strcmp(fmt,"[%s]")==0){glyphOwned.push_back(true);}
+    else{assert(false&&"unexpected song tracker text");}
+    va_end(args);
+}
+static void TextDisabled(const char*fmt,...){assert(std::strcmp(fmt,"[%s]")==0);glyphOwned.push_back(false);}
+}
+namespace Notification {
+struct Info{std::string prefix,message,suffix;float remainingTime;};
+static void Emit(const Info&){++notifications;}
+}
+#define SPDLOG_INFO(...) do{}while(false)
+struct ArchipelagoClient{void RefreshSongNotes();};
+@SONG_TABLE@
+@RECEIPTS@
+@LEGACY_DEFAULTS@
+static void ApplyCustomCVars(const std::unordered_map<std::string,int>&settingsSnapshot){
+    const std::set<std::string>consumedKeys;
+    @CVAR_WRITER@
+}
+@TRACKER@
+static unsigned assertions=0,cases=0;
+#define CHECK(c) do{++assertions;if(!(c)){std::fprintf(stderr,"FAIL line %d: %s\n",__LINE__,#c);return 1;}}while(false)
+static const char* const expectedNames[]={"Zelda's Lullaby","Epona's Song","Saria's Song","Sun's Song","Song of Time","Song of Storms",
+    "Minuet of Forest","Bolero of Fire","Serenade of Water","Requiem of Spirit","Nocturne of Shadow","Prelude of Light"};
+static constexpr int expectedCounts[]={6,6,6,6,6,6,6,8,5,6,7,6};
+static constexpr int expectedOffsets[]={0,6,12,18,24,30,36,42,50,55,61,68};
+static void clearDraw(){rows.clear();glyphOwned.clear();noteReads.clear();separators=0;totalHave=totalRequired=-1;}
+static void reset(){
+    isRando=isAp=nativeNotesEnabled=true;noteFlags.fill(false);cvars.clear();gSaveContext.inventory.questItems=0;notifications=0;clearDraw();
+}
+static int verifyDraw(uint16_t mask){
+    cvars[CVAR_RANDOMIZER_SETTING("SongNoteSongMask")]=mask;clearDraw();
+    CHECK(SongNoteTrackingActive()==(mask!=0));DrawSongNoteProgress();
+    int expectedTotal=0,expectedHave=0;size_t rowIndex=0,glyphIndex=0,readIndex=0;
+    for(int song=0;song<12;++song){
+        if(!(mask&(1u<<song)))continue;
+        int count=0;for(int n=0;n<expectedCounts[song];++n)count+=noteFlags[expectedOffsets[song]+n];
+        CHECK(rowIndex<rows.size());const auto&row=rows[rowIndex++];
+        CHECK(row.name==expectedNames[song]&&row.required==expectedCounts[song]&&row.have==count);
+        for(int pass=0;pass<2;++pass)for(int n=0;n<expectedCounts[song];++n){
+            CHECK(readIndex<noteReads.size()&&noteReads[readIndex++]==expectedOffsets[song]+n);
+        }
+        for(int n=0;n<expectedCounts[song];++n){
+            CHECK(glyphIndex<glyphOwned.size()&&glyphOwned[glyphIndex++]==noteFlags[expectedOffsets[song]+n]);
+        }
+        expectedTotal+=expectedCounts[song];expectedHave+=count;
+    }
+    CHECK(rows.size()==rowIndex&&glyphOwned.size()==glyphIndex&&noteReads.size()==readIndex);
+    CHECK(mask?(totalRequired==expectedTotal&&totalHave==expectedHave&&separators==2):
+        (totalRequired==-1&&totalHave==-1&&separators==0));
+    return 0;
+}
+int main(){
+    CHECK(AP_LAST_SONG_NOTE-AP_FIRST_SONG_NOTE+1==74&&AP_LAST_PROGRESSIVE_SONG-AP_FIRST_PROGRESSIVE_SONG+1==12);
+    for(int song=0;song<12;++song){
+        reset();noteFlags.fill(true);for(int n=0;n<expectedCounts[song];++n)noteFlags[expectedOffsets[song]+n]=(n%2)==0;
+        CHECK(verifyDraw(1u<<song)==0);++cases;
+    }
+    std::puts("PASS each of 12 single-song selections renders only that row, its correct total and original 74-flag offsets, even with all skipped songs collected");
+    for(uint16_t mask:{uint16_t(0xFFF),uint16_t(0),uint16_t((1u<<1)|(1u<<7)|(1u<<8)|(1u<<11)),uint16_t(0x555),uint16_t(0xAAA)}){
+        reset();for(int i=0;i<74;++i)noteFlags[i]=(i%3)!=0;
+        CHECK(verifyDraw(mask)==0);++cases;
+    }
+    std::puts("PASS all, empty and noncontiguous selections preserve original flag/glyph offsets and sum only the selected songs");
+    for(int slotCase=0;slotCase<6;++slotCase){
+        reset();cvars[CVAR_RANDOMIZER_SETTING("SongNoteSongMask")]=0x155;
+        std::unordered_map<std::string,int>settings;
+        if(slotCase!=0)settings["SongNoteShuffle"]=slotCase!=1;
+        if(slotCase==3)settings["SongNoteSongMask"]=0;
+        if(slotCase==4)settings["SongNoteSongMask"]=(1<<7)|(1<<8);
+        if(slotCase==5)settings["SongNoteSongMask"]=0xFFF;
+        const int expected=slotCase<=1||slotCase==3?0:slotCase==4?((1<<7)|(1<<8)):0xFFF;
+        ApplyLegacySongNoteMask(settings);ApplyCustomCVars(settings);
+        CHECK(settings.at("SongNoteSongMask")==expected&&CVarGetInteger(CVAR_RANDOMIZER_SETTING("SongNoteSongMask"),-1)==expected);
+        ApplyLegacySongNoteMask(settings);CHECK(settings.at("SongNoteSongMask")==expected);
+        ++cases;
+    }
+    std::puts("PASS old slots default all when enabled and zero when off; explicit subsets/zero survive; applying another slot replaces stale cached CVars");
+    reset();CHECK(SongNoteTrackingMask()==0xFFF);nativeNotesEnabled=false;CHECK(SongNoteTrackingMask()==0);
+    noteFlags[73]=true;CHECK(SongNoteTrackingMask()==0);
+    cvars[CVAR_RANDOMIZER_SETTING("SongNoteSongMask")]=(1<<11);CHECK(SongNoteTrackingMask()==(1<<11));
+    // Explicit slot selection remains usable while the native option cache catches up.
+    cvars[CVAR_RANDOMIZER_SETTING("SongNoteSongMask")]=0;CHECK(SongNoteTrackingMask()==0);
+    cvars[CVAR_RANDOMIZER_SETTING("SongNoteSongMask")]=0x1FFF;CHECK(SongNoteTrackingMask()==0xFFF);
+    isRando=false;CHECK(!SongNoteTrackingActive());++cases;
+    std::puts("PASS AP legacy fallback, explicit zero with old note flags, delayed native settings, high-bit masking and nonrandomizer behavior");
+    reset();isAp=false;cvars[CVAR_RANDOMIZER_SETTING("SongNoteSongMask")]=0;
+    CHECK(SongNoteTrackingMask()==0xFFF);nativeNotesEnabled=false;CHECK(SongNoteTrackingMask()==0);
+    noteFlags[73]=true;CHECK(SongNoteTrackingMask()==0xFFF);DrawSongNoteProgress();
+    CHECK(rows.size()==12&&totalRequired==74&&totalHave==1);++cases;
+    std::puts("PASS native saves ignore AP song masks and keep their original all-song and legacy-note visibility");
+    for(int song=0;song<12;++song){
+        reset();ArchipelagoClient client;
+        // Other full songs can already be owned; partial-note completion must preserve them.
+        const uint32_t otherQuest=1u<<kApSongNotes[(song+1)%12].quest;gSaveContext.inventory.questItems=otherQuest;
+        for(int note=0;note<expectedCounts[song];++note){
+            CHECK(ApplyApSongNote(AP_FIRST_PROGRESSIVE_SONG+song));client.RefreshSongNotes();
+            const bool complete=note+1==expectedCounts[song];
+            CHECK(((gSaveContext.inventory.questItems&(1u<<kApSongNotes[song].quest))!=0)==complete);
+            for(int flag=0;flag<74;++flag)CHECK(noteFlags[flag]==(flag>=expectedOffsets[song]&&flag<=expectedOffsets[song]+note));
+        }
+        const auto finished=noteFlags;CHECK(ApplyApSongNote(AP_FIRST_PROGRESSIVE_SONG+song));client.RefreshSongNotes();
+        CHECK(noteFlags==finished&&notifications==1&&(gSaveContext.inventory.questItems&otherQuest));
+        CHECK(verifyDraw(1u<<song)==0);++cases;
+    }
+    std::puts("PASS unchanged progressive receipts fill the selected song's original flags, unlock only after its complete sequence, cap duplicates and preserve other full songs");
+    reset();ArchipelagoClient client;
+    for(int note=0;note<74;++note){CHECK(ApplyApSongNote(AP_FIRST_SONG_NOTE+note));CHECK(noteFlags[note]);}
+    client.RefreshSongNotes();CHECK(notifications==12&&gSaveContext.inventory.questItems==0xFFF);
+    CHECK(!ApplyApSongNote(AP_FIRST_SONG_NOTE-1)&&!ApplyApSongNote(AP_LAST_PROGRESSIVE_SONG+1));++cases;
+    std::puts("PASS legacy individual-note IDs retain all 74 flags and complete every song; unrelated item IDs are rejected");
+    std::printf("RESULT cases=%u assertions=%u\n",cases,assertions);
+}

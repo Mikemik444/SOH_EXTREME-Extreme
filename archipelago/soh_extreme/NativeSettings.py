@@ -6,6 +6,9 @@ Starting inventory is granted by AP, never inherited from a local seed.
 """
 NATIVE_AP_DEFAULTS = {'BunnyHood': 1,
  'DecoupleEntrances': 0,
+ 'DungeonDoorMixedOutside': 0,
+ 'EntranceMixedPoolMask': 0,
+ 'EntrancePoolPolicyRevision': 0,
  'EarlyGrannysShop': 0,
  'MQDungeonCount': 0,
  'MQDungeons': 0,

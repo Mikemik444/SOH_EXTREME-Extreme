@@ -44,6 +44,20 @@ int Archipelago_EntranceSpawnRoom(int scene, int room);
 bool Archipelago_EntranceSpawnPosition(int scene);
 const char* Archipelago_EntranceDestinationName(int source);
 int Archipelago_EntranceDestination(int source);
+// The dungeon menu uses its physical entryway, or the previous distinct scene
+// when the enabled dungeon-door pool mixes with non-dungeon categories.
+enum ArchipelagoDungeonReturnMode {
+    AP_DUNGEON_RETURN_SPAWN = 0,
+    AP_DUNGEON_RETURN_PREVIOUS_SCENE = 1,
+    AP_DUNGEON_RETURN_NO_PREVIOUS_SCENE = 2
+};
+void Archipelago_EntranceRecordRoomEntry(void);
+int Archipelago_EntranceDungeonReturnMode(void);
+bool Archipelago_EntranceRequestDungeonReturn(void);
+bool Archipelago_EntranceRestoreDungeonReturn(void);
+bool Archipelago_EntranceGameOverDungeonReturn(void);
+bool Archipelago_EntranceDungeonReturnInProgress(void);
+void Archipelago_EntranceCancelDungeonReturn(void);
 bool Archipelago_EntranceSavewarp(void);
 // Actual spawn requests only; no preview calls. Missing slot maps are deferred.
 bool Archipelago_EntranceSavewarpForAge(int age);

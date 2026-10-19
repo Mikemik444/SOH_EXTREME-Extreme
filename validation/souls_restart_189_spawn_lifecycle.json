@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "case_count": 8,
+  "source_sha256": {
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "4d28f7846873a9967585d1517485ac018e37baa45c5d2b52616ebb691aeaf5b7",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "0efeee52cb4057e64685baf1cecc6fe7b5e932ef2a4bce43d4ca2a69658ee666",
+    "soh/Network/Archipelago/EntranceRouting.h": "224774a70c88f7a91aa0492e450f6e6c92260376073bf2e3aa9cff35fd308485",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a",
+    "soh/Network/Archipelago/EntranceDestinationPolicy.h": "ad437810079db56bdcdfc30e3fa688ec5a32cfbb0c00c7e16f46b6fb724427a0",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "d4978e4bdcd765821fb4d85421681f3b6977eca5c19f3b0d5de105edd25e0a0f",
+    "soh/Network/Archipelago/ArchipelagoC.h": "244f16b88eb138d6fda4abea4e66f2f55bae957372d6d64075b47af87349f45b",
+    "soh/Network/Archipelago/SceneTransitionChecks.h": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496",
+    "soh/Network/Archipelago/SceneTransitionData.inc": "b7b4aa8c04ba92c233a501a8dabd509bcc4c214fb4bb9146005a2d7020e68893",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "d50283887426dd61cce5be606fe6aeeaf9236c349f0e6f1f0d635960166f35a5",
+    "soh/Enhancements/randomizer/randomizer_entrance.h": "f8c1772c26df6e74c92ac933c2f1d689f310f078fbb5d7849c16809ce55eecb5",
+    "soh/Enhancements/randomizer/randomizer_grotto.c": "c24197093d1ba4324c518ff919d00e5f04748b51cd7a5951bbe31cc72a7924a3",
+    "soh/Enhancements/randomizer/randomizer_grotto.h": "b049586ec0cc4127d4a26a87a6c30eac97449c84f4c0612b3a4ed28ab91fd56a",
+    "soh/Enhancements/randomizer/randomizerTypes.h": "dc86b56177c188419a7b00f600f3f91e45f491dce16989f677cd6dbc609bd2aa",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/QoL/BetterSaveMenu.cpp": "0d24917165376054689820d5d8a7afbf98ce0f26cd3547af3e0f75b963245c30",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3"
+  },
+  "test_sha256": {
+    "tools/tests/entrance_runtime_tests.cpp": "d0accf18c3a1b807dfda0aac29e85a4afeda177287f113b127ebe83940777827",
+    "tools/tests/test_entrance_spawn_lifecycle.py": "a59f1fe890ef18a69f81360d3fec82fb67f6da8ac093186292e9c72232da565b"
+  },
+  "source_unchanged_during_tests": true,
+  "engine_io_isolated": true,
+  "native_windows_build": false,
+  "in_game_playthrough": false,
+  "coverage": [
+    "cached and late child/adult spawn",
+    "explicit-age save-menu return",
+    "opening cutscene reset",
+    "canceled and superseded load requests",
+    "same-map reconnect and grotto state retention",
+    "rejected map preservation",
+    "ordinary native and non-randomizer save behavior"
+  ],
+  "log": "PASS: cached child loads reuse the chosen exact room and clear the opening cutscene.\nPASS: save-to-spawn resolves the explicitly selected age without stale room state.\nPASS: late verified map completes one safe load warp, reports no traversal, and never rewarps on reconnect.\nPASS: deferred explicit-age request survives the old scene's teardown.\nPASS: known disabled maps preserve native behavior and cannot arm later relocation.\nPASS: exit/save switch clear requests; rejected slot maps cannot consume or replace them.\nPASS: duplicate live maps preserve real grotto state and custom arrival; reset/non-gameplay tables rebuild.\nPASS: ordinary native randomizer and non-randomizer saves keep their existing spawn paths.\n"
+}

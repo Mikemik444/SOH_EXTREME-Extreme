@@ -21,6 +21,9 @@ from ._vendor_oot_soh import LogicHelpers as H
 from .EnemyRoomLogic import GRAPH, NativeEnemyRegions
 
 REVISION = 1
+# Revision 1 partitions unmixed room doors by their physical dungeon scene.
+# Keep topology revision separate so earlier saved maps can still be restored.
+POOL_POLICY_REVISION = 1
 CATALOG = tuple(json.loads(files(__package__).joinpath('EntranceCatalog.json').read_text()))
 Safety.validate_catalog(CATALOG)
 ENDPOINTS = {e['id']: e for e in CATALOG}
@@ -58,10 +61,44 @@ def enabled_categories(world):
     return {key for key, option in CATEGORIES.items() if getattr(world.options, option).value}
 
 
+# Stable bits exported with the slot's native settings. Append future categories
+# instead of reordering these; old saves retain their exact metadata.
+MIXED_CATEGORY_BITS = {name: 1 << bit for bit, name in enumerate((
+    'overworld', 'interiors', 'dungeons', 'grottos', 'bosses', 'one_ways',
+    'owls', 'warp_songs', 'child_spawn', 'adult_spawn', 'dungeon_doors',
+))}
+DUNGEON_CATEGORIES = frozenset({'dungeons', 'bosses', 'dungeon_doors'})
+
+
 def mixed_categories(world):
-    """Expand 'all' from the enabled options without changing the saved value."""
+    """Return the enabled categories selected to mix; 'all' enables no shuffle."""
     selected = set(world.options.mixed_entrance_pools.value)
-    return enabled_categories(world) if 'all' in selected else selected
+    enabled = enabled_categories(world)
+    return enabled if 'all' in selected else selected & enabled
+
+
+def dungeon_doors_are_mixed(world):
+    mixed = mixed_categories(world)
+    return 'dungeon_doors' in mixed and len(mixed) > 1
+
+
+def dungeon_doors_mix_outside(world):
+    mixed = mixed_categories(world)
+    return 'dungeon_doors' in mixed and bool(mixed - DUNGEON_CATEGORIES)
+
+
+def _paired_pool_key(row, mixed):
+    # Selecting only room doors has no second category to mix with. Those doors
+    # keep the same per-dungeon behavior as an empty mixed-pool selection.
+    if row['category'] == 'dungeon_doors' and not ('dungeon_doors' in mixed and len(mixed) > 1):
+        return ('dungeon_doors', row['source_scene'])
+    return 'mixed' if row['category'] in mixed else row['category']
+
+
+def _pool_policy_revision(world):
+    if world.using_ut:
+        return world.passthrough.get('entrance_randomizer', {}).get('pool_policy_revision', 0)
+    return POOL_POLICY_REVISION
 
 
 def restore_legacy_defaults(world):
@@ -229,7 +266,7 @@ def _eligible(world):
     return result
 
 
-def validate_mapping(world, mapping):
+def validate_mapping(world, mapping, *, legacy_dungeon_pools=False):
     eligible = {e['id'] for e in _eligible(world)}
     if set(mapping) != eligible:
         raise OptionError('Entrance mapping does not match the enabled source pools')
@@ -241,6 +278,10 @@ def validate_mapping(world, mapping):
         if b is None: raise OptionError(f'Unknown entrance destination {dest}')
         if not Safety.allowed_route(source, dest):
             raise OptionError('Entrance destination is unreviewed or incompatible with the source age')
+        if (not legacy_dungeon_pools and a['category'] == 'dungeon_doors'
+                and not dungeon_doors_are_mixed(world)
+                and (b['category'] != 'dungeon_doors' or b['source_scene'] != a['source_scene'])):
+            raise OptionError('Unmixed dungeon room doors must stay inside their own dungeon')
         if source in LOCAL_CARRIER_DOORS and dest != source:
             raise OptionError(
                 'This seed shuffles a Jabu-Jabu door needed to carry Ruto. '
@@ -251,13 +292,21 @@ def validate_mapping(world, mapping):
                 raise OptionError('Unpaired entrance mapping; decoupled entrances are not supported')
             if a['category'] != b['category'] and not {a['category'], b['category']} <= mixed:
                 raise OptionError('Entrance destination crosses pools without mixed entrances enabled')
-        elif dest != source and dest not in {e['id'] for e in _one_way_targets(world, a)}:
+        elif dest != source and dest not in {e['id'] for e in _one_way_targets(
+                world, a, legacy_dungeon_pools=legacy_dungeon_pools)}:
             raise OptionError('One-way destination is outside its selected pool')
 
 
-def _one_way_targets(world, source):
+def _one_way_targets(world, source, *, legacy_dungeon_pools=False):
     mixed = mixed_categories(world)
-    if source['category'] in mixed:
+    if (source['category'] == 'dungeon_doors' and not legacy_dungeon_pools
+            and not dungeon_doors_are_mixed(world)):
+        # Forward-only shutters remain dungeon doors, even though the one-way
+        # option is needed to shuffle them. They must not inherit the ordinary
+        # river/fence destinations outside their dungeon.
+        targets = [e for e in CATALOG if e['category'] == 'dungeon_doors'
+                   and e['source_scene'] == source['source_scene'] and e['primary']]
+    elif source['category'] in mixed:
         targets = [e for e in CATALOG if e['category'] in mixed & enabled_categories(world) and e['primary']]
     else:
         targets = [e for e in CATALOG if e['category'] in ('overworld', 'owls', 'warp_songs')]
@@ -270,7 +319,7 @@ def _candidate(world):
     for e in eligible:
         if e['reverse'] < 0: one_ways.append(e)
         elif e['primary'] and e['id'] not in LOCAL_CARRIER_DOORS:
-            pools['mixed' if e['category'] in mixed else e['category']].append(e)
+            pools[_paired_pool_key(e, mixed)].append(e)
     mapping = {e['id']: e['id'] for e in eligible if e['id'] in LOCAL_CARRIER_DOORS}
     for pool in pools.values():
         targets = pool.copy(); world.random.shuffle(targets)
@@ -575,8 +624,11 @@ def connect(world):
         if saved.get('revision') != REVISION: raise OptionError('Unsupported entrance mapping revision')
         if saved.get('destination_policy_revision', Safety.POLICY_REVISION) != Safety.POLICY_REVISION:
             raise OptionError('Unsupported entrance destination safety policy')
+        pool_revision = saved.get('pool_policy_revision', 0)
+        if type(pool_revision) is not int or pool_revision not in (0, POOL_POLICY_REVISION):
+            raise OptionError('Unsupported dungeon entrance pool policy')
         mapping = {int(k): v for k, v in saved.get('connections', {}).items() if int(k) in {e['id'] for e in rows}}
-        validate_mapping(world, mapping); apply(mapping)
+        validate_mapping(world, mapping, legacy_dungeon_pools=pool_revision == 0); apply(mapping)
         if world._er_mapping != {int(k): v for k, v in saved['connections'].items()}:
             raise OptionError('Entrance mapping blue-warp return data differs from this world')
         state = world.multiworld.get_all_state(False, perform_sweep=False).copy()
@@ -598,7 +650,7 @@ def connect(world):
     pools = defaultdict(list)
     for e in rows:
         if e['primary'] and e['reverse'] >= 0 and e['id'] not in LOCAL_CARRIER_DOORS:
-            pools['mixed' if e['category'] in mixed else e['category']].append(e['id'])
+            pools[_paired_pool_key(e, mixed)].append(e['id'])
     accepted = 0
     inventory = world.multiworld.get_all_state(False, perform_sweep=False)
     fill_locations = [loc for loc in world.get_locations()
@@ -668,6 +720,9 @@ def connect(world):
 
 def slot_data(world):
     return {'revision': REVISION, 'destination_policy_revision': Safety.POLICY_REVISION,
+            'pool_policy_revision': _pool_policy_revision(world),
+            'effective_mixed_categories': sorted(mixed_categories(world)),
+            'dungeon_door_mixed_outside': int(dungeon_doors_mix_outside(world)),
             'disabled_actions': getattr(world, '_er_disabled_actions', []),
             'connections': {str(k): v for k, v in sorted(getattr(world, '_er_mapping', {}).items())}}
 
@@ -676,6 +731,9 @@ def native_settings(world):
     cats = enabled_categories(world); mixed = mixed_categories(world)
     result = {'EntranceRandomizerRevision': REVISION if cats else 0,
               'EntranceDestinationPolicyRevision': Safety.POLICY_REVISION if cats else 0,
+              'EntrancePoolPolicyRevision': _pool_policy_revision(world) if cats else 0,
+              'EntranceMixedPoolMask': sum(MIXED_CATEGORY_BITS[category] for category in mixed),
+              'DungeonDoorMixedOutside': int(dungeon_doors_mix_outside(world)),
               'DecoupleEntrances': 0,
               'ShuffleInteriorsEntrances': 2 if 'interiors' in cats else 0,
               'ShuffleThievesHideoutEntrances': int('interiors' in cats),

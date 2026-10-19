@@ -5,6 +5,7 @@
 #include "global.h"
 #include "vt.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 #include <string.h>
 #include <assert.h>
 
@@ -658,4 +659,5 @@ void Room_FinishRoomChange(PlayState* play, RoomContext* roomCtx) {
     gSaveContext.ship.stats.tsIdx++;
     gSaveContext.ship.stats.roomNum = roomCtx->curRoom.num;
     gSaveContext.ship.stats.roomTimer = 0;
+    Archipelago_EntranceRecordRoomEntry();
 }

@@ -38,7 +38,9 @@ def fragments():
         ('small','Obj_Kibako','obj_kibako'),('large','Obj_Kibako2','obj_kibako2'),
         ('rock','En_Ishi','en_ishi'),('brown','Obj_Bombiwa','obj_bombiwa'),
         ('bronze','Obj_Hamishi','obj_hamishi'),('ceiling','Bg_Jya_Bombchuiwa','bg_jya_bombchuiwa')]}
-    paths.update(collision=SOURCE/'src/code/z_collision_check.c',rocks=RANDO/'ShuffleRocks.cpp',crates=RANDO/'ShuffleCrates.cpp')
+    paths.update(collision=SOURCE/'src/code/z_collision_check.c',background=SOURCE/'src/code/z_bgcheck.c',
+                 souls=RANDO/'MegaSouls.cpp',header=RANDO/'SoulActorAccess.h',
+                 rocks=RANDO/'ShuffleRocks.cpp',crates=RANDO/'ShuffleCrates.cpp')
     code={name:path.read_text() for name,path in paths.items()}
     native={token:function(code[source],name) for token,source,name in [
         ('MASS_TYPES','collision','CollisionCheck_GetMassType'),('OC_COLLISION','collision','CollisionCheck_SetOCvsOC'),
@@ -145,6 +147,9 @@ def main():
     for name in ('EnemyRoomGraph.json','EnemyRoomLogic.py','_vendor_oot_soh/location_access/dungeons/spirit_temple.py'):
         paths[name]=SOURCE/'archipelago/soh_extreme'/name
     paths['spirit']=RANDO/'location_access/dungeons/spirit_temple.cpp'
+    for key,path in [('runner',Path(__file__)),('native_fixture',FIXTURES/'native_fixture.c.in'),
+                     ('draw_fixture',FIXTURES/'draw_fixture.cpp.in')]:
+        paths[key]=path
     report['sources']={str(path.relative_to(SOURCE)):hashlib.sha256(path.read_bytes()).hexdigest() for path in paths.values()}
     if args.report:args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(report,indent=2)+'\n')
 

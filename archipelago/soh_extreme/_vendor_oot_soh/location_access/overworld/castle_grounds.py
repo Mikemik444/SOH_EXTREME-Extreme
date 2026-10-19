@@ -56,8 +56,8 @@ def set_region_rules(world: "SohWorld") -> None:
     connect_regions(Regions.HYRULE_CASTLE_GROUNDS, world, [
         (Regions.CASTLE_GROUNDS, lambda b: True_()),
         (Regions.HC_ABOVE_VINE, lambda b: climb | can_use(Items.HOOKSHOT, b)),
-        # The gate guard remains active and interactable while invisible.
-        (Regions.HC_PAST_GATE, lambda b: speak & has_item(Items.CHILD_WALLET, b)),
+        # The physical gate remains closed without a guard to accept payment.
+        (Regions.HC_PAST_GATE, lambda b: npc & speak & has_item(Items.CHILD_WALLET, b)),
     ])
 
     add_locations(Regions.HC_ABOVE_VINE, world, [
@@ -101,10 +101,11 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.HC_MOAT, lambda b: True_()),
     ])
 
-    # Skip Zelda starts with Talon gone. Otherwise the egg and Hylian
-    # interaction are required before pushing crates; this Talon stays active.
+    # Skip Zelda starts with Talon gone. Otherwise model the permanent wake-up
+    # interaction. A temporary absence before receiving NPC Soul is not a
+    # reliable generation route because the actor can return with that item.
     def drain_route(b):
-        talon_gone = True_() if options.skip_child_zelda.value else (speak & can_use(Items.WEIRD_EGG, b))
+        talon_gone = True_() if options.skip_child_zelda.value else (npc & speak & can_use(Items.WEIRD_EGG, b))
         return ((talon_gone & grab) | can_use(Items.HOVER_BOOTS, b) |
                 (can_do_trick(Tricks.DAMAGE_BOOST_SIMPLE, b) & has_explosives(b) & can_jump_slash(b)))
 

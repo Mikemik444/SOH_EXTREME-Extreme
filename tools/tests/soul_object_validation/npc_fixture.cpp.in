@@ -1,68 +1,109 @@
+#include <cassert>
+#include <cfloat>
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
 #include <initializer_list>
 #include <limits>
+#include <unordered_map>
 #include "soh/Enhancements/randomizer/SoulActorAccess.h"
 
 using s16=int16_t;using u16=uint16_t;using s32=int32_t;using u32=uint32_t;using u8=uint8_t;using f32=float;
 struct Vec3f{float x=0,y=0,z=0;};struct Vec3s{int16_t x=0,y=0,z=0;};
-struct PosRot{Vec3f pos;Vec3s rot;};
-struct PlayState;struct Lights{};
+struct PosRot{Vec3f pos;Vec3s rot;};struct PlayState;struct Lights{};
 struct Actor {
-    int16_t id=0,params=0;int category=0,objBankIndex=0;uint32_t flags=0;
+    int16_t id=0,params=0;int category=0,objBankIndex=0,targetMode=0;uint32_t flags=0;
     PosRot world,home,focus;Vec3f scale{1,1,1};
     struct {Vec3s rot;float yOffset=0;void(*shadowDraw)(Actor*,Lights*,PlayState*)=nullptr;}shape;
     struct {u8 mass=0,damage=0,health=1;Vec3f displacement;}colChkInfo;
-    void(*draw)(Actor*,PlayState*)=nullptr;
-    float xzDistToPlayer=0,yDistToPlayer=0,speedXZ=0;
-    s16 yawTowardsPlayer=0,colorFilterParams=0;u8 colorFilterTimer=0;bool isTargeted=false;u16 textId=0;
+    void(*draw)(Actor*,PlayState*)=nullptr;void(*update)(Actor*,PlayState*)=nullptr;
+    float xzDistToPlayer=0,yDistToPlayer=0,speedXZ=0,gravity=0,xyzDistToPlayerSq=0;
+    s16 yawTowardsPlayer=0,colorFilterParams=0,sfx=0;u8 colorFilterTimer=0;bool isTargeted=false;u16 textId=0;
 };
-struct Player {Actor actor;Actor*talkActor=nullptr,*unk_6A8=nullptr;float talkActorDistance=10000;
-               u32 exchangeItemId=0,stateFlags2=0;};
+struct GetItemEntry{int getItemId=0;};
+struct Player {
+    Actor actor;Actor*talkActor=nullptr,*focusActor=nullptr,*interactRangeActor=nullptr,*heldActor=nullptr,*unk_6A8=nullptr;
+    float talkActorDistance=10000;u32 exchangeItemId=0,stateFlags1=0,stateFlags2=0;
+    int getItemId=0,getItemDirection=0;GetItemEntry getItemEntry;
+};
+struct Collider{unsigned atFlags=0,acFlags=0,ocFlags1=0,ocFlags2=0,shape=0;Actor*actor=nullptr,*oc=nullptr;};
+struct ColliderInfo{unsigned ocElemFlags=0;};
+struct ColliderCylinder{Collider base;struct {float radius=36;int height=246;Vec3s pos;}dim;};
+struct CollisionCheckContext {
+    int colATCount=0,colACCount=0,colOCCount=0,sacFlags=0;
+    Collider*colAT[16]{},*colAC[16]{},*colOC[16]{};
+};
+struct Sphere16{Vec3s center; s16 radius=100;};struct Linef{Vec3f a,b;};struct SSList{int head=0;};struct MtxF{};
+struct ScaleRotPos{Vec3f scale,pos;Vec3s rot;};
+struct CollisionPoly{u16 vtxData[3]{};};struct CollisionHeader{CollisionPoly*polyList=nullptr;Vec3s*vtxList=nullptr;};
+struct BgActor {
+    Actor*actor=nullptr;float minY=-100,maxY=100;
+    Sphere16 boundingSphere;struct{SSList floor,wall,ceiling;int polyStartIndex=0;}dynaLookup;
+    ScaleRotPos curTransform;CollisionHeader*colHeader=nullptr;
+};
+constexpr int BG_ACTOR_MAX=4;
+struct DynaCollisionContext{BgActor bgActors[BG_ACTOR_MAX];u16 bgActorFlags[BG_ACTOR_MAX]{};CollisionPoly*polyList=nullptr;};
+struct CollisionContext{DynaCollisionContext dyna;};struct DynaPolyActor{Actor actor;int bgId=0;};
 struct PlayState {
-    int sceneNum=0,colChkCtx=0;Player*player=nullptr;
+    int sceneNum=0;CollisionCheckContext colChkCtx;Player*player=nullptr;CollisionContext colCtx;
     struct {void*gfxCtx=nullptr;}state;
     struct {void*listHead=nullptr;}lightCtx;
     struct {Vec3f skyboxOffset;}mainCamera;
     struct {struct {void*segment=nullptr;}status[1];}objectCtx;
-    struct {int msgMode=0;}msgCtx;
-    struct {int state=0;}csCtx;
-    struct {Vec3f eye;}view;
+    struct {int msgMode=0,ocarinaMode=0;}msgCtx;struct {int state=0;}csCtx;struct {Vec3f eye;}view;struct {int state=0,debugState=0;}pauseCtx;
 };
-struct Collider{unsigned ocFlags1=0,ocFlags2=0;Actor*actor=nullptr,*oc=nullptr;};
-struct ColliderInfo{unsigned ocElemFlags=0;};
-struct ColliderCylinder{Collider base;struct {float radius=36;Vec3s pos;}dim;};
-struct SkelAnime{void*animation=nullptr;float playSpeed=1;};
+struct DynaRaycast {
+    CollisionContext*colCtx=nullptr;DynaCollisionContext*dyna=nullptr;Actor*actor=nullptr;
+    PlayState*play=nullptr;Vec3f*pos=nullptr;SSList*ssList=nullptr;CollisionPoly**resultPoly=nullptr;
+    s32*bgId=nullptr;f32 yIntersect=-32000,chkDist=0;u32 unk_20=0;
+};
+struct SkelAnime{float playSpeed=1;void*animation=nullptr;};
 struct NpcInteractInfo{int16_t talkState=0;Vec3f trackPos;float yOffset=0;};
+struct EnKo {Actor actor;ColliderCylinder collider;SkelAnime skelAnime;NpcInteractInfo interactInfo;
+             void(*actionFunc)(EnKo*,PlayState*)=nullptr;float modelAlpha=1;int osAnimeBankIndex=0;};
 struct EnMd {Actor actor;ColliderCylinder collider;SkelAnime skelAnime;NpcInteractInfo interactInfo;
-             void(*actionFunc)(EnMd*,PlayState*)=nullptr;int waypoint=0;s16 fidgetTableY[17]{},fidgetTableZ[17]{};};
+             void(*actionFunc)(EnMd*,PlayState*)=nullptr;int waypoint=0; s16 fidgetTableY[17]{},fidgetTableZ[17]{};};
 using NpcGetTextIdFunc=u16(*)(PlayState*,Actor*);using NpcUpdateTalkStateFunc=s16(*)(PlayState*,Actor*);
 using RandomizerInf=int;
 @ACTOR_IDS@
-enum {ACTORCAT_NPC=1,ACTORCAT_PROP=2,EN_FISH_PARAM=100};
-enum {ACTOR_FLAG_ATTENTION_ENABLED=1,ACTOR_FLAG_TALK=2,ACTOR_FLAG_IGNORE_POINTLIGHTS=4,ACTOR_FLAG_IGNORE_QUAKE=8};
-enum {SCENE_KOKIRI_FOREST=0x55,SCENE_LOST_WOODS=0x5B,SCENE_HYRULE_CASTLE=0x5F};
+enum {ACTORCAT_NPC=1,ACTORCAT_PROP=2,ACTORCAT_BG=3,EN_FISH_PARAM=100};
+enum {ACTOR_FLAG_ATTENTION_ENABLED=1,ACTOR_FLAG_TALK=2,ACTOR_FLAG_IGNORE_POINTLIGHTS=4,
+      ACTOR_FLAG_IGNORE_QUAKE=8,ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED=16};
+enum {SCENE_KOKIRI_FOREST=0x55,SCENE_LOST_WOODS=0x5B,SCENE_HYRULE_CASTLE=0x5F,SCENE_MIDOS_HOUSE=0x28};
 enum {RSK_SHUFFLE_NPC_SOUL,RSK_SHUFFLE_SIGN_SOUL,RSK_SHUFFLE_ROCK_SOUL,RSK_SHUFFLE_CRATE_SOUL};
 enum {RAND_INF_NPC_SOUL,RAND_INF_SIGN_SOUL,RAND_INF_ROCK_SOUL,RAND_INF_CRATE_SOUL};
 enum {MASS_HEAVY=254,MASS_IMMOVABLE=255,MASSTYPE_NORMAL,MASSTYPE_HEAVY,MASSTYPE_IMMOVABLE};
 enum {OC1_HIT=1,OC1_NO_PUSH=4,OC2_TYPE_PLAYER=1,OC2_HIT_PLAYER=2,OCELEM_HIT=1};
-enum {NPC_TALK_STATE_IDLE,NPC_TALK_STATE_TALKING,NPC_TALK_STATE_ACTION};
-enum {NPC_TRACKING_NONE,NPC_TRACKING_HEAD_AND_TORSO,NPC_TRACKING_FULL_BODY,CS_STATE_IDLE=0};
+enum {NPC_TALK_STATE_IDLE,NPC_TALK_STATE_TALKING,NPC_TALK_STATE_ACTION,EXCH_ITEM_NONE=0,GI_NONE=0,GI_MAX=100,
+      MOD_NONE=0,MOD_RANDOMIZER=1,RG_NONE=0,RG_MAX=1000,MTXMODE_APPLY=0};
+enum {PLAYER_STATE1_DEAD=1,PLAYER_STATE1_CHARGING_SPIN_ATTACK=2,PLAYER_STATE1_HANGING_OFF_LEDGE=4,
+      PLAYER_STATE1_CLIMBING_LEDGE=8,PLAYER_STATE1_JUMPING=16,PLAYER_STATE1_FREEFALL=32,PLAYER_STATE1_FIRST_PERSON=64,
+      PLAYER_STATE1_CLIMBING_LADDER=128,PLAYER_STATE1_CARRYING_ACTOR=256,PLAYER_STATE1_IN_CUTSCENE=512};
+enum {COLSHAPE_QUAD=3,COLLISION_CHECK_AT_MAX=16,COLLISION_CHECK_AC_MAX=16,COLLISION_CHECK_OC_MAX=16};
+enum {BGCHECK_IGNORE_FLOOR=1,BGCHECK_IGNORE_WALL=2,BGCHECK_IGNORE_CEILING=4,
+      DYNA_RAYCAST_FLOORS=1,DYNA_RAYCAST_WALLS=2,DYNA_RAYCAST_CEILINGS=4,BGCHECK_SCENE=50};
+enum {LINK_AGE_ADULT=0,LINK_AGE_CHILD=1};
 enum {VB_MOVE_MIDO_IN_KOKIRI_FOREST,VB_MIDO_CONSIDER_DEKU_TREE_DEAD,QUEST_KOKIRI_EMERALD,
       EVENTCHKINF_SPOKE_TO_MIDO_AFTER_DEKU_TREES_DEATH,EVENTCHKINF_SHOWED_MIDO_SWORD_SHIELD,
-      EVENTCHKINF_PLAYED_SARIAS_SONG_FOR_MIDO_AS_ADULT,MSGMODE_PAUSED,OCARINA_ACTION_CHECK_SARIA,
-      EXCH_ITEM_NONE=0,MTXMODE_APPLY=0};
+      EVENTCHKINF_PLAYED_SARIAS_SONG_FOR_MIDO_AS_ADULT,MSGMODE_PAUSED,OCARINA_ACTION_CHECK_SARIA};
 enum {PLAYER_STATE2_ATTEMPT_PLAY_FOR_ACTOR=1,PLAYER_STATE2_PLAY_FOR_ACTOR=2,PLAYER_STATE2_NEAR_OCARINA_ACTOR=4};
+enum {NPC_TRACKING_NONE,NPC_TRACKING_HEAD_AND_TORSO,NPC_TRACKING_FULL_BODY,CS_STATE_IDLE=0,
+      OCARINA_MODE_03=3,OCARINA_MODE_04=4,NA_SE_SY_CORRECT_CHIME=100};
+constexpr float BGCHECK_Y_MIN=-32000.0f;
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 #define GET_PLAYER(play) ((play)->player)
 #define IS_ZERO(x) (fabsf(x)<0.00001f)
 #define SQ(x) ((x)*(x))
 #define CLAMP(x,lo,hi) ((x)<(lo)?(lo):((x)>(hi)?(hi):(x)))
+#define CLAMP_MAX(x,hi) ((x)>(hi)?(hi):(x))
 #define ABS(x) ((x)<0?-(x):(x))
+#define COLPOLY_VTX_INDEX(x) ((x)&0x1fff)
+#define DOTXYZ(a,b) ((a).x*(b).x+(a).y*(b).y+(a).z*(b).z)
 static bool isRando=true,options[4]{true,true,true,true},souls[4]{};
 static PlayState state;static PlayState*gPlayState=&state;static Player player;
+static struct {int linkAge=LINK_AGE_ADULT;}gSaveContext;
+#define LINK_IS_ADULT (gSaveContext.linkAge==LINK_AGE_ADULT)
 #define IS_RANDO isRando
 #define RAND_GET_OPTION(key) options[key]
 static bool Flags_GetRandomizerInf(int key){return souls[key];}
@@ -71,6 +112,12 @@ static bool IsMegaEnemySoulInvincible(Actor*){return false;}
 static bool IsPoeSisterIntroActor(Actor*){return false;}
 static void HideGoneEnemy(Actor*){}
 static void RestoreGoneEnemy(Actor*){}
+static int releaseCalls=0;
+static void Player_ReleaseLockOn(Player*p){p->focusActor=nullptr;++releaseCalls;}
+static int Player_GetExplosiveHeld(Player*){return -1;}
+static float iceTrapScale=0;
+static struct{float leashScale=1;}D_80115FF8[1];
+static bool Attention_ActorIsInRange(Actor*,float value){return value<10000;}
 
 static int modelCalls=0,shadowCalls=0,npcGlowCalls=0,enemyGlowCalls=0,renderOpenCalls=0;
 static bool npcGlow=false,offscreen=false,cutscene=false;
@@ -80,6 +127,7 @@ static void Actor_ProjectPos(PlayState*,Vec3f*pos,Vec3f*projected,float*w){
     projectedFocus=*pos;*projected={offscreen?2.0f:0.0f,0,0};*w=1;
 }
 @NATIVE_TALK@
+@NPC_STATE_STORAGE@
 @POLICY@
 static void SoulInit(void*actorRef){@INIT_HOOK@}
 static void SoulUpdate(void*actorRef,bool*should){@UPDATE_HOOK@}
@@ -110,162 +158,294 @@ static bool Actor_DrawNpcSpeechGlow(PlayState*,Actor*){++npcGlowCalls;return npc
 static void Actor_DrawEnemyCheckGlow(PlayState*,Actor*){++enemyGlowCalls;}
 @NATIVE_DRAW@
 
+static int resetAT(PlayState*,Collider*c){c->atFlags=0;return 0;}
+static int resetAC(PlayState*,Collider*c){c->acFlags=0;return 0;}
+static int resetOC(PlayState*,Collider*c){c->ocFlags1&=~OC1_HIT;return 0;}
+using ColChkResetFunc=int(*)(PlayState*,Collider*);
+static ColChkResetFunc sATResetFuncs[]={resetAT,resetAT,resetAT,resetAT};
+static ColChkResetFunc sACResetFuncs[]={resetAC,resetAC,resetAC,resetAC};
+static ColChkResetFunc sOCResetFuncs[]={resetOC,resetOC,resetOC,resetOC};
+static bool GameInteractor_SecondCollisionUpdate(){return false;}
+static bool FrameAdvance_IsEnabled(PlayState*){return false;}
+#define osSyncPrintf(...) do{}while(false)
 @NATIVE_COLLISION@
-static int ocCalls=0,animationCalls=0,offerTextCalls=0,eventCalls=0,ocarinaCalls=0;
-static bool moveMidoOverride=false,quest=false;static bool eventFlags[32]{};
-static bool gDbgCamEnabled=false;static struct {int linkAge=1;}gSaveContext;
-static int gMidoHandsOnHipsIdleAnim;
-static void CollisionCheck_SetOC(PlayState*,int*,Collider*){++ocCalls;}
+
+// Geometry helpers return one deterministic intersection. The production query
+// loops decide whether an actor is allowed to reach any of these helpers.
+static int geometryCalls=0;static CollisionPoly hitPoly;
+static bool Math3D_XZInSphere(...){return true;}
+static bool Math3D_XYInSphere(...){return true;}
+static bool Math3D_YZInSphere(...){return true;}
+static bool Math3D_LineVsSph(...){return true;}
+static bool Math3D_SphVsSph(...){return true;}
+static void SkinMatrix_SetTranslateRotateYXZScale(...){}
+static void Math_Vec3s_ToVec3f(...){}
+static void SkinMatrix_Vec3fMtxFMultXYZ(...){}
+static void Math3D_SurfaceNorm(...){}
+static float Math3D_Vec3fMagnitude(...){return 0;}
+static bool Math3D_TriChkPointParaYIntersectInsideTri(...){return false;}
+static float BgCheck_RaycastFloorDynaList(DynaRaycast*d,u32){++geometryCalls;*d->resultPoly=&hitPoly;return 10;}
+static bool BgCheck_SphVsDynaWallInBgActor(CollisionContext*,u16,DynaCollisionContext*,SSList*,float*x,float*z,
+    CollisionPoly**poly,s32*bg,Vec3f*pos,float,s32 id){++geometryCalls;*x=pos->x+1;*z=pos->z;*poly=&hitPoly;*bg=id;return true;}
+static bool BgCheck_CheckDynaCeilingList(CollisionContext*,u16,DynaCollisionContext*,SSList*,float*y,Vec3f*,float,CollisionPoly**p){
+    ++geometryCalls;*y=1;*p=&hitPoly;return true;}
+static bool BgCheck_CheckLineAgainstBgActor(...){++geometryCalls;return true;}
+static bool BgCheck_SphVsFirstDynaPolyInBgActor(...){++geometryCalls;return true;}
+@NATIVE_DYNA@
+
+static int animationCalls=0,talkTrackingCalls=0,delayedLoads=0,actionCalls=0;
+static uintptr_t gSegments[16]{};
+#define VIRTUAL_TO_PHYSICAL(x) reinterpret_cast<uintptr_t>(x)
 static void SkelAnime_Update(SkelAnime*){++animationCalls;}
-static void EnMd_UpdateEyes(EnMd*){}
-static void EnMd_UpdateAlphaByDistance(EnMd*,PlayState*){}
+static void func_80A98DB4(EnKo*k,PlayState*){k->actor.flags|=ACTOR_FLAG_ATTENTION_ENABLED;}
+static void EnKo_Blink(EnKo*){}
 static void Actor_MoveXZGravity(Actor*){}
+static bool func_80A97C7C(EnKo*){return true;}
 static void Actor_UpdateBgCheckInfo(...){}
-static void EnMd_UpdateAnimSequence_WithTalking(EnMd*){++animationCalls;}
-static void EnMd_UpdateAnimSequence(EnMd*){++animationCalls;}
-static void EnMd_SetAnimSequence(EnMd*,int){++animationCalls;}
-static void Actor_UpdateFidgetTables(...){}
+static void func_80A9877C(EnKo*,PlayState*){++talkTrackingCalls;}
 static s16 Math_Vec3f_Yaw(Vec3f*a,Vec3f*b){return static_cast<s16>(std::atan2(b->x-a->x,b->z-a->z)*32768.0/3.14159265358979323846);}
 static float Math_SinS(s16 a){return std::sin(a*3.14159265358979323846/32768.0);}
 static float Math_CosS(s16 a){return std::cos(a*3.14159265358979323846/32768.0);}
-static bool GameInteractor_Should(int event,bool original,...){return event==VB_MOVE_MIDO_IN_KOKIRI_FOREST&&moveMidoOverride?true:original;}
-#define CHECK_QUEST_ITEM(...) quest
-static bool Flags_GetEventChkInf(int event){return eventFlags[event];}
-static void Flags_SetEventChkInf(int event){eventFlags[event]=true;++eventCalls;}
-static void func_8010BD58(PlayState*,int){++ocarinaCalls;}
-static int Npc_GetTrackingPresetMaxPlayerYaw(int){return 16384;}
-static void Npc_TrackPoint(...){}
-static u16 EnMd_GetText(PlayState*,Actor*){++offerTextCalls;return 0x1040;}
-static s16 func_80AAAF04(PlayState*,Actor*){return NPC_TALK_STATE_IDLE;}
-static void EnMd_Walk(EnMd*,PlayState*){}
-static void EnMd_Watch(EnMd*,PlayState*){}
-static void EnMd_ListenToOcarina(EnMd*,PlayState*){}
-@MIDO@
-
-static unsigned assertions=0,cases=0;
-#define CHECK(c) do{++assertions;if(!(c)){std::fprintf(stderr,"FAIL line %d: %s\n",__LINE__,#c);return 1;}}while(false)
+static void func_80A99048(EnKo*,PlayState*);
+@KOKIRI@
 static void model(Actor*,PlayState*){++modelCalls;}
 static void shadow(Actor*,Lights*,PlayState*){++shadowCalls;}
-static Actor actor(int id,int params=0){
-    Actor a;a.id=id;a.params=params;a.category=ACTORCAT_NPC;a.flags=ACTOR_FLAG_ATTENTION_ENABLED;
-    a.world.pos={100,20,300};a.world.rot={1,200,3};a.draw=model;a.shape.shadowDraw=shadow;
-    a.xzDistToPlayer=30;return a;
+static void update(Actor*,PlayState*){++actionCalls;}
+static void func_80A99048(EnKo*k,PlayState*){
+    ++delayedLoads;k->actor.draw=model;k->actionFunc=func_80A995CC;
+    k->collider.base.actor=&k->actor;k->actor.colChkInfo.mass=@KOKIRI_MASS@;
+}
+// Animation, dialog content, sound and path I/O are shimmed; Mido's production
+// update, blocking movement, talk routing and ocarina branches run below.
+static int ocarinaCalls=0,chimeCalls=0;static bool gDbgCamEnabled=false,midoEvents[16]{};
+static int gMidoHandsOnHipsIdleAnim=0;
+static Vec3f gSfxDefaultPos;static float gSfxDefaultFreqAndVolScale=1,gSfxDefaultReverb=0;
+static void EnMd_UpdateEyes(EnMd*){}
+static void EnMd_UpdateAlphaByDistance(EnMd*,PlayState*){}
+static void EnMd_UpdateAnimSequence_WithTalking(EnMd*){++animationCalls;}
+static void EnMd_UpdateAnimSequence(EnMd*){++animationCalls;}
+static void EnMd_SetAnimSequence(EnMd*,u8){}
+static void Actor_UpdateFidgetTables(PlayState*,s16*,s16*,int){}
+static bool GameInteractor_Should(int,bool vanilla,...){return vanilla;}
+static bool Flags_GetEventChkInf(int id){return midoEvents[id];}
+static void Flags_SetEventChkInf(int id){midoEvents[id]=true;}
+#define CHECK_QUEST_ITEM(key) false
+static void func_8010BD58(PlayState*,int){++ocarinaCalls;}
+static void Audio_PlaySfxGeneral(...){++chimeCalls;}
+static s16 Npc_GetTrackingPresetMaxPlayerYaw(int){return 0x7fff;}
+static void Npc_TrackPoint(Actor*,NpcInteractInfo*,int,int){++talkTrackingCalls;}
+static u16 EnMd_GetText(PlayState*,Actor*){++talkTrackingCalls;return 0x1060;}
+static s16 func_80AAAF04(PlayState*,Actor*){++talkTrackingCalls;return NPC_TALK_STATE_ACTION;}
+static void EnMd_Walk(EnMd*,PlayState*){++actionCalls;}
+static void EnMd_Watch(EnMd*,PlayState*){++actionCalls;}
+void EnMd_BlockPath(EnMd*,PlayState*);
+void EnMd_ListenToOcarina(EnMd*,PlayState*);
+@MIDO@
+static u16 textId(PlayState*,Actor*){++talkTrackingCalls;return 0x1040;}
+static s16 talkState(PlayState*,Actor*){++talkTrackingCalls;return NPC_TALK_STATE_IDLE;}
+static unsigned assertions=0,cases=0;
+#define CHECK(c) do{++assertions;if(!(c)){std::fprintf(stderr,"FAIL line %d: %s\n",__LINE__,#c);return 1;}}while(false)
+static Actor actor(int id,int params=0,int category=ACTORCAT_NPC){
+    Actor a;a.id=id;a.params=params;a.category=category;a.flags=ACTOR_FLAG_ATTENTION_ENABLED;
+    a.world.pos={100,20,300};a.world.rot={1,200,3};a.draw=model;a.update=update;a.shape.shadowDraw=shadow;
+    a.xzDistToPlayer=30;a.yawTowardsPlayer=0x4000;return a;
 }
 static void reset(){
-    state=PlayState{};player=Player{};state.player=&player;state.sceneNum=SCENE_KOKIRI_FOREST;gPlayState=&state;
+    gNpcSoulInteractionFlags.clear();state=PlayState{};player=Player{};
+    state.player=&player;state.sceneNum=SCENE_KOKIRI_FOREST;gPlayState=&state;
     for(int i=0;i<4;++i){options[i]=true;souls[i]=false;}
-    for(auto&event:eventFlags)event=false;
-    isRando=true;modelCalls=shadowCalls=npcGlowCalls=enemyGlowCalls=renderOpenCalls=0;
-    ocCalls=animationCalls=offerTextCalls=eventCalls=ocarinaCalls=0;
-    npcGlow=offscreen=cutscene=moveMidoOverride=quest=false;
+    isRando=true;modelCalls=shadowCalls=npcGlowCalls=enemyGlowCalls=renderOpenCalls=releaseCalls=0;
+    geometryCalls=animationCalls=talkTrackingCalls=delayedLoads=actionCalls=0;
+    npcGlow=offscreen=cutscene=gDbgCamEnabled=false;ocarinaCalls=chimeCalls=0;
+    for(bool&flag:midoEvents){flag=false;}
+    gSaveContext.linkAge=LINK_AGE_ADULT;
 }
 static bool near(float a,float b){return std::fabs(a-b)<0.001f;}
-static bool focusAt(const Actor&a,float height){return near(a.focus.pos.x,a.world.pos.x)&&
-    near(a.focus.pos.y,a.world.pos.y+height)&&near(a.focus.pos.z,a.world.pos.z)&&a.focus.rot.y==a.world.rot.y;}
-static bool canTalk(Actor&a){player.talkActor=&a;bool should=true;SoulSpeak(&should);return should;}
+static bool canSpeak(Actor&a){player.talkActor=&a;bool should=true;SoulSpeak(&should);return should;}
+static bool dynaQuery(Actor&a,int which){
+    state.colCtx={};auto&d=state.colCtx.dyna;d.bgActors[0].actor=&a;d.bgActorFlags[0]=1;
+    Vec3f pos{},end{1,10,1},out;CollisionPoly*poly=nullptr;int bg=50;float x=0,y=100,z=0,dist=100;
+    if(which==0){DynaRaycast r;r.colCtx=&state.colCtx;r.pos=&pos;r.resultPoly=&poly;r.bgId=&bg;r.unk_20=BGCHECK_IGNORE_FLOOR;
+        return BgCheck_RaycastFloorDyna(&r)!=BGCHECK_Y_MIN;}
+    if(which==1)return BgCheck_SphVsDynaWall(&state.colCtx,0,&x,&z,&pos,10,&poly,&bg,nullptr);
+    if(which==2)return BgCheck_CheckDynaCeiling(&state.colCtx,0,&y,&pos,50,&poly,&bg,nullptr);
+    if(which==3)return BgCheck_CheckLineAgainstDyna(&state.colCtx,0,&pos,&end,&out,&poly,&dist,&bg,nullptr,0,0);
+    return BgCheck_SphVsFirstDynaPoly(&state.colCtx,0,&poly,&bg,&pos,10,nullptr,0);
+}
 int main(){
-    reset();
-    struct Placement{int id,params,scene;float height;};
-    const Placement allowed[]={
-        {ACTOR_EN_MD,0,SCENE_KOKIRI_FOREST,50},{ACTOR_EN_MD,-1,SCENE_LOST_WOODS,50},
-        {ACTOR_EN_KZ,0,0,100},{ACTOR_EN_HEISHI1,0,SCENE_HYRULE_CASTLE,60},
-        {ACTOR_EN_HEISHI3,0,0,60},{ACTOR_EN_GE2,0,0,60},
-        {ACTOR_EN_KO,3,SCENE_KOKIRI_FOREST,50},{ACTOR_EN_KO,0x1203,SCENE_KOKIRI_FOREST,50},
-        {ACTOR_EN_HEISHI2,2,0,70},{ACTOR_EN_HEISHI2,0x1205,0,70},
-        {ACTOR_EN_GE1,0,0,60},{ACTOR_EN_GE1,1,0,60},{ACTOR_EN_GE1,0x1246,0,60},
-        {ACTOR_EN_TA,0,SCENE_HYRULE_CASTLE,60},{ACTOR_EN_TA,-1,SCENE_HYRULE_CASTLE,60}};
-    for(const auto&p:allowed){
+    struct Placement{int id,params,scene;bool solid;};
+    const Placement placements[]={
+        {ACTOR_EN_KO,3,SCENE_KOKIRI_FOREST,true},{ACTOR_EN_KO,0x1203,SCENE_KOKIRI_FOREST,true},
+        {ACTOR_EN_KO,3,SCENE_LOST_WOODS,false},{ACTOR_EN_KO,3,-1,false},
+        {ACTOR_EN_MD,0,SCENE_KOKIRI_FOREST,false},{ACTOR_EN_MD,-1,SCENE_LOST_WOODS,true},
+        {ACTOR_EN_MD,0,SCENE_MIDOS_HOUSE,false},{ACTOR_EN_MD,0,SCENE_HYRULE_CASTLE,false},
+        {ACTOR_EN_KZ,0,0,false},{ACTOR_EN_HEISHI1,0,SCENE_HYRULE_CASTLE,false},
+        {ACTOR_EN_HEISHI3,0,0,false},{ACTOR_EN_GE2,0,0,false},
+        {ACTOR_EN_HEISHI2,2,0,false},{ACTOR_EN_HEISHI2,0x1205,0,false},
+        {ACTOR_EN_GE1,0,0,false},{ACTOR_EN_GE1,1,0,false},{ACTOR_EN_GE1,0x1246,0,false},
+        {ACTOR_EN_TA,0,SCENE_HYRULE_CASTLE,false},{ACTOR_EN_TA,-1,SCENE_HYRULE_CASTLE,false},
+        {ACTOR_EN_RU1,0,0,false},{ACTOR_EN_KO,0,SCENE_KOKIRI_FOREST,false},
+        {ACTOR_EN_KO,2,SCENE_KOKIRI_FOREST,false},{ACTOR_EN_KO,4,SCENE_KOKIRI_FOREST,false},
+        {ACTOR_BG_ZG,0,0,false},{ACTOR_EN_JSJUTAN,0,0,false}};
+    for(const auto&p:placements){
         reset();state.sceneNum=p.scene;Actor a=actor(p.id,p.params);
-        CHECK(MegaSoul_IsPathBlockingNpcPlacement(p.id,p.params,p.scene));
-        CHECK(MegaSoul_IsPathBlockingNpc(&a)&&MegaSoul_ShouldHideActor(&a));
-        SoulInit(&a);CHECK(a.draw==model&&(a.flags&ACTOR_FLAG_ATTENTION_ENABLED)&&focusAt(a,p.height));
-        a.world.pos={201,45,404};a.world.rot.y=300;bool update=true;SoulUpdate(&a,&update);
-        CHECK(update&&focusAt(a,p.height)&&canTalk(a));
+        a.flags|=ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED|ACTOR_FLAG_TALK;a.isTargeted=true;
+        player.talkActor=player.focusActor=player.interactRangeActor=&a;player.getItemId=42;player.exchangeItemId=12;
+        CHECK(MegaSoul_IsPathBlockingNpcPlacement(p.id,p.params,p.scene)==p.solid);
+        CHECK(MegaSoul_ShouldDisableActorCollision(&a)==!p.solid&&!MegaSoul_CanInteractWithActor(&a));
+        SoulInit(&a);CHECK(a.draw==model&&!(a.flags&(ACTOR_FLAG_ATTENTION_ENABLED|ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED|ACTOR_FLAG_TALK)));
+        CHECK(!a.isTargeted&&player.talkActor==nullptr&&player.focusActor==nullptr&&player.interactRangeActor==nullptr);
+        CHECK(player.getItemId==GI_NONE&&player.exchangeItemId==EXCH_ITEM_NONE&&releaseCalls==1);
+        bool should=true;SoulUpdate(&a,&should);CHECK(should==p.solid&&!canSpeak(a));
         Actor_Draw(&state,&a);CHECK(modelCalls==0&&shadowCalls==0&&npcGlowCalls==0&&enemyGlowCalls==0&&renderOpenCalls==0);
-        souls[RAND_INF_NPC_SOUL]=true;CHECK(!MegaSoul_ShouldHideActor(&a));
+        Collider c;c.actor=&a;CHECK(CollisionCheck_SetAT(&state,&state.colChkCtx,&c)==-1);
+        CHECK(CollisionCheck_SetAC(&state,&state.colChkCtx,&c)==-1);
+        CHECK((CollisionCheck_SetOC(&state,&state.colChkCtx,&c)>=0)==p.solid);
+        for(int kind=0;kind<5;++kind){int before=geometryCalls;CHECK(dynaQuery(a,kind)==p.solid);CHECK((geometryCalls>before)==p.solid);}
+        souls[RAND_INF_NPC_SOUL]=true;should=true;SoulUpdate(&a,&should);
+        CHECK(should&&!MegaSoul_ShouldHideActor(&a)&&MegaSoul_CanInteractWithActor(&a));
+        CHECK((a.flags&ACTOR_FLAG_ATTENTION_ENABLED)&&(a.flags&ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED));
         Actor_Draw(&state,&a);CHECK(modelCalls==1&&shadowCalls==1&&npcGlowCalls==1&&enemyGlowCalls==1&&renderOpenCalls==1);
+        for(int kind=0;kind<5;++kind)CHECK(dynaQuery(a,kind));
+        ++cases;
     }
-    ++cases;std::puts("PASS every allowed NPC placement stays initialized, targetable, updateable and talkable while completely hidden, then renders on acquisition");
-    const Placement denied[]={
-        {ACTOR_EN_KO,0,SCENE_KOKIRI_FOREST,0},{ACTOR_EN_KO,2,SCENE_KOKIRI_FOREST,0},
-        {ACTOR_EN_KO,4,SCENE_KOKIRI_FOREST,0},{ACTOR_EN_KO,0x1202,SCENE_KOKIRI_FOREST,0},
-        {ACTOR_EN_HEISHI2,0,0,0},{ACTOR_EN_HEISHI2,1,0,0},{ACTOR_EN_HEISHI2,3,0,0},
-        {ACTOR_EN_HEISHI2,4,0,0},{ACTOR_EN_HEISHI2,6,0,0},{ACTOR_EN_HEISHI2,0x1204,0,0},
-        {ACTOR_EN_GE1,2,0,0},{ACTOR_EN_GE1,3,0,0},{ACTOR_EN_GE1,0x45,0,0},{ACTOR_EN_GE1,0x47,0,0},
-        {ACTOR_EN_TA,1,SCENE_HYRULE_CASTLE,0},{ACTOR_EN_TA,2,SCENE_HYRULE_CASTLE,0},
-        {ACTOR_EN_TA,0,SCENE_KOKIRI_FOREST,0},{ACTOR_EN_TA,0,-1,0},{ACTOR_EN_RU1,0,0,0}};
-    for(const auto&p:denied){
-        reset();state.sceneNum=p.scene;Actor a=actor(p.id,p.params);
-        CHECK(!MegaSoul_IsPathBlockingNpcPlacement(p.id,p.params,p.scene));
-        SoulInit(&a);bool update=true;SoulUpdate(&a,&update);
-        CHECK(a.draw==nullptr&&!(a.flags&ACTOR_FLAG_ATTENTION_ENABLED)&&!update&&!canTalk(a));
+    std::puts("PASS 25 NPC placements: only the Kokiri Forest exit boy and adult Lost Woods Mido retain collision; none can interact while hidden; existing actors restore on Soul acquisition");
+    for(const auto&p:placements){
+        reset();state.sceneNum=p.scene;Actor a=actor(p.id,p.params);a.flags|=ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;
+        CHECK(!Actor_OfferTalk(&a,&state,60)&&!Actor_OfferTalkExchange(&a,&state,60,60,1));
+        a.flags|=ACTOR_FLAG_TALK;CHECK(!Actor_ProcessTalkRequest(&a,&state)&&!(a.flags&ACTOR_FLAG_TALK));
+        s16 talk=NPC_TALK_STATE_ACTION;a.flags|=ACTOR_FLAG_TALK;
+        CHECK(!Npc_UpdateTalking(&state,&a,&talk,60,textId,talkState)&&talk==NPC_TALK_STATE_IDLE&&talkTrackingCalls==0);
+        CHECK(!Actor_OfferGetItem(&a,&state,42,60,60)&&!GiveItemEntryFromActor(&a,&state,GetItemEntry{42},60,60));
+        Actor_OfferCarry(&a,&state);CHECK(player.interactRangeActor==nullptr&&player.getItemId==GI_NONE);
+        CHECK(Attention_ShouldReleaseLockOn(&a,&player,true));
+        souls[RAND_INF_NPC_SOUL]=true;
+        CHECK(Actor_OfferTalk(&a,&state,60)&&Actor_OfferTalkExchange(&a,&state,60,60,1));
+        CHECK(Actor_OfferGetItem(&a,&state,42,60,60)&&GiveItemEntryFromActor(&a,&state,GetItemEntry{42},60,60));
+        CHECK(player.interactRangeActor==&a&&player.getItemId==42&&!Attention_ShouldReleaseLockOn(&a,&player,true));
+        ++cases;
     }
-    ++cases;std::puts("PASS ordinary NPCs and wrong guard/Kokiri/Talon variants retain the existing hidden, frozen, untalkable behavior");
-    reset();CHECK(!MegaSoul_IsPathBlockingNpc(nullptr)&&!MegaSoul_ShouldHideActor(nullptr));SoulInit(nullptr);
-    Actor talon=actor(ACTOR_EN_TA);gPlayState=nullptr;CHECK(!MegaSoul_IsPathBlockingNpc(&talon));gPlayState=&state;
-    Actor midoActor=actor(ACTOR_EN_MD);options[RSK_SHUFFLE_NPC_SOUL]=false;SoulInit(&midoActor);
-    CHECK(!MegaSoul_ShouldHideActor(&midoActor)&&canTalk(midoActor));
-    options[RSK_SHUFFLE_NPC_SOUL]=true;isRando=false;CHECK(!MegaSoul_ShouldHideActor(&midoActor));
-    ++cases;std::puts("PASS null scene/actor handling and disabled/randomizer-off rendering remain safe");
-    reset();
-    for(int id:{ACTOR_EN_ISHI,ACTOR_OBJ_BOMBIWA,ACTOR_OBJ_HAMISHI,ACTOR_BG_JYA_BOMBCHUIWA,ACTOR_OBJ_KIBAKO,ACTOR_OBJ_KIBAKO2}){
-        Actor a=actor(id);a.category=ACTORCAT_PROP;Actor_Draw(&state,&a);
-        CHECK(modelCalls==0&&shadowCalls==0&&npcGlowCalls==0&&enemyGlowCalls==0&&renderOpenCalls==0);
+    std::puts("PASS all 25 placements reject normal and automatic talk, pending talk callbacks, exchanges, gifts, carrying and lock-on; normal offers resume when owned");
+    for(int which=0;which<6;++which){
+        reset();Actor a=actor(ACTOR_EN_KZ);Collider c;c.actor=&a;c.acFlags=c.atFlags=1;c.ocFlags1=OC1_HIT;
+        auto call=[&](){switch(which){case 0:return CollisionCheck_SetAT(&state,&state.colChkCtx,&c);
+            case 1:return CollisionCheck_SetAC(&state,&state.colChkCtx,&c);case 2:return CollisionCheck_SetOC(&state,&state.colChkCtx,&c);
+            case 3:return CollisionCheck_SetAT_SAC(&state,&state.colChkCtx,&c,0);case 4:return CollisionCheck_SetAC_SAC(&state,&state.colChkCtx,&c,0);
+            default:return CollisionCheck_SetOC_SAC(&state,&state.colChkCtx,&c,0);}};
+        CHECK(call()==-1&&state.colChkCtx.colATCount==0&&state.colChkCtx.colACCount==0&&state.colChkCtx.colOCCount==0);
+        souls[RAND_INF_NPC_SOUL]=true;CHECK(call()==0);
+        ++cases;
     }
-    souls[RAND_INF_ROCK_SOUL]=souls[RAND_INF_CRATE_SOUL]=true;
-    for(int id:{ACTOR_EN_ISHI,ACTOR_OBJ_BOMBIWA,ACTOR_OBJ_HAMISHI,ACTOR_BG_JYA_BOMBCHUIWA,ACTOR_OBJ_KIBAKO,ACTOR_OBJ_KIBAKO2}){
-        Actor a=actor(id);a.category=ACTORCAT_PROP;CHECK(!MegaSoul_ShouldHideActor(&a));Actor_Draw(&state,&a);
+    std::puts("PASS all six native AT, AC, OC and indexed registration paths reject invisible NPC colliders and restore live");
+    for(int id:{ACTOR_OBJ_KIBAKO,ACTOR_OBJ_KIBAKO2,ACTOR_EN_ISHI,ACTOR_OBJ_BOMBIWA,ACTOR_OBJ_HAMISHI,ACTOR_BG_JYA_BOMBCHUIWA}){
+        for(int type=0;type<2;++type){
+            reset();Actor a=actor(id,type,ACTORCAT_PROP);bool solid=id!=ACTOR_OBJ_KIBAKO&&id!=ACTOR_OBJ_KIBAKO2&&(id!=ACTOR_EN_ISHI||type==1);
+            CHECK(MegaSoul_ShouldHideActor(&a)&&!MegaSoul_CanInteractWithActor(&a));
+            CHECK(MegaSoul_ShouldDisableActorCollision(&a)==!solid);Collider c;c.actor=&a;
+            CHECK((CollisionCheck_SetOC(&state,&state.colChkCtx,&c)>=0)==solid);
+            CHECK(CollisionCheck_SetAC(&state,&state.colChkCtx,&c)==-1&&CollisionCheck_SetAT(&state,&state.colChkCtx,&c)==-1);
+            for(int kind=0;kind<5;++kind)CHECK(dynaQuery(a,kind)==solid);
+            // Queries must leave original dyna registration/enable flags intact.
+            CHECK(state.colCtx.dyna.bgActorFlags[0]==1&&DynaPoly_GetActor(&state.colCtx,0)==reinterpret_cast<DynaPolyActor*>(&a));
+            souls[RAND_INF_CRATE_SOUL]=souls[RAND_INF_ROCK_SOUL]=true;
+            CHECK(!MegaSoul_ShouldHideActor(&a)&&!MegaSoul_ShouldDisableActorCollision(&a));
+            for(int kind=0;kind<5;++kind)CHECK(dynaQuery(a,kind));
+            ++cases;
+        }
     }
-    CHECK(modelCalls==6&&shadowCalls==6&&npcGlowCalls==6&&enemyGlowCalls==6);
-    for(int id:{ACTOR_BG_JYA_BOMBIWA,ACTOR_EN_GOROIWA,ACTOR_BG_JYA_GOROIWA}){
-        Actor a=actor(id);souls[RAND_INF_ROCK_SOUL]=false;CHECK(!MegaSoul_ShouldHideActor(&a));
-    }
-    ++cases;std::puts("PASS central rendering hides all intended rock/crate families before model/shadow/glow and preserves wall/rolling hazards");
-    reset();
-    for(int id:{ACTOR_EN_COW,ACTOR_EN_DNS,ACTOR_EN_SHOPNUTS,ACTOR_EN_SW,ACTOR_EN_SI}){
-        Actor a=actor(id);CHECK(!IsMegaNpcSoulActor(&a));
-    }
-    Actor fish=actor(ACTOR_FISHING,100);CHECK(!IsMegaNpcSoulActor(&fish));fish.params=99;CHECK(IsMegaNpcSoulActor(&fish));
-    Actor sign=actor(ACTOR_EN_KANBAN);CHECK(!canTalk(sign));
-    ++cases;std::puts("PASS animal/scrub/Skulltula/fishing classifications and the separate Sign Soul speech gate stay intact");
-
-    reset();Actor a=actor(ACTOR_EN_MD);SoulInit(&a);s16 talk=NPC_TALK_STATE_IDLE;
-    CHECK(!Npc_UpdateTalking(&state,&a,&talk,60,EnMd_GetText,func_80AAAF04));
-    CHECK(player.talkActor==&a&&a.textId==0x1040&&offerTextCalls==1);
-    CHECK(projectedFocus.x==a.world.pos.x&&projectedFocus.y==a.world.pos.y+50&&projectedFocus.z==a.world.pos.z);
-    CHECK(canTalk(a));a.flags|=ACTOR_FLAG_TALK;
-    CHECK(Npc_UpdateTalking(&state,&a,&talk,60,EnMd_GetText,func_80AAAF04)&&talk==NPC_TALK_STATE_TALKING&&!(a.flags&ACTOR_FLAG_TALK));
-    CHECK(!Npc_UpdateTalking(&state,&a,&talk,60,EnMd_GetText,func_80AAAF04)&&talk==NPC_TALK_STATE_IDLE);
-    player.talkActor=nullptr;offscreen=true;CHECK(!Npc_UpdateTalking(&state,&a,&talk,60,EnMd_GetText,func_80AAAF04)&&player.talkActor==nullptr);
-    offscreen=false;a.xzDistToPlayer=100;CHECK(!Npc_UpdateTalking(&state,&a,&talk,60,EnMd_GetText,func_80AAAF04)&&player.talkActor==nullptr);
-    a.xzDistToPlayer=30;a.yDistToPlayer=100;CHECK(!Npc_UpdateTalking(&state,&a,&talk,60,EnMd_GetText,func_80AAAF04)&&player.talkActor==nullptr);
-    ++cases;std::puts("PASS actual native talk state/offer path uses hidden world-relative focus and retains distance/offscreen restrictions");
-
-    reset();EnMd mido;mido.actor=actor(ACTOR_EN_MD);mido.actor.colChkInfo.mass=@MIDO_MASS@;
-    mido.actor.home.pos={100,20,300};mido.collider.base.actor=&mido.actor;mido.actionFunc=EnMd_BlockPath;
-    player.actor.world.pos={100,20,500};SoulInit(&mido.actor);
-    bool update=true;SoulUpdate(&mido.actor,&update);if(update)EnMd_Update(&mido.actor,&state);
-    CHECK(ocCalls==1&&mido.collider.dim.pos.x==100&&mido.collider.dim.pos.y==20&&mido.collider.dim.pos.z==300);
-    CHECK(near(mido.actor.world.pos.x,100)&&near(mido.actor.world.pos.z,360)&&mido.actionFunc==EnMd_BlockPath);
-    CHECK(player.talkActor==&mido.actor&&offerTextCalls==1&&canTalk(mido.actor));
-    player.actor.colChkInfo.mass=MASS_HEAVY;Collider playerCollider;playerCollider.actor=&player.actor;playerCollider.ocFlags2=OC2_TYPE_PLAYER;
+    std::puts("PASS crates and regular rocks have no collision in every query; silver, brown, bronze and ceiling boulders remain solid and unbreakable until their Soul");
+    reset();EnKo boy;boy.actor=actor(ACTOR_EN_KO,3);boy.actor.home.pos={100,20,300};
+    boy.actor.draw=nullptr;boy.actionFunc=func_80A99048;player.actor.world.pos={100,20,500};SoulInit(&boy.actor);
+    bool should=true;SoulUpdate(&boy.actor,&should);CHECK(should);EnKo_Update(&boy.actor,&state);UpdateNpcSoulState(&boy.actor);
+    CHECK(delayedLoads==1&&boy.actor.draw==model&&boy.actionFunc==func_80A995CC&&talkTrackingCalls==0);
+    state.colChkCtx={};boy.actor.flags|=ACTOR_FLAG_TALK|ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;boy.actor.isTargeted=true;
+    SoulUpdate(&boy.actor,&should);CHECK(should);EnKo_Update(&boy.actor,&state);UpdateNpcSoulState(&boy.actor);
+    CHECK(near(boy.actor.world.pos.x,100)&&near(boy.actor.world.pos.z,380)&&state.colChkCtx.colOCCount==1);
+    CHECK(boy.collider.dim.pos.z==380&&talkTrackingCalls==0&&!boy.actor.isTargeted);
+    CHECK(!(boy.actor.flags&(ACTOR_FLAG_TALK|ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED|ACTOR_FLAG_ATTENTION_ENABLED)));
+    player.actor.colChkInfo.mass=MASS_HEAVY;Collider pc;pc.actor=&player.actor;pc.ocFlags2=OC2_TYPE_PLAYER;
     ColliderInfo leftInfo,rightInfo;Vec3f left{},right{10,0,0};
-    CollisionCheck_SetOCvsOC(&mido.collider.base,&leftInfo,&left,&playerCollider,&rightInfo,&right,5);
+    CollisionCheck_SetOCvsOC(&boy.collider.base,&leftInfo,&left,&pc,&rightInfo,&right,5);
+    CHECK(boy.actor.colChkInfo.displacement.x==0&&player.actor.colChkInfo.displacement.x==5);
+    Actor_Draw(&state,&boy.actor);CHECK(modelCalls==0&&shadowCalls==0);
+    souls[RAND_INF_NPC_SOUL]=true;SoulUpdate(&boy.actor,&should);EnKo_Update(&boy.actor,&state);
+    CHECK(should&&talkTrackingCalls==1);Actor_Draw(&state,&boy.actor);CHECK(modelCalls==1&&shadowCalls==1);
+    ++cases;std::puts("PASS actual Kokiri exit boy update retains deferred loading, 80-unit blocking movement and solid OC, skips all talk/trade callbacks, and restores normally");
+    reset();state.sceneNum=SCENE_LOST_WOODS;gSaveContext.linkAge=LINK_AGE_CHILD;
+    Actor childMido=actor(ACTOR_EN_MD);
+    CHECK(MegaSoul_IsPathBlockingNpcPlacement(childMido.id,childMido.params,state.sceneNum));
+    CHECK(!MegaSoul_IsPathBlockingNpc(&childMido)&&MegaSoul_ShouldDisableActorCollision(&childMido));
+    should=true;SoulUpdate(&childMido,&should);CHECK(!should&&!MegaSoul_CanInteractWithActor(&childMido));
+    Collider childMidoCollider;childMidoCollider.actor=&childMido;
+    CHECK(CollisionCheck_SetOC(&state,&state.colChkCtx,&childMidoCollider)==-1);
+    gSaveContext.linkAge=LINK_AGE_ADULT;should=true;SoulUpdate(&childMido,&should);
+    CHECK(should&&MegaSoul_IsPathBlockingNpc(&childMido)&&!MegaSoul_ShouldDisableActorCollision(&childMido));
+    CHECK(CollisionCheck_SetOC(&state,&state.colChkCtx,&childMidoCollider)==0);
+    ++cases;std::puts("PASS Lost Woods Mido collision and live blocking AI are limited to adult Link");
+
+    reset();state.sceneNum=SCENE_LOST_WOODS;EnMd mido;mido.actor=actor(ACTOR_EN_MD);
+    mido.actor.home.pos=mido.actor.world.pos;mido.actor.colChkInfo.mass=@MIDO_MASS@;
+    mido.collider.base.actor=&mido.actor;mido.collider.dim.height=46;mido.actionFunc=EnMd_BlockPath;
+    player.actor.world.pos={100,20,500};player.stateFlags2=PLAYER_STATE2_ATTEMPT_PLAY_FOR_ACTOR;
+    mido.interactInfo.talkState=NPC_TALK_STATE_ACTION;
+    SoulInit(&mido.actor);should=true;SoulUpdate(&mido.actor,&should);CHECK(should);
+    EnMd_Update(&mido.actor,&state);UpdateNpcSoulState(&mido.actor);
+    CHECK(near(mido.actor.world.pos.x,100)&&near(mido.actor.world.pos.z,360));
+    CHECK(mido.actionFunc==EnMd_BlockPath&&mido.interactInfo.talkState==NPC_TALK_STATE_IDLE);
+    CHECK(state.colChkCtx.colOCCount==1&&mido.collider.dim.pos.z==300);
+    CHECK(talkTrackingCalls==0&&ocarinaCalls==0&&chimeCalls==0&&player.unk_6A8==nullptr);
+    CHECK(!(player.stateFlags2&(PLAYER_STATE2_PLAY_FOR_ACTOR|PLAYER_STATE2_NEAR_OCARINA_ACTOR)));
+    CHECK(!midoEvents[EVENTCHKINF_PLAYED_SARIAS_SONG_FOR_MIDO_AS_ADULT]);
+    CHECK(!(mido.actor.flags&(ACTOR_FLAG_TALK|ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED|ACTOR_FLAG_ATTENTION_ENABLED)));
+    state.colChkCtx={};EnMd_Update(&mido.actor,&state);UpdateNpcSoulState(&mido.actor);
+    CHECK(mido.collider.dim.pos.z==360&&state.colChkCtx.colOCCount==1);
+    player.actor.colChkInfo.mass=MASS_HEAVY;pc.actor=&player.actor;pc.ocFlags2=OC2_TYPE_PLAYER;
+    CollisionCheck_SetOCvsOC(&mido.collider.base,&leftInfo,&left,&pc,&rightInfo,&right,5);
     CHECK(mido.actor.colChkInfo.displacement.x==0&&player.actor.colChkInfo.displacement.x==5);
-    SoulUpdate(&mido.actor,&update);CHECK(focusAt(mido.actor,50));EnMd_Update(&mido.actor,&state);
-    CHECK(ocCalls==2&&mido.collider.dim.pos.z==360);
-    mido.interactInfo.talkState=NPC_TALK_STATE_ACTION;EnMd_BlockPath(&mido,&state);
-    CHECK(mido.actionFunc==EnMd_Walk&&mido.waypoint==1&&mido.actor.speedXZ==1.5f&&eventFlags[EVENTCHKINF_SHOWED_MIDO_SWORD_SHIELD]);
     Actor_Draw(&state,&mido.actor);CHECK(modelCalls==0&&shadowCalls==0);
-    souls[RAND_INF_NPC_SOUL]=true;Actor_Draw(&state,&mido.actor);CHECK(modelCalls==1&&shadowCalls==1);
-    ++cases;std::puts("PASS actual Mido Update and BlockPath retain per-frame solid OC, positioning, talk, and quest-triggered path clearing while invisible");
-    reset();state.sceneNum=SCENE_LOST_WOODS;mido=EnMd{};mido.actor=actor(ACTOR_EN_MD);
-    mido.actor.home.pos=mido.actor.world.pos;mido.actionFunc=EnMd_BlockPath;player.actor.world.pos={100,20,500};
-    SoulInit(&mido.actor);player.stateFlags2=PLAYER_STATE2_ATTEMPT_PLAY_FOR_ACTOR;EnMd_BlockPath(&mido,&state);
-    CHECK(mido.actionFunc==EnMd_ListenToOcarina&&player.unk_6A8==&mido.actor&&ocarinaCalls==1&&
-          (player.stateFlags2&PLAYER_STATE2_PLAY_FOR_ACTOR));
+    player.stateFlags2=0;player.actor.world.pos={300,20,300};state.colChkCtx={};
+    EnMd_Update(&mido.actor,&state);CHECK(near(mido.actor.world.pos.x,160)&&near(mido.actor.world.pos.z,300));
+    CHECK(!(player.stateFlags2&PLAYER_STATE2_NEAR_OCARINA_ACTOR));
+    souls[RAND_INF_NPC_SOUL]=true;should=true;SoulUpdate(&mido.actor,&should);
+    player.stateFlags2=PLAYER_STATE2_ATTEMPT_PLAY_FOR_ACTOR;EnMd_Update(&mido.actor,&state);
+    CHECK(should&&talkTrackingCalls>0&&ocarinaCalls==1&&mido.actionFunc==EnMd_ListenToOcarina);
+    CHECK(player.unk_6A8==&mido.actor&&(player.stateFlags2&PLAYER_STATE2_PLAY_FOR_ACTOR));
+    state.msgCtx.ocarinaMode=OCARINA_MODE_03;EnMd_ListenToOcarina(&mido,&state);
+    CHECK(chimeCalls==1&&mido.actor.textId==0x1067&&mido.actionFunc==EnMd_BlockPath);
+    CHECK(!midoEvents[EVENTCHKINF_PLAYED_SARIAS_SONG_FOR_MIDO_AS_ADULT]);
     mido.interactInfo.talkState=NPC_TALK_STATE_ACTION;EnMd_BlockPath(&mido,&state);
-    CHECK(mido.actionFunc==EnMd_Walk&&eventFlags[EVENTCHKINF_PLAYED_SARIAS_SONG_FOR_MIDO_AS_ADULT]);
-    ++cases;std::puts("PASS adult Lost Woods Mido still accepts the ocarina and clears his route on the existing quest action");
+    CHECK(midoEvents[EVENTCHKINF_PLAYED_SARIAS_SONG_FOR_MIDO_AS_ADULT]);
+    CHECK(mido.actionFunc==EnMd_Walk&&mido.waypoint==1&&near(mido.actor.speedXZ,1.5f));
+    Actor_Draw(&state,&mido.actor);CHECK(modelCalls==1&&shadowCalls==1);
+    ++cases;std::puts("PASS actual adult Lost Woods Mido update keeps 60-unit blocking movement and immovable OC, rejects pending talk/ocarina/move-aside flags, and restores normal song/dialogue progression live");
+
+    reset();state.sceneNum=SCENE_LOST_WOODS;mido=EnMd{};mido.actor=actor(ACTOR_EN_MD);
+    mido.collider.base.actor=&mido.actor;mido.actionFunc=EnMd_ListenToOcarina;
+    mido.interactInfo.talkState=NPC_TALK_STATE_ACTION;player.unk_6A8=&mido.actor;
+    player.stateFlags2=PLAYER_STATE2_ATTEMPT_PLAY_FOR_ACTOR|PLAYER_STATE2_PLAY_FOR_ACTOR|PLAYER_STATE2_NEAR_OCARINA_ACTOR;
+    state.msgCtx.ocarinaMode=OCARINA_MODE_03;
+    EnMd_Update(&mido.actor,&state);
+    CHECK(mido.actionFunc==EnMd_BlockPath&&mido.interactInfo.talkState==NPC_TALK_STATE_IDLE);
+    CHECK(player.unk_6A8==nullptr&&player.stateFlags2==0);
+    CHECK(chimeCalls==0&&ocarinaCalls==0&&talkTrackingCalls==0&&player.talkActor==nullptr);
+    CHECK(!midoEvents[EVENTCHKINF_PLAYED_SARIAS_SONG_FOR_MIDO_AS_ADULT]);
+    ++cases;std::puts("PASS invisible Mido cancels a stale actor-owned ocarina state without dialogue, sound, reward or passage flag");
+
+    reset();Actor a=actor(ACTOR_EN_MD);a.flags=ACTOR_FLAG_IGNORE_POINTLIGHTS;SoulInit(&a);
+    souls[RAND_INF_NPC_SOUL]=true;SoulUpdate(&a,&should);CHECK(a.flags==ACTOR_FLAG_IGNORE_POINTLIGHTS&&a.draw==model);
+    souls[RAND_INF_NPC_SOUL]=false;SoulInit(&a);options[RSK_SHUFFLE_NPC_SOUL]=false;SoulUpdate(&a,&should);
+    CHECK(!MegaSoul_ShouldHideActor(&a)&&MegaSoul_CanInteractWithActor(&a)&&!MegaSoul_ShouldDisableActorCollision(&a));
+    ++cases;std::puts("PASS restoration preserves originally disabled attention/auto-talk and follows live option changes");
+    reset();SoulInit(nullptr);SoulUpdate(nullptr,&should);
+    CHECK(!MegaSoul_IsPathBlockingNpc(nullptr)&&!MegaSoul_ShouldHideActor(nullptr)&&MegaSoul_CanInteractWithActor(nullptr));
+    a=actor(ACTOR_EN_KO,3);gPlayState=nullptr;CHECK(!MegaSoul_IsPathBlockingNpc(&a));UpdateNpcSoulState(&a);gPlayState=&state;
+    isRando=false;CHECK(!MegaSoul_ShouldHideActor(&a)&&MegaSoul_CanInteractWithActor(&a));
+    ++cases;std::puts("PASS null actor/scene and ordinary-game paths remain safe");
+    reset();
+    for(int id:{ACTOR_EN_COW,ACTOR_EN_DNS,ACTOR_EN_SHOPNUTS,ACTOR_EN_SW,ACTOR_EN_SI}){Actor other=actor(id);CHECK(!IsMegaNpcSoulActor(&other));}
+    Actor fish=actor(ACTOR_FISHING,100);CHECK(!IsMegaNpcSoulActor(&fish));fish.params=99;
+    CHECK(IsMegaNpcSoulActor(&fish)&&!MegaSoul_ShouldHideActor(&fish)&&!MegaSoul_CanInteractWithActor(&fish));
+    should=true;SoulUpdate(&fish,&should);CHECK(should);Actor sign=actor(ACTOR_EN_KANBAN);CHECK(!canSpeak(sign));
+    ++cases;std::puts("PASS separate animal/scrub/skulltula classification, Sign Soul speech, and the fishing pond controller remain intact");
     std::printf("RESULT cases=%u assertions=%u\n",cases,assertions);
 }

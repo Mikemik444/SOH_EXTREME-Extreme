@@ -44,6 +44,7 @@ from ._vendor_oot_soh.LogicHelpers import (
 from worlds.generic.Rules import add_rule
 from Options import OptionError
 from .Options import SohExtremeOptions, extreme_option_groups
+from .SongNotes import SONG_NOTE_LAYOUT, selected_song_names, song_note_mask
 from .ForkLocations import FORK_LOCATIONS, FORK_LOCATION_NAME_TO_ID, RETIRED_FORK_LOCATION_IDS
 from .PhysicalChestTypes import CHEST_TYPES_BY_AP_ID
 from .EnemyDropLocations import ENEMY_DROP_LOCATIONS, ENEMY_DROP_LOCATION_NAME_TO_ID, ENEMY_UNUSED_OBJECT_IDS
@@ -171,20 +172,6 @@ EXTREME_ITEMS = {
     "Big Octo Soul": 9500185,
 
 }
-SONG_NOTE_LAYOUT = (
-    ("Zelda's Lullaby", 6),
-    ("Epona's Song", 6),
-    ("Saria's Song", 6),
-    ("Sun's Song", 6),
-    ("Song of Time", 6),
-    ("Song of Storms", 6),
-    ("Minuet of Forest", 6),
-    ("Bolero of Fire", 8),
-    ("Serenade of Water", 5),
-    ("Requiem of Spirit", 6),
-    ("Nocturne of Shadow", 7),
-    ("Prelude of Light", 6),
-)
 # New seeds use repeatable per-song items. Legacy note IDs remain reserved.
 PROGRESSIVE_SONG_ITEMS = {f"Progressive {song}": 9500300 + i
                           for i, (song, _) in enumerate(SONG_NOTE_LAYOUT)}
@@ -982,8 +969,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 # Older SOH-EXTREME slots may predate extreme_all_options but
                 # still contain many options at the top level.
                 if name not in slot_data:
-                    continue
-                raw_value = slot_data[name]
+                    if name != "song_note_songs":
+                        continue
+                    # Older note seeds split every song. Never inherit a local
+                    # partial selection when reconstructing their saved graph.
+                    raw_value = ["all"]
+                else:
+                    raw_value = slot_data[name]
             else:
                 raw_value = option_snapshot[name]
 
@@ -1491,7 +1483,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     getattr(self.options, name).value = self.passthrough[name]
 
     def push_precollected(self, item: Item) -> None:
-        if self.options.song_note_shuffle.value and item.name in self.SONG_NOTE_GROUPS:
+        if self.song_uses_individual_notes(item.name):
             existing = Counter(entry.name for entry in self.multiworld.precollected_items[self.player])
             for note, needed in Counter(self._song_note_groups()[item.name]).items():
                 for _ in range(max(0, needed - existing[note])):
@@ -1509,9 +1501,21 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         """
         if not self.options.song_note_shuffle.value:
             return
+        legacy_starting_flags = set()
         for option in (self.options.start_inventory, self.options.start_inventory_from_pool):
             expanded = dict(option.value)
             for song, notes in self._song_note_groups().items():
+                if self._song_note_revision() and not self.using_ut:
+                    # A progressive receipt fills the first missing legacy flag.
+                    # A later numbered receipt can overlap it, so new seeds use
+                    # one receipt representation for each selected song. Legacy
+                    # flags count once across both common starting options.
+                    progressive = f"Progressive {song}"
+                    for legacy in self.SONG_NOTE_GROUPS[song]:
+                        requested = expanded.pop(legacy, 0)
+                        if requested and legacy not in legacy_starting_flags:
+                            expanded[progressive] = expanded.get(progressive, 0) + 1
+                            legacy_starting_flags.add(legacy)
                 count = expanded.pop(song, 0)
                 if count:
                     # Starting a complete song grants its required number of copies.
@@ -1573,9 +1577,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             self.options.shuffle_beehives.value = 1
 
         self._expand_starting_song_requests()
-        if self.options.song_note_shuffle.value and self.options.shuffle_songs != "anywhere":
-            logger.info("SOH-EXTREME individual notes use the normal pool; whole-song "
-                        "placement mode %s does not place complete songs", self.options.shuffle_songs.current_key)
+        if selected_song_names(self.options) and self.options.shuffle_songs != "anywhere":
+            logger.info("SOH-EXTREME selected songs use progressive notes in the normal pool; "
+                        "unselected songs keep placement mode %s", self.options.shuffle_songs.current_key)
         self._generate_stock_foundation()
         self._restore_universal_tracker_shop_prices()
 
@@ -1757,10 +1761,15 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
     def _song_note_revision(self):
         return int(self.passthrough.get("song_note_catalog_revision", 0)) if self.using_ut else 1
 
+    def song_uses_individual_notes(self, song: str) -> bool:
+        return song in selected_song_names(self.options)
+
     def _song_note_groups(self):
+        selected = selected_song_names(self.options)
         if not self._song_note_revision():
-            return self.SONG_NOTE_GROUPS
-        return {song: (f"Progressive {song}",) * count for song, count in self.SONG_NOTE_LAYOUT}
+            return {song: notes for song, notes in self.SONG_NOTE_GROUPS.items() if song in selected}
+        return {song: (f"Progressive {song}",) * count for song, count in self.SONG_NOTE_LAYOUT
+                if song in selected}
 
     @classmethod
     def _song_for_note(cls, note_name: str):
@@ -1909,7 +1918,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         eventually started precollecting important stock items.
 
         This version replaces, in order:
-          1. the 12 full-song items when Individual Song Notes are enabled;
+          1. full-song items selected for Individual Notes;
           2. filler/trap/non-progression entries from the *actual global pool*;
           3. optional heart upgrades only if an unusual configuration still needs
              a few more slots.
@@ -1927,12 +1936,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 self.item_pool.remove(item)
             removed += 1
 
-        # Individual notes replace the normal twelve songs first.
+        # Remove every selected whole-song copy, including plentiful copies
+        # and songs already completed by starting inventory. Final pool sizing
+        # restores filler if fewer notes than removed songs still need placing.
         if replace_songs:
+            selected = selected_song_names(self.options)
             for item in list(reversed(self.multiworld.itempool)):
-                if removed >= count:
-                    break
-                if item.player == self.player and item.name in self.SONG_ITEMS:
+                if item.player == self.player and item.name in selected:
                     remove_item(item)
 
         # IMPORTANT: scan multiworld.itempool, not just self.item_pool.
@@ -1956,7 +1966,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     continue
                 remove_item(item)
 
-        if removed != count:
+        if removed < count:
             raise Exception(
                 f"SOH-EXTREME needs {count} pool slots but only found {removed} replaceable slots. "
                 "Enable the corresponding object sanity checks or use a less restrictive stock item pool."
@@ -1996,9 +2006,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         grass_tags = LocTag.Overworld_Grass | LocTag.Grotto_Grass | LocTag.Dungeon_Grass
         npc_tags = (LocTag.Shop | LocTag.Merchant | LocTag.Trade_Location |
                     LocTag.Shooting_Minigame | LocTag.House_of_Skulltula_Reward)
-        # King Zora is an active path blocker in both ages. These exact native
-        # reward/trade IDs keep their language, thaw, age and exchange rules.
-        path_blocker_location_ids = frozenset({110, 740})
 
         fork_requirements = {}
         fork_any_requirements = {}
@@ -2991,8 +2998,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             for item_name in item_names:
                 if not native_item_enabled(item_name):
                     continue
-                if item_name == "NPC Soul" and ap_id in path_blocker_location_ids:
-                    continue
                 if item_name == "Speak":
                     require_speak(location)
                 elif item_name == "Animal Soul":
@@ -3822,8 +3827,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # speak checks also require NPC Soul when that option is active.
             if o.shuffle_speak.value and ((tags & npc_tags) or is_named_npc_interaction):
                 require_speak(location)
-            if (o.shuffle_npc_soul.value and location.address not in path_blocker_location_ids
-                    and ((tags & npc_tags) or is_named_npc_interaction)):
+            if o.shuffle_npc_soul.value and ((tags & npc_tags) or is_named_npc_interaction):
                 require(location, 'NPC Soul')
 
         # 0.7.6 uses the boolean-preserving native C++ overlay above instead of
@@ -3847,22 +3851,26 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if o.shuffle_speak.value:
                 require_speak(rolling_goron_adult)
 
-        # Mido remains active and interactable while invisible. His event
-        # still requires the proper language and the stock sword/shield/age
-        # requirements before opening the Deku Tree / forest progression route.
+        # NPC Soul controls every conversation, including Mido and the Kokiri
+        # exit boy. Retaining the exit boy's collision does not permit speech.
+        # Keep Mido's real language, sword/shield and age requirements too.
         for event_name in ("Mido", "Mido From Outside Deku Tree"):
             try:
                 event_location = self.get_location(event_name)
             except Exception:
                 continue
             require_language(event_location, "Kokiri")
+            if o.shuffle_npc_soul.value:
+                require(event_location, "NPC Soul")
 
         # The letter bottle becomes usable only after the child King Zora
-        # exchange. He stays active while hidden; language and the stock child,
-        # letter and Domain access requirements still gate the actual exchange.
+        # exchange. Crossing his empty position while NPC Soul is missing does
+        # not deliver the letter or grant the reusable bottle.
         if o.zoras_fountain.value != 2:
             letter_delivery = self.get_location("ZD Deliver Ruto's Letter")
             require_language(letter_delivery, "Zora")
+            if o.shuffle_npc_soul.value:
+                require(letter_delivery, "NPC Soul")
 
         # Song from Saria is an inherited stock location whose native metadata
         # does not always carry NPC tags into the standalone EXTREME world.
@@ -3909,7 +3917,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     continue
                 if self.options.shuffle_speak.value:
                     require_speak(location)
-                if self.options.shuffle_npc_soul.value and speech.base_address not in path_blocker_location_ids:
+                if self.options.shuffle_npc_soul.value:
                     require(location, "NPC Soul")
 
             # Generic flavor-NPC capacity slots are intentionally absent from the
@@ -4623,7 +4631,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # Scrub Soul still controls the scrub actor; merchant conversation
             # additionally needs NPC interaction availability, just like native
             # HasItem(RG_SPEAK_DEKU) and the runtime business-scrub talk hook.
-            if o.shuffle_npc_soul.value and address not in path_blocker_location_ids:
+            if o.shuffle_npc_soul.value:
                 require(location, "NPC Soul")
             native_npc_interactions[location.name] = language
         self._extreme_native_interactions = native_npc_interactions
@@ -4887,8 +4895,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             ),
         )
 
+        selected_songs = selected_song_names(o)
+        if extras or selected_songs:
+            self._remove_replaceable_items(len(extras), replace_songs=bool(selected_songs))
         if extras:
-            self._remove_replaceable_items(len(extras), replace_songs=bool(o.song_note_shuffle.value))
             new_items = [self.create_item(name) for name in extras]
             self.item_pool.extend(new_items)
             self.multiworld.itempool.extend(new_items)
@@ -5034,16 +5044,22 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
     def post_fill(self) -> None:
         """Fail generation rather than output a seed whose AP logic stalls."""
         super().post_fill()
-        if self.options.song_note_shuffle.value:
+        selected_songs = selected_song_names(self.options)
+        if selected_songs:
+            # New seeds use repeatable Progressive items exclusively. Numbered
+            # legacy-note plando can overlap earlier progressive receipts in the
+            # native 74-flag save layout and falsely satisfy AP completion.
+            legacy_selected_notes = {note for song in selected_songs for note in self.SONG_NOTE_GROUPS[song]}
+            blocked = selected_songs | (legacy_selected_notes if self._song_note_revision() and not self.using_ut else set())
             bypasses = [location.name for location in self.multiworld.get_filled_locations()
                         if location.address is not None and location.item is not None
                         and location.item.player == self.player
-                        and location.item.name in self.SONG_ITEMS]
+                        and location.item.name in blocked]
             if bypasses:
                 raise OptionError(
-                    "SOH-EXTREME individual-note mode cannot place complete song items: "
+                    "SOH-EXTREME individual-note mode cannot place complete songs or legacy numbered notes for selected songs: "
                     + ", ".join(bypasses)
-                    + ". Use Progressive song items in plando, or disable individual notes."
+                    + ". Use Progressive song items in plando, or remove that song from Song Note Songs."
                 )
         from .FrontierFill import validate_filled_world
         validate_filled_world(self)
@@ -5379,7 +5395,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "ShuffleSkulltulaSoul": o.shuffle_skulltula_soul.value,
             "ShuffleBusinessScrubSoul": o.shuffle_business_scrub_soul.value,
             "ShuffleShovel": o.shuffle_shovel.value, "NpcSpeechSanity": o.npc_speech_sanity.value,
-            "SongNoteShuffle": o.song_note_shuffle.value, "ShuffleFlowOfTime": o.shuffle_flow_of_time.value,
+            "SongNoteShuffle": int(bool(selected_song_names(o))), "SongNoteSongMask": song_note_mask(o),
+            "ShuffleFlowOfTime": o.shuffle_flow_of_time.value,
             "FrozenStartingTime": o.frozen_starting_time.value, "TimeSpeedAfterUnlock": o.time_speed_after_unlock.value,
             "ExtremeTrapPool": o.extreme_trap_pool.value, "ExtremeIceTraps": o.extreme_ice_traps.value,
             "ExtremeFireTraps": o.extreme_fire_traps.value, "ExtremeSlowTraps": o.extreme_slow_traps.value,
@@ -5466,8 +5483,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "npc_speech_identity_version": NpcSpeech.identity_version(self),
             "npc_speech_catalog_revision": NpcSpeech.catalog_revision(self),
             "song_note_shuffle": o.song_note_shuffle.value,
+            "song_note_songs": sorted(o.song_note_songs.value),
             "song_note_catalog_revision": self._song_note_revision(),
-            "progressive_song_requirements": {f"Progressive {song}": count for song, count in self.SONG_NOTE_LAYOUT},
+            "progressive_song_requirements": {f"Progressive {song}": count
+                                              for song, count in self.SONG_NOTE_LAYOUT
+                                              if self.song_uses_individual_notes(song)},
             "shuffle_flow_of_time": o.shuffle_flow_of_time.value,
             "frozen_starting_time": o.frozen_starting_time.value,
             "time_speed_after_unlock": o.time_speed_after_unlock.value,

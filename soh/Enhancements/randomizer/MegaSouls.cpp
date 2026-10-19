@@ -273,49 +273,81 @@ static bool IsMegaNpcSoulActor(const Actor* actor) {
 }
 
 extern "C" bool MegaSoul_IsPathBlockingNpcPlacement(int16_t actorId, int16_t params, int16_t scene) {
-    switch (actorId) {
-        case ACTOR_EN_MD:   // Mido guards the forest routes.
-        case ACTOR_EN_KZ:   // King Zora blocks the fountain passage.
-        case ACTOR_EN_HEISHI1: // Courtyard patrols/search balls.
-        case ACTOR_EN_HEISHI3: // Castle sentinels.
-        case ACTOR_EN_GE2:  // Fortress patrols and capture.
-            return true;
-        case ACTOR_EN_KO:
-            return (params & 0xFF) == 3; // Kokiri Forest exit boy only.
-        case ACTOR_EN_HEISHI2:
-            return (params & 0xFF) == 2 || (params & 0xFF) == 5; // Castle/DMT gates.
-        case ACTOR_EN_GE1:
-            return (params & 0xFF) == 0 || (params & 0xFF) == 1 ||
-                   (params & 0xFF) == 0x46; // Gate, wasteland, training ground.
-        case ACTOR_EN_TA:
-            return scene == SCENE_HYRULE_CASTLE && params != 1 && params != 2;
-        default:
-            return false;
-    }
+    // These placements must still move to prevent walking around their paths.
+    // Mido in Kokiri Forest and the other NPC placements do not stay solid.
+    return (actorId == ACTOR_EN_KO && (params & 0xFF) == 3 && scene == SCENE_KOKIRI_FOREST) ||
+           (actorId == ACTOR_EN_MD && scene == SCENE_LOST_WOODS);
 }
 
 extern "C" bool MegaSoul_IsPathBlockingNpc(const Actor* actor) {
     return actor != nullptr && MegaSoul_IsPathBlockingNpcPlacement(
-        actor->id, actor->params, gPlayState != nullptr ? gPlayState->sceneNum : -1);
+        actor->id, actor->params, gPlayState != nullptr ? gPlayState->sceneNum : -1) &&
+        (actor->id != ACTOR_EN_MD || LINK_IS_ADULT);
 }
 
-static void UpdateHiddenNpcFocus(Actor* actor) {
-    // Several NPCs normally update their focus in the head-limb draw callback.
-    // Keep a world-relative talk/target point while their model is not drawn.
-    // This does not change talk distance, language, or quest requirements.
-    float height = 60.0f;
-    if (actor->id == ACTOR_EN_MD || actor->id == ACTOR_EN_KO) height = 50.0f;
-    else if (actor->id == ACTOR_EN_KZ) height = 100.0f;
-    else if (actor->id == ACTOR_EN_HEISHI2) height = 70.0f;
-    Actor_SetFocus(actor, height);
+extern "C" bool MegaSoul_IsNpcSoulLocked(const Actor* actor) {
+    return IS_RANDO && actor != nullptr && RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) &&
+           !MegaHas(RAND_INF_NPC_SOUL) && IsMegaNpcSoulActor(actor);
+}
+
+extern "C" bool MegaSoul_CanInteractWithActor(const Actor* actor) {
+    if (!IS_RANDO || actor == nullptr) return true;
+    if (MegaSoul_IsNpcSoulLocked(actor)) return false;
+    if (IsMegaCrateActor(actor->id) && !MegaSoul_CanUseCrate()) return false;
+    return !IsMegaRockActor(actor->id) || MegaSoul_CanUseRock();
+}
+
+extern "C" bool MegaSoul_ShouldDisableActorCollision(const Actor* actor) {
+    if (!IS_RANDO || actor == nullptr) return false;
+    if (MegaSoul_IsNpcSoulLocked(actor)) return !MegaSoul_IsPathBlockingNpc(actor);
+    if (IsMegaCrateActor(actor->id) && !MegaSoul_CanUseCrate()) return true;
+    // En_Ishi bit zero distinguishes ordinary rocks from large silver boulders.
+    // Brown, bronze and ceiling boulders retain their own solid collision too.
+    return actor->id == ACTOR_EN_ISHI && (actor->params & 1) == 0 && !MegaSoul_CanUseRock();
 }
 
 extern "C" bool MegaSoul_ShouldHideActor(const Actor* actor) {
     if (!IS_RANDO || actor == nullptr) return false;
     if (IsMegaCrateActor(actor->id) && !MegaSoul_CanUseCrate()) return true;
     if (IsMegaRockActor(actor->id) && !MegaSoul_CanUseRock()) return true;
-    return MegaSoul_IsPathBlockingNpc(actor) && RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) &&
-           !MegaHas(RAND_INF_NPC_SOUL);
+    // Fishing_Draw also draws the whole pond. It hides only its owner internally.
+    return actor->id != ACTOR_FISHING && MegaSoul_IsNpcSoulLocked(actor);
+}
+
+static std::unordered_map<Actor*, uint32_t> gNpcSoulInteractionFlags;
+
+static void UpdateNpcSoulState(Actor* actor) {
+    if (actor == nullptr) return;
+    constexpr uint32_t interactionFlags = ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED;
+    if (!MegaSoul_IsNpcSoulLocked(actor)) {
+        const auto it = gNpcSoulInteractionFlags.find(actor);
+        if (it != gNpcSoulInteractionFlags.end()) {
+            actor->flags = (actor->flags & ~interactionFlags) | it->second;
+            gNpcSoulInteractionFlags.erase(it);
+        }
+        return;
+    }
+
+    gNpcSoulInteractionFlags.try_emplace(actor, actor->flags & interactionFlags);
+    // Do not overwrite draw: some NPCs install it after their object loads.
+    // Actor_Draw's live predicate restores the model as soon as the Soul arrives.
+    actor->flags &= ~(interactionFlags | ACTOR_FLAG_TALK);
+    actor->isTargeted = false;
+    actor->sfx = 0;
+    actor->colChkInfo.displacement.x = actor->colChkInfo.displacement.y = actor->colChkInfo.displacement.z = 0.0f;
+
+    Player* player = gPlayState != nullptr ? GET_PLAYER(gPlayState) : nullptr;
+    if (player == nullptr) return;
+    if (player->focusActor == actor) Player_ReleaseLockOn(player);
+    if (player->talkActor == actor) {
+        player->talkActor = nullptr;
+        player->talkActorDistance = 10000.0f;
+        player->exchangeItemId = EXCH_ITEM_NONE;
+    }
+    if (player->interactRangeActor == actor) {
+        player->interactRangeActor = nullptr;
+        player->getItemId = GI_NONE;
+    }
 }
 
 static int GetEnemySoulMode() {
@@ -1143,7 +1175,7 @@ static void RegisterMegaSouls() {
             return;
         }
         if (RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !MegaHas(RAND_INF_NPC_SOUL) &&
-            IsMegaNpcSoulActor(talkActor) && !MegaSoul_IsPathBlockingNpc(talkActor)) {
+            IsMegaNpcSoulActor(talkActor)) {
             *should = false;
         }
     });
@@ -1182,17 +1214,14 @@ static void RegisterMegaSouls() {
     COND_HOOK(ShouldActorUpdate, shouldRegister, [](void* actorRef, bool* should) {
         Actor* actor = static_cast<Actor*>(actorRef);
 
-        // Path guards retain AI, per-frame collision, attention and dialogue.
-        // Other missing-soul NPCs keep their existing inactive behavior.
-        if (actor->id != ACTOR_FISHING &&
-            RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !MegaHas(RAND_INF_NPC_SOUL) &&
-            IsMegaNpcSoulActor(actor)) {
-            if (MegaSoul_IsPathBlockingNpc(actor)) {
-                UpdateHiddenNpcFocus(actor);
-            } else {
-                *should = false;
-                return;
-            }
+        if (actor == nullptr) return;
+        UpdateNpcSoulState(actor);
+        // The exit boy and adult Lost Woods Mido need blocking movement while
+        // hidden. Fishing separately gates its pond controller's owner model/dialogue.
+        if (actor->id != ACTOR_FISHING && MegaSoul_IsNpcSoulLocked(actor) &&
+            !MegaSoul_IsPathBlockingNpc(actor)) {
+            *should = false;
+            return;
         }
 
         if (IsMegaEnemySoulGone(actor)) {
@@ -1293,10 +1322,9 @@ static void RegisterMegaSouls() {
             return;
         }
 
-        // Crates intentionally remain in the scene without Crate Soul, matching
-        // Rock/Boulder Soul semantics. Obj_Kibako/Obj_Kibako2 already call
-        // MegaSoul_CanUseCrate(), so they stay solid but cannot be lifted or
-        // broken until the soul is owned. The render gate also hides their shadows.
+        // Keep crates initialized so they reappear when Crate Soul arrives.
+        // Their runtime and collision gates make them invisible, non-solid and
+        // unusable until then, without losing the original check or actor.
         // Soul semantics are existential: without Grass/Bush Soul, both grass
         // and bush actors are absent from the scene.
         if (RAND_GET_OPTION(RSK_SHUFFLE_GRASS_SOUL) && !MegaHas(RAND_INF_GRASS_SOUL) &&
@@ -1305,10 +1333,9 @@ static void RegisterMegaSouls() {
             return;
         }
 
-        // Rock/Boulder Soul is different from the existential actor Souls:
-        // rocks must remain in the scene so they continue to cover/block checks
-        // and grotto holes. Their actor update functions reject lifting/breaking
-        // until the Soul is obtained.
+        // Rock actors also remain initialized for live Soul acquisition.
+        // Small rocks have no collision while hidden; boulders stay solid.
+        // Both reject lifting/breaking until Rock / Boulder Soul is obtained.
 
         if (RAND_GET_OPTION(RSK_SHUFFLE_TREE_SOUL) && !MegaHas(RAND_INF_TREE_SOUL) && IsMegaTreeActor(actor)) {
             *result = false;
@@ -1410,6 +1437,10 @@ static void RegisterMegaSouls() {
         Actor* actor = static_cast<Actor*>(actorRef);
         if (actor == nullptr) return;
 
+        // The moving exit boy can set attention flags during its update.
+        // Suppress those again before the frame's targeting/interaction pass.
+        UpdateNpcSoulState(actor);
+
         // Physical Enemy Defeat AP rewards get five seconds to behave normally.
         // If Link has not collected one by then, magnetize it to the player.
         auto* enemyPickup =
@@ -1457,27 +1488,15 @@ static void RegisterMegaSouls() {
         if (identity != nullptr && identity->deathObserved && !identity->defeatHandled) handleEnemyDeath(actor);
     });
 
-    // NPCs are scene-sensitive, so do not cancel their initialization. Hiding them after init
-    // keeps scripts and room bookkeeping alive. Path guards also retain their interactions.
-    // Fishing is a combined NPC/scene controller and gates its model/dialog in z_fishing.c.
-    // Other NPCs retain their existing re-entry restoration behavior.
+    // Preserve NPC initialization/bookkeeping and the original draw callback.
+    // All locked NPCs lose player interactions, including the solid exit boy.
+    // Fishing keeps the separate pond controller running.
     COND_HOOK(OnActorInit, shouldRegister, [](void* actorRef) {
         Actor* actor = static_cast<Actor*>(actorRef);
         if (actor == nullptr) {
             return;
         }
-        if (actor->id != ACTOR_FISHING &&
-            RAND_GET_OPTION(RSK_SHUFFLE_NPC_SOUL) && !MegaHas(RAND_INF_NPC_SOUL) &&
-            IsMegaNpcSoulActor(actor)) {
-            if (MegaSoul_IsPathBlockingNpc(actor)) {
-                // Keep the original callback, including delayed model loading.
-                // Actor_Draw hides it without interfering with actor state.
-                UpdateHiddenNpcFocus(actor);
-            } else {
-                actor->draw = nullptr;
-                actor->flags &= ~ACTOR_FLAG_ATTENTION_ENABLED;
-            }
-        }
+        UpdateNpcSoulState(actor);
 
         // Identity was captured in Actor_Spawn before actor-specific init could
         // mutate params/home/room. Never reconstruct it from post-init fields.
@@ -1493,6 +1512,7 @@ static void RegisterMegaSouls() {
     // Prevent stale Actor* entries when leaving rooms/scenes.
     COND_HOOK(OnActorDestroy, shouldRegister, [](void* actorRef) {
         Actor* actor = static_cast<Actor*>(actorRef);
+        gNpcSoulInteractionFlags.erase(actor);
         gGoneEnemyRuntimeStates.erase(actor);
         const auto* enemy = ObjectExtension::GetInstance().Get<EnemyDefeatIdentity>(actor);
         if (enemy != nullptr && enemy->placementIndex >= 0 &&

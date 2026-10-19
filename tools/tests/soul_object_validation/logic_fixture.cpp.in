@@ -1,0 +1,201 @@
+#include <array>
+#include <cstdint>
+#include <cstdlib>
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
+
+// Symbolic native IDs are generated from the captured production functions.
+// The fixture supplies option/inventory storage and actor-independent engine IO.
+@CONSTANTS@
+using RandomizerGet = int;
+using RandomizerCheck = int;
+using ActorID = int;
+using s16 = int16_t;
+
+namespace Rando {
+struct Context;
+struct Logic {
+    Context* ctx = nullptr;
+    bool IsChild = false;
+    std::array<bool, CONSTANT_COUNT> inventory{};
+    bool HasItem(RandomizerGet item);
+    bool CanUse(RandomizerGet item) const { return inventory[item]; }
+    bool CheckRandoInf(int flag) const {
+        return inventory[flag == RAND_INF_NPC_SOUL ? RG_NPC_SOUL : flag];
+    }
+    bool CanSpeakToPathBlockingNpc(RandomizerGet language);
+    bool HasAnimalSoul(RandomizerGet) const { return true; }
+    bool CanBreakPots() const { return true; }
+    bool CanBreakCrates() const { return true; }
+    bool CanBreakSmallCrates() const { return true; }
+    bool CanPickUpGrass() const { return true; }
+    bool CanCutShrubs() const { return true; }
+    bool CanBreakRocks() const { return true; }
+    bool CanBonkTrees() const { return true; }
+};
+struct Location {
+    RandomizerCheck rc = RC_ZD_KING_ZORA_THAWED;
+    ActorID actor = ACTOR_EN_KZ;
+    int scene = SCENE_ZORAS_DOMAIN;
+    int type = RCTYPE_DEFAULT;
+    int params = 0;
+    std::string name;
+    ActorID GetActorID() const { return actor; }
+    int GetScene() const { return scene; }
+    int GetRCType() const { return type; }
+    int GetActorParams() const { return params; }
+    RandomizerCheck GetRandomizerCheck() const { return rc; }
+    const std::string& GetName() const { return name; }
+};
+struct Context {
+    std::array<bool, CONSTANT_COUNT> options{};
+    Logic* instance = nullptr;
+    static Context* GetInstance();
+    bool GetOption(int option) const { return options[option]; }
+    bool GetTrickOption(int option) const { return options[option]; }
+    Logic* GetLogic() const { return instance; }
+};
+namespace StaticData {
+static std::map<int, Location> locations;
+static const std::map<RandomizerGet, int> RandoGetToRandInf = {
+    {RG_SPEAK_DEKU, RG_SPEAK_DEKU}, {RG_SPEAK_GERUDO, RG_SPEAK_GERUDO},
+    {RG_SPEAK_GORON, RG_SPEAK_GORON}, {RG_SPEAK_HYLIAN, RG_SPEAK_HYLIAN},
+    {RG_SPEAK_KOKIRI, RG_SPEAK_KOKIRI}, {RG_SPEAK_ZORA, RG_SPEAK_ZORA},
+};
+const Location* GetLocation(RandomizerCheck rc) {
+    auto it = locations.find(rc);
+    return it == locations.end() ? nullptr : &it->second;
+}
+}
+static Context context;
+static Logic stateLogic;
+Context* Context::GetInstance() { return &context; }
+bool Logic::HasItem(RandomizerGet item) {
+    // Production HasItem already stacks NPC Soul on language items. Model this
+    // dependency at the fixture's inventory boundary; the three gates below are
+    // captured unchanged from the production source files.
+    if (StaticData::RandoGetToRandInf.count(item) && ctx->GetOption(RSK_SHUFFLE_NPC_SOUL) &&
+        !inventory[RG_NPC_SOUL]) return false;
+    return inventory[item];
+}
+@NPC_LOGIC_HELPER@
+}
+static Rando::Logic* logic = &Rando::stateLogic;
+struct NpcSpeechFinderEntry {
+    int32_t rc;
+    RandomizerGet languageItem;
+};
+@NPC_ACTOR_CLASSIFICATION@
+@ANIMAL_ACTOR_CLASSIFICATION@
+@LOCATION_LANGUAGE@
+@LOCATION_SPEAK@
+@LOCATION_SOUL_GATE@
+@FIRST_TALK_GATE@
+
+static Rando::Context* ctx = &Rando::context;
+static bool MidoForwardRoute() { return @MIDO_FORWARD_ROUTE@; }
+static bool MidoReverseRoute() { return @MIDO_REVERSE_ROUTE@; }
+
+static int cases = 0;
+static int assertions = 0;
+#define CHECK(condition) do { ++assertions; if (!(condition)) { \
+    std::cerr << "failed at line " << __LINE__ << ": " << #condition << '\n'; std::exit(1); } } while (false)
+static void Reset(bool soulOption, bool speechOption, bool soul) {
+    Rando::context.options.fill(false);
+    Rando::context.options[RSK_SHUFFLE_NPC_SOUL] = soulOption;
+    Rando::context.options[RSK_SHUFFLE_SPEAK] = speechOption;
+    Rando::context.instance = logic;
+    logic->ctx = &Rando::context;
+    logic->inventory.fill(false);
+    logic->IsChild = false;
+    logic->inventory[RG_NPC_SOUL] = soul;
+    Rando::StaticData::locations.clear();
+}
+
+int main() {
+    const std::array<int, 6> languages = {
+        RG_SPEAK_DEKU, RG_SPEAK_GERUDO, RG_SPEAK_GORON,
+        RG_SPEAK_HYLIAN, RG_SPEAK_KOKIRI, RG_SPEAK_ZORA,
+    };
+    for (bool soulOption : {false, true}) for (bool speechOption : {false, true})
+    for (bool soul : {false, true}) for (bool speak : {false, true}) {
+        for (int language : languages) {
+            ++cases;
+            Reset(soulOption, speechOption, soul);
+            logic->inventory[language] = speak;
+            const bool expected = (!soulOption || soul) && (!speechOption || speak);
+            CHECK(logic->CanSpeakToPathBlockingNpc(language) == expected);
+            CHECK(HasNpcSpeechInteractionItems({RC_ZD_KING_ZORA_THAWED, language}) == expected);
+        }
+        ++cases;
+        Reset(soulOption, speechOption, soul);
+        logic->inventory[RG_SPEAK_KOKIRI] = speak;
+        CHECK(!logic->CanSpeakToPathBlockingNpc(RG_OPEN_CHEST));
+        CHECK(HasNpcSpeechInteractionItems({RC_ZD_KING_ZORA_THAWED, RG_NONE}) ==
+              ((!soulOption || soul) && (!speechOption || speak)));
+    }
+
+    // Independently enumerated examples cover the former exceptions as well as
+    // ordinary NPCs. The exit boy gets no location/speech exception either.
+    const std::array<int, 12> npcs = {
+        ACTOR_EN_KO, ACTOR_EN_MD, ACTOR_EN_KZ, ACTOR_EN_TA,
+        ACTOR_EN_HEISHI2, ACTOR_EN_GE1, ACTOR_EN_GE2, ACTOR_EN_GE3,
+        ACTOR_EN_SA, ACTOR_EN_OSSAN, ACTOR_EN_MA1, ACTOR_EN_OWL,
+    };
+    for (bool soulOption : {false, true}) for (bool soul : {false, true}) {
+        for (int actor : npcs) {
+            ++cases;
+            Reset(soulOption, true, soul);
+            Rando::Location location;
+            location.actor = actor;
+            location.params = actor == ACTOR_EN_KO ? 3 : 0;
+            location.scene = actor == ACTOR_EN_KO ? SCENE_KOKIRI_FOREST : SCENE_ZORAS_DOMAIN;
+            Rando::StaticData::locations.emplace(location.rc, location);
+            CHECK(MegaSoulAllowsLocation(location.rc) == (!soulOption || soul));
+        }
+        // An object near an NPC is not itself an NPC interaction.
+        for (int actor : {ACTOR_EN_BOX, ACTOR_OBJ_KIBAKO}) {
+            ++cases;
+            Reset(soulOption, true, soul);
+            Rando::Location location;
+            location.actor = actor;
+            Rando::StaticData::locations.emplace(location.rc, location);
+            CHECK(MegaSoulAllowsLocation(location.rc));
+        }
+    }
+
+    // The NPC policy must not bypass another actor-independent physical gate.
+    for (bool shovel : {false, true}) {
+        ++cases;
+        Reset(false, false, false);
+        Rando::context.options[RSK_SHUFFLE_SHOVEL] = true;
+        logic->inventory[RG_SHOVEL] = shovel;
+        Rando::Location location;
+        location.actor = ACTOR_EN_BOX;
+        location.scene = SCENE_GROTTOS;
+        Rando::StaticData::locations.emplace(location.rc, location);
+        CHECK(MegaSoulAllowsLocation(location.rc) == shovel);
+    }
+    // Adult Mido blocks in both directions until his song and follow-up
+    // conversation are possible. Child and the existing forward trick remain
+    // independent alternatives; CanUse represents already-validated song IO.
+    for (bool soulOption : {false, true}) for (bool speechOption : {false, true})
+    for (bool soul : {false, true}) for (bool speak : {false, true})
+    for (bool child : {false, true}) for (bool song : {false, true})
+    for (bool trick : {false, true}) {
+        ++cases;
+        Reset(soulOption, speechOption, soul);
+        logic->IsChild = child;
+        logic->inventory[RG_SPEAK_KOKIRI] = speak;
+        logic->inventory[RG_SARIAS_SONG] = song;
+        ctx->options[RT_LW_MIDO_BACKFLIP] = trick;
+        const bool conversation = (!soulOption || soul) && (!speechOption || speak);
+        CHECK(MidoForwardRoute() == (child || (song && conversation) || trick));
+        CHECK(MidoReverseRoute() == (child || (song && conversation)));
+    }
+
+    std::cout << "RESULT cases=" << cases << " assertions=" << assertions << '\n';
+    return 0;
+}
