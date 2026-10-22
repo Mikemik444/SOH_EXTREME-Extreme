@@ -110,6 +110,26 @@ class EntranceRouting {
             }
         }
         if (next.empty()) { error = "Enabled entrance randomizer has no mapping"; return false; }
+        const auto riverRevision = settings.find("EntranceRiverPathsRevision");
+        if (riverRevision != settings.end()) {
+            if (riverRevision->second < 0 || riverRevision->second > 1) {
+                error = "Unsupported Zora's River entrance policy";
+                return false;
+            }
+            if (riverRevision->second == 1 && (next.contains(234) || next.contains(385)) &&
+                (!next.contains(473) || !next.contains(785))) {
+                error = "The entrance map is missing a Zora's River water path";
+                return false;
+            }
+            if (riverRevision->second == 0) {
+                for (const auto& [source, target] : next) {
+                    if (source == 473 || source == 785 || target == 473 || target == 785) {
+                        error = "Water-path endpoints require the independent Zora's River entrance policy";
+                        return false;
+                    }
+                }
+            }
+        }
         for (const auto& [id, target] : next) {
             const auto* a = EntranceEndpointById(id);
             const auto* b = EntranceEndpointById(target);
@@ -157,14 +177,24 @@ class EntranceRouting {
     }
     void Reset() { routes.clear(); previousSceneReturn = false; }
     int Destination(int source) const {
-        const auto it = routes.find(source);
+        const auto it = FindSource(source);
         return it == routes.end() ? source : it->second;
     }
-    bool Contains(int source) const { return routes.contains(source); }
+    bool Contains(int source) const { return FindSource(source) != routes.end(); }
     bool Active() const { return !routes.empty(); }
     bool UsesPreviousSceneReturn() const { return Active() && previousSceneReturn; }
     const std::map<int, int>& Routes() const { return routes; }
   private:
+    std::map<int, int>::const_iterator FindSource(int source) const {
+        const auto exact = routes.find(source);
+        if (exact != routes.end()) return exact;
+        // Keep older saved maps byte-for-byte while honoring their former
+        // water-to-land destination aliases. Check/recovery callers still use
+        // the raw physical source. Explicit water mappings always take priority.
+        if (source == 473) return routes.find(234); // Hyrule Field -> river water path
+        if (source == 785) return routes.find(385); // River -> Hyrule Field water path
+        return routes.end();
+    }
     std::map<int, int> routes;
     bool previousSceneReturn = false;
 };

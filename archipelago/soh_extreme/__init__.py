@@ -1242,10 +1242,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             for entry in NpcSpeech.active_entries(self):
                 region = menu
                 if entry.get("native_rc"):
-                    stock_name = next((str(name) for name, data in location_data_table.items()
-                                       if data.loc_id == entry["anchor"]), None)
-                    anchor = stock_locations_by_name.get(stock_name)
-                    region = anchor.parent_region if anchor is not None else resolve_native_region(entry["native_region"])
+                    region = NpcSpeech.scrub_conversation_parent(
+                        self, entry, stock_locations_by_name, resolve_native_region)
                     if region is None:
                         raise OptionError(f"Missing scrub conversation region: {entry['name']}")
                 location = SohExtremeLocation(self.player, entry["name"], entry["id"], region)
@@ -1439,23 +1437,28 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             self.options.bottom_of_the_well_key_ring,
             self.options.gerudo_training_ground_key_ring, self.options.ganons_castle_key_ring,
         ]
-        if self.options.key_rings != "selection":
-            for option in key_ring_options:
-                option.value = False
-        if self.options.key_rings == "count":
-            if (self.options.fortress_carpenters == "normal" and
-                    self.options.gerudo_fortress_key_shuffle == "vanilla"):
-                if self.options.key_rings_count.value > 8:
-                    self.options.key_rings_count.value = 8
-                if self.options.gerudo_fortress_key_ring in key_ring_options:
-                    key_ring_options.remove(self.options.gerudo_fortress_key_ring)
-            self.random.shuffle(key_ring_options)
-            for option in key_ring_options[:self.options.key_rings_count.value]:
-                option.value = True
-        elif (self.options.key_rings == "selection" and
-              self.options.fortress_carpenters == "normal" and
-              self.options.gerudo_fortress_key_shuffle == "vanilla"):
-            self.options.gerudo_fortress_key_ring.value = False
+        # generate_early already restored UT's resolved per-dungeon flags from
+        # slot data. Keep those flags in place while building the prefill pool;
+        # rerolling Count here would reserve a different set of keys/rings even
+        # if the flags were restored again afterwards.
+        if not self.using_ut:
+            if self.options.key_rings != "selection":
+                for option in key_ring_options:
+                    option.value = False
+            if self.options.key_rings == "count":
+                if (self.options.fortress_carpenters == "normal" and
+                        self.options.gerudo_fortress_key_shuffle == "vanilla"):
+                    if self.options.key_rings_count.value > 8:
+                        self.options.key_rings_count.value = 8
+                    if self.options.gerudo_fortress_key_ring in key_ring_options:
+                        key_ring_options.remove(self.options.gerudo_fortress_key_ring)
+                self.random.shuffle(key_ring_options)
+                for option in key_ring_options[:self.options.key_rings_count.value]:
+                    option.value = True
+            elif (self.options.key_rings == "selection" and
+                  self.options.fortress_carpenters == "normal" and
+                  self.options.gerudo_fortress_key_shuffle == "vanilla"):
+                self.options.gerudo_fortress_key_ring.value = False
 
         self.pre_fill_pool += get_pre_fill_rewards(self)
         self.pre_fill_pool += get_prefill_songs(self)
@@ -1465,22 +1468,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         self.pre_fill_pool += get_dungeon_item_prefill_items(self, True)
         self.pre_fill_pool += get_vanilla_shop_pool(self)
 
-        if self.options.ganons_trials == "set_number" and self.options.ganons_trials_count.value > 0:
+        if self.using_ut:
+            self.ganons_trials = list(self.passthrough.get("required_trials", self.ganons_trials))
+        elif self.options.ganons_trials == "set_number" and self.options.ganons_trials_count.value > 0:
             self.ganons_trials = [str(trial) for trial in GanonsTrials]
             if self.options.ganons_trials_count.value < 6:
                 self.random.shuffle(self.ganons_trials)
                 self.ganons_trials = self.ganons_trials[:self.options.ganons_trials_count.value]
-
-        if self.using_ut:
-            self.ganons_trials = self.passthrough.get("required_trials", self.ganons_trials)
-            for name in (
-                "gerudo_fortress_key_ring", "forest_temple_key_ring", "fire_temple_key_ring",
-                "water_temple_key_ring", "spirit_temple_key_ring", "shadow_temple_key_ring",
-                "bottom_of_the_well_key_ring", "gerudo_training_ground_key_ring",
-                "ganons_castle_key_ring",
-            ):
-                if name in self.passthrough:
-                    getattr(self.options, name).value = self.passthrough[name]
 
     def push_precollected(self, item: Item) -> None:
         if self.song_uses_individual_notes(item.name):
@@ -2642,7 +2636,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # Shuffle Swim keeps all three physical Progressive Scale counts. The
         # first scale also creates the virtual Swim event; counted scale #1 is
         # Bronze/basic swim, #2 Silver, and #3 Golden.
-        gc_route = Has("Progressive Bomb Bag") | Has("Bombchu Bag")
+        from ._vendor_oot_soh.LogicHelpers import HasLiveAmmo
+        gc_route = (Has("Progressive Bomb Bag") & HasLiveAmmo(4, True_())) | (Has("Bombchu Bag") & HasLiveAmmo(8, True_()))
         if o.shuffle_rock_boulder_soul.value:
             gc_route = gc_route & Has("Rock / Boulder Soul")
 
@@ -3034,7 +3029,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         def lost_woods_access_rule(include_gc_warp: bool = True):
             """The three supported physical entry routes into Lost Woods."""
             climb_route = Has("Climb") if o.shuffle_climb.value else True_()
-            bomb_route = Has("Progressive Bomb Bag") | Has("Bombchu Bag")
+            bomb_route = (Has("Progressive Bomb Bag") & HasLiveAmmo(4, True_())) | (Has("Bombchu Bag") & HasLiveAmmo(8, True_()))
             if o.shuffle_rock_boulder_soul.value:
                 bomb_route = bomb_route & Has("Rock / Boulder Soul")
             # Use the same Silver Scale threshold as the actual river entrance.
@@ -3072,8 +3067,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 | can_use(Items.FAIRY_BOW, bundle)
                 | can_use(Items.FAIRY_SLINGSHOT, bundle)
                 | Has("Din's Fire")
-                | (Has("Progressive Bomb Bag") & (
-                    Has("Progressive Nut Capacity")
+                | ((Has("Progressive Bomb Bag") & HasLiveAmmo(4, True_())) & (
+                    (Has("Progressive Nut Capacity") & HasLiveAmmo(2, True_()))
                     | can_use(Items.HOOKSHOT, bundle)
                     | can_use(Items.BOOMERANG, bundle)
                 ))
@@ -3419,7 +3414,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     #      Swim while remaining counted as physical tier #1;
                     #   B) Rock/Boulder Soul + Bomb Bag/Bombchu.
                     deep_dive_route = deep_swim_route()
-                    rock_break_route = Has("Progressive Bomb Bag") | Has("Bombchu Bag")
+                    rock_break_route = (Has("Progressive Bomb Bag") & HasLiveAmmo(4, True_())) | (Has("Bombchu Bag") & HasLiveAmmo(8, True_()))
                     if o.shuffle_rock_boulder_soul.value:
                         rock_break_route &= Has("Rock / Boulder Soul")
                     upper_child_route = deep_dive_route | rock_break_route
@@ -3789,7 +3784,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 if getattr(location, "address", None) == 509:
                     if o.shuffle_rock_boulder_soul.value:
                         require(location, 'Rock / Boulder Soul')
-                    require_native_existing(location, Has("Progressive Bomb Bag") | Has("Bombchu Bag"))
+                    require_native_existing(location, (Has("Progressive Bomb Bag") & HasLiveAmmo(4, True_())) | (Has("Bombchu Bag") & HasLiveAmmo(8, True_())))
                     if o.shuffle_crate_soul.value:
                         require(location, 'Crate Soul')
             # SOH-EXTREME: every check physically inside the Goron City boulder
@@ -3804,7 +3799,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 # sub-check rules (silver/bronze boulders, crate, etc.) still stack.
                 require_native_existing(
                     location,
-                    Has("Progressive Bomb Bag") | Has("Bombchu Bag") | grab_rule()
+                    (Has("Progressive Bomb Bag") & HasLiveAmmo(4, True_())) | (Has("Bombchu Bag") & HasLiveAmmo(8, True_())) | grab_rule()
                 )
 
             if o.shuffle_animal_soul.value and (tags & animal_tags):
@@ -4484,7 +4479,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         zr_bundle = (Regions.ZORA_RIVER, self)
         zr_basic_swim = swim_rule()
         zr_deep_swim = deep_swim_route()
-        zr_front_break = Has("Progressive Bomb Bag") | Has("Bombchu Bag")
+        zr_front_break = (Has("Progressive Bomb Bag") & HasLiveAmmo(4, True_())) | (Has("Bombchu Bag") & HasLiveAmmo(8, True_()))
         if o.shuffle_rock_boulder_soul.value:
             zr_front_break = zr_front_break & Has("Rock / Boulder Soul")
         zr_upper_child_entry = zr_deep_swim | zr_front_break

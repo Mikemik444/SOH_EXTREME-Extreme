@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "source_sha256": {
+    "archipelago/soh_extreme/TrackerMirror.py": "b364abeee802587a63147ddfe56d54b88012dca345e737903848f3ebd30ef64f",
+    "archipelago/soh_extreme/TrackerClient.py": "f88a327c727df9de77e5e6cb35e0b59adac63253ad66f5abc5d3c4f77c1715b2",
+    "archipelago/soh_extreme/AmmoRefillRules.py": "21f12128e66daa3dfeb2b4261ef75077737c139bf22a6f08d74d577733a829c8",
+    "soh/Network/Archipelago/TrackerMirror.h": "c01a0c54875c4bf25b9a39971b9972b7cc2ade0f755708fc2d189a45dc220c83",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "75f4f836d5c6b30e4867514bd1ac566b8c7b16f391237e73b20d73bb63cf61cc",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "a3eb0a5578362b57f43147feeee5b62728b10e3a17a165a6d8895ea8b9a9c3bc",
+    "soh/Network/Archipelago/AmmoPolicy.h": "e1337cfa6c8be0ec7ad8ede2df3363bdd827deed47e96382b013b032d27bcd9e",
+    "soh/SohExtremeVersion.h": "ecf85730a6c9c89636e012b57aeefef80051c82fa4ebc017b2ddffe3b1a263fd"
+  },
+  "test_sha256": {
+    "tools/tests/test_ammo_tracker_protocol.py": "691b6c3ca8559bb03244db1600ed136ae48323916fb6c06087b876d277616eee",
+    "tools/tests/ammo_tracker_protocol_tests.cpp.in": "003903ebc1def35fb82b2acf6b0790929bc389f58e6c0fea6c27921767a3326f",
+    "tools/tests/test_zora_river_native.py": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48"
+  },
+  "source_unchanged_during_tests": true,
+  "wire_cases": 97,
+  "encoder_assertions": 19,
+  "native": {
+    "cases": 127,
+    "assertions": 311
+  },
+  "worker": {
+    "cases": 48,
+    "assertions": 103,
+    "proof_calls": 12
+  },
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "native_windows_build": false,
+  "in_game_playthrough": false,
+  "scope": "Production Python encoder and request/publish handler, C++ decoder and mirror, complete native GetFinderSnapshot and ServiceFinderWorker. Network/process IO, UT evaluation, clock and native storage are isolated; actual AP refill reachability has its separate test_ammo_refill.py suite.",
+  "replay_command": "PYTHONPATH=<AP-dependencies>:<AP-0.6.8-runtime> python3 source/tools/tests/test_ammo_tracker_protocol.py --report tests/ammo_1812_tracker.json"
+}

@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "cases": 65,
+  "assertions": 144,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "source_unchanged_during_tests": true,
+  "scope": "Actual EnHoll Update, all seven hallway types, room swaps, wait/finish actions, source-side observation and pre-request/final-commit selection helpers. Actor coordinate transforms, room loader, switch lookup and AP hook storage are shimmed. The companion entrance_return_death_1810_native.json validates actual history storage. No native game build, scene geometry or controller playthrough.",
+  "output": [
+    "RESULT cases=65 assertions=144"
+  ],
+  "sources": {
+    "src/overlays/actors/ovl_En_Holl/z_en_holl.c": "9264a74c0b5fc2291da9454d7e2e45eb691d343a0f701a6ac30e689e73c4f1a4",
+    "src/overlays/actors/ovl_En_Holl/z_en_holl.h": "416658dae06eff0937f1e81b8d54695de8960ea41bcd11d15793fd8208fdcdcb",
+    "soh/Network/Archipelago/ArchipelagoC.h": "5ae28084050049b0e1afb6d1900856a4f3987b28e606ba4eb427eaca9d1ba646",
+    "tools/tests/test_hallway_boundary_native.py": "1ec3c46713baf36aa6a81a7d901c78d1ee8f9da98e6bd4b60bb5656851d05a99",
+    "tools/tests/test_soul_object_blockers.py": "a21f4e28154fef749960f04aa6ce8ab0824b1a4697ca5602460d4b0b38852aee",
+    "tools/tests/hallway_boundary_native_tests.cpp.in": "ea5849d0b00899e0005639673b095e89d742f956f0e1f0d86cec5a8cdbe031f6"
+  },
+  "tested_function_sha256": {
+    "EnHoll_SetupAction": "e2f2ef551e052bd1b8737f4de36b8c01df2191b1cf7da50db5f7ffbefc02859f",
+    "EnHoll_IsKokiriLayer8": "db0c2188006ccd60c0c851f28ebb85403c9e11bf47b89a10da04145c15f02d47",
+    "EnHoll_ChooseAction": "078ff05b677db551a73d150179ca7ad2395ca6985198bd2fbc921ae77c3f4418",
+    "EnHoll_SwapRooms": "fae94f843dcf3a6456bd078155427cfd137134129775129af46534ca67a210f4",
+    "EnHoll_ShouldTrackRoomBoundary": "05fd35a2f2a1aaa9943551accf3c8bec39dc82d7d5888700bbd529f964a09e1c",
+    "EnHoll_ObserveRoomBoundary": "152dff9542ba421ca75efbe230b27fb1fda875504b51372a59dee12b321d2be7",
+    "EnHoll_SelectRoomBoundary": "48ffcac85a35742f94ac9431b74bded1280bbe45c1d5f348261d43a9a9909182",
+    "EnHoll_RequestNewRoom": "cdd7a5f30937cd635903ed40d01984718e0a8e55a0b49353ddef468baafb6c5d",
+    "EnHoll_HorizontalVisibleNarrow": "26faa088da4f190b325c09f7ca2c6a80935ce2fd1afda78d695664b7e62718b5",
+    "EnHoll_VerticalDownBgCoverLarge": "8bb00fdd8547420c6e6c6903b30a277814c15be380775dec2de82119b784f06e",
+    "EnHoll_VerticalInvisible": "ddbf909bca8579bcb7371195b7eb25a0e4edefc418f37b34dfd0ac3f66132145",
+    "EnHoll_HorizontalBgCoverSwitchFlag": "cb97f8daee490b9296d86bd45e718d113e4e307b292775c899c34fa6291ffea4",
+    "EnHoll_HorizontalInvisible": "e24cd1c47003d6c381d0c843d5f8f273a72962f9150ecc7850a52399ce052d50",
+    "EnHoll_VerticalBgCover": "1ffc4e8d37e3486c9ea62dbdd73bee592defe2ad0f2ae2cee061ace6f28f429a",
+    "EnHoll_WaitRoomLoaded": "3266c25dfe75186b85c73270d187a0636619c1f7174a0d125ff7d50c1472be36",
+    "EnHoll_Update": "bb512d034735a275e64d0a9e97df146839f06d2c12e909b675ed76835a915ebf"
+  }
+}

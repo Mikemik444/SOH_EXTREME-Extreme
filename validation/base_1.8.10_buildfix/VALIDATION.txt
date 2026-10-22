@@ -1,0 +1,6 @@
+SOH-EXTREME 1.8.10 compile-fix validation: PASSED
+175 complete source files; one production include added; function bodies unchanged.
+Actual console-variable declaration probe and build-helper source preflight passed.
+The original APWorld, YAML and all other source files are byte-identical.
+Prior 1.8.10 test reports are under validation/base_1.8.10/.
+No full native Windows build or gameplay test was performed.

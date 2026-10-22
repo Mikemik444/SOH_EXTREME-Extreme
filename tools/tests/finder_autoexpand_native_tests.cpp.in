@@ -1,0 +1,371 @@
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <cstdarg>
+#include <cstdint>
+#include <cstdio>
+#include <map>
+#include <set>
+#include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "soh/Enhancements/randomizer/randomizerEnums.h"
+#include "soh/Network/Archipelago/TrackerScenes.h"
+#include "soh/Network/Archipelago/SceneTransitionChecks.h"
+#define DEFINE_SCENE(segment, title, name, config, a, b) name,
+enum SceneID {
+#include "scene_table.h"
+    SCENE_ID_MAX
+};
+#undef DEFINE_SCENE
+constexpr int ENTRANCE_GROTTO_EXIT_START = 0x800;
+struct EntranceEntry { uint8_t spawn = 0, room = 0; };
+struct PlayState {
+    int16_t sceneNum = SCENE_KOKIRI_FOREST;
+    uint8_t curSpawn = 0, numRooms = 7;
+    EntranceEntry* setupEntranceList = nullptr;
+    struct { struct { int8_t num = 0; } curRoom; } roomCtx;
+};
+static PlayState play;
+static PlayState* gPlayState = &play;
+static EntranceEntry entranceList[] = {{0, 0}, {1, 6}};
+static RandomizerCheckArea legacyArea = RCAREA_KOKIRI_FOREST;
+static int currentGrotto = -1;
+static int savedAreaReads = 0;
+RandomizerCheckArea GetCheckArea() { ++savedAreaReads; return legacyArea; }
+int8_t Grotto_CurrentGrotto() { return currentGrotto; }
+namespace Rando { RandomizerCheckArea TryGetAreaFromScene(uint8_t); }
+@Rando::TryGetAreaFromScene@
+@SCENE_NAMES@
+@AREA_NAMES@
+namespace SohUtils {
+const std::string& GetSceneName(int scene) { return sceneNames.at(scene); }
+}
+namespace RandomizerCheckObjects {
+RandomizerCheckArea GetRCAreaBySceneID(SceneID scene) { return Rando::TryGetAreaFromScene(scene); }
+std::string GetRCAreaName(RandomizerCheckArea area) { return rcAreaNames.at(area); }
+}
+@AREA_GROUPS@
+namespace EntranceTracker {
+struct EntranceData { std::string source; int srcGroup; };
+static std::map<int, EntranceData> grottoEntrances = {
+    {ENTRANCE_GROTTO_EXIT_START + GROTTO_HF_NEAR_MARKET_OFFSET, {"HF Near Market Boulder Grotto", 12}},
+    {ENTRANCE_GROTTO_EXIT_START + GROTTO_HF_SOUTHEAST_OFFSET, {"HF Southeast Grotto", 12}},
+    {ENTRANCE_GROTTO_EXIT_START + GROTTO_HF_FAIRY_OFFSET, {"HF Fairy Grotto", 12}},
+};
+const EntranceData* GetEntranceData(int entrance) {
+    const auto found = grottoEntrances.find(entrance);
+    return found == grottoEntrances.end() ? nullptr : &found->second;
+}
+}
+namespace Rando::StaticData {
+struct Location {
+    int scene;
+    RandomizerCheckArea area;
+    int GetScene() const { return scene; }
+    RandomizerCheckArea GetArea() const { return area; }
+};
+static const std::map<RandomizerCheck, Location> locations = {
+@LOCATION_INPUTS@
+};
+const Location* GetLocation(RandomizerCheck check) {
+    const auto found = locations.find(check);
+    return found == locations.end() ? nullptr : &found->second;
+}
+}
+@LEGACY@
+@FinderScene@
+@FinderCurrentScene@
+@FinderNativeScene@
+
+// Explicit ImGui I/O shim: persistent IDs follow PushID and ### semantics;
+// a physical click/key action differs from SetNextItemOpen and clipped output.
+constexpr int ImGuiCond_Always = 1;
+struct ImVec2 { float x, y; ImVec2(float x, float y) : x(x), y(y) {} };
+namespace ImGui {
+struct Header { std::string id, label; bool desired, expanded; };
+static std::vector<std::string> ids;
+static std::vector<Header> headers;
+static std::vector<std::string> rowText;
+static std::map<std::string, bool> actions;
+static std::set<std::string> clipped;
+static bool nextOpen = false, toggled = false, echoProgrammaticToggle = false;
+static int indent = 0;
+static std::string Id(const std::string& label) {
+    std::string result;
+    for (const auto& id : ids) result += id + "/";
+    const auto suffix = label.find("###");
+    return result + (suffix == std::string::npos ? label : label.substr(suffix));
+}
+void PushID(const char* id) { ids.emplace_back(id); }
+void PushID(int id) { ids.push_back(std::to_string(id)); }
+void PopID() { assert(!ids.empty()); ids.pop_back(); }
+void SetNextItemOpen(bool open, int condition) { assert(condition == ImGuiCond_Always); nextOpen = open; }
+bool CollapsingHeader(const char* label) {
+    const std::string id = Id(label);
+    bool expanded = nextOpen;
+    toggled = echoProgrammaticToggle;
+    if (clipped.count(id)) { expanded = false; toggled = false; }
+    else if (const auto action = actions.find(id); action != actions.end()) {
+        expanded = action->second;
+        toggled = expanded != nextOpen;
+        actions.erase(action);
+    }
+    headers.push_back({id, label, nextOpen, expanded});
+    return expanded;
+}
+bool IsItemToggledOpen() { return toggled; }
+bool BeginChild(const char* name, ImVec2, bool) { PushID(name); return true; }
+void EndChild() { PopID(); }
+void Separator() {}
+void Indent() { ++indent; }
+void Unindent() { assert(indent > 0); --indent; }
+void TextWrapped(const char* format, ...) {
+    char buffer[4096]; va_list args; va_start(args, format); std::vsnprintf(buffer, sizeof(buffer), format, args); va_end(args);
+    rowText.emplace_back(buffer);
+}
+void TextUnformatted(const char*) {}
+void Text(const char*, ...) {}
+void TextDisabled(const char*, ...) {}
+bool IsItemHovered() { return false; }
+void BeginTooltip() {}
+void EndTooltip() {}
+void PushTextWrapPos(float) {}
+void PopTextWrapPos() {}
+void BeginFrame() { headers.clear(); rowText.clear(); assert(ids.empty() && indent == 0); }
+}
+namespace SohExtreme {
+struct EntranceEndpoint {};
+std::string TrackerDestinationLabel(int64_t, const std::string& name, const EntranceEndpoint*) { return name; }
+std::string TrackerCheckDetailLine(int64_t, const EntranceEndpoint*) { return "Room detail"; }
+std::string CleanTrackerLabel(const std::string& name) { return name; }
+}
+static const SohExtreme::EntranceEndpoint* FinderCheckArrival(int64_t) { return nullptr; }
+@DrawFinderDropdown@
+static std::map<int, bool> regionDropdownChoices;
+static std::map<std::pair<int, int>, bool> sceneDropdownChoices;
+using Routes = std::map<int64_t, SohExtreme::TrackerScene>;
+static void Draw(const SohExtreme::TrackerSnapshot& snapshot, const SohExtreme::TrackerScene& current,
+                 const Routes& routes, bool onlyCurrent = false) {
+    const auto groups = SohExtreme::GroupTrackerRowsByScene(snapshot, current, true, onlyCurrent,
+        [&](int64_t id) { return routes.at(id); }, [](const auto&, const auto&) { return true; });
+    const auto regions = SohExtreme::GroupTrackerScenesByRegion(groups, current, true, [](int area) {
+        return RandomizerCheckObjects::GetRCAreaName(static_cast<RandomizerCheckArea>(area));
+    });
+    const bool showRoomDoorNumbers = false;
+    ImGui::BeginFrame();
+@DrawUniversalFinderMirror_presentation_loop@
+    assert(ImGui::ids.empty() && ImGui::indent == 0);
+}
+static int cases = 0, assertions = 0, reproductions = 0;
+static void Require(bool value, const std::string& message) {
+    ++assertions;
+    if (!value) throw std::runtime_error(message);
+}
+static void Case(const char* name) { ++cases; std::printf("CASE %s\n", name); }
+static void Reset() {
+    play = {}; play.setupEntranceList = entranceList;
+    gPlayState = &play; savedAreaReads = 0; currentGrotto = -1;
+    regionDropdownChoices.clear(); sceneDropdownChoices.clear();
+    ImGui::actions.clear(); ImGui::clipped.clear(); ImGui::echoProgrammaticToggle = false;
+}
+static std::string SceneId(const SohExtreme::TrackerScene& scene) {
+    return "SOHExtremeUTRegions/APScenes/" + std::to_string(scene.scene) + "/" + std::to_string(scene.instance) + "/###APScene";
+}
+static std::string RegionId(int area) {
+    return "SOHExtremeUTRegions/APMapRegions/" + std::to_string(area) + "/###APMapRegion";
+}
+static const ImGui::Header* Header(const std::string& id) {
+    const auto found = std::find_if(ImGui::headers.begin(), ImGui::headers.end(), [&](const auto& h) { return h.id == id; });
+    return found == ImGui::headers.end() ? nullptr : &*found;
+}
+static bool Open(const SohExtreme::TrackerScene& scene) {
+    const auto* header = Header(SceneId(scene));
+    return header && header->expanded;
+}
+static SohExtreme::TrackerSnapshot Snapshot(std::initializer_list<int64_t> ids) {
+    SohExtreme::TrackerSnapshot snapshot;
+    for (const int64_t id : ids) snapshot.rows.push_back({id, 1, "Check " + std::to_string(id), "Logic region"});
+    return snapshot;
+}
+static void NativeCases() {
+    Reset();
+    const RandomizerCheck courtyardChecks[] = {RC_TOT_LEFTMOST_GOSSIP_STONE, RC_TOT_LEFT_CENTER_GOSSIP_STONE,
+        RC_TOT_RIGHTMOST_GOSSIP_STONE, RC_TOT_RIGHT_CENTER_GOSSIP_STONE};
+    for (const int scene : {SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT, SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS}) {
+        Case("day-authored ToT checks on night/adult first entry");
+        play.sceneNum = scene; legacyArea = RCAREA_MARKET;
+        const auto oldCurrent = Legacy::Current();
+        const auto now = FinderCurrentScene();
+        for (const auto check : courtyardChecks) {
+            Require(!Legacy::FinderNativeScene(check).Matches(oldCurrent), "baseline reproduces missing current match");
+            Require(FinderNativeScene(check).Matches(now), "native override follows canonical current scene");
+        }
+        Require(now.name == "Temple of Time Exterior", "canonical display name must not claim child/day");
+        Draw(Snapshot({1}), now, {{1, FinderNativeScene(courtyardChecks[0])}});
+        Require(Open(now), "previously unseen ToT section expands automatically");
+        Require(sceneDropdownChoices.empty() && regionDropdownChoices.empty(), "auto entry is not a manual preference");
+        ++reproductions;
+    }
+    const std::vector<std::vector<int>> aliases = {
+        {SCENE_MARKET_ENTRANCE_DAY, SCENE_MARKET_ENTRANCE_NIGHT, SCENE_MARKET_ENTRANCE_RUINS},
+        {SCENE_BACK_ALLEY_DAY, SCENE_BACK_ALLEY_NIGHT},
+        {SCENE_MARKET_DAY, SCENE_MARKET_NIGHT, SCENE_MARKET_RUINS},
+        {SCENE_CASTLE_COURTYARD_GUARDS_DAY, SCENE_CASTLE_COURTYARD_GUARDS_NIGHT},
+        {SCENE_HYRULE_CASTLE, SCENE_OUTSIDE_GANONS_CASTLE},
+    };
+    for (const auto& family : aliases) {
+        Case("age/time resource family shares one physical group");
+        Routes routes; auto snapshot = Snapshot({}); int id = 0;
+        for (const int scene : family) {
+            play.sceneNum = scene; routes[++id] = FinderScene(scene, RCAREA_INVALID);
+            snapshot.rows.push_back({id, 1, "Variant check", "Area"});
+            Require(routes.at(id).Matches(FinderCurrentScene()), "resource aliases match live scene");
+        }
+        Draw(snapshot, FinderCurrentScene(), routes, true);
+        Require(ImGui::headers.size() == 1 && ImGui::headers.front().expanded, "aliases coalesce and only-current keeps all rows");
+        Require(ImGui::rowText.size() == family.size(), "alias normalization keeps every input check exactly once");
+    }
+    struct SharedInput { int scene, spawn; RandomizerCheckArea area; };
+    const SharedInput shared[] = {
+@SHARED_INPUTS@
+    };
+    for (const auto& input : shared) {
+        Case("shared interior uses authored live spawn rather than saved entrance");
+        play.sceneNum = input.scene; play.curSpawn = input.spawn; legacyArea = RCAREA_LOST_WOODS;
+        savedAreaReads = 0;
+        const auto current = FinderCurrentScene();
+        Require(current.Matches(FinderScene(input.scene, input.area)), "correct native shared instance");
+        Require(current.area == input.area && savedAreaReads == 0, "does not read stale entrance area");
+        const auto wrong = FinderScene(input.scene, input.area == RCAREA_KAKARIKO_VILLAGE ? RCAREA_MARKET : RCAREA_KAKARIKO_VILLAGE);
+        Require(!current.Matches(wrong), "different shared instance stays distinct");
+    }
+    Case("Kakariko test-resource alias remains distinct from Market bazaar");
+    play.sceneNum = SCENE_BAZAAR; play.curSpawn = 0;
+    Require(FinderNativeScene(RC_KAK_BAZAAR_ITEM_1).Matches(FinderCurrentScene()), "TEST01 remains Kakariko");
+    Require(!FinderNativeScene(RC_MARKET_BAZAAR_ITEM_1).Matches(FinderCurrentScene()), "Market shop does not inherit Kak alias");
+    play.curSpawn = 1;
+    Require(FinderNativeScene(RC_MARKET_BAZAAR_ITEM_1).Matches(FinderCurrentScene()), "Market physical spawn matches its checks");
+    Case("grave spawn followed by native room walk into windmill");
+    play.sceneNum = SCENE_WINDMILL_AND_DAMPES_GRAVE; play.curSpawn = 0; play.roomCtx.curRoom.num = 0;
+    legacyArea = RCAREA_GRAVEYARD;
+    const auto grave = FinderCurrentScene();
+    Require(grave.area == RCAREA_GRAVEYARD, "grave source instance");
+    play.roomCtx.curRoom.num = entranceList[1].room;
+    const auto windmill = FinderCurrentScene();
+    Require(!Legacy::Current().Matches(Legacy::FinderNativeScene(RC_KAK_WINDMILL_FREESTANDING_POH)), "old saved-area path reproduces missed windmill");
+    Require(windmill.Matches(FinderNativeScene(RC_KAK_WINDMILL_FREESTANDING_POH)), "room arrival follows native windmill");
+    Draw(Snapshot({1,2}), grave, {{1, grave}, {2, windmill}});
+    Require(Open(grave) && !Open(windmill), "grave opens before room transition");
+    Draw(Snapshot({1,2}), FinderCurrentScene(), {{1, grave}, {2, windmill}});
+    Require(!Open(grave) && Open(windmill), "walking opens windmill and re-collapses untouched grave");
+    Require(sceneDropdownChoices.empty(), "walking between instances creates no manual choice");
+    ++reproductions;
+    Case("windmill room comes from loaded table, not a fixed room number");
+    entranceList[1].room = 4; play.roomCtx.curRoom.num = 4;
+    Require(FinderCurrentScene().area == RCAREA_KAKARIKO_VILLAGE, "uses authored loaded room");
+    entranceList[1].room = 6; play.roomCtx.curRoom.num = -1; play.curSpawn = 1;
+    Require(FinderCurrentScene().area == RCAREA_KAKARIKO_VILLAGE, "first-load pending room falls back to live spawn");
+    play.setupEntranceList = nullptr; play.curSpawn = 0;
+    Require(FinderCurrentScene().area == RCAREA_GRAVEYARD, "missing room table uses native spawn");
+    play.setupEntranceList = entranceList;
+    Case("ordinary dungeon rooms use their physical scene with stale source data");
+    for (const int scene : {SCENE_DODONGOS_CAVERN, SCENE_JABU_JABU, SCENE_WATER_TEMPLE, SCENE_FOREST_TEMPLE_BOSS}) {
+        play.sceneNum = scene; play.curSpawn = 1; legacyArea = RCAREA_KOKIRI_FOREST;
+        const auto atEntry = FinderCurrentScene(); play.roomCtx.curRoom.num = 18;
+        Require(atEntry.Matches(FinderCurrentScene()), "dungeon room change does not change physical scene identity");
+        Require(atEntry.area == Rando::TryGetAreaFromScene(scene), "dungeon region is physical, not saved source");
+    }
+    Case("shared generic grotto geometry keeps exact native grotto identity");
+    play.sceneNum = SCENE_GROTTOS; play.curSpawn = 0; currentGrotto = GROTTO_HF_NEAR_MARKET_OFFSET;
+    const auto first = FinderCurrentScene(); currentGrotto = GROTTO_HF_SOUTHEAST_OFFSET;
+    const auto second = FinderCurrentScene();
+    Require(first.area == RCAREA_HYRULE_FIELD && second.area == RCAREA_HYRULE_FIELD, "actual grotto metadata supplies region");
+    Require(!first.Matches(second), "same scene and spawn do not merge separate grottos");
+    Draw(Snapshot({1,2}), second, {{1, first}, {2, second}});
+    Require(!Open(first) && Open(second), "only entered grotto auto-opens");
+    currentGrotto = -1;
+    Require(FinderCurrentScene().instance == -1 && !first.Matches(FinderCurrentScene()), "unknown grotto never wildcard-matches");
+    play.sceneNum = SCENE_FAIRYS_FOUNTAIN; currentGrotto = GROTTO_HF_FAIRY_OFFSET;
+    Require(FinderCurrentScene().area == RCAREA_HYRULE_FIELD, "fairy grotto uses exact native identity");
+    Case("unknown shared instances and absent play state stay unknown");
+    play.sceneNum = SCENE_BAZAAR; play.curSpawn = 99;
+    Require(FinderCurrentScene().instance == -1, "unsupported spawn must not select an arbitrary shop");
+    play.sceneNum = -1; Require(FinderCurrentScene().scene == -1, "invalid scene guarded");
+    play.sceneNum = SCENE_ID_MAX; Require(FinderCurrentScene().scene == -1, "scene upper bound guarded");
+    gPlayState = nullptr; Require(FinderCurrentScene().scene == -1, "no game state guarded");
+}
+static void ExpansionCases() {
+    Reset();
+    const auto field = FinderScene(SCENE_HYRULE_FIELD, RCAREA_HYRULE_FIELD);
+    const auto windmill = FinderScene(SCENE_WINDMILL_AND_DAMPES_GRAVE, RCAREA_KAKARIKO_VILLAGE);
+    const auto kak = FinderScene(SCENE_KAKARIKO_VILLAGE, RCAREA_KAKARIKO_VILLAGE);
+    const Routes routes = {{1, field}, {2, windmill}, {3, kak}};
+    const auto all = Snapshot({1,2,3});
+    Case("automatic enter leave reenter and unseen snapshot arrival");
+    Draw(Snapshot({1}), windmill, {{1, field}});
+    Require(!Open(field) && sceneDropdownChoices.empty(), "stale snapshot has no current row and records no override");
+    Draw(all, windmill, routes);
+    Require(Open(windmill) && !Open(kak) && !Open(field), "late current rows open on the first displayed frame");
+    Require(Header(RegionId(RCAREA_KAKARIKO_VILLAGE))->expanded, "current child opens automatic parent");
+    Draw(all, field, routes);
+    Require(Open(field) && !Header(RegionId(RCAREA_KAKARIKO_VILLAGE))->expanded, "untouched departed region re-collapses");
+    Draw(all, windmill, routes);
+    Require(Open(windmill), "untouched return reopens");
+    Require(sceneDropdownChoices.empty() && regionDropdownChoices.empty(), "automatic decisions never become manual");
+    Case("manual child close survives location snapshot and count changes");
+    ImGui::actions[SceneId(windmill)] = false;
+    Draw(all, windmill, routes);
+    Require(!Open(windmill) && sceneDropdownChoices.at(windmill.Key()) == false, "deliberate close recorded");
+    Draw(all, field, routes); Draw(all, windmill, routes);
+    Require(!Open(windmill), "manual close overrides reentry");
+    Draw(Snapshot({2}), windmill, {{2, windmill}});
+    Require(!Open(windmill), "hidden single-scene parent and count changes preserve manual close");
+    Case("manual scene open keeps its automatic parent open after leaving");
+    ImGui::actions[SceneId(windmill)] = true; Draw(all, windmill, routes);
+    Draw(all, field, routes);
+    Require(Open(windmill) && Header(RegionId(RCAREA_KAKARIKO_VILLAGE))->expanded, "explicit child open keeps parent visible");
+    Require(Open(field), "automatic current scene is still open");
+    Case("explicit parent close wins and returns when filtered parent reappears");
+    ImGui::actions[RegionId(RCAREA_KAKARIKO_VILLAGE)] = false; Draw(all, windmill, routes);
+    Require(!Header(RegionId(RCAREA_KAKARIKO_VILLAGE))->expanded, "parent close overrides manual child open");
+    Draw(Snapshot({2}), windmill, {{2, windmill}});
+    Require(!Header(RegionId(RCAREA_KAKARIKO_VILLAGE)) && Open(windmill), "single scene omits parent header");
+    Draw(all, windmill, routes);
+    Require(!Header(RegionId(RCAREA_KAKARIKO_VILLAGE))->expanded, "explicit parent choice survives filtering");
+    Case("late area correction preserves manual key and ImGui identity");
+    Reset(); auto unresolved = windmill; unresolved.scene = SCENE_KAKARIKO_CENTER_GUEST_HOUSE;
+    unresolved.instance = 0; unresolved.area = -1;
+    auto resolved = unresolved; resolved.area = RCAREA_KAKARIKO_VILLAGE; resolved.name = "Corrected name";
+    Draw(Snapshot({2}), field, {{2, unresolved}});
+    const auto originalId = Header(SceneId(unresolved))->id;
+    ImGui::actions[originalId] = true; Draw(Snapshot({2}), field, {{2, unresolved}});
+    Draw(Snapshot({2,3}), field, {{2, resolved}, {3, kak}});
+    Require(Open(resolved) && Header(SceneId(resolved))->id == originalId, "physical scene identity survives new area/parent/name");
+    Require(sceneDropdownChoices.size() == 1, "corrected grouping does not duplicate manual state");
+    Case("clipped current header returning false is not a manual close");
+    Reset(); ImGui::clipped.insert(SceneId(windmill));
+    Draw(Snapshot({2}), windmill, {{2, windmill}});
+    Require(sceneDropdownChoices.empty(), "clipped false has no deliberate toggle");
+    ImGui::clipped.clear(); Draw(Snapshot({2}), windmill, {{2, windmill}});
+    Require(Open(windmill), "current section opens when it becomes visible");
+    Case("programmatic expansion flag echo does not create a manual preference");
+    Reset(); ImGui::echoProgrammaticToggle = true;
+    Draw(Snapshot({2}), windmill, {{2, windmill}});
+    Require(Open(windmill) && sceneDropdownChoices.empty(), "matching programmed value is not saved as a manual action");
+    ImGui::echoProgrammaticToggle = false;
+    Case("different grotto manual preferences remain independent");
+    Reset();
+    const auto one = FinderScene(SCENE_GROTTOS, RCAREA_HYRULE_FIELD, GROTTO_HF_NEAR_MARKET_OFFSET);
+    const auto two = FinderScene(SCENE_GROTTOS, RCAREA_HYRULE_FIELD, GROTTO_HF_SOUTHEAST_OFFSET);
+    ImGui::actions[SceneId(one)] = false; Draw(Snapshot({1,2}), one, {{1, one}, {2, two}});
+    Draw(Snapshot({1,2}), two, {{1, one}, {2, two}});
+    Require(!Open(one) && Open(two), "closing first grotto does not close unseen second grotto");
+    Require(sceneDropdownChoices.size() == 1 && sceneDropdownChoices.contains(one.Key()), "exact shared instance manual key");
+}
+int main() {
+    NativeCases(); ExpansionCases();
+    std::printf("RESULT cases=%d assertions=%d baseline_reproductions=%d\n", cases, assertions, reproductions);
+}

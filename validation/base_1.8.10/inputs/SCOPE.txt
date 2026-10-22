@@ -1,0 +1,6 @@
+The 1.8.9 metadata report exactly reproduces the user upload with immutable 1.8.9 sources.
+The baseline replay matches all 36 original progression sphere sizes.
+The corrected 1.8.10 replay intentionally FAILS the unchanged old seed goal.
+Its 355 reachable checks and 3/20 goal pieces demonstrate why this seed needs regeneration.
+The 1.8.7 report is historical input for the retained Jabu source-rule regression.
+Fresh 1.8.10 generation evidence is separate, in the parent validation directory.

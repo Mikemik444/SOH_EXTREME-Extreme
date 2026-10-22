@@ -171,6 +171,25 @@ void Entrance_ResetEntranceTable(void) {
     }
 }
 
+// Older maps represented the river's water paths with their land endpoints.
+// Apply that legacy convention only to omitted water sources, after every
+// explicit override has been installed. Array order must never merge a new pair.
+static void Entrance_ApplyLegacyRiverOverrides(EntranceOverride* overrides) {
+    uint8_t landToRiver = false, waterToRiver = false;
+    uint8_t landToField = false, waterToField = false;
+    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; ++i) {
+        if (Entrance_EntranceIsNull(&overrides[i])) break;
+        landToRiver |= overrides[i].index == ENTR_ZORAS_RIVER_WEST_EXIT;
+        waterToRiver |= overrides[i].index == ENTR_ZORAS_RIVER_3;
+        landToField |= overrides[i].index == ENTR_HYRULE_FIELD_RIVER_EXIT;
+        waterToField |= overrides[i].index == ENTR_HYRULE_FIELD_14;
+    }
+    if (landToRiver && !waterToRiver)
+        entranceOverrideTable[ENTR_ZORAS_RIVER_3] = entranceOverrideTable[ENTR_ZORAS_RIVER_WEST_EXIT];
+    if (landToField && !waterToField)
+        entranceOverrideTable[ENTR_HYRULE_FIELD_14] = entranceOverrideTable[ENTR_HYRULE_FIELD_RIVER_EXIT];
+}
+
 void Entrance_Init(void) {
     EntranceOverride* entranceOverrides = Randomizer_GetEntranceOverrides();
 
@@ -252,13 +271,8 @@ void Entrance_Init(void) {
         // Overwrite the indices which we want to shuffle, leaving the rest as they are
         entranceOverrideTable[originalIndex] = overrideIndex;
 
-        // Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
-        if (originalIndex == ENTR_ZORAS_RIVER_WEST_EXIT) { // Hyrule Field -> ZR Front land entrance
-            entranceOverrideTable[ENTR_ZORAS_RIVER_3] = overrideIndex;
-        } else if (originalIndex == ENTR_HYRULE_FIELD_RIVER_EXIT) { // ZR Front -> Hyrule Field land entrance
-            entranceOverrideTable[ENTR_HYRULE_FIELD_14] = overrideIndex;
-        }
     }
+    Entrance_ApplyLegacyRiverOverrides(entranceOverrides);
 
     // Stop playing background music during shuffled entrance transitions
     // so that we don't get duplicated or overlapping music tracks
@@ -320,20 +334,11 @@ s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
         return nextEntranceIndex;
     }
 
-    // Land and water variants share one physical HF <-> Zora's River route.
-    // Keep the raw index for the native lookup (and its vanilla water spawn),
-    // but use the catalog identity for AP checks, recovery history and tracking.
-    s16 sourceIndex = nextEntranceIndex;
-    if (Archipelago_EntranceShuffleActive()) {
-        if (sourceIndex == ENTR_ZORAS_RIVER_3) {
-            sourceIndex = ENTR_ZORAS_RIVER_WEST_EXIT;
-        } else if (sourceIndex == ENTR_HYRULE_FIELD_14) {
-            sourceIndex = ENTR_HYRULE_FIELD_RIVER_EXIT;
-        }
-    }
-    Archipelago_RecordEntrance(sourceIndex);
-    Entrance_SetEntranceDiscovered(sourceIndex, false);
-    EntranceTracker_SetLastEntranceOverride(sourceIndex);
+    // Land and water are separate physical crossings. Legacy destination
+    // aliases are resolved by the route table, never by replacing check IDs.
+    Archipelago_RecordEntrance(nextEntranceIndex);
+    Entrance_SetEntranceDiscovered(nextEntranceIndex, false);
+    EntranceTracker_SetLastEntranceOverride(nextEntranceIndex);
     return Grotto_OverrideSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
 }
 
@@ -512,6 +517,10 @@ void Entrance_SetWarpSongEntrance(void) {
         // During DHWW the cutscene must play at the destination
         gSaveContext.respawnFlag = -3;
     }
+    // Pause-menu song travel calls this resolver directly, while animated and
+    // skipped warps also pass through Environment_WarpSongLeave. Re-arming the
+    // same request is harmless; the completed arrival submits it only once.
+    Archipelago_BeginWarpSongTransition(gPlayState->msgCtx.lastPlayedSong);
 }
 
 void Entrance_OverrideBlueWarp(void) {

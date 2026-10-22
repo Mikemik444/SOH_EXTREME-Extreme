@@ -137,11 +137,15 @@ static CheckIdentity IdentifyPot(s32 sceneNum, s32 posX, s32 posZ) {
 void RegisterShufflePots() {
     bool shouldRegister = IS_RANDO && RAND_GET_OPTION(RSK_SHUFFLE_POTS);
 
-    COND_ID_HOOK(OnActorInit, ACTOR_OBJ_TSUBO, shouldRegister, [](void* actorRef) {
+    // Resolve ordinary AP sources too; randomized draw/drop gates stay below.
+    COND_ID_HOOK(OnActorInit, ACTOR_OBJ_TSUBO, IS_RANDO, [](void* actorRef) {
+        if (!RAND_GET_OPTION(RSK_SHUFFLE_POTS) && !Archipelago_IsCurrentSaveFile()) return;
         Actor* actor = static_cast<Actor*>(actorRef);
         ObjTsubo* potActor = static_cast<ObjTsubo*>(actorRef);
 
         auto potIdentity = IdentifyPot(gPlayState->sceneNum, (s16)actor->world.pos.x, (s16)actor->world.pos.z);
+        Archipelago_ObserveAmmoSource(static_cast<int32_t>(potIdentity.randomizerCheck), actor->id,
+                                     actor->params, actor->home.rot.z);
         ObjectExtension::GetInstance().Set<CheckIdentity>(actor, std::move(potIdentity));
     });
 

@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "cases": 995,
+  "assertions": 7166,
+  "baseline_reproductions": 12,
+  "groups": {
+    "all_six_songs_ages_modes_routes_same_scene_and_selected_location": 480,
+    "arrival_file_age_scene_mismatch_is_consumed": 3,
+    "baseline_warp_omission_and_destination_only_false_positive": 6,
+    "declined_pause_warp": 2,
+    "invalid_native_resolver_song": 1,
+    "invalid_source_and_session_guards": 9,
+    "mixed_grotto_return_and_room_arrival_modes": 36,
+    "ordinary_scene_and_grotto_portal_regression": 319,
+    "pending_request_mismatch_and_cancelled_tuple_reuse": 54,
+    "save_void_death_and_non_song_negative3_do_not_check": 84,
+    "skip_hook_ignores_non_departure_actor": 1
+  },
+  "source_sha256": {
+    "soh/Network/Archipelago/SceneTransitionChecks.h": "980bcbe08987417185d1e261d19902461882a9a08045a10b40dbcaac54eb9bdc",
+    "soh/Network/Archipelago/SceneTransitionData.inc": "b7b4aa8c04ba92c233a501a8dabd509bcc4c214fb4bb9146005a2d7020e68893",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "a592f88c0a5d5a32ebc6018411ad32674c6043a96816029e8883856f7615db7f",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "594fa045bba0fec0a334345f7920da1ebda294086dc06238f913a15949da7f33",
+    "soh/Network/Archipelago/ArchipelagoC.h": "0765aa65b68e620a55dff93b6cef7b9649071fa1c6b77035bcd260d758db27e3",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "c5ce9e3a275e890afd67ec5ddfa1cfb346c5df5b310e1d6447215a3809cbb789",
+    "soh/Network/Archipelago/EntranceRouting.h": "3981c9879bcf8c3491ff058b8ff0353ba0df34b86e995a39546cc1cece20584a",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "a2fb3879d93dc0bbb80be220f707041422e1bec858d2def134e080844f543bfd",
+    "soh/Network/Archipelago/EntranceDestinationPolicy.h": "ad437810079db56bdcdfc30e3fa688ec5a32cfbb0c00c7e16f46b6fb724427a0",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "373afcf47a27efb2b8a59ac2852c71b2a3416617938666e3798edbb254928d63",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "e2989e4f59eeef1cc28ac99e85a8c6a84c0d46e5bbc54548a0ab6fec8f3febda",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/QoL/PauseWarp.cpp": "8060afca24fbadee9c8f603b12a0b41203e9afaab93c790b49c545fcfb47ea50",
+    "soh/Enhancements/QoL/SkipWarpAnimation.cpp": "d291e6b40a63134fc1f6f54fae9055f090bc7786f8e52c9f0e0d5351ca7da017",
+    "src/code/z_kankyo.c": "0062d9dbaf5100afd410c2e1191b1217a9c8ace54c99177d3d44ad7f627de118",
+    "src/code/z_play.c": "f55e703fababf5bae3f60ee0af250d4350470284e4463c511e83dc80b98f8e70",
+    "src/overlays/actors/ovl_player_actor/z_player.c": "fdc9cafccb840bb9d7303351e467b27a90016ba181caa8a75063a4b19e3a106a",
+    "src/overlays/actors/ovl_Demo_Kankyo/z_demo_kankyo.c": "34040dbc9e585ef7e429e4cdc1ecbf3b3de31948719760142fa0fbbdae5c63a8",
+    "archipelago/soh_extreme/SceneTransitionCatalog.json": "567e5873ec61236274b290b138379a58aecbbf3f9ddfbd0ec3a2ee51b92cab13"
+  },
+  "test_sha256": {
+    "tools/tests/test_warp_song_checks.py": "d12018a114a74750647f107f37f2f96ac187dbfdc2874f39ea1cdd8604a13661",
+    "tools/tests/warp_song_checks_tests.cpp.in": "3287135533d12e1dc65cebc438958e6c4490ececddfa4c847c0564fd4f1c0623",
+    "tools/tests/warp_song_1812_legacy_crossing.inc": "29bc2032265b6e9e0781b798b02efc844e306757cbd90b174542b9a3141fe17f"
+  },
+  "dependency_sha256": {
+    "entrance_table.h": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa",
+    "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c"
+  },
+  "source_unchanged_during_tests": true,
+  "baseline": {
+    "release": "1.8.12",
+    "source_sha256": {
+      "soh/Network/Archipelago/SceneTransitionChecks.h": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496"
+    }
+  },
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_scanner": false,
+  "native_windows_build": false,
+  "in_game_playthrough": false,
+  "scope": "Actual native warp, pause/skip callbacks, AP routing record/completion and scene-journal functions; controlled engine/network IO.",
+  "limitations": [
+    "Animation timing, scene allocation, destination collision/arrival guards and network transport are fixture I/O.",
+    "The actual production AP Record and Complete functions run with the real routing class; ArmArrival and scene-history storage are boundary shims.",
+    "A full Windows game build or controller playthrough is not claimed."
+  ],
+  "replay_command": "python3 source/tools/tests/test_warp_song_checks.py --dependencies tests/entrance_184_native_dependencies --report tests/warp_song_1813_native.json"
+}

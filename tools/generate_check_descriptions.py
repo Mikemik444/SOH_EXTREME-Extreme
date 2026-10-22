@@ -19,6 +19,13 @@ WORLD = ROOT / "archipelago/soh_extreme"
 # Grounded in the nine maze door positions/yaws in DungeonDoorCatalog.json.
 # Left/right look into the maze from the lobby (-60, -80, -1100), facing -Z.
 # Source side 0 crosses along the yaw normal; source side 1 crosses against it.
+RIVER_PATH_NAMES = {
+    11000234: "Scene Transition: Hyrule Field Land Path -> Zora's River Land Path",
+    11000385: "Scene Transition: Zora's River Land Path -> Hyrule Field Land Path",
+    11000473: "Scene Transition: Hyrule Field Water Path -> Zora's River Water Path",
+    11000785: "Scene Transition: Zora's River Water Path -> Hyrule Field Water Path",
+}
+
 MAZE_PASSAGES = {
     11211290: "Outer Left Entrance Passage, Rightward",
     11211291: "Outer Left Entrance Passage, Leftward",
@@ -88,7 +95,7 @@ def build_descriptions():
     scenes = scene_display_names(enemy_rows)
     for filename in ("SceneTransitionCatalog.json", "DungeonDoorCatalog.json"):
         for row in json.loads((WORLD / filename).read_text(encoding="utf-8")):
-            name = row["name"]
+            name = RIVER_PATH_NAMES.get(row["id"], row["name"])
             arrival = None
             if row["mode"] == "door":
                 passage = re.sub(r"\s+\(door \d+, room [^)]+\)$", "",

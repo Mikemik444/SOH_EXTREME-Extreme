@@ -8537,7 +8537,7 @@
     "side": -1
   },
   "11000234": {
-    "name": "Scene Transition: Hyrule Field River Exit -> Zora's River Lower Exit",
+    "name": "Scene Transition: Hyrule Field Land Path -> Zora's River Land Path",
     "legacy_name": "Scene Transition: Hyrule Field River Exit -> Zora's River Lower Exit",
     "kind": "entrance",
     "source_scene": 81,
@@ -8757,7 +8757,7 @@
     "side": -1
   },
   "11000385": {
-    "name": "Scene Transition: Zora's River Lower Exit -> Hyrule Field River Exit",
+    "name": "Scene Transition: Zora's River Land Path -> Hyrule Field Land Path",
     "legacy_name": "Scene Transition: Zora's River Lower Exit -> Hyrule Field River Exit",
     "kind": "entrance",
     "source_scene": 84,
@@ -8927,7 +8927,7 @@
     "side": -1
   },
   "11000473": {
-    "name": "Scene Transition: Hyrule Field -> Zora River (water exit)",
+    "name": "Scene Transition: Hyrule Field Water Path -> Zora's River Water Path",
     "legacy_name": "Scene Transition: Hyrule Field -> Zora River (water exit)",
     "kind": "entrance",
     "source_scene": 81,
@@ -9537,7 +9537,7 @@
     "side": -1
   },
   "11000785": {
-    "name": "Scene Transition: Zora River -> Hyrule Field (water exit)",
+    "name": "Scene Transition: Zora's River Water Path -> Hyrule Field Water Path",
     "legacy_name": "Scene Transition: Zora River -> Hyrule Field (water exit)",
     "kind": "entrance",
     "source_scene": 84,

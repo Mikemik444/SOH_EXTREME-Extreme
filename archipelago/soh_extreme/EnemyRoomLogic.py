@@ -211,6 +211,18 @@ WATER_FORMULAS = {
  'WL_HIGH_OR_MID':'Get(LOGIC_WATER_MIDDLE) || Get(LOGIC_WATER_HIGH) || Get(LOGIC_WATER_COULD_MIDDLE)',
 }
 
+# Room-door rewiring removes the vanilla routes that connect the three
+# emblems. Only reaching the actual control action proves its water level.
+# HIGH retains the native reset-proof meaning; it is not an inventory-negative
+# assumption that the initial high level can always be restored.
+SHUFFLED_WATER_FORMULAS = {
+ 'WL_LOW':'Get(LOGIC_WATER_LOW)',
+ 'WL_MID':'Get(LOGIC_WATER_MIDDLE)',
+ 'WL_HIGH':'Get(LOGIC_WATER_HIGH)',
+ 'WL_LOW_OR_MID':'Get(LOGIC_WATER_LOW) || Get(LOGIC_WATER_MIDDLE)',
+ 'WL_HIGH_OR_MID':'Get(LOGIC_WATER_HIGH) || Get(LOGIC_WATER_MIDDLE)',
+}
+
 @dataclasses.dataclass
 class NativeAsAge(Rule, game="SOH-EXTREME"):
     """Evaluate inventory conditions in Spirit's alternate-age key universe.
@@ -378,6 +390,7 @@ class NativeRoomCompiler:
         if name=='CanOpenLargeChest':
             return Has('Open Chest', 2 if o.shuffle_open_chest.value==2 else 1) if o.shuffle_open_chest.value else True_()
         if name=='CanRead':return H.extreme_requirement(b,'shuffle_sign_soul','Sign Soul')
+        if name=='WaterTempleDoorsShuffled':return bool(o.shuffle_dungeon_doors.value)
         if name=='CanGetEnemyDrop':
             more=list(a[1:])
             if more:more[0]=EnemyDistance[more[0][3:]]
@@ -443,7 +456,9 @@ class NativeRoomCompiler:
             # access to the hood and an age that can wear it.
             return H.can_use_bunny_hood(b)
         if name=='SmallKeys':return H.small_keys(Items[KEYS[a[0]]],a[1],b)
-        if name=='WaterLevel':return self.expr(WATER_FORMULAS[a[0]],rr)
+        if name=='WaterLevel':
+            formulas = SHUFFLED_WATER_FORMULAS if o.shuffle_dungeon_doors.value else WATER_FORMULAS
+            return self.expr(formulas[a[0]],rr)
         if name=='CanGroundJumpslash':
             return self.expr('Trick(RT_GROUND_JUMP_HARD) && CanStandingShield() && CanJumpslash() && (CanUse(RG_BOMB_BAG)'+(' || HasItem(RG_GORONS_BRACELET)' if a and a[0] else '')+')',rr)
         if name=='CanGroundJump':return H.can_ground_jump(b,*a)

@@ -30,10 +30,36 @@ struct SceneReturnPoint {
     Vec3f position{};
     s16 yaw = 0;
     int dungeonEntrance = -1;
+    // Before the first proven landing this position is a grotto emergence
+    // origin. Replaying it must retain the native emergence start mode.
+    bool grottoEmergence = false;
 };
 SceneReturnPoint roomEntry;
+// The immediate completed room/doorway transition, including another room in
+// the same scene. Its position is the departure side of that doorway.
 SceneReturnPoint previousScene;
 SceneReturnPoint departingScene;
+SceneReturnPoint pendingDeparture;
+SceneReturnPoint lastPlayerPosition;
+SceneReturnPoint lastGroundPosition;
+SceneReturnPoint previousBeforeArrival;
+SceneReturnPoint nativeRoomDeparture;
+struct RoomBoundaryPoint {
+    SceneReturnPoint point;
+    int target = -1;
+};
+std::map<int, RoomBoundaryPoint> roomBoundaryPoints;
+int selectedRoomBoundary = -1;
+bool pendingDepartureRecorded = false;
+bool departingSceneRecorded = false;
+bool preserveHistoryForArrival = false;
+struct DoorDeparture {
+    bool active = false;
+    int scene = -1, from = -1, to = -1;
+    float x = 0, z = 0, nx = 0, nz = 0, startSide = 0;
+    SceneReturnPoint point;
+};
+DoorDeparture doorDeparture;
 SceneReturnPoint restartArrival;
 bool dungeonReturnArrival = false;
 int returnedDungeonOwner = -1;
@@ -45,6 +71,12 @@ struct PendingDungeonReturn {
 };
 PendingDungeonReturn pendingDungeonReturn;
 const EntranceDestinationPolicy* sceneArrivalPolicy = nullptr;
+
+bool ReturnPointIsCurrent(const SceneReturnPoint& point);
+SceneReturnPoint CaptureReturnPoint(int room = -1);
+void CaptureSceneDeparture(bool physicalCrossing = false);
+void AdvanceDoorDeparture();
+void RememberPlayerPosition();
 
 // A real resolved AP transition owns one arrival. Peeks and Finder labels never
 // arm this marker, and a changed map/save or canceled transition discards it.
@@ -66,13 +98,19 @@ void CancelTransition() {
     arrival = crossingSource = crossingTarget = openedDoor = nullptr;
     lastArrivalSource = lastArrivalTarget = nullptr;
     doorJournal.Reset();
+    doorDeparture = {};
+    pendingDeparture = departingScene = nativeRoomDeparture = {};
+    pendingDepartureRecorded = departingSceneRecorded = false;
+    preserveHistoryForArrival = false;
+    roomBoundaryPoints.clear();
+    selectedRoomBoundary = -1;
 }
 
 void Reset(bool preserveRequestedDungeonReturn = false) {
     routing.Reset();
     slotMapLoaded = false;
     pendingSpawnAge = -1;
-    roomEntry = previousScene = departingScene = {};
+    roomEntry = previousScene = departingScene = lastPlayerPosition = lastGroundPosition = previousBeforeArrival = {};
     sceneArrivalPolicy = nullptr;
     // Only LoadSaveMetadata may preserve an explicitly requested same-save,
     // same-seed, same-settings reload. Ordinary file loads always clear it.
@@ -163,10 +201,21 @@ bool BeforeSceneInit() {
     const int linkAge = LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT;
     if ((roomEntry.scene >= 0 && (roomEntry.age != linkAge || roomEntry.file != gSaveContext.fileNum)) ||
         (previousScene.valid && (previousScene.age != linkAge || previousScene.file != gSaveContext.fileNum))) {
-        roomEntry = previousScene = {};
+        roomEntry = previousScene = lastPlayerPosition = lastGroundPosition = previousBeforeArrival = {};
+        pendingDeparture = {};
+        pendingDepartureRecorded = false;
+        preserveHistoryForArrival = false;
     }
-    if (roomEntry.scene >= 0) departingScene = roomEntry;
-    else if (departingScene.age != linkAge || departingScene.file != gSaveContext.fileNum) departingScene = {};
+    departingSceneRecorded = pendingDepartureRecorded && !preserveHistoryForArrival;
+    departingScene = departingSceneRecorded ? pendingDeparture : SceneReturnPoint{};
+    pendingDeparture = {};
+    pendingDepartureRecorded = false;
+    doorDeparture = {};
+    lastPlayerPosition = {};
+    lastGroundPosition = {};
+    nativeRoomDeparture = {};
+    roomBoundaryPoints.clear();
+    selectedRoomBoundary = -1;
     returnedDungeonOwner = restartArrival.valid ? restartArrival.dungeonEntrance : -1;
     roomEntry = {};
     sceneArrivalPolicy = nullptr;
@@ -210,6 +259,7 @@ bool AfterSceneConditions() {
         dungeonReturnArrival = false;
         returnedDungeonOwner = -1;
         sceneArrivalPolicy = nullptr;
+        preserveHistoryForArrival = false;
         return true;
     }
     // Normal engine setup selects only one of these four verified layers,
@@ -265,7 +315,7 @@ bool Apply(const std::unordered_map<std::string, int>& settings) {
                             routing.UsesPreviousSceneReturn() == next.UsesPreviousSceneReturn();
     if (!sameRoutes) {
         CancelTransition();
-        roomEntry = previousScene = departingScene = {};
+        roomEntry = previousScene = departingScene = lastPlayerPosition = lastGroundPosition = previousBeforeArrival = {};
         sceneArrivalPolicy = nullptr;
         // A menu request survives only its own table reinstall and semantics.
         if (pendingDungeonReturn.routes != next.Routes() ||
@@ -330,13 +380,25 @@ void Record(int source) {
     // traversal checks, even though their destination still follows the map.
     if (!gPlayState || gSaveContext.health <= 0 || gSaveContext.gameMode != GAMEMODE_NORMAL ||
         gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE) return;
+    CaptureSceneDeparture(true);
     crossingSource = a;
     crossingTarget = EntranceEndpointById(routing.Destination(source));
 }
 
 void BeginDoor(int door, int from, int to, const Actor* actor, int side) {
     openedDoor = nullptr; doorJournal.Reset();
+    doorDeparture = {};
     if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState || !actor) return;
+    const auto* player = GET_PLAYER(gPlayState);
+    if (!player || from < 0 || to < 0) return;
+    // Capture the source side before the open animation carries Link through.
+    // This also tracks ordinary native room doors when another ER pool is on.
+    const float nx = Math_SinS(actor->shape.rot.y), nz = Math_CosS(actor->shape.rot.y);
+    const float offset = (player->actor.world.pos.x - actor->world.pos.x) * nx +
+                         (player->actor.world.pos.z - actor->world.pos.z) * nz;
+    doorDeparture = { true, gPlayState->sceneNum, from, to, actor->world.pos.x, actor->world.pos.z,
+                      nx, nz, offset > 0.0f ? 1.0f : offset < 0.0f ? -1.0f : side == 1 ? 1.0f : -1.0f,
+                      CaptureReturnPoint(from) };
     const auto* crossing = FindDoorCrossing(gPlayState->sceneNum, door, from, to,
                                            actor->world.pos.x, actor->world.pos.z, side);
     if (!crossing) return;
@@ -349,14 +411,16 @@ void BeginDoor(int door, int from, int to, const Actor* actor, int side) {
         }
     }
     if (!openedDoor) return;
-    const auto* player = GET_PLAYER(gPlayState);
-    if (!player) { openedDoor = nullptr; return; }
     doorJournal.BeginDoor(crossing, player->actor.world.pos.x, player->actor.world.pos.z,
                           Math_SinS(actor->shape.rot.y), Math_CosS(actor->shape.rot.y));
 }
 
 void AdvanceDoor() {
-    if (!openedDoor || !gPlayState) return;
+    if (openedDoor) AdvanceDoorDeparture();
+    if (!openedDoor || !gPlayState) {
+        RememberPlayerPosition();
+        return;
+    }
     const auto* player = GET_PLAYER(gPlayState);
     if (!player) return;
     const auto check = doorJournal.AdvanceDoor(gPlayState->sceneNum, gPlayState->roomCtx.curRoom.num,
@@ -405,7 +469,7 @@ bool SpawnPosition(int scene) {
         spawnEntry.pos.y = static_cast<s16>(restartArrival.position.y);
         spawnEntry.pos.z = static_cast<s16>(restartArrival.position.z);
         spawnEntry.rot.y = restartArrival.yaw;
-        spawnEntry.params = 0x0DFF;
+        spawnEntry.params = restartArrival.grottoEmergence ? 0x04FF : 0x0DFF;
         gPlayState->linkActorEntry = &spawnEntry;
         restartArrival = {};
         arrival = nullptr;
@@ -449,7 +513,11 @@ bool ReturnFromUnsafeArrival() {
     if (!source || !target || source->reverse < 0 ||
         CrossingScene(target->scene) != CrossingScene(gPlayState->sceneNum)) return false;
     const int destination = source->reverse;
+    const auto priorHistory = previousBeforeArrival;
     CancelTransition();
+    // The rejected wet room must not become a return destination. Returning
+    // to the source restores the history that source had before this crossing.
+    previousScene = ReturnPointIsCurrent(priorHistory) ? priorHistory : SceneReturnPoint{};
     suppressTransitionChecks = true;
     ArmArrival(-1, destination);
     gSaveContext.respawnFlag = 0;
@@ -474,6 +542,148 @@ bool ReturnPointIsCurrent(const SceneReturnPoint& point) {
            point.age == (LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT);
 }
 
+SceneReturnPoint CaptureReturnPoint(int room) {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        gSaveContext.gameMode != GAMEMODE_NORMAL || gSaveContext.health <= 0 ||
+        gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE) return {};
+    const auto* player = GET_PLAYER(gPlayState);
+    if (!player) return {};
+    const auto& pos = player->actor.world.pos;
+    for (float axis : {pos.x, pos.y, pos.z})
+        if (!std::isfinite(axis) || axis < -32768.0f || axis > 32767.0f) return {};
+    if (room < 0) room = gPlayState->roomCtx.curRoom.num;
+    if (room < 0 || room >= gPlayState->numRooms) return {};
+    SceneReturnPoint point = roomEntry;
+    point.valid = ReturnPointIsCurrent(roomEntry) &&
+                  CrossingScene(roomEntry.scene) == CrossingScene(gPlayState->sceneNum);
+    point.scene = gPlayState->sceneNum;
+    point.room = room;
+    point.age = LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT;
+    point.file = gSaveContext.fileNum;
+    point.position = pos;
+    point.yaw = player->actor.shape.rot.y;
+    return point;
+}
+
+void RememberPlayerPosition() {
+    if (!gPlayState || gPlayState->transitionTrigger != TRANS_TRIGGER_OFF || doorDeparture.active ||
+        pendingDepartureRecorded || suppressTransitionChecks ||
+        roomEntry.room != gPlayState->roomCtx.curRoom.num) return;
+    const auto point = CaptureReturnPoint();
+    if (point.scene >= 0) {
+        auto* player = GET_PLAYER(gPlayState);
+        // Door_Ana can keep updating while Link falls into its trigger. That
+        // falling/trigger point is not the usable departure side of the hole.
+        if (!player || Grotto_HasPendingReturnLanding() || !Grotto_CanCaptureReturnPoint(&player->actor)) return;
+        lastPlayerPosition = point;
+        if (player->actor.bgCheckFlags & BGCHECKFLAG_GROUND) lastGroundPosition = point;
+    }
+}
+
+void RememberGrottoLanding() {
+    if (!gPlayState || !ReturnPointIsCurrent(roomEntry) ||
+        roomEntry.scene != gPlayState->sceneNum || roomEntry.room != gPlayState->roomCtx.curRoom.num) return;
+    const int id = Grotto_CurrentGrotto();
+    const auto* policy = EntranceDestinationById(roomEntry.target);
+    if (id < 0 || id >= NUM_GROTTOS || !policy || policy->kind != kEntranceGrottoReturn ||
+        policy->id != ENTRANCE_GROTTO_EXIT_START + id) return;
+    const auto point = CaptureReturnPoint();
+    if (!ReturnPointIsCurrent(point)) return;
+    roomEntry.position = point.position;
+    roomEntry.yaw = point.yaw;
+    roomEntry.grottoEmergence = false;
+    lastPlayerPosition = lastGroundPosition = roomEntry;
+    // Previous-scene/history ownership is deliberately unchanged.
+}
+
+void ObserveRoomBoundary(int transition, int physicalRoom, int otherRoom, bool vertical) {
+    if (!gPlayState || transition < 0 || transition >= gPlayState->transiActorCtx.numActors ||
+        physicalRoom != roomEntry.room || otherRoom < 0 || otherRoom == physicalRoom) return;
+    auto point = CaptureReturnPoint(physicalRoom);
+    if (point.scene < 0) return;
+    if (vertical) {
+        // A point already falling through a shaft is not a usable return side.
+        // Keep the last grounded position from this room, or its real arrival.
+        point = ReturnPointIsCurrent(lastGroundPosition) && lastGroundPosition.scene == point.scene &&
+                        lastGroundPosition.room == physicalRoom ? lastGroundPosition : roomEntry;
+    }
+    roomBoundaryPoints[transition] = { point, otherRoom };
+    if (selectedRoomBoundary == transition && nativeRoomDeparture.scene == point.scene &&
+        nativeRoomDeparture.room == physicalRoom) nativeRoomDeparture = point;
+}
+
+void SelectRoomBoundary(int transition, int target) {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        roomEntry.scene != gPlayState->sceneNum || target == roomEntry.room ||
+        target < 0 || target >= gPlayState->numRooms) return;
+    const auto found = roomBoundaryPoints.find(transition);
+    if (found != roomBoundaryPoints.end() && found->second.target == target &&
+        found->second.point.scene == roomEntry.scene && found->second.point.room == roomEntry.room &&
+        found->second.point.age == roomEntry.age && found->second.point.file == roomEntry.file) {
+        nativeRoomDeparture = found->second.point;
+    } else {
+        // An unobserved warp/debug-camera load cannot invent a safe doorway
+        // coordinate. Its successful room-entry checkpoint is still usable.
+        nativeRoomDeparture = roomEntry;
+    }
+    selectedRoomBoundary = transition;
+}
+
+void BeginNativeRoomChange(int target) {
+    if (!gPlayState || target < 0 || target >= gPlayState->numRooms ||
+        target == roomEntry.room || nativeRoomDeparture.scene >= 0 ||
+        roomEntry.scene != gPlayState->sceneNum) return;
+    const auto point = CaptureReturnPoint(roomEntry.room);
+    if (point.scene < 0) return;
+    // Actual hallway predicates select their observed source-side point first.
+    // Other native door actors provide their pre-open position. A request with
+    // neither source proof falls back to the room's successful arrival.
+    nativeRoomDeparture = doorDeparture.active ? doorDeparture.point : roomEntry;
+}
+
+// Ordinary scene-exit polygons are detected during Player_Update. Retain the
+// last completed normal frame, before Link stepped onto that exit polygon.
+// Door actors instead supply their exact source-side position at BeginDoor.
+void CaptureSceneDeparture(bool physicalCrossing) {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        pendingDepartureRecorded || suppressTransitionChecks || dungeonReturnArrival ||
+        preserveHistoryForArrival || gSaveContext.health <= 0 ||
+        gSaveContext.gameMode != GAMEMODE_NORMAL ||
+        gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
+        (gSaveContext.respawnFlag != 0 && gSaveContext.respawnFlag != -2 && gSaveContext.respawnFlag != 2) ||
+        (!physicalCrossing && gPlayState->nextEntranceIndex == gSaveContext.entranceIndex)) return;
+    const auto point = CaptureReturnPoint();
+    if (point.scene < 0) return;
+    pendingDeparture = lastPlayerPosition.scene == point.scene && lastPlayerPosition.room == point.room &&
+                               lastPlayerPosition.age == point.age && lastPlayerPosition.file == point.file ?
+                           lastPlayerPosition : point;
+    pendingDepartureRecorded = true;
+}
+
+void AdvanceDoorDeparture() {
+    if (!doorDeparture.active || !gPlayState) return;
+    const auto* player = GET_PLAYER(gPlayState);
+    if (!player || gSaveContext.health <= 0 || gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
+        gPlayState->sceneNum != doorDeparture.scene ||
+        doorDeparture.point.file != gSaveContext.fileNum ||
+        doorDeparture.point.age != (LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT)) {
+        doorDeparture = {};
+        return;
+    }
+    const int room = gPlayState->roomCtx.curRoom.num;
+    if (room != doorDeparture.from && room != doorDeparture.to) {
+        doorDeparture = {};
+        return;
+    }
+    const float offset = (player->actor.world.pos.x - doorDeparture.x) * doorDeparture.nx +
+                         (player->actor.world.pos.z - doorDeparture.z) * doorDeparture.nz;
+    if (room == doorDeparture.to && std::fabs(offset) > 4.0f && offset * doorDeparture.startSide < 0.0f) {
+        pendingDeparture = doorDeparture.point;
+        pendingDepartureRecorded = true;
+        doorDeparture = {};
+    }
+}
+
 // Called after Link/room initialization and after a native room change commits.
 // Play_SetupRespawnPoint can instead run at a death position, so it is not used
 // as evidence that Link successfully entered a room.
@@ -484,6 +694,36 @@ void RecordRoomEntry() {
         gPlayState->roomCtx.curRoom.num >= gPlayState->numRooms) return;
     const auto* player = GET_PLAYER(gPlayState);
     if (!player) return;
+    AdvanceDoorDeparture();
+    // Native room loading happens before a mapped door's scene reload. That
+    // intermediate room is neither the arrival checkpoint nor previous room.
+    if (openedDoor || crossingSource) {
+        if (!pendingDepartureRecorded && roomEntry.scene == gPlayState->sceneNum &&
+            roomEntry.room == gPlayState->roomCtx.curRoom.num) {
+            openedDoor = nullptr;
+            doorJournal.Reset();
+            doorDeparture = {};
+            nativeRoomDeparture = {};
+            roomBoundaryPoints.clear();
+            selectedRoomBoundary = -1;
+        }
+        return;
+    }
+    if (!pendingDepartureRecorded && nativeRoomDeparture.scene == gPlayState->sceneNum &&
+        roomEntry.scene == gPlayState->sceneNum && roomEntry.room != gPlayState->roomCtx.curRoom.num) {
+        pendingDeparture = nativeRoomDeparture;
+        pendingDepartureRecorded = true;
+    }
+    if (!departingSceneRecorded && !pendingDepartureRecorded && roomEntry.scene == gPlayState->sceneNum &&
+        roomEntry.room == gPlayState->roomCtx.curRoom.num) {
+        // A hallway/shutter can finish back in its original room after Link
+        // abandons a preload. That is not a new arrival or death checkpoint.
+        doorDeparture = {};
+        nativeRoomDeparture = {};
+        roomBoundaryPoints.clear();
+        selectedRoomBoundary = -1;
+        return;
+    }
     const auto& pos = player->actor.world.pos;
     for (float axis : {pos.x, pos.y, pos.z}) {
         if (!std::isfinite(axis) || axis < -32768.0f || axis > 32767.0f) return;
@@ -528,12 +768,18 @@ void RecordRoomEntry() {
         }
     }
     returnedDungeonOwner = -1;
-    if (departingScene.scene >= 0 && departingScene.file == gSaveContext.fileNum &&
-        departingScene.age == (LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT) &&
-        CrossingScene(departingScene.scene) != CrossingScene(gPlayState->sceneNum)) {
-        previousScene = ReturnPointIsCurrent(departingScene) ? departingScene : SceneReturnPoint{};
+    if (!preserveHistoryForArrival && (departingSceneRecorded || pendingDepartureRecorded)) {
+        const auto& source = departingSceneRecorded ? departingScene : pendingDeparture;
+        previousBeforeArrival = previousScene;
+        previousScene = ReturnPointIsCurrent(source) ? source : SceneReturnPoint{};
     }
-    departingScene = {};
+    departingScene = pendingDeparture = {};
+    departingSceneRecorded = pendingDepartureRecorded = false;
+    preserveHistoryForArrival = false;
+    doorDeparture = {};
+    nativeRoomDeparture = {};
+    roomBoundaryPoints.clear();
+    selectedRoomBoundary = -1;
     sceneArrivalPolicy = policy;
     // Remember that a distinct normal scene was entered even if its scripted
     // entry is not a reviewed return destination (for example Ganondorf).
@@ -541,14 +787,17 @@ void RecordRoomEntry() {
     // an older scene mislabeled as the immediate previous scene.
     roomEntry = {policy != nullptr, gPlayState->sceneNum, gPlayState->roomCtx.curRoom.num,
                  LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT, gSaveContext.fileNum,
-                 policy ? policy->id : -1, pos, player->actor.shape.rot.y, dungeonEntrance};
+                 policy ? policy->id : -1, pos, player->actor.shape.rot.y, dungeonEntrance,
+                 policy && policy->kind == kEntranceGrottoReturn && Grotto_HasPendingReturnLanding()};
+    lastPlayerPosition = roomEntry;
+    lastGroundPosition = {};
+    if (player->actor.bgCheckFlags & BGCHECKFLAG_GROUND) lastGroundPosition = roomEntry;
 }
 
 int DungeonReturnMode() {
     if (!Archipelago_IsCurrentSaveFile() || !routing.UsesPreviousSceneReturn())
         return AP_DUNGEON_RETURN_SPAWN;
-    if (gPlayState && ReturnPointIsCurrent(previousScene) &&
-        CrossingScene(previousScene.scene) != CrossingScene(gPlayState->sceneNum))
+    if (gPlayState && ReturnPointIsCurrent(previousScene))
         return AP_DUNGEON_RETURN_PREVIOUS_SCENE;
     return AP_DUNGEON_RETURN_NO_PREVIOUS_SCENE;
 }
@@ -567,7 +816,8 @@ PendingDungeonReturn BuildDungeonReturn() {
         if (request.entrance < 0) return {};
     }
     request.valid = true;
-    request.origin = roomEntry;
+    request.origin = CaptureReturnPoint();
+    if (request.origin.scene < 0) request.origin = roomEntry;
     request.age = LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT;
     request.file = gSaveContext.fileNum;
     request.routes = routing.Routes();
@@ -618,6 +868,8 @@ bool ApplyDungeonReturn(const PendingDungeonReturn& request) {
     }
     gSaveContext.respawnFlag = 0;
     roomEntry = request.origin;
+    pendingDeparture = request.origin;
+    pendingDepartureRecorded = true;
     return true;
 }
 
@@ -635,8 +887,38 @@ bool RestoreDungeonReturn() {
     return ApplyDungeonReturn(request);
 }
 
+bool RespawnInCurrentRoom() {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        !ReturnPointIsCurrent(roomEntry) ||
+        CrossingScene(roomEntry.scene) != CrossingScene(gPlayState->sceneNum)) return false;
+    const auto point = roomEntry;
+    const auto history = previousScene;
+    const auto* policy = EntranceDestinationById(point.target);
+    if (!EntranceDestinationAllowsAge(policy, CurrentArrivalAge()) || !ArrivalTableMatches(policy)) return false;
+    CancelTransition();
+    pendingSpawnAge = -1;
+    suppressTransitionChecks = true;
+    dungeonReturnArrival = true;
+    preserveHistoryForArrival = true;
+    gSaveContext.respawnFlag = 0;
+    ClearIncomingCutscene();
+    ArmArrival(-1, point.target);
+    // A death reload uses the successful room arrival, not the current death
+    // position, the menu return target, or a second shuffle lookup.
+    gSaveContext.entranceIndex = Grotto_OverrideSpecialEntrance(static_cast<s16>(point.target));
+    restartArrival = point;
+    arrival = nullptr;
+    roomEntry = point;
+    previousScene = history;
+    gSaveContext.respawnFlag = 0;
+    return true;
+}
+
 bool GameOverDungeonReturn() {
     pendingDungeonReturn = {};
+    if (RespawnInCurrentRoom()) return true;
+    // Disabled ER and unreviewed scripted battle entries retain the native
+    // dungeon-safe fallback; they cannot manufacture a playable checkpoint.
     return ApplyDungeonReturn(BuildDungeonReturn());
 }
 
@@ -645,7 +927,11 @@ void CancelDungeonReturn() {
     restartArrival = {};
     dungeonReturnArrival = false;
     returnedDungeonOwner = -1;
-    roomEntry = previousScene = departingScene = {};
+    roomEntry = previousScene = departingScene = pendingDeparture = lastPlayerPosition = lastGroundPosition = previousBeforeArrival = nativeRoomDeparture = {};
+    pendingDepartureRecorded = departingSceneRecorded = preserveHistoryForArrival = false;
+    doorDeparture = {};
+    roomBoundaryPoints.clear();
+    selectedRoomBoundary = -1;
     sceneArrivalPolicy = nullptr;
 }
 
@@ -772,6 +1058,18 @@ extern "C" int Archipelago_EntranceDestination(int source) {
 
 extern "C" void Archipelago_EntranceRecordRoomEntry(void) {
     SohExtreme::EntranceRuntime::RecordRoomEntry();
+}
+extern "C" void Archipelago_EntranceRememberGrottoLanding(void) {
+    SohExtreme::EntranceRuntime::RememberGrottoLanding();
+}
+extern "C" void Archipelago_EntranceBeginRoomChange(int target) {
+    SohExtreme::EntranceRuntime::BeginNativeRoomChange(target);
+}
+extern "C" void Archipelago_EntranceObserveRoomBoundary(int transition, int physicalRoom, int otherRoom, bool vertical) {
+    SohExtreme::EntranceRuntime::ObserveRoomBoundary(transition, physicalRoom, otherRoom, vertical);
+}
+extern "C" void Archipelago_EntranceSelectRoomBoundary(int transition, int target) {
+    SohExtreme::EntranceRuntime::SelectRoomBoundary(transition, target);
 }
 extern "C" int Archipelago_EntranceDungeonReturnMode(void) {
     return SohExtreme::EntranceRuntime::DungeonReturnMode();

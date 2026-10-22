@@ -11,6 +11,7 @@
 #include "objects/object_mizu_objects/object_mizu_objects.h"
 #include "objects/object_haka_door/object_haka_door.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -148,11 +149,24 @@ void EnDoor_Destroy(Actor* thisx, PlayState* play) {
     }
 }
 
+static bool EnDoor_IsChildDampeHutDoor(EnDoor* this, PlayState* play) {
+    // The three authored exterior variants are 645 (day), 447 (evening/adult)
+    // and 774 (late night). Door locking may change only their type bits before
+    // SetupType runs. Preserve other doors and the exit from inside the hut.
+    s16 identity = this->actor.params & ~0x380;
+    return Archipelago_IsCurrentSaveFile() && !LINK_IS_ADULT && play->sceneNum == SCENE_GRAVEYARD &&
+           (identity == (645 & ~0x380) || identity == (447 & ~0x380) || identity == (774 & ~0x380));
+}
+
 void EnDoor_SetupType(EnDoor* this, PlayState* play) {
     s32 doorType;
 
     if (Object_IsLoaded(&play->objectCtx, this->requiredObjBankIndex)) {
         doorType = this->actor.params >> 7 & 7;
+        if (EnDoor_IsChildDampeHutDoor(this, play)) {
+            doorType = DOOR_CHECKABLE;
+            this->actor.params = (this->actor.params & ~0x3F) | 5; // Existing closed-hut text 0x0205.
+        }
         this->actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;
         this->actor.objBankIndex = this->requiredObjBankIndex;
         this->actionFunc = EnDoor_Idle;

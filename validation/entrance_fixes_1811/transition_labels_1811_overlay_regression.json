@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "cases": 1278,
+  "assertions": 6910,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "standalone_header_compile": "passed",
+  "source_unchanged_during_tests": true,
+  "catalogue": {
+    "endpoint_arrivals": 719,
+    "room_door_endpoints": 421,
+    "scene_endpoints_unknown_room": 298,
+    "physical_scene_exit_handles": 52,
+    "same_room_directions": 24,
+    "native_passage_types": 7
+  },
+  "scope": "Actual production RoomDebugDestination, RoomDebugSceneExitText, RoomDebugPassageText and FinderCheckArrival bodies, plus the full shared production header and tables. Engine actors/room state, save-scoped AP mapping, math, MQ/scene names, entrance table and unchanged lower-level scene-exit resolution use explicit I/O shims. Finder toggle/second-line rendering and required header declarations are source-inspected. No full native game build, rendered UI test, ROM geometry or controller playthrough.",
+  "output": [
+    "Catalog: 421 room arrivals and 298 scene arrivals",
+    "Room doors: 421 physical sources, vanilla and mapped arrivals",
+    "Handle doors: 52 exact scene identities (49 shuffled, 3 fixed Richard entries)",
+    "Native EnHoll: 84 side/type/preload/same-room cases plus load/MQ guards",
+    "Finder: mapped room details, separate title, age/alias and custom-label preservation",
+    "RESULT cases=1278 assertions=6910"
+  ],
+  "sources": {
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "c22d91438942442167cc4e77bf2edc0b0c9ada09e3afcc7ad37d49c883f92a53",
+    "soh/Enhancements/randomizer/RoomDebugWorldLabels.inc": "8543da4fe295d25e25fce0c6fc7e186a1d9b21df4f454e764a4652f88628b03c",
+    "soh/Enhancements/randomizer/RoomDebugDoorData.inc": "093222ef9d9be8941f3a17954f7770f6adc4ee43c2486fb6b1c8a94b02d26b34",
+    "soh/Enhancements/randomizer/RoomDebugSceneData.inc": "cad6bafaaa01843118f15e268e22d4e3b08e080a56964d2e3569b75f250b4c9f",
+    "soh/Network/Archipelago/RoomTransitionLabels.h": "3adc7793fc000b074602d1247ae119ffe98e2d583cd6166b2b2dc7a46cb16847",
+    "soh/Network/Archipelago/TrackerCheckLabels.h": "e801ac4d413b233044fcd6c51344bd10f2288a6b8a45f2572130eb53913e081f",
+    "soh/Network/Archipelago/CheckDescriptions.inc": "5126a56fe1b66768703164d5a59280198e36720adf6d1dea6c44069dff42dcdf",
+    "soh/Network/Archipelago/EntranceRouting.h": "224774a70c88f7a91aa0492e450f6e6c92260376073bf2e3aa9cff35fd308485",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a",
+    "soh/Network/Archipelago/EntranceDestinationPolicy.h": "ad437810079db56bdcdfc30e3fa688ec5a32cfbb0c00c7e16f46b6fb724427a0",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "d4978e4bdcd765821fb4d85421681f3b6977eca5c19f3b0d5de105edd25e0a0f",
+    "soh/Network/Archipelago/ArchipelagoC.h": "5ae28084050049b0e1afb6d1900856a4f3987b28e606ba4eb427eaca9d1ba646",
+    "soh/ResourceManagerHelpers.h": "f328c0f62f508c49f85cb0029e99f40df082bf3cda0eb3d30950a8ca326be733",
+    "archipelago/soh_extreme/CheckDescriptions.json": "962c67c679bfe44f7cb8b3204b9ea614f8ea2789807d5e695e2c768b362b2769",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
+    "archipelago/soh_extreme/SceneTransitionCatalog.json": "faff0beed2c86f693c65d44dccd8be4271658c37f70e6655b14ee2c1ca39097d",
+    "tools/generate_room_debug_destinations.py": "ef523515cfac5ff8afb3f5c62caedbd662771beec3675193b233b532b167af58",
+    "tools/tests/test_transition_labels_native.py": "17d6555bfa6835807ec205bd41db35e3dfe01896a1b69f23ea9706194a01ce4a",
+    "tools/tests/test_soul_object_blockers.py": "a21f4e28154fef749960f04aa6ce8ab0824b1a4697ca5602460d4b0b38852aee",
+    "tools/tests/transition_labels_native_tests.cpp.in": "8df30c6e6c9e827c9fea406f6e67afec6d2314c00af8568a36c6a3811a023e81"
+  },
+  "tested_function_sha256": {
+    "RoomDebugDestination": "964d2dcbf370f17c6b177ebef205368e553790ee1f696f4100b30f3585f6f006",
+    "RoomDebugSceneExitText": "5317d4f334971e9ae7307541b2ef13ce33b4e070ca2b67c663de75c6b52ee66a",
+    "RoomDebugPassageText": "7d0d3d82880784d502e889b960a0da4b179efaf2542ef6be86e56cc9d2bc0ada",
+    "FinderCheckArrival": "88e5100eda46b96990d5f5f222795941c790d84fc31629c40ec63ae0bd685d21"
+  }
+}

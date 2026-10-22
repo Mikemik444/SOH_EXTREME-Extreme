@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "cases": 83,
+  "assertions": 926,
+  "physical_switch_doors": 2,
+  "source_sha256": {
+    "soh/Enhancements/randomizer/logic.cpp": "85011ebbbc2f1ca8da0cb0e3a1e53a84fe53976f5ef6756bfe745894d9a0aea6",
+    "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp": "c579335626e53799cabf37d149dd961f77ab1bbfb486c284553ef5e4ea5a54df",
+    "src/overlays/actors/ovl_Door_Shutter/z_door_shutter.c": "bfe80a290982db02459b5952e1a57ce4242e45aec54e766884ba04e5bbaab970",
+    "src/overlays/actors/ovl_Door_Shutter/z_door_shutter.h": "7653304ada3ae7c761a324fa0315fd31e17497e1a61a8c3181e6a268bd464de6",
+    "src/code/z_actor.c": "0a89295fddefb6c8b01de6e76acabcec144fba7954007e42a89c1bdd4d5bfb22",
+    "archipelago/soh_extreme/DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad"
+  },
+  "test_sha256": {
+    "tools/tests/test_dodongo_armos_native.py": "e56006d03bfff2df8048b3f52b0e00ac90b64d17997d30aea0b08e20b865b2dc",
+    "tools/tests/dodongo_armos_native_tests.cpp.in": "c9de0cebd5b9527202ed2b9c03521009ca5782f17563f67388fca46367f2a8f3",
+    "tools/tests/test_soul_logic_native.py": "c3d6cf972babdd9b1c31b1ae8b93192f3ba8c5b593f2b9f73e0b14e823a4f785",
+    "tools/tests/test_water_native.py": "311999e518a7da1be7e817bde374947a6880558ba0a799f46ea758a5baeabc3d"
+  },
+  "captured_functions": [
+    "Logic::CanUse",
+    "Logic::CanClimbLadder",
+    "DoorShutter_SetupAction",
+    "DoorShutter_SetupDoor",
+    "Flags_GetSwitch",
+    "Flags_SetSwitch",
+    "Flags_UnsetSwitch"
+  ],
+  "captured_region_blocks": [
+    "RR_DODONGOS_CAVERN_ARMOS_ROOM",
+    "RR_DODONGOS_CAVERN_STAIRS_UPPER",
+    "RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE",
+    "RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER"
+  ],
+  "captured_fragment_sha256": {
+    "CAN_USE": "a9d736d7cdd6fa09def561b0eb70d1d3dca878bfa0f088d393ce9eb9b300bfe6",
+    "CAN_CLIMB_LADDER": "8f3a3ce8bef4b7b0728ea7dd9c5c8f4035b4c511b8e426bb0a30aec2d04bce99",
+    "SHUTTER_SETUP_ACTION": "acf65fefda97980f65568b67006018ab0c6809538ac9caa6450fe21a0d6ddc0f",
+    "SHUTTER_SETUP_DOOR": "41ecddb72890c157f5cac8cf3f675165872e0089c5e38654e76b10f8b6c192bc",
+    "FLAGS_GET": "58402194152f76c4f81d6c08e603e325bba6e0265176d0fb8b082b6f3f169b41",
+    "FLAGS_SET": "64e14abeeb10fc34eb7a6d7134331669865d331f6a422e311b3a144ff6c5b1ca",
+    "FLAGS_UNSET": "24394bafde0e675b01ece5efc461ab0c852470ebe9561ec50d0c5c4d5d0c8ec9",
+    "REGIONS": "fcd355d4c656e26e52f32a06e7e51837dcc830db0f0f1d22d1079112da6c8df3",
+    "SHUTTER_TYPES": "0072b06a133aee0828960065032c94c03e0ebd0b90d614d22b6a9ef88c5decb2",
+    "DOOR_FACTS": "0cf84fb876423d5c0a1b9d2b64e417a19aa67ca5428d5bcc55215c87f2c9e31e",
+    "CONSTANTS": "b3cd96c7cc3c28e34225e0a0edeb42715c6b87a9edaee23254b3208fd0c444fa",
+    "OTHER_LOGIC_METHODS": "aa8e275440bf66886d6e1afbf41dbf77deccc1bf2e78d7ecc4569f8715aa05bc"
+  },
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "engine_io_isolated": true,
+  "native_game_build": false,
+  "in_game_playthrough": false,
+  "elapsed_seconds": 6.135,
+  "scope": "Actual native Armos/adjacent region predicates, CanUse, CanClimbLadder, DoorShutter_SetupDoor and temporary Flags_Get/Set/UnsetSwitch functions. Source actor data supplies both switch0x22 door sides. No geometry measurement."
+}

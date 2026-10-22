@@ -1,0 +1,103 @@
+SOH-EXTREME 1.8.12 - Focused validation replay
+===========================================
+
+The JSON reports describe source-level tests, not a Windows executable or a ROM
+playthrough. Their source/test digests bind the complete bytes supplied here.
+REPLAY_INPUTS.json maps those digests to replacement files, unchanged native
+fixture inputs, or members of the current root soh_extreme.apworld.
+
+PREPARE AN ISOLATED REPLAY TREE
+------------------------------
+Use a complete source checkout with this release merged, or prepare a disposable
+replay-source directory as follows:
+
+1. Copy the package's soh, src, tools and archipelago folders into replay-source.
+2. Extract the current root soh_extreme.apworld into replay-source/archipelago.
+   The resulting archipelago/soh_extreme folder contains all unchanged AP Python
+   modules and JSON resources in addition to the changed replacement files.
+3. Merge validation/landing_river_1812/native_source into replay-source. Those
+   extra files are unchanged native or test inputs needed by the focused tests.
+4. Keep validation/landing_river_1812/native_dependencies available. The provided
+   JSON and native engine/table headers are the exact dependency bytes named in
+   the reports. Set DEPS below to that directory's absolute path.
+5. Keep validation/landing_river_1812/legacy_seed_inputs and the small
+   river_native_baseline_1.8.11.zip beside the reports. Set EVIDENCE below to this
+   validation/landing_river_1812 directory's absolute path.
+
+The native examples below target Linux or WSL; they use /tmp and Linux compiler
+and linker flags. Run each command from replay-source and replace placeholders
+with your actual paths. Python 3, C11/C++20 compilers, and
+AddressSanitizer/UndefinedBehaviorSanitizer are external prerequisites for the
+native fixtures. Leak scanning is disabled
+because the managed test executor cannot inspect its process/task filesystem;
+address and undefined-behavior instrumentation remain enabled.
+
+NATIVE REPLAYS
+--------------
+python3 tools/tests/test_ammo_native.py --report /tmp/ammo-native.json
+python3 tools/tests/test_ammo_sources_native.py --dependencies <DEPS> --report /tmp/ammo-sources.json
+python3 tools/tests/test_ammo_refill_drop_bounds_native.py --report /tmp/ammo-drop-bounds.json
+python3 tools/tests/test_grotto_landing_native.py --dependencies <DEPS> --report /tmp/grotto-landing.json
+python3 tools/tests/test_dungeon_return.py --dependencies <DEPS> --report /tmp/room-return.json
+python3 tools/tests/test_zora_river_native.py --dependencies <DEPS> --baseline <EVIDENCE>/river_native_baseline_1.8.11.zip --report /tmp/river-native.json
+
+The small river baseline ZIP contains exactly the two verified historical source
+files compiled by that regression. Its ZIP hash differs from the complete old
+release ZIP recorded by the original test run. The baseline source hashes and
+compiled bodies are identical. Other native baseline function excerpts are
+retained directly in their digest-bound fixture .inc files.
+
+ARCHIPELAGO REPLAYS
+-------------------
+Use an isolated Archipelago 0.6.8 runtime and its normal Python dependencies.
+Create worlds/soh_extreme in that runtime as a symlink to the absolute
+replay-source/archipelago/soh_extreme directory. Do not install a duplicate world
+archive in that runtime at the same time. Set PYTHONPATH to the AP dependency
+folder and runtime folder (colon on Linux, semicolon on Windows).
+
+python3 tools/tests/test_ammo_refill.py --settings-report <EVIDENCE>/legacy_seed_inputs/grotto_1811_uploaded_seed_reproduction.options.json --report /tmp/ammo-refill.json
+python3 tools/tests/test_ammo_tracker_protocol.py --report /tmp/ammo-tracker.json
+python3 tools/tests/test_zora_river_paths.py --settings-report <EVIDENCE>/legacy_seed_inputs/grotto_1811_uploaded_seed_reproduction.options.json --legacy-report <EVIDENCE>/legacy_seed_inputs/grotto_1811_uploaded_seed_reproduction.json --report /tmp/river-ap.json
+
+The protocol suite needs the AP modules but does not launch a GUI, network
+server, game process, or actual Universal Tracker host. It invokes the real
+request/publish handler with explicit host and evaluation IO, feeds the real
+Python encoder into the real C++ decoder, and executes the native worker/snapshot
+servicing bodies. Refill graph decisions are exercised separately by the AP
+refill suite.
+
+The river AP suite restores the exact historical 719-route map without rerolling
+it and separately runs production entrance generation for a new 721-route map.
+It does not regenerate the old 4036 item placements or execute a full game fill.
+Those previous full-placement results remain historical evidence.
+
+CURRENT APWORLD ARCHIVE LOAD
+----------------------------
+The included finder_hints_186_validate_apworld.py script validates the exact
+current archive via the official AP loader, checks packaged resources/imports
+against loose source, and checks 1.8.12 version parity. It temporarily swaps the
+isolated runtime's source symlink for a staged archive and restores it afterward.
+Run this only after other AP tests in that runtime have finished.
+
+python3 <EVIDENCE>/finder_hints_186_validate_apworld.py --runtime <AP_RUNTIME> --archive <PACKAGE>/soh_extreme.apworld --source <REPLAY_SOURCE>/archipelago/soh_extreme --native-header <REPLAY_SOURCE>/soh/SohExtremeVersion.h --expected-version 1.8.12 --version-report /tmp/version.json --report /tmp/apworld.json
+
+SOURCE BUILD PREFLIGHT AND PACKAGING
+------------------------------------
+The source-build report executes the actual shipped PowerShell helper's source
+verification functions against every replacement source in a disposable fixture.
+It does not invoke Windows or MSBuild. Its driver and the PowerShell probe are
+included here; their original workspace-relative paths are retained in the
+report and script. Replaying that driver also requires PowerShell 7.6.7 at
+runtime/powershell-7.6.7/bin/pwsh in the documented workspace layout. The packaged
+build helper performs the real Windows Release
+build when run in the user's complete checkout, as described in README.txt.
+
+prepare_landing_river_1812_delivery.py and its helper imports are included for
+release provenance. Rebuilding the cumulative ZIP requires the original upload,
+the 1.8.11 entrance-fixes delivery archive and original workspace layout. Those
+packaging inputs are not duplicated inside this ZIP. Replaying the focused source tests uses the
+source/dependency inputs supplied here plus the external runtimes above.
+
+Every historical validation entry copied from the previous delivery is retained
+byte for byte. Use the current root APWorld for installation. Historical APWorld
+copies under validation are evidence only.

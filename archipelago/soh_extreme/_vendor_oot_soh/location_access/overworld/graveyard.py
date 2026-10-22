@@ -83,7 +83,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.GRAVEYARD_HEART_PIECE_GRAVE,
          lambda bundle: can_grab(bundle) & (is_adult(bundle) | at_night(bundle))),
         (Regions.GRAVEYARD_DAMPES_GRAVE, lambda bundle: can_grab(bundle) & is_adult(bundle)),
-        (Regions.GRAVEYARD_DAMPES_HOUSE, lambda bundle: (is_adult(bundle) | at_clock_window(bundle, 'dampe'))
+        (Regions.GRAVEYARD_DAMPES_HOUSE, lambda bundle: is_adult(bundle)
          & can_open_overworld_door(Items.DAMPES_HUT_KEY, bundle)),
         (Regions.KAKARIKO_VILLAGE, lambda bundle: True_()),
         (Regions.GRAVEYARD_WARP_PAD_REGION, lambda bundle: False_())

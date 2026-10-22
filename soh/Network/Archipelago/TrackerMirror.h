@@ -32,6 +32,9 @@ struct TrackerSnapshot {
     uint32_t liveShields = 0xffffffffu; // 1 Deku, 2 Hylian; sentinel for standalone UT
     uint32_t liveTime = 0xffffffffu; // optional TIME extension: 0 day, 1 night
     uint32_t liveClock = 0xffffffffu, liveTimeFlags = 0; // CLCK: raw clock and Dampe-all-night flag
+    uint32_t liveAmmo = 0xffffffffu, liveAmmoOwned = 0, liveRupees = 0, liveAmmoFlags = 0;
+    uint64_t liveAmmoState = 0;
+    uint32_t ammoRefills = 0; // proven renewable sources; absent extension keeps the last unit
     uint64_t request = 0, revision = 0, received = 0;
     std::set<int64_t> active, checked;
     std::vector<TrackerRow> rows;
@@ -123,17 +126,30 @@ inline TrackerSnapshot DecodeTrackerSnapshot(const std::string& encoded) {
             !seen.insert(row.id).second || row.name.empty()) throw std::invalid_argument("Invalid tracker row");
         result.rows.push_back(std::move(row));
     }
-    if (data.size() - pos >= 8) {
-        const auto tag = integer(4);
-        if (tag != 0x454d4954u) throw std::invalid_argument("Unknown tracker extension");
+    if (pos != data.size()) {
+        if (integer(4) != 0x454d4954u) throw std::invalid_argument("Unknown tracker extension");
         result.liveTime = static_cast<uint32_t>(integer(4));
         if (result.liveTime > 1) throw std::invalid_argument("Invalid tracker time phase");
     }
-    if (data.size() - pos == 12 && integer(4) == 0x4b434c43u) {
+    if (pos != data.size()) {
+        if (integer(4) != 0x4b434c43u) throw std::invalid_argument("Unknown tracker clock extension");
         result.liveClock = static_cast<uint32_t>(integer(4));
         result.liveTimeFlags = static_cast<uint32_t>(integer(4));
         if (result.liveClock > 0xffffu || result.liveTimeFlags > 1)
             throw std::invalid_argument("Invalid tracker clock state");
+    }
+    if (pos != data.size()) {
+        if (integer(4) != 0x4f4d4d41u) throw std::invalid_argument("Unknown tracker ammo extension");
+        result.liveAmmo = static_cast<uint32_t>(integer(4));
+        result.liveAmmoOwned = static_cast<uint32_t>(integer(4));
+        result.liveRupees = static_cast<uint32_t>(integer(4));
+        result.liveAmmoFlags = static_cast<uint32_t>(integer(4));
+        result.liveAmmoState = integer(8);
+        result.ammoRefills = static_cast<uint32_t>(integer(4));
+        if (result.liveAmmo > 31 || result.liveAmmoOwned > 31 ||
+            (result.liveAmmo & ~result.liveAmmoOwned) || result.liveRupees > 65535 ||
+            result.liveAmmoFlags > 3 || result.liveAmmoState == 0 || result.ammoRefills > 31)
+            throw std::invalid_argument("Invalid tracker ammo state");
     }
     if (pos != data.size()) throw std::invalid_argument("Trailing tracker data");
     return result;
@@ -143,13 +159,32 @@ inline uint32_t TrackerClockWindow(uint32_t clock) {
     // Accept ordinary clock motion within a window; invalidate on a rule boundary.
     return (clock >= 0x4555 && clock < 0x5000 ? 1u : 0u) |
            (clock > 0xC000 && clock < 0xE000 ? 2u : 0u) |
-           (clock <= 0x3555 || clock > 0xD556 ? 4u : 0u);
+           (clock <= 0x3555 || clock > 0xD556 ? 4u : 0u) |
+           (clock >= 0x4555 && clock < 0xB889 ? 8u : 0u);
 }
+// Event-driven requests are coalesced; unchanged inventory uses the heartbeat.
+// The minimum interval matches the worker's 100 ms receive throttle with margin.
+class TrackerRequestPacer {
+  public:
+    void Reset() { sent_ = false; signature_ = 0; lastSent_ = 0.0; }
+    bool Due(double now, uint64_t signature, double heartbeatDeadline) const {
+        if (sent_ && now - lastSent_ < 0.15) return false;
+        return !sent_ || signature != signature_ || now >= heartbeatDeadline;
+    }
+    void Sent(double now, uint64_t signature) {
+        sent_ = true; lastSent_ = now; signature_ = signature;
+    }
+  private:
+    bool sent_ = false;
+    uint64_t signature_ = 0;
+    double lastSent_ = 0.0;
+};
 class TrackerMirrorState {
   public:
     void Reset(const std::string& nonce) {
         nonce_ = nonce; snapshot_ = {}; producer_.clear(); hasSnapshot_ = false;
         request_ = 0; lastReceive_ = 0;
+        displaySnapshot_ = {}; displayChecked_.clear(); displayDirty_ = true;
     }
     uint64_t NextRequest() { return ++request_; }
     const std::string& Nonce() const { return nonce_; }
@@ -166,12 +201,13 @@ class TrackerMirrorState {
             error = "Out-of-order tracker snapshot."; return false;
         }
         producer_ = candidate.producer; snapshot_ = std::move(candidate);
-        hasSnapshot_ = true; lastReceive_ = now; error.clear(); return true;
+        hasSnapshot_ = true; displayDirty_ = true; lastReceive_ = now; error.clear(); return true;
     }
     const TrackerSnapshot* Current(uint32_t slot, uint64_t received, const std::set<int64_t>& active,
                                    const std::set<int64_t>& checked, double now, std::string& status,
                                    uint32_t liveShields = 0xffffffffu, uint32_t liveTime = 0xffffffffu,
-                                   uint32_t liveClock = 0xffffffffu, uint32_t liveTimeFlags = 0) const {
+                                   uint32_t liveClock = 0xffffffffu, uint32_t liveTimeFlags = 0,
+                                   uint32_t liveAmmo = 0xffffffffu, uint64_t liveAmmoState = 0) const {
         if (!hasSnapshot_) { status = "Starting the automatic AP tracker..."; return nullptr; }
         if (now - lastReceive_ > 10.0) { status = "Tracker snapshot expired; waiting for a live update."; return nullptr; }
         if (snapshot_.slot != slot || snapshot_.active != active) { status = "Tracker location manifest differs from this slot."; return nullptr; }
@@ -189,10 +225,48 @@ class TrackerMirrorState {
              snapshot_.liveTimeFlags != liveTimeFlags)) {
             status = "Synchronizing time-sensitive checks with the AP tracker..."; return nullptr;
         }
+        if (snapshot_.liveAmmo != 0xffffffffu &&
+            (snapshot_.liveAmmo != liveAmmo || snapshot_.liveAmmoState != liveAmmoState)) {
+            status = "Synchronizing Link's carried ammunition with the AP tracker..."; return nullptr;
+        }
         status = "Automatic AP tracker - Universal Tracker rules, using Link's owned shields.";
         return &snapshot_;
     }
+    // Rendering only: keep the last complete result during a same-session
+    // recalculation. Current() above remains strict for gameplay/refill proofs.
+    // Never retain a display across Reset, slot changes or a changed manifest.
+    const TrackerSnapshot* Display(uint32_t slot, uint64_t received, const std::set<int64_t>& active,
+                                   const std::set<int64_t>& checked, double now, std::string& status,
+                                   uint32_t liveShields = 0xffffffffu, uint32_t liveTime = 0xffffffffu,
+                                   uint32_t liveClock = 0xffffffffu, uint32_t liveTimeFlags = 0,
+                                   uint32_t liveAmmo = 0xffffffffu, uint64_t liveAmmoState = 0) const {
+        const auto* fresh = Current(slot, received, active, checked, now, status, liveShields,
+                                    liveTime, liveClock, liveTimeFlags, liveAmmo, liveAmmoState);
+        if (!hasSnapshot_ || snapshot_.slot != slot || snapshot_.active != active) return nullptr;
+        if (fresh == nullptr) {
+            status = now - lastReceive_ > 10.0
+                ? "Tracker delayed; displaying previous results."
+                : "Updating AP checks; displaying previous results.";
+        }
+        // Rebuild only on a complete reply or an actual local check change,
+        // not on every ImGui frame. Immediate check removal is not a new
+        // reachability decision; newly available rows await the complete reply.
+        if (displayDirty_ || displayChecked_ != checked) {
+            TrackerSnapshot candidate = snapshot_;
+            for (const auto id : checked) if (active.count(id)) candidate.checked.insert(id);
+            candidate.rows.erase(std::remove_if(candidate.rows.begin(), candidate.rows.end(),
+                [&](const TrackerRow& row) { return candidate.checked.count(row.id) != 0; }), candidate.rows.end());
+            candidate.ammoRefills = 0; // A rendering cache never grants gameplay authority.
+            displaySnapshot_ = std::move(candidate);
+            displayChecked_ = checked;
+            displayDirty_ = false;
+        }
+        return &displaySnapshot_;
+    }
   private:
+    mutable TrackerSnapshot displaySnapshot_;
+    mutable std::set<int64_t> displayChecked_;
+    mutable bool displayDirty_ = true;
     std::string nonce_, producer_;
     uint64_t request_ = 0;
     double lastReceive_ = 0;

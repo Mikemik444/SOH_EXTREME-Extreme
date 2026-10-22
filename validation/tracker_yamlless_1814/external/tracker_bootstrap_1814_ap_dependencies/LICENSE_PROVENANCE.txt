@@ -1,0 +1,4 @@
+Upstream license source: https://raw.githubusercontent.com/ArchipelagoMW/Archipelago/0.6.8/LICENSE
+Revision: 0.6.8
+SHA256: f66c14cec56600dec0a63c5dc14d9fe3dc4efbcdfbf34b100b6fcf1f1e3ded00
+Bytes: 1424

@@ -24,9 +24,16 @@ bool Archipelago_IsAuthenticatedForFileSelect(void);
 bool Archipelago_IsCurrentSaveActive(void);
 // Save identity, independent of connection/enabled state, for physical seed rules.
 bool Archipelago_IsCurrentSaveFile(void);
+// Keep existing final ammo until its own renewable source is reachable.
+// Positive grants and empty/unowned inventory retain ordinary behavior.
+int32_t Archipelago_AdjustAmmoChange(int32_t item, int32_t currentAmmo, int32_t change);
+void Archipelago_ObserveAmmoSource(int32_t randomizerCheck, int32_t actorId, int32_t sourceDropParams,
+                                  int32_t collectibleInput);
 // First-use directed physical crossings; never used for entrance discovery flags.
 bool Archipelago_HasSceneTransitionChecks(void);
 void Archipelago_CaptureSceneTransition(void);
+// The real warp departure records provenance; credit still waits for arrival.
+void Archipelago_BeginWarpSongTransition(int song);
 void Archipelago_BeginDoorTransition(int door, int fromRoom, int toRoom, const struct Actor* actor, int side);
 // Physical AP routing remains active without a server connection or menu CVar.
 bool Archipelago_EntranceShuffleActive(void);
@@ -44,14 +51,19 @@ int Archipelago_EntranceSpawnRoom(int scene, int room);
 bool Archipelago_EntranceSpawnPosition(int scene);
 const char* Archipelago_EntranceDestinationName(int source);
 int Archipelago_EntranceDestination(int source);
-// The dungeon menu uses its physical entryway, or the previous distinct scene
-// when the enabled dungeon-door pool mixes with non-dungeon categories.
+// The dungeon menu uses its physical entryway, or the previous completed
+// room/doorway when dungeon doors mix with non-dungeon categories.
 enum ArchipelagoDungeonReturnMode {
     AP_DUNGEON_RETURN_SPAWN = 0,
     AP_DUNGEON_RETURN_PREVIOUS_SCENE = 1,
     AP_DUNGEON_RETURN_NO_PREVIOUS_SCENE = 2
 };
 void Archipelago_EntranceRecordRoomEntry(void);
+// Replace only the current grotto-return launch checkpoint after proven landing.
+void Archipelago_EntranceRememberGrottoLanding(void);
+void Archipelago_EntranceBeginRoomChange(int target);
+void Archipelago_EntranceObserveRoomBoundary(int transition, int physicalRoom, int otherRoom, bool vertical);
+void Archipelago_EntranceSelectRoomBoundary(int transition, int target);
 int Archipelago_EntranceDungeonReturnMode(void);
 bool Archipelago_EntranceRequestDungeonReturn(void);
 bool Archipelago_EntranceRestoreDungeonReturn(void);

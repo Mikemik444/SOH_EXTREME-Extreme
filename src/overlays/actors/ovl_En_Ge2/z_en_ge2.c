@@ -559,10 +559,47 @@ void EnGe2_UpdateAfterTalk(Actor* thisx, PlayState* play) {
     EnGe2_MoveAndBlink(this, play);
 }
 
+static s32 EnGe2_UpdateRandomizerFriendliness(EnGe2* this, PlayState* play) {
+    s32 type = this->actor.params & 0xFF;
+
+    // Remote card receipts and NPC Soul restoration must become friendly before
+    // sensing the player. Keep knocked-out guards in their existing KO action.
+    if (!IS_RANDO || (this->stateFlags & GE2_STATE_KO) ||
+        (type != GE2_TYPE_PATROLLING && type != GE2_TYPE_STATIONARY) ||
+        !GameInteractor_Should(VB_GERUDOS_BE_FRIENDLY, EnGe2_CheckCarpentersFreed())) {
+        return false;
+    }
+
+    if (this->stateFlags & GE2_STATE_CAPTURING) {
+        Player* player = GET_PLAYER(play);
+        if (play->msgCtx.talkActor == &this->actor && play->msgCtx.textId == 0x6000) {
+            Message_CloseTextbox(play);
+        }
+        if (player->csActor == &this->actor && player->csAction == 95) {
+            Player_SetCsActionWithHaltedActors(play, &this->actor, 7);
+        }
+        this->stateFlags &= ~GE2_STATE_CAPTURING;
+        this->actor.speedXZ = 0.0f;
+        this->timer = 0;
+        this->playerSpottedParam = 0;
+        EnGe2_ChangeAction(this, type == GE2_TYPE_PATROLLING ? GE2_ACTION_ABOUTTURN : GE2_ACTION_STAND);
+    }
+
+    this->collider.base.acFlags &= ~AC_HIT;
+    this->actor.update = EnGe2_UpdateFriendly;
+    this->actor.targetMode = 6;
+    return true;
+}
+
 void EnGe2_Update(Actor* thisx, PlayState* play) {
     EnGe2* this = (EnGe2*)thisx;
     s32 paramsType;
 
+    // Voluntary jail travel uses UpdateAfterTalk and retains its chosen action.
+    if (EnGe2_UpdateRandomizerFriendliness(this, play)) {
+        EnGe2_UpdateFriendly(thisx, play);
+        return;
+    }
     EnGe2_MaintainColliderAndSetAnimState(this, play);
 
     if ((this->stateFlags & GE2_STATE_KO) || (this->stateFlags & GE2_STATE_CAPTURING)) {

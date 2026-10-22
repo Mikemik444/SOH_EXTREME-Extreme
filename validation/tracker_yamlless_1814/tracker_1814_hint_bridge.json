@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "passed": true,
+  "tests_run": 21,
+  "failures": 0,
+  "errors": 0,
+  "scope": "Focused server hint metadata, reveal command authorization, transport and lifecycle checks",
+  "limitations": "No live AP server or complete native game/UI execution in this test. UT bootstrap is an explicit I/O boundary here; real UT reconstruction is covered by test_tracker_yamlless.py.",
+  "source_sha256": {
+    "archipelago/soh_extreme/HintBridge.py": "e00318acd27bb0d1662caa02ef6acbdc248bcc84c30687f4d6129620feca71e1",
+    "archipelago/soh_extreme/TrackerClient.py": "fa39c0f10dd12214bcc995ba68178227fc00a3aa474b2a570615d07bb932be77",
+    "archipelago/soh_extreme/TrackerBootstrap.py": "49db125d47aa12ad0ad1ebcfcca47a225384d1d22f71f5f622f2a3cb10b4f892",
+    "archipelago/soh_extreme/TrackerWorker.py": "d3c0a2722a75098c1b4f9660638070ee564862b91d4b5e754b5c5981bbc3386e"
+  },
+  "test_sha256": {
+    "tools/tests/test_hint_bridge.py": "b8970979543f90a09c4ecc75131fb4ae26e7c15cf894a62b333f64474f1ff1bd"
+  },
+  "source_unchanged_during_tests": true
+}

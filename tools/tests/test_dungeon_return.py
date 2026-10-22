@@ -41,6 +41,8 @@ def main():
         'soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h',
         'soh/Enhancements/randomizer/randomizerEnums/RandomizerOptions.h',
         'soh/Enhancements/QoL/BetterSaveMenu.cpp','src/code/z_play.c','src/code/z_room.c','src/code/z_sram.c',
+        'src/code/z_parameter.c','soh/z_scene_otr.cpp','src/overlays/actors/ovl_En_Holl/z_en_holl.c',
+        'src/overlays/actors/ovl_player_actor/z_player.c',
         'src/overlays/misc/ovl_kaleido_scope/z_kaleido_scope_PAL.c',
         'archipelago/soh_extreme/EntranceCatalog.json')
     tests = ('tools/tests/test_dungeon_return.py','tools/tests/dungeon_return_tests.cpp',
@@ -59,6 +61,8 @@ def main():
     play = read('src/code/z_play.c')
     room = read('src/code/z_room.c')
     sram = read('src/code/z_sram.c')
+    parameter = read('src/code/z_parameter.c')
+    player_source = read('src/overlays/actors/ovl_player_actor/z_player.c')
     kaleido = read('src/overlays/misc/ovl_kaleido_scope/z_kaleido_scope_PAL.c')
     engine = (args.dependencies/'z64.h').read_text()
     save = (args.dependencies/'z64save.h').read_text()
@@ -74,8 +78,37 @@ def main():
     harness = read('tools/tests/entrance_slot_bridge_tests.cpp').split('#include "captured_native_savewarp.inc"',1)[0]
     harness = harness.replace('    int numRooms = 64;', '''    int numRooms = 64;
     struct { int promptChoice = 0, unk_1EC = 0; } pauseCtx;
-    struct { struct { int tempSwch = 0, tempCollect = 0; } flags; } actorCtx;''')
-    harness = harness.replace('    int fileNum = 0;', '    int fileNum = 0;\n    struct { int resetToSpawn = 0; } ship;')
+    struct { struct { int tempSwch = 0, tempCollect = 0; } flags;
+        struct { Actor* head = nullptr; } actorLists[ACTORCAT_MAX]; } actorCtx;''')
+    harness = harness.replace('    int fileNum = 0;', '    int fileNum = 0, linkAge = LINK_AGE_CHILD;\n    float entranceSpeed = 0;\n    struct { int resetToSpawn = 0; } ship;')
+    harness = harness.replace('struct { struct { int num = 0; } curRoom; } roomCtx;',
+                              'struct { int status = 0; struct { int num = 0; } curRoom; } roomCtx;')
+    harness = harness.replace('    struct { Vec3f pos; } world;',
+                              '''    struct { Vec3f pos; } world, home, focus;
+    Vec3f prevPos, velocity;
+    struct { Vec3f displacement; } colChkInfo;
+    float floorHeight = 0, speedXZ = 0, gravity = 0;
+    CollisionPoly* floorPoly = nullptr;
+    int floorBgId = BGCHECK_SCENE;
+    Actor* next = nullptr;
+    void (*update)() = nullptr;''')
+    harness = harness.replace('struct Player { Actor actor; int doorType = 0; } player;',
+                              '''struct Player { Actor actor; int doorType = 0, unk_A86 = 0, yaw = 0;
+    float fallStartHeight = 0, linearVelocity = 0; u32 stateFlags1 = 0; } player;''')
+    # Geometry/animation are explicit IO boundaries here. The dedicated grotto
+    # geometry fixture compiles the production floor, wall, water and actor tests.
+    harness = harness.replace('constexpr int BGCHECKFLAG_GROUND = 1;', '''constexpr int BGCHECKFLAG_GROUND = 1;
+constexpr int BGCHECK_SCENE = 50, ACTORCAT_MAX = 12, ACTOR_DOOR_ANA = 0x9B;
+constexpr u32 PLAYER_STATE1_FLOOR_DISABLED = 1u << 0, PLAYER_STATE1_IN_WATER = 1u << 1,
+              PLAYER_STATE1_IN_CUTSCENE = 1u << 2;
+struct CollisionPoly {};
+using std::isfinite;''')
+    harness = harness.replace('#include "captured_grotto_data.inc"',
+                              '''using RespawnData = std::remove_reference_t<decltype(gSaveContext.respawn[0])>;
+#include "captured_grotto_data.inc"''')
+    harness = harness.replace('#include <vector>', '#include <vector>\n#include <type_traits>')
+    harness = harness.replace('#define GET_PLAYER(play) (static_cast<void>(play), &::player)',
+                              'Player* fixturePlayer = &::player;\n#define GET_PLAYER(play) (static_cast<void>(play), fixturePlayer)')
     init = between(play,'void Play_Init(GameState*','void Play_Destroy(') if 'void Play_Destroy(' in play[play.index('void Play_Init(GameState*'):] else play[play.index('void Play_Init(GameState*'):play.index('void Play_Main(')]
     assert init.index('Actor_InitContext(') < init.index('Archipelago_EntranceRecordRoomEntry();')
     assert 'Archipelago_EntranceRecordRoomEntry();' in between(room,'void Room_FinishRoomChange(','\n}')
@@ -92,7 +125,32 @@ def main():
         'captured_native_savewarp.inc':between(native,'void Entrance_SetSavewarpEntrance(void)','void Entrance_SetWarpSongEntrance(void)'),
         'captured_native_gameover.inc':between(native,'void Entrance_SetGameOverEntrance(void)','// Properly savewarp the player'),
         'captured_grotto_force_return.inc':between(grotto,'void Grotto_ForceGrottoReturn(void)','// Used for the DMT special voids'),
+        'captured_grotto_force_special.inc':between(grotto,'void Grotto_ForceGrottoReturnOnSpecialEntrance(void)',
+                                                   '// Set the respawn flag for when we want to return from a grotto entrance'),
+        'captured_grotto_force_void.inc':between(grotto,'void Grotto_ForceRegularVoidOut(void)',
+                                                '// If returning to a FW point'),
+        'captured_grotto_identity.inc':between(grotto,'s16 Grotto_GetRenamedGrottoIndexFromOriginal(',
+                                              '// SOH-EXTREME exterior grotto landing ownership and geometry.'),
+        'captured_grotto_ownership.inc':between(grotto,'static bool Grotto_LandingMatchesCurrent(void) {',
+                                               'static bool Grotto_StaticGround('),
+        'captured_grotto_landing_state.inc':grotto[grotto.index('static void Grotto_SaveLandedPoint('):],
         'captured_native_respawn.inc':between(play,'void Play_SetRespawnData(','s32 Play_CamIsNotFixed('),
+        # Only the C identifier "this" is renamed for the C++ fixture. This is
+        # the actual native override that runs after ActorEntry initialization.
+        'captured_player_respawn_override.inc':re.sub(r'\bthis\b', 'link',
+            between(player_source[player_source.index('void Player_Init('):],
+                    '    respawnFlag = gSaveContext.respawnFlag;',
+                    '    if ((respawnFlag == 0) || (respawnFlag < -1))')),
+        'captured_player_down_checkpoint.inc':re.sub(r'\bthis\b', 'link',
+            between(player_source[player_source.index('void Player_Init('):],
+                    '    if (func_80845C68(play, (respawnFlag == 2) ? 1 : 0) == 0)',
+                    '    gSaveContext.respawn[RESPAWN_MODE_DOWN].data = 1;')),
+        'captured_player_grotto_start.inc':re.sub(r'\bthis\b', 'link',
+            between(player_source,'void Player_StartMode_Grotto(PlayState* play, Player* this) {',
+                    'void Player_StartMode_KnockedOver(')),
+        'captured_player_grotto_dispatch.inc':re.sub(r'\bthis\b', 'link',
+            between(player_source[player_source.index('void Player_UpdateCommon('):],
+                    '    const s32 grottoLandingResult =', '    sControlInput = input;')),
         'captured_return_engine.inc':harness,
         'captured_metadata_identity.inc':between(metadata,'    auto sameIdentity =','    // Return to Spawn'),
         'captured_metadata_reset.inc':between(metadata,'    const bool preserveRequestedDungeonReturn =','    {\n        std::scoped_lock lock(queueMutex);'),
@@ -108,12 +166,26 @@ def main():
         'captured_native_exit.inc':between(hooks,'void RandomizerOnExitGameHandler(','void RandomizerOnKaleidoscopeUpdateHandler('),
         'captured_client_scene.inc':between(client,'void ArchipelagoClient::CaptureSceneTransition()','void ArchipelagoClient::BeginDoorTransition('),
         'captured_room_entry_call.inc':'    Archipelago_EntranceRecordRoomEntry();',
+        'captured_room_request_hook.inc':between(room[room.index('s32 Room_RequestNewRoom('):],
+                                                '    if (roomCtx->status == 0)',
+                                                '    return OTRRoom_RequestNewRoom('),
+        'captured_suns_song_reload.inc':between(parameter[parameter.index('void Interface_Update('):],
+                                               '            gSaveContext.respawnFlag = -2;',
+                                               '            gSaveContext.sunsSongState = SUNSSONG_INACTIVE;'),
         'captured_category_truth.inc':'\n'.join('{'+str(row['id'])+','+str(row['category'] in {'dungeons','bosses','dungeon_doors'}).lower()+'},' for row in json.loads(read('archipelago/soh_extreme/EntranceCatalog.json'))),
     }
     with tempfile.TemporaryDirectory(prefix='soh-dungeon-return-') as directory:
         work=Path(directory)
         for name in ('entrance.h','randomizer_entrance.h','randomizer_grotto.h'):
             stub=work/'soh/Enhancements/randomizer'/name;stub.parent.mkdir(parents=True,exist_ok=True);stub.write_text('// Engine IO supplied by the native fixture.\n')
+        (work/'soh/Enhancements/randomizer/randomizer_grotto.h').write_text('''
+s32 Grotto_QueueReturnLanding(Actor*);
+s32 Grotto_HasPendingReturnLanding(void);
+s32 Grotto_ResolveReturnLanding(Actor*);
+void Grotto_UpdateReturnLanding(Actor*);
+s32 Grotto_CanCaptureReturnPoint(Actor*);
+s8 Grotto_CurrentGrotto();
+''')
         for name, contents in captures.items(): (work/name).write_text(contents+'\n')
         executable=work/'dungeon_return'
         command=[compiler,'-std=c++20','-O1','-g','-Wall','-Wextra','-Werror','-Wno-missing-field-initializers',
@@ -135,10 +207,16 @@ def main():
             'engine_io_isolated':True,'native_windows_build':False,'in_game_playthrough':False,
             'coverage':['full native Entrance_Init and table construction','full native savewarp and game-over entrance functions',
                         'full native respawn setup and last-entrance functions','native grotto resolver and game-over return flags',
+                        'actual Player_Init respawn position/yaw/start-mode override after ActorEntry initialization',
+                        'real grotto landing ownership/cache, native start dispatch and room-checkpoint callback',
                         'actual BetterSaveMenu message text, continue prompt and reload begin helper','actual AP metadata preservation predicates',
                         'actual native Sram_OpenSave dungeon table and entrance selection',
-                        'previous distinct physical scene and source dungeon ownership','same-scene room reloads and native room completion',
-                        'explicit age spawn, absent history, reload/map/file/age invalidation','all 719 endpoint pool classifications'],
+                        'immediate doorway departure position and source dungeon ownership',
+                        'same-scene and same-room mapped doors, native room preload abort and completion',
+                        'same-room death checkpoints with retained prior-room history',
+                        'source-only check credit and rejected wet arrival history restoration',
+                        "Sun's Song reload retains doorway history",
+                        'explicit age spawn, absent history, reload/map/file/age invalidation','all current endpoint pool classifications'],
             'limitations':['Room geometry, native actor scene loading, audio, persistent file IO and UI rendering are isolated.',
                            'Saved previous-scene positions enter through the native integer ActorEntry coordinate path.',
                            'No Windows game build or controller playthrough was possible with the uploaded partial checkout.']}

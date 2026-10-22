@@ -26,6 +26,7 @@ void BgBreakwall_Draw(Actor* thisx, PlayState* play);
 void BgBreakwall_WaitForObject(BgBreakwall* this, PlayState* play);
 void BgBreakwall_Wait(BgBreakwall* this, PlayState* play);
 void BgBreakwall_LavaCoverMove(BgBreakwall* this, PlayState* play);
+void BgBreakwall_UpdateCollider(BgBreakwall* this, PlayState* play);
 
 const ActorInit Bg_Breakwall_InitVars = {
     ACTOR_BG_BREAKWALL,
@@ -210,14 +211,15 @@ void BgBreakwall_WaitForObject(BgBreakwall* this, PlayState* play) {
 
         this->dyna.actor.objBankIndex = this->bankIndex;
         Actor_SetObjectDependency(play, &this->dyna.actor);
-        this->dyna.actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;
         this->dyna.actor.draw = BgBreakwall_Draw;
         CollisionHeader_GetVirtual(sBombableWallInfo[wallType].colHeader, &colHeader);
         this->dyna.bgId = DynaPoly_SetBgActor(play, &play->colCtx.dyna, &this->dyna.actor, colHeader);
 
         if (wallType == BWALL_KD_LAVA_COVER) {
+            this->dyna.actor.flags &= ~ACTOR_FLAG_UPDATE_CULLING_DISABLED;
             BgBreakwall_SetupAction(this, BgBreakwall_LavaCoverMove);
         } else {
+            // The solid wall must still receive attacks when its model is culled.
             BgBreakwall_SetupAction(this, BgBreakwall_Wait);
         }
     }
@@ -284,6 +286,9 @@ void BgBreakwall_Update(Actor* thisx, PlayState* play) {
     BgBreakwall* this = (BgBreakwall*)thisx;
 
     this->actionFunc(this, play);
+    if (this->dyna.actor.update != NULL && this->actionFunc == BgBreakwall_Wait) {
+        BgBreakwall_UpdateCollider(this, play);
+    }
 }
 
 /**
@@ -295,6 +300,30 @@ static Vec3f sColQuadList[][4] = {
     { { 10.0f, 0.0f, 10.0f }, { -10.0f, 0.0f, 10.0f }, { 10.0f, 0.0f, -10.0f }, { -10.0f, 0.0f, -10.0f } },
 };
 
+void BgBreakwall_UpdateCollider(BgBreakwall* this, PlayState* play) {
+    Vec3f colQuad[4];
+    s32 i;
+
+    if (this->bombableWallDList == NULL || this->colType < 0 || this->colType >= (s32)ARRAY_COUNT(sColQuadList)) {
+        return;
+    }
+
+    // Match the actor's model transform without depending on Draw running.
+    // Register after Wait consumes the previous frame's hit: SetAC clears it.
+    Matrix_Push();
+    Matrix_SetTranslateRotateYXZ(this->dyna.actor.world.pos.x,
+                                 this->dyna.actor.world.pos.y + this->dyna.actor.shape.yOffset * this->dyna.actor.scale.y,
+                                 this->dyna.actor.world.pos.z, &this->dyna.actor.shape.rot);
+    Matrix_Scale(this->dyna.actor.scale.x, this->dyna.actor.scale.y, this->dyna.actor.scale.z, MTXMODE_APPLY);
+    for (i = 0; i < 4; i++) {
+        Matrix_MultVec3f(&sColQuadList[this->colType][i], &colQuad[i]);
+    }
+    Matrix_Pop();
+
+    Collider_SetQuadVertices(&this->collider, &colQuad[0], &colQuad[1], &colQuad[2], &colQuad[3]);
+    CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
+}
+
 void BgBreakwall_Draw(Actor* thisx, PlayState* play) {
     s32 pad;
     BgBreakwall* this = (BgBreakwall*)thisx;
@@ -305,20 +334,6 @@ void BgBreakwall_Draw(Actor* thisx, PlayState* play) {
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         gSPMatrix(POLY_OPA_DISP++, MATRIX_NEWMTX(play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         gSPDisplayList(POLY_OPA_DISP++, this->bombableWallDList);
-
-        if (this->colType >= 0) {
-            Vec3f colQuad[4];
-            Vec3f* src = &sColQuadList[this->colType][0];
-            Vec3f* dst = &colQuad[0];
-            s32 i;
-
-            for (i = 0; i < 4; i++) {
-                Matrix_MultVec3f(src++, dst++);
-            }
-
-            Collider_SetQuadVertices(&this->collider, &colQuad[0], &colQuad[1], &colQuad[2], &colQuad[3]);
-            CollisionCheck_SetAC(play, &play->colChkCtx, &this->collider.base);
-        }
 
         CLOSE_DISPS(play->state.gfxCtx);
     }

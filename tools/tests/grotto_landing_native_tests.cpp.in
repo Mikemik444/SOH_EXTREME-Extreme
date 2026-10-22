@@ -1,0 +1,439 @@
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <limits>
+
+using s8 = int8_t; using u8 = uint8_t; using s16 = int16_t; using u16 = uint16_t;
+using s32 = int32_t; using u32 = uint32_t; using f32 = float;
+using std::isfinite;
+constexpr int NUM_GROTTOS = 33, NOT_GROTTO = 0, GROTTO_LOAD = 1, GROTTO_RETURN = 2;
+constexpr int ENTRANCE_GROTTO_LOAD_START = 0x700, ENTRANCE_GROTTO_EXIT_START = 0x800;
+constexpr int ENTR_RETURN_GROTTO = 0x7FFF, ENTR_LOAD_OPENING = -1, TRANS_TYPE_FADE_WHITE = 3;
+enum RespawnMode { RESPAWN_MODE_DOWN, RESPAWN_MODE_RETURN, RESPAWN_MODE_TOP };
+enum { ACTORCAT_BG, ACTORCAT_PLAYER, ACTORCAT_PROP, ACTORCAT_NPC, ACTORCAT_MAX = 12 };
+enum { ACTOR_PLAYER, ACTOR_DOOR_ANA, ACTOR_OBJ_BOMBIWA, ACTOR_EN_ISHI, ACTOR_OTHER };
+enum { RSK_SHUFFLE_GROTTO_ENTRANCES, RSK_SHUFFLE_OVERWORLD_SPAWNS, RSK_SHUFFLE_WARP_SONGS,
+       RSK_MIX_GROTTO_ENTRANCES, RSK_DECOUPLED_ENTRANCES };
+constexpr int BGCHECK_SCENE = 50, BGCHECKFLAG_GROUND = 1, OC1_ON = 1, OCELEM_ON = 1;
+constexpr int MASS_IMMOVABLE = 0xFF;
+constexpr f32 BGCHECK_Y_MIN = -32000.0f;
+constexpr u32 PLAYER_STATE1_FLOOR_DISABLED = 1u << 0, PLAYER_STATE1_IN_WATER = 1u << 1,
+              PLAYER_STATE1_IN_CUTSCENE = 1u << 2, PLAYER_STATE1_CLIMBING_LADDER = 1u << 3,
+              PLAYER_STATE2_CRAWLING = 1u << 0;
+constexpr int VB_PLAYER_LIMIT_JUMP_SPEED = 0, VB_INFLICT_VOID_DAMAGE = 1;
+int updateRate = 3, registers[100] = {};
+#define R_UPDATE_RATE updateRate
+#define REG(index) registers[index]
+#define R_RUN_SPEED_LIMIT 600
+#define CLAMP(x, lo, hi) std::clamp((x), (lo), (hi))
+#define ABS(x) std::abs(x)
+#define COLPOLY_GET_NORMAL(x) ((x) / 32767.0f)
+@SCENES@
+@ENTRANCES@
+struct Vec3f { f32 x = 0, y = 0, z = 0; };
+struct Vec3s { s16 x = 0, y = 0, z = 0; };
+struct CollisionPoly { Vec3s normal{0, 32767, 0}; };
+struct WaterBox {};
+struct CollisionContext { void* colHeader = nullptr; };
+struct CollisionCheckContext {};
+struct Actor {
+    int id = ACTOR_OTHER, params = 0;
+    struct { Vec3f pos; Vec3s rot; } world, home, focus;
+    struct { Vec3s rot; } shape;
+    Vec3f prevPos, velocity;
+    f32 gravity = 0, minVelocityY = -20, speedXZ = 0, floorHeight = 0;
+    CollisionPoly* floorPoly = nullptr;
+    int floorBgId = BGCHECK_SCENE, bgCheckFlags = 0;
+    struct { Vec3f displacement; int cylRadius = 0, cylHeight = 0, mass = 0; } colChkInfo;
+    Actor* next = nullptr;
+    void (*update)() = nullptr;
+    void (*init)() = nullptr;
+};
+struct AgeProperties { f32 wallCheckRadius, ceilingCheckHeight; };
+struct Player {
+    Actor actor;
+    AgeProperties* ageProperties = nullptr;
+    f32 linearVelocity = 0, fallStartHeight = 0;
+    u32 stateFlags1 = 0, stateFlags2 = 0;
+    int meleeWeaponState = 0, unk_A86 = 0, skelAnime = 0;
+    s16 yaw = 0;
+};
+struct ColliderCylinder {
+    struct { int ocFlags1 = OC1_ON; } base;
+    struct { int ocElemFlags = OCELEM_ON; } info;
+    struct { Vec3s pos; s16 yShift = 0, height = 70, radius = 55; } dim;
+};
+struct ObjBombiwa { Actor actor; ColliderCylinder collider; };
+struct EnIshi { Actor actor; void (*actionFunc)() = nullptr; ColliderCylinder collider; };
+struct PlayState {
+    int sceneNum = 0, numRooms = 16, nextEntranceIndex = 0, transitionType = 0;
+    struct { int status = 0; struct { int num = 0; } curRoom; } roomCtx;
+    struct {
+        struct { u32 tempSwch = 0, tempCollect = 0; } flags;
+        struct { Actor* head = nullptr; } actorLists[ACTORCAT_MAX];
+    } actorCtx;
+    CollisionContext colCtx;
+    CollisionCheckContext colChkCtx;
+};
+struct RespawnData {
+    int entranceIndex = 0, roomIndex = 0, playerParams = 0, yaw = 0, data = 0;
+    Vec3f pos;
+    u32 tempSwchFlags = 0, tempCollectFlags = 0;
+};
+struct SaveContext {
+    RespawnData respawn[3], fw;
+    s16 entranceIndex = 0, fileNum = 0, linkAge = 0;
+    int respawnFlag = 0, nextTransitionType = 0;
+    f32 entranceSpeed = 0;
+} gSaveContext;
+PlayState playStorage, *gPlayState = &playStorage;
+Player player;
+#define GET_PLAYER(play) ((Player*)((play)->actorCtx.actorLists[ACTORCAT_PLAYER].head))
+bool apActive = true, randomizerOptions[5] = {}, disableRockCollision = false;
+int remembered = 0, trackedGrotto = -1;
+s16 lastResolvedTarget = -1, lastResolvedNative = -1;
+bool Archipelago_EntranceShuffleActive() { return apActive; }
+int Randomizer_GetSettingValue(int key) { return randomizerOptions[key]; }
+s16 Archipelago_ResolveDoorArrival(s16 index, bool query) { return index; }
+s16 Archipelago_ResolvedEntranceArrival(s16 target, s16 native) {
+    lastResolvedTarget = target; lastResolvedNative = native; return native;
+}
+void Archipelago_RecordEntrance(int) {}
+void Entrance_SetEntranceDiscovered(int, bool) {}
+void EntranceTracker_SetLastEntranceOverride(int) {}
+void EntranceTracker_SetCurrentGrottoID(int id) { trackedGrotto = id; }
+void Archipelago_EntranceRememberGrottoLanding() { ++remembered; }
+bool MegaSoul_ShouldDisableActorCollision(const Actor* actor) {
+    return disableRockCollision && actor->id == ACTOR_EN_ISHI;
+}
+void Alive() {}
+f32 Math_SinS(s16 angle) { return std::sin(angle * (3.14159265358979323846f / 32768.0f)); }
+f32 Math_CosS(s16 angle) { return std::cos(angle * (3.14159265358979323846f / 32768.0f)); }
+void Math_Vec3f_Copy(Vec3f* out, const Vec3f* in) { *out = *in; }
+s32 Math_StepToF(f32* value, f32 target, f32 step) {
+    *value += std::clamp(target - *value, -step, step); return *value == target;
+}
+void Math_AsymStepToF(f32* value, f32 target, f32 up, f32 down) {
+    Math_StepToF(value, target, *value < target ? up : down);
+}
+void Math_ScaledStepToS(s16* value, s16 target, s16 step) {
+    const s16 diff = target - *value;
+    *value += std::clamp<int>(diff, -step, step);
+}
+f32 GameInteractor_MovementSpeedMultiplier() { return 1.0f; }
+bool GameInteractor_Should(int, bool original, ...) { return original; }
+void LinkAnimation_Update(PlayState*, int*) {}
+bool nativeFalling = false;
+void func_80837B9C(Player*, PlayState*) { nativeFalling = true; }
+
+// Every scene-geometry query is explicit IO, with an authored plane and
+// controllable hazards; no synthetic coordinate is called a real asset proof.
+struct Geometry {
+    f32 floor = 0, waterHeight = 0;
+    int bgId = BGCHECK_SCENE;
+    bool missing = false, wall = false, ceiling = false, water = false, oc = false;
+    int exit = 0, effect = 0, damage = 0, conveyor = 0, type = 0, property = 0;
+    bool footprintGap = false, slope = false;
+    Vec3f gapCenter;
+    int floors = 0, walls = 0, ceilings = 0, waters = 0, ocs = 0;
+} geo;
+CollisionPoly floorPoly;
+WaterBox waterBox;
+f32 BgCheck_EntityRaycastFloor3(CollisionContext*, CollisionPoly** poly, s32* bgId, Vec3f* probe) {
+    ++geo.floors;
+    const f32 dx = probe->x - geo.gapCenter.x, dz = probe->z - geo.gapCenter.z;
+    if (geo.missing || (geo.footprintGap && dx * dx + dz * dz < 9.0f) || probe->y < geo.floor) {
+        *poly = nullptr; return BGCHECK_Y_MIN;
+    }
+    floorPoly.normal.y = geo.slope ? 20000 : 32767;
+    *poly = &floorPoly; *bgId = geo.bgId; return geo.floor;
+}
+s32 BgCheck_EntitySphVsWall3(CollisionContext*, Vec3f* adjusted, Vec3f* next, Vec3f*,
+                            f32 radius, CollisionPoly**, s32*, Actor*, f32 height) {
+    ++geo.walls;
+    if (radius != 14 && radius != 18) std::abort();
+    if (height != 26) std::abort();
+    *adjusted = *next; return geo.wall;
+}
+s32 BgCheck_EntityCheckCeiling(CollisionContext*, f32* outY, Vec3f*, f32 height,
+                              CollisionPoly**, s32*, Actor*) {
+    ++geo.ceilings; *outY = 0;
+    if (height != 40 && height != 56) std::abort();
+    return geo.ceiling;
+}
+s32 WaterBox_GetSurface1(PlayState*, CollisionContext*, f32, f32, f32* surface, WaterBox** box) {
+    ++geo.waters; *surface = geo.waterHeight; *box = &waterBox; return geo.water;
+}
+u32 SurfaceType_GetSceneExitIndex(CollisionContext*, CollisionPoly*, s32) { return geo.exit; }
+u32 SurfaceType_GetFloorEffect(CollisionContext*, CollisionPoly*, s32) { return geo.effect; }
+u32 SurfaceType_IsWallDamage(CollisionContext*, CollisionPoly*, s32) { return geo.damage; }
+u32 SurfaceType_GetConveyorSpeed(CollisionContext*, CollisionPoly*, s32) { return geo.conveyor; }
+u32 SurfaceType_GetFloorType(CollisionContext*, CollisionPoly*, s32) { return geo.type; }
+u32 func_80041EA4(CollisionContext*, CollisionPoly*, s32) { return geo.property; }
+s32 CollisionCheck_LineOCCheck(PlayState*, CollisionCheckContext*, Vec3f*, Vec3f*, Actor** excluded, int count) {
+    ++geo.ocs;
+    if (count != 1 || excluded[0] != &player.actor) std::abort();
+    return geo.oc;
+}
+
+@TYPES@
+@DATA@
+@ROUTING@
+@HELPERS@
+@LEGACY_FORCE_RETURN@
+@NATIVE_PHYSICS@
+@NATIVE_ACTIONS@
+
+int assertions = 0, scenarios = 0;
+void Check(bool value, const char* text, int line) {
+    ++assertions;
+    if (!value) { std::fprintf(stderr, "line %d: %s\n", line, text); std::exit(1); }
+}
+#define CHECK(value) Check((value), #value, __LINE__)
+bool Close(f32 a, f32 b) { return std::fabs(a - b) < 0.01f; }
+bool Same(const Vec3f& a, const Vec3f& b) { return Close(a.x,b.x) && Close(a.y,b.y) && Close(a.z,b.z); }
+f32 Horizontal(const Vec3f& a, const Vec3f& b) { return std::hypot(a.x-b.x, a.z-b.z); }
+Actor hole;
+AgeProperties ages[2]{{18,56}, {14,40}};
+void Prepare(int id = 14, int age = 1) {
+    gPlayState = &playStorage;
+    playStorage = {}; gSaveContext = {}; player = {}; hole = {}; geo = {};
+    apActive = true; std::fill(std::begin(randomizerOptions), std::end(randomizerOptions), false);
+    disableRockCollision = false; remembered = 0; trackedGrotto = -1; nativeFalling = false;
+    registers[68] = -120; updateRate = 3;
+    Grotto_InitExitAndLoadLists();
+    grottoId = id; lastEntranceType = GROTTO_RETURN;
+    gPlayState->sceneNum = grottoLoadTable[id].scene;
+    gPlayState->roomCtx.curRoom.num = grottoReturnTable[id].room;
+    gPlayState->colCtx.colHeader = &floorPoly;
+    gPlayState->actorCtx.flags.tempSwch = 0x3456; gPlayState->actorCtx.flags.tempCollect = 0x789;
+    gPlayState->actorCtx.actorLists[ACTORCAT_PLAYER].head = &player.actor;
+    gPlayState->actorCtx.actorLists[ACTORCAT_PROP].head = &hole;
+    gSaveContext.entranceIndex = grottoReturnTable[id].entranceIndex;
+    gSaveContext.linkAge = age; gSaveContext.fileNum = 2;
+    player.ageProperties = &ages[age]; player.actor.id = ACTOR_PLAYER;
+    player.actor.world.pos = player.actor.home.pos = player.actor.prevPos = grottoReturnTable[id].pos;
+    player.actor.shape.rot.y = player.yaw = grottoReturnTable[id].angle;
+    player.actor.focus.pos = player.actor.world.pos; player.actor.focus.pos.y += 50;
+    player.actor.update = Alive; player.actor.params = 0x04FF;
+    hole.id = ACTOR_DOOR_ANA; hole.update = Alive; hole.world.pos = grottoReturnTable[id].pos;
+    geo.floor = hole.world.pos.y;
+    Grotto_SetupReturnInfo(grottoReturnTable[id], RESPAWN_MODE_DOWN);
+    Grotto_SetupReturnInfo(grottoReturnTable[id], RESPAWN_MODE_RETURN);
+}
+void NativePlayerInitRespawn() {
+    Player* link = &player; Actor* thisx = &player.actor; PlayState* play = gPlayState;
+    s32 respawnFlag = 0, respawnMode = 0;
+    @PLAYER_RESPAWN_OVERRIDE@
+}
+
+Vec3f ActualNativeNeutralLanding() {
+    Player native = player;
+    native.actor.velocity.y = 12; native.actor.gravity = 0; native.actor.minVelocityY = -20;
+    native.linearVelocity = 0; native.actor.colChkInfo.displacement = {};
+    nativeFalling = false;
+    for (int frame = 0; frame < 64; ++frame) {
+        native.actor.speedXZ = native.linearVelocity;
+        native.actor.world.rot.y = native.yaw;
+        Actor_MoveXZGravity(&native.actor);
+        if (native.actor.velocity.y < 0 && native.actor.world.pos.y <= geo.floor) {
+            native.actor.world.pos.y = geo.floor;
+            return native.actor.world.pos;
+        }
+        native.actor.gravity = REG(68) / 100.0f;
+        if (!nativeFalling) Player_Action_8084F9C0(&native, gPlayState);
+        else { f32 speed = 0; s16 yaw = native.yaw; func_8083DFE0(&native, &speed, &yaw); }
+    }
+    CHECK(false); return {};
+}
+
+void AllAuthoredReturnsAndNativeMotion() {
+    for (int id = 0; id < NUM_GROTTOS; ++id) for (int age = 0; age < 2; ++age) {
+        ++scenarios; Prepare(id, age);
+        const auto origin = player.actor.world.pos;
+        const auto yaw = player.actor.shape.rot.y;
+        const auto expected = ActualNativeNeutralLanding();
+        CHECK(!Grotto_CanCaptureReturnPoint(&player.actor));
+        CHECK(Grotto_QueueReturnLanding(&player.actor));
+        CHECK(Grotto_HasPendingReturnLanding());
+        CHECK(Grotto_ResolveReturnLanding(&player.actor) == 1);
+        CHECK(Same(player.actor.world.pos, expected));
+        CHECK(Horizontal(player.actor.world.pos, origin) > 15 + player.ageProperties->wallCheckRadius + 1);
+        CHECK(player.actor.shape.rot.y == yaw);
+        CHECK(Close((player.actor.world.pos.x-origin.x)*Math_CosS(yaw) -
+                    (player.actor.world.pos.z-origin.z)*Math_SinS(yaw), 0));
+        CHECK(Same(player.actor.home.pos, expected) && Same(player.actor.prevPos, expected));
+        CHECK(Close(player.actor.focus.pos.y, expected.y + 50));
+        CHECK(player.actor.floorPoly == &floorPoly && player.actor.floorBgId == BGCHECK_SCENE);
+        CHECK(player.actor.bgCheckFlags & BGCHECKFLAG_GROUND);
+        CHECK(player.actor.params == 0x0DFF && player.actor.speedXZ == 0 && player.linearVelocity == 0);
+        CHECK(Same(player.actor.velocity, {}));
+        CHECK(remembered == 1 && !Grotto_HasPendingReturnLanding());
+        for (int mode : {RESPAWN_MODE_DOWN, RESPAWN_MODE_RETURN}) {
+            CHECK(Same(gSaveContext.respawn[mode].pos, expected));
+            CHECK(gSaveContext.respawn[mode].playerParams == 0x0DFF);
+            CHECK(gSaveContext.respawn[mode].tempSwchFlags == 0x3456);
+        }
+        CHECK(geo.floors >= 10 && geo.walls > 10 && geo.ceilings > 10 && geo.waters >= 10 && geo.ocs == 9);
+        Grotto_ForceGrottoReturn(); CHECK(Same(gSaveContext.respawn[1].pos, expected));
+        Grotto_ForceRegularVoidOut(); CHECK(Same(gSaveContext.respawn[0].pos, expected));
+        Grotto_ForceGrottoReturnOnSpecialEntrance(); CHECK(Same(gSaveContext.respawn[1].pos, expected));
+        CHECK(gSaveContext.respawn[1].playerParams == 0x0DFF);
+    }
+}
+
+void GeometryRejections() {
+    for (int fault = 0; fault < 19; ++fault) {
+        ++scenarios; Prepare();
+        const auto expected = ActualNativeNeutralLanding();
+        switch (fault) {
+            case 0: geo.missing = true; break;
+            case 1: geo.bgId = 2; break;
+            case 2: geo.wall = true; break;
+            case 3: geo.ceiling = true; break;
+            case 4: geo.water = true; geo.waterHeight = geo.floor + 1; break;
+            case 5: geo.oc = true; break;
+            case 6: geo.exit = 1; break;
+            case 7: geo.effect = 2; break;
+            case 8: geo.damage = 1; break;
+            case 9: geo.conveyor = 1; break;
+            case 10: geo.type = 2; break;
+            case 11: geo.type = 4; break;
+            case 12: geo.property = 5; break;
+            case 13: geo.slope = true; break;
+            case 14: geo.floor -= 50; break;
+            case 15: geo.footprintGap = true; geo.gapCenter = expected;
+                geo.gapCenter.x += player.ageProperties->wallCheckRadius + 1; break;
+            case 16: gPlayState->roomCtx.status = 1; break;
+            case 17: gPlayState->colCtx.colHeader = nullptr; break;
+            case 18: updateRate = 4; break;
+        }
+        CHECK(Grotto_QueueReturnLanding(&player.actor));
+        CHECK(Grotto_ResolveReturnLanding(&player.actor) == 2);
+        CHECK(Same(player.actor.world.pos, grottoReturnTable[14].pos));
+        CHECK(!grottoLanding.landed && grottoLanding.observing && remembered == 0);
+        Grotto_ForceGrottoReturn(); CHECK(gSaveContext.respawn[1].playerParams == 0x04FF);
+        Grotto_ForceRegularVoidOut(); CHECK(gSaveContext.respawn[0].playerParams == 0x04FF);
+    }
+    for (int bad : {3,7,12}) {
+        ++scenarios; Prepare(); geo.type = bad;
+        CHECK(Grotto_QueueReturnLanding(&player.actor)); CHECK(Grotto_ResolveReturnLanding(&player.actor) == 2);
+    }
+    ++scenarios; Prepare(); geo.property = 12;
+    CHECK(Grotto_QueueReturnLanding(&player.actor)); CHECK(Grotto_ResolveReturnLanding(&player.actor) == 2);
+}
+
+void ActorAndHoleExclusions() {
+    for (int fault = 0; fault < 7; ++fault) {
+        ++scenarios; Prepare(); const auto destination = ActualNativeNeutralLanding();
+        ObjBombiwa boulder; EnIshi rock; Actor other;
+        Actor* actor = fault == 0 ? &boulder.actor : fault == 1 ? &rock.actor : &other;
+        actor->world.pos = destination; actor->update = Alive;
+        actor->id = fault == 0 ? ACTOR_OBJ_BOMBIWA : fault == 1 ? ACTOR_EN_ISHI : ACTOR_OTHER;
+        if (fault < 2) {
+            ColliderCylinder& collider = fault == 0 ? boulder.collider : rock.collider;
+            collider.dim.pos = {(s16)destination.x,(s16)destination.y,(s16)destination.z};
+            collider.dim.height = 70; collider.dim.radius = 55;
+        } else if (fault == 2) actor->init = Alive;
+        else if (fault == 3) { actor->colChkInfo.cylRadius=20; actor->colChkInfo.cylHeight=60; }
+        else if (fault == 4) { actor->colChkInfo.cylRadius=1; actor->colChkInfo.cylHeight=60;
+            actor->colChkInfo.mass=MASS_IMMOVABLE; actor->world.pos.x+=50; }
+        else if (fault == 5) actor->id = ACTOR_DOOR_ANA;
+        else actor->colChkInfo.mass = MASS_IMMOVABLE; // Mido: real OC, zero generic dimensions
+        hole.next = actor;
+        CHECK(Grotto_QueueReturnLanding(&player.actor)); CHECK(Grotto_ResolveReturnLanding(&player.actor) == 2);
+        if (fault == 1) {
+            // The existing Soul policy disables ordinary rock collision; the
+            // placement helper consumes that policy instead of inventing one.
+            disableRockCollision = true;
+            CHECK(Grotto_QueueReturnLanding(&player.actor)); CHECK(Grotto_ResolveReturnLanding(&player.actor) == 1);
+        }
+        if (fault == 0) {
+            disableRockCollision = true;
+            CHECK(Grotto_QueueReturnLanding(&player.actor)); CHECK(Grotto_ResolveReturnLanding(&player.actor) == 2);
+        }
+    }
+}
+
+void ObserveFallbackAndInvalidate() {
+    ++scenarios; Prepare(); const auto destination = ActualNativeNeutralLanding();
+    geo.wall=true; CHECK(Grotto_QueueReturnLanding(&player.actor));
+    CHECK(Grotto_ResolveReturnLanding(&player.actor)==2); geo.wall=false;
+    player.actor.bgCheckFlags=BGCHECKFLAG_GROUND;
+    Grotto_UpdateReturnLanding(&player.actor); CHECK(remembered==0); // hole is not a checkpoint
+    player.actor.world.pos=destination;
+    player.actor.bgCheckFlags=0; Grotto_UpdateReturnLanding(&player.actor); CHECK(remembered==0);
+    player.actor.bgCheckFlags=BGCHECKFLAG_GROUND; player.actor.floorBgId=3;
+    Grotto_UpdateReturnLanding(&player.actor); CHECK(remembered==0);
+    player.actor.floorBgId=BGCHECK_SCENE; player.stateFlags1=PLAYER_STATE1_IN_WATER;
+    Grotto_UpdateReturnLanding(&player.actor); CHECK(remembered==0);
+    player.stateFlags1=PLAYER_STATE1_FLOOR_DISABLED;
+    Grotto_UpdateReturnLanding(&player.actor); CHECK(remembered==0);
+    player.stateFlags1=0; Grotto_UpdateReturnLanding(&player.actor);
+    CHECK(remembered==1 && grottoLanding.landed && !Grotto_HasPendingReturnLanding());
+    Grotto_UpdateReturnLanding(&player.actor); CHECK(remembered==1);
+    CHECK(Same(gSaveContext.respawn[1].pos,destination));
+    for (int field = 0; field < 7; ++field) {
+        ++scenarios; Prepare(); CHECK(Grotto_QueueReturnLanding(&player.actor));
+        switch(field) {
+            case 0: ++gSaveContext.fileNum; break;
+            case 1: gSaveContext.linkAge ^= 1; break;
+            case 2: ++gPlayState->sceneNum; break;
+            case 3: ++gPlayState->roomCtx.curRoom.num; break;
+            case 4: ++gSaveContext.entranceIndex; break;
+            case 5: ++grottoId; break;
+            case 6: apActive=false; break;
+        }
+        CHECK(!Grotto_HasPendingReturnLanding()); CHECK(Grotto_ResolveReturnLanding(&player.actor)==0);
+        CHECK(!grottoLanding.queued && !grottoLanding.landed && remembered==0);
+    }
+    ++scenarios; Prepare(); CHECK(Grotto_QueueReturnLanding(&player.actor)); Grotto_InitExitAndLoadLists();
+    CHECK(!Grotto_HasPendingReturnLanding());
+    ++scenarios; Prepare(); CHECK(Grotto_QueueReturnLanding(&player.actor));
+    Grotto_OverrideSpecialEntrance(ENTRANCE_GROTTO_EXIT_START+1); CHECK(!grottoLanding.queued);
+    ++scenarios; Prepare(); CHECK(Grotto_QueueReturnLanding(&player.actor));
+    CHECK(Grotto_ResolveReturnLanding(&player.actor)==1);
+    overridingNextEntrance=false; gSaveContext.respawnFlag=0; Grotto_SanitizeEntranceType();
+    CHECK(!grottoLanding.landed && lastEntranceType==NOT_GROTTO);
+}
+
+void InteriorAndVanillaAndLegacy() {
+    ++scenarios; Prepare();
+    const int native = Grotto_OverrideSpecialEntrance(1806);
+    CHECK(native==1432 && trackedGrotto==14 && lastResolvedTarget==1806 && lastResolvedNative==1432);
+    CHECK((u8)gSaveContext.respawn[1].data==229);
+    gPlayState->sceneNum=SCENE_GROTTOS; gPlayState->roomCtx.curRoom.num=0;
+    CHECK(SCENE_GROTTOS==62 && !Grotto_QueueReturnLanding(&player.actor));
+    ++scenarios; Prepare(); apActive=false;
+    CHECK(!Grotto_QueueReturnLanding(&player.actor));
+    randomizerOptions[RSK_SHUFFLE_GROTTO_ENTRANCES]=true;
+    Grotto_ForceGrottoReturnOnSpecialEntrance(); CHECK(gSaveContext.respawn[1].playerParams==0x04FF);
+    Grotto_ForceGrottoReturn(); CHECK(gSaveContext.respawn[1].playerParams==0x0DFF);
+    ++scenarios; Prepare();
+    gSaveContext.fw.playerParams=0x04FF; gSaveContext.respawn[2].pos=grottoReturnTable[14].pos;
+    Grotto_SetupReturnInfoOnFWReturn(); CHECK(gSaveContext.respawn[1].playerParams==0x04FF);
+    // The original helper idles at precisely the authored hole even when an
+    // earlier ActorEntry stage already selected a perfectly good landing.
+    for (int id=0; id<NUM_GROTTOS; ++id) {
+        ++scenarios; Prepare(id); const auto landing=ActualNativeNeutralLanding();
+        player.actor.world.pos=landing;
+        Legacy_Grotto_ForceGrottoReturn(); NativePlayerInitRespawn();
+        CHECK(Same(player.actor.world.pos,grottoReturnTable[id].pos));
+        CHECK(player.actor.params==0x0DFF && !Grotto_CanCaptureReturnPoint(&player.actor));
+        Prepare(id); player.actor.world.pos=landing;
+        Grotto_ForceGrottoReturn(); NativePlayerInitRespawn();
+        CHECK(player.actor.params==0x04FF);
+        CHECK(Grotto_QueueReturnLanding(&player.actor)); CHECK(Grotto_ResolveReturnLanding(&player.actor)==1);
+        CHECK(Same(player.actor.world.pos,landing));
+    }
+}
+
+int main() {
+    AllAuthoredReturnsAndNativeMotion(); GeometryRejections(); ActorAndHoleExclusions();
+    ObserveFallbackAndInvalidate(); InteriorAndVanillaAndLegacy();
+    std::printf("{\"scenarios\":%d,\"assertions\":%d,\"authored_exteriors_both_ages\":66,"
+                "\"legacy_hole_overrides_reproduced\":33,\"native_motion_compared\":66}\n",scenarios,assertions);
+}

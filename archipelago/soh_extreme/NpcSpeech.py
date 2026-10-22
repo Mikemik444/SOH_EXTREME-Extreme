@@ -54,6 +54,27 @@ def active_entries(world):
         yield e
 
 
+def scrub_conversation_parent(world, entry, stock_locations_by_name, native_resolver):
+    """Resolve the physical scrub independently of whether its reward is shuffled.
+
+    add_locations records each authored refill actor's parent even when its
+    reward location is disabled. Reuse only that parent, not the reward's price
+    or purchase rule. The conversation retains its own Soul/stun/speech gates.
+    """
+    from ._vendor_oot_soh.Locations import location_data_table
+    stock_name = next((str(name) for name, data in location_data_table.items()
+                       if data.loc_id == entry["anchor"]), None)
+    anchor = stock_locations_by_name.get(stock_name)
+    if anchor is not None:
+        return anchor.parent_region
+    source = getattr(world, "_extreme_refill_source_rules", {}).get(stock_name)
+    if source is not None:
+        return world.get_region(str(source[0]))
+    # Keep the legacy resolver as a checked fallback; never place at Menu or
+    # silently delete an NPC to conceal invalid catalogue data.
+    return native_resolver(entry["native_region"])
+
+
 def conversation_rule(world, entry, scrub_region=None):
     o = world.options
     rules = []

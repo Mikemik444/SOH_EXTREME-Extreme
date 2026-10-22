@@ -1,0 +1,10 @@
+{
+  "tests/uploaded_seed_189_baseline/source/archipelago/soh_extreme/EnemyRoomGraph.json": {
+    "archive_path": "validation/inputs/reference_sources/1.8.9_EnemyRoomGraph.json",
+    "sha256": "13e6cfdeeac346be56fee81e53016c78dea62115091cd7a85bdc7ce4d16174ea"
+  },
+  "source/src/overlays/actors/ovl_Bg_Mizu_Water/z_bg_mizu_water.h": {
+    "archive_path": "validation/inputs/reference_sources/z_bg_mizu_water.h",
+    "sha256": "43d7a802115b78cecb36f7f50b4cfd8fa4f85b2cb1623f201d2577511a33be47"
+  }
+}

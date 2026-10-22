@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "source_sha256": {
+    "src/overlays/actors/ovl_En_Heishi1/z_en_heishi1.c": "1233c9c41690c1231adee84f9d8026f59fde25a805b1ae612ceae37ebfc979a2",
+    "src/overlays/actors/ovl_En_Door/z_en_door.c": "014d1418c1f0a1dabe615ab504d24dfd630bfe264ec538b74382ca6dc50ed5cc",
+    "src/overlays/actors/ovl_En_Heishi1/z_en_heishi1.h": "30ddae997174ba91d8ef10e6ae04561081658e86ee1d3e7f5e5e6c1bb35b7e3f",
+    "src/overlays/actors/ovl_En_Door/z_en_door.h": "1594d0a73d715a678088ef63301d90544d0761b51a717e3ca7dd3869d0a66901",
+    "soh/Network/Archipelago/ArchipelagoC.h": "0765aa65b68e620a55dff93b6cef7b9649071fa1c6b77035bcd260d758db27e3",
+    "soh/Network/Archipelago/EntranceDestinationPolicy.h": "ad437810079db56bdcdfc30e3fa688ec5a32cfbb0c00c7e16f46b6fb724427a0",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "373afcf47a27efb2b8a59ac2852c71b2a3416617938666e3798edbb254928d63",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "7467e5e665764b4482f75bb0f2b43aca92fa643065bac8f0b3277ca8d7a789cc",
+    "soh/Enhancements/randomizer/ShuffleWonderItems.cpp": "cb34935932479da84f965472dcc88c694e4cc53996dae6282d59438a4d5ed49f",
+    "soh/Enhancements/randomizer/LockOverworldDoors.cpp": "267e802ab7dc882de25fdef49478f42d437001168ab56a3b18608dc5cdf8ce47"
+  },
+  "test_sha256": {
+    "tools/tests/test_courtyard_dampe_native.py": "b9ba518d3c45a2e7c5e8973276ecbaa55b489d5c9927516154d2a340fbb7d727",
+    "tools/tests/test_zora_river_native.py": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48",
+    "tools/tests/courtyard_dampe_native_io.h": "f2181d8c2cbd3b9fffb160bee5b274b5345ad4a9ee5c21c4fafc3e68029bdac1",
+    "tools/tests/courtyard_dampe_native_tests.c.in": "168617f8cdca0f02bc78e11cf71e445d300b9dee58d2baae5f7236a38508c145",
+    "tools/tests/courtyard_dampe_policy_tests.cpp.in": "e81cf457efcf61f0354d8ff4cc7244e4d290e53b0cbe4539fee65bfb4a58faf9",
+    "tools/tests/courtyard_dampe_legacy_sources.json": "54a41c176976cefb1c3e1e498afaa5cfc42e2e05bd86dc08b93d4532b2342675",
+    "tools/tests/courtyard_dampe_legacy_guard.inc": "9c4fc7d86e1b7f4a970caf8d2329089e5a9e295279f0a24b6f7c92b7c761e62d",
+    "tools/tests/courtyard_dampe_legacy_full_guard_init.inc": "88b772c5afe7bc83c1776dea75bfd7493fd4bb99522780a220d61bee5945282b",
+    "tools/tests/courtyard_dampe_legacy_door.inc": "1debcc8f6ec44e26960a4daa4012087195fd4b1d8deb7fbefa7547f226da9cde"
+  },
+  "source_unchanged_during_run": true,
+  "dependency_root": "/workspace/scratch/8fddab5b8169/tests/entrance_184_native_dependencies",
+  "dependency_sha256": {
+    "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c",
+    "z64save.h": "ba9f4092650d8e9cafd72e8185375c332cd69ab7c5b836841853fc7965531ae5",
+    "z64scene.h": "c3a66f466d91220d1d2c0b27182a651f1db97e073a8df808b7374242376c7757"
+  },
+  "baseline": {
+    "guard": {
+      "archive": "haha.zip",
+      "archive_sha256": "854ffecebd1e01ffd16c5e2b5cd8b2c43648e84180d5be75055a32c65ef4f59b",
+      "member": "src/overlays/actors/ovl_En_Heishi1/z_en_heishi1.c",
+      "full_source_sha256": "7fbb2a308a0c89be75502bbc8f20b7cd46ae5692fb2a1b84eb8f4ca69f9b975c",
+      "retained_excerpt": "tools/tests/courtyard_dampe_legacy_guard.inc",
+      "retained_excerpt_sha256": "9c4fc7d86e1b7f4a970caf8d2329089e5a9e295279f0a24b6f7c92b7c761e62d",
+      "retained_full_init": "tools/tests/courtyard_dampe_legacy_full_guard_init.inc",
+      "retained_full_init_sha256": "88b772c5afe7bc83c1776dea75bfd7493fd4bb99522780a220d61bee5945282b"
+    },
+    "door": {
+      "archive": "SOH-EXTREME-1.8.12-source-files.zip",
+      "archive_sha256": "1ff721a78693bbd01f2f641767eda2126edc66a62fea0ce3b152efc72a6ae0da",
+      "member": "validation/native_source/src/overlays/actors/ovl_En_Door/z_en_door.c",
+      "full_source_sha256": "53dab2314d069dd0b54ed978ced8fe628a1ede0e4f97789354b42f52a56d4dc8",
+      "retained_excerpt": "tools/tests/courtyard_dampe_legacy_door.inc",
+      "retained_excerpt_sha256": "1debcc8f6ec44e26960a4daa4012087195fd4b1d8deb7fbefa7547f226da9cde"
+    }
+  },
+  "evidence": {
+    "haha.zip": {
+      "path": "/workspace/scratch/8fddab5b8169/upload/haha.zip",
+      "sha256": "854ffecebd1e01ffd16c5e2b5cd8b2c43648e84180d5be75055a32c65ef4f59b"
+    },
+    "SOH-EXTREME-1.8.12-source-files.zip": {
+      "path": "/workspace/scratch/8fddab5b8169/delivery/SOH-EXTREME-1.8.12-source-files.zip",
+      "sha256": "1ff721a78693bbd01f2f641767eda2126edc66a62fea0ce3b152efc72a6ae0da"
+    }
+  },
+  "captures_sha256": {
+    "captured_native_constants.h": "9cc9a0863e3765abc69e1e6a0a1720fb598f93ee9abdc750428eea1f0697200f",
+    "captured_actor_structs.h": "f6ce7aa651f273922d08cbf904c66a155cec7a1faa0204866b8daaf656b57086",
+    "captured_guard_data.inc": "8dd47870ad48d95db13659e15a1f25b2f9d8b6a223ce716687879a8d38f69aa1",
+    "captured_guard_helpers.inc": "0564e5febbf48850f3cd484f0e5c2030822e81e92f877e39ba86e0d93466f945",
+    "captured_guard_init.inc": "0c5244f76fa9611347d3835c4a0256956a5305d778e0a09cf562b46722f3fd34",
+    "captured_dampe_door.inc": "794af52280752c7329adf00e1f84dc1338036c8a78d0a98aba744b8694148578"
+  },
+  "compiler": {
+    "c": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+    "cpp": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0"
+  },
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "results": {
+    "native": {
+      "status": "passed",
+      "assertions": 14084
+    },
+    "policy": {
+      "status": "passed",
+      "assertions": 19
+    },
+    "original_type5_init": {
+      "expected_failure_reproduced": true,
+      "exit_code": 1,
+      "sanitizer_diagnostic": "/tmp/courtyard-dampe-native-aid5qwe2/courtyard_dampe_legacy_full_guard_init.inc:14:46: runtime error: index 5 out of bounds for type 'f32 [4][8]'"
+    }
+  },
+  "scope": "Compile real courtyard guard Init/lifecycle, hut SetupType and arrival policy.\n\nComplete production EnHeishi1_Init and EnDoor_SetupType execute with minimal\nengine I/O and actual actor layouts/tables/constants. Rendering, scene geometry\nand full actor Update are not simulated. Guard Update integration is checked\nfor an early refresh before AI/timers. Historical production excerpts reproduce\nthe guard selection, child-evening hut bug and original type-5 table overrun.\n"
+}

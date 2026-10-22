@@ -1,0 +1,627 @@
+{
+  "archipelago/soh_extreme/AmmoRefillRules.py": {
+    "sha256": "21f12128e66daa3dfeb2b4261ef75077737c139bf22a6f08d74d577733a829c8",
+    "location": "archipelago/soh_extreme/AmmoRefillRules.py"
+  },
+  "archipelago/soh_extreme/AmmoRefillSources.json": {
+    "sha256": "d1091410ae9a80d156005f59f667334dcacf91cab4110620f3c01e5b11cb69b0",
+    "location": "archipelago/soh_extreme/AmmoRefillSources.json"
+  },
+  "archipelago/soh_extreme/CheckDescriptions.json": {
+    "sha256": "d168cf159d3e1335cc892d41f11152a271b47519acb8342ef7962f32dfc953c1",
+    "location": "archipelago/soh_extreme/CheckDescriptions.json"
+  },
+  "archipelago/soh_extreme/CheckDescriptions.py": {
+    "sha256": "e985562d01393f3207c15e8ef41899b0539015ceebcd701358267d32dcd38b20",
+    "location": "archipelago/soh_extreme/CheckDescriptions.py"
+  },
+  "archipelago/soh_extreme/DungeonDoorCatalog.json": {
+    "sha256": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
+    "location": "soh_extreme.apworld!soh_extreme/DungeonDoorCatalog.json"
+  },
+  "archipelago/soh_extreme/DungeonExternalEdges.json": {
+    "sha256": "21a06af9683c1ac8667d5fb4af62872ffb7157696ebeb33246d6c499539287f7",
+    "location": "soh_extreme.apworld!soh_extreme/DungeonExternalEdges.json"
+  },
+  "archipelago/soh_extreme/DungeonLocationRoutes.json": {
+    "sha256": "a3f55e52dc3c79ca717355328d7624fcc9f831c07eee620a9a10c68f24cbce31",
+    "location": "archipelago/soh_extreme/DungeonLocationRoutes.json"
+  },
+  "archipelago/soh_extreme/EnemyDropLocations.py": {
+    "sha256": "911a56aafdfea550a373a86c291507d559bd3c810b194da406d558974d993852",
+    "location": "archipelago/soh_extreme/EnemyDropLocations.py"
+  },
+  "archipelago/soh_extreme/EnemyDropRules.py": {
+    "sha256": "6e6e68a971475384ebaf018eeecd14844074571143393fd46a75ec51fc773c0d",
+    "location": "archipelago/soh_extreme/EnemyDropRules.py"
+  },
+  "archipelago/soh_extreme/EnemyRoomGraph.json": {
+    "sha256": "00f8467cc25b8ee35ca5b2a70c44cb01e30e54c29604aa65ff2e2339180384d7",
+    "location": "archipelago/soh_extreme/EnemyRoomGraph.json"
+  },
+  "archipelago/soh_extreme/EnemyRoomLogic.py": {
+    "sha256": "c1ada3a8ee0c69e2ad7a77569bf4bea9264965642dabfbf6bcacb2d48ff68c85",
+    "location": "archipelago/soh_extreme/EnemyRoomLogic.py"
+  },
+  "archipelago/soh_extreme/EnemyRoomMap.json": {
+    "sha256": "aecf6f9e541eb568b4ecf29010a0e5b48e629bac19335a9f2e7701fcb7b25acc",
+    "location": "soh_extreme.apworld!soh_extreme/EnemyRoomMap.json"
+  },
+  "archipelago/soh_extreme/EntranceCatalog.json": {
+    "sha256": "f5ba502aef5f06719b2bf39447f287743ae656ba0b884d698d8e5cc88c2d83ae",
+    "location": "archipelago/soh_extreme/EntranceCatalog.json"
+  },
+  "archipelago/soh_extreme/EntranceDestinationPolicy.json": {
+    "sha256": "7467e5e665764b4482f75bb0f2b43aca92fa643065bac8f0b3277ca8d7a789cc",
+    "location": "archipelago/soh_extreme/EntranceDestinationPolicy.json"
+  },
+  "archipelago/soh_extreme/EntranceOptions.py": {
+    "sha256": "5d8a44a49f519b693ecaf3949680c4a99192651575ecf914eeda6b5435144cfa",
+    "location": "archipelago/soh_extreme/EntranceOptions.py"
+  },
+  "archipelago/soh_extreme/EntranceRandomizer.py": {
+    "sha256": "62183bea6fd56506bcb699db05d2a2572fd01d3f8bb5449d035b83a913fe9025",
+    "location": "archipelago/soh_extreme/EntranceRandomizer.py"
+  },
+  "archipelago/soh_extreme/EntranceSafety.py": {
+    "sha256": "2f8812b1ad2ae1b070e70e55e146e7e7fe188c92d6a883e41d807edea54f5608",
+    "location": "archipelago/soh_extreme/EntranceSafety.py"
+  },
+  "archipelago/soh_extreme/ForkLocations.py": {
+    "sha256": "fb80320ed2c384a4d83f9aa956bebc4acb77591a9676a1ff94831f4ff80dd20f",
+    "location": "soh_extreme.apworld!soh_extreme/ForkLocations.py"
+  },
+  "archipelago/soh_extreme/FrontierFill.py": {
+    "sha256": "bee9dd5e923412bc7138d7e03a3f1f05a37b136b158c389b11b9e951ebf8ca30",
+    "location": "soh_extreme.apworld!soh_extreme/FrontierFill.py"
+  },
+  "archipelago/soh_extreme/HintAreas.py": {
+    "sha256": "5652233d3cadf3549a01d05598b98317d3501045012128869b6ef96ef8955925",
+    "location": "archipelago/soh_extreme/HintAreas.py"
+  },
+  "archipelago/soh_extreme/HintBridge.py": {
+    "sha256": "e00318acd27bb0d1662caa02ef6acbdc248bcc84c30687f4d6129620feca71e1",
+    "location": "archipelago/soh_extreme/HintBridge.py"
+  },
+  "archipelago/soh_extreme/LogicAudit.py": {
+    "sha256": "fbadd8bf7e347c20a37bc2a477eca8875194a692788c0165ec89f09f496ba950",
+    "location": "soh_extreme.apworld!soh_extreme/LogicAudit.py"
+  },
+  "archipelago/soh_extreme/NativeAbilityAudit.py": {
+    "sha256": "da749431e951bea9e525120f4dcaf137d1d348f1531ae324ae4df3e72074ca1b",
+    "location": "archipelago/soh_extreme/NativeAbilityAudit.py"
+  },
+  "archipelago/soh_extreme/NativeLocationRequirements.py": {
+    "sha256": "beb41c9ff4dd09a442be382a6283792e33e2d5fcc42089359013be653d6426d7",
+    "location": "soh_extreme.apworld!soh_extreme/NativeLocationRequirements.py"
+  },
+  "archipelago/soh_extreme/NativeLogic.py": {
+    "sha256": "41dbbed6f032fa759c6af4f15bcd58a4614dde71ebc68989bc538008a3802350",
+    "location": "archipelago/soh_extreme/NativeLogic.py"
+  },
+  "archipelago/soh_extreme/NativeLogicAlternatives.py": {
+    "sha256": "4fd0040ba6d71b67ddecf0475f2881e388be510b124dad0a79a78d0447eaa035",
+    "location": "archipelago/soh_extreme/NativeLogicAlternatives.py"
+  },
+  "archipelago/soh_extreme/NativeRegionMap.py": {
+    "sha256": "23bce34860de5c8f3832804a9ddb70856c962abdb3dc2a612f124bfc60f84290",
+    "location": "soh_extreme.apworld!soh_extreme/NativeRegionMap.py"
+  },
+  "archipelago/soh_extreme/NativeSettings.py": {
+    "sha256": "8f9e8c10c20d66b7c7e5bfd8ed57e0b7a86a6f48206a1b8cb2a3c67bb1ee20e8",
+    "location": "archipelago/soh_extreme/NativeSettings.py"
+  },
+  "archipelago/soh_extreme/NpcSpeech.py": {
+    "sha256": "f7b2ae3be88e3faa9155020be66dff987b5ea27f6aba84ceaa2a297508c5104a",
+    "location": "archipelago/soh_extreme/NpcSpeech.py"
+  },
+  "archipelago/soh_extreme/NpcSpeechCatalog.json": {
+    "sha256": "19804e7b6d2b00f7c01f0364e89c1c93753c8c7da02bb9dbb5454fc58b8898c7",
+    "location": "archipelago/soh_extreme/NpcSpeechCatalog.json"
+  },
+  "archipelago/soh_extreme/Options.py": {
+    "sha256": "23922e35d731ae63fa40c1b6b15b17c2f9f3ec542b4de4c5baf3626d1669a7de",
+    "location": "archipelago/soh_extreme/Options.py"
+  },
+  "archipelago/soh_extreme/PhysicalChestTypes.py": {
+    "sha256": "92d273a76e56e6d21244b77da0311fa865f87291110b8bed7ccf56b64bde7ee5",
+    "location": "soh_extreme.apworld!soh_extreme/PhysicalChestTypes.py"
+  },
+  "archipelago/soh_extreme/PhysicalInteractionRules.py": {
+    "sha256": "c8cb523c1c77dd4d7c7877667e1a2927abae61ebbe34722641b02e68b59128cc",
+    "location": "soh_extreme.apworld!soh_extreme/PhysicalInteractionRules.py"
+  },
+  "archipelago/soh_extreme/SceneTransitionCatalog.json": {
+    "sha256": "567e5873ec61236274b290b138379a58aecbbf3f9ddfbd0ec3a2ee51b92cab13",
+    "location": "archipelago/soh_extreme/SceneTransitionCatalog.json"
+  },
+  "archipelago/soh_extreme/SceneTransitions.py": {
+    "sha256": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "location": "archipelago/soh_extreme/SceneTransitions.py"
+  },
+  "archipelago/soh_extreme/SettingsParityAudit.py": {
+    "sha256": "811b15635552eed14a574754e92d9ce38b04fabace556894e9df5d96007a9dbe",
+    "location": "soh_extreme.apworld!soh_extreme/SettingsParityAudit.py"
+  },
+  "archipelago/soh_extreme/SilverRoomLogic.py": {
+    "sha256": "9ec8e5417fdb2b2bb97d1dc46fefe82e1ae4f9aff631b54751aa5be37026fb58",
+    "location": "soh_extreme.apworld!soh_extreme/SilverRoomLogic.py"
+  },
+  "archipelago/soh_extreme/SilverRoomRoutes.json": {
+    "sha256": "1206f478ad1feebf038eb8cb23f86d9930eb636d811c5dfc0f39617c59202fd2",
+    "location": "soh_extreme.apworld!soh_extreme/SilverRoomRoutes.json"
+  },
+  "archipelago/soh_extreme/SongNotes.py": {
+    "sha256": "533836d57a4c241f5217d8245aa81437db515bf85dff1e94f0cafcb1fe0daac5",
+    "location": "archipelago/soh_extreme/SongNotes.py"
+  },
+  "archipelago/soh_extreme/SpeechLocations.py": {
+    "sha256": "5d5ebe4e6eca5d4a524ba592e3e39b5901005392d94a0b17a22d8711f04a6647",
+    "location": "soh_extreme.apworld!soh_extreme/SpeechLocations.py"
+  },
+  "archipelago/soh_extreme/TrackerBootstrap.py": {
+    "sha256": "49db125d47aa12ad0ad1ebcfcca47a225384d1d22f71f5f622f2a3cb10b4f892",
+    "location": "archipelago/soh_extreme/TrackerBootstrap.py"
+  },
+  "archipelago/soh_extreme/TrackerClient.py": {
+    "sha256": "fa39c0f10dd12214bcc995ba68178227fc00a3aa474b2a570615d07bb932be77",
+    "location": "archipelago/soh_extreme/TrackerClient.py"
+  },
+  "archipelago/soh_extreme/TrackerMirror.py": {
+    "sha256": "c6ee2460bb63c43c074bd20e133170184403efb4bd80a3009ae241a1e6c5965f",
+    "location": "archipelago/soh_extreme/TrackerMirror.py"
+  },
+  "archipelago/soh_extreme/TrackerWorker.py": {
+    "sha256": "d3c0a2722a75098c1b4f9660638070ee564862b91d4b5e754b5c5981bbc3386e",
+    "location": "archipelago/soh_extreme/TrackerWorker.py"
+  },
+  "archipelago/soh_extreme/__init__.py": {
+    "sha256": "d3861b9fcfcf9e628d39d59dc05eda0ce17178f655cf20913b656419438f4e9a",
+    "location": "archipelago/soh_extreme/__init__.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Client.py": {
+    "sha256": "134e4135bac0c8f475bd27da738c4b5776c347ca7b450a9cd8833f177f0b87eb",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/Client.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/DungeonRewardShuffle.py": {
+    "sha256": "7d77f1309c0cc7ab25c2fa74d3000686eef32b5c38ed79602a1bb295f258243c",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/DungeonRewardShuffle.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Enums.py": {
+    "sha256": "4266288357f5a8441863bbd29af344233baa8e1765a1af29cbec4e1d2bb9af7f",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/Enums.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Hints.py": {
+    "sha256": "5f82f782215fe889d5d720a39621f4113abce83604ed84815f3485e628d33104",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/Hints.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/ItemPool.py": {
+    "sha256": "914ae7ce542647990b23ae33bff9df528a80fed23441093920ea1a941d2b8d0d",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/ItemPool.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Items.py": {
+    "sha256": "c0a21a035c22f32d2381c3e662f0705a7ba89bb86f8823fa6840653c0c2e09a7",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/Items.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/KeyShuffle.py": {
+    "sha256": "93bb824e131c59a4a285fe9bc9cabca7ac59dfe6a2ebe5614a8da4347feeed90",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/KeyShuffle.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Locations.py": {
+    "sha256": "68b5fe7760d9eace3760504ff9c0e51c91506dad1d93e002ef42c39f1a54d29d",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/Locations.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": {
+    "sha256": "213389e2fdce43180ed44e9a4fc56b80150abf4c7790119220ead8d0ec43b6ef",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Options.py": {
+    "sha256": "a4299a203c588d9f946f80399fba7b47c043a3488f8e094432469b7fa31520a9",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/Options.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Presets.py": {
+    "sha256": "b5c683f312956205e1a6dad109e80749b83e182e652282ef29cc976f2cd5966b",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/Presets.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/RegionAgeAccess.py": {
+    "sha256": "b7625d38befa593efd36fb1c6d721acac5e3a60331118742c7e19b5d3cb44db3",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/RegionAgeAccess.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Regions.py": {
+    "sha256": "a1514211106f2ed71ddde422b2ec13689a2eba74edfcbf2966046e9719bbcda9",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/Regions.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/ShopItems.py": {
+    "sha256": "9f76a24ae5e27597d5c358a92b92b404d81292f68f8e5b396e1527906b850377",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/ShopItems.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/SongShuffle.py": {
+    "sha256": "f313382c9a0e3378db31359203e63fccdd1c1277852fd1b5d860e88c385138cf",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/SongShuffle.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/UniversalTracker.py": {
+    "sha256": "9fddb5ce4e9277240626ab2acdf59fdf18eb9d4867869c7f8383ae982661b082",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/UniversalTracker.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/__init__.py": {
+    "sha256": "a2d4d9030a1d8cff9445f6e16d40d3f284a20607e574771212d0807281d40947",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/__init__.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/__init__.py": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/__init__.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/__init__.py": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/__init__.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/bottom_of_the_well.py": {
+    "sha256": "ad3d56f18ba695a564f9e2f750dd03bceb85be1b7f1b0caafa11715a523d62c3",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/bottom_of_the_well.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/deku_tree.py": {
+    "sha256": "144ecaac11047c6d602052998ebe77637ad10cf52751a061d230355de0ace0cf",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/deku_tree.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py": {
+    "sha256": "3f557d63b5ec2531ff1223ec5446b8f3ec3c453d5572f17130d050b1dc99c45c",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/fire_temple.py": {
+    "sha256": "faf0b47a2e4fce6d7550c2d9966727834c4d68c917e3f0c8535f5a0fcb3084a4",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/fire_temple.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/forest_temple.py": {
+    "sha256": "a8ee193395cb795ffe7ea40cd0b6f39feeeee964748b9b3e61e0b36b36c9a015",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/forest_temple.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/ganons_castle.py": {
+    "sha256": "80adf5df9fe738bf50bfc9ea9d18aa012ece1d445a31fe4252d12c0ae49df220",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/ganons_castle.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/gerudo_training_ground.py": {
+    "sha256": "771f8c445d8ea35a3d7a3957989b820f29c5524a605db62779c8062fb3e20083",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/gerudo_training_ground.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/ice_cavern.py": {
+    "sha256": "70fd538d50b8995addbcfa42a75a0455f6334af2eb773b91efee862516948ea4",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/ice_cavern.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/jabujabus_belly.py": {
+    "sha256": "3347eb50d9c25a702c9012b8e6d9d437db36bd31f99d5c962999a50919bc4ca6",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/jabujabus_belly.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/shadow_temple.py": {
+    "sha256": "77e8a27ea2ecfe67ac852ecbc005e60aff10addf08a1faa40dee26f89d444b5c",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/dungeons/shadow_temple.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py": {
+    "sha256": "b51f2cc06d0dc628814465f1010f86c013c197a8d93ed1031642ac49f97db673",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/water_temple.py": {
+    "sha256": "7cd3c3d576ac90610dcd95b71481c3cf6fe9a710b4d06aa801eec1d044166cf7",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/water_temple.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/__init__.py": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/__init__.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py": {
+    "sha256": "ebaad44df63e0d8f61652fce775956b70398f407f5872d91c3b2b35ca3d53af7",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_crater.py": {
+    "sha256": "6517e133569ae7e1262675001fcca84f1f07002590be0a27d6263a288debda87",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_crater.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_trail.py": {
+    "sha256": "e2653b77f918c001b54e9dc46a51de0bb55bd0775467530b7e24c87c5a5e3b80",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_trail.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/desert_colossus.py": {
+    "sha256": "963d9deaf25ef704e4eb9700c4b59276f23942babbf6b24d92a0842f8b44e8b2",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/desert_colossus.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py": {
+    "sha256": "34087bd6c1ed254455edd9e169dda616ce8f76249646621a10d8fe5d29570435",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_valley.py": {
+    "sha256": "316d9fa802bbe6561dbdb97f15e5fbd16f1e1232021c8b3ce5056a8438eec357",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_valley.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/goron_city.py": {
+    "sha256": "70a37887e28d0db8a212f44870dbfed55db66db5dea529fbfef661b7485f741d",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/goron_city.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/graveyard.py": {
+    "sha256": "8c0c1afe324f5356d9fd5149ddd54d845fe24ca79dec0f0399e7ab66e58c364d",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/graveyard.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py": {
+    "sha256": "4b44180e2d905d001256adb08eb2308785ec6a71e4bba9969f8e4f8f81d008cd",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py": {
+    "sha256": "60dd6c66fd89f8e4214d12e29ed08f38b86b004a25cae360393fcaad2d1a9f29",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py": {
+    "sha256": "aba25472a8b89bf5d5ecc692cb7a4ebe3eece3da81af1ddf5f1de7902a83dc97",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py": {
+    "sha256": "d27d86750b4c20545d673e1c0d93ae3079beb87acab98b4c2b0f2f0d90045c90",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lake_hylia.py": {
+    "sha256": "d77816ce5b36d62ab402ddb28290a061947e02ef1b19723bc6d69888e948dfa2",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/lake_hylia.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lon_lon_ranch.py": {
+    "sha256": "843a4a344002ef2c264a23e5354d82722dbf78e7c49b4b50a8dfaf355b92414b",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lon_lon_ranch.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py": {
+    "sha256": "eb3a6d78b8ddbe16ec545f6b66f0683b686571fffd193d6b7c6721e0057c67fb",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/market.py": {
+    "sha256": "98d0cdf38c0ad87adfbb364d3da6b9dd7c02a0a30a3af90901a5401d2ef9960c",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/market.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/sacred_forest_meadow.py": {
+    "sha256": "bfaf8a03ec0fa9eb07425772d9623f65e7c8a06a17ebce317fb02a0028b376bd",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/sacred_forest_meadow.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/temple_of_time.py": {
+    "sha256": "23f5cc8f544ffb3426099c7c00b5aaa7cad2894bc5ca20d4fd98070a87a6a9ca",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/temple_of_time.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/thieves_hideout.py": {
+    "sha256": "8416e4feb9c46697ccd9b6428983795141443aa209b627b98dbb135d65bcb378",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/thieves_hideout.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py": {
+    "sha256": "5ad5ad681d3c3c4ff3be94ac50d387b3c213b9b8edb851c55d6c1dc9fe89e5ef",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_fountain.py": {
+    "sha256": "4ed627da7075d85233c646d8697e28d210308a23f8f8520a67bacaed3b285a27",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_fountain.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_river.py": {
+    "sha256": "f608f9d7ace80850d897df278d47e1ca25dda0660c1ee34594c65b37843ca233",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_river.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/root.py": {
+    "sha256": "389a06b853af8b7a4e490ec94e9f261df14c3551a7fc841cdba38b2fd3a2f328",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/root.py"
+  },
+  "archipelago/soh_extreme/archipelago.json": {
+    "sha256": "a602ccc86d4712253b12fed9d11b403c0d481dc0295a41e2c72c9bc013678f4f",
+    "location": "archipelago/soh_extreme/archipelago.json"
+  },
+  "archipelago/soh_extreme/shared_logic.py": {
+    "sha256": "45feb3aa866222007de6fc8e112912134fe1b089878a8dce58e7d1f8a45a9a82",
+    "location": "soh_extreme.apworld!soh_extreme/shared_logic.py"
+  },
+  "tools/tests/test_tracker_yamlless.py": {
+    "sha256": "b4a94ccf6e0ee90551f79395fc57249692cf27fa4a5e4823fcd6ad3830c27319",
+    "location": "tools/tests/test_tracker_yamlless.py"
+  },
+  "tools/tests/test_hint_bridge.py": {
+    "sha256": "b8970979543f90a09c4ecc75131fb4ae26e7c15cf894a62b333f64474f1ff1bd",
+    "location": "tools/tests/test_hint_bridge.py"
+  },
+  "soh/Network/Archipelago/TrackerMirror.h": {
+    "sha256": "c4daff987bc2d864ebe407e8df3d4d5b21471af757ee4167f0c647809b16043a",
+    "location": "soh/Network/Archipelago/TrackerMirror.h"
+  },
+  "soh/Network/Archipelago/ArchipelagoClient.cpp": {
+    "sha256": "4918aaefbf4643f700f3ceebcf3b29edea0d54caea237ac78cbc8783a14cd4aa",
+    "location": "soh/Network/Archipelago/ArchipelagoClient.cpp"
+  },
+  "soh/Network/Archipelago/ArchipelagoClient.h": {
+    "sha256": "594fa045bba0fec0a334345f7920da1ebda294086dc06238f913a15949da7f33",
+    "location": "soh/Network/Archipelago/ArchipelagoClient.h"
+  },
+  "soh/Network/Archipelago/AmmoPolicy.h": {
+    "sha256": "e1337cfa6c8be0ec7ad8ede2df3363bdd827deed47e96382b013b032d27bcd9e",
+    "location": "soh/Network/Archipelago/AmmoPolicy.h"
+  },
+  "soh/SohExtremeVersion.h": {
+    "sha256": "11f3ea882c5497fea0ff8eea6eefaee49145425144c2cc96f052a59e145c6c95",
+    "location": "soh/SohExtremeVersion.h"
+  },
+  "tools/tests/test_ammo_tracker_protocol.py": {
+    "sha256": "4d242c3041ecff948a3c05230a0c95eb854ead58fff017598f0f128bf89f2d76",
+    "location": "tools/tests/test_ammo_tracker_protocol.py"
+  },
+  "tools/tests/ammo_tracker_protocol_tests.cpp.in": {
+    "sha256": "96a27255c1ee04dcf28a3ef9b5d083ef01b86e29f46178ea68cd68fe0d0d2b08",
+    "location": "tools/tests/ammo_tracker_protocol_tests.cpp.in"
+  },
+  "tools/tests/test_zora_river_native.py": {
+    "sha256": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48",
+    "location": "tools/tests/test_zora_river_native.py"
+  },
+  "soh/OTRGlobals.h": {
+    "sha256": "b90b7c4a2be6e538952a65edd066349d7306cd48bb802daf4733b8a99e1ba961",
+    "location": "validation/tracker_yamlless_1814/native_source/soh/OTRGlobals.h"
+  },
+  "soh/OTRGlobals.cpp": {
+    "sha256": "f636ace1aca35abe4b181ee805fb7d6299c27b8080f28cec3addeb4bd509eba3",
+    "location": "validation/tracker_yamlless_1814/native_source/soh/OTRGlobals.cpp"
+  },
+  "soh/Enhancements/randomizer/randomizerEnums.h": {
+    "sha256": "93f366a0f1025c277e1ed4920b4f68c64150343432bc7e0bd600782d78bb712f",
+    "location": "validation/tracker_yamlless_1814/native_source/soh/Enhancements/randomizer/randomizerEnums.h"
+  },
+  "soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h": {
+    "sha256": "8d7911b0c242ce2f3210db17959de93be56cd8c106fa065f1f086c94890a129b",
+    "location": "validation/tracker_yamlless_1814/native_source/soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h"
+  },
+  "soh/Network/Archipelago/ArchipelagoC.h": {
+    "sha256": "0765aa65b68e620a55dff93b6cef7b9649071fa1c6b77035bcd260d758db27e3",
+    "location": "soh/Network/Archipelago/ArchipelagoC.h"
+  },
+  "tools/tests/test_setting_bridge_declaration.py": {
+    "sha256": "181b662a1868047416dec76a29aca8acb8a61891619f7472cba1cf427db4959a",
+    "location": "tools/tests/test_setting_bridge_declaration.py"
+  },
+  "tools/tests/ammo_native_io.h": {
+    "sha256": "360f313774073c9ec89c1a92f50f35319952b39ac7968d008d42d450ac46cbb4",
+    "location": "tools/tests/ammo_native_io.h"
+  },
+  "tools/tests/test_tracker_keyring_restore.py": {
+    "sha256": "1cdf6348e5f4b15b5fe2d2631d3eeeaed47e8c5293898184cae08f32807e1071",
+    "location": "tools/tests/test_tracker_keyring_restore.py"
+  },
+  "external/tracker_bootstrap_1814_upstream/LICENSE": {
+    "sha256": "f66c14cec56600dec0a63c5dc14d9fe3dc4efbcdfbf34b100b6fcf1f1e3ded00",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_upstream/LICENSE"
+  },
+  "external/tracker_bootstrap_1814_upstream/LICENSE_PROVENANCE.txt": {
+    "sha256": "972677946ce2515db24b42c1cfd8ce9350ff72576ae5f20a35f44e580e9acc15",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_upstream/LICENSE_PROVENANCE.txt"
+  },
+  "external/tracker_bootstrap_1814_upstream/TrackerClient.py": {
+    "sha256": "bd781024429ab58357dfbe595e02abebffbe7e25522c64fc9b3b4828d5d53ec4",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_upstream/TrackerClient.py"
+  },
+  "external/tracker_bootstrap_1814_upstream/TrackerCore.py": {
+    "sha256": "9d6cb8ffc73d972281a7d8ff23a7571e46a0f8a39d874989901820fa9d60851d",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_upstream/TrackerCore.py"
+  },
+  "external/tracker_bootstrap_1814_upstream/UPSTREAM.json": {
+    "sha256": "5080d1324614375a84eff72aa80d74ce880f9604652f7106798aed838ecac70e",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_upstream/UPSTREAM.json"
+  },
+  "external/tracker_bootstrap_1814_upstream/__init__.py": {
+    "sha256": "fc86b699247d26e2fab6bd7085487ca44160c930203150cc87f48e87c15021db",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_upstream/__init__.py"
+  },
+  "external/tracker_bootstrap_1814_upstream/docs/re-gen-passthrough.md": {
+    "sha256": "e14e9b983e96bb3178bdcde2d090d31706dd74dda1c5046ef456c9b551856d02",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_upstream/docs/re-gen-passthrough.md"
+  },
+  "external/tracker_bootstrap_1814_ap_dependencies/LICENSE": {
+    "sha256": "f66c14cec56600dec0a63c5dc14d9fe3dc4efbcdfbf34b100b6fcf1f1e3ded00",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_ap_dependencies/LICENSE"
+  },
+  "external/tracker_bootstrap_1814_ap_dependencies/LICENSE_PROVENANCE.txt": {
+    "sha256": "3673d07d582c5d8e00fa0fe38c19cda9eaf43490e0345d2885c4955772c0b41d",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_ap_dependencies/LICENSE_PROVENANCE.txt"
+  },
+  "external/tracker_bootstrap_1814_ap_dependencies/UPSTREAM.json": {
+    "sha256": "1373cf57aa51cfc76192d110ee47aab026cfa3faaad6e6fa952782f789efb38c",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_ap_dependencies/UPSTREAM.json"
+  },
+  "external/tracker_bootstrap_1814_ap_dependencies/apmw/__init__.py": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_ap_dependencies/apmw/__init__.py"
+  },
+  "external/tracker_bootstrap_1814_ap_dependencies/apmw/multiserver/__init__.py": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_ap_dependencies/apmw/multiserver/__init__.py"
+  },
+  "external/tracker_bootstrap_1814_ap_dependencies/apmw/multiserver/gamespackagecache.py": {
+    "sha256": "0a829ca789a209e757b057a1d2bca217c5b3ab990dc65e29ba7ec6b9d8209f09",
+    "location": "validation/tracker_yamlless_1814/external/tracker_bootstrap_1814_ap_dependencies/apmw/multiserver/gamespackagecache.py"
+  },
+  "external_runtime/BaseClasses.py": {
+    "sha256": "bdbbcfe5fd50fa0ab95f676a68a65944851b599643ddc5f870d4bb9c0d36b545",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/CommonClient.py": {
+    "sha256": "5a3dbdac313a006a22a98e01d832d549ea874ca24e431c7285b28f6e9a1ffbc0",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/Generate.py": {
+    "sha256": "ac70e743970314dfb68df421640d07620db2067f6e6338616ca297803d6e8ce7",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/MultiServer.py": {
+    "sha256": "e157abab8a56351d58f1cf5a84c6c2a9144d295956d6be08cbd5811c7a2932de",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/NetUtils.py": {
+    "sha256": "0c4acb2e0a434bcd91ed03d6e9c66f5d119597b3feb300620241f206bd7f0b06",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/Options.py": {
+    "sha256": "12bd29c84c3c92a353ef252086ab80bd5cf66fc83dc3e371e4c687a0f052f101",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/Utils.py": {
+    "sha256": "25ed8f2b79f8e26c79b3ec8dae733ef6d4fdaafc29d4d2d75dc76b67f376d7ff",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/settings.py": {
+    "sha256": "2713575becebd384e00ccf89f0ccfba062df56e59914ce083ff95dbcf230c371",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/test/general/__init__.py": {
+    "sha256": "8e906eff20c1f42ff9c7a4b53c5adfc7a80e8ca49511fa312dd850e080e5262b",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "external_runtime/worlds/AutoWorld.py": {
+    "sha256": "e721dfefd6bfe012ea8d9d6757bcbbc2721dc0afe4d72d60394e5cd4dc92215d",
+    "included": false,
+    "runtime": "Archipelago 0.6.8"
+  },
+  "inputs/tracker_yamlless_1814_baseline_members.zip": {
+    "sha256": "91ff0670a8d556da90395d2470f4b6d4ba6926ce9afa967412335998516c1cf6",
+    "location": "validation/tracker_yamlless_1814/inputs/tracker_yamlless_1814_baseline_members.zip",
+    "verified_original_archive": "SOH-EXTREME-1.8.13-source-files.zip",
+    "verified_original_archive_sha256": "818915c0115c6db6ebcbee984caec953ef374501b6682b7ac0acb879cd264995",
+    "members": {
+      "archipelago/soh_extreme/TrackerClient.py": "11d8ad14b9e22f9b3ae7b4703c6882d3927382a685e8ef78af0625a98bff47c4",
+      "archipelago/soh_extreme/__init__.py": "71f2844cd5762e75a33f85d2f794eccd4c756557f0ee5674fb954024f5664ef4",
+      "soh/Network/Archipelago/ArchipelagoClient.cpp": "a592f88c0a5d5a32ebc6018411ad32674c6043a96816029e8883856f7615db7f"
+    }
+  },
+  "inputs/tracker_yamlless_1814_YamlLessAdult_slot.json": {
+    "sha256": "ea4bb6fa4fb5355a0ce598d3b2a86ca8c0feadf56bf3f8fa11ac73ba83201bf4",
+    "location": "validation/tracker_yamlless_1814/inputs/tracker_yamlless_1814_YamlLessAdult_slot.json",
+    "reports": [
+      "tracker_yamlless_1814_integration.json"
+    ]
+  },
+  "inputs/tracker_yamlless_1814_YamlLessChild_slot.json": {
+    "sha256": "44dd3151c1f8d8ef673582deedd7d4068d34346c5b1e1791e9e3ca741de87ade",
+    "location": "validation/tracker_yamlless_1814/inputs/tracker_yamlless_1814_YamlLessChild_slot.json",
+    "reports": [
+      "tracker_yamlless_1814_integration.json"
+    ]
+  },
+  "inputs/tracker_yamlless_1814_controlled_er_slot.json": {
+    "sha256": "47991f8e5c50adab3f64bb4568c0bbd433e600573392bcf0ed4455ad03fa5b78",
+    "location": "validation/tracker_yamlless_1814/inputs/tracker_yamlless_1814_controlled_er_slot.json",
+    "reports": [
+      "tracker_yamlless_1814_integration.json"
+    ]
+  },
+  "baseline/tracker_yamlless_1814_setting_declaration.json/soh/Network/Archipelago/ArchipelagoClient.cpp": {
+    "sha256": "a592f88c0a5d5a32ebc6018411ad32674c6043a96816029e8883856f7615db7f",
+    "verified_archive": [
+      "SOH-EXTREME-1.8.13-source-files.zip"
+    ],
+    "fixture_tests": [
+      "tools/tests/ammo_native_io.h",
+      "tools/tests/test_setting_bridge_declaration.py",
+      "tools/tests/test_zora_river_native.py"
+    ]
+  }
+}

@@ -1,0 +1,447 @@
+#include <algorithm>
+#include <array>
+#include <atomic>
+#include <cmath>
+#include <cstdint>
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+#include <limits>
+#include "ammo_native_io.h"
+#include "soh/Network/Archipelago/TrackerMirror.h"
+
+extern "C" {
+AmmoTestSave gSaveContext{};
+PlayState* gPlayState = nullptr;
+int gAmmoCapacities[16]{}, gAmmoUpgrades[16]{};
+int gIsAdult = 1, gHookshot = 0, gExplosiveType = 0, gSpawnSucceeds = 1;
+int gAnimationFinished = 0, gThrowFrame = 0, gMagicSucceeds = 1, gCapacityHook = 1;
+int gBowSlingshotFix = 0, gInfiniteAmmo = 0;
+int gNoRandomDrops = 0, gTreesDropSticks = 0, gDampeAllNight = 0, gBombchuBagMode = RO_BOMBCHU_BAG_SINGLE;
+int gUnequipped = 0, gPutAway = 0, gSpawned = 0, gLastActorId = 0, gLastActorParams = 0;
+int gMagicRequests = 0, gMagicCost = 0, gBreakEffects = 0, gFlameEffects = 0, gRumbles = 0;
+int gVoices = 0, gSounds = 0, gStatsCalls = 0, gStatsUsed[256]{};
+int gPlayerAnim_link_normal_light_bom_end = 0;
+Vec3f gSfxDefaultPos{};
+float gSfxDefaultFreqAndVolScale = 1;
+s8 gSfxDefaultReverb = 0;
+static Actor spawnedActor;
+void GameplayStats_UpdateAmmoUsed(s16 item, s16 used) { ++gStatsCalls; gStatsUsed[item] += used; }
+int GameInteractor_Should(int behavior, int condition, ...) {
+    return behavior == VB_CHECK_BOMBCHU_CAPACITY ? gCapacityHook : condition;
+}
+int CVarGetInteger(const char* name, int fallback) {
+    if (!std::strcmp(name, "BowSlingshotAmmoFix")) return gBowSlingshotFix;
+    if (!std::strcmp(name, "InfiniteAmmo")) return gInfiniteAmmo;
+    if (!std::strcmp(name, "NoRandomDrops")) return gNoRandomDrops;
+    if (!std::strcmp(name, "TreesDropSticks")) return gTreesDropSticks;
+    if (!std::strcmp(name, "DampeAllNight")) return gDampeAllNight;
+    return fallback;
+}
+int Randomizer_GetSettingValue(int setting) {
+    return setting == RSK_BOMBCHU_BAG ? gBombchuBagMode : 0;
+}
+int Player_GetExplosiveHeld(Player*) { return gExplosiveType; }
+void Player_PutAwayHeldItem(PlayState*, Player*) { ++gPutAway; }
+Actor* Actor_SpawnAsChild(int*, Actor* parent, PlayState*, int id, float, float, float, int, int, int, int params) {
+    ++gSpawned; gLastActorId = id; gLastActorParams = params;
+    if (!gSpawnSucceeds) return nullptr;
+    spawnedActor = {}; spawnedActor.parent = parent;
+    if (parent) parent->child = &spawnedActor;
+    return &spawnedActor;
+}
+Actor* Actor_Spawn(int* context, PlayState* play, int id, float x, float y, float z,
+                   int rx, int ry, int rz, int params) {
+    return Actor_SpawnAsChild(context, nullptr, play, id, x, y, z, rx, ry, rz, params);
+}
+int Player_HoldsHookshot(Player*) { return gHookshot; }
+void Player_RequestRumble(Player*, int, int, int, int) { ++gRumbles; }
+void Player_UseItem(PlayState*, Player* player, int item) {
+    if (item == ITEM_NONE) { ++gUnequipped; player->heldItemAction = PLAYER_IA_NONE; }
+}
+void Player_PlaySfx(Player*, int) { ++gSounds; }
+void Player_PlayVoiceSfx(Player*, int) { ++gVoices; }
+void EffectSsStick_Spawn(PlayState*, Vec3f*, int) { ++gBreakEffects; }
+void func_8002836C(PlayState*, Vec3f*, Vec3f*, Vec3f*, Color_RGBA8*, Color_RGBA8*, float, int, int) {
+    ++gFlameEffects;
+}
+int LinkAnimation_Update(PlayState*, int*) { return gAnimationFinished; }
+int LinkAnimation_OnFrame(int*, float frame) { return gThrowFrame && frame == 3.0f; }
+void func_8083A098(Player*, int*, PlayState*) {}
+void Player_DecelerateToZero(Player*) {}
+void Sfx_PlaySfxCentered(int) { ++gSounds; }
+void Player_SetUpperActionFunc(Player*, s32 (*)(Player*, PlayState*)) {}
+int Magic_RequestChange(PlayState*, s16 amount, s16) { ++gMagicRequests; gMagicCost += amount; return gMagicSucceeds; }
+s32 func_808351D4(Player*, PlayState*) { return 0; }
+void Audio_PlaySfxGeneral(int, Vec3f*, int, float*, float*, s8*) { ++gSounds; }
+void Play_TriggerRespawn(PlayState*) {}
+}
+
+// Actual AP methods below; authentication and the clock are supplied IO.
+class ArchipelagoClient {
+  public:
+    bool currentSaveIsArchipelago = true, saveIdentityMismatch = false, authenticated = true;
+    uint64_t appliedItemCount = 7;
+    uint32_t ammoRefillMask = 0;
+    uint64_t ammoRefillState = 0, ammoRefillReceived = 0;
+    uint64_t ammoSourceRevision = 0;
+    std::atomic_bool slotSettingsPendingApply{false};
+    double ammoRefillUntil = 0;
+    static ArchipelagoClient& GetInstance() { static ArchipelagoClient client; return client; }
+    bool IsAuthenticated() const { return authenticated; }
+    int32_t AdjustAmmoChange(int32_t, int32_t, int32_t) const;
+};
+static double clockNow = 100;
+static double FinderMirrorClock() { return clockNow; }
+@CLIENT_FUNCTIONS@
+
+@TRAP_ENUM@
+using EntranceIndex = int;
+constexpr int ENTR_MAX = 0xffff;
+static AltTrapType roll = ADD_TRAP_MAX;
+static int statusTimer = -1, eventTimer = -1;
+static EntranceIndex teleportRoll = ENTR_MAX;
+static bool allowTrap = true;
+namespace GameInteractor {
+namespace State { static float MovementSpeedMultiplier = 1; }
+namespace RawAction {
+void KnockbackPlayer(int) {}
+void SpawnActor(int, int) {}
+void TeleportPlayer(int) {}
+}
+}
+namespace SohExtreme { bool CanTriggerGameplayTrap(PlayState*) { return allowTrap; } }
+@TRAP_FUNCTIONS@
+
+static void LegacyAmmoTrap() {
+    switch (ADD_AMMO_TRAP) {
+@LEGACY_TRAP@
+        default: break;
+    }
+}
+
+static int cases = 0, assertions = 0, baselineCases = 0;
+static void Check(bool result, const char* description) {
+    ++assertions;
+    if (!result) { std::cerr << "FAIL: " << description << '\n'; std::exit(1); }
+}
+static constexpr std::array<int, 5> items = {ITEM_STICK, ITEM_NUT, ITEM_BOMB, ITEM_BOMBCHU, ITEM_BOW};
+static constexpr std::array<int, 5> upgrades = {UPG_STICKS, UPG_NUTS, UPG_BOMB_BAG, UPG_BOMBCHU, UPG_QUIVER};
+static PlayState play;
+static Player player;
+static void Reset() {
+    gSaveContext = {}; play = {}; player = {}; spawnedActor = {};
+    gPlayState = &play;
+    std::fill(std::begin(gSaveContext.inventory.items), std::end(gSaveContext.inventory.items), ITEM_NONE);
+    std::fill(std::begin(gAmmoCapacities), std::end(gAmmoCapacities), 30);
+    std::fill(std::begin(gAmmoUpgrades), std::end(gAmmoUpgrades), 1);
+    std::fill(std::begin(gStatsUsed), std::end(gStatsUsed), 0);
+    for (int item : items) INV_CONTENT(item) = item;
+    gSaveContext.ship.quest.id = QUEST_RANDOMIZER;
+    gSaveContext.ship.quest.data.randomizer.bombchuUpgradeLevel = 1;
+    gSaveContext.dayTime = 0x8000;
+    gIsAdult = 1; gHookshot = 0; gExplosiveType = 0; gSpawnSucceeds = 1;
+    gAnimationFinished = 0; gThrowFrame = 0; gMagicSucceeds = 1; gCapacityHook = 1;
+    gBowSlingshotFix = 0; gInfiniteAmmo = 0; gNoRandomDrops = 0; gTreesDropSticks = 0; gDampeAllNight = 0;
+    gBombchuBagMode = RO_BOMBCHU_BAG_SINGLE;
+    gUnequipped = gPutAway = gSpawned = gLastActorId = gLastActorParams = 0;
+    gMagicRequests = gMagicCost = gBreakEffects = gFlameEffects = gRumbles = 0;
+    gVoices = gSounds = gStatsCalls = 0;
+    clockNow = 100;
+    auto& client = ArchipelagoClient::GetInstance();
+    client.currentSaveIsArchipelago = client.authenticated = true;
+    client.saveIdentityMismatch = false; client.appliedItemCount = 7;
+    client.ammoRefillMask = 0; client.ammoRefillState = client.ammoRefillReceived = 0;
+    client.ammoSourceRevision = 0; client.ammoRefillUntil = 0;
+    client.slotSettingsPendingApply.store(false);
+    ResetExtraTrapEffects(); allowTrap = true;
+}
+static void Ammo(int count) { for (int item : items) AMMO(item) = count; }
+static void Stamp(uint32_t refillMask) {
+    auto& client = ArchipelagoClient::GetInstance();
+    client.ammoRefillMask = refillMask;
+    client.ammoRefillState = CaptureApAmmoStateToken(client.ammoSourceRevision);
+    client.ammoRefillReceived = client.appliedItemCount;
+    client.ammoRefillUntil = clockNow + 5;
+}
+static void TestCore() {
+    const int cChecks = TestAmmoPureC();
+    Check(cChecks == 360, "C11 policy integer matrix"); cases += 360; assertions += 360;
+    ++cases;
+    Check(SohExtreme_AdjustAmmoChange(INT32_MAX, INT32_MIN, true, false) == 1 - INT32_MAX,
+          "C++ policy avoids signed addition overflow");
+    Check(SohExtreme_AdjustAmmoChange(0, INT32_MIN, true, false) == INT32_MIN, "C++ does not repair zero");
+    Check(SohExtreme_AdjustAmmoChange(1, INT32_MAX, true, false) == INT32_MAX, "C++ preserves positive change");
+    for (int item : items) {
+        for (int current : {1, 2, 5}) {
+            for (int change : {-1, -2, -5, -32768}) {
+                ++cases; Reset(); AMMO(item) = current;
+                Inventory_ChangeAmmo(item, change);
+                Check(AMMO(item) == std::max(1, current + change), "protected central native decrement");
+                Check(INV_CONTENT(item) == item, "central native decrement preserves owned slot");
+            }
+        }
+        ++cases; Reset(); AMMO(item) = 3;
+        for (int action = 0; action != 12; ++action) Inventory_ChangeAmmo(item, -1);
+        Check(AMMO(item) == 1, "repeated ordinary consumption leaves exactly one");
+        Check(gStatsCalls == 12 && gStatsUsed[item] == 12, "protected actions still count in native statistics");
+        ++cases; Reset();
+        Inventory_ChangeAmmo(item, -1);
+        Check(AMMO(item) == 0, "empty ammo stays zero even for a direct malformed decrement");
+        Inventory_ChangeAmmo(item, 0);
+        Check(AMMO(item) == 0, "zero delta cannot grant ammo");
+        Inventory_ChangeAmmo(item, 10);
+        Check(AMMO(item) == 10, "normal positive refill still works from zero");
+        Inventory_ChangeAmmo(item, 60);
+        Check(AMMO(item) == (item == ITEM_BOMBCHU ? 50 : 30), "native capacity still bounds ordinary refills");
+        for (int active : {0, 1}) for (int empty : {-128, -1, 0, 1, 20}) {
+            for (int change : {-32768, -1000, -255, -129, -128, -1}) {
+                ++cases; Reset(); AMMO(item) = empty;
+                ArchipelagoClient::GetInstance().currentSaveIsArchipelago = active;
+                Stamp(31);
+                Inventory_ChangeAmmo(item, change);
+                Check(AMMO(item) == std::max(0, empty + change),
+                      "native loss is bounded before signed-byte storage with or without AP protection");
+            }
+        }
+    }
+    for (int excluded : {ITEM_SLINGSHOT, ITEM_SEEDS, ITEM_BEAN}) {
+        ++cases; Reset(); AMMO(excluded) = 1;
+        Check(ApAmmoMaskForItem(excluded) == 0, "unrequested ammo has no refill bit");
+        Inventory_ChangeAmmo(excluded, -1);
+        Check(AMMO(excluded) == 0, "seeds and beans remain consumable");
+    }
+    ++cases; Reset();
+    Check(Archipelago_AdjustAmmoChange(-1, 1, -1) == -1, "invalid item is excluded before inventory lookup");
+    Check(Archipelago_AdjustAmmoChange(50000, 1, -1) == -1, "out-of-range item is excluded");
+}
+
+static void TestAuthority() {
+    for (size_t index = 0; index != items.size(); ++index) {
+        int item = items[index];
+        ++cases; Reset(); AMMO(item) = 1; INV_CONTENT(item) = ITEM_NONE;
+        Inventory_ChangeAmmo(item, -1);
+        Check(AMMO(item) == 0 && INV_CONTENT(item) == ITEM_NONE, "unowned slot cannot gain protection or an item");
+        ++cases; Reset(); AMMO(item) = 1;
+        if (item == ITEM_BOMBCHU) {
+            gBombchuBagMode = RO_BOMBCHU_BAG_PROGRESSIVE;
+            gSaveContext.ship.quest.data.randomizer.bombchuUpgradeLevel = 0;
+        } else gAmmoCapacities[upgrades[index]] = 0;
+        Check((CaptureApAmmoOwnedMask() & (1u << index)) == 0, "missing container is not owned");
+        Check(Archipelago_AdjustAmmoChange(item, 1, -1) == -1, "missing container does not receive last-unit protection");
+        for (uint32_t mask = 0; mask != 32; ++mask) {
+            ++cases; Reset(); Ammo(1); Stamp(mask);
+            Inventory_ChangeAmmo(item, -1);
+            Check(AMMO(item) == ((mask & (1u << index)) ? 0 : 1), "each refill bit permits only its own ammo");
+        }
+    }
+    for (int mode : {RO_BOMBCHU_BAG_NONE, RO_BOMBCHU_BAG_SINGLE, RO_BOMBCHU_BAG_PROGRESSIVE}) {
+        for (int bombBag : {0, 1}) for (int upgrade : {0, 1, 2, 3}) {
+            ++cases; Reset(); gBombchuBagMode = mode;
+            gAmmoCapacities[UPG_BOMB_BAG] = bombBag ? 20 : 0;
+            gSaveContext.ship.quest.data.randomizer.bombchuUpgradeLevel = upgrade;
+            bool expected = mode == RO_BOMBCHU_BAG_PROGRESSIVE ? upgrade > 0 :
+                            mode == RO_BOMBCHU_BAG_SINGLE || bombBag;
+            Check(bool(CaptureApAmmoOwnedMask() & SOH_EXTREME_AMMO_REFILL_BOMBCHU) == expected,
+                  "Bombchu ownership follows actual native bag mode");
+        }
+    }
+    for (int boundary = 0; boundary != 5; ++boundary) {
+        ++cases; Reset(); Ammo(1);
+        if (boundary == 0) ArchipelagoClient::GetInstance().currentSaveIsArchipelago = false;
+        if (boundary == 1) gSaveContext.ship.quest.id = QUEST_RANDOMIZER + 1;
+        if (boundary == 2) gSaveContext.gameMode = GAMEMODE_NORMAL + 1;
+        if (boundary == 3) gPlayState = nullptr;
+        if (boundary == 4) { INV_CONTENT(ITEM_STICK) = ITEM_NUT; }
+        Inventory_ChangeAmmo(ITEM_STICK, -1);
+        Check(AMMO(ITEM_STICK) == 0, "non-AP/title/wrong-quest/wrong-item boundary stays ordinary");
+    }
+    ++cases; Reset();
+    Check(CaptureApAmmoOwnedMask() == 31 && CaptureApAmmoAvailableMask(31) == 0,
+          "empty owned containers stay owned but provide no usable ammo");
+    Ammo(1);
+    Check(CaptureApAmmoAvailableMask(31) == 31, "positive owned ammo is usable");
+    AMMO(ITEM_NUT) = -1;
+    Check(CaptureApAmmoAvailableMask(31) == 29, "negative ammo is never a usable tracker capability");
+}
+
+static void TestFreshness() {
+    for (int mutation = 0; mutation != 18; ++mutation) {
+        ++cases; Reset(); Ammo(1); Stamp(31);
+        auto& client = ArchipelagoClient::GetInstance();
+        switch (mutation) {
+            case 0: client.authenticated = false; break;
+            case 1: client.saveIdentityMismatch = true; break;
+            case 2: ++client.appliedItemCount; break;
+            case 3: ++client.ammoRefillState; break;
+            case 4: clockNow = client.ammoRefillUntil + 0.01; break;
+            case 5: ++gSaveContext.inventory.questItems; break;
+            case 6: ++gSaveContext.ship.randomizerInf[2]; break;
+            case 7: ++gSaveContext.rupees; break;
+            case 8: ++gSaveContext.linkAge; break;
+            case 9: ++gSaveContext.nightFlag; break;
+            case 10: gSaveContext.dayTime = 0; break;
+            case 11: gNoRandomDrops = 1; break;
+            case 12: gTreesDropSticks = 1; break;
+            case 13: ++gSaveContext.ship.quest.data.randomizer.bombchuUpgradeLevel; break;
+            case 14: AMMO(ITEM_NUT) = 0; break;
+            case 15: ++client.ammoSourceRevision; break;
+            case 16: client.slotSettingsPendingApply.store(true); break;
+            case 17: gDampeAllNight = 1; break;
+        }
+        Inventory_ChangeAmmo(ITEM_STICK, -1);
+        Check(AMMO(ITEM_STICK) == 1, "missing/stale/mismatched authority conservatively keeps the last unit");
+    }
+    ++cases; Reset(); Ammo(20); Stamp(31);
+    auto& client = ArchipelagoClient::GetInstance();
+    uint64_t token = client.ammoRefillState;
+    for (int count = 20; count > 1; --count) Inventory_ChangeAmmo(ITEM_STICK, -1);
+    Check(CaptureApAmmoStateToken() == token, "positive quantity changes do not invalidate a refill proof");
+    Inventory_ChangeAmmo(ITEM_STICK, -1);
+    Check(AMMO(ITEM_STICK) == 0, "fresh authoritative refill allows the last unit to be consumed");
+    Check(CaptureApAmmoStateToken() != token, "crossing to zero invalidates dependent refill proofs");
+    Inventory_ChangeAmmo(ITEM_NUT, -100);
+    Check(AMMO(ITEM_NUT) == 1, "other resources stay protected while that new inventory awaits proof");
+    ++cases; Reset(); Ammo(1); Stamp(31); clockNow = ArchipelagoClient::GetInstance().ammoRefillUntil;
+    Inventory_ChangeAmmo(ITEM_STICK, -1);
+    Check(AMMO(ITEM_STICK) == 0, "proof is usable through its stated expiry boundary");
+    ++cases; Reset(); Ammo(1);
+    client.ammoSourceRevision = 20; Stamp(31);
+    Inventory_ChangeAmmo(ITEM_STICK, -1);
+    Check(AMMO(ITEM_STICK) == 0, "fresh proof binds the current nonzero observed-source revision");
+}
+
+static void TestSticksAndNuts() {
+    ++cases; Reset(); AMMO(ITEM_STICK) = 1;
+    player.heldItemAction = PLAYER_IA_DEKU_STICK; player.unk_85C = 1;
+    Check(func_80842AC4(&play, &player) == 1, "actual stick break branch executes");
+    Check(AMMO(ITEM_STICK) == 1 && gUnequipped == 1 && gBreakEffects == 1,
+          "breaking consumes the held stick effect while preserving inventory replacement");
+    Check(gStatsUsed[ITEM_STICK] == 1, "stick break reports one use");
+    ++cases; Reset(); AMMO(ITEM_STICK) = 1;
+    player.heldItemAction = PLAYER_IA_DEKU_STICK; player.unk_85C = 1; player.unk_860 = 2;
+    Player_UpdateBurningDekuStick(&play, &player);
+    Check(AMMO(ITEM_STICK) == 1 && gStatsCalls == 0, "burn countdown does not prematurely consume a stick");
+    Player_UpdateBurningDekuStick(&play, &player);
+    Check(AMMO(ITEM_STICK) == 1 && player.unk_85C == 0 && player.unk_860 == 1,
+          "actual burn-out leaves one inventory stick and ends the burning stick");
+    Player_UpdateBurningDekuStick(&play, &player);
+    Check(gUnequipped == 1 && gStatsUsed[ITEM_STICK] == 1, "burn completion puts stick away without consuming twice");
+    ++cases; Reset(); AMMO(ITEM_NUT) = 1;
+    Player_Action_8084E604(&player, &play);
+    Check(gStatsCalls == 0 && gSpawned == 0, "nut waits for the native throw frame");
+    gThrowFrame = 1; Player_Action_8084E604(&player, &play);
+    Check(AMMO(ITEM_NUT) == 1 && gLastActorId == ACTOR_EN_ARROW && gLastActorParams == ARROW_NUT,
+          "actual nut throw remains effective at one");
+    Check(gStatsUsed[ITEM_NUT] == 1 && gVoices == 1, "nut throw retains action statistics and sound");
+}
+
+static void TestProjectiles() {
+    for (int type = 0; type != 2; ++type) {
+        ++cases; Reset(); int item = type ? ITEM_BOMBCHU : ITEM_BOMB; AMMO(item) = 1; gExplosiveType = type;
+        gSpawnSucceeds = 0; Player_InitExplosiveIA(&play, &player);
+        Check(AMMO(item) == 1 && gStatsCalls == 0 && !player.heldActor, "failed explosive spawn costs no ammo");
+        gSpawnSucceeds = 1; Player_InitExplosiveIA(&play, &player);
+        Check(AMMO(item) == 1 && player.heldActor && (player.stateFlags1 & PLAYER_STATE1_CARRYING_ACTOR),
+              "successful native explosive remains usable at one");
+        Check(gStatsUsed[item] == 1 && gLastActorId == (type ? ACTOR_EN_BOM_CHU : ACTOR_EN_BOM),
+              "explosive consumes the correct ammo type");
+        Player_InitExplosiveIA(&play, &player);
+        Check(gPutAway == 1 && gStatsUsed[item] == 1, "already-held actor branch cannot consume again");
+    }
+    ++cases; Reset(); AMMO(ITEM_BOMBCHU) = 1; gExplosiveType = 1; play.bombchuBowlingStatus = 2;
+    Player_InitExplosiveIA(&play, &player);
+    Check(play.bombchuBowlingStatus == 1 && AMMO(ITEM_BOMBCHU) == 1 && gStatsCalls == 0,
+          "Bowling uses its finite counter instead of protected inventory");
+    player.stateFlags1 = 0; Player_InitExplosiveIA(&play, &player);
+    Check(play.bombchuBowlingStatus == -1 && gStatsCalls == 0, "Bowling still reaches its native exhausted sentinel");
+
+    for (int action : {PLAYER_IA_BOW, PLAYER_IA_BOW_FIRE, PLAYER_IA_BOW_ICE, PLAYER_IA_BOW_LIGHT}) {
+        ++cases; Reset(); AMMO(ITEM_BOW) = 1; player.heldItemAction = action; player.unk_860 = 1;
+        Check(func_8083442C(&player, &play) == 1 && player.heldActor, "native bow creates a projectile with one arrow");
+        Check(gMagicRequests == (action == PLAYER_IA_BOW ? 0 : 1), "elemental arrow magic checks remain native");
+        Check(func_808350A4(&play, &player) == 1, "actual native arrow fire executes");
+        Check(AMMO(ITEM_BOW) == 1 && gStatsUsed[ITEM_BOW] == 1 && !player.heldActor,
+              "all bow arrow types preserve one and release the projectile");
+        Check(func_808350A4(&play, &player) == 0 && gStatsUsed[ITEM_BOW] == 1,
+              "firing without a held projectile does not consume");
+    }
+    ++cases; Reset(); player.heldItemAction = PLAYER_IA_BOW; player.unk_860 = 1;
+    Check(func_8083442C(&player, &play) == 1 && !player.heldActor && gSpawned == 0,
+          "empty bow remains unable to create a projectile");
+    Check(AMMO(ITEM_BOW) == 0, "aiming an empty bow cannot grant an arrow");
+    ++cases; Reset(); AMMO(ITEM_BOW) = 1; player.heldActor = &spawnedActor; gHookshot = 1;
+    Check(func_808350A4(&play, &player) == 1 && gStatsCalls == 0 && AMMO(ITEM_BOW) == 1,
+          "hookshot release remains outside arrow consumption");
+    for (int minigame = 0; minigame != 2; ++minigame) {
+        ++cases; Reset(); AMMO(ITEM_BOW) = 1; player.heldItemAction = PLAYER_IA_BOW;
+        player.unk_860 = 1;
+        if (minigame == 0) { gSaveContext.minigameState = 1; play.interfaceCtx.hbaAmmo = 1; }
+        else play.shootingGalleryStatus = 2;
+        Check(func_8083442C(&player, &play) == 1 && player.heldActor, "minigame projectile uses its own supply");
+        func_808350A4(&play, &player);
+        Check(AMMO(ITEM_BOW) == 1 && gStatsCalls == 0, "minigame shot does not consume normal ammo");
+        Check(minigame == 0 ? play.interfaceCtx.hbaAmmo == 0 : play.shootingGalleryStatus == -10,
+              "minigame supply exhausts without last-unit protection");
+    }
+    ++cases; Reset(); AMMO(ITEM_SLINGSHOT) = 1; gIsAdult = 0;
+    player.heldItemAction = PLAYER_IA_SLINGSHOT; player.unk_860 = 1;
+    func_8083442C(&player, &play); func_808350A4(&play, &player);
+    Check(AMMO(ITEM_SLINGSHOT) == 0 && gLastActorParams == ARROW_SEED, "native child slingshot remains finite");
+}
+
+static void TestTrapsAndBaseline() {
+    ++cases; Reset(); Ammo(1); AMMO(ITEM_SLINGSHOT) = 1;
+    roll = ADD_AMMO_TRAP; eventTimer = 0; allowTrap = false;
+    UpdateExtraTrapEffects();
+    Check(eventTimer == 0 && AMMO(ITEM_SLINGSHOT) == 1, "queued unsafe ammo trap waits without applying losses");
+    allowTrap = true; UpdateExtraTrapEffects();
+    for (int item : items) Check(AMMO(item) == 1, "actual trap update preserves protected last ammo");
+    Check(AMMO(ITEM_SLINGSHOT) == 0 && gStatsCalls == 0 && eventTimer == -1,
+          "trap still halves slingshot without recording fired ammo");
+    for (int count : {0, 1, 2, 3, 10, 29, 50}) {
+        for (int active : {0, 1}) {
+            ++cases; Reset(); Ammo(count); AMMO(ITEM_SLINGSHOT) = count;
+            ArchipelagoClient::GetInstance().currentSaveIsArchipelago = active;
+            roll = ADD_AMMO_TRAP; eventTimer = 0; UpdateExtraTrapEffects();
+            for (int item : items) {
+                int expected = active && count > 0 ? std::max(1, count / 2) : count / 2;
+                Check(AMMO(item) == expected, "trap halves existing counts with a one-unit floor only when eligible");
+            }
+            Check(AMMO(ITEM_SLINGSHOT) == count / 2 && gStatsCalls == 0,
+                  "trap keeps ordinary excluded ammo and usage statistics");
+        }
+    }
+    for (size_t index = 0; index != items.size(); ++index) {
+        ++cases; Reset(); Ammo(1); Stamp(1u << index);
+        roll = ADD_AMMO_TRAP; eventTimer = 0; UpdateExtraTrapEffects();
+        for (size_t other = 0; other != items.size(); ++other)
+            Check(AMMO(items[other]) == (other == index ? 0 : 1), "trap respects each authoritative refill bit");
+    }
+    ++cases; Reset(); Ammo(10); Stamp(31); roll = ADD_AMMO_TRAP; eventTimer = 0; UpdateExtraTrapEffects();
+    for (int item : items) Check(AMMO(item) == 5, "positive-to-positive trap losses preserve the valid refill snapshot");
+    for (int item : items) {
+        ++cases; ++baselineCases; Reset(); AMMO(item) = 1;
+        Legacy_Inventory_ChangeAmmo(item, -1);
+        Check(AMMO(item) == 0, "retained original native function reproduces last-unit loss");
+    }
+    ++cases; ++baselineCases; Reset(); Ammo(1); LegacyAmmoTrap();
+    for (int item : items) Check(AMMO(item) == 0, "retained original ammo trap removes each last unit");
+    ++cases; ++baselineCases; Reset(); Legacy_Inventory_ChangeAmmo(ITEM_BOMBCHU, -1);
+    Check(AMMO(ITEM_BOMBCHU) == -1, "retained original native capacity branch reproduces negative empty Bombchu ammo");
+    AMMO(ITEM_BOMBCHU) = 0; Inventory_ChangeAmmo(ITEM_BOMBCHU, -1);
+    Check(AMMO(ITEM_BOMBCHU) == 0, "independent native lower clamp fixes that empty Bombchu boundary");
+    ++cases; Reset(); AMMO(ITEM_BOMBCHU) = -1; Legacy_Inventory_ChangeAmmo(ITEM_BOMBCHU, 0);
+    Check(AMMO(ITEM_BOMBCHU) == -1, "original standard-capacity branch leaves an existing negative byte unnormalized");
+    Inventory_ChangeAmmo(ITEM_BOMBCHU, 0);
+    Check(AMMO(ITEM_BOMBCHU) == 0, "independent Bombchu lower clamp normalizes the byte even without a negative delta");
+    ++cases; ++baselineCases; Reset(); Legacy_Inventory_ChangeAmmo(ITEM_BOW, -129);
+    Check(AMMO(ITEM_BOW) == 30, "retained original signed-byte underflow can create arrows from zero");
+    AMMO(ITEM_BOW) = 0; Inventory_ChangeAmmo(ITEM_BOW, -129);
+    Check(AMMO(ITEM_BOW) == 0, "native negative-delta bound prevents an empty inventory from wrapping positive");
+}
+
+int main() {
+    TestCore(); TestAuthority(); TestFreshness(); TestSticksAndNuts(); TestProjectiles(); TestTrapsAndBaseline();
+    std::cout << "cases=" << cases << " assertions=" << assertions << " baseline_cases=" << baselineCases << '\n';
+}

@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "assertions": 2041,
+  "scope": "Complete production TrackerMirror.h compiled under ASan/UBSan; client call-site wiring checked structurally. No full native game build or live UI timing claimed.",
+  "output": "PASS: 2041 assertions; same-session display retained, strict gameplay unchanged, atomic replies, check masking, resets and request coalescing.\n",
+  "sources": {
+    "soh/Network/Archipelago/TrackerMirror.h": "c25f99684f5cca7a40ad8c0f90c28d1ded42201ed7773684bebf696f9c51715b",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "be2336ca3ce3b8321aa4a593d06f5f55ad22bb03d779b310b7c729f7030f642f",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "a4277ef64259df53e63e11b73f93c0e658e99d1d0763d94c665a8e61dc18ed98",
+    "tools/tests/test_tracker_continuity_1815.py": "565c16123a875e1e46c0b5cd6785442e78baed4cbe3403981066eaf56e73aef7",
+    "tools/tests/tracker_continuity_1815.cpp": "0679aecd542b2097d7ed08e18728547f12178fb272bda94d6db02b4301b57860"
+  }
+}

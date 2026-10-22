@@ -1,0 +1,384 @@
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+using s8 = int8_t; using s16 = int16_t; using s32 = int32_t; using u32 = uint32_t; using f32 = float;
+using RandomizerInf = int; using Gfx = int;
+@SYMBOLS@
+@WALL_TYPES@
+constexpr int ACTORCAT_BG = 1, ACTORCAT_NPC = 2, EN_FISH_PARAM = 100;
+constexpr u32 ACTOR_FLAG_UPDATE_CULLING_DISABLED = 1, ACTOR_FLAG_INSIDE_CULLING_VOLUME = 2, ACTOR_FLAG_IGNORE_QUAKE = 4;
+constexpr int AC_HIT = 2, AC_BOUNCED = 4, AC_ON = 1, AC_TYPE_PLAYER = 8, AC_TYPE_OTHER = 32;
+constexpr int BUMP_ON = 1, BUMP_HIT = 2, BUMP_DRAW_HITMARK = 4;
+constexpr int COLTYPE_NONE = 0, AT_NONE = 0, OC1_NONE = 0, OC2_TYPE_2 = 2, COLSHAPE_QUAD = 3;
+constexpr int ELEMTYPE_UNK0 = 0, TOUCH_NONE = 0, OCELEM_NONE = 0, DPM_UNK = 0;
+constexpr int MTXMODE_APPLY = 1, OBJECT_KINGDODONGO = 0, OBJECT_BWALL = 1;
+constexpr int VB_BG_BREAKWALL_BREAK = 1, VB_PLAY_ENTRANCE_CS = 2, EVENTCHKINF_ENTERED_DODONGOS_CAVERN = 3;
+constexpr int NA_SE_EV_EXPLOSION = 1, NA_SE_EV_WALL_BROKEN = 2, NA_SE_SY_CORRECT_CHIME = 3, NA_SE_SY_TRE_BOX_APPEAR = 4;
+constexpr u32 DMG_ARROW_ICE = 0x1000;
+constexpr int COLLISION_CHECK_AC_MAX = 64, BOMB_BODY = 0;
+#define ARRAY_COUNT(value) (sizeof(value)/sizeof((value)[0]))
+#define DECR(value) ((value) != 0 ? --(value) : 0)
+#define ICHAIN_CONTINUE 0
+#define ICHAIN_STOP 1
+#define ICHAIN_VEC3F_DIV1000(field, value, cont) {0, (value)/1000.0f}
+#define ICHAIN_F32(field, value, cont) {1, float(value)}
+#define KREG(index) (0)
+#define OPEN_DISPS(...)
+#define CLOSE_DISPS(...)
+#define gSPMatrix(...) ((void)0)
+#define gSPDisplayList(...) (++drawCalls)
+#define osSyncPrintf(...) ((void)0)
+
+struct Vec3f { f32 x = 0, y = 0, z = 0; };
+struct Vec3s { s16 x = 0, y = 0, z = 0; };
+struct PlayState; struct Actor;
+using ActorFunc = void (*)(Actor*, PlayState*);
+struct ActorShape { f32 yOffset = 0; Vec3s rot; };
+struct Actor {
+    s16 id = ACTOR_BG_BREAKWALL, params = 0;
+    int category = ACTORCAT_BG, objBankIndex = 0, freezeTimer = 0;
+    u32 flags = @ACTOR_DEFAULT_FLAGS@;
+    struct { Vec3f pos; Vec3s rot; } world, home;
+    ActorShape shape;
+    Vec3f scale{1,1,1};
+    float speedXZ = 0, yDistToWater = 0;
+    ActorFunc update = nullptr, draw = nullptr;
+};
+struct DynaPolyActor { Actor actor; int bgId = -1; };
+struct Collider; struct ColliderInfo;
+struct ColliderTouch { u32 dmgFlags = 0; int effect = 0, damage = 0; };
+struct ColliderBump { u32 dmgFlags = 0; int effect = 0, defense = 0; Vec3s hitPos; };
+struct ColliderInfo {
+    int elemType = 0;
+    ColliderTouch toucher; ColliderBump bumper;
+    int toucherFlags = 0, bumperFlags = 0, ocElemFlags = 0;
+    Collider* acHit = nullptr; ColliderInfo* acHitInfo = nullptr;
+};
+struct ColliderInit { int colType, atFlags, acFlags, ocFlags1, ocFlags2, shape; };
+struct Collider {
+    Actor* actor = nullptr; Actor* ac = nullptr;
+    int shape = COLSHAPE_QUAD, acFlags = 0;
+};
+struct ColliderQuadDim { Vec3f quad[4], dcMid, baMid; };
+struct ColliderQuad { Collider base; ColliderInfo info; ColliderQuadDim dim; };
+struct ColliderQuadInit { ColliderInit base; ColliderInfo info; ColliderQuadDim dim; };
+struct CollisionCheckContext { int colACCount = 0, sacFlags = 0; Collider* colAC[COLLISION_CHECK_AC_MAX]{}; };
+struct CollisionHeader { int unused = 0; };
+struct InitChainEntry { int kind; float value; };
+struct PlayState {
+    CollisionCheckContext colChkCtx;
+    struct { bool loaded = true; int index = 0; } objectCtx;
+    struct { int dyna = 0; } colCtx;
+    struct { int gfxCtx = 0; } state;
+    struct { Vec3f skyboxOffset; } mainCamera;
+    int actorCtx = 0;
+    bool switches[64]{};
+};
+struct BgBreakwall;
+using BgBreakwallActionFunc = void (*)(BgBreakwall*, PlayState*);
+struct BgBreakwall {
+    DynaPolyActor dyna;
+    Gfx* bombableWallDList = nullptr;
+    s8 colType = 0, bankIndex = 0;
+    ColliderQuad collider;
+    BgBreakwallActionFunc actionFunc = nullptr;
+};
+struct EnBom { Actor actor; int timer = 5; };
+struct EnBomChu { Actor actor; int timer = 0; void (*actionFunc)(EnBomChu*, PlayState*) = nullptr; };
+struct { int entranceIndex = 77, cutsceneTrigger = 0; } gSaveContext;
+PlayState* gPlayState;
+bool isRando = false, hasSouls = false, shuffledSouls = false, enteredCavern = false;
+bool secondUpdate = false, frameAdvance = false, playIntroCutscene = false;
+int forcedBreak = -1, drawCalls = 0, deletedCollision = 0, createdCollision = 0, killedActors = 0;
+int switchWrites = 0, fragments = 0, entranceEvents = 0, cutscenes = 0, colliderResets = 0;
+int spawnedActorId = -1, bubbles = 0;
+EnBom spawnedBomb;
+#define IS_RANDO isRando
+#define RAND_GET_OPTION(key) shuffledSouls
+bool Flags_GetRandomizerInf(RandomizerInf) { return hasSouls; }
+@SOULS@
+
+using ColChkResetFunc = s32 (*)(PlayState*, Collider*);
+s32 Collider_ResetQuadAC(PlayState*, Collider*);
+static ColChkResetFunc sACResetFuncs[] = {nullptr, nullptr, nullptr, Collider_ResetQuadAC};
+bool GameInteractor_SecondCollisionUpdate() { return secondUpdate; }
+bool FrameAdvance_IsEnabled(PlayState*) { return frameAdvance; }
+void Math_Vec3f_Copy(Vec3f* dest, Vec3f* src) { *dest = *src; }
+@COLLISION@
+
+CollisionHeader object_bwall_Col_000118, object_kingdodongo_Col_0264A8, object_kingdodongo_Col_025B64;
+Gfx object_bwall_DL_000040[1], object_kingdodongo_DL_025BD0[1];
+int gDcOpeningCs = 0, gSfxDefaultPos = 0, gSfxDefaultFreqAndVolScale = 0, gSfxDefaultReverb = 0;
+@INFO_STRUCT@
+@DATA@
+@MELEE_FLAGS@
+constexpr u32 nativeBombMask = @BOMB_MASK@, nativeBombflowerMask = @BOMBFLOWER_MASK@;
+
+using Matrix = std::array<std::array<float,4>,4>;
+Matrix matrix;
+std::vector<Matrix> matrixStack;
+Matrix identity() { Matrix m{}; for (int i=0; i<4; ++i) m[i][i]=1; return m; }
+Matrix multiply(const Matrix& a, const Matrix& b) {
+    Matrix m{};
+    for (int row=0; row<4; ++row) for (int col=0; col<4; ++col)
+        for (int k=0; k<4; ++k) m[row][col] += a[row][k]*b[k][col];
+    return m;
+}
+void Matrix_Push() { matrixStack.push_back(matrix); }
+void Matrix_Pop() { assert(!matrixStack.empty()); matrix=matrixStack.back(); matrixStack.pop_back(); }
+void Matrix_SetTranslateRotateYXZ(float x,float y,float z,Vec3s* rot) {
+    const float rx=rot->x*3.14159265358979323846f/32768,
+                ry=rot->y*3.14159265358979323846f/32768,
+                rz=rot->z*3.14159265358979323846f/32768;
+    Matrix mx=identity(),my=identity(),mz=identity();
+    mx[1][1]=mx[2][2]=std::cos(rx); mx[1][2]=-std::sin(rx); mx[2][1]=std::sin(rx);
+    my[0][0]=my[2][2]=std::cos(ry); my[0][2]=std::sin(ry); my[2][0]=-std::sin(ry);
+    mz[0][0]=mz[1][1]=std::cos(rz); mz[0][1]=-std::sin(rz); mz[1][0]=std::sin(rz);
+    matrix=multiply(multiply(my,mx),mz); matrix[0][3]=x; matrix[1][3]=y; matrix[2][3]=z;
+}
+void Matrix_Scale(float x,float y,float z,int) {
+    for (int row=0;row<4;++row) { matrix[row][0]*=x; matrix[row][1]*=y; matrix[row][2]*=z; }
+}
+void Matrix_MultVec3f(Vec3f* src,Vec3f* dest) {
+    *dest={matrix[0][0]*src->x+matrix[0][1]*src->y+matrix[0][2]*src->z+matrix[0][3],
+           matrix[1][0]*src->x+matrix[1][1]*src->y+matrix[1][2]*src->z+matrix[1][3],
+           matrix[2][0]*src->x+matrix[2][1]*src->y+matrix[2][2]*src->z+matrix[2][3]};
+}
+void CapturedActorDrawTransform(Actor* actor, PlayState* play) { @DRAW_TRANSFORM@ }
+bool CapturedEngineSchedulesUpdate(Actor* actor) { return (@UPDATE_PREDICATE@; }
+
+void BgBreakwall_WaitForObject(BgBreakwall*,PlayState*);
+void BgBreakwall_Wait(BgBreakwall*,PlayState*);
+void BgBreakwall_LavaCoverMove(BgBreakwall*,PlayState*);
+void BgBreakwall_UpdateCollider(BgBreakwall*,PlayState*);
+void BgBreakwall_Update(Actor*,PlayState*);
+void BgBreakwall_Draw(Actor*,PlayState*);
+void Actor_ProcessInitChain(Actor* actor,InitChainEntry* chain) {
+    actor->scale={chain[0].value,chain[0].value,chain[0].value};
+}
+void DynaPolyActor_Init(DynaPolyActor* dyna,int) { dyna->bgId=-1; }
+bool Flags_GetSwitch(PlayState* play,int flag) { return play->switches[flag]; }
+void Flags_SetSwitch(PlayState* play,int flag) { play->switches[flag]=true; ++switchWrites; }
+void Actor_Kill(Actor* actor) { actor->update=nullptr; actor->draw=nullptr; ++killedActors; }
+void ActorShape_Init(ActorShape* shape,float offset,void*,float) { shape->yOffset=offset; }
+void Collider_InitQuad(PlayState*,ColliderQuad* quad) { *quad={}; }
+void Collider_SetQuad(PlayState*,ColliderQuad* quad,Actor* actor,ColliderQuadInit* init) {
+    quad->base.actor=actor; quad->base.shape=init->base.shape; quad->base.acFlags=init->base.acFlags;
+    quad->info=init->info; quad->dim=init->dim;
+}
+int Object_GetIndex(decltype(PlayState::objectCtx)* object,int) { return object->index; }
+bool Object_IsLoaded(decltype(PlayState::objectCtx)* object,int) { return object->loaded; }
+void Actor_SetObjectDependency(PlayState*,Actor*) {}
+void CollisionHeader_GetVirtual(CollisionHeader* source,CollisionHeader** dest) { *dest=source; }
+int DynaPoly_SetBgActor(PlayState*,int*,Actor*,CollisionHeader*) { ++createdCollision; return 17; }
+void DynaPoly_DeleteBgActor(PlayState*,int*,int) { ++deletedCollision; }
+template<typename... T> bool GameInteractor_Should(int kind,int defaultValue,T...) {
+    if (kind==VB_BG_BREAKWALL_BREAK && forcedBreak>=0) return forcedBreak!=0;
+    if (kind==VB_PLAY_ENTRANCE_CS) return playIntroCutscene && defaultValue;
+    return defaultValue!=0;
+}
+Actor* BgBreakwall_SpawnFragments(PlayState*,BgBreakwall*,Vec3f*,f32,f32,f32,s32,f32) { ++fragments; return nullptr; }
+void Audio_PlayActorSound2(Actor*,int) {}
+template<typename... T> void Audio_PlaySfxGeneral(T...) {}
+bool Flags_GetEventChkInf(int) { return enteredCavern; }
+void Flags_SetEventChkInf(int) { enteredCavern=true; ++entranceEvents; }
+void Cutscene_SetSegment(PlayState*,int) { ++cutscenes; }
+void Player_SetCsActionWithHaltedActors(PlayState*,void*,int) {}
+void Math_StepToF(float* value,float target,float step) {
+    *value += std::clamp(target-*value,-step,step);
+}
+void Gfx_SetupDL_25Opa(int) {}
+@WALL@
+@BLUE_FIRE@
+namespace Legacy { @LEGACY@ }
+
+void EnBomChu_WaitForKill(EnBomChu*,PlayState*) {}
+Actor* Actor_Spawn(int*,PlayState*,int id,float x,float y,float z,int,int,int,int) {
+    spawnedActorId=id; spawnedBomb={}; spawnedBomb.actor.world.pos={x,y,z}; return &spawnedBomb.actor;
+}
+void EffectSsBubble_Spawn(PlayState*,Vec3f*,float,float,float,float) { ++bubbles; }
+@BOMBCHU@
+
+int cases=0, assertions=0;
+void expect(bool result,const char* description) { ++assertions; if(!result) throw std::runtime_error(description); }
+template<typename F> void test(const char* name,F body) {
+    ++cases; try { body(); } catch(const std::exception& e) { throw std::runtime_error(std::string(name)+": "+e.what()); }
+}
+struct Scenario {
+    PlayState play;
+    BgBreakwall wall;
+    Scenario(int type=BWALL_WALL,int mode=0,bool loaded=true,bool broken=false) {
+        isRando=mode!=0; shuffledSouls=mode!=0; hasSouls=mode==2;
+        enteredCavern=secondUpdate=frameAdvance=playIntroCutscene=false; forcedBreak=-1;
+        drawCalls=deletedCollision=createdCollision=killedActors=switchWrites=fragments=entranceEvents=cutscenes=0;
+        spawnedActorId=-1; bubbles=0; gSaveContext={}; matrix=identity(); matrixStack.clear();
+        gPlayState=&play; play.objectCtx.loaded=loaded; play.switches[7]=broken;
+        wall.dyna.actor.params=(type<<13)|7; wall.dyna.actor.update=BgBreakwall_Update;
+        BgBreakwall_Init(&wall.dyna.actor,&play);
+    }
+    void clearRegistrations() { play.colChkCtx.colACCount=0; }
+    void tick() {
+        clearRegistrations();
+        if(wall.dyna.actor.update && CapturedEngineSchedulesUpdate(&wall.dyna.actor))
+            wall.dyna.actor.update(&wall.dyna.actor,&play);
+    }
+    bool contact(u32 mask) {
+        // Physical contact is engine I/O. Registration and mask eligibility are
+        // production code; a nonregistered or unsupported hit cannot be delivered.
+        ColliderInfo attack; attack.toucher.dmgFlags=mask;
+        bool registered=false;
+        for(int i=0;i<play.colChkCtx.colACCount;++i)
+            registered |= play.colChkCtx.colAC[i]==&wall.collider.base;
+        if(!registered || CollisionCheck_NoSharedFlags(&attack,&wall.collider.info)) return false;
+        wall.collider.base.acFlags |= AC_HIT; return true;
+    }
+};
+bool same(const Vec3f& a,const Vec3f& b) {
+    return std::abs(a.x-b.x)<0.0001f && std::abs(a.y-b.y)<0.0001f && std::abs(a.z-b.z)<0.0001f;
+}
+
+int main() {
+    try {
+        for(u32 attack:{nativeBombMask,D_80854488[4][0]}) test("old production update has no collider without Draw",[=] {
+            Scenario s;
+            Legacy::BgBreakwall_WaitForObject(&s.wall,&s.play);
+            expect(createdCollision==1,"old solid wall exists");
+            expect(!CapturedEngineSchedulesUpdate(&s.wall.dyna.actor),"old object-load step makes update depend on culling");
+            Legacy::BgBreakwall_Update(&s.wall.dyna.actor,&s.play);
+            expect(s.play.colChkCtx.colACCount==0 && !s.contact(attack),"actual old update cannot receive a valid attack without Draw");
+            expect(s.wall.dyna.actor.update!=nullptr && switchWrites==0,"old solid wall stays unbroken");
+            CapturedActorDrawTransform(&s.wall.dyna.actor,&s.play);
+            Legacy::BgBreakwall_Draw(&s.wall.dyna.actor,&s.play);
+            expect(s.play.colChkCtx.colACCount==1 && s.contact(attack),"old Draw supplies the missing collider");
+            s.clearRegistrations(); Legacy::BgBreakwall_Update(&s.wall.dyna.actor,&s.play);
+            expect(s.wall.dyna.actor.update==nullptr && switchWrites==1,"same native hit works once old Draw has registered it");
+        });
+        for(int mode:{0,1,2}) for(int type:{BWALL_DC_ENTRANCE,BWALL_WALL,BWALL_KD_FLOOR})
+            for(u32 attack:{nativeBombMask,D_80854488[4][0]}) test("no-draw explosive/Hammer collision and break",[=] {
+                Scenario s(type,mode); s.tick();
+                expect(createdCollision==1 && drawCalls==0,"wall loads with no rendering");
+                expect(CapturedEngineSchedulesUpdate(&s.wall.dyna.actor),"destructible wall continues updating outside draw volume");
+                expect(s.play.colChkCtx.colACCount==1,"first loaded update registers exactly once");
+                expect(s.wall.collider.info.bumper.dmgFlags==0x48,"vanilla attack mask preserved");
+                expect((s.wall.collider.base.acFlags&(AC_TYPE_PLAYER|AC_TYPE_OTHER))==(AC_TYPE_PLAYER|AC_TYPE_OTHER),"native attack actor categories preserved");
+                expect(MegaSoul_CanInteractWithActor(&s.wall.dyna.actor),"missing category Souls do not lock mud walls");
+                expect(s.contact(attack),"registered wall accepts native attack mask");
+                s.tick();
+                expect(s.wall.dyna.actor.update==nullptr && killedActors==1,"previous hit consumed before registration can clear it");
+                expect(s.play.switches[7] && switchWrites==1,"native wall switch written once");
+                expect(deletedCollision==1 && fragments==1,"solid collision removed and break effects issued");
+                expect(s.play.colChkCtx.colACCount==0,"destroyed wall never registers again");
+                expect(entranceEvents==(type==BWALL_DC_ENTRANCE?1:0),"ordinary/floor breaks retain entrance-event distinction");
+            });
+        for(int mode:{0,1,2}) for(u32 attack:{D_80854488[0][0],D_80854488[4][1],u32(0x20)})
+            test("unsupported native attacks remain rejected",[=] {
+                Scenario s(BWALL_WALL,mode); s.tick();
+                expect(!s.contact(attack),"sword/arrow/Hammer jumpslash is outside original0x48 mask");
+                s.tick(); expect(s.wall.dyna.actor.update!=nullptr && !s.play.switches[7],"unsupported attack cannot destroy wall");
+                expect(s.play.colChkCtx.colACCount==1 && deletedCollision==0,"solid receiving collider remains active");
+            });
+        test("Bomb Flower keeps native explosive attack",[] {
+            Scenario s; s.tick(); expect(nativeBombflowerMask==nativeBombMask,"Bomb Flower explosion shares bomb damage bit");
+            expect(s.contact(nativeBombflowerMask),"Bomb Flower contact accepted"); s.tick();
+            expect(s.play.switches[7],"Bomb Flower breaks wall without Draw");
+        });
+        test("Bombchu uses actual bomb explosion handoff",[] {
+            Scenario s; s.tick(); EnBomChu chu; chu.actor.world.pos={1,2,3}; chu.actor.speedXZ=5;
+            EnBomChu_Explode(&chu,&s.play);
+            expect(spawnedActorId==ACTOR_EN_BOM && spawnedBomb.timer==0,"actual Bombchu spawns immediate bomb explosion");
+            expect(chu.timer==1 && chu.actor.speedXZ==0 && chu.actionFunc==EnBomChu_WaitForKill,"native Bombchu terminal state unchanged");
+            expect(s.contact(nativeBombMask),"Bombchu bomb attack accepted"); s.tick(); expect(s.play.switches[7],"Bombchu explosion breaks wall");
+        });
+        test("object loading defers collision until ready",[] {
+            Scenario s(BWALL_WALL,0,false); s.tick();
+            expect(s.wall.actionFunc==BgBreakwall_WaitForObject && createdCollision==0 && s.play.colChkCtx.colACCount==0,"unloaded object has no invalid collider");
+            expect(CapturedEngineSchedulesUpdate(&s.wall.dyna.actor),"object wait still updates offscreen");
+            s.play.objectCtx.loaded=true; s.tick();
+            expect(s.wall.actionFunc==BgBreakwall_Wait && createdCollision==1 && s.play.colChkCtx.colACCount==1,"ready object creates geometry and receiver in same update");
+        });
+        test("already broken wall remains absent",[] {
+            Scenario s(BWALL_WALL,0,true,true);
+            expect(s.wall.dyna.actor.update==nullptr && killedActors==1,"existing switch kills wall at init");
+            expect(createdCollision==0 && s.play.colChkCtx.colACCount==0,"no solid or attack collision allocated");
+        });
+        test("missing object remains native init failure",[] {
+            Scenario s; s.play.objectCtx.index=-1; s.wall.dyna.actor.update=BgBreakwall_Update;
+            BgBreakwall_Init(&s.wall.dyna.actor,&s.play);
+            expect(s.wall.dyna.actor.update==nullptr && s.play.colChkCtx.colACCount==0,"missing object kills actor without receiver");
+        });
+        test("rendering cannot duplicate registration or erase pending hit",[] {
+            Scenario s; s.tick(); expect(s.contact(nativeBombMask),"valid hit queued");
+            BgBreakwall_Draw(&s.wall.dyna.actor,&s.play); BgBreakwall_Draw(&s.wall.dyna.actor,&s.play);
+            expect(drawCalls==2 && s.play.colChkCtx.colACCount==1,"multiple Draw calls are visual only");
+            expect(s.wall.collider.base.acFlags&AC_HIT,"Draw cannot reset the pending attack");
+            s.tick(); expect(s.play.switches[7] && deletedCollision==1,"pending hit still breaks next update");
+        });
+        test("native Blue Fire mask extension survives updates",[] {
+            Scenario s; UpdateBlueFireCollidersBgBreakwall(&s.wall); s.tick();
+            expect(s.wall.collider.info.bumper.dmgFlags==(0x48|DMG_ARROW_ICE),"update does not reset enhancement damage mask");
+            s.tick(); expect(s.contact(DMG_ARROW_ICE),"enhancement attack still accepted");
+            s.tick(); expect(s.play.switches[7],"enhanced attack retains break behavior");
+        });
+        for(int type:{BWALL_DC_ENTRANCE,BWALL_WALL,BWALL_KD_FLOOR}) for(int rotation:{0,0x4000,0x2100})
+            test("new collider transform equals prior draw transform",[=] {
+                Scenario s(type); s.tick();
+                auto& actor=s.wall.dyna.actor;
+                actor.world.pos={1200,-350,280}; actor.shape.rot={s16(rotation/2),s16(rotation),s16(-rotation/3)};
+                actor.shape.yOffset=12; actor.scale={0.1f,0.2f,0.15f};
+                CapturedActorDrawTransform(&actor,&s.play); Legacy::BgBreakwall_Draw(&actor,&s.play);
+                std::array<Vec3f,4> previous;
+                for(int i=0;i<4;++i) previous[i]=s.wall.collider.dim.quad[i];
+                matrix=identity(); matrix[0][3]=9999; const auto before=matrix;
+                s.clearRegistrations(); BgBreakwall_UpdateCollider(&s.wall,&s.play);
+                for(int i=0;i<4;++i) expect(same(previous[i],s.wall.collider.dim.quad[i]),"world position, shape rotation, offset and scale preserved");
+                expect(matrix==before && matrixStack.empty(),"collision transform restores global matrix stack");
+                expect(s.play.colChkCtx.colACCount==1,"geometry refresh registers exactly once");
+            });
+        test("lava cover keeps native motion/culling and no attack collider",[] {
+            Scenario s(BWALL_KD_LAVA_COVER); s.wall.dyna.actor.home.pos.y=100; s.tick();
+            expect(s.wall.colType==-1 && s.wall.bombableWallDList==nullptr,"native lava collision-only subtype");
+            expect(s.wall.actionFunc==BgBreakwall_LavaCoverMove && createdCollision==1,"native lava action and dynamic geometry selected");
+            expect(!CapturedEngineSchedulesUpdate(&s.wall.dyna.actor),"lava retains original update culling behavior");
+            const float before=s.wall.dyna.actor.world.pos.y;
+            s.wall.dyna.actor.flags |= ACTOR_FLAG_INSIDE_CULLING_VOLUME; s.tick();
+            expect(s.wall.dyna.actor.world.pos.y==before+1,"native one-unit lava movement preserved");
+            BgBreakwall_Draw(&s.wall.dyna.actor,&s.play);
+            expect(s.play.colChkCtx.colACCount==0 && drawCalls==0 && switchWrites==0,"lava gains no receiving collider, rendering or break switch");
+        });
+        for(bool enabled:{false,true}) test("entrance cutscene decision preserved",[=] {
+            Scenario s(BWALL_DC_ENTRANCE); playIntroCutscene=enabled; s.tick(); s.contact(nativeBombMask); s.tick();
+            expect(enteredCavern && entranceEvents==1,"native entrance event still written");
+            expect(cutscenes==(enabled?1:0) && gSaveContext.cutsceneTrigger==(enabled?1:0),"existing cutscene hook decision honored");
+        });
+        test("vetoed break keeps collider for a later valid hit",[] {
+            Scenario s; s.tick(); s.contact(nativeBombMask); forcedBreak=0; s.tick();
+            expect(s.wall.dyna.actor.update!=nullptr && switchWrites==0 && s.play.colChkCtx.colACCount==1,"native hook veto does not remove wall or future hit detection");
+            forcedBreak=-1; expect(s.contact(nativeBombMask),"later hit can be delivered"); s.tick();
+            expect(s.play.switches[7],"normal behavior resumes after veto");
+        });
+        for(bool second:{false,true}) test("registration respects engine pause/extra-update guards",[=] {
+            Scenario s; s.tick(); s.clearRegistrations();
+            secondUpdate=second; frameAdvance=!second; BgBreakwall_Update(&s.wall.dyna.actor,&s.play);
+            expect(s.play.colChkCtx.colACCount==0,"native SetAC guard is retained");
+        });
+        test("Soul gate fixture rejects actual locked categories",[] {
+            Scenario s(BWALL_WALL,1); Actor other;
+            other.id=ACTOR_EN_ISHI; expect(!MegaSoul_CanInteractWithActor(&other),"locked real rock still rejected");
+            other.id=ACTOR_OBJ_KIBAKO; expect(!MegaSoul_CanInteractWithActor(&other),"locked crate still rejected");
+            other.id=ACTOR_EN_MD; other.category=ACTORCAT_NPC;
+            expect(!MegaSoul_CanInteractWithActor(&other),"locked real NPC still rejected");
+            expect(MegaSoul_CanInteractWithActor(&s.wall.dyna.actor),"mud wall remains outside all those categories");
+        });
+        std::printf("BASELINE reproduced: old Update has zero AC registrations without Draw; valid attacks are ignored.\n");
+        std::printf("RESULT cases=%d assertions=%d\n",cases,assertions);
+    } catch(const std::exception& error) { std::fprintf(stderr,"%s\n",error.what()); return 1; }
+    return 0;
+}

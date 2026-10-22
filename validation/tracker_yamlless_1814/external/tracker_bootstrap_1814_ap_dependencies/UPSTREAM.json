@@ -1,0 +1,24 @@
+{
+  "repository": "https://github.com/ArchipelagoMW/Archipelago",
+  "ref": "0.6.8",
+  "files": [
+    {
+      "path": "apmw/__init__.py",
+      "url": "https://raw.githubusercontent.com/ArchipelagoMW/Archipelago/0.6.8/apmw/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "apmw/multiserver/__init__.py",
+      "url": "https://raw.githubusercontent.com/ArchipelagoMW/Archipelago/0.6.8/apmw/multiserver/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "apmw/multiserver/gamespackagecache.py",
+      "url": "https://raw.githubusercontent.com/ArchipelagoMW/Archipelago/0.6.8/apmw/multiserver/gamespackagecache.py",
+      "sha256": "0a829ca789a209e757b057a1d2bca217c5b3ab990dc65e29ba7ec6b9d8209f09",
+      "bytes": 4221
+    }
+  ]
+}

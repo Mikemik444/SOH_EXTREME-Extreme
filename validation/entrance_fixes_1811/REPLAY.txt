@@ -1,0 +1,41 @@
+Replay notes for the fresh entrance/Finder/grotto evidence
+====================================================
+Run from a complete checkout after merging the replacement source files. Use
+Python with Archipelago 0.6.8 and its dependencies, importing this unchanged
+SOH-EXTREME 1.8.11 world from the checkout. Supply your actual runtime paths.
+Also copy the validation folder into the checkout root to use these commands.
+Unchanged native source inputs are retained under validation/native_source
+with their checkout-relative paths; they are references, not extra changes.
+REPLAY_INPUTS.json identifies every bound source input, including AP source
+members already contained in the root soh_extreme.apworld. The native scene
+and entrance tables are retained under validation/native_dependencies.
+
+AP source-versus-spawn regression:
+python tools/tests/test_bomb_grotto_logic.py --settings-report validation/entrance_fixes_1811/inputs/grotto_1811_uploaded_seed_reproduction.options.json --report bomb_grotto_replay.json
+
+Exact uploaded-seed reconstruction:
+python validation/entrance_fixes_1811/audit_uploaded_seed_189.py --source-root . --spoiler validation/entrance_fixes_1811/inputs/AP_66154502437901277321_Spoiler.txt --report seed_reproduction.json --initial-time-random
+
+The filename number differs from the generator seed in the spoiler header.
+Exact attribution requires all 4,036 generated placements to match. The original
+Random starting-time setting is restored before world RNG resolution. This
+audit generates no game output files and changes no user save or installed world.
+
+Native grotto fixture (C++ compiler with AddressSanitizer and UBSan):
+python tools/tests/test_grotto_access_native.py --report grotto_native_replay.json
+
+Native destination formatter regression:
+python tools/tests/test_transition_labels_native.py --report labels_replay.json
+
+Native Finder automatic expansion and old-behavior reproductions:
+python tools/tests/test_finder_autoexpand_native.py --baseline ../SOH-EXTREME-1.8.11-source-files.zip --native-deps validation/native_dependencies --report finder_replay.json
+
+Native overlapping entrance labels and old-behavior reproductions:
+python tools/tests/test_entrance_label_overlays_native.py --baseline ../SOH-EXTREME-1.8.11-source-files.zip --report overlay_replay.json
+
+Adjust the --baseline path to your immutable original 1.8.11 source archive.
+The Finder runner requires it; the overlay runner can omit that argument when
+not replaying the former duplicate producers. The required original archive has
+SHA256 5dbd457545a053e1175e4d921afd8168272e75d9de386ea373013b85693094e0.
+Production-function native fixtures isolate engine I/O; they are not a native
+game build or controller playthrough. See each report for actual source hashes.

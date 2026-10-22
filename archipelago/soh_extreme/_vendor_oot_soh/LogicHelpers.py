@@ -4,7 +4,8 @@ from typing import TYPE_CHECKING, Callable
 from collections import Counter
 
 from BaseClasses import CollectionState, ItemClassification as IC, MultiWorld, Location, Region
-from .Locations import SohLocation
+from .Locations import (SohLocation, scrubs_location_table, pots_overworld_location_table,
+    pots_dungeon_location_table, crates_overworld_location_table, crates_dungeon_location_table)
 from worlds.AutoWorld import LogicMixin, World
 from .Enums import *
 from .Items import SohItem, item_data_table, ItemType, no_rules_bottles, GroupTag, progressive_items
@@ -65,6 +66,15 @@ def add_locations(parent_region: Regions, world: "SohWorld", locations: list[tup
     mLocations : list[tuple[str, int | None, Rule | Callable[[CollectionState], bool]]] = list()
     for loc in locations:
         locationName = str(loc[0])
+        # Keep the same authored access predicate for ordinary, unshuffled
+        # refill actors. This does not create an AP check or a logic event.
+        if (loc[0] in scrubs_location_table or loc[0] in pots_overworld_location_table
+                or loc[0] in pots_dungeon_location_table or loc[0] in crates_overworld_location_table
+                or loc[0] in crates_dungeon_location_table):
+            source_rule = (loc[1]((parent_region, world)) if callable(loc[1]) else loc[1]) if len(loc) > 1 else True_()
+            if not hasattr(world, "_extreme_refill_source_rules"):
+                world._extreme_refill_source_rules = {}
+            world._extreme_refill_source_rules[locationName] = (parent_region, source_rule)
         if locationName in world.included_locations:
             locationAddress = world.included_locations.pop(loc[0]).loc_id
             if len(loc) > 1 and not world.options.true_no_logic:
@@ -216,8 +226,16 @@ def can_use(item: Items, bundle: tuple[Regions, "SohWorld"]) -> Rule:
     if item in (Items.FIRE_ARROW, Items.ICE_ARROW, Items.LIGHT_ARROW):
         rule &= can_use(Items.FAIRY_BOW, bundle)
 
+    # The managed tracker has the exact carried ammo. A protected last unit is
+    # usable without a farm; an empty bag is not. Standalone generation retains
+    # its established resource rules when no live inventory was supplied.
     if item in (Items.BOMBCHU_BAG, Items.BOMBCHUS_5, Items.BOMBCHUS_10, Items.BOMBCHUS_20):
-        rule &= bombchu_refill(bundle)
+        rule &= HasLiveAmmo(8, bombchu_refill(bundle))
+    elif item in (Items.FAIRY_BOW, Items.PROGRESSIVE_BOW, Items.BIG_QUIVER, Items.BIGGEST_QUIVER, Items.QUIVER_INF):
+        rule &= HasLiveAmmo(16, True_())
+    elif item in (Items.PROGRESSIVE_BOMB_BAG, Items.BOMB_BAG, Items.BIG_BOMB_BAG,
+                  Items.BIGGEST_BOMB_BAG, Items.BOMB_BAG_INF):
+        rule &= HasLiveAmmo(4, True_())
 
     if item == Items.IRON_BOOTS:
         # EXTREME voids Link on water contact without Swim, including in Irons.
@@ -261,7 +279,7 @@ def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"],
         # Receiving a shuffled bag/capacity upgrade fills it with sticks.
         # The unshuffled bag is only an innate capacity tier, not free ammo.
         grant_count = 1 if bundle[1].options.shuffle_deku_stick_bag.value else 2
-        return has_item(Items.DEKU_STICK_BAG, bundle) & (
+        return has_item(Items.DEKU_STICK_BAG, bundle) & HasLiveAmmo(1,
             has_item(Events.CAN_FARM_STICKS, bundle)
             | Has(Items.PROGRESSIVE_STICK_CAPACITY, grant_count)
             | OptionFilter(StartWithStickAmmo, True))
@@ -270,7 +288,7 @@ def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"],
         return bombchus_enabled(bundle)
 
     if item == Items.NUTS:
-        return has_item(Events.CAN_FARM_NUTS, bundle) & has_item(Items.DEKU_NUT_BAG, bundle)
+        return HasLiveAmmo(2, has_item(Events.CAN_FARM_NUTS, bundle)) & has_item(Items.DEKU_NUT_BAG, bundle)
 
     if item == Items.MAGIC_BEAN:
         return HasAny(Items.MAGIC_BEAN_PACK, Events.CAN_BUY_BEANS)
@@ -333,6 +351,33 @@ def has_item(item: Items | Events | StrEnum, bundle: tuple[Regions, "SohWorld"],
 
     return Has(item, count)
 
+
+
+@dataclasses.dataclass
+class HasLiveAmmo(Rule, game="SOH-EXTREME"):
+    """A live ammo bit guards use, while ownership remains a separate rule."""
+    mask: int
+    fallback: Rule
+
+    def _instantiate(self, world: "SohWorld") -> Rule.Resolved:
+        return self.Resolved(mask=self.mask, fallback=self.fallback.resolve(world),
+                             player=world.player, caching_enabled=False)
+
+    class Resolved(Rule.Resolved):
+        mask: int
+        fallback: Rule.Resolved
+        force_recalculate = True
+
+        def _evaluate(self, state: CollectionState) -> bool:
+            world = state.multiworld.worlds[self.player]
+            ammo = getattr(world, "_extreme_live_ammo", None)
+            return bool(ammo & self.mask) if ammo is not None else self.fallback(state)
+
+        def item_dependencies(self): return self.fallback.item_dependencies()
+        def region_dependencies(self): return self.fallback.region_dependencies()
+        def location_dependencies(self): return self.fallback.location_dependencies()
+        def entrance_dependencies(self): return self.fallback.entrance_dependencies()
+        def __str__(self): return "Carry usable ammunition"
 
 
 @dataclasses.dataclass
@@ -776,6 +821,12 @@ class FrozenClockWindow(Rule, game="SOH-EXTREME"):
                 clock = {1: 0x4555, 2: 0x8000, 3: 0xB555, 4: 0}.get(world.options.frozen_starting_time.value, 0x4555)
             if self.window == 'dawn':
                 return 0x4555 <= clock < 0x5000
+            if self.window == 'courtyard':
+                # EnHeishi1's stationary guards spawn at 0xB889, before the
+                # engine's night phase. Keep this boundary in tracker cache keys.
+                phase = getattr(world, '_extreme_live_time', None)
+                daytime = phase == 0 if phase is not None else 0x4555 <= clock <= 0xC000
+                return daytime and 0x4555 <= clock < 0xB889
             if self.window == 'dampe':
                 if getattr(world, '_extreme_live_time_flags', 0) & 1:
                     return clock > 0xC000 or clock < 0x4555

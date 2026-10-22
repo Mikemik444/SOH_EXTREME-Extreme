@@ -17,9 +17,11 @@
 using s16 = int16_t;
 struct Vec3s { s16 x = 0, y = 0, z = 0; };
 struct Vec3f { float x = 0, y = 0, z = 0; };
+constexpr int BGCHECKFLAG_GROUND = 1;
 struct Actor {
     struct { Vec3f pos; } world;
     struct { Vec3s rot; } shape;
+    int bgCheckFlags = BGCHECKFLAG_GROUND;
 };
 struct ActorEntry { Vec3s pos, rot; s16 params = 0; };
 struct Player { Actor actor; } player;
@@ -28,6 +30,7 @@ struct PlayState {
     int sceneNum = 52, numRooms = 64;
     struct { int state = 0; } gameOverCtx;
     struct { struct { int num = 0; } curRoom; } roomCtx;
+    struct { int numActors = 0; } transiActorCtx;
     ActorEntry* linkActorEntry = nullptr;
     int nextEntranceIndex = 0, transitionTrigger = 0, transitionType = 0;
 } play, *gPlayState = &play;

@@ -20,6 +20,10 @@ SohExtreme::SaveConnectionIdentity identityForReload = saveConnectionIdentity;
 std::string serverForReload = saveServer, slotForReload = saveSlot, settingsJsonForReload = cachedSlotSettingsJson;
 bool restoreMapDuringLoad = true;
 SohExtreme::CrossingJournal gCrossingJournal;
+// Ammo observations are an independent per-save service. The ammo fixtures
+// execute that store; the return fixture supplies only its reset boundary.
+int ammoSourceFile = 0;
+void ResetAmmoSources() { ammoSourceFile = gSaveContext.fileNum; }
 
 void ReloadMetadata(bool isArchipelagoSave, const std::string& server, const std::string& slot,
                     const std::string& cachedSettingsJson, const SohExtreme::SaveConnectionIdentity& identity) {
@@ -33,14 +37,61 @@ void ReloadMetadata(bool isArchipelagoSave, const std::string& server, const std
     cachedSlotSettingsJson = cachedSettingsJson;
 }
 
-using RespawnData = std::remove_reference_t<decltype(gSaveContext.respawn[0])>;
 constexpr int ITEM_SWORD_MASTER = 1;
 int itemGrants = 0;
 void Item_Give(PlayState*, int) { ++itemGrants; }
 #include "captured_native_respawn.inc"
 #include "captured_native_savewarp.inc"
 #include "captured_native_gameover.inc"
+#include "captured_grotto_force_special.inc"
 #include "captured_grotto_force_return.inc"
+#include "captured_grotto_force_void.inc"
+#include "captured_grotto_identity.inc"
+#include "captured_grotto_ownership.inc"
+
+// Only the collision query results are supplied by this integration fixture.
+// Actual geometry is separately compiled by test_grotto_landing_native.py.
+bool landingGeometryClear = true, landingValidationClear = true;
+bool resolveLandingOnArrival = true;
+CollisionPoly fixtureFloor;
+static bool Grotto_FindReturnLanding(Player*, Vec3f* point, CollisionPoly** poly) {
+    if (!landingGeometryClear) return false;
+    *point = grottoLanding.origin;
+    point->x += Math_SinS(grottoLanding.yaw) * 64.0f;
+    point->z += Math_CosS(grottoLanding.yaw) * 64.0f;
+    *poly = &fixtureFloor;
+    return true;
+}
+static bool Grotto_ValidateLanding(Player*, Vec3f* point, CollisionPoly** poly) {
+    *poly = &fixtureFloor;
+    return landingValidationClear && Grotto_PointClearOfHoles(point, 20.0f);
+}
+#include "captured_grotto_landing_state.inc"
+
+int nativeEmergences = 0, nativeIdleStarts = 0;
+constexpr int Player_Action_8084F9A0 = 0;
+void Player_SetupAction(PlayState*, Player*, int, int) {}
+void Player_StartGrottoEmergence(PlayState*, Player* link) {
+    ++nativeEmergences;
+    link->actor.velocity.y = 12.0f;
+    link->actor.bgCheckFlags &= ~BGCHECKFLAG_GROUND;
+}
+void Player_StartMode_Idle(PlayState*, Player*) { ++nativeIdleStarts; }
+#include "captured_player_grotto_start.inc"
+void DispatchFirstGrottoUpdate(PlayState* play, Player* link) {
+#include "captured_player_grotto_dispatch.inc"
+}
+
+constexpr int VB_INFLICT_VOID_DAMAGE = 0;
+template <typename... Args> bool GameInteractor_Should(int, bool vanilla, Args...) { return vanilla; }
+void Math_Vec3f_Copy(Vec3f* destination, const Vec3f* source) { *destination = *source; }
+int func_80845C68(PlayState*, int) { return 0; }
+void ApplyNativePlayerRespawn(PlayState* play, Player* link) {
+    Actor* thisx = &link->actor;
+    int respawnFlag, respawnMode;
+#include "captured_player_respawn_override.inc"
+#include "captured_player_down_checkpoint.inc"
+}
 
 constexpr int TEXTBOX_TYPE_BLUE = 0, TEXT_CONTINUE_DUNGEON_MSG = 1, TEXT_CONTINUE_OVERWORLD_MSG = 2;
 constexpr int NA_SE_SY_PIECE_OF_HEART = 1;
@@ -95,6 +146,7 @@ std::map<std::string, int> cases;
 void Count(const char* name) { ++cases[name]; }
 SettingsMap Settings(int mask = 0) {
     SettingsMap result{{"EntranceRandomizerRevision",1}, {"EntrancePoolPolicyRevision",1},
+        {"EntranceRiverPathsRevision",1},
         {"EntranceMixedPoolMask",mask}, {"DungeonDoorMixedOutside",int((mask & 1024) && (mask & ~(4 | 16 | 1024)))},
         {"ShuffleDungeonDoors",(mask & 1024) ? 1 : 0}};
     for (const auto& row : SohExtreme::kEntranceEndpoints) result["EntranceMap." + std::to_string(row.id)] = row.id;
@@ -114,6 +166,9 @@ void ResetFixture(const SettingsMap& settings, bool asChild = false) {
     play = {}; gPlayState = &play; gSaveContext = {}; player = {};
     gSaveContext.nextCutsceneIndex = 0xFFEF;
     child = asChild; currentSaveIsAP = true; isRandomizer = true;
+    gSaveContext.linkAge = child ? LINK_AGE_CHILD : LINK_AGE_ADULT;
+    landingGeometryClear = landingValidationClear = resolveLandingOnArrival = true;
+    nativeEmergences = nativeIdleStarts = 0;
     for (auto& option : Rando::Context::GetInstance()->options) option.Set(0);
     for (auto& row : overrides) row = {};
     Entrance_ResetEntranceTable();
@@ -128,26 +183,39 @@ void ResetFixture(const SettingsMap& settings, bool asChild = false) {
     itemGrants = 0;
 }
 void FinishArrival(int scene, int nativeRoom = 0, Vec3s nativePosition = {101,202,303}) {
+    const bool explicitReturn = ER::dungeonReturnArrival;
     assert(Archipelago_EntranceBeforeSceneInit());
+    if (explicitReturn) assert(gSaveContext.respawnFlag == 0);
     assert(Archipelago_EntranceAfterSceneConditions());
     play.sceneNum = scene;
-    play.roomCtx.curRoom.num = Archipelago_EntranceSpawnRoom(scene,nativeRoom);
+    play.roomCtx.curRoom.num = gSaveContext.respawnFlag > 0 ?
+        gSaveContext.respawn[gSaveContext.respawnFlag - 1].roomIndex :
+        Archipelago_EntranceSpawnRoom(scene,nativeRoom);
     static ActorEntry nativeEntry;
     nativeEntry = {}; nativeEntry.pos = nativePosition;
     play.linkActorEntry = &nativeEntry;
     Archipelago_EntranceSpawnPosition(scene);
     client.CompleteSceneTransition(scene);
+    player = {}; // The scene creates a fresh player before Player_Init.
     player.actor.world.pos = {float(play.linkActorEntry->pos.x), float(play.linkActorEntry->pos.y), float(play.linkActorEntry->pos.z)};
     player.actor.shape.rot.y = play.linkActorEntry->rot.y;
+    player.actor.params = play.linkActorEntry->params;
+    ApplyNativePlayerRespawn(&play, &player);
+    if (((player.actor.params >> 8) & 0xF) == 4) Player_StartMode_Grotto(&play, &player);
     play.transitionTrigger = TRANS_TRIGGER_OFF;
     gSaveContext.respawnFlag = 0;
     gSaveContext.health = 48;
     gSaveContext.savedSceneNum = scene;
 #include "captured_room_entry_call.inc"
+    if (resolveLandingOnArrival) DispatchFirstGrottoUpdate(&play, &player);
 }
 void ArriveResolved(int target, int room = 0, Vec3s position = {101,202,303}) {
     const auto* policy = SohExtreme::EntranceDestinationById(target);
     assert(policy);
+    if (ER::roomEntry.scene >= 0) {
+        ER::RememberPlayerPosition();
+        ER::CaptureSceneDeparture(true);
+    }
     ER::ArmArrival(-1,target);
     gSaveContext.entranceIndex = Grotto_OverrideSpecialEntrance(target);
     const int layer = child ? 0 : 2;
@@ -169,6 +237,88 @@ void PopulatePreviousScene(const SettingsMap& settings) {
     assert(!ER::previousScene.valid);
     ArriveResolved(8459); // Jabu NW corridor room, reached through a room endpoint.
     assert(ER::previousScene.valid && ER::previousScene.scene == SCENE_ZORA_SHOP);
+}
+bool SamePoint(const ER::SceneReturnPoint& a, const ER::SceneReturnPoint& b) {
+    return a.valid == b.valid && a.scene == b.scene && a.room == b.room && a.age == b.age &&
+           a.file == b.file && a.target == b.target && a.position.x == b.position.x &&
+           a.position.y == b.position.y && a.position.z == b.position.z && a.yaw == b.yaw &&
+           a.dungeonEntrance == b.dungeonEntrance && a.grottoEmergence == b.grottoEmergence;
+}
+void AssertPlayerAt(const ER::SceneReturnPoint& point) {
+    assert(play.sceneNum == point.scene && play.roomCtx.curRoom.num == point.room);
+    assert(player.actor.world.pos.x == static_cast<s16>(point.position.x) &&
+           player.actor.world.pos.y == static_cast<s16>(point.position.y) &&
+           player.actor.world.pos.z == static_cast<s16>(point.position.z) && player.actor.shape.rot.y == point.yaw);
+}
+void MovePlayer(Vec3f position, s16 yaw = 0) {
+    player.actor.world.pos = position;
+    player.actor.shape.rot.y = yaw;
+    ER::RememberPlayerPosition();
+}
+bool RequestNativeRoom(int roomNum) {
+    auto* roomCtx = &play.roomCtx;
+#include "captured_room_request_hook.inc"
+    // Resource/room allocation is the isolated IO boundary. The production
+    // pre-request hook above must run before the engine replaces curRoom.
+    if (roomCtx->status != 0) return false;
+    roomCtx->curRoom.num = roomNum;
+    roomCtx->status = 1;
+    return true;
+}
+void FinishNativeRoom(int selectedRoom) {
+    play.roomCtx.curRoom.num = selectedRoom;
+    play.roomCtx.status = 0;
+#include "captured_room_entry_call.inc"
+}
+void FinishQueuedArrival(int target) {
+    const auto* policy = SohExtreme::EntranceDestinationById(target);
+    assert(policy);
+    client.CaptureSceneTransition();
+    gSaveContext.entranceIndex = play.nextEntranceIndex;
+    FinishArrival(policy->normalLayers[child ? 0 : 2].scene);
+}
+ER::SceneReturnPoint CrossMappedDoor(int source, bool finish = true) {
+    const auto* door = SohExtreme::EntranceEndpointById(source);
+    assert(door && door->door >= 0 && play.sceneNum == door->sourceScene &&
+           play.roomCtx.curRoom.num == door->fromRoom);
+    const auto entry = ER::roomEntry, history = ER::previousScene;
+    Actor actor;
+    actor.world.pos = {float(door->x), float(door->y), float(door->z)};
+    actor.shape.rot.y = door->yaw;
+    const float nx = Math_SinS(door->yaw), nz = Math_CosS(door->yaw);
+    const float side = door->side == 1 ? 1.0f : -1.0f;
+    MovePlayer({door->x + nx * side * 22.0f, float(door->y), door->z + nz * side * 22.0f},
+               static_cast<s16>(door->yaw + (side > 0 ? 0x8000 : 0)));
+    const auto departure = ER::CaptureReturnPoint();
+    ER::BeginDoor(door->door, door->fromRoom, door->room, &actor, door->side);
+    assert(ER::openedDoor && SamePoint(ER::doorDeparture.point, departure));
+    if (door->fromRoom != door->room) assert(RequestNativeRoom(door->room));
+    assert(SamePoint(ER::roomEntry, entry) && SamePoint(ER::previousScene, history));
+    player.actor.world.pos = {door->x - nx * side * 60.0f, float(door->y), door->z - nz * side * 60.0f};
+    ER::AdvanceDoor();
+    assert(play.transitionTrigger == TRANS_TRIGGER_START && ER::pendingDepartureRecorded);
+    FinishNativeRoom(door->room); // Native doorway completion must not record the intermediate room.
+    assert(SamePoint(ER::roomEntry, entry) && SamePoint(ER::previousScene, history));
+    if (finish) FinishQueuedArrival(ER::routing.Destination(source));
+    return departure;
+}
+void DieAndReturnToCurrentRoom() {
+    const auto checkpoint = ER::roomEntry, history = ER::previousScene;
+    const auto reportCount = client.reports.size();
+    player.actor.world.pos = {-444,-555,-666};
+    gSaveContext.health = 0;
+    play.actorCtx.flags.tempSwch = 0x12345678;
+    play.actorCtx.flags.tempCollect = 0x11223344;
+    Entrance_SetGameOverEntrance();
+    assert(ER::restartArrival.valid && ER::preserveHistoryForArrival);
+    assert(ER::restartArrival.target == checkpoint.target);
+    Play_TriggerRespawn(&play);
+    gSaveContext.respawnFlag = -2; // Actual kaleidoscope continuation assignment.
+    Grotto_ForceGrottoReturn();
+    FinishQueuedArrival(checkpoint.target);
+    AssertPlayerAt(checkpoint);
+    assert(SamePoint(ER::previousScene, history) && !ER::preserveHistoryForArrival);
+    assert(client.reports.size() == reportCount && itemGrants == 0);
 }
 
 void TestPolicy() {
@@ -274,19 +424,11 @@ void TestBossOwnership() {
     ResetFixture(settings);
     ArriveResolved(ENTR_FOREST_TEMPLE_ENTRANCE,7);
     ArriveResolved(773);
-    gSaveContext.health = 0;
-    player.actor.world.pos = {-444,-555,-666};
-    play.actorCtx.flags.tempSwch = 0x12345678;
-    play.actorCtx.flags.tempCollect = 0x11223344;
-    Entrance_SetGameOverEntrance();
+    DieAndReturnToCurrentRoom();
+    assert(play.sceneNum == SCENE_FIRE_TEMPLE_BOSS && ER::roomEntry.dungeonEntrance == ENTR_FOREST_TEMPLE_ENTRANCE);
+    BeginDungeonReturn();
     assert(gSaveContext.entranceIndex == ENTR_FOREST_TEMPLE_ENTRANCE);
-    Play_TriggerRespawn(&play);
-    gSaveContext.respawnFlag = -2; // Actual kaleidoscope continuation assignment.
-    assert(play.nextEntranceIndex == ENTR_FOREST_TEMPLE_ENTRANCE);
-    assert(Archipelago_EntranceBeforeSceneInit());
-    assert(gSaveContext.respawnFlag == 0); // Native Player_Init cannot restore boss flags in the dungeon.
-    assert(!ER::restartArrival.valid && itemGrants == 0);
-    Count("game_over_dungeon_and_flag_isolation");
+    Count("boss_death_same_room_and_menu_source_dungeon");
 }
 void TestPreviousScene() {
     const auto settings = Settings(2047);
@@ -298,45 +440,42 @@ void TestPreviousScene() {
     assert(!Archipelago_EntranceRequestDungeonReturn());
     assert(continuePreviousSceneMsg.text.find("Return to Previous Scene") != std::string::npos);
     Count("no_history_omits_middle_action");
-    PopulatePreviousScene(settings);
-    const auto previous = ER::previousScene;
-    ArriveResolved(8460); // Full same-scene room reload must not replace the prior Zora Shop scene.
-    play.roomCtx.curRoom.num = 7;
-    player.actor.world.pos = {411,522,633};
-    player.actor.shape.rot.y = 1234;
-#include "captured_room_entry_call.inc"
-    assert(ER::previousScene.scene == previous.scene && ER::previousScene.position.x == previous.position.x);
-    assert(ER::roomEntry.room == 7 && ER::roomEntry.position.x == 411);
+
+    ResetFixture(settings);
+    ArriveResolved(896,0,{123,234,345});
+    const auto initialShopEntry = ER::roomEntry;
+    MovePlayer({432,234,654},1234);
+    const auto shopDoorway = ER::CaptureReturnPoint();
+    ArriveResolved(8459);
+    assert(!SamePoint(initialShopEntry, ER::previousScene));
+    assert(SamePoint(shopDoorway, ER::previousScene));
+    DieAndReturnToCurrentRoom();
+    DieAndReturnToCurrentRoom();
+    assert(SamePoint(shopDoorway, ER::previousScene));
+    Count("repeated_death_keeps_departure_history");
+
+    const auto jabuCheckpoint = ER::roomEntry;
     StartContinuePrompt(&play);
     assert(openedTextId == TEXT_CONTINUE_DUNGEON_MSG);
-    const auto source = ER::roomEntry;
     BeginDungeonReturn();
     assert(gSaveContext.entranceIndex == 896 && ER::restartArrival.valid);
     FinishArrival(SCENE_ZORA_SHOP);
-    assert(play.roomCtx.curRoom.num == previous.room && player.actor.world.pos.x == previous.position.x);
-    assert(ER::previousScene.scene == SCENE_JABU_JABU && ER::previousScene.room == 7);
-    assert(ER::previousScene.position.x == source.position.x);
+    AssertPlayerAt(shopDoorway);
+    assert(SamePoint(ER::previousScene, jabuCheckpoint));
     assert(client.reports.empty());
     StartContinuePrompt(&play);
-    assert(openedTextId == TEXT_CONTINUE_DUNGEON_MSG); // Also works outside the dungeon after mixed travel.
+    assert(openedTextId == TEXT_CONTINUE_DUNGEON_MSG);
     BeginDungeonReturn();
     FinishArrival(SCENE_JABU_JABU);
-    assert(play.roomCtx.curRoom.num == source.room && player.actor.world.pos.x == source.position.x);
-    assert(player.actor.shape.rot.y == source.yaw && client.reports.empty());
-    Count("distinct_scene_and_native_room_history");
-    const auto sameScene = ER::previousScene;
+    AssertPlayerAt(jabuCheckpoint);
+    assert(client.reports.empty());
+    Count("return_restores_departure_position_and_yaw");
+
+    const auto history = ER::previousScene;
     assert(ER::Apply(settings));
-    assert(ER::previousScene.scene == sameScene.scene && ER::previousScene.position.x == sameScene.position.x);
+    assert(SamePoint(ER::previousScene, history));
     assert(!ER::ServicePendingSpawn(true));
     Count("same_map_reconnect_keeps_history");
-    PopulatePreviousScene(settings);
-    player.actor.world.pos = {-900,-1000,-1100}; gSaveContext.health = 0;
-    Entrance_SetGameOverEntrance();
-    Play_TriggerRespawn(&play); gSaveContext.respawnFlag = -2;
-    assert(play.nextEntranceIndex == 896);
-    assert(Archipelago_EntranceBeforeSceneInit() && gSaveContext.respawnFlag == 0);
-    assert(ER::restartArrival.position.x == 123);
-    Count("game_over_previous_scene");
 }
 void TestFinalBattleReturns() {
     for (bool active : {false,true}) {
@@ -361,6 +500,7 @@ void TestFinalBattleReturns() {
     ResetFixture(Settings(2047));
     ArriveResolved(896,0,{123,234,345});
     ArriveResolved(ENTR_GANONS_TOWER_0,7,{456,567,678});
+    ER::CaptureSceneDeparture(true);
     gSaveContext.entranceIndex = ENTR_GANONDORF_BOSS_0;
     FinishArrival(SCENE_GANONDORF_BOSS);
     assert(!ER::roomEntry.valid && ER::roomEntry.scene == SCENE_GANONDORF_BOSS);
@@ -389,6 +529,154 @@ void TestFinalBattleReturns() {
     assert(play.nextEntranceIndex == ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_0 && itemGrants == 1);
     Count("ordinary_native_final_battle_respawn_preserved");
 }
+void TestImmediateMappedRoomHistory() {
+    for (bool sameRoom : {false,true}) {
+        auto settings = Settings(2047);
+        if (sameRoom) SwapPairs(settings,8460,8463); // Corridor -> another door in that same room.
+        PopulatePreviousScene(settings); // Current Jabu room 7, older history Zora Shop.
+        const auto oldEntry = ER::roomEntry;
+        const auto departure = CrossMappedDoor(8460);
+        const auto current = ER::roomEntry;
+        assert(play.sceneNum == SCENE_JABU_JABU);
+        assert(play.roomCtx.curRoom.num == (sameRoom ? 7 : 8));
+        assert(!SamePoint(oldEntry, current));
+        assert(SamePoint(ER::previousScene, departure));
+        assert(Archipelago_EntranceDungeonReturnMode() == AP_DUNGEON_RETURN_PREVIOUS_SCENE);
+        assert(client.reports.size() == 1 && client.reports.front() == SohExtreme::EntranceEndpointById(8460)->check);
+        DieAndReturnToCurrentRoom();
+        DieAndReturnToCurrentRoom();
+        assert(SamePoint(ER::previousScene, departure));
+        BeginDungeonReturn();
+        FinishArrival(SCENE_JABU_JABU);
+        AssertPlayerAt(departure);
+        assert(client.reports.size() == 1);
+        const auto returnToB = ER::previousScene;
+        BeginDungeonReturn();
+        FinishArrival(SCENE_JABU_JABU);
+        AssertPlayerAt(returnToB);
+        assert(client.reports.size() == 1);
+        Count(sameRoom ? "same_room_different_door_return_and_death" : "same_scene_next_room_return_and_death");
+    }
+    for (int mask : {0,1024,4,16,4|16|1024}) {
+        ResetFixture(Settings(mask));
+        ArriveResolved(8459);
+        CrossMappedDoor(8460);
+        DieAndReturnToCurrentRoom();
+        assert(play.roomCtx.curRoom.num == 8);
+        assert(Archipelago_EntranceDungeonReturnMode() == AP_DUNGEON_RETURN_SPAWN);
+        BeginDungeonReturn();
+        assert(gSaveContext.entranceIndex == ENTR_JABU_JABU_ENTRANCE);
+        FinishArrival(SCENE_JABU_JABU);
+        assert(play.roomCtx.curRoom.num == 0);
+        Count("death_checkpoint_independent_of_dungeon_menu_policy");
+    }
+}
+void TestNativeRoomCompletion() {
+    PopulatePreviousScene(Settings(2047));
+    const auto entry = ER::roomEntry, history = ER::previousScene;
+    play.transiActorCtx.numActors = 2;
+    MovePlayer({30,-260,-60},1234);
+    Archipelago_EntranceObserveRoomBoundary(0,7,8,false);
+    const auto boundary = ER::CaptureReturnPoint();
+    // Actual end-of-Player_Update precedes the invisible hallway actor. The
+    // request occurs 50..100 units on the far side while curRoom is still 7.
+    MovePlayer({30,-260,60},1234);
+    Archipelago_EntranceObserveRoomBoundary(0,8,7,false);
+    Archipelago_EntranceSelectRoomBoundary(0,8);
+    assert(RequestNativeRoom(8));
+    assert(SamePoint(ER::nativeRoomDeparture, boundary));
+    assert(SamePoint(ER::roomEntry, entry) && SamePoint(ER::previousScene, history));
+    // Return without finishing the far room. Both checkpoints remain unchanged.
+    MovePlayer({30,-260,-180},2345);
+    FinishNativeRoom(7);
+    assert(SamePoint(ER::roomEntry, entry) && SamePoint(ER::previousScene, history));
+    assert(!ER::nativeRoomDeparture.valid);
+    Count("abandoned_hallway_preload_keeps_checkpoint_and_history");
+
+    MovePlayer({40,-260,-80},3456);
+    Archipelago_EntranceObserveRoomBoundary(0,7,8,false);
+    Archipelago_EntranceSelectRoomBoundary(0,8);
+    assert(RequestNativeRoom(8));
+    // A visible narrow hallway can preload at 150 units; keep refining its
+    // source-side point while Link approaches, even though curRoom was swapped.
+    player.actor.world.pos = {40,-260,-20};
+    Archipelago_EntranceObserveRoomBoundary(0,7,8,false);
+    const auto beforePlane = ER::nativeRoomDeparture;
+    player.actor.world.pos = {40,-260,80};
+    Archipelago_EntranceObserveRoomBoundary(0,8,7,false);
+    FinishNativeRoom(8);
+    assert(SamePoint(ER::previousScene, beforePlane));
+    assert(ER::previousScene.room == 7 && ER::previousScene.position.z == -20);
+    assert(ER::roomEntry.room == 8 && ER::roomEntry.position.z == 80);
+    DieAndReturnToCurrentRoom();
+    BeginDungeonReturn();
+    FinishArrival(SCENE_JABU_JABU);
+    AssertPlayerAt(beforePlane);
+    assert(client.reports.empty());
+    Count("completed_native_hallway_source_side_return_and_death");
+
+    const auto current = ER::roomEntry;
+    player.actor.bgCheckFlags = BGCHECKFLAG_GROUND;
+    MovePlayer({10,200,-10},4567);
+    const auto grounded = ER::CaptureReturnPoint();
+    player.actor.bgCheckFlags = 0;
+    MovePlayer({10,40,-10},4567);
+    play.transiActorCtx.numActors = 2;
+    Archipelago_EntranceObserveRoomBoundary(1,current.room,9,true);
+    Archipelago_EntranceSelectRoomBoundary(1,9);
+    assert(SamePoint(ER::nativeRoomDeparture, grounded));
+    assert(RequestNativeRoom(9));
+    player.actor.world.pos.y = -60;
+    FinishNativeRoom(9);
+    assert(SamePoint(ER::previousScene, grounded));
+    Count("vertical_boundary_uses_grounded_source_position");
+
+    PopulatePreviousScene(Settings(2047));
+    const auto checkpoint = ER::roomEntry;
+    const auto prior = ER::previousScene;
+    const auto* door = SohExtreme::EntranceEndpointById(8460);
+    Actor actor; actor.world.pos = {float(door->x),float(door->y),float(door->z)}; actor.shape.rot.y=door->yaw;
+    MovePlayer({float(door->x),float(door->y),float(door->z + 22)},0);
+    ER::BeginDoor(door->door,door->fromRoom,door->room,&actor,door->side);
+    assert(RequestNativeRoom(8));
+    FinishNativeRoom(7);
+    assert(SamePoint(ER::roomEntry,checkpoint) && SamePoint(ER::previousScene,prior));
+    assert(!ER::openedDoor && !ER::pendingDepartureRecorded);
+    Count("abandoned_mapped_shutter_keeps_checkpoint_and_history");
+}
+void TestReloadAndRecoveryHistory() {
+    PopulatePreviousScene(Settings(2047));
+    const auto history = ER::previousScene;
+    const int target = ER::roomEntry.target;
+    const int scene = play.sceneNum;
+    MovePlayer({777,888,999},7890);
+    auto* play = gPlayState;
+#include "captured_suns_song_reload.inc"
+    client.CaptureSceneTransition();
+    assert(!ER::pendingDepartureRecorded);
+    gSaveContext.entranceIndex = play->nextEntranceIndex;
+    FinishArrival(scene);
+    assert(SamePoint(ER::previousScene,history));
+    assert(client.reports.empty());
+    (void)target;
+    Count("suns_song_reload_preserves_previous_doorway");
+
+    auto settings = Settings(2047);
+    SwapPairs(settings,8460,8861);
+    PopulatePreviousScene(settings);
+    const auto safeHistory = ER::previousScene;
+    CrossMappedDoor(8460);
+    assert(gPlayState->sceneNum == SCENE_WATER_TEMPLE);
+    assert(client.reports.size() == 1);
+    assert(Archipelago_EntranceReturnFromUnsafeArrival());
+    FinishQueuedArrival(8461); // Already resolved source-side endpoint; never shuffle again.
+    assert(gPlayState->sceneNum == SCENE_JABU_JABU && gPlayState->roomCtx.curRoom.num == 7);
+    assert(SamePoint(ER::previousScene,safeHistory));
+    assert(client.reports.size() == 1 && !Archipelago_EntranceReturnFromUnsafeArrival());
+    DieAndReturnToCurrentRoom();
+    assert(SamePoint(ER::previousScene,safeHistory));
+    Count("wet_arrival_recovery_restores_history_without_extra_credit");
+}
 void TestSharedGrottoHistory() {
     for (bool asChild : {false,true}) {
         for (const auto& policy : SohExtreme::kEntranceDestinationPolicies) {
@@ -406,7 +694,7 @@ void TestSharedGrottoHistory() {
             assert(ER::restartArrival.target == policy.id);
             FinishArrival(original.scene);
             assert(play.roomCtx.curRoom.num == original.room);
-            assert(player.actor.world.pos.x == original.position.x);
+            AssertPlayerAt(original);
             assert(ER::roomEntry.target == policy.id && client.reports.empty());
             assert(grottoId == (policy.id & 0xFF));
             if (policy.kind == SohExtreme::kEntranceGrottoLoad)
@@ -414,6 +702,108 @@ void TestSharedGrottoHistory() {
             Count(asChild ? "child_shared_grotto_previous_scene" : "adult_shared_grotto_previous_scene");
         }
     }
+}
+void TestGrottoLandingAndNativeOverrides() {
+    for (bool asChild : {false,true}) {
+        ResetFixture(Settings(1024 | 8),asChild);
+        ArriveResolved(896,0,{123,234,345});
+        ArriveResolved(2062); // HF stone-bridge/tree grotto exterior return.
+        assert(ER::roomEntry.valid && ER::roomEntry.target == 2062);
+        assert(grottoLanding.landed && !Grotto_HasPendingReturnLanding());
+        assert(!ER::roomEntry.grottoEmergence && nativeIdleStarts == 1 && nativeEmergences == 0);
+        const auto landed = ER::roomEntry, history = ER::previousScene;
+        assert(history.target == 896);
+        assert(std::hypot(landed.position.x - grottoReturnTable[14].pos.x,
+                          landed.position.z - grottoReturnTable[14].pos.z) > 50.0f);
+        for (const int mode : {RESPAWN_MODE_DOWN, RESPAWN_MODE_RETURN}) {
+            const auto& data = gSaveContext.respawn[mode];
+            assert(data.playerParams == 0x0DFF && data.pos.x == landed.position.x &&
+                   data.pos.z == landed.position.z && data.yaw == landed.yaw);
+        }
+        Count("exterior_player_override_then_landed_checkpoint");
+
+        // Both native helpers must reuse the proven point, including the later
+        // positive-respawnFlag override inside the real Player_Init block.
+        for (bool special : {false,true}) {
+            if (special) Grotto_ForceGrottoReturnOnSpecialEntrance();
+            else Grotto_ForceRegularVoidOut();
+            player.actor.world.pos = {1,2,3};
+            ApplyNativePlayerRespawn(&play, &player);
+            assert(player.actor.world.pos.x == landed.position.x &&
+                   player.actor.world.pos.z == landed.position.z && player.actor.params == 0x0DFF);
+            assert(SamePoint(ER::previousScene, history));
+            Count("native_force_helper_reuses_landed_point");
+        }
+        gSaveContext.respawnFlag = 0;
+        DieAndReturnToCurrentRoom();
+        assert(!ER::roomEntry.grottoEmergence);
+        Count("death_after_grotto_landing_keeps_previous_scene");
+
+        // Reject a falling/on-hole departure point even if the doorway actor
+        // continues to update before the transition starts.
+        MovePlayer({landed.position.x + 80.0f, landed.position.y, landed.position.z},0x1234);
+        const auto departure = ER::lastGroundPosition;
+        Actor hole;
+        hole.id = ACTOR_DOOR_ANA; hole.update = +[]{};
+        hole.world.pos = grottoReturnTable[14].pos;
+        play.actorCtx.actorLists[0].head = &hole;
+        player.actor.world.pos = hole.world.pos;
+        player.stateFlags1 |= PLAYER_STATE1_FLOOR_DISABLED;
+        player.actor.bgCheckFlags &= ~BGCHECKFLAG_GROUND;
+        ER::RememberPlayerPosition();
+        assert(SamePoint(ER::lastGroundPosition, departure));
+        ArriveResolved(1806,0,{456,567,678});
+        assert(ER::roomEntry.target == 1806 && play.sceneNum == SCENE_GROTTOS);
+        assert(!Grotto_HasPendingReturnLanding());
+        assert(SamePoint(ER::previousScene, departure));
+        play.actorCtx.actorLists[0].head = nullptr;
+        BeginDungeonReturn();
+        FinishArrival(departure.scene);
+        AssertPlayerAt(departure);
+        assert(player.actor.params == 0x0DFF && !ER::roomEntry.grottoEmergence);
+        Count("grotto_previous_scene_uses_last_clear_departure");
+
+        // The exit origin has not become a stationary checkpoint if death
+        // interrupts the queued start before the first collision-ready update.
+        ResetFixture(Settings(1024 | 8),asChild);
+        ArriveResolved(896);
+        resolveLandingOnArrival = false;
+        ArriveResolved(2062);
+        assert(ER::roomEntry.grottoEmergence && Grotto_HasPendingReturnLanding());
+        DieAndReturnToCurrentRoom();
+        assert(player.actor.params == 0x04FF && ER::roomEntry.grottoEmergence);
+        assert(Grotto_HasPendingReturnLanding() && nativeIdleStarts == 0);
+        const auto pendingHistory = ER::previousScene;
+        landingGeometryClear = false;
+        DispatchFirstGrottoUpdate(&play,&player);
+        assert(nativeEmergences == 1 && grottoLanding.observing && !grottoLanding.landed);
+        Grotto_UpdateReturnLanding(&player.actor);
+        assert(ER::roomEntry.grottoEmergence); // Airborne is not a landing.
+        Count("death_before_grotto_landing_replays_emergence");
+
+        hole.world.pos = grottoLanding.origin;
+        play.actorCtx.actorLists[0].head = &hole;
+        player.actor.bgCheckFlags |= BGCHECKFLAG_GROUND;
+        Grotto_UpdateReturnLanding(&player.actor);
+        assert(ER::roomEntry.grottoEmergence); // Ground under the hole is insufficient.
+        player.actor.world.pos.x += 80.0f;
+        Grotto_UpdateReturnLanding(&player.actor);
+        assert(grottoLanding.landed && !ER::roomEntry.grottoEmergence);
+        assert(SamePoint(ER::previousScene,pendingHistory));
+        assert(gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams == 0x0DFF);
+        play.actorCtx.actorLists[0].head = nullptr;
+        DieAndReturnToCurrentRoom();
+        Count("native_emergence_landing_updates_only_current_checkpoint");
+    }
+    auto settings = Settings(2047);
+    settings["EntranceMap.187"] = 1806;
+    ResetFixture(settings,true);
+    assert(ER::routing.Destination(187) == 1806);
+    assert(GetAgeSpawnEntrance(LINK_AGE_CHILD) == grottoLoadTable[14].entranceIndex);
+    FinishArrival(SCENE_GROTTOS,0,{111,222,333});
+    assert(ER::roomEntry.target == 1806 && !Grotto_HasPendingReturnLanding());
+    assert(play.sceneNum == SCENE_GROTTOS && nativeIdleStarts == 0 && nativeEmergences == 0);
+    Count("existing_seed_interior_spawn_1806_is_not_converted_to_exterior");
 }
 void TestLifecycleAndSpawn() {
     auto settings = Settings(2047);
@@ -480,7 +870,8 @@ void TestLifecycleAndSpawn() {
 }
 int main() {
     TestPolicy(); TestDungeonSpawns(); TestBossOwnership(); TestPreviousScene(); TestFinalBattleReturns();
-    TestSharedGrottoHistory(); TestLifecycleAndSpawn();
+    TestImmediateMappedRoomHistory(); TestNativeRoomCompletion(); TestReloadAndRecoveryHistory();
+    TestSharedGrottoHistory(); TestGrottoLandingAndNativeOverrides(); TestLifecycleAndSpawn();
     assert(itemGrants == 0);
     nlohmann::json report = cases;
     std::cout << report.dump(2) << '\n';

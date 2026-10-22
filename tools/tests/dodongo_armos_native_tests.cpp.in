@@ -1,0 +1,218 @@
+#include <array>
+#include <cstdint>
+#include <cstdlib>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <string>
+#include <vector>
+
+@CONSTANTS@
+using RandomizerGet = int;
+#define SPDLOG_INFO(...) ((void)0)
+#define SPDLOG_ERROR(...) ((void)0)
+namespace Rando {
+struct Context;
+struct Logic {
+    Context* ctx = nullptr;
+    bool IsChild = true, IsAdult = false, CalculatingAvailableChecks = true, allowed = true;
+    std::array<bool, CONSTANT_COUNT> inventory{}, events{};
+    std::map<std::string, bool> capabilities;
+    bool HasItem(int key) { return inventory[key] || (key == RG_HOOKSHOT && inventory[RG_LONGSHOT]); }
+    bool ItemUseAllowed(int) { return allowed; }
+    bool Get(int key) { return events[key]; }
+    bool CanUse(RandomizerGet);
+    bool CanClimbLadder();
+    int GetAmmo(int) { return 0; }
+    int CurrentUpgrade(int) { return 0; }
+    bool BombchuRefill() { return false; }
+    bool BombchusEnabled() { return false; }
+    bool HasAnimalSoul(int) { return true; }
+    @OTHER_LOGIC_METHODS@
+};
+struct Context {
+    std::array<bool, CONSTANT_COUNT> options{};
+    bool GetOption(int key) { return options[key]; }
+    bool GetTrickOption(int key) { return options[key]; }
+};
+@CAN_USE@
+@CAN_CLIMB_LADDER@
+}
+Rando::Context context;
+Rando::Context* ctx = &context;
+auto logic = std::make_shared<Rando::Logic>();
+struct Rule { int key; std::function<bool()> condition; };
+struct Region {
+    std::vector<Rule> events, locations, exits;
+    Region() = default;
+    Region(const char*, int, std::initializer_list<Rule> e,
+           std::initializer_list<Rule> l, std::initializer_list<Rule> x)
+        : events(e), locations(l), exits(x) {}
+};
+std::array<Region, CONSTANT_COUNT> areaTable;
+#define EVENT_ACCESS(key, ...) Rule{key, [] { return __VA_ARGS__; }}
+#define LOCATION(key, ...) Rule{key, [] { return __VA_ARGS__; }}
+#define ENTRANCE(key, condition, ...) Rule{key, [] { return condition; }}
+template<class F> bool AnyAgeTime(F condition) { return condition(); }
+void InitArmosRoute() {
+@REGIONS@
+}
+
+using u8 = uint8_t;
+using u16 = uint16_t;
+using s8 = int8_t;
+using s16 = int16_t;
+using s32 = int32_t;
+#define ABS(x) std::abs(x)
+#define LUSLOG_INFO(...) ((void)0)
+constexpr int FLAG_SCENE_SWITCH = 0;
+struct TransitionSide { s8 room = 0; };
+struct TransitionActorEntry { TransitionSide sides[2]; };
+struct PlayState {
+    int sceneNum = 1;
+    struct { std::array<TransitionActorEntry, 32> list; } transiActorCtx;
+    struct { struct { uint32_t swch = 0, tempSwch = 0, clear = 0; } flags; } actorCtx;
+};
+struct DoorShutter;
+using DoorShutterActionFunc = void(*)(DoorShutter*, PlayState*);
+struct DoorShutter {
+    struct { struct {
+        int params = 0;
+        s8 room = 0;
+        struct { struct { s16 y = 0; } rot; } shape;
+        s16 yawTowardsPlayer = 0;
+    } actor; } dyna;
+    int doorType = 0, styleType = 0, gfxType = 0, actionTimer = 0;
+    float barsClosedAmount = 0;
+    DoorShutterActionFunc actionFunc = nullptr;
+};
+struct ShutterObjectInfo { int index1, index2; };
+ShutterObjectInfo sObjectInfo[] = {{0, 1}};
+@SHUTTER_TYPES@
+void DoorShutter_WaitClear(DoorShutter*, PlayState*) {}
+void DoorShutter_BarAndWaitSwitchFlag(DoorShutter*, PlayState*) {}
+void DoorShutter_UnbarredCheckSwitchFlag(DoorShutter*, PlayState*) {}
+void DoorShutter_Unopenable(DoorShutter*, PlayState*) {}
+void DoorShutter_Idle(DoorShutter*, PlayState*) {}
+size_t switchSetCalls = 0, switchUnsetCalls = 0;
+void GameInteractor_ExecuteOnSceneFlagSet(int, int, int) { ++switchSetCalls; }
+void GameInteractor_ExecuteOnSceneFlagUnset(int, int, int) { ++switchUnsetCalls; }
+bool Flags_GetClear(PlayState* play, int room) { return play->actorCtx.flags.clear & (1u << room); }
+@FLAGS_GET@
+@FLAGS_SET@
+@FLAGS_UNSET@
+// Original C actor functions name the receiver "this". Rename only that C
+// identifier while compiling the untouched function text alongside C++ rules.
+#define this actorSelf
+@SHUTTER_SETUP_ACTION@
+@SHUTTER_SETUP_DOOR@
+#undef this
+
+struct DoorFact { int index, front, back, params; };
+const DoorFact facts[] = {
+@DOOR_FACTS@
+};
+size_t cases = 0, assertions = 0;
+#define CHECK(condition) do { ++assertions; if (!(condition)) { \
+    std::cerr << "failed at " << __LINE__ << ": " << #condition << '\n'; std::exit(1); } } while (false)
+bool Exit(int source, int target) {
+    bool found = false, allowed = false;
+    for (const auto& exit : areaTable[source].exits)
+        if (exit.key == target) { found = true; allowed |= exit.condition(); }
+    CHECK(found);
+    return allowed;
+}
+void Reset(bool adult = false) {
+    *logic = Rando::Logic{};
+    logic->ctx = ctx;
+    logic->IsAdult = adult;
+    logic->IsChild = !adult;
+    ctx->options.fill(false);
+}
+DoorShutter Door(PlayState& play, const DoorFact& fact, int side) {
+    play.transiActorCtx.list[fact.index].sides[0].room = fact.front;
+    play.transiActorCtx.list[fact.index].sides[1].room = fact.back;
+    DoorShutter door;
+    door.dyna.actor.params = fact.params | (fact.index << 10);
+    door.doorType = (fact.params >> 6) & 15;
+    door.dyna.actor.room = side == 0 ? fact.front : fact.back;
+    return door;
+}
+
+int main() {
+    Reset();
+    InitArmosRoute();
+    CHECK(areaTable[RR_DODONGOS_CAVERN_ARMOS_ROOM].events.empty());
+    CHECK(areaTable[RR_DODONGOS_CAVERN_ARMOS_ROOM].exits.size() == 2);
+    for (const auto& exit : areaTable[RR_DODONGOS_CAVERN_ARMOS_ROOM].exits)
+        CHECK(exit.key != RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER);
+
+    // Real native region predicates, including explicit native-only tricks.
+    for (bool adult : {false, true}) for (bool grab : {false, true})
+    for (bool climb : {false, true}) for (bool hook : {false, true})
+    for (bool trick : {false, true}) for (bool usable : {false, true}) {
+        ++cases; Reset(adult);
+        logic->inventory[RG_POWER_BRACELET] = grab;
+        logic->inventory[RG_CLIMB] = climb;
+        logic->inventory[RG_HOOKSHOT] = hook;
+        logic->allowed = usable;
+        ctx->options[RT_UNINTUITIVE_JUMPS] = trick;
+        CHECK(logic->CanUse(RG_HOOKSHOT) == (adult && hook && usable));
+        const bool canPress = adult || (grab && climb) || trick;
+        CHECK(Exit(RR_DODONGOS_CAVERN_ARMOS_ROOM, RR_DODONGOS_CAVERN_STAIRS_UPPER) == canPress);
+        CHECK(Exit(RR_DODONGOS_CAVERN_ARMOS_ROOM, RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE) == canPress);
+        CHECK(Exit(RR_DODONGOS_CAVERN_STAIRS_UPPER, RR_DODONGOS_CAVERN_ARMOS_ROOM));
+        CHECK(Exit(RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE, RR_DODONGOS_CAVERN_ARMOS_ROOM));
+        CHECK(Exit(RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE, RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER));
+        CHECK(Exit(RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER, RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE) == climb);
+    }
+
+    // The real actor gates both room5 exits on the same switch, independently
+    // of room clear flags. Free outer approaches do not imply a free return.
+    for (const auto& fact : facts) for (int side : {0, 1})
+    for (bool pressed : {false, true}) for (bool cleared : {false, true}) {
+        ++cases;
+        PlayState play;
+        DoorShutter door = Door(play, fact, side);
+        if (pressed) Flags_SetSwitch(&play, 0x22);
+        if (cleared) play.actorCtx.flags.clear = 1u << 5;
+        const bool barred = side == 1 && !pressed;
+        CHECK(DoorShutter_SetupDoor(&door, &play) == barred);
+        if (barred) {
+            CHECK(door.actionFunc == DoorShutter_BarAndWaitSwitchFlag);
+            CHECK(door.barsClosedAmount == 1.0f);
+        } else {
+            CHECK(door.actionFunc == (side == 1 ? DoorShutter_UnbarredCheckSwitchFlag : DoorShutter_Idle));
+        }
+        CHECK(play.actorCtx.flags.swch == 0);
+        CHECK(bool(Flags_GetSwitch(&play, 0x22)) == pressed);
+    }
+    for (const auto& fact : facts) {
+        ++cases;
+        PlayState play;
+        DoorShutter door = Door(play, fact, 1);
+        CHECK(DoorShutter_SetupDoor(&door, &play));
+        const auto setBefore = switchSetCalls;
+        Flags_SetSwitch(&play, 0x22);
+        Flags_SetSwitch(&play, 0x22);
+        CHECK(switchSetCalls == setBefore + 1);
+        CHECK(play.actorCtx.flags.tempSwch == (1u << 2));
+        CHECK(!DoorShutter_SetupDoor(&door, &play));
+        CHECK(door.actionFunc == DoorShutter_UnbarredCheckSwitchFlag);
+        Flags_UnsetSwitch(&play, 0x22);
+        CHECK(DoorShutter_SetupDoor(&door, &play));
+        CHECK(door.actionFunc == DoorShutter_BarAndWaitSwitchFlag);
+        // An ordinary new scene starts without this temporary scene bit.
+        PlayState reloaded;
+        DoorShutter freshDoor = Door(reloaded, fact, 1);
+        CHECK(DoorShutter_SetupDoor(&freshDoor, &reloaded));
+    }
+    ++cases; Reset(true);
+    CHECK(Exit(RR_DODONGOS_CAVERN_ARMOS_ROOM, RR_DODONGOS_CAVERN_STAIRS_UPPER));
+    logic->IsAdult = false; logic->IsChild = true;
+    CHECK(!Exit(RR_DODONGOS_CAVERN_ARMOS_ROOM, RR_DODONGOS_CAVERN_STAIRS_UPPER));
+    CHECK(!Exit(RR_DODONGOS_CAVERN_ARMOS_ROOM, RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE));
+    std::cout << "{\"cases\":" << cases << ",\"assertions\":" << assertions
+              << ",\"physical_switch_doors\":" << std::size(facts) << "}\n";
+}

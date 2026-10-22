@@ -11,6 +11,7 @@
 #include "soh/Enhancements/cosmetics/cosmeticsTypes.h"
 #include "soh/Enhancements/enhancementTypes.h"
 #include "soh/ShipUtils.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -2995,8 +2996,22 @@ void Inventory_ChangeAmmo(s16 item, s16 ammoChange) {
     // "Item = (%d)    Amount = (%d + %d)"
     osSyncPrintf("アイテム = (%d)    数 = (%d + %d)  ", item, AMMO(item), ammoChange);
 
+    // Keep usage statistics tied to the action even when its last unit is
+    // protected. The wrapper never grants ammo or changes positive refills.
+    const int32_t currentAmmo = AMMO(item);
+    int32_t appliedAmmoChange = Archipelago_AdjustAmmoChange(item, currentAmmo, ammoChange);
+    if (appliedAmmoChange < 0 &&
+        (item == ITEM_STICK || item == ITEM_NUT || item == ITEM_BOMB || item == ITEM_BOMBCHU || item == ITEM_BOW)) {
+        // Native ammo is signed eight-bit storage. Bound losses before that
+        // conversion so an oversized decrement cannot wrap into a refill.
+        const int32_t minimumAmmoChange = currentAmmo > 0 ? -currentAmmo : 0;
+        if (appliedAmmoChange < minimumAmmoChange) {
+            appliedAmmoChange = minimumAmmoChange;
+        }
+    }
+
     if (item == ITEM_STICK) {
-        AMMO(ITEM_STICK) += ammoChange;
+        AMMO(ITEM_STICK) += appliedAmmoChange;
 
         if (AMMO(ITEM_STICK) >= CUR_CAPACITY(UPG_STICKS)) {
             AMMO(ITEM_STICK) = CUR_CAPACITY(UPG_STICKS);
@@ -3004,7 +3019,7 @@ void Inventory_ChangeAmmo(s16 item, s16 ammoChange) {
             AMMO(ITEM_STICK) = 0;
         }
     } else if (item == ITEM_NUT) {
-        AMMO(ITEM_NUT) += ammoChange;
+        AMMO(ITEM_NUT) += appliedAmmoChange;
 
         if (AMMO(ITEM_NUT) >= CUR_CAPACITY(UPG_NUTS)) {
             AMMO(ITEM_NUT) = CUR_CAPACITY(UPG_NUTS);
@@ -3012,17 +3027,18 @@ void Inventory_ChangeAmmo(s16 item, s16 ammoChange) {
             AMMO(ITEM_NUT) = 0;
         }
     } else if (item == ITEM_BOMBCHU) {
-        AMMO(ITEM_BOMBCHU) += ammoChange;
+        AMMO(ITEM_BOMBCHU) += appliedAmmoChange;
 
         if (GameInteractor_Should(VB_CHECK_BOMBCHU_CAPACITY, true)) {
             if (AMMO(ITEM_BOMBCHU) > 50) {
                 AMMO(ITEM_BOMBCHU) = 50;
             }
-        } else if (AMMO(ITEM_BOMBCHU) < 0) {
+        }
+        if (AMMO(ITEM_BOMBCHU) < 0) {
             AMMO(ITEM_BOMBCHU) = 0;
         }
     } else if (item == ITEM_BOW) {
-        AMMO(ITEM_BOW) += ammoChange;
+        AMMO(ITEM_BOW) += appliedAmmoChange;
 
         if (AMMO(ITEM_BOW) >= CUR_CAPACITY(UPG_QUIVER)) {
             AMMO(ITEM_BOW) = CUR_CAPACITY(UPG_QUIVER);
@@ -3030,7 +3046,7 @@ void Inventory_ChangeAmmo(s16 item, s16 ammoChange) {
             AMMO(ITEM_BOW) = 0;
         }
     } else if ((item == ITEM_SLINGSHOT) || (item == ITEM_SEEDS)) {
-        AMMO(ITEM_SLINGSHOT) += ammoChange;
+        AMMO(ITEM_SLINGSHOT) += appliedAmmoChange;
 
         if (AMMO(ITEM_SLINGSHOT) >= CUR_CAPACITY(UPG_BULLET_BAG)) {
             AMMO(ITEM_SLINGSHOT) = CUR_CAPACITY(UPG_BULLET_BAG);
@@ -3038,7 +3054,7 @@ void Inventory_ChangeAmmo(s16 item, s16 ammoChange) {
             AMMO(ITEM_SLINGSHOT) = 0;
         }
     } else if (item == ITEM_BOMB) {
-        AMMO(ITEM_BOMB) += ammoChange;
+        AMMO(ITEM_BOMB) += appliedAmmoChange;
 
         if (AMMO(ITEM_BOMB) >= CUR_CAPACITY(UPG_BOMB_BAG)) {
             AMMO(ITEM_BOMB) = CUR_CAPACITY(UPG_BOMB_BAG);
@@ -3046,7 +3062,7 @@ void Inventory_ChangeAmmo(s16 item, s16 ammoChange) {
             AMMO(ITEM_BOMB) = 0;
         }
     } else if (item == ITEM_BEAN) {
-        AMMO(ITEM_BEAN) += ammoChange;
+        AMMO(ITEM_BEAN) += appliedAmmoChange;
     }
 
     osSyncPrintf("合計 = (%d)\n", AMMO(item)); // "Total = (%d)"

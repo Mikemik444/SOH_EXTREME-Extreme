@@ -1,0 +1,24 @@
+#include <cassert>
+#include <cstdio>
+#include "soh/Network/Archipelago/EntranceDestinationPolicy.h"
+using namespace SohExtreme;
+int main() {
+    const auto* hut = EntranceDestinationById(781);
+    const auto* outside = EntranceDestinationById(853);
+    assert(hut && outside);
+    assert(hut->sourceAgeMask == kEntranceAdultAge);
+    assert(hut->arrivalAgeMask == kEntranceAdultAge);
+    assert(outside->sourceAgeMask == (kEntranceChildAge | kEntranceAdultAge));
+    assert(outside->arrivalAgeMask == (kEntranceChildAge | kEntranceAdultAge));
+    assert(!EntranceDestinationAllowsAge(hut, kEntranceChildAge));
+    assert(EntranceDestinationAllowsAge(hut, kEntranceAdultAge));
+    assert(EntranceDestinationAllowsAge(outside, kEntranceChildAge));
+    assert(EntranceDestinationAllowsAge(outside, kEntranceAdultAge));
+    assert(!EntranceDestinationAllowsAge(hut, 0));
+    assert(!EntranceDestinationAllowsAge(hut, 3));
+    for (unsigned ageTime = 0; ageTime < 4; ++ageTime) {
+        assert(hut->normalLayers[ageTime].scene == 58);
+        assert(outside->normalLayers[ageTime].scene == 83);
+    }
+    std::puts("{\"status\":\"passed\",\"assertions\":19}");
+}

@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "cases": 86,
+  "assertions": 355,
+  "output": [
+    "Catalog: 52 handles, rotated probes, disconnected same-source and shared-destination exits",
+    "Lifecycle: double leaves, culling, actor removal/reuse, toggle, unload and scene reset",
+    "Fallbacks: renderer boundaries, missing state, MQ, dynamic/lower floors and identity rejection",
+    "Components: exact membership, header replacement, distinct same-target doors and other cyan labels",
+    "RESULT cases=86 assertions=355"
+  ],
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "standalone_header_compile": "passed",
+  "source_unchanged_during_tests": true,
+  "destination_wording_unchanged_from_baseline": true,
+  "scope": "Actual production collector, renderer-eligibility helper, yellow/cyan updaters, exit ownership, cache/reset bodies, scene/actor hook bodies and Floor3 wrapper; full SceneExitLabels.h and physical catalogues. Engine actors, synthetic triangle floor queries, NameTag registration and destination wording use explicit I/O shims. No full native game build, ROM geometry, rendered UI/controller playthrough, or new seed validation.",
+  "sources": {
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "c22d91438942442167cc4e77bf2edc0b0c9ada09e3afcc7ad37d49c883f92a53",
+    "soh/Enhancements/randomizer/RoomDebugWorldLabels.inc": "8543da4fe295d25e25fce0c6fc7e186a1d9b21df4f454e764a4652f88628b03c",
+    "soh/Enhancements/randomizer/SceneExitLabels.h": "77e3e9f428e72fdf6968279b9d82de4321b4eed6b0942161a94f191ea6c95b9c",
+    "soh/Enhancements/randomizer/RoomDebugDoorData.inc": "093222ef9d9be8941f3a17954f7770f6adc4ee43c2486fb6b1c8a94b02d26b34",
+    "soh/Enhancements/randomizer/RoomDebugSceneData.inc": "cad6bafaaa01843118f15e268e22d4e3b08e080a56964d2e3569b75f250b4c9f",
+    "soh/Enhancements/nametag.cpp": "c4febcf7c0e7e24ed7901eef549dee8b9e3b8458a3a4ea7b6f2575840a74cab6",
+    "soh/Enhancements/nametag.h": "473d0d72be3ec612eb9cf25675a92566372e13811ec2ad5988478731060274bb",
+    "src/overlays/actors/ovl_player_actor/z_player.c": "bedcd6d3cbef6cd3d3f3d286ca7f491d7327e110110b67daf3ce4fa230c803ee",
+    "src/overlays/actors/ovl_En_Door/z_en_door.c": "53dab2314d069dd0b54ed978ced8fe628a1ede0e4f97789354b42f52a56d4dc8",
+    "src/code/z_bgcheck.c": "c6ff3556647d60f70b7fb8d771c2471ba442345b48b74c0ee8afb6e5ed6b651e",
+    "tools/tests/test_entrance_label_overlays_native.py": "55fbefcc95026765c0014444435adc869f72a34386bcf6eaf2ccd0d2b7e189be",
+    "tools/tests/test_soul_object_blockers.py": "a21f4e28154fef749960f04aa6ce8ab0824b1a4697ca5602460d4b0b38852aee",
+    "tools/tests/entrance_label_overlays_native_tests.cpp.in": "720c4b570d9672efd91243078b34297752a173ddfc02bdd7c962218be8e4ef27"
+  },
+  "tested_function_sha256": {
+    "YELLOW_FUNCTION": "cfbab27b3500ace433dc0264eff2cd369f788e6360d710e5e1f7cb5be2fde138",
+    "RESET_FUNCTION": "229518a5dc347e9555857aaa6fd0be75a5f0958d5e915b6808b9f75a9e91730f",
+    "CACHE_FUNCTION": "7bf9e469f9dcbce15c518acb6c409b6235a24bee0f34431bfe3adf423ab97309",
+    "CYAN_FUNCTION": "dcb6e45135ff03df0b25367c7735214e35717372b4186653125f292eee99e4b7",
+    "FLOOR_WRAPPER": "be8a569dea2ae619eeb6051d374f3bc7a43d8d41d2d0febcd558726fb582596c",
+    "VISIBLE_FUNCTION": "1c8b4319e95d776120f7b1a08bdee8418ed1d07a2b094c744b2358c3a580949d",
+    "COLLECTOR_FUNCTION": "0a8b3fe3da37d0841323d25e4cb79f8098d266385cb42660ed1e00d6f23d400e",
+    "OWNERSHIP_FUNCTION": "8dc0449740ab02ea454a8cce41166300589ea29a2d297b7b92e97bdef10084c3"
+  },
+  "baseline": {
+    "archive": "SOH-EXTREME-1.8.11-source-files.zip",
+    "sha256": "5dbd457545a053e1175e4d921afd8168272e75d9de386ea373013b85693094e0",
+    "tested_function_sha256": {
+      "YELLOW_FUNCTION": "f5fcad77302b9a242922db9f84ab4e251e79361b09af2d08991cd434b69fd19c",
+      "RESET_FUNCTION": "229518a5dc347e9555857aaa6fd0be75a5f0958d5e915b6808b9f75a9e91730f",
+      "CACHE_FUNCTION": "6c3b39b2624a48d9fa08f83432ce48343830244b150b766123673c836d77d8aa",
+      "CYAN_FUNCTION": "0bf3854566977e6fe14d75f7d993e9576c414d9c18fd4ec5dacfc6d09cfc7b80",
+      "FLOOR_WRAPPER": "be8a569dea2ae619eeb6051d374f3bc7a43d8d41d2d0febcd558726fb582596c"
+    },
+    "scope": "Old production updater/cache/reset bodies taken directly from the supplied ZIP; explicit engine I/O shims and the current backward-compatible SceneExitLabels.h. The header's added polygon metadata is unused by the old bodies.",
+    "reproduction": {
+      "status": "passed",
+      "cases": 2,
+      "assertions": 2,
+      "output": [
+        "Reproduced: one physical handle registers 1 yellow and 1 cyan label",
+        "Reproduced: one double doorway registers 2 yellow and 2 cyan labels",
+        "RESULT cases=2 assertions=2"
+      ]
+    }
+  }
+}

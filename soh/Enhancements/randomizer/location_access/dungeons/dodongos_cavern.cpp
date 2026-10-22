@@ -163,9 +163,14 @@ void RegionTable_Init_DodongosCavern() {
     });
 
     areaTable[RR_DODONGOS_CAVERN_ARMOS_ROOM] = Region("Dodongos Cavern Armos Room", SCENE_DODONGOS_CAVERN, {}, {}, {
+        // Both room-side shutters use temporary switch 0x22 on the central pillar.
+        // A child moves the non-enemy statue and climbs the ladder; an adult can
+        // climb onto it directly. Reaching either doorway never opens its bars.
+        // Keep this a current-age action: a prior visit cannot save the switch
+        // across an ordinary scene reload or an age change.
         //Exits
-        ENTRANCE(RR_DODONGOS_CAVERN_STAIRS_UPPER,    true),
-        ENTRANCE(RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER, logic->IsAdult || (logic->HasItem(RG_POWER_BRACELET) && logic->HasItem(RG_CLIMB)) || ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) || logic->CanUse(RG_HOOKSHOT)),
+        ENTRANCE(RR_DODONGOS_CAVERN_STAIRS_UPPER,         logic->IsAdult || (logic->HasItem(RG_POWER_BRACELET) && logic->HasItem(RG_CLIMB)) || ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) || logic->CanUse(RG_HOOKSHOT)),
+        ENTRANCE(RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE, logic->IsAdult || (logic->HasItem(RG_POWER_BRACELET) && logic->HasItem(RG_CLIMB)) || ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS) || logic->CanUse(RG_HOOKSHOT)),
     });
 
     areaTable[RR_DODONGOS_CAVERN_ENTRANCE_SIDE_BRIDGE] = Region("Dodongos Cavern Entrance Side Bridge", SCENE_DODONGOS_CAVERN, {}, {
@@ -176,6 +181,8 @@ void RegionTable_Init_DodongosCavern() {
         //Exits
         ENTRANCE(RR_DODONGOS_CAVERN_LOBBY,           logic->TakeDamage()),
         ENTRANCE(RR_DODONGOS_CAVERN_ARMOS_ROOM,      true),
+        // The downward ladder route starts after the physical bridge-side door.
+        ENTRANCE(RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER, true),
         //RANDOTODO where does this damage boost start?
         ENTRANCE(RR_DODONGOS_CAVERN_BOMB_ROOM_UPPER, ((logic->IsAdult || logic->BunnyHood()) && ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS)) || logic->CanUse(RG_HOVER_BOOTS) || 
                                                          (ctx->GetTrickOption(RT_DAMAGE_BOOST_SIMPLE) && logic->HasExplosives() && logic->CanJumpslash())),

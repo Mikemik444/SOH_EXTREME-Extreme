@@ -1,0 +1,12 @@
+SOH-EXTREME 1.8.11 validation: PASSED
+190 complete replacement source files.
+Current evidence: validation/dodongo_1811/
+Walls: 52 cases / 347 assertions. Hallway signature: 65 cases / 144 assertions.
+Armos native switch logic: 83 cases / 926 assertions. AP: 8 methods / 230 decisions.
+Destination labels: 1,278 cases / 6,910 assertions; standalone header compilation passed.
+Native fixtures passed AddressSanitizer and UndefinedBehaviorSanitizer.
+Original seed: 4,036 exact placements and 719 mappings; corrected unchanged replay 2/4,036, goal false.
+Fresh child and adult full fills: 4,036/4,036 and goal reachable in each.
+Actual generated ages asserted; adult variant explicitly uses Closed Forest Off.
+APWorld bytes and complete source manifest verified by the shipped helper.
+No full Windows native build or gameplay test performed.

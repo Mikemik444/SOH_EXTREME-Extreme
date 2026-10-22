@@ -311,7 +311,7 @@
     "index": "ENTR_CASTLE_COURTYARD_GUARDS_DAY_0",
     "kind": "Interior",
     "source": "HC_DRAIN_LEDGE",
-    "target": "HC_GARDEN",
+    "target": "HC_COURTYARD_GUARDS",
     "mode": "entrance",
     "entrances": [
       122
@@ -2035,7 +2035,7 @@
     "index": "ENTR_CASTLE_COURTYARD_GUARDS_DAY_1",
     "kind": "Interior",
     "source": "HC_GARDEN",
-    "target": "HC_GARDEN",
+    "target": "HC_COURTYARD_GUARDS",
     "mode": "entrance",
     "entrances": [
       662
@@ -2045,8 +2045,7 @@
     "source_scene_token": "SCENE_CASTLE_COURTYARD_ZELDA",
     "target_scene_token": "SCENE_CASTLE_COURTYARD_GUARDS_DAY",
     "grotto": -1,
-    "content": -1,
-    "traversal_rule": "day"
+    "content": -1
   },
   {
     "id": 11000666,
@@ -3254,7 +3253,7 @@
     "name": "Scene Transition: Castle Courtyard guards -> Zelda Courtyard",
     "index": "ENTR_CASTLE_COURTYARD_ZELDA_0",
     "kind": "Interior",
-    "source": "HC_GARDEN",
+    "source": "HC_COURTYARD_GUARDS",
     "target": "HC_GARDEN",
     "mode": "entrance",
     "entrances": [
@@ -3265,8 +3264,7 @@
     "source_scene_token": "SCENE_CASTLE_COURTYARD_GUARDS_DAY",
     "target_scene_token": "SCENE_CASTLE_COURTYARD_ZELDA",
     "grotto": -1,
-    "content": -1,
-    "traversal_rule": "day"
+    "content": -1
   },
   {
     "id": 11001035,
@@ -5812,7 +5810,7 @@
     "name": "Scene Transition: Castle Courtyard guards -> Hyrule Castle drain",
     "index": "ENTR_CASTLE_GROUNDS_RAINBOW_BRIDGE_EXIT",
     "kind": "Interior",
-    "source": "HC_GARDEN",
+    "source": "HC_COURTYARD_GUARDS",
     "target": "HC_DRAIN_LEDGE",
     "mode": "entrance",
     "entrances": [

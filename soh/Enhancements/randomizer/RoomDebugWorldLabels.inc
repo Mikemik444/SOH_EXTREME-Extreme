@@ -49,21 +49,17 @@ static int RoomDebugOverriddenEntrance(int entrance) {
     return entrance;
 }
 
-static std::string RoomDebugSceneExitText(int entrance, const std::string& prefix) {
+static std::string RoomDebugSceneExitText(int entrance, const std::string& prefix,
+                                         int nativeRoom, int nativeScene) {
     const int source = RoomDebugResolveExit(entrance);
     const int apDestination = Archipelago_EntranceDestination(source);
     const int destination = apDestination != source ? apDestination : RoomDebugOverriddenEntrance(source);
-    int scene = -1;
-    std::string name;
-    if (const auto* endpoint = SohExtreme::EntranceEndpointById(destination); endpoint && endpoint->door >= 0) {
-        std::string label(endpoint->name);
-        const auto separator = label.find(" -> ");
-        if (separator != std::string::npos) label.erase(0, separator + 4);
-        return prefix + " -> " + label + "\nScene: " + SohUtils::GetSceneName(endpoint->scene) +
-               " | Room " + std::to_string(endpoint->room);
-    }
+    const auto* endpoint = SohExtreme::EntranceEndpointById(destination);
+    int scene = endpoint ? endpoint->scene : -1;
+    int room = endpoint ? endpoint->room : -1;
+    std::string name = endpoint ? SohExtreme::EntranceArrivalDescription(*endpoint) : "";
     const auto* data = EntranceTracker::GetEntranceData(destination);
-    if (data) name = data->destination;
+    if (name.empty() && data) name = SohExtreme::ReadableEntranceDestination(data->destination);
     for (const auto& row : roomDebugSceneTransitions) {
         if (row.entrance != destination) continue;
         scene = row.target;
@@ -71,16 +67,16 @@ static std::string RoomDebugSceneExitText(int entrance, const std::string& prefi
             name = row.name;
             const auto separator = name.find(" -> ");
             if (separator != std::string::npos) name.erase(0, separator + 4);
+            name = SohExtreme::ReadableEntranceDestination(SohExtreme::CleanTrackerLabel(std::move(name)));
         }
         break;
     }
     if (scene < 0 && destination >= 0 && destination < ENTR_MAX) scene = gEntranceTable[destination].scene;
-    if (name.empty() && scene >= 0) name = SohUtils::GetSceneName(scene);
-    char id[32];
-    std::snprintf(id, sizeof(id), "0x%04X", destination);
-    if (name.empty()) name = std::string("Entrance ") + id;
-    return prefix + " -> " + name + (scene >= 0 ? "\nScene: " + SohUtils::GetSceneName(scene) : "") +
-           " (" + id + ")";
+    // The physical scene-door catalogue knows some vanilla arrival rooms.
+    // An overridden scene entrance only has a spawn index, not a room number.
+    if (room < 0 && destination == source && scene == nativeScene) room = nativeRoom;
+    if (name.empty()) name = scene >= 0 ? SohUtils::GetSceneName(scene) : "the scene exit";
+    return SohExtreme::RoomDestinationLabel(prefix, name, room);
 }
 
 static void CacheRoomDebugExitAnchors() {
@@ -94,7 +90,7 @@ static void CacheRoomDebugExitAnchors() {
         auto* poly = &header->polyList[i];
         const int exit = SurfaceType_GetSceneExitIndex(&gPlayState->colCtx, poly, BGCHECK_SCENE);
         if (exit <= 0 || exit > 31) continue;
-        SohExtreme::ExitTriangle triangle{ exit, {} };
+        SohExtreme::ExitTriangle triangle{ exit, {}, i };
         bool valid = true;
         for (int v = 0; v < 3; ++v) {
             const int index = COLPOLY_VTX_INDEX(poly->vtxData[v]);
@@ -124,22 +120,48 @@ static int RoomDebugGrottoEntrance(const Actor* actor) {
     return index >= 0 && index < static_cast<int>(std::size(entrances)) ? entrances[index] : -1;
 }
 
-static std::string RoomDebugPassageText(const Actor* actor, int index) {
-    const auto& door = gPlayState->transiActorCtx.list[index];
-    const int type = (actor->params >> 6) & 7;
-    const int room = gPlayState->roomCtx.curRoom.num;
-    if (type == 1) {
-        if (door.sides[0].room != room && door.sides[0].room != door.sides[1].room) return {};
-        return "One-way drop -> Room " + std::to_string(door.sides[1].room);
+static std::string RoomDebugPassageText(const Actor*, int index) {
+    // The popup and world labels must agree even while a hallway has already
+    // preloaded the opposite room. The shared formatter reads physical sides.
+    return RoomDebugDestination(index);
+}
+
+using RoomDebugExitPolygons = std::set<const CollisionPoly*>;
+
+static RoomDebugExitPolygons RoomDebugDoorExitPolygons() {
+    RoomDebugExitPolygons covered;
+    if (!gPlayState || !gPlayState->setupExitList || roomDebugExitAnchors.empty() ||
+        ResourceMgr_IsSceneMasterQuest(gPlayState->sceneNum)) return covered;
+    for (const auto& [index, leaves] : CollectRoomDebugDoorActors()) {
+        if (leaves.front()->id != ACTOR_EN_DOOR || !RoomDebugActorLabelVisible(leaves.front())) continue;
+        const auto& door = gPlayState->transiActorCtx.list[index];
+        int entrance = -1;
+        for (const auto& row : roomDebugDoors) {
+            if (row.entrance >= 0 && row.scene == gPlayState->sceneNum && row.door == index &&
+                row.x == door.pos.x && row.y == door.pos.y && row.z == door.pos.z) {
+                entrance = row.entrance;
+                break;
+            }
+        }
+        if (entrance < 0) continue;
+        for (const auto* leaf : leaves) for (float offset : { -22.0f, 22.0f }) {
+            // Player_ActionHandler_1 samples 22 units through a scene handle
+            // at Y + 10. Both directions and both double-door leaves matter.
+            Vec3f position{ leaf->world.pos.x + offset * Math_SinS(leaf->shape.rot.y),
+                            leaf->world.pos.y + 10.0f,
+                            leaf->world.pos.z + offset * Math_CosS(leaf->shape.rot.y) };
+            CollisionPoly* poly = nullptr;
+            s32 bgId = BGCHECK_SCENE;
+            const float floor = BgCheck_EntityRaycastFloor3(&gPlayState->colCtx, &poly, &bgId, &position);
+            // Floor3 also returns dynamic ownership. Stay on the scene's own
+            // polygons and within EnDoor_Idle's vertical opening range.
+            if (!poly || bgId != BGCHECK_SCENE || std::abs(floor - leaf->world.pos.y) >= 20.0f) continue;
+            const int exit = SurfaceType_GetSceneExitIndex(&gPlayState->colCtx, poly, BGCHECK_SCENE);
+            if (exit > 0 && exit <= 31 &&
+                RoomDebugResolveExit(gPlayState->setupExitList[exit - 1]) == entrance) covered.insert(poly);
+        }
     }
-    if (type == 2 || type == 5) {
-        const int side = GET_PLAYER(gPlayState)->actor.world.pos.y > actor->world.pos.y ? 0 : 1;
-        return "Vertical passage " + std::to_string(index + 1) + " -> Room " +
-               std::to_string(door.sides[1 - side].room);
-    }
-    std::string text = RoomDebugDestination(index);
-    text.replace(0, 4, "Passage");
-    return text;
+    return covered;
 }
 
 static void UpdateRoomDebugWorldLabels() {
@@ -149,10 +171,19 @@ static void UpdateRoomDebugWorldLabels() {
         return;
     }
     CacheRoomDebugExitAnchors();
+    const auto covered = RoomDebugDoorExitPolygons();
+    const auto* header = gPlayState->colCtx.colHeader;
     std::vector<RoomDebugWorldLabel> next;
     if (gPlayState->setupExitList) for (const auto& anchor : roomDebugExitAnchors) {
+        // Suppress only this physical component. Separate entrances may share
+        // the same exit-list entry or shuffled destination and keep their label.
+        const bool hasDoorLabel = std::any_of(anchor.polygons.begin(), anchor.polygons.end(), [&](int polygon) {
+            return header && polygon >= 0 && polygon < header->numPolygons &&
+                   covered.count(&header->polyList[polygon]);
+        });
+        if (hasDoorLabel) continue;
         next.push_back({ anchor.position, RoomDebugSceneExitText(gPlayState->setupExitList[anchor.exit - 1],
-                                                                "Scene exit " + std::to_string(anchor.exit)) });
+                                                                "Exit") });
     }
     for (const auto& list : gPlayState->actorCtx.actorLists) for (Actor* actor = list.head; actor; actor = actor->next) {
         std::string text;

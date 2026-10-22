@@ -39,13 +39,13 @@ class OverworldPoolTests(unittest.TestCase):
     def world(self, **options):
         return setup_multiworld(SohExtremeWorld, steps=(), seed=1802, options=options).worlds[1]
 
-    def test_default_is_off_and_overworld_toggle_selects_all_52_endpoints(self):
+    def test_default_is_off_and_overworld_toggle_selects_all_54_endpoints(self):
         world = self.world()
         self.assertNotIn('overworld', ER.enabled_categories(world))
         self.assertEqual(ER._eligible(world), [])
         world.options.shuffle_overworld_entrances.value = 1
         rows = ER._eligible(world)
-        self.assertEqual(len(rows), 52)
+        self.assertEqual(len(rows), 54)
         self.assertEqual({row['category'] for row in rows}, {'overworld'})
         ids = {row['id'] for row in rows}
         # Trail/City, summit/Crater, Darunia/Crater, and Woods/City.

@@ -24,7 +24,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.WATER_TEMPLE_ENTRYWAY, world, [
         (Regions.WATER_TEMPLE_LOBBY, lambda bundle: (
-            has_item(Items.BRONZE_SCALE, bundle))),
+            can_use(Items.IRON_BOOTS, bundle))),
         (Regions.LH_FROM_WATER_TEMPLE, lambda bundle: True_())
     ])
 

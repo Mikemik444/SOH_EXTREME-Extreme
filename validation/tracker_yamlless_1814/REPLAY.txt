@@ -1,0 +1,114 @@
+SOH-EXTREME 1.8.14 - Current validation replay
+=============================================
+
+The JSON reports in this directory describe tests of the exact current source
+bytes. REPLAY_INPUTS.json maps each hashed input to a complete replacement file,
+an APWorld member, a retained native source file, or a required external runtime.
+Reports elsewhere under validation are preserved historical results.
+
+ENVIRONMENT
+-----------
+The integration tests use a full SOH checkout with this release merged into it,
+Python 3.12, an Archipelago 0.6.8 source/runtime checkout with its Python
+dependencies and test/general.py, and the retained pinned Universal Tracker
+v0.3.5 input. The native checks use GCC 13.3.0 with C++20; the ammo protocol test
+also enables AddressSanitizer and UndefinedBehaviorSanitizer.
+
+For the following Linux commands, use this disposable layout:
+
+  /absolute/replay-work/source/          full SOH checkout plus this ZIP
+  /absolute/replay-work/ap-runtime-068/  Archipelago 0.6.8 source/runtime
+  /absolute/replay-work/ap-deps/         installed AP Python dependencies
+
+Register source/archipelago/soh_extreme as worlds.soh_extreme in that disposable
+AP runtime. A symbolic link at ap-runtime-068/worlds/soh_extreme is sufficient.
+Do not register a second loose or archived copy of the same world. The tests
+load their retained real UT fixture themselves and isolate GUI/socket/storage
+boundaries. They do not connect to a live server or modify your game saves.
+
+Set paths from the replay-work directory:
+
+  TASK_ROOT="$PWD"
+  SOH_SRC="$TASK_ROOT/source"
+  AP_RUNTIME="$TASK_ROOT/ap-runtime-068"
+  VALID="$SOH_SRC/validation/tracker_yamlless_1814"
+  UT_INPUT="$VALID/external/tracker_bootstrap_1814_upstream"
+  AP_INPUT="$VALID/external/tracker_bootstrap_1814_ap_dependencies"
+  BASE_INPUT="$VALID/inputs/tracker_yamlless_1814_baseline_members.zip"
+  RESULTS="$TASK_ROOT/replay-results"
+  export PYTHONPATH="$TASK_ROOT/ap-deps:$AP_RUNTIME"
+  mkdir -p "$RESULTS"
+
+REAL TRACKER AND WORLD RECONSTRUCTION
+-------------------------------------
+  python3 "$SOH_SRC/tools/tests/test_tracker_yamlless.py" \
+    --upstream "$UT_INPUT" --ap-dependencies "$AP_INPUT" \
+    --baseline "$BASE_INPUT" --report "$RESULTS/integration.json"
+
+  python3 "$SOH_SRC/tools/tests/test_tracker_keyring_restore.py" \
+    --upstream "$UT_INPUT" --ap-dependencies "$AP_INPUT" \
+    --baseline "$BASE_INPUT" --report "$RESULTS/keyring_restore.json"
+
+The baseline subset ZIP contains exact 1.8.13 TrackerClient.py, world __init__.py
+and ArchipelagoClient.cpp members. Its parent delivery and every extracted
+member were verified during packaging. A replay against this smaller ZIP will
+record its own archive hash, which deliberately differs from the original
+full-delivery hash in the published reports. The source-member hashes match.
+
+The integration test creates its own current slot snapshots, then verifies
+Connected, real UT TMain/updateTracker, ReceivedItems, reconnection, malformed
+snapshot rejection, Check Finder mirroring and launcher dispatch. The retained
+adult/child/controlled-entrance JSONs are evidence of the published successful
+run; they are not a playable seed package or a completed item fill.
+
+HINT, MIRROR AND NATIVE DECLARATION REGRESSIONS
+---------------------------------------------
+  python3 "$SOH_SRC/tools/tests/test_hint_bridge.py" \
+    --report "$RESULTS/hint_bridge.json"
+
+  python3 "$SOH_SRC/tools/tests/test_ammo_tracker_protocol.py" \
+    --report "$RESULTS/ammo_protocol.json"
+
+  python3 "$SOH_SRC/tools/tests/test_setting_bridge_declaration.py" \
+    --baseline "$BASE_INPUT" --report "$RESULTS/setting_declaration.json"
+
+The declaration check compiles the complete production ownership helper with
+the actual setting enum/header. Its baseline variant must fail specifically
+because Randomizer_GetSettingValue is undeclared; the production declaration
+must compile. No test-only declaration or function implementation masks that
+failure. This is a compile-only GCC probe, not a Windows/MSVC game build.
+
+OFFICIAL APWORLD ZIP LOADER
+---------------------------
+Run only after other AP tests have finished. This validator temporarily stages
+the APWorld and removes the loose-world link in the disposable runtime, then
+restores the link. Use absolute paths, because its child process changes cwd.
+
+  python3 "$VALID/finder_hints_186_validate_apworld.py" \
+    --runtime "$AP_RUNTIME" --archive "$SOH_SRC/soh_extreme.apworld" \
+    --source "$SOH_SRC/archipelago/soh_extreme" \
+    --native-header "$SOH_SRC/soh/SohExtremeVersion.h" \
+    --expected-version 1.8.14 \
+    --version-report "$RESULTS/version_validation.json" \
+    --report "$RESULTS/apworld_validation.json"
+
+An equivalent run against a separate Archipelago 0.6.7 runtime checks the
+declared minimum version. The current reports include both versions.
+
+PACKAGE AND BUILD-HELPER VERIFICATION
+-------------------------------------
+SOURCE_FILES.json lists all 259 complete replacement files and their hashes.
+The APWorld member manifest is also recorded there. The current source-build
+report exercised the actual shipped PowerShell helper's verification functions
+in a disposable fixture using PowerShell 7.6.7 on Linux. It did not compile the
+game. The old revision-4 build-workflow tests remain historical evidence.
+
+The retained packager and source-preflight scripts document the original
+release procedure. Reproducing the complete source inventory also needs the
+original upload/haha.zip and full 1.8.13 delivery ZIP at their recorded hashes,
+plus the original workspace layout. Those large prior inputs are not nested
+inside this cumulative delivery. REPLAY_INPUTS.json records their provenance.
+
+On Windows, BUILD_RELEASE.cmd/BUILD_RELEASE.ps1 at the release root perform the
+actual clean Release build against your full checkout. That build and a live
+in-game playthrough remain outside the tests performed in this environment.

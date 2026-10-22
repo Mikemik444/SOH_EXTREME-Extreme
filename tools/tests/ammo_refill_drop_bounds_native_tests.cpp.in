@@ -1,0 +1,169 @@
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <vector>
+using s16=int16_t; using s32=int32_t; using u8=uint8_t; using u32=uint32_t; using f32=float;
+@CONSTANTS@
+constexpr int ITEM_NONE=255, FULL_HEART_HEALTH=16, FAIRY_HEAL_TIMED=0;
+constexpr int NA_SE_EV_BUTTERFRY_TO_FAIRY=0, DEADSOUND_REPEAT_MODE_OFF=0, VB_FLEX_DROP_AMMO=0,
+              VB_PREVENT_ADULT_STICK=1, ACTOR_FLAG_UPDATE_CULLING_DISABLED=1;
+#define ARRAY_COUNT(a) (sizeof(a)/sizeof((a)[0]))
+#define MIN(a,b) std::min((a),(b))
+#define CVAR_ENHANCEMENT(name) name
+bool isRando=true, adult=false;
+#define IS_RANDO isRando
+#define LINK_IS_ADULT adult
+int inventory[CONSTANT_COUNT], capacities[CONSTANT_COUNT], ammo[CONSTANT_COUNT], settings[CONSTANT_COUNT];
+#define INV_CONTENT(item) inventory[item]
+#define CUR_CAPACITY(upg) capacities[upg]
+#define AMMO(item) ammo[item]
+int CVarGetInteger(const char*, int) { return 0; }
+int Randomizer_GetSettingValue(int setting) { return settings[setting]; }
+bool GameInteractor_Should(int, bool original, ...) { return original; }
+struct Vec3f { f32 x=0,y=0,z=0; };
+struct Actor {
+    int params=0, room=0, flags=0, dropFlag=0;
+    struct { Vec3f pos; struct { s16 y=0; } rot; } world;
+    Vec3f velocity;
+    f32 speedXZ=0, gravity=0;
+};
+struct EnItem00 { Actor actor; int unk_15A=0; };
+struct PlayState { int actorCtx=0; } play;
+struct SaveContext {
+    int health=160, healthCapacity=160, magicLevel=0, magic=0, rupees=99;
+    struct { struct { struct { struct { unsigned bombchuUpgradeLevel=0; } randomizer; } data; } quest; } ship;
+} gSaveContext;
+int dropDecision=1;
+int MegaSoul_ConsumeNormalEnemyDrop(Actor*) { return dropDecision; }
+std::vector<f32> randomValues;
+size_t randomPosition=0;
+f32 Rand_ZeroOne() { return randomPosition<randomValues.size() ? randomValues[randomPosition++] :0.25f; }
+u32 Rand_Next() { return 1; }
+static u32 sRandInt=0, sRandFloat=0;
+@NATIVE_RNG@
+std::vector<int> spawnedItems, directItems;
+EnItem00 actors[16];
+Actor* Actor_Spawn(int*, PlayState*, int id, f32 x, f32 y, f32 z, s16, s16, s16, int params) {
+    if (id!=ACTOR_EN_ITEM00) return nullptr;
+    if (spawnedItems.size()>=ARRAY_COUNT(actors)) std::abort();
+    auto& actor=actors[spawnedItems.size()]; actor={};
+    actor.actor.params=params; actor.actor.world.pos={x,y,z};
+    spawnedItems.push_back(params); return &actor.actor;
+}
+EnItem00* Item_DropCollectible(PlayState*,Vec3f*,s16 params) {
+    directItems.push_back(params); return nullptr;
+}
+void Actor_SetScale(Actor*,f32) {}
+void func_8001E304(EnItem00*,PlayState*) {}
+void EnItem00_SetupAction(EnItem00*,void (*)(EnItem00*,PlayState*)) {}
+void EffectSsDeadSound_SpawnStationary(PlayState*,Vec3f*,int,bool,int,int) {}
+@POLICY@
+@DATA@
+@CONVERSIONS@
+@DROP@
+
+int assertions=0, cases=0;
+void Check(bool result,const char* expression,int line) {
+    ++assertions;
+    if(!result) { std::fprintf(stderr,"line %d: %s\n",line,expression); std::exit(1); }
+}
+#define CHECK(value) Check((value),#value,__LINE__)
+void Reset() {
+    spawnedItems.clear(); directItems.clear(); randomValues.clear(); randomPosition=0;
+    dropDecision=1; adult=false; isRando=true; gSaveContext={};
+    std::fill(std::begin(inventory),std::end(inventory),0);
+    std::fill(std::begin(capacities),std::end(capacities),50);
+    std::fill(std::begin(ammo),std::end(ammo),50);
+    std::fill(std::begin(settings),std::end(settings),0);
+    settings[RSK_BOMBCHU_BAG]=RO_BOMBCHU_BAG_NONE;
+}
+void Select(int row,int column) {
+    randomValues={0.0f,(row+0.5f)/15.0f,(column+0.5f)/16.0f}; randomPosition=0;
+}
+int LegacyIndex(f32 rowValue,f32 columnValue) {
+    s16 params=0,dropTableIndex=0;
+    randomValues={rowValue,columnValue}; randomPosition=0;
+    @LEGACY_SELECTOR@
+    return params+dropTableIndex;
+}
+void AllCells() {
+    CHECK(ARRAY_COUNT(sItemDropIds)==240 && ARRAY_COUNT(sDropQuantities)==244);
+    CHECK(ARRAY_COUNT(sItemDropIds)/16==ARRAY_COUNT(sDropQuantities)/16);
+    for(int age=0;age<2;++age) for(int immediate=0;immediate<2;++immediate)
+        for(int row=0;row<15;++row) for(int column=0;column<16;++column) {
+            ++cases; Reset(); adult=age;
+            int expected=sItemDropIds[row*16+column];
+            int quantity=sDropQuantities[row*16+column];
+            // Full health/magic/ammo and >=11 rupees turn FLEXIBLE into the
+            // real repeat-enemy fallback; missing/zero entries do likewise.
+            if(expected==ITEM00_FLEXIBLE || expected==255) expected=ITEM00_RUPEE_GREEN;
+            if(quantity<=0) { expected=ITEM00_RUPEE_GREEN; quantity=1; }
+            expected=func_8001F404(expected);
+            if(expected==-1) expected=ITEM00_RUPEE_GREEN;
+            Select(row,column);
+            Actor enemy; Vec3f position;
+            Item_DropCollectibleRandom(&play,&enemy,&position,immediate?0x8000:0);
+            const auto& items=immediate?directItems:spawnedItems;
+            CHECK(items.size()==static_cast<size_t>(quantity));
+            for(int item:items) {
+                if((item&0xFFFF)!=(expected|(immediate?0x8000:0)))
+                    std::fprintf(stderr,"row%d column%d age%d immediate%d item%d expected%d\n",
+                                 row,column,age,immediate,item,expected);
+                CHECK((item&0xFFFF)==(expected|(immediate?0x8000:0)));
+            }
+            CHECK((immediate?spawnedItems:directItems).empty());
+        }
+}
+void BoundariesAndNonRepeat() {
+    ++cases; Reset(); sRandInt=@RNG_MAX_SEED@;
+    const f32 maximum=Native_Rand_ZeroOne();
+    CHECK(maximum<1 && maximum>0.999999f);
+    CHECK(LegacyIndex(maximum,maximum)==255);
+    for(int column=0;column<16;++column) {
+        ++cases;
+        const int index=LegacyIndex(maximum,(column+0.5f)/16.0f);
+        CHECK(index==240+column && index>=static_cast<int>(ARRAY_COUNT(sItemDropIds)));
+    }
+    Reset(); randomValues={maximum,maximum,maximum};
+    Actor enemy; Vec3f position;
+    Item_DropCollectibleRandom(&play,&enemy,&position,0);
+    CHECK(spawnedItems.size()==1 && spawnedItems[0]==ITEM00_RUPEE_GREEN);
+    for(int decision:{-1,0}) {
+        ++cases; Reset(); dropDecision=decision;
+        randomValues={12.5f/16.0f};
+        Item_DropCollectibleRandom(&play,&enemy,&position,0);
+        if(decision<0) CHECK(spawnedItems.empty());
+        else CHECK(spawnedItems.size()==1 && spawnedItems[0]==ITEM00_SEEDS);
+    }
+    ++cases; Reset(); randomValues={12.5f/16.0f};
+    Item_DropCollectibleRandom(&play,nullptr,&position,0);
+    CHECK(spawnedItems.size()==1 && spawnedItems[0]==ITEM00_SEEDS);
+}
+void ConversionPreserved() {
+    for(int bothBags=0;bothBags<2;++bothBags) {
+        ++cases; Reset();
+        settings[RSK_BOMBCHU_BAG]=RO_BOMBCHU_BAG_PROGRESSIVE;
+        settings[RSK_ENABLE_BOMBCHU_DROPS]=1;
+        inventory[ITEM_BOMBCHU]=ITEM_BOMBCHU;
+        gSaveContext.ship.quest.data.randomizer.bombchuUpgradeLevel=1;
+        capacities[UPG_BOMB_BAG]=bothBags?20:0;
+        ammo[ITEM_BOMBCHU]=0;
+        Select(1,10); Actor enemy; Vec3f position;
+        CHECK(sItemDropIds[1*16+10]==ITEM00_BOMBS_A);
+        Item_DropCollectibleRandom(&play,&enemy,&position,0);
+        CHECK(spawnedItems.size()==1);
+        CHECK(spawnedItems[0]==(bothBags?ITEM00_BOMBS_A:ITEM00_BOMBCHU));
+    }
+    ++cases; Reset(); capacities[UPG_BOMB_BAG]=0;
+    Select(1,10); Actor enemy; Vec3f position;
+    Item_DropCollectibleRandom(&play,&enemy,&position,0);
+    CHECK(spawnedItems.size()==1 && spawnedItems[0]==ITEM00_RUPEE_GREEN);
+}
+int main() {
+    AllCells(); BoundariesAndNonRepeat(); ConversionPreserved();
+    std::printf("{\"cases\":%d,\"assertions\":%d,\"valid_cells_exercised\":240,"
+        "\"age_and_pickup_combinations\":4,\"legacy_invalid_indices_reproduced\":16}\n",cases,assertions);
+}

@@ -1,0 +1,158 @@
+SOH-EXTREME 1.8.12 - Current validation and release scope
+========================================================
+
+DELIVERY CONTENTS
+-----------------
+This release contains 235 complete replacement files. All 199 replacement paths
+from the 1.8.11 entrance-fixes delivery are retained, with their current full
+contents. The source inventory was compared against all 25,035 files in the
+original upload; there are no missing original source files or unmanifested
+source changes. The YAML remains byte-identical to the previous delivery.
+
+The root soh_extreme.apworld is the current installation archive. It contains
+123 entries, including 122 world package files, and the 721-endpoint entrance
+catalog. Its SHA-256 is:
+c9df7a550d44d62d232be6e501d18717f5f05c75e5a0d18912a266a22d16ab42
+
+SOURCE_FILES.json records the complete source inventory and hashes, including
+the APWorld member inventory. Current reports are under:
+  validation/landing_river_1812/
+
+CURRENT TEST RESULTS
+--------------------
+All reports listed here passed against their recorded production/test bytes.
+
+Ammo consumption - ammo_1812_native.json
+  1,001 cases; 1,239 assertions; 8 baseline reproductions.
+  Executes the production C inventory function, C++ bridge/policy and ammo trap
+  path. Covers all five ammo types, positive-to-one and one-to-one use, empty
+  slots, ownership, non-AP saves, finite minigame counters, current inventory,
+  state tokens, receipts, expiry, connection state and pending settings.
+
+Observed refill sources - ammo_sources_1812_native.json
+  6,269 cases; 27,852 assertions; 6 baseline reproductions.
+  Covers all 64 collectible flags and 32 native drop values for each of three
+  container classes, plus production source identity, native initialization,
+  age/save ownership, observation storage, wire serialization, reset, bounds,
+  deduplication and conflicting-source invalidation. The exact Item00Type enum
+  and its source provenance are included with the fixture dependencies.
+
+Refill reachability - ammo_1812_ap.json
+  10 test groups; 284 decisions; 55 actual AP refill evaluations.
+  Uses the real AP rules and entrance/room graph, with controlled ingress and
+  source cases. Exercises current age, carried rupees, required Souls and
+  actions, current weapons/containers, completed first checks, ordinary scrub
+  prices, retained stock, observed active and inactive sources, a direct Lost
+  Woods bomb gate, and circular derived events. The target ammo is removed
+  and derived events are recomputed before refill reachability is accepted.
+  This is not a full item-fill or game playthrough.
+
+Tracker protocol - ammo_1812_tracker.json
+  97 wire cases and 19 Python encoder assertions; 127 native cases with 311
+  assertions; 48 Python handler cases with 103 assertions and 12 proof calls.
+  Feeds the production Python encoder into the production native decoder and
+  mirror. Executes native worker/snapshot servicing and the Python request/
+  publish handler. Covers closed-UI servicing, age/source metadata, old/new
+  protocol behavior, stale or mismatched proofs, manual and ignored tracker
+  state, and failure behavior. Network/process/host I/O and the proof callback
+  are isolated in this suite; actual AP proof decisions are tested above.
+
+Renewable random-drop bounds - ammo_refill_drop_bounds_1812_native.json
+  983 cases; 3,143 assertions; 16 old invalid indexes reproduced safely.
+  Tests all 240 valid table cells across both ages and pickup modes. There are
+  15 complete rows shared by the native drop tables; trailing quantity padding
+  cannot authorize a nonexistent sixteenth item row.
+
+Grotto landing - grotto_landing_1812_native.json
+  143 scenarios; 2,106 assertions; 66 authored exterior/age combinations;
+  33 legacy hole-position overrides reproduced.
+  Runs the production landing/ownership helpers and native emergence motion
+  with controlled geometry I/O. Covers clear floor, hole rejection, walls,
+  ceiling, hazards, water, actor collision and native emergence fallback.
+
+Room return and death - grotto_landing_1812_integration.json
+  938 cases, including classification of every one of the 721 catalog rows.
+  Executes production entrance initialization, game-over/savewarp/respawn,
+  save/menu and Player_Init override paths with explicit engine I/O shims.
+  Covers death before and after landing, independent previous-scene history,
+  clear source-side position/facing, same-scene room transitions, and the
+  existing child spawn 187 -> 1806 remaining inside the grotto. Ammo-source
+  reset is a boundary shim here; its actual storage is tested separately.
+
+Native river routes - zora_river_1812_native.json
+  93 cases; 2,726 assertions; 6 previous-bug reproductions.
+  Checks separate land and water IDs, all 16 age/time arrival combinations,
+  paired return routing, explicit mapping installation order, physical check
+  and discovery credit, invalid-map rejection, and legacy alias behavior.
+
+AP river routes - zora_river_1812_ap.json
+  6 tests; 851 decisions.
+  Restores the exact historical 719-endpoint saved map without rerolling it.
+  Separately runs production generation for a fresh 721-endpoint entrance map
+  and validates both water paths, Swim rules, coupling and export metadata.
+  The starting-state guard is exercised. There is no complete new item fill.
+
+Official APWorld and versions - landing_river_1812_apworld_validation.json
+  Official Archipelago 0.6.8 zipimporter loaded the actual packaged archive
+  without a loose world copy. All 123 archive entries and 122 package files
+  were verified. Packaged and loose manifests, tracker values and the native
+  version header all agree on 1.8.12. The isolated runtime was restored after
+  the check. This loader check does not perform generation.
+
+Source build preflight - landing_river_1812_source_build_validation.json
+  The actual shipped revision-4 PowerShell helper's verification functions
+  checked all 235 replacement files in a disposable repository fixture.
+  No files were changed by verification. The helper is identical to 1.8.11
+  except for its release-version text. The current report binds the helper,
+  manifest, all source files, and the validation driver/probe. This runs on
+  Linux PowerShell 7.6.7 and does not run Windows or MSBuild.
+
+SOURCE AND ARCHIVE INTEGRITY
+---------------------------
+The release finalizer checks every current report's source or archive hashes
+against the delivered bytes, verifies previous baseline provenance, retains
+all prior validation entries byte for byte, and checks every staged member
+against the completed ZIP after writing it. It also verifies the ZIP CRC,
+complete source manifest, current APWorld contents, version parity and source
+preflight result. The resulting release record is:
+  validation/landing_river_1812/landing_river_1812_release_validation.json
+
+REPLAY_INPUTS.json locates each current source, test, dependency and seed-input
+hash. The original and previous-release baseline function excerpts are bound
+to their verified source hashes. A small river baseline ZIP contains only the
+two historical source files needed for that native comparison. REPLAY.txt
+explains the focused reruns and required external runtimes.
+
+INTENTIONAL REFILL COVERAGE
+--------------------------
+Protection turns off only for a verified renewable source of that exact ammo.
+Covered sources include retained native shop stock, ordinary unshuffled ammo
+scrubs, the Carpet Merchant after the required initial check, audited renewable
+overworld enemy placements, and observed fixed-ammo pots/crates with flag zero.
+Actual prices, age, path, first-check and physical-use requirements still apply.
+
+Unknown or conflicting container metadata, persistent container drops,
+unverified grass/bush sources, unaudited enemy farms and Bowling are not used
+to remove protection. They keep the last unit usable. This conservatism avoids
+spending the last unit because of an assumed refill. Current zero stays zero.
+
+COMPATIBILITY AND LIMITS
+------------------------
+Use both the updated native source build and the current APWorld. Existing
+seeds retain saved entrance targets and can use the ammo protection. Generate
+a new seed to obtain independent Zora's River land and water shuffling.
+
+This partial-source environment cannot produce or launch the user's complete
+Windows game build. No Windows executable, controller playthrough or complete
+new 1.8.12 item fill is claimed. Native fixtures compile production function
+bodies with explicit engine I/O shims and controlled geometry. AddressSanitizer
+and UndefinedBehaviorSanitizer are used by the native suites where reported;
+LeakSanitizer is disabled because the executor cannot inspect process/task
+filesystem information. Real scene collision is evaluated in game at runtime.
+
+Historical evidence from earlier releases is clearly retained under validation.
+The previously reconstructed 4,036 placements and 44 progression spheres are
+historical seed evidence, not a fresh 1.8.12 full-fill result. The current river
+suite replays that saved map and performs a separate new entrance generation.
+Use the current APWorld at the ZIP root for installation; older APWorld copies
+under validation are historical evidence only.

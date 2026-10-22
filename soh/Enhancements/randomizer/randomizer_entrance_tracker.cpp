@@ -222,7 +222,7 @@ const EntranceData entranceData[] = {
     { ENTRANCE_GROTTO_EXIT(GROTTO_GORON_CITY_OFFSET), ENTRANCE_GROTTO_LOAD(GROTTO_GORON_CITY_OFFSET), {{ SCENE_GROTTOS, 0x04 }},           "GC Deku Scrub Grotto",               "GC Lava Grotto Entry",              ENTRANCE_GROUP_GORON_CITY, ENTRANCE_GROUP_GORON_CITY,            ENTRANCE_TYPE_GROTTO,    "gc,scrubs"},
 
     // Zora's River
-    { ENTR_HYRULE_FIELD_RIVER_EXIT,                  ENTR_ZORAS_RIVER_WEST_EXIT,                    SINGLE_SCENE_INFO(SCENE_ZORAS_RIVER), "Zora's River Lower Exit",          "Hyrule Field River Exit",        ENTRANCE_GROUP_ZORAS_RIVER, ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_TYPE_OVERWORLD, "hf"},
+    { ENTR_HYRULE_FIELD_RIVER_EXIT,                  ENTR_ZORAS_RIVER_WEST_EXIT,                    SINGLE_SCENE_INFO(SCENE_ZORAS_RIVER), "Zora's River Land Path",          "Hyrule Field Land Path",        ENTRANCE_GROUP_ZORAS_RIVER, ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_TYPE_OVERWORLD, "hf"},
     { ENTR_LOST_WOODS_UNDERWATER_SHORTCUT,           ENTR_ZORAS_RIVER_UNDERWATER_SHORTCUT,          SINGLE_SCENE_INFO(SCENE_ZORAS_RIVER), "Zora's River Underwater Shortcut", "Lost Woods Underwater Shortcut", ENTRANCE_GROUP_ZORAS_RIVER, ENTRANCE_GROUP_LOST_WOODS,   ENTRANCE_TYPE_OVERWORLD, "lw"},
     { ENTR_ZORAS_DOMAIN_ENTRANCE,                    ENTR_ZORAS_RIVER_WATERFALL_EXIT,               SINGLE_SCENE_INFO(SCENE_ZORAS_RIVER), "Zora's River Waterfall Exit",      "Zora's Domain Entrance",         ENTRANCE_GROUP_ZORAS_RIVER, ENTRANCE_GROUP_ZORAS_DOMAIN, ENTRANCE_TYPE_OVERWORLD},
     { ENTRANCE_GROTTO_LOAD(GROTTO_ZR_STORMS_OFFSET), ENTRANCE_GROTTO_EXIT(GROTTO_ZR_STORMS_OFFSET), SINGLE_SCENE_INFO(SCENE_ZORAS_RIVER), "ZR Rock Circle Grotto Entry",      "ZR Deku Scrub Grotto",           ENTRANCE_GROUP_ZORAS_RIVER, ENTRANCE_GROUP_ZORAS_RIVER,  ENTRANCE_TYPE_GROTTO,    "scrubs", 1},
@@ -258,7 +258,7 @@ const EntranceData entranceData[] = {
     { ENTR_MARKET_ENTRANCE_NEAR_GUARD_EXIT,                ENTR_HYRULE_FIELD_ON_BRIDGE_SPAWN,                   SINGLE_SCENE_INFO(SCENE_HYRULE_FIELD), "Hyrule Field Drawbridge Exit",        "Market Entrance South Exit",          ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_MARKET,        ENTRANCE_TYPE_OVERWORLD, "hf"},
     { ENTR_LON_LON_RANCH_ENTRANCE,                         ENTR_HYRULE_FIELD_CENTER_EXIT,                       SINGLE_SCENE_INFO(SCENE_HYRULE_FIELD), "Hyrule Field Center Exit",            "Lon Lon Ranch Entrance",              ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_LON_LON_RANCH, ENTRANCE_TYPE_OVERWORLD, "hf,llr"},
     { ENTR_KAKARIKO_VILLAGE_FRONT_GATE,                    ENTR_HYRULE_FIELD_STAIRS_EXIT,                       SINGLE_SCENE_INFO(SCENE_HYRULE_FIELD), "Hyrule Field Stairs Exit",            "Kakariko Front Gate",                 ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_KAKARIKO,      ENTRANCE_TYPE_OVERWORLD, "hf"},
-    { ENTR_ZORAS_RIVER_WEST_EXIT,                          ENTR_HYRULE_FIELD_RIVER_EXIT,                        SINGLE_SCENE_INFO(SCENE_HYRULE_FIELD), "Hyrule Field River Exit",             "Zora's River Lower Exit",             ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_ZORAS_RIVER,   ENTRANCE_TYPE_OVERWORLD, "hf"},
+    { ENTR_ZORAS_RIVER_WEST_EXIT,                          ENTR_HYRULE_FIELD_RIVER_EXIT,                        SINGLE_SCENE_INFO(SCENE_HYRULE_FIELD), "Hyrule Field Land Path",             "Zora's River Land Path",             ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_ZORAS_RIVER,   ENTRANCE_TYPE_OVERWORLD, "hf"},
     { ENTR_LAKE_HYLIA_NORTH_EXIT,                          ENTR_HYRULE_FIELD_FENCE_EXIT,                        SINGLE_SCENE_INFO(SCENE_HYRULE_FIELD), "Hyrule Field Fence Exit",             "Lake Hylia North Exit",               ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_LAKE_HYLIA,    ENTRANCE_TYPE_OVERWORLD, "hf,lh"},
     { ENTR_GERUDO_VALLEY_EAST_EXIT,                        ENTR_HYRULE_FIELD_ROCKY_PATH,                        SINGLE_SCENE_INFO(SCENE_HYRULE_FIELD), "Hyrule Field Rocky Path",             "Gerudo Valley East Exit",             ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_GERUDO_VALLEY, ENTRANCE_TYPE_OVERWORLD, "hf"},
     { ENTRANCE_GROTTO_LOAD(GROTTO_HF_NEAR_MARKET_OFFSET),  ENTRANCE_GROTTO_EXIT(GROTTO_HF_NEAR_MARKET_OFFSET),  SINGLE_SCENE_INFO(SCENE_HYRULE_FIELD), "HF Near Market Boulder Grotto Entry", "HF Near Market Boulder Grotto",       ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_HYRULE_FIELD,  ENTRANCE_TYPE_GROTTO,    "chest", 1},
@@ -458,7 +458,9 @@ int16_t LinkIsInArea(const EntranceData* entrance) {
 
 bool IsEntranceDiscovered(s16 index) {
     bool isDiscovered = Entrance_GetIsEntranceDiscovered(index);
-    if (!isDiscovered) {
+    if (!isDiscovered && !Archipelago_IsCurrentSaveFile()) {
+        // Non-AP native seeds retain the old linked land/water discovery.
+        // AP tracks each physical crossing even when an older map aliases it.
         // If the pair included one of the hyrule field <-> zora's river entrances,
         // the randomizer will have also overridden the water-based entrances, so check those too
         if ((index == ENTR_ZORAS_RIVER_WEST_EXIT && Entrance_GetIsEntranceDiscovered(ENTR_ZORAS_RIVER_3)) ||
@@ -525,7 +527,7 @@ const EntranceData* GetEntranceData(s16 index) {
             data.dstGroup = EntranceGroupForScene(endpoint.scene);
             data.type = endpoint.door >= 0 ? ENTRANCE_TYPE_ROOM_DOOR :
                         (endpoint.reverse < 0 ? ENTRANCE_TYPE_ONE_WAY : ENTRANCE_TYPE_OVERWORLD);
-            data.metaTag = endpoint.door >= 0 ? "room door" : "one way";
+            data.metaTag = endpoint.door >= 0 ? "room door" : (endpoint.reverse < 0 ? "one way" : "overworld");
             // Room endpoints have distinct source sides. Never hide a room
             // return as if it were a redundant single-exit house interior.
             data.oneExit = 1;

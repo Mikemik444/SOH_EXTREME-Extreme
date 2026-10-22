@@ -1,0 +1,489 @@
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <cstdint>
+#include <cstdlib>
+#include <functional>
+#include <iostream>
+#include <limits>
+#include <map>
+#include <string>
+#include <tuple>
+#include <utility>
+#include "ammo_sources_native_io.h"
+
+extern "C" {
+SourceTestSave gSaveContext{};
+PlayState* gPlayState = nullptr;
+int gSourceDropCalls = 0, gSourceDropParams = -1, gSourceFlagEvents = 0;
+int gSourceAdult = 0, gSourceInventory[256]{}, gSourceCapacities[16]{};
+CollisionHeader gLargeCrateCol{};
+static EnItem00 droppedItem;
+int GameInteractor_Should(int, int condition, ...) { return condition; }
+EnItem00* Item_DropCollectible(PlayState*, Vec3f*, s16 params) {
+    ++gSourceDropCalls; gSourceDropParams = params; return &droppedItem;
+}
+void DynaPolyActor_Init(DynaPolyActor*, int) {}
+void Actor_ProcessInitChain(Actor*, const int*) {}
+void ObjKibako2_InitCollider(Actor*, PlayState*) {}
+void CollisionHeader_GetVirtual(CollisionHeader* header, CollisionHeader** out) { *out = header; }
+u32 DynaPoly_SetBgActor(PlayState*, int*, Actor*, CollisionHeader*) { return 73; }
+void ObjKibako2_Idle(ObjKibako2*, PlayState*) {}
+void GameInteractor_ExecuteOnSceneFlagSet(int, int, int) { ++gSourceFlagEvents; }
+// Ordinary bomb-to-Bombchu conversion is separately tested. This fixture
+// isolates the native age/container behavior from that live option/IO path.
+s16 EnItem00_ConvertOrdinaryBombDrop(s16 drop) { return drop; }
+}
+
+using RandomizerCheck = int;
+using RandomizerInf = int;
+constexpr int RC_UNKNOWN_CHECK = 0, RC_MAX = 8192, RAND_INF_MAX = 9000;
+enum {
+    SCENE_GANONDORF_BOSS = 1, SCENE_GANONS_TOWER = 2,
+    SCENE_MARKET_NIGHT = 3, SCENE_MARKET_DAY = 4,
+    SCENE_GERUDOS_FORTRESS = 5, SCENE_GERUDO_VALLEY = 6,
+    RSK_SHUFFLE_POTS = 0, RSK_SHUFFLE_CRATES = 1, RSK_LOGIC_RULES = 2,
+    RO_LOGIC_NO_LOGIC = 1,
+    VB_POT_SETUP_DRAW = 10, VB_LOCK_BOSS_DOOR = 11,
+    VB_CRATE_SETUP_DRAW = 12, VB_SMALL_CRATE_SETUP_DRAW = 13, VB_ITEM00_KILL = 14,
+};
+static bool isRando = true;
+static int options[3]{};
+struct TestOption {
+    int value;
+    operator bool() const { return value != 0; }
+    bool Is(int other) const { return value == other; }
+    bool IsNot(int other) const { return value != other; }
+};
+#define IS_RANDO isRando
+#define RAND_GET_OPTION(option) TestOption{options[(option)]}
+#define SPDLOG_ERROR(...) ((void)0)
+#define SPDLOG_WARN(...) ((void)0)
+@IDENTITY_TYPE@
+
+// Native database access is a finite input map. Its missing-key value matches
+// Randomizer::GetCheckObjectFromActor's non-null unknown-location sentinel.
+namespace Rando {
+class Location {
+  public:
+    int check;
+    int GetRandomizerCheck() const { return check; }
+};
+}
+using LookupKey = std::tuple<int, int, int32_t>;
+static std::map<LookupKey, Rando::Location> locations;
+static std::map<int, int> rcToRandomizerInf;
+static Rando::Location unknownLocation{RC_UNKNOWN_CHECK};
+class TestRandomizer {
+  public:
+    Rando::Location* GetCheckObjectFromActor(int actor, int scene, int32_t params) {
+        auto found = locations.find({actor, scene, params});
+        return found == locations.end() ? &unknownLocation : &found->second;
+    }
+};
+class OTRGlobals {
+  public:
+    inline static OTRGlobals* Instance;
+    TestRandomizer* gRandomizer;
+};
+class ObjectExtension {
+  public:
+    std::map<Actor*, CheckIdentity> identities;
+    static ObjectExtension& GetInstance() { static ObjectExtension object; return object; }
+    template <typename T> void Set(Actor* actor, T&& identity) { identities[actor] = identity; }
+};
+bool IdentifyCheck(CheckIdentity*, Rando::Location*, bool allowUnknown = true);
+@IDENTITIES@
+
+// Actual client retention and exported C wrapper below. File/quest state and
+// the exact RC-to-AP map are supplied inputs, not replacement policy decisions.
+class ArchipelagoClient {
+  public:
+    bool currentSaveIsArchipelago = true;
+    std::map<int32_t, int64_t> rcToApLocation;
+    std::map<std::pair<int64_t, uint32_t>, uint32_t> ammoSourceFacts;
+    uint64_t ammoSourceRevision = 0;
+    int32_t ammoSourceFile = -1;
+    uint32_t ammoRefillMask = 0;
+    double ammoRefillUntil = 0, finderNextRequest = 0;
+    static ArchipelagoClient& GetInstance() { static ArchipelagoClient client; return client; }
+    void ResetAmmoSources();
+    void ObserveAmmoSource(int32_t, int32_t, int32_t, int32_t);
+    std::string AmmoSourcesJson() const;
+};
+extern "C" bool Archipelago_IsCurrentSaveFile(void) {
+    return ArchipelagoClient::GetInstance().currentSaveIsArchipelago;
+}
+@SOURCE_FUNCTIONS@
+
+static std::map<int, std::function<void(void*)>> initHooks;
+static std::map<int, bool> vanillaHooks;
+template <typename Callback> static void RegisterInit(int actor, bool enabled, Callback callback) {
+    initHooks.erase(actor);
+    if (enabled) initHooks[actor] = callback;
+}
+static void RegisterVanilla(int id, bool enabled) { vanillaHooks[id] = enabled; }
+#define COND_ID_HOOK(event, actor, condition, ...) RegisterInit((actor), bool(condition), __VA_ARGS__)
+// The unchanged rendering/drop callbacks are not invoked or compiled here.
+// Their exact registration conditions execute; their bodies are hash-bound.
+#define COND_VB_SHOULD(behavior, condition, ...) RegisterVanilla((behavior), bool(condition))
+@CALLBACKS@
+@LEGACY@
+
+static int cases = 0, assertions = 0, baselineCases = 0;
+static void Check(bool value, const char* why) {
+    ++assertions;
+    if (!value) { std::cerr << "FAIL: " << why << '\n'; std::exit(1); }
+}
+static PlayState play;
+static TestRandomizer randomizer;
+static OTRGlobals globals{&randomizer};
+static void Reset() {
+    gSaveContext = {}; play = {}; gPlayState = &play;
+    gSaveContext.ship.quest.id = QUEST_RANDOMIZER;
+    gSaveContext.linkAge = LINK_AGE_CHILD;
+    play.linkAgeOnLoad = LINK_AGE_CHILD;
+    gSourceAdult = 0;
+    std::fill(std::begin(gSourceInventory), std::end(gSourceInventory), ITEM_NONE);
+    gSourceInventory[ITEM_BOW] = ITEM_BOW;
+    gSourceInventory[ITEM_SLINGSHOT] = ITEM_SLINGSHOT;
+    std::fill(std::begin(gSourceCapacities), std::end(gSourceCapacities), 30);
+    gSourceDropCalls = gSourceFlagEvents = 0; gSourceDropParams = -1;
+    isRando = true; std::fill(std::begin(options), std::end(options), 0);
+    OTRGlobals::Instance = &globals;
+    locations.clear(); rcToRandomizerInf.clear(); initHooks.clear(); vanillaHooks.clear();
+    ObjectExtension::GetInstance().identities.clear();
+    ArchipelagoClient::GetInstance() = {};
+    ArchipelagoClient::GetInstance().ammoSourceFile = gSaveContext.fileNum;
+}
+static int32_t PackedPosition(int32_t x, int32_t z) {
+    // Safe independent input construction, including negative source positions.
+    return static_cast<int32_t>((static_cast<uint32_t>(x) & 0xffffu) << 16 |
+                                (static_cast<uint32_t>(z) & 0xffffu));
+}
+static void MapLocation(int actor, int scene, int x, int z, int check, int64_t ap = 0) {
+    locations[{actor, scene, PackedPosition(x, z)}] = Rando::Location{check};
+    rcToRandomizerInf[check] = check + 100;
+    ArchipelagoClient::GetInstance().rcToApLocation[check] = ap ? ap : 700000000000LL + check;
+}
+static uint32_t ExpectedRawMask(int drop) {
+    switch (drop) {
+        case 4: case 11: return 4;
+        case 8: case 9: case 10: return 16;
+        case 12: return 2;
+        case 13: return 1;
+        case 16: return 32;
+        default: return 0;
+    }
+}
+static uint32_t Fact(int kind, int age, int drop) {
+    auto mask = ExpectedRawMask(drop);
+    return mask ? mask | (kind << 6) | (age << 8) : 0;
+}
+static void Dispatch(Actor* actor) {
+    const auto found = initHooks.find(actor->id);
+    if (found != initHooks.end()) found->second(actor);
+}
+static void TestNativeParameters() {
+    Reset();
+    for (int kind = 1; kind <= 3; ++kind) {
+        for (int flag = 0; flag < 64; ++flag) for (int drop = 0; drop < 32; ++drop) {
+            ++cases;
+            int params = drop | (flag << (kind == 1 ? 9 : 8));
+            int inputFlag = 999;
+            gSourceDropCalls = 0; gSourceDropParams = -1;
+            if (kind == 1) {
+                ObjTsubo actor{}; actor.actor.params = params;
+                ObjTsubo_SpawnCollectible(&actor, &play);
+            } else if (kind == 2) {
+                ObjKibako actor{}; actor.actor.params = params;
+                ObjKibako_SpawnCollectible(&actor, &play);
+            } else {
+                ObjKibako2 actor{};
+                actor.dyna.actor.home.rot.x = drop;
+                actor.dyna.actor.home.rot.z = flag;
+                ObjKibako2_Init(&actor.dyna.actor, &play);
+                Check(actor.collectibleFlag == flag && actor.dyna.actor.home.rot.z == 0,
+                      "native large-crate Init retains and clears the authored flag");
+                Check(actor.dyna.actor.home.rot.x == drop && actor.dyna.bgId == 73,
+                      "native large-crate drop rotation survives Init");
+                ObjKibako2_SpawnCollectible(&actor, &play);
+                params = drop; inputFlag = actor.collectibleFlag;
+            }
+            Check(gSourceDropCalls == (drop <= 25 ? 1 : 0), "native ordinary fixed-drop upper boundary");
+            if (gSourceDropCalls) Check(gSourceDropParams == (drop | (flag << 8)),
+                                       "actual native encoded drop and collectible flag");
+            const uint32_t expected = flag == 0 ? ExpectedRawMask(drop) : 0;
+            Check(SohExtreme_AmmoSourceMask(kind, params, inputFlag) == expected,
+                  "C++ source policy accepts only fixed ammo with collectible flag zero");
+            Check(SourceTest_AmmoSourceMaskC(kind, params, inputFlag) == expected,
+                  "C11 source policy matches actual native flag/drop decoding");
+        }
+    }
+    for (int kind = -1; kind <= 4; ++kind) for (int params : {INT32_MIN, -32769, 65536, INT32_MAX}) {
+        ++cases;
+        Check(SohExtreme_AmmoSourceMask(kind, params, 0) == 0, "invalid source payload range is rejected");
+    }
+    for (int kind : {-1, 0, 4}) for (int drop : {4, 8, 12, 13, 16}) {
+        ++cases;
+        Check(SohExtreme_AmmoSourceMask(kind, drop, 0) == 0, "unknown actor class cannot authorize ammo");
+    }
+    for (int extra : {0, 0x20, 0x40, 0x80, 0x100, 0x8000, 0x8100}) {
+        ++cases;
+        Check(SohExtreme_AmmoSourceMask(1, static_cast<int16_t>(13 | extra), 63) == 1,
+              "pot object/high bits and irrelevant rotation do not create a collectible flag");
+    }
+    ++cases;
+    Check(SohExtreme_AmmoSourceMask(2, 13 | 0x100, 0) == 0, "small crate bit eight is a collectible flag");
+    Check(SohExtreme_AmmoSourceMask(3, 13, 0x40) == 1, "large crate saved flag uses native six-bit mask");
+    Check(SohExtreme_AmmoSourceMask(3, -1, 0) == 0, "negative large-crate drop is rejected");
+    Check(SohExtreme_AmmoSourceMask(1, ITEM00_BOMBS_SPECIAL, 0) == 0,
+          "special-bombs pickup with no ammo grant is excluded");
+    Check(SohExtreme_AmmoSourceMask(1, ITEM00_ARROWS_SINGLE, 0) == 0,
+          "single-arrow ownership-granting drop is excluded");
+}
+static void TestNativePersistenceAndAge() {
+    ++cases; Reset();
+    Flags_SetCollectible(&play, 0); Flags_SetCollectible(&play, 0);
+    Check(Flags_GetCollectible(&play, 0) == 0 && play.actorCtx.flags.collect == 0,
+          "collectible flag zero never becomes a consumed source flag");
+    Check(gSourceFlagEvents == 2, "native zero flag still produces scene flag callbacks");
+    for (int flag : {1, 20, 32, 48}) {
+        ++cases; const int events = gSourceFlagEvents;
+        Flags_SetCollectible(&play, flag); Flags_SetCollectible(&play, flag);
+        Check(Flags_GetCollectible(&play, flag) != 0 && gSourceFlagEvents == events + 1,
+              "nonzero permanent and temporary native flags record collection");
+    }
+    for (int adult : {0, 1}) for (int drop : {4, 8, 9, 10, 11, 12, 13, 16}) {
+        ++cases; Reset(); gSourceAdult = adult;
+        int expected = drop;
+        if (adult && drop == 16) expected = 8;
+        if (adult && drop == 13) expected = 0;
+        if (!adult && (drop == 8 || drop == 9 || drop == 10)) expected = 16;
+        Check(func_8001F404(drop) == expected, "actual native child/adult drop conversion");
+    }
+    ++cases; Reset(); gSourceAdult = 1; gSourceInventory[ITEM_BOW] = ITEM_NONE;
+    Check(func_8001F404(ITEM00_SEEDS) == -1 && func_8001F404(ITEM00_ARROWS_LARGE) == -1,
+          "adult arrows from either raw type require native bow ownership");
+    ++cases; Reset(); gSourceInventory[ITEM_SLINGSHOT] = ITEM_NONE;
+    Check(func_8001F404(ITEM00_SEEDS) == -1 && func_8001F404(ITEM00_ARROWS_SMALL) == -1,
+          "child converted arrow packs require slingshot ownership");
+    ++cases; Reset(); gSourceCapacities[UPG_BOMB_BAG] = 0;
+    Check(func_8001F404(ITEM00_BOMBS_A) == -1 && func_8001F404(ITEM00_BOMBS_B) == -1,
+          "ordinary unconverted bombs require a native bomb bag");
+}
+static void TestRegistration() {
+    for (int rando : {0, 1}) for (int ap : {0, 1}) for (int shuffled = 0; shuffled <= 3; ++shuffled) {
+        ++cases; Reset(); isRando = rando;
+        auto& client = ArchipelagoClient::GetInstance(); client.currentSaveIsArchipelago = ap;
+        options[RSK_SHUFFLE_POTS] = options[RSK_SHUFFLE_CRATES] = shuffled;
+        RegisterShufflePots(); RegisterShuffleCrates();
+        Check(initHooks.size() == (rando ? 3u : 0u), "identity hooks follow randomizer initialization lifetime");
+        Check(vanillaHooks.size() == 8, "all original draw/drop/door registration gates remain represented");
+        for (const auto& [id, enabled] : vanillaHooks) Check(enabled == bool(rando && shuffled),
+            "observation does not enable randomized draws, drops, or doors for ordinary containers");
+        ObjTsubo pot{}; pot.actor.id = ACTOR_OBJ_TSUBO; pot.actor.params = ITEM00_STICK;
+        ObjKibako small{}; small.actor.id = ACTOR_OBJ_KIBAKO; small.actor.params = ITEM00_NUTS;
+        ObjKibako2 big{}; big.dyna.actor.id = ACTOR_OBJ_KIBAKO2; big.dyna.actor.home.rot.x = ITEM00_BOMBS_A;
+        MapLocation(ACTOR_OBJ_TSUBO, 0, 0, 0, 10);
+        MapLocation(ACTOR_OBJ_KIBAKO, 0, 0, 0, 11);
+        MapLocation(ACTOR_OBJ_KIBAKO2, 0, 0, 0, 12);
+        Dispatch(&pot.actor); Dispatch(&small.actor); Dispatch(&big.dyna.actor);
+        Check(ObjectExtension::GetInstance().identities.size() == (rando && (ap || shuffled) ? 3u : 0u),
+              "ordinary non-AP containers return before identity mutation");
+        Check(client.ammoSourceFacts.size() == (rando && ap ? 3u : 0u),
+              "AP observation covers unshuffled pots and both crate kinds without affecting local saves");
+    }
+    ++cases; Reset(); RegisterShufflePots(); RegisterShuffleCrates();
+    isRando = false; RegisterShufflePots(); RegisterShuffleCrates();
+    Check(initHooks.empty(), "registration refresh removes callbacks when leaving randomizer mode");
+}
+static void TestIdentityAndInit() {
+    ++cases; Reset(); RegisterShufflePots(); RegisterShuffleCrates();
+    auto& client = ArchipelagoClient::GetInstance();
+    ObjTsubo pot{}; pot.actor.id = ACTOR_OBJ_TSUBO; pot.actor.params = ITEM00_STICK;
+    pot.actor.world.pos = {10, 0, -20}; pot.actor.home.pos = {999, 0, 999};
+    play.sceneNum = SCENE_GANONDORF_BOSS;
+    MapLocation(ACTOR_OBJ_TSUBO, SCENE_GANONS_TOWER, 10, -20, 21);
+    Dispatch(&pot.actor);
+    Check(ObjectExtension::GetInstance().identities[&pot.actor].randomizerCheck == 21,
+          "pot exact check identity uses world position and Ganondorf-to-tower alias");
+    Check(client.ammoSourceFacts.at({700000000021LL, 1}) == Fact(1, 1, 13),
+          "pot raw drop reaches the actual C client boundary under its exact AP identity");
+    ++cases; Reset(); RegisterShuffleCrates();
+    ObjKibako small{}; small.actor.id = ACTOR_OBJ_KIBAKO; small.actor.params = ITEM00_NUTS;
+    small.actor.home.pos = {11, 0, -22}; small.actor.world.pos = {500, 0, 600};
+    MapLocation(ACTOR_OBJ_KIBAKO, 0, 11, -22, 22);
+    Dispatch(&small.actor);
+    Check(ObjectExtension::GetInstance().identities[&small.actor].randomizerCheck == 22,
+          "small-crate identity uses authored home position rather than moved world position");
+    Check(client.ammoSourceFacts.at({700000000022LL, 1}) == Fact(2, 1, 12),
+          "small-crate hook forwards its actual params into native retention");
+    ++cases; Reset(); RegisterShuffleCrates();
+    ObjKibako2 big{}; big.dyna.actor.id = ACTOR_OBJ_KIBAKO2;
+    big.dyna.actor.world.pos = {15, 0, -25};
+    big.dyna.actor.params = ITEM00_SMALL_KEY;
+    big.dyna.actor.home.rot.x = ITEM00_BOMBS_A; big.dyna.actor.home.rot.z = 1;
+    big.dyna.actor.world.rot.x = 7; big.dyna.actor.world.rot.z = 8; big.dyna.actor.shape.rot.z = 9;
+    play.sceneNum = SCENE_MARKET_NIGHT;
+    MapLocation(ACTOR_OBJ_KIBAKO2, SCENE_MARKET_DAY, 15, -25, 23);
+    ObjKibako2_Init(&big.dyna.actor, &play);
+    Dispatch(&big.dyna.actor);
+    Check(ObjectExtension::GetInstance().identities[&big.dyna.actor].randomizerCheck == 23,
+          "large-crate exact identity follows native market night/day alias");
+    Check(client.ammoSourceFacts.at({700000000023LL, 1}) == 0,
+          "large-crate saved nonzero flag is rejected even though native Init cleared rotation Z");
+    Check(big.collectibleFlag == 1 && big.dyna.actor.home.rot.z == 0 && big.dyna.actor.home.rot.x == 4,
+          "large-crate hook runs with the real post-Init fields");
+    ++cases; Reset(); RegisterShuffleCrates();
+    big = {}; big.dyna.actor.id = ACTOR_OBJ_KIBAKO2; big.dyna.actor.params = ITEM00_SMALL_KEY;
+    big.dyna.actor.home.rot.x = ITEM00_ARROWS_LARGE;
+    MapLocation(ACTOR_OBJ_KIBAKO2, 0, 0, 0, 24);
+    ObjKibako2_Init(&big.dyna.actor, &play); Dispatch(&big.dyna.actor);
+    Check(client.ammoSourceFacts.at({700000000024LL, 1}) == Fact(3, 1, 10),
+          "large-crate raw drop comes from home X rather than skulltula actor params");
+    for (const auto& [childZ, canonicalZ] : {std::pair{-1830, -1842}, std::pair{-1770, -1782}}) {
+        ++cases; Reset(); RegisterShuffleCrates();
+        play.sceneNum = SCENE_GERUDOS_FORTRESS;
+        big = {}; big.dyna.actor.id = ACTOR_OBJ_KIBAKO2;
+        big.dyna.actor.world.pos = {310, 0, float(childZ)}; big.dyna.actor.home.rot.x = ITEM00_NUTS;
+        MapLocation(ACTOR_OBJ_KIBAKO2, SCENE_GERUDOS_FORTRESS, 310, canonicalZ, 25);
+        Dispatch(&big.dyna.actor);
+        Check(ObjectExtension::GetInstance().identities[&big.dyna.actor].randomizerCheck == 25,
+              "Gerudo Fortress child crate adjustment preserves the existing exact native identity");
+    }
+    for (const auto& [scene, x, z] : {std::tuple{SCENE_GERUDOS_FORTRESS, -4051, -3429},
+             std::tuple{SCENE_GERUDOS_FORTRESS, -4571, -3429}, std::tuple{SCENE_GERUDOS_FORTRESS, 3443, -4876},
+             std::tuple{SCENE_GERUDO_VALLEY, -764, 148}, std::tuple{SCENE_GERUDO_VALLEY, -860, -125},
+             std::tuple{SCENE_GERUDO_VALLEY, -860, -150}, std::tuple{SCENE_GERUDO_VALLEY, -860, -90}}) {
+        ++cases; Reset(); RegisterShuffleCrates(); play.sceneNum = scene;
+        big = {}; big.dyna.actor.id = ACTOR_OBJ_KIBAKO2; big.dyna.actor.world.pos = {float(x), 0, float(z)};
+        big.dyna.actor.home.rot.x = ITEM00_STICK;
+        MapLocation(ACTOR_OBJ_KIBAKO2, scene, x, z, 26);
+        Dispatch(&big.dyna.actor);
+        Check(client.ammoSourceFacts.empty() && ObjectExtension::GetInstance().identities.empty(),
+              "existing no-logic decoy crate exclusion remains effective");
+    }
+    ++cases; Reset(); RegisterShufflePots();
+    pot = {}; pot.actor.id = ACTOR_OBJ_TSUBO; pot.actor.params = ITEM00_STICK;
+    Dispatch(&pot.actor);
+    Check(ObjectExtension::GetInstance().identities.at(&pot.actor).randomizerCheck == RC_UNKNOWN_CHECK &&
+          client.ammoSourceFacts.empty(), "unknown native location cannot create an AP source identity");
+}
+static void Observe(int check, int actor, int drop, int flag = 0) {
+    Archipelago_ObserveAmmoSource(check, actor, drop, flag);
+}
+static void TestRetention() {
+    for (int invalid = 0; invalid < 9; ++invalid) {
+        ++cases; Reset(); auto& client = ArchipelagoClient::GetInstance();
+        int check = 1, actor = ACTOR_OBJ_TSUBO;
+        client.rcToApLocation[check] = 700000000001LL;
+        switch (invalid) {
+            case 0: client.currentSaveIsArchipelago = false; break;
+            case 1: gPlayState = nullptr; break;
+            case 2: gSaveContext.ship.quest.id = 0; break;
+            case 3: check = RC_UNKNOWN_CHECK; break;
+            case 4: check = -1; break;
+            case 5: check = RC_MAX; break;
+            case 6: actor = -999; break;
+            case 7: client.rcToApLocation.clear(); break;
+            case 8: client.rcToApLocation[check] = 0; break;
+        }
+        Observe(check, actor, ITEM00_STICK);
+        Check(client.ammoSourceFacts.empty() && client.ammoSourceRevision == 0,
+              "actual observer rejects non-AP, invalid context, bounds, actor, and unmapped identities");
+    }
+    ++cases; Reset(); auto& client = ArchipelagoClient::GetInstance();
+    client.rcToApLocation[1] = 700000000001LL;
+    client.ammoRefillMask = 31; client.ammoRefillUntil = 500; client.finderNextRequest = 500;
+    Observe(1, ACTOR_OBJ_TSUBO, ITEM00_STICK);
+    Check(client.ammoSourceFacts.size() == 1 && client.ammoSourceRevision == 1,
+          "new exact source updates the real revision once");
+    Check(client.ammoRefillMask == 0 && client.ammoRefillUntil == 0 && client.finderNextRequest == 0,
+          "new source clears last-unit refill permission and immediately schedules a fresh proof");
+    Check(client.AmmoSourcesJson() == "[[700000000001,321]]", "source JSON keeps exact 64-bit identity and encoded child fact");
+    client.ammoRefillMask = 31; client.ammoRefillUntil = 500; client.finderNextRequest = 500;
+    Observe(1, ACTOR_OBJ_TSUBO, ITEM00_STICK);
+    Check(client.ammoSourceRevision == 1 && client.ammoRefillMask == 31 && client.finderNextRequest == 500,
+          "identical observation is a no-op and preserves the fresh cache");
+    ++cases;
+    gSaveContext.linkAge = LINK_AGE_ADULT;
+    Observe(1, ACTOR_OBJ_TSUBO, ITEM00_SEEDS);
+    Check(client.ammoSourceFacts.size() == 2 && client.ammoSourceFacts.at({700000000001LL, 2}) == 608,
+          "same identity retains distinct child and adult authored variants");
+    Check(client.AmmoSourcesJson() == "[[700000000001,321],[700000000001,608]]",
+          "JSON encodes both observed ages deterministically without inventing cross-age evidence");
+    for (int conflict = 0; conflict < 3; ++conflict) {
+        ++cases; Reset(); client.rcToApLocation[1] = 700000000001LL;
+        Observe(1, ACTOR_OBJ_TSUBO, ITEM00_STICK);
+        client.ammoRefillMask = 31; client.ammoRefillUntil = 500;
+        if (conflict == 0) Observe(1, ACTOR_OBJ_TSUBO, ITEM00_NUTS);
+        if (conflict == 1) Observe(1, ACTOR_OBJ_KIBAKO, ITEM00_STICK);
+        if (conflict == 2) Observe(1, ACTOR_OBJ_TSUBO, ITEM00_STICK | (1 << 9));
+        Check(client.ammoSourceFacts.at({700000000001LL, 1}) == 0 && client.AmmoSourcesJson() == "[]",
+              "changed drop, actor kind, or nonzero flag creates a conservative nonexported tombstone");
+        Check(client.ammoSourceRevision == 2 && client.ammoRefillMask == 0 && client.ammoRefillUntil == 0,
+              "conflicting source invalidates the cache and binds a new revision");
+        Observe(1, ACTOR_OBJ_TSUBO, ITEM00_STICK);
+        Check(client.ammoSourceFacts.at({700000000001LL, 1}) == 0 && client.ammoSourceRevision == 2,
+              "later ordinary observation cannot revive an ambiguous source in the same lifetime");
+        gSaveContext.linkAge = LINK_AGE_ADULT;
+        Observe(1, ACTOR_OBJ_TSUBO, ITEM00_NUTS);
+        Check(client.ammoSourceFacts.at({700000000001LL, 2}) != 0,
+              "one observed-age tombstone does not fabricate or remove evidence for the other age");
+    }
+    ++cases; Reset(); client.rcToApLocation[1] = 700000000001LL;
+    Observe(1, ACTOR_OBJ_TSUBO, ITEM00_STICK);
+    client.ammoRefillMask = 31; client.ammoRefillUntil = 500;
+    client.ResetAmmoSources();
+    Check(client.ammoSourceFacts.empty() && client.ammoSourceRevision == 2 && client.ammoSourceFile == 0,
+          "actual reset removes all facts and changes source authority token input");
+    Check(client.ammoRefillMask == 0 && client.ammoRefillUntil == 0, "reset revokes cached refill permission");
+    ++cases;
+    Observe(1, ACTOR_OBJ_TSUBO, ITEM00_STICK);
+    gSaveContext.fileNum = 1;
+    client.rcToApLocation[2] = 700000000002LL;
+    Observe(2, ACTOR_OBJ_KIBAKO, ITEM00_NUTS);
+    Check(client.ammoSourceFile == 1 && client.ammoSourceFacts.size() == 1 &&
+          client.ammoSourceFacts.count({700000000001LL, 1}) == 0 &&
+          client.ammoSourceFacts.at({700000000002LL, 1}) == Fact(2, 1, 12),
+          "observing a different physical file removes prior file facts before accepting the new one");
+    ++cases; Reset();
+    for (int check = 1; check <= 2049; ++check) {
+        client.rcToApLocation[check] = 700000000000LL + check;
+        Observe(check, ACTOR_OBJ_TSUBO, check % 2 ? ITEM00_STICK : ITEM00_SMALL_KEY);
+    }
+    Check(client.ammoSourceFacts.size() == 2048 && client.ammoSourceRevision == 2048 &&
+          client.ammoSourceFacts.count({700000002049LL, 1}) == 0,
+          "actual source store caps accepted and tombstoned identities together at 2048");
+    Observe(1, ACTOR_OBJ_TSUBO, ITEM00_NUTS);
+    Check(client.ammoSourceFacts.at({700000000001LL, 1}) == 0 && client.ammoSourceRevision == 2049,
+          "an existing source can still be revoked after the observation store reaches its bound");
+    Check(client.AmmoSourcesJson().find("[700000000002,") == std::string::npos,
+          "bounded tombstones are never serialized as valid source facts");
+}
+static void TestBaseline() {
+    for (int shuffled : {0, 1}) {
+        Reset(); options[RSK_SHUFFLE_POTS] = options[RSK_SHUFFLE_CRATES] = shuffled;
+        Legacy::RegisterShufflePots(); Legacy::RegisterShuffleCrates();
+        ObjTsubo pot{}; pot.actor.id = ACTOR_OBJ_TSUBO; pot.actor.params = ITEM00_STICK;
+        ObjKibako small{}; small.actor.id = ACTOR_OBJ_KIBAKO; small.actor.params = ITEM00_NUTS;
+        ObjKibako2 big{}; big.dyna.actor.id = ACTOR_OBJ_KIBAKO2; big.dyna.actor.home.rot.x = ITEM00_BOMBS_A;
+        std::array<Actor*, 3> actors{&pot.actor, &small.actor, &big.dyna.actor};
+        for (int index = 0; index < 3; ++index) {
+            ++cases; ++baselineCases; Actor* actor = actors[index];
+            MapLocation(actor->id, 0, 0, 0, 10 + index);
+            Dispatch(actor);
+            Check(ArchipelagoClient::GetInstance().ammoSourceFacts.empty(),
+                  "retained original init code did not observe actual container ammo sources");
+            Check(ObjectExtension::GetInstance().identities.count(actor) == unsigned(shuffled),
+                  "retained original observation gap is reproduced with its original identity gate");
+        }
+    }
+}
+int main() {
+    TestNativeParameters(); TestNativePersistenceAndAge(); TestRegistration();
+    TestIdentityAndInit(); TestRetention(); TestBaseline();
+    std::cout << "{\"cases\":" << cases << ",\"assertions\":" << assertions
+              << ",\"baseline_reproductions\":" << baselineCases << "}\n";
+}

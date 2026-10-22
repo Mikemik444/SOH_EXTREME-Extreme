@@ -1,0 +1,328 @@
+#include <array>
+#include <cassert>
+#include <cstdint>
+#include <cstdlib>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <string>
+#include <vector>
+
+@CONSTANTS@
+using RandomizerGet = int;
+using RandomizerRegion = int;
+using RandomizerCheckArea = int;
+using RandoWaterLevel = int;
+#define SPDLOG_INFO(...) ((void)0)
+#define SPDLOG_ERROR(...) ((void)0)
+#define CVAR_RANDOMIZER_SETTING(name) name
+bool apSave = true, roomDoors = true;
+bool Archipelago_IsCurrentSaveFile() { return apSave; }
+int CVarGetInteger(const char*, int) { return roomDoors; }
+
+namespace Rando {
+struct Context;
+struct Logic {
+    Context* ctx = nullptr;
+    bool IsChild = true, IsAdult = false, AtDay = true, AtNight = false;
+    bool CalculatingAvailableChecks = true, allowed = true;
+    int CurrentRegionKey = 0, waterSeconds = 32;
+    std::array<bool, CONSTANT_COUNT> inventory{}, events{};
+    std::map<std::string, bool> capabilities;
+    bool HasItem(int key) { return inventory[key] || (key == RG_HOOKSHOT && inventory[RG_LONGSHOT]); }
+    bool ItemUseAllowed(int) { return allowed; }
+    bool Get(int key) { return events[key]; }
+    bool CanUse(RandomizerGet);
+    bool WaterTempleDoorsShuffled();
+    bool WaterLevel(RandoWaterLevel);
+    int WaterTimer() { return waterSeconds; }
+    int GetAmmo(int) { return 0; }
+    int CurrentUpgrade(int) { return 0; }
+    bool BombchuRefill() { return false; }
+    bool BombchusEnabled() { return false; }
+    bool HasAnimalSoul(int) { return true; }
+    bool SmallKeys(int, int) { return capabilities["SmallKeys"]; }
+    @OTHER_LOGIC_METHODS@
+};
+struct Dungeon {
+    bool IsVanilla() { return true; }
+    bool IsMQ() { return false; }
+};
+struct Context {
+    std::array<bool, CONSTANT_COUNT> options{};
+    Dungeon dungeon;
+    bool GetOption(int key) { return options[key]; }
+    bool GetTrickOption(int key) { return options[key]; }
+    Dungeon* GetDungeon(int) { return &dungeon; }
+};
+@CAN_USE@
+@WATER_MODE@
+@WATER_LEVEL@
+}
+Rando::Context context;
+Rando::Context* ctx = &context;
+auto logic = std::make_shared<Rando::Logic>();
+
+struct Rule {
+    int key;
+    std::function<bool()> condition;
+};
+struct Region {
+    std::vector<Rule> events, locations, exits;
+    bool childAccess = false, adultAccess = false;
+    bool Child() { return childAccess; }
+    bool Adult() { return adultAccess; }
+    Region() = default;
+    Region(const char*, int, std::initializer_list<Rule> e,
+           std::initializer_list<Rule> l, std::initializer_list<Rule> x)
+        : events(e), locations(l), exits(x) {}
+};
+std::array<Region, CONSTANT_COUNT> areaTable;
+#define EVENT_ACCESS(key, ...) Rule{key, [] { return __VA_ARGS__; }}
+#define LOCATION(key, ...) Rule{key, [] { return __VA_ARGS__; }}
+#define ENTRANCE(key, condition, ...) Rule{key, [] { return condition; }}
+template<class F> bool AnyAgeTime(F condition) { return condition(); }
+template<class F> bool Adult(F condition) { return logic->IsAdult && condition(); }
+template<class F> bool Child(F condition) { return logic->IsChild && condition(); }
+@WATER_REGIONS@
+void InitGtgUnderwater() {
+@GTG_REGION@
+}
+
+@FINDER_TYPES@
+static const EnemyDefeatFinderEntry finderEntries[] = {
+@FINDER_MAP@
+};
+@FINDER_MELEE@
+@FINDER_GATE@
+
+size_t cases = 0, assertions = 0;
+#define CHECK(condition) do { ++assertions; if (!(condition)) { \
+    std::cerr << "failed at " << __LINE__ << ": " << #condition << '\n'; std::exit(1); } } while (false)
+bool Evaluate(const std::vector<Rule>& rules, int key) {
+    bool found = false, allowed = false;
+    for (const auto& rule : rules) if (rule.key == key) { found = true; allowed |= rule.condition(); }
+    CHECK(found);
+    return allowed;
+}
+bool Exit(int region, int target) { return Evaluate(areaTable[region].exits, target); }
+bool Event(int region, int event) { return Evaluate(areaTable[region].events, event); }
+bool Location(int region, int check) { return Evaluate(areaTable[region].locations, check); }
+void Reset(bool adult = false) {
+    *logic = Rando::Logic{};
+    logic->ctx = ctx;
+    logic->IsAdult = adult;
+    logic->IsChild = !adult;
+    ctx->options.fill(false);
+    roomDoors = true; apSave = true;
+}
+void Song(int song) {
+    for (int item : std::initializer_list<int>{song, RG_FAIRY_OCARINA, RG_OCARINA_A_BUTTON,
+                     RG_OCARINA_C_LEFT_BUTTON, RG_OCARINA_C_RIGHT_BUTTON,
+                     RG_OCARINA_C_UP_BUTTON, RG_OCARINA_C_DOWN_BUTTON})
+        logic->inventory[item] = true;
+}
+void WetEquipment() {
+    logic->inventory[RG_IRON_BOOTS] = true;
+    logic->inventory[RG_BRONZE_SCALE] = true;
+}
+
+int main() {
+    Reset();
+    RegionTable_Init_WaterTemple();
+    InitGtgUnderwater();
+
+    // The actual CanUse function enforces all three distinct requirements.
+    for (bool adult : {false, true}) for (bool boots : {false, true})
+    for (bool swim : {false, true}) for (bool enabledItem : {false, true}) {
+        ++cases; Reset(adult);
+        logic->inventory[RG_IRON_BOOTS] = boots;
+        logic->inventory[RG_BRONZE_SCALE] = swim;
+        logic->allowed = enabledItem;
+        CHECK(logic->CanUse(RG_IRON_BOOTS) == (adult && boots && swim && enabledItem));
+    }
+
+    // A vanilla shortcut capability must not claim control through shuffled doors.
+    for (bool shuffled : {false, true}) {
+        ++cases; Reset(true); roomDoors = shuffled; Song(RG_ZELDAS_LULLABY);
+        for (int event : {LOGIC_WATER_COULD_LOW_FROM_HIGH, LOGIC_WATER_COULD_LOW,
+                          LOGIC_WATER_COULD_HIGH_FROM_MID, LOGIC_WATER_COULD_MIDDLE})
+            logic->events[event] = true;
+        CHECK(logic->WaterLevel(WL_LOW) == !shuffled);
+        CHECK(logic->WaterLevel(WL_MID) == !shuffled);
+        CHECK(logic->WaterLevel(WL_HIGH) == !shuffled);
+        CHECK(logic->WaterLevel(WL_LOW_OR_MID) == !shuffled);
+        CHECK(logic->WaterLevel(WL_HIGH_OR_MID) == !shuffled);
+    }
+    ++cases; Reset(); roomDoors = true; apSave = false;
+    CHECK(!logic->WaterTempleDoorsShuffled());
+    ++cases; Reset();
+    logic->events[LOGIC_WATER_HIGH] = true;
+    CHECK(logic->WaterLevel(WL_HIGH));
+    CHECK(logic->WaterLevel(WL_HIGH_OR_MID));
+    CHECK(!logic->WaterLevel(WL_LOW));
+    CHECK(!logic->WaterLevel(WL_MID));
+    logic->events[LOGIC_WATER_LOW] = true;
+    CHECK(logic->WaterLevel(WL_LOW));
+    CHECK(logic->WaterLevel(WL_LOW_OR_MID));
+    CHECK(!logic->WaterLevel(WL_MID));
+    logic->events[LOGIC_WATER_MIDDLE] = true;
+    CHECK(logic->WaterLevel(WL_MID));
+
+    // Direct arrival at the dry Low Emblem remains useful to a child.
+    ++cases; Reset();
+    CHECK(Exit(RR_WATER_TEMPLE_LOW_EMBLEM, RR_WATER_TEMPLE_4_SPIKES_ROOM));
+    CHECK(Exit(RR_WATER_TEMPLE_HIGH_EMBLEM, RR_WATER_TEMPLE_3F_CENTRAL_A));
+    CHECK(!Event(RR_WATER_TEMPLE_LOW_EMBLEM, LOGIC_WATER_LOW));
+    CHECK(!Exit(RR_WATER_TEMPLE_HIGH_EMBLEM, RR_WATER_TEMPLE_MAIN));
+    Song(RG_ZELDAS_LULLABY);
+    CHECK(Event(RR_WATER_TEMPLE_LOW_EMBLEM, LOGIC_WATER_LOW));
+    logic->events[LOGIC_WATER_LOW] = true;
+    CHECK(Exit(RR_WATER_TEMPLE_HIGH_EMBLEM, RR_WATER_TEMPLE_MAIN));
+    CHECK(Event(RR_WATER_TEMPLE_PILLAR_2F, LOGIC_WATER_MIDDLE));
+
+    // High-water room arrivals must not use the submerged emblem, dry torch,
+    // dry pots, dry eye target, or a low/mid-only upper-floor route.
+    ++cases; Reset(true); WetEquipment(); Song(RG_ZELDAS_LULLABY);
+    logic->events[LOGIC_WATER_HIGH] = true;
+    logic->inventory[RG_LONGSHOT] = true;
+    logic->inventory[RG_FAIRY_BOW] = true;
+    logic->capabilities["CanBreakPots"] = true;
+    logic->capabilities["HasFireSourceWithTorch"] = true;
+    logic->capabilities["CanHitEyeTargets"] = true;
+    CHECK(!Event(RR_WATER_TEMPLE_PILLAR_2F, LOGIC_WATER_MIDDLE));
+    CHECK(!Event(RR_WATER_TEMPLE_PILLAR_2F, LOGIC_WATER_COULD_MIDDLE));
+    CHECK(!Location(RR_WATER_TEMPLE_2F_CENTRAL_LM, RC_WATER_TEMPLE_MAIN_LEVEL_2_POT_1));
+    CHECK(!Exit(RR_WATER_TEMPLE_2F_CENTRAL_LM, RR_WATER_TEMPLE_PILLAR_2F));
+    CHECK(!Exit(RR_WATER_TEMPLE_2F_CENTRAL_LM, RR_WATER_TEMPLE_BLOCK_LOOP));
+    CHECK(!Exit(RR_WATER_TEMPLE_2F_CENTRAL_LM, RR_WATER_TEMPLE_3F_CENTRAL_LM));
+    CHECK(Exit(RR_WATER_TEMPLE_2F_CENTRAL_LM, RR_WATER_TEMPLE_2F_CENTRAL_H));
+    CHECK(Location(RR_WATER_TEMPLE_2F_CENTRAL_H, RC_WATER_TEMPLE_MAIN_LEVEL_2_POT_1));
+    CHECK(Exit(RR_WATER_TEMPLE_PILLAR_2F, RR_WATER_TEMPLE_PILLAR_H));
+    logic->inventory[RG_LONGSHOT] = false;
+    CHECK(Exit(RR_WATER_TEMPLE_PILLAR_1F, RR_WATER_TEMPLE_PILLAR_H));
+    logic->inventory[RG_LONGSHOT] = true;
+    logic->inventory[RG_IRON_BOOTS] = false;
+    CHECK(!Exit(RR_WATER_TEMPLE_2F_CENTRAL_LM, RR_WATER_TEMPLE_2F_CENTRAL_H));
+    CHECK(!Exit(RR_WATER_TEMPLE_PILLAR_2F, RR_WATER_TEMPLE_PILLAR_H));
+    CHECK(!Exit(RR_WATER_TEMPLE_PILLAR_1F, RR_WATER_TEMPLE_PILLAR_H));
+    logic->events[LOGIC_WATER_LOW] = true;
+    CHECK(Event(RR_WATER_TEMPLE_PILLAR_2F, LOGIC_WATER_MIDDLE));
+    CHECK(Location(RR_WATER_TEMPLE_2F_CENTRAL_LM, RC_WATER_TEMPLE_MAIN_LEVEL_2_POT_1));
+    CHECK(Exit(RR_WATER_TEMPLE_2F_CENTRAL_LM, RR_WATER_TEMPLE_PILLAR_2F));
+
+    // The pillar's high-water view cannot bypass the shuffled physical door.
+    for (bool shuffled : {false, true}) {
+        ++cases; Reset(true); WetEquipment(); roomDoors = shuffled;
+        logic->events[LOGIC_WATER_MIDDLE] = true;
+        CHECK(Exit(RR_WATER_TEMPLE_PILLAR_1F, RR_WATER_TEMPLE_PILLAR_2F) == shuffled);
+        CHECK(Exit(RR_WATER_TEMPLE_PILLAR_H, RR_WATER_TEMPLE_MAIN) == !shuffled);
+        CHECK(Exit(RR_WATER_TEMPLE_PILLAR_H, RR_WATER_TEMPLE_2F_CENTRAL_LM) == !shuffled);
+        CHECK(Exit(RR_WATER_TEMPLE_PILLAR_H, RR_WATER_TEMPLE_PILLAR_2F) == shuffled);
+        CHECK(Exit(RR_WATER_TEMPLE_PILLAR_B1, RR_WATER_TEMPLE_MAIN) == !shuffled);
+        CHECK(Exit(RR_WATER_TEMPLE_PILLAR_B1, RR_WATER_TEMPLE_PILLAR_1F) == shuffled);
+        logic->waterSeconds = 15;
+        CHECK(!Exit(RR_WATER_TEMPLE_PILLAR_B1, RR_WATER_TEMPLE_PILLAR_1F));
+        logic->waterSeconds = 7;
+        CHECK(!Exit(RR_WATER_TEMPLE_PILLAR_H, RR_WATER_TEMPLE_PILLAR_2F));
+    }
+    for (bool shuffled : {false, true}) {
+        ++cases; Reset(true); WetEquipment(); roomDoors = shuffled;
+        logic->inventory[RG_HOOKSHOT] = true;
+        for (const char* capability : {"SmallKeys", "CanHitSwitch", "HasFireSourceWithTorch",
+                                       "BunnyHovers", "CanRecoilHover"}) logic->capabilities[capability] = true;
+        CHECK(Event(RR_WATER_TEMPLE_MAIN, LOGIC_WATER_COULD_MIDDLE) == !shuffled);
+        CHECK(Event(RR_WATER_TEMPLE_MAIN, LOGIC_WATER_COULD_HIGH_FROM_MID) == !shuffled);
+        CHECK(Event(RR_WATER_TEMPLE_ENTRANCE_LEDGE, LOGIC_WATER_COULD_MIDDLE) == !shuffled);
+        CHECK(Event(RR_WATER_TEMPLE_RISING_TARGET_LEDGE, LOGIC_WATER_COULD_MIDDLE) == !shuffled);
+    }
+
+    // Dry rooms keep their exits; entering the river or central water is wet.
+    ++cases; Reset();
+    logic->inventory[RG_BRONZE_SCALE] = true;
+    CHECK(Exit(RR_WATER_TEMPLE_SOT_PIT_ROOM, RR_WATER_TEMPLE_DARK_LINK_ROOM));
+    CHECK(!Exit(RR_WATER_TEMPLE_SOT_PIT_ROOM, RR_WATER_TEMPLE_RIVER));
+    logic->events[LOGIC_WATER_MIDDLE] = true;
+    CHECK(Exit(RR_WATER_TEMPLE_JET_LIFT_2F, RR_WATER_TEMPLE_OUTSIDE_JET_LIFT_2F));
+    CHECK(!Exit(RR_WATER_TEMPLE_OUTSIDE_JET_LIFT_2F, RR_WATER_TEMPLE_MAIN));
+    logic->events[LOGIC_WATER_LOW] = true;
+    CHECK(Exit(RR_WATER_TEMPLE_OUTSIDE_JET_LIFT_2F, RR_WATER_TEMPLE_MAIN));
+    CHECK(!Exit(RR_WATER_TEMPLE_RISING_TARGET_LEDGE, RR_WATER_TEMPLE_MAIN));
+    logic->capabilities["TakeDamage"] = true;
+    CHECK(Exit(RR_WATER_TEMPLE_RISING_TARGET_LEDGE, RR_WATER_TEMPLE_MAIN));
+    logic->events[LOGIC_WATER_LOW] = false;
+    CHECK(!Exit(RR_WATER_TEMPLE_RISING_TARGET_LEDGE, RR_WATER_TEMPLE_MAIN));
+    ++cases; Reset();
+    logic->events[LOGIC_WATER_LOW] = true;
+    logic->events[LOGIC_WATER_PUSHED_1F_BLOCK] = true;
+    logic->inventory[RG_SILVER_SCALE] = true;
+    logic->capabilities["HasExplosives"] = true;
+    CHECK(!Exit(RR_WATER_TEMPLE_MAIN, RR_WATER_TEMPLE_BLOCK_U_BEND));
+    CHECK(!Exit(RR_WATER_TEMPLE_MAIN, RR_WATER_TEMPLE_NEAR_CAGE));
+    ++cases; Reset();
+    logic->inventory[RG_GOLDEN_SCALE] = true;
+    logic->capabilities["CanBreakPots"] = true;
+    logic->events[LOGIC_WATER_HIGH] = true;
+    CHECK(!Location(RR_WATER_TEMPLE_3F_CENTRAL_A, RC_WATER_TEMPLE_MAIN_LEVEL_2_POT_1));
+    logic->inventory[RG_BOOMERANG] = true;
+    CHECK(Location(RR_WATER_TEMPLE_3F_CENTRAL_A, RC_WATER_TEMPLE_MAIN_LEVEL_2_POT_1));
+    logic->inventory[RG_BOOMERANG] = false;
+    logic->events[LOGIC_WATER_LOW] = true;
+    CHECK(Location(RR_WATER_TEMPLE_3F_CENTRAL_A, RC_WATER_TEMPLE_MAIN_LEVEL_2_POT_1));
+    ++cases; Reset(true); WetEquipment(); Song(RG_SONG_OF_TIME);
+    CHECK(Exit(RR_WATER_TEMPLE_SOT_PIT_ROOM, RR_WATER_TEMPLE_RIVER));
+
+    size_t gtgEntries = 0;
+    for (const auto& entry : finderEntries) {
+        const bool poolEnemy = entry.locationId >= 9800443 && entry.locationId <= 9800446;
+        CHECK((entry.gate == EFG_GTG_UNDERWATER) == poolEnemy);
+        if (!poolEnemy) continue;
+        ++gtgEntries;
+        for (bool adult : {false, true}) for (bool boots : {false, true})
+        for (bool swim : {false, true}) for (bool hookshot : {false, true})
+        for (bool song : {false, true}) for (int seconds : {15, 16}) {
+            ++cases; Reset(adult);
+            logic->inventory[RG_IRON_BOOTS] = boots;
+            logic->inventory[RG_BRONZE_SCALE] = swim;
+            logic->inventory[RG_HOOKSHOT] = hookshot;
+            logic->inventory[RG_KOKIRI_SWORD] = true;
+            if (song) Song(RG_SONG_OF_TIME);
+            logic->waterSeconds = seconds;
+            const bool expected = adult && boots && swim && hookshot && song && seconds >= 16;
+            CHECK(EnemyFinderEncounterGate(logic.get(), entry) == expected);
+            CHECK(Exit(RR_GERUDO_TRAINING_GROUND_UNDERWATER, RR_GERUDO_TRAINING_GROUND_LAVA_ROOM));
+        }
+    }
+    CHECK(gtgEntries == 4);
+    size_t waterEntries = 0;
+    for (const auto& entry : finderEntries) {
+        const bool pillarEnemy = entry.locationId == 9800232 || entry.locationId == 9800233;
+        const bool torchEnemy = entry.locationId >= 9800272 && entry.locationId <= 9800274;
+        CHECK((entry.gate == EFG_WATER_PILLAR_BOTTOM) == pillarEnemy);
+        CHECK((entry.gate == EFG_WATER_TORCH_ROOM) == torchEnemy);
+        if (!pillarEnemy && !torchEnemy) continue;
+        ++waterEntries;
+        for (bool adult : {false, true}) for (bool boots : {false, true})
+        for (bool swim : {false, true}) for (bool hookshot : {false, true})
+        for (bool low : {false, true}) {
+            ++cases; Reset(adult);
+            logic->inventory[RG_IRON_BOOTS] = boots;
+            logic->inventory[RG_BRONZE_SCALE] = swim;
+            logic->inventory[RG_HOOKSHOT] = hookshot;
+            logic->inventory[RG_KOKIRI_SWORD] = true;
+            logic->events[LOGIC_WATER_LOW] = low;
+            const bool wetCombat = adult && boots && swim && hookshot;
+            CHECK(EnemyFinderEncounterGate(logic.get(), entry) ==
+                  ((torchEnemy && low) || wetCombat));
+        }
+    }
+    CHECK(waterEntries == 5);
+    ++cases; Reset();
+    logic->inventory[RG_GTG_SILVER_WATER] = true;
+    logic->inventory[RG_OPEN_CHEST] = true;
+    CHECK(Location(RR_GERUDO_TRAINING_GROUND_UNDERWATER, RC_GERUDO_TRAINING_GROUND_UNDERWATER_SILVER_RUPEE_CHEST));
+    std::cout << "{\"cases\":" << cases << ",\"assertions\":" << assertions
+              << ",\"gtg_pool_enemies\":" << gtgEntries
+              << ",\"water_submerged_enemies\":" << waterEntries << "}\n";
+}

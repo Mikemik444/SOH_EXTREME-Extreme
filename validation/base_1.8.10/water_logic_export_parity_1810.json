@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "mode": "check",
+  "changed_exports": [],
+  "native_regions": 62,
+  "native_exits": 171,
+  "native_events": 18,
+  "native_mapped_location_routes": 60,
+  "unrelated_graph_regions_unchanged": 367,
+  "structural_edges_added": [],
+  "structural_edges_removed": [],
+  "source_sha256": {
+    "soh/Enhancements/randomizer/location_access/dungeons/water_temple.cpp": "b80ebd6ff31720cc75dd0eabff347b422a62a36cd2e828fdb4d63278284c0809",
+    "tools/update_water_logic_exports.py": "2157cba5f1627e1cea6bca1683ddb6f077cac0487366a64f296ac48deacd18e3",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "9bee9b5b226f26e77ab83316f4768688a4e89c20a90382e9b56e3d1b74eadc1b",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "a3f55e52dc3c79ca717355328d7624fcc9f831c07eee620a9a10c68f24cbce31",
+    "archipelago/soh_extreme/NativeLogic.py": "b30937e106b35d665fc5f73afc7c974e29ede776cab9d22026b581e67995ec43"
+  }
+}

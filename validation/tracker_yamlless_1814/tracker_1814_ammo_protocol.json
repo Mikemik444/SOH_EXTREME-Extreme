@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "source_sha256": {
+    "archipelago/soh_extreme/TrackerMirror.py": "c6ee2460bb63c43c074bd20e133170184403efb4bd80a3009ae241a1e6c5965f",
+    "archipelago/soh_extreme/TrackerClient.py": "fa39c0f10dd12214bcc995ba68178227fc00a3aa474b2a570615d07bb932be77",
+    "archipelago/soh_extreme/TrackerBootstrap.py": "49db125d47aa12ad0ad1ebcfcca47a225384d1d22f71f5f622f2a3cb10b4f892",
+    "archipelago/soh_extreme/TrackerWorker.py": "d3c0a2722a75098c1b4f9660638070ee564862b91d4b5e754b5c5981bbc3386e",
+    "archipelago/soh_extreme/AmmoRefillRules.py": "21f12128e66daa3dfeb2b4261ef75077737c139bf22a6f08d74d577733a829c8",
+    "soh/Network/Archipelago/TrackerMirror.h": "c4daff987bc2d864ebe407e8df3d4d5b21471af757ee4167f0c647809b16043a",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "4918aaefbf4643f700f3ceebcf3b29edea0d54caea237ac78cbc8783a14cd4aa",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "594fa045bba0fec0a334345f7920da1ebda294086dc06238f913a15949da7f33",
+    "soh/Network/Archipelago/AmmoPolicy.h": "e1337cfa6c8be0ec7ad8ede2df3363bdd827deed47e96382b013b032d27bcd9e",
+    "soh/SohExtremeVersion.h": "11f3ea882c5497fea0ff8eea6eefaee49145425144c2cc96f052a59e145c6c95"
+  },
+  "test_sha256": {
+    "tools/tests/test_ammo_tracker_protocol.py": "4d242c3041ecff948a3c05230a0c95eb854ead58fff017598f0f128bf89f2d76",
+    "tools/tests/ammo_tracker_protocol_tests.cpp.in": "96a27255c1ee04dcf28a3ef9b5d083ef01b86e29f46178ea68cd68fe0d0d2b08",
+    "tools/tests/test_zora_river_native.py": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48"
+  },
+  "source_unchanged_during_tests": true,
+  "wire_cases": 97,
+  "encoder_assertions": 19,
+  "native": {
+    "cases": 145,
+    "assertions": 335
+  },
+  "worker": {
+    "cases": 49,
+    "assertions": 108,
+    "proof_calls": 15
+  },
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "native_windows_build": false,
+  "in_game_playthrough": false,
+  "scope": "Production Python encoder and request/publish handler, C++ decoder and mirror, complete native GetFinderSnapshot and ServiceFinderWorker. Network/process IO, UT evaluation, clock and native storage are isolated; actual AP refill reachability has its separate test_ammo_refill.py suite. The real UT slot bootstrap and launcher dispatch are covered by test_tracker_yamlless.py.",
+  "replay_command": "PYTHONPATH=<AP-dependencies>:<AP-0.6.8-runtime> python3 source/tools/tests/test_ammo_tracker_protocol.py --report <REPORT>"
+}

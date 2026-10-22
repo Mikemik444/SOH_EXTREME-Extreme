@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "cases": 51,
+  "assertions": 145,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "scope": "Actual EnGe1/EnGe2 init, update, sensing/capture, card-refresh, friendly/stunned and voluntary-jail functions plus actual randomizer friendliness/jail hook branches. Animation, rendering, collision and message I/O are shimmed. Soul-freeze dispatch is modeled by the harness; no full native build, scene actor placement or gameplay test.",
+  "output": [
+    "PASS: live card receipt, first restored update, automatic capture cancellation, roles, KO/stuns, voluntary jail and vanilla behavior",
+    "RESULT cases=51 assertions=145"
+  ],
+  "sources": {
+    "src/overlays/actors/ovl_En_Ge1/z_en_ge1.c": "a65cc9a237fbf0523e6cdeecefdfa2592951d7f46c0c85c754ee9d90482781ef",
+    "src/overlays/actors/ovl_En_Ge1/z_en_ge1.h": "1bb07a606e403b61f67763058dc75803e8f8eb85b0362d850ee70213949f620e",
+    "src/overlays/actors/ovl_En_Ge2/z_en_ge2.c": "e2c3c15767976b559888247594a5b38080a228b949e6730f10959ee506f564a2",
+    "src/overlays/actors/ovl_En_Ge2/z_en_ge2.h": "bc23a79e7a7e8f54ca40054ee2f508d6b5cdbe3cb6eed37fcc74ee39e0a005df",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "tools/tests/test_gerudo_guard_card_native.py": "00f4e5ff6fd195022397c353cf90b664dee823f3a11f7f82cf23f4944677b74c",
+    "tools/tests/gerudo_guard_card_native_tests.cpp.in": "458f98311fecb31d848f549329267b3fbfc41eec71a3cb79c898596c0632e3fb"
+  },
+  "tested_function_sha256": {
+    "WHITE": "07acece9f06798d56d3f916768012bda89d74f655526fbec136f51f3e9d8fc0a",
+    "PURPLE": "8d51aa85b0e96229eedce3e70a8edfa2bfc9b857977c15df88be569c7b24188a",
+    "WHITE_TYPES": "7b0879701590e064336f3ee61dee16774870222fac0955f788b6deecb056509f",
+    "WHITE_HAIR": "f48b589496dac67349be336f94cb845053a7bfe26c3dfcb740f260c845aaa7ac",
+    "PURPLE_TYPES": "d635776274344beed235a4b83acb01aadaf4d1be32e7fdcdfbba2d432a357d08",
+    "PURPLE_ACTIONS": "77c283fe2e0291e19455cafb951c229268fd85dde8c0724ef4570d7234377b27",
+    "PURPLE_ACTION_TABLE": "4641341479242345c33ff39e4d2ca3a2c18c5ad160b2c35cc53f88182feb5c1d",
+    "STATE_FLAGS": "9aa75f5a0c5a18668743ca5bc016ca0eec5774d2e6414f4499b9d85217252f8c",
+    "HOOK_CASES": "fc53c0acc9094b7cd63e3e4e227429e300574d9d9ca590d5682f2e1ca282e57f"
+  }
+}

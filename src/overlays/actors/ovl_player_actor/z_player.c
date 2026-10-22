@@ -10701,7 +10701,7 @@ void Player_StartMode_Door(PlayState* play, Player* this) {
     Player_StartAnimMovement(play, this, 0x9B);
 }
 
-void Player_StartMode_Grotto(PlayState* play, Player* this) {
+static void Player_StartGrottoEmergence(PlayState* play, Player* this) {
     // If can respawn from water to grotto, need to set normal speed factor for the jump
     if (IS_RANDO) {
         sWaterSpeedFactor = 1.0f;
@@ -10711,6 +10711,20 @@ void Player_StartMode_Grotto(PlayState* play, Player* this) {
     this->stateFlags1 |= PLAYER_STATE1_IN_CUTSCENE;
     this->fallStartHeight = this->actor.world.pos.y;
     OnePointCutscene_Init(play, 5110, 40, &this->actor, CAM_ID_MAIN);
+}
+
+void Player_StartMode_Grotto(PlayState* play, Player* this) {
+    if (Grotto_QueueReturnLanding(&this->actor)) {
+        // Room actors/dynamic collision are not ready during Player_Init.
+        // Hold this exact return until the first player update can prove a
+        // stationary landing or begin the unchanged native emergence.
+        Player_SetupAction(play, this, Player_Action_8084F9A0, 0);
+        this->stateFlags1 |= PLAYER_STATE1_IN_CUTSCENE;
+        this->linearVelocity = this->actor.speedXZ = this->actor.gravity = 0.0f;
+        this->actor.velocity = (Vec3f){ 0 };
+        return;
+    }
+    Player_StartGrottoEmergence(play, this);
 }
 
 void Player_StartMode_KnockedOver(PlayState* play, Player* this) {
@@ -11790,6 +11804,13 @@ static f32 sFloorConveyorSpeeds[] = { 0.5f, 1.0f, 3.0f };
 void Player_UpdateCommon(Player* this, PlayState* play, Input* input) {
     s32 pad;
 
+    // BG collision lookup has been built before the player category updates.
+    // Resolve before physics and the first draw, never by moving through a
+    // guessed offset after control has already been returned to the player.
+    const s32 grottoLandingResult = Grotto_ResolveReturnLanding(&this->actor);
+    if (grottoLandingResult == 1) Player_StartMode_Idle(play, this);
+    else if (grottoLandingResult == 2) Player_StartGrottoEmergence(play, this);
+
     sControlInput = input;
 
     if (this->unk_A86 < 0) {
@@ -12333,6 +12354,7 @@ void Player_Update(Actor* thisx, PlayState* play) {
         // Actor_PlaySfx_Flagged(&player->actor, NA_SE_EV_WIND_TRAP - SFX_FLAG);
     }
 
+    Grotto_UpdateReturnLanding(&this->actor);
     GameInteractor_ExecuteOnPlayerUpdate();
 }
 

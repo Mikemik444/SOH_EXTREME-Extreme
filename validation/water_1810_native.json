@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "cases": 447,
+  "assertions": 3330,
+  "gtg_pool_enemies": 4,
+  "water_submerged_enemies": 5,
+  "source_sha256": {
+    "soh/Enhancements/randomizer/logic.cpp": "9e6a0aed7fbec38674ffc5458f900192db5a967e246e508f5c68e411a263067c",
+    "soh/Enhancements/randomizer/logic.h": "8490b5e9538ab5927ff86ccd419ad964926973391e08047ff876a3be39f9896c",
+    "soh/Enhancements/randomizer/location_access/dungeons/water_temple.cpp": "b80ebd6ff31720cc75dd0eabff347b422a62a36cd2e828fdb4d63278284c0809",
+    "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp": "6568780c798e66a282dd45c0f6a3b6d34c3f99f39e53f1f6c32ce3895944d694",
+    "soh/Enhancements/randomizer/randomizer_check_tracker.cpp": "b0032e627382eddfbb5815969a26007fccce482ade7a988541dffcbc640a9626",
+    "soh/Network/Archipelago/ArchipelagoEnemyFinderMap.inc": "9c932c2776c2250a9eb2c7425dc806ecc83692f29ceb552b8b6943ca4f93c5a8",
+    "archipelago/soh_extreme/EnemyRoomMap.json": "aecf6f9e541eb568b4ecf29010a0e5b48e629bac19335a9f2e7701fcb7b25acc",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e"
+  },
+  "test_sha256": {
+    "tools/tests/test_water_native.py": "311999e518a7da1be7e817bde374947a6880558ba0a799f46ea758a5baeabc3d",
+    "tools/tests/water_native_tests.cpp.in": "d07f1974ebbc0fbbecff75ee24a96b4267ff636473ec8d54e5ca1a0c9e7eaa9e",
+    "tools/tests/test_soul_logic_native.py": "c3d6cf972babdd9b1c31b1ae8b93192f3ba8c5b593f2b9f73e0b14e823a4f785"
+  },
+  "captured_fragment_sha256": {
+    "CAN_USE": "a9d736d7cdd6fa09def561b0eb70d1d3dca878bfa0f088d393ce9eb9b300bfe6",
+    "WATER_MODE": "38900bf063c5b244751e731feefb8ff15378be03cb6f720b5acd267c1c2017f9",
+    "WATER_LEVEL": "503ffbfa34dc621ee8acd1f9f42af1baa3af92db917bdd6bec96cab7b7d2d76e",
+    "WATER_REGIONS": "7aadf397453a1d371e5c622579c93e69e960d38b97f8e6a701f710708d465230",
+    "GTG_REGION": "01074ed79ca59654a700ceed798e259146f2a9b4376e36d599a1974f6e89bb60",
+    "FINDER_MELEE": "4cbf9c53428dfda7715ced926865769e695dd109af2f5162becea66bdf54d205",
+    "FINDER_GATE": "c1578a96e888170cfe52d51a4c8b530e190f41fbb0da00e764cb77417e2a8de7",
+    "FINDER_TYPES": "8ae6eda01dd9fbbb311473c767de7fda9c8d389cdd22c7b07479077ccc8d0d8c",
+    "FINDER_MAP": "9c932c2776c2250a9eb2c7425dc806ecc83692f29ceb552b8b6943ca4f93c5a8",
+    "CONSTANTS": "4ebe7538136134fbe481cb37233c500c3bb8f5e92b64a919ae5ad1720fc2255a",
+    "OTHER_LOGIC_METHODS": "54bf3941b66058ec9430e78228ee7e1fdbac24e67f4f29859e0bd87df06ce794"
+  },
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "captured_functions": [
+    "Logic::CanUse",
+    "Logic::WaterTempleDoorsShuffled",
+    "Logic::WaterLevel",
+    "RegionTable_Init_WaterTemple",
+    "EnemyFinderMelee",
+    "EnemyFinderEncounterGate"
+  ],
+  "captured_region_blocks": [
+    "RR_GERUDO_TRAINING_GROUND_UNDERWATER"
+  ],
+  "engine_io_isolated": true,
+  "native_game_build": false,
+  "in_game_playthrough": false,
+  "scope": "Actual native Water Temple region initializer, item usability, water-control helper and local GTG Finder encounter gate; complete generated enemy gate table. Inventory/options/region storage are isolated. No collision geometry simulation.",
+  "elapsed_seconds": 84.066
+}

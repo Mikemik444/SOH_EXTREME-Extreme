@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "cases": 24,
+  "assertions": 43,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "scope": "Actual dog Init/CanFollow/FollowPlayer, player scene-transfer marker/spawn branch, dog-lady spawn and Richard dialogue/reward branches, animal Soul policy/init gate, and randomizer reward hook. Engine I/O and object-bank availability are shimmed; common NPC/language dispatch is outside this fixture and is covered by the separate NPC/AP suites. No complete native build, scene asset list, route geometry or gameplay test.",
+  "output": [
+    "PASS: Richard identity, local scene carry, native delivery flag, wrong/day dogs, soul modes and objectless scene limitation",
+    "RESULT cases=24 assertions=43"
+  ],
+  "sources": {
+    "src/overlays/actors/ovl_En_Dog/z_en_dog.c": "3d052f0f31a7d5135b37f5e31bdc29f6da28eff67764127c1c3f1c4644864646",
+    "src/overlays/actors/ovl_En_Dog/z_en_dog.h": "31f5541f5f2cca707ef93064b57a9291a4bbdbf305680ff9b118c67d91b19c50",
+    "src/overlays/actors/ovl_En_Hy/z_en_hy.c": "4fd223892fa3c9cfbf873a20dd37a6436c6051716a8b6a4f02f4a16cb029bd62",
+    "src/overlays/actors/ovl_player_actor/z_player.c": "bedcd6d3cbef6cd3d3f3d286ca7f491d7327e110110b67daf3ce4fa230c803ee",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "db261c49d61e58216611dde7e84ce9daeee9797aa08ca554eef41960194689bd",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/SceneTransitionCatalog.json": "faff0beed2c86f693c65d44dccd8be4271658c37f70e6655b14ee2c1ca39097d",
+    "tools/tests/test_richard_delivery_native.py": "96da05c18e8cc9bf51f7afcd07938479ee4eebedf67af07cd54d2ea6fbc4ae20",
+    "tools/tests/richard_delivery_native_tests.cpp.in": "2b44d6cfe5009ced2ba891c32b86d3790119e8905691cedecf78a70460e3994f"
+  },
+  "tested_function_sha256": {
+    "DOG": "1a8c69ca6e3e7115661f6df0fe0440cac1012c99c60b5c19bfd6671c78daa4e3",
+    "TRANSFER": "6ec21b8b1c728ba5160e7e4684c3ddcf21bdd2e81930aa659399e26b7555b8b2",
+    "ARM_TRANSFER": "d3767e88200bfd2bb6b6c932387572c129c9b0d94cc493a1dc490e177d7e81f8",
+    "LADY_TEXT": "d8a8b7db6a26d80b3ce76cba5f7b39a853a3c0e9fcc143ba09a6cf6b11060d34",
+    "LADY_SPAWN": "ec9f9454c18f35dda4826873042ab0366fcbe760300f7d1cb18d4c537fd64fd7",
+    "LADY_TALK": "7e6fbcfef6889973a3f91affe308ddd1733914cb5dc3bfec9a54d2291ea1613c",
+    "REWARD_HOOK": "707a9cda9733c515aa5fff1a71c6a3a393cb349e3af4e2a92b3f5cb7c83fbe4e",
+    "ANIMAL_POLICY": "17bd0b58e8f966a517051fa97b81ab26901842fb8f4b99650659a5751f5daf03",
+    "ANIMAL_INIT_GATE": "bb3f4b15f3578a3d7dba750415cb2e5e5d2213baa6975b8dedabc1ebd7512903",
+    "DOG_ENUMS": "ac5625fed8257f680d89f238751f00d6e4d543f4e5076b424784a4f643f29d8d",
+    "DOG_BEHAVIOR": "8b33097fd985b447d92039a0352ac995cfd0b884e075423bfc43ca66318c2364",
+    "SYMBOLS": "1a8a09c5143dc6b8ea4a9958571f435a9395c80673d4a934f6b4ce6e1addc47b"
+  },
+  "protected_house_entrances_absent_from_shuffle_catalog": [
+    908,
+    920
+  ]
+}

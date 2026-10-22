@@ -31,6 +31,15 @@ inline int CrossingScene(int scene) {
     }
 }
 
+// A warp pad is also a valid spawn/return destination. Its index alone cannot
+// prove that Link played its song. Only the native warp departure arms this row.
+inline const Crossing* FindWarpSongCrossing(int entrance) {
+    for (const auto& entry:kCrossings) {
+        if (entry.kind==CrossingKind::Entrance && entry.source<0 && entry.entrance==entrance) return &entry;
+    }
+    return nullptr;
+}
+
 inline const Crossing* FindSceneCrossing(int source, int entrance, int respawn,
                                          int content, int returnScene) {
     source=CrossingScene(source);
@@ -38,8 +47,8 @@ inline const Crossing* FindSceneCrossing(int source, int entrance, int respawn,
     // have the high bit set, while the catalog records the unsigned value.
     content &= 0xFF;
     for (const auto& entry:kCrossings) {
-        if (entry.kind==CrossingKind::Door) continue;
-        if (entry.source>=0 && CrossingScene(entry.source)!=source) continue;
+        if (entry.kind==CrossingKind::Door || entry.source<0) continue;
+        if (CrossingScene(entry.source)!=source) continue;
         if (entry.kind==CrossingKind::GrottoExit) {
             if (respawn==2 && entry.content==content &&
                 CrossingScene(entry.target)==CrossingScene(returnScene)) return &entry;
@@ -68,12 +77,27 @@ inline const Crossing* FindDoorCrossing(int scene, int door, int from, int to, f
 // the door plane into the destination room; keep no actor pointers across loads.
 class CrossingJournal {
   public:
-    void Reset() { scene=nullptr; door=nullptr; }
-    void BeginScene(const Crossing* crossing) { scene=crossing; door=nullptr; }
-    int64_t Arrive(int destination) {
-        const auto* crossing=scene;
+    void Reset() { scene=nullptr; door=nullptr; warp={}; sceneFile=sceneAge=-1; }
+    void BeginScene(const Crossing* crossing) { Reset(); scene=crossing; }
+    void ArmWarpSong(const Crossing* crossing, int source, int destination, int respawn, int file, int age) {
         Reset();
-        return crossing && CrossingScene(crossing->target)==CrossingScene(destination)
+        if (crossing) warp={crossing, source, destination, respawn, file, age};
+    }
+    void CancelPendingWarpSong() { warp={}; }
+    const Crossing* CaptureWarpSong(int source, int destination, int respawn, int file, int age) {
+        const auto request=warp;
+        warp={};
+        if (!request.crossing || request.source!=source || request.destination!=destination ||
+            request.respawn!=respawn || request.file!=file || request.age!=age) return nullptr;
+        BeginScene(request.crossing);
+        sceneFile=file; sceneAge=age;
+        return request.crossing;
+    }
+    int64_t Arrive(int destination, int file=-1, int age=-1) {
+        const auto* crossing=scene;
+        const bool owned=sceneFile<0 || (sceneFile==file && sceneAge==age);
+        Reset();
+        return owned && crossing && CrossingScene(crossing->target)==CrossingScene(destination)
                    ? crossing->location : 0;
     }
     void BeginDoor(const Crossing* crossing, float playerX, float playerZ, float sinYaw, float cosYaw) {
@@ -100,8 +124,13 @@ class CrossingJournal {
         return 0;
     }
   private:
+    struct WarpRequest {
+        const Crossing* crossing=nullptr;
+        int source=-1, destination=-1, respawn=0, file=-1, age=-1;
+    } warp;
     const Crossing* scene=nullptr;
     const Crossing* door=nullptr;
+    int sceneFile=-1, sceneAge=-1;
     float nx=0, nz=0, startSide=0;
 };
 } // namespace SohExtreme

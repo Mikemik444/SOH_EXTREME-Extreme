@@ -147,6 +147,20 @@ def enemy_drop_rule(world, entry):
         # Player_UseItem permits Hookshot/Longshot underwater while grounded,
         # not Bow. can_use(IRON_BOOTS) retains EXTREME's Swim requirement.
         gates.append(can_use(Items.IRON_BOOTS, b) & can_use(Items.HOOKSHOT, b))
+    elif gate == "water_pillar_bottom":
+        gates.append(world._extreme_room_compiler.expr(
+            "CanUse(RG_IRON_BOOTS) && CanUse(RG_HOOKSHOT)", entry.region_token))
+    elif gate == "water_torch_room":
+        gates.append(world._extreme_room_compiler.expr(
+            "WaterLevel(WL_LOW) || (CanUse(RG_IRON_BOOTS) && CanUse(RG_HOOKSHOT))",
+            entry.region_token))
+    elif gate == "gtg_underwater":
+        # The doorway and chest are on the dry upper ledge. These four Shell
+        # Blades are on the pool bottom, behind the Song of Time blocks.
+        # Underwater combat permits a grounded Hookshot, not the melee branch.
+        gates.append(world._extreme_room_compiler.expr(
+            "CanUse(RG_SONG_OF_TIME) && CanUse(RG_IRON_BOOTS) "
+            "&& CanUse(RG_HOOKSHOT) && WaterTimer() >= 16", entry.region_token))
     elif gate == "night":
         gates.append(time_available(True))
     elif gate not in ("", "anubis", "sfm_moblin", "peahat_larva"):

@@ -2542,6 +2542,7 @@ void Environment_WarpSongLeave(PlayState* play) {
 
     // Where entrance rando redirects the warp: every warp song path decides its destination here.
     GameInteractor_ExecuteOnWarpSongLeave();
+    Archipelago_BeginWarpSongTransition(play->msgCtx.lastPlayedSong);
 
     switch (play->nextEntranceIndex) {
         case ENTR_DEATH_MOUNTAIN_CRATER_UPPER_EXIT:

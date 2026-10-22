@@ -1715,7 +1715,10 @@ void Item_DropCollectibleRandom(PlayState* play, Actor* fromActor, Vec3f* spawnP
         enemyDropDecision = MegaSoul_ConsumeNormalEnemyDrop(fromActor);
         if (enemyDropDecision < 0) return;
         if (enemyDropDecision > 0) {
-            params = ((s16)(Rand_ZeroOne() * 16.0f)) * 0x10;
+            // Both native tables contain 15 complete rows. The quantities
+            // array has four trailing padding bytes, not a sixteenth row.
+            const s16 dropTableRows = MIN(ARRAY_COUNT(sItemDropIds), ARRAY_COUNT(sDropQuantities)) / 0x10;
+            params = ((s16)(Rand_ZeroOne() * dropTableRows)) * 0x10;
             dropTableIndex = (s16)(Rand_ZeroOne() * 16.0f);
         }
         if (fromActor->dropFlag) {

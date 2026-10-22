@@ -1,0 +1,110 @@
+{
+  "status": "passed",
+  "cases": {
+    "AP_discovery_is_physical_path_only": 4,
+    "arrival_credit_guard": 6,
+    "baseline_AP_land_discovery_also_discovers_water": 2,
+    "baseline_explicit_water_erased_when_land_written_later": 2,
+    "baseline_water_credit_collapses_to_land": 2,
+    "catalog_and_native_layers": 4,
+    "decoupled_water_pair_rejected_atomically": 1,
+    "explicit_water_wins_every_override_order": 24,
+    "identity_keeps_physical_spawn": 16,
+    "independent_destination_and_coupled_return": 8,
+    "legacy_land_map_retains_routes_and_raw_credit": 4,
+    "legacy_map_requires_legacy_policy": 2,
+    "map_reinstallation_clears_previous_legacy_alias": 1,
+    "native_discovery_retains_legacy_pair": 4,
+    "native_land_alias_routes_without_AP_credit": 2,
+    "no_river_rows_keep_native_water": 2,
+    "one_explicit_water_overrides_only_its_legacy_alias": 2,
+    "unmapped_unknown_native_source_has_no_AP_credit": 1,
+    "water_only_map_does_not_alias_land": 1,
+    "water_policy_revision_validates_atomically": 4,
+    "wrong_scene_never_credits_water_source": 1
+  },
+  "case_count": 93,
+  "assertion_count": 2726,
+  "baseline_reproductions": 6,
+  "source_sha256": {
+    "soh/Network/Archipelago/EntranceRuntime.inc": "c5ce9e3a275e890afd67ec5ddfa1cfb346c5df5b310e1d6447215a3809cbb789",
+    "soh/Network/Archipelago/EntranceRouting.h": "3981c9879bcf8c3491ff058b8ff0353ba0df34b86e995a39546cc1cece20584a",
+    "soh/Network/Archipelago/EntranceRandomizerData.inc": "a2fb3879d93dc0bbb80be220f707041422e1bec858d2def134e080844f543bfd",
+    "soh/Network/Archipelago/EntranceDestinationPolicy.h": "ad437810079db56bdcdfc30e3fa688ec5a32cfbb0c00c7e16f46b6fb724427a0",
+    "soh/Network/Archipelago/EntranceDestinationData.inc": "2f6dcf8d60583bc7e16c6ef3209f9fb33cdaa58bcc63e70b7621c6aee243a433",
+    "soh/Network/Archipelago/SceneTransitionChecks.h": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496",
+    "soh/Network/Archipelago/SceneTransitionData.inc": "b7b4aa8c04ba92c233a501a8dabd509bcc4c214fb4bb9146005a2d7020e68893",
+    "soh/Enhancements/randomizer/randomizer_entrance.c": "638ca013d45c14a7f2c890a2df8032f1ece8d2313a51e06fa314d04294b78ba2",
+    "soh/Enhancements/randomizer/randomizer_entrance.h": "0e4b6b5618bac86b7bd38eae302e21c745d9caffcef009b9ac5d19080e7a08ef",
+    "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp": "776e095c7e31a83aac4e44b5b1f2076b92462c2b62256b6d53b11b13163bfd98",
+    "soh/Enhancements/randomizer/randomizerTypes.h": "dc86b56177c188419a7b00f600f3f91e45f491dce16989f677cd6dbc609bd2aa",
+    "soh/Enhancements/randomizer/randomizer_grotto.c": "f06d9ab004096c99818f8fbe5c57fe9aa2d392a69936902513e67deeb501c95a",
+    "soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h": "8d7911b0c242ce2f3210db17959de93be56cd8c106fa065f1f086c94890a129b",
+    "soh/Enhancements/randomizer/randomizerEnums/RandomizerOptions.h": "bbce1566d7842a06d16aba1c05cead7326bd87ad1c757f4d5a0eb724850cb141",
+    "archipelago/soh_extreme/EntranceCatalog.json": "f5ba502aef5f06719b2bf39447f287743ae656ba0b884d698d8e5cc88c2d83ae",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "dae658d0ce877ebb22199e28a7f5ab21edcdf1f9f6b696b6dce75059301eec0c"
+  },
+  "test_sha256": {
+    "tools/tests/test_zora_river_native.py": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48",
+    "tools/tests/zora_river_native_tests.cpp.in": "3bcdd42ef64a3723fbc9b52da54ce182f7fc1f89b9cf5d5932be3c4befd7b8a1"
+  },
+  "dependency_sha256": {
+    "entrance_table.h": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa",
+    "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c",
+    "z64.h": "2b542e7be12e20e49034c17db444bf1de489d4161bb333d3bcd73bc32c34ea71",
+    "z64scene.h": "c3a66f466d91220d1d2c0b27182a651f1db97e073a8df808b7374242376c7757"
+  },
+  "captured_sha256": {
+    "captured_native_constants.h": "4627e8366c3fc58d3a32976aa821796a2e44ec01f2acc376b39188e4544ea684",
+    "captured_engine_constants.h": "2593a54682a4fe1d6a7b538c787b733071cc817f246cdd319ca516f445dc7573",
+    "captured_scene_aliases.h": "23f621be63d4299b4279f79695d9e7f9f19267d0798aad6dfa748ebbf22fbc8e",
+    "captured_native_structs.h": "c953f8fd6b913b3209230b0c4893a21b9ede1d2b4df3d793454afcd7ef0e66de",
+    "captured_native_init.inc": "b1f8ab131b7481fb52b21bfdf6d201beb70dd4ab123aaee5f81e445857fd12c9",
+    "captured_native_override.inc": "351d0f363cf80ab7c3c4ee510962cdcf76b8b32586be2ddb8ee2318505f014c8",
+    "captured_discovery.inc": "acad57e29d6b8f402be39b62a57588fd413f925b3b64e23dcc9e9c22f6181c7d",
+    "captured_runtime_state.inc": "15603e60eb0ba1168a591eaca8112ef86d2489e7d9c66c608f0bc58216cad4a6",
+    "captured_runtime_methods.inc": "6e9f6af433dba44ab2239dfdc72973205bd165c2def918d5fde479632c4db42a",
+    "captured_runtime_exports.inc": "fc751b590e66c8ed59173a565a3efa1cc0cc2ee85358765dd5edeebe31bf0348",
+    "captured_catalog.inc": "ce849ccacd9527b730b98a898002d08fc2dd8cea0c397b7965207bed3462178b",
+    "captured_baseline_init.inc": "6d3eb5f942d16ee778d43adc1289314d19f2c63437dae0f138f771176127d6a8",
+    "captured_baseline_override.inc": "6df217da6caa4eeaaa07aa364fa0cf57227ef5f890024e0dced538ad72f8624d",
+    "captured_baseline_discovery.inc": "b61dceb3e90a1e2a4b97b9f68d6540842d7c3cb30b3a709281f0e9f448d81ea8"
+  },
+  "baseline": {
+    "archive": "SOH-EXTREME-1.8.11-entrance-fixes-source-files.zip",
+    "sha256": "8d105428ddd2146abaf70a6ab4ce7b05e44aefbcccdcc8076893185ce896bc3e",
+    "source_sha256": {
+      "soh/Enhancements/randomizer/randomizer_entrance.c": "d50283887426dd61cce5be606fe6aeeaf9236c349f0e6f1f0d635960166f35a5",
+      "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp": "0943ff9dfddeac6fec3c35ee5acfbc955069057ba530609f9119e69785d7c021"
+    },
+    "note": "Previous shipped native bodies execute against the current catalog to isolate native aliasing regressions.",
+    "reproductions": 6
+  },
+  "source_unchanged_during_tests": true,
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_scanner": false,
+  "native_windows_build": false,
+  "in_game_playthrough": false,
+  "coverage": [
+    "Complete production Entrance_Init, table reset and native lookup bodies",
+    "Actual AP EntranceRouting and endpoint/policy/crossing headers",
+    "Actual AP Record, Complete, ArmArrival and ResolvedArrival functions",
+    "Four distinct physical river endpoints, all four native age/time layers",
+    "Distinct mapped destinations and coupled returns with source-only check credit",
+    "All 24 orderings of four river override rows",
+    "Explicit identity water paths preserve their native water spawn",
+    "Legacy land-only maps retain their original route entries and effective native destinations",
+    "Partial and absent legacy aliases, native-only aliases and exact AP discovery",
+    "Independent river-path wire revision validation rejects incomplete or incompatible maps atomically",
+    "Canceled, suppressed, dead, wrong-scene and repeated arrival credit guards"
+  ],
+  "limitations": [
+    "Game-state reads, discovery persistence and departure-position capture are explicit IO shims.",
+    "All exercised destinations are native entrance indices; grotto resolution is an identity IO shim that invokes the real AP resolution callback.",
+    "Scene allocation, collision geometry, player swimming, actor updates, rendering and network transmission are not exercised.",
+    "Baseline replay isolates previous native bodies against current endpoint metadata; it is not a previous executable or full game replay."
+  ]
+}

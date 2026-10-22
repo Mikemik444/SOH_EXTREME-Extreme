@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <map>
 #include <string>
+#include <utility>
 #include <sstream>
 #include <vector>
 #include <set>
@@ -17,6 +18,8 @@
 #include "soh/Network/Archipelago/EntranceRouting.h"
 #include "soh/Network/Archipelago/TrackerScenes.h"
 #include "soh/Network/Archipelago/TrackerCheckLabels.h"
+#include "soh/Network/Archipelago/RoomTransitionLabels.h"
+#include "soh/ResourceManagerHelpers.h"
 #include "soh/Network/Archipelago/SceneTransitionChecks.h"
 #include "soh/util.h"
 #include "randomizer_grotto.h"
@@ -57,6 +60,7 @@ extern "C" bool MegaSoul_HasEnemyDefeatSoul(int16_t actorId);
 extern "C" {
 #include "overlays/actors/ovl_En_GirlA/z_en_girla.h"
 #include "z64item.h"
+#include "functions.h"
 #include "variables.h"
 #include "macros.h"
 extern PlayState* gPlayState;
@@ -104,7 +108,7 @@ enum EnemyFinderCombat : uint8_t {
     EFC_BABY_DODONGO,
 };
 
-enum EnemyFinderGate : uint8_t { EFG_NONE, EFG_AMY, EFG_ANUBIS, EFG_COFFIN, EFG_COMPOSER, EFG_FOREST_BLOCK_TOP, EFG_GRAVE, EFG_MEG, EFG_NIGHT, EFG_PEAHAT_LARVA, EFG_SFM_MOBLIN, EFG_SWIM, EFG_GV_LOWER_CURRENT };
+enum EnemyFinderGate : uint8_t { EFG_NONE, EFG_AMY, EFG_ANUBIS, EFG_COFFIN, EFG_COMPOSER, EFG_FOREST_BLOCK_TOP, EFG_GRAVE, EFG_MEG, EFG_NIGHT, EFG_PEAHAT_LARVA, EFG_SFM_MOBLIN, EFG_SWIM, EFG_GV_LOWER_CURRENT, EFG_GTG_UNDERWATER, EFG_WATER_PILLAR_BOTTOM, EFG_WATER_TORCH_ROOM };
 
 struct EnemyDefeatFinderEntry {
     int64_t locationId;
@@ -254,6 +258,20 @@ static bool EnemyFinderEncounterGate(Rando::Logic* enemyLogic, const EnemyDefeat
         // provide footing; Hookshot/Longshot remains usable underwater.
         case EFG_GV_LOWER_CURRENT: return enemyLogic->CanUse(RG_IRON_BOOTS) &&
                                          enemyLogic->CanUse(RG_HOOKSHOT);
+        // These Shell Blades are at the pool bottom, below the dry room entry.
+        // The Song of Time blocks, water footing and underwater weapon all
+        // belong to the enemy check, not to the dry doorway or chest.
+        case EFG_GTG_UNDERWATER: return enemyLogic->CanUse(RG_SONG_OF_TIME) &&
+                                       enemyLogic->CanUse(RG_IRON_BOOTS) &&
+                                       enemyLogic->CanUse(RG_HOOKSHOT) &&
+                                       enemyLogic->WaterTimer() >= 16;
+        // These placements share the authored central water-level contexts.
+        // Pillar B1 is always submerged; the torch room dries at Low.
+        case EFG_WATER_PILLAR_BOTTOM: return enemyLogic->CanUse(RG_IRON_BOOTS) &&
+                                            enemyLogic->CanUse(RG_HOOKSHOT);
+        case EFG_WATER_TORCH_ROOM: return enemyLogic->WaterLevel(WL_LOW) ||
+                                         (enemyLogic->CanUse(RG_IRON_BOOTS) &&
+                                          enemyLogic->CanUse(RG_HOOKSHOT));
         case EFG_NIGHT: return enemyLogic->AtNight;
         default: return true; // Other gates inherit their precise parent region/combat rule.
     }
@@ -1729,6 +1747,10 @@ static SohExtreme::TrackerScene FinderScene(int scene, RandomizerCheckArea area,
         scene = SCENE_BAZAAR;
         area = RCAREA_KAKARIKO_VILLAGE;
     }
+    // Age/time resource variants describe the same physical scene. Apply the
+    // same identity to checks and the live scene so a day-authored check still
+    // opens its section when Link arrives at night or as the other age.
+    scene = SohExtreme::CrossingScene(scene);
     const auto validArea = [](RandomizerCheckArea value) {
         return value >= RCAREA_KOKIRI_FOREST && value < RCAREA_INVALID;
     };
@@ -1737,6 +1759,17 @@ static SohExtreme::TrackerScene FinderScene(int scene, RandomizerCheckArea area,
         scene == SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC || scene == SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS ||
         scene == SCENE_WINDMILL_AND_DAMPES_GRAVE;
     SohExtreme::TrackerScene result{ scene, 0, SohUtils::GetSceneName(scene) };
+    // Canonical groups have neutral names instead of inheriting the first
+    // check's day/child label while the player is in its night/adult resource.
+    switch (scene) {
+        case SCENE_MARKET_ENTRANCE_DAY: result.name = "Market Entrance"; break;
+        case SCENE_BACK_ALLEY_DAY: result.name = "Back Alley"; break;
+        case SCENE_MARKET_DAY: result.name = "Market"; break;
+        case SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY: result.name = "Temple of Time Exterior"; break;
+        case SCENE_CASTLE_COURTYARD_GUARDS_DAY: result.name = "Castle Hedge Maze"; break;
+        case SCENE_OUTSIDE_GANONS_CASTLE: result.name = "Castle Grounds"; break;
+        default: break;
+    }
     if (grottoScene) {
         // Resolve the exact grotto's map region, never the last generic grotto
         // in the native check table. This also covers transition/NPC-only rows.
@@ -1766,6 +1799,52 @@ static SohExtreme::TrackerScene FinderScene(int scene, RandomizerCheckArea area,
         }
     }
     return result;
+}
+
+// Current scene identity comes from the loaded game, independently of a
+// tracker's last snapshot or the entrance saved before a shuffled transition.
+// Shared interior resources use their actual spawn/room, not that source's map
+// region. Keep unknown grotto/shared instances unknown rather than opening all.
+static SohExtreme::TrackerScene FinderCurrentScene() {
+    if (gPlayState == nullptr) return {};
+    const int scene = gPlayState->sceneNum;
+    if (scene < 0 || scene >= SCENE_ID_MAX) return {};
+    const int spawn = gPlayState->curSpawn;
+    auto area = Rando::TryGetAreaFromScene(static_cast<uint8_t>(scene));
+    switch (scene) {
+        case SCENE_BAZAAR:
+        case SCENE_SHOOTING_GALLERY:
+            if (spawn == 0) area = RCAREA_KAKARIKO_VILLAGE;
+            else if (spawn == 1) area = RCAREA_MARKET;
+            break;
+        case SCENE_GREAT_FAIRYS_FOUNTAIN_MAGIC:
+            if (spawn == 0) area = RCAREA_DEATH_MOUNTAIN_TRAIL;
+            else if (spawn == 1) area = RCAREA_DEATH_MOUNTAIN_CRATER;
+            else if (spawn == 2) area = RCAREA_HYRULE_CASTLE;
+            break;
+        case SCENE_GREAT_FAIRYS_FOUNTAIN_SPELLS:
+            if (spawn == 0) area = RCAREA_ZORAS_FOUNTAIN;
+            else if (spawn == 1) area = RCAREA_HYRULE_CASTLE;
+            else if (spawn == 2) area = RCAREA_DESERT_COLOSSUS;
+            break;
+        case SCENE_WINDMILL_AND_DAMPES_GRAVE: {
+            if (spawn == 0) area = RCAREA_GRAVEYARD;
+            else if (spawn == 1) area = RCAREA_KAKARIKO_VILLAGE;
+            // Native spawn 1 enters the windmill, while spawn 0 enters the
+            // grave. Consult the loaded room table so walking out of the race
+            // into the windmill also follows the current zone without a load.
+            const int room = gPlayState->roomCtx.curRoom.num;
+            if (gPlayState->setupEntranceList != nullptr && room >= 0 && room < gPlayState->numRooms) {
+                const int windmillRoom = gPlayState->setupEntranceList[1].room;
+                if (windmillRoom >= 0 && windmillRoom < gPlayState->numRooms)
+                    area = room == windmillRoom ? RCAREA_KAKARIKO_VILLAGE : RCAREA_GRAVEYARD;
+            }
+            break;
+        }
+        default: break;
+    }
+    const bool grottoScene = scene == SCENE_GROTTOS || scene == SCENE_FAIRYS_FOUNTAIN;
+    return FinderScene(scene, area, grottoScene ? Grotto_CurrentGrotto() : -1);
 }
 
 static SohExtreme::TrackerScene FinderNativeScene(RandomizerCheck rc) {
@@ -1888,12 +1967,21 @@ static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClie
 }
 
 
+// The installed map is the same one already used by the AP Finder labels.
+// This read-only lookup never discovers an entrance or changes room history.
+static const SohExtreme::EntranceEndpoint* FinderCheckArrival(int64_t location) {
+    const auto* source = SohExtreme::EntranceEndpointByCheck(location);
+    if (!source || !Archipelago_EntranceDestinationName(source->id)) return nullptr;
+    return SohExtreme::EntranceEndpointById(Archipelago_EntranceDestination(source->id));
+}
+
 // Debug visibility never evaluates or submits checks. Room numbers are engine
 // rooms; several logical regions can legitimately occupy the same room.
 struct RoomDebugDoor {
     int scene, door, side, from, to, targetScene, x, y, z;
     const char* sourceRegion;
     const char* targetRegion;
+    int entrance = -1; // Exact scene-exit identity; never inferred from a door text ID.
 };
 static constexpr RoomDebugDoor roomDebugDoors[] = {
 #include "RoomDebugDoorData.inc"
@@ -1902,37 +1990,91 @@ static bool roomDebugOpen = false;
 static constexpr const char* roomDebugTag = "soh_extreme_room_debug";
 static std::map<Actor*, std::string> roomDebugTags;
 
+static std::string RoomDebugSceneExitText(int entrance, const std::string& prefix,
+                                         int nativeRoom = -1, int nativeScene = -1);
+
 static std::string RoomDebugDestination(int index) {
+    if (!gPlayState || index < 0 || index >= gPlayState->transiActorCtx.numActors) return {};
     const auto& door = gPlayState->transiActorCtx.list[index];
-    const int room = gPlayState->roomCtx.curRoom.num;
     const Player* player = GET_PLAYER(gPlayState);
-    int side = door.sides[0].room == room ? 0 : 1;
-    if (door.sides[0].room == door.sides[1].room && player) {
-        const float distance = (player->actor.world.pos.x - door.pos.x) * Math_SinS(door.rotY) +
-                               (player->actor.world.pos.z - door.pos.z) * Math_CosS(door.rotY);
-        side = distance > 0 ? 1 : 0;
+    if (!player) return {};
+    const float localZ = (player->actor.world.pos.x - door.pos.x) * Math_SinS(door.rotY) +
+                         (player->actor.world.pos.z - door.pos.z) * Math_CosS(door.rotY);
+    const bool passage = std::abs(static_cast<int>(door.id)) == ACTOR_EN_HOLL;
+    std::string kind = "Door";
+    int side;
+    if (passage) {
+        const int type = (door.params >> 6) & 7;
+        side = SohExtreme::PassageSourceSide(type, localZ, player->actor.world.pos.y - door.pos.y);
+        if (side < 0) return {};
+        kind = type == 1 ? "Drop" : (type == 2 || type == 5) ? "Vertical passage" : "Passage";
+    } else {
+        // Handle doors and shutters also preload their destination before
+        // Link crosses. Match their physical opening side, including z == 0.
+        side = localZ < 0.0f ? 0 : 1;
     }
-    const int sourceId = 0x2000 + gPlayState->sceneNum * 128 + index * 2 + side;
-    if (const char* label = Archipelago_EntranceDestinationName(sourceId)) {
-        const auto* target = SohExtreme::EntranceEndpointById(Archipelago_EntranceDestination(sourceId));
-        std::string destination(label);
-        const auto separator = destination.find(" -> ");
-        if (separator != std::string::npos) destination.erase(0, separator + 4);
-        return "Door " + std::to_string(index + 1) + " -> " + destination +
-               (target ? "\nScene: " + SohUtils::GetSceneName(target->scene) +
-                 (target->room >= 0 ? " | Room " + std::to_string(target->room) : "") : "");
-    }
-    for (const auto& row : roomDebugDoors) {
+    const int targetRoom = door.sides[1 - side].room;
+    const bool catalogLayout = !ResourceMgr_IsSceneMasterQuest(gPlayState->sceneNum);
+    if (!passage && catalogLayout) for (const auto& row : roomDebugDoors) {
         if (row.scene != gPlayState->sceneNum || row.door != index ||
             (row.side >= 0 && row.side != side) ||
-            row.x != door.pos.x || row.z != door.pos.z) continue;
-        return "Door " + std::to_string(index + 1) + " -> Room " + std::to_string(row.to) +
-               "\n" + (row.targetScene != row.scene ? SohUtils::GetSceneName(row.targetScene) + " / " : "") +
-               row.targetRegion;
+            row.x != door.pos.x || row.y != door.pos.y || row.z != door.pos.z) continue;
+        if (row.entrance >= 0) {
+            // Interior handle doors use scene-exit polygons. Their source is
+            // the catalogue's actual entrance, not a synthetic room-door ID.
+            return RoomDebugSceneExitText(row.entrance, kind, row.to, row.targetScene);
+        }
+        const int sourceId = 0x2000 + row.scene * 128 + index * 2 + side;
+        const auto* physical = SohExtreme::EntranceEndpointById(sourceId);
+        if (physical && physical->fromRoom == door.sides[side].room && physical->room == targetRoom) {
+            const auto* arrival = SohExtreme::EntranceEndpointById(Archipelago_EntranceDestination(sourceId));
+            if (arrival) return SohExtreme::RoomDestinationLabel(kind,
+                SohExtreme::EntranceArrivalDescription(*arrival), arrival->room);
+        }
+        return SohExtreme::RoomDestinationLabel(kind,
+            SohExtreme::ReadableEntranceDestination(row.targetRegion), row.to);
     }
-    const int target = door.sides[1 - side].room;
-    return "Door " + std::to_string(index + 1) +
-           (target >= 0 ? " -> Room " + std::to_string(target) : " -> Scene exit");
+    // EnHoll passages are native fixed boundaries, including under entrance
+    // shuffle. A preloaded room must not reverse their physical destination.
+    std::string name = catalogLayout ? SohExtreme::NativeRoomDescription(gPlayState->sceneNum, targetRoom) : "";
+    if (name.empty()) name = SohUtils::GetSceneName(gPlayState->sceneNum);
+    return SohExtreme::RoomDestinationLabel(kind, name, targetRoom);
+}
+
+using RoomDebugDoorActors = std::map<int, std::vector<Actor*>>;
+
+static bool RoomDebugActorLabelVisible(const Actor* actor) {
+    const Player* player = gPlayState ? GET_PLAYER(gPlayState) : nullptr;
+    if (!player || !actor || !actor->draw || !actor->isDrawn) return false;
+    const float dx = actor->world.pos.x - player->actor.world.pos.x;
+    const float dy = actor->world.pos.y - player->actor.world.pos.y;
+    const float dz = actor->world.pos.z - player->actor.world.pos.z;
+    // Match DrawNameTag's actor eligibility, including its zero-alpha boundary.
+    // A distant or hidden yellow tag must leave the cyan fallback available.
+    return dx * dx + dy * dy + dz * dz < 440000.0f;
+}
+
+static RoomDebugDoorActors CollectRoomDebugDoorActors() {
+    RoomDebugDoorActors result;
+    if (!gPlayState) return result;
+    for (Actor* actor = gPlayState->actorCtx.actorLists[ACTORCAT_DOOR].head; actor; actor = actor->next) {
+        if (actor->id == ACTOR_EN_HOLL) continue; // Invisible passages use world-position labels.
+        const int index = static_cast<uint16_t>(actor->params) >> 10;
+        if (index >= gPlayState->transiActorCtx.numActors) continue;
+        const auto& door = gPlayState->transiActorCtx.list[index];
+        // Shutters lift in Y; the two EnDoor leaves shift 30 units in X/Z.
+        const float dx = actor->world.pos.x - door.pos.x;
+        const float dz = actor->world.pos.z - door.pos.z;
+        if (std::abs(static_cast<int>(door.id)) != actor->id || dx * dx + dz * dz > 32.0f * 32.0f)
+            continue;
+        auto& leaves = result[index];
+        leaves.push_back(actor);
+        // One physical transition owns one yellow label. Keep every leaf for
+        // the matching scene-exit probes, with a visible representative first.
+        if (!RoomDebugActorLabelVisible(leaves.front()) && RoomDebugActorLabelVisible(actor))
+            std::swap(leaves.front(), leaves.back());
+    }
+    return result;
 }
 
 static void UpdateRoomDebugLabels() {
@@ -1940,19 +2082,9 @@ static void UpdateRoomDebugLabels() {
     // The labels are an independent debug toggle, not the popup's lifetime.
     if (CVarGetInteger(CVAR_TRACKER_CHECK("RoomDebugDestinationLabels"), 0) &&
         gPlayState && GameInteractor::IsSaveLoaded(true)) {
-        for (Actor* actor = gPlayState->actorCtx.actorLists[ACTORCAT_DOOR].head; actor; actor = actor->next) {
-            if (actor->id == ACTOR_EN_HOLL) continue; // Invisible passages use world-position labels.
-            const int index = static_cast<uint16_t>(actor->params) >> 10;
-            if (index >= gPlayState->transiActorCtx.numActors) continue;
-            const auto& door = gPlayState->transiActorCtx.list[index];
-            // Shutters overwrite home.pos.z with their draw offset at init.
-            // Use the current horizontal position: shutters only lift in Y,
-            // while each leaf of an EnDoor double door shifts 30 units in X/Z.
-            const float dx = actor->world.pos.x - door.pos.x;
-            const float dz = actor->world.pos.z - door.pos.z;
-            if (std::abs(static_cast<int>(door.id)) != actor->id || dx * dx + dz * dz > 32.0f * 32.0f)
-                continue;
-            next.emplace(actor, RoomDebugDestination(index));
+        for (const auto& [index, leaves] : CollectRoomDebugDoorActors()) {
+            const std::string label = RoomDebugDestination(index);
+            if (!label.empty()) next.emplace(leaves.front(), label);
         }
     }
     if (next == roomDebugTags) return;
@@ -2004,16 +2136,11 @@ static void DrawRoomDebugSceneTransitions() {
             if ((row.source < 0) != songWarps || !RoomDebugSceneMatches(row, scene, gPlayState->curSpawn, grotto)) continue;
             ++count;
             ImGui::PushID(static_cast<int>(row.location));
-            ImGui::TextWrapped("%s", row.name);
+            ImGui::TextWrapped("%s", RoomDebugSceneExitText(row.entrance, songWarps ? "Song warp" : "Exit").c_str());
             const char* status = Archipelago_IsLocationReported(row.location) ? "Checked" :
                 (Archipelago_IsLocationActive(row.location) ? "Unchecked" : "Not a check in this seed");
             ImGui::TextWrapped("%s | %s | Entrance 0x%04X | AP %lld", row.kind, status, row.entrance,
                                static_cast<long long>(row.location));
-            if (const char* shuffled = Archipelago_EntranceDestinationName(row.entrance)) {
-                ImGui::TextWrapped("Shuffled destination: %s", shuffled);
-            } else {
-                ImGui::TextWrapped("Destination scene: %s (%d)", SohUtils::GetSceneName(row.target).c_str(), row.target);
-            }
             ImGui::Separator();
             ImGui::PopID();
         }
@@ -2054,8 +2181,13 @@ static void DrawRoomDebugWindow() {
             if (ImGui::CollapsingHeader("Room doors and passages", ImGuiTreeNodeFlags_DefaultOpen)) {
                 for (int i = 0; i < gPlayState->transiActorCtx.numActors; ++i) {
                     const auto& door = gPlayState->transiActorCtx.list[i];
-                    if (door.sides[0].room == room || door.sides[1].room == room)
-                        ImGui::TextWrapped("%s", RoomDebugDestination(i).c_str());
+                    if (door.sides[0].room == room || door.sides[1].room == room) {
+                        const std::string label = RoomDebugDestination(i);
+                        if (!label.empty()) {
+                            ImGui::TextWrapped("%s", label.c_str());
+                            ImGui::TextDisabled("Transition %d", i + 1);
+                        }
+                    }
                 }
             }
             DrawRoomDebugSceneTransitions();
@@ -2077,7 +2209,7 @@ static bool DrawFinderDropdown(const std::string& label, const Key& key, bool au
     const bool open = choice != manualChoices.end() ? choice->second : automaticOpen;
     ImGui::SetNextItemOpen(open, ImGuiCond_Always);
     const bool expanded = ImGui::CollapsingHeader(label.c_str());
-    if (ImGui::IsItemToggledOpen()) manualChoices[key] = expanded;
+    if (ImGui::IsItemToggledOpen() && expanded != open) manualChoices[key] = expanded;
     return expanded;
 }
 
@@ -2172,10 +2304,7 @@ static void DrawUniversalFinderMirror() {
     // ID-to-scene mapping is used ONLY for display, never for reachability.
     // Missing mapping does not hide a check or change its logical availability.
     const bool sceneMappingsReady = client.PrepareCheckFinderMappings();
-    const int scene = gPlayState != nullptr ? gPlayState->sceneNum : -1;
-    const bool grottoScene = scene == SCENE_GROTTOS || scene == SCENE_FAIRYS_FOUNTAIN;
-    const auto current = FinderScene(scene, gPlayState != nullptr ? GetCheckArea() : RCAREA_INVALID,
-                                    grottoScene ? Grotto_CurrentGrotto() : -1);
+    const auto current = FinderCurrentScene();
     if (current.scene >= 0) ImGui::Text("Current scene: %s", current.name.c_str());
     if (current.area >= 0) ImGui::Text("Current map region: %s",
         RandomizerCheckObjects::GetRCAreaName(static_cast<RandomizerCheckArea>(current.area)).c_str());
@@ -2183,7 +2312,7 @@ static void DrawUniversalFinderMirror() {
     static bool onlyCurrent = false;
     static ImGuiTextFilter filter;
     static std::map<int, bool> regionDropdownChoices;
-    static std::map<std::array<int, 3>, bool> sceneDropdownChoices;
+    static std::map<std::pair<int, int>, bool> sceneDropdownChoices;
     ImGui::Checkbox("Current scene/region first", &currentFirst);
     ImGui::SameLine();
     ImGui::Checkbox("Only current scene", &onlyCurrent);
@@ -2193,8 +2322,8 @@ static void DrawUniversalFinderMirror() {
         Ship::Context::GetRawInstance()->GetWindow()->GetGui()->SaveConsoleVariablesNextFrame();
     }
     if (ImGui::IsItemHovered()) {
-        ImGui::SetTooltip("Adds the physical check's room and door IDs. Door numbers match Room debug;\n"
-                          "descriptive room and transition names remain visible.");
+        ImGui::SetTooltip("Shows room and door details below each descriptive name.\n"
+                          "Destination rooms follow the installed entrance map; door numbers identify the source.");
     }
     filter.Draw("Search scene/region/check");
     if (onlyCurrent && !sceneMappingsReady)
@@ -2207,9 +2336,11 @@ static void DrawUniversalFinderMirror() {
             if (filterAge && !SohExtreme::TrackerRowMatchesAge(row, adult)) return false;
             const std::string mapRegion = rowScene.area >= 0
                 ? RandomizerCheckObjects::GetRCAreaName(static_cast<RandomizerCheckArea>(rowScene.area)) : "";
-            const std::string displayName = SohExtreme::TrackerCheckLabel(row.id, row.name, showRoomDoorNumbers);
+            const auto* arrival = FinderCheckArrival(row.id);
+            const std::string displayName = SohExtreme::TrackerDestinationLabel(row.id, row.name, arrival);
+            const std::string details = showRoomDoorNumbers ? SohExtreme::TrackerCheckDetailLine(row.id, arrival) : "";
             const std::string text = mapRegion + " | " + rowScene.name + " | " +
-                SohExtreme::CleanTrackerLabel(row.region) + " | " + displayName + " | " + row.name;
+                SohExtreme::CleanTrackerLabel(row.region) + " | " + displayName + " | " + details + " | " + row.name;
             return filter.PassFilter(text.c_str());
         });
     const auto regions = SohExtreme::GroupTrackerScenesByRegion(groups, current, currentFirst, [](int area) {
@@ -2219,36 +2350,44 @@ static void DrawUniversalFinderMirror() {
     if (ImGui::BeginChild("SOHExtremeUTRegions", ImVec2(0, 0), false)) {
         if (regions.empty()) ImGui::TextUnformatted("No remaining in-logic checks match this view.");
         for (const auto& region : regions) {
+            // Region headings and scene headings have independent ID scopes.
+            // Adding/removing a parent or correcting its area as mappings arrive
+            // must not change a physical scene's manual expansion preference.
+            ImGui::PushID("APMapRegions");
             ImGui::PushID(region.area);
-            // Count scenes remaining in this view after filtering. Keep the
-            // region ID even when its heading is hidden so scene state persists.
+            // Count scenes remaining in this view after filtering.
             const bool showRegionHeader = region.scenes.size() > 1;
             const std::string regionLabel = (region.currentRegion ? "[Current region] " : "") + region.name +
                 " (" + std::to_string(region.normal) + " in logic, " + std::to_string(region.glitched) + " glitched)###APMapRegion";
             bool regionAutomaticallyOpen = region.currentRegion || region.containsCurrentScene;
             for (const auto* group : region.scenes) {
-                const std::array<int, 3> key = { region.area, group->scene.scene, group->scene.instance };
+                const auto key = group->scene.Key();
                 const auto choice = sceneDropdownChoices.find(key);
                 // A manually opened scene also keeps its automatic parent open
                 // after leaving the zone. An explicit parent close still wins.
                 if (choice != sceneDropdownChoices.end() && choice->second) regionAutomaticallyOpen = true;
             }
-            if (!showRegionHeader || DrawFinderDropdown(regionLabel, region.area, regionAutomaticallyOpen,
-                                                         regionDropdownChoices)) {
+            const bool regionExpanded = !showRegionHeader ||
+                DrawFinderDropdown(regionLabel, region.area, regionAutomaticallyOpen, regionDropdownChoices);
+            ImGui::PopID();
+            ImGui::PopID();
+            if (regionExpanded) {
                 if (showRegionHeader) ImGui::Indent();
                 for (const auto* group : region.scenes) {
-                    // Map-region and scene identities remain stable as counts,
-                    // inventory, age and the player's current location change.
+                    // Identity excludes grouping area, labels and counts. The
+                    // exact shared-scene/grotto instance remains part of it.
+                    ImGui::PushID("APScenes");
                     ImGui::PushID(group->scene.scene);
                     ImGui::PushID(group->scene.instance);
                     const std::string label = (group->currentScene ? "[Current scene] " : "") + group->scene.name +
                         " (" + std::to_string(group->normal) + " in logic, " + std::to_string(group->glitched) + " glitched)###APScene";
-                    const std::array<int, 3> key = { region.area, group->scene.scene, group->scene.instance };
+                    const auto key = group->scene.Key();
                     if (DrawFinderDropdown(label, key, group->currentScene, sceneDropdownChoices)) {
                         ImGui::Indent();
                         for (const auto* row : group->rows) {
+                            const auto* arrival = FinderCheckArrival(row->id);
                             const std::string line = (row->state == 2 ? "[Glitched] " : "") +
-                                SohExtreme::TrackerCheckLabel(row->id, row->name, showRoomDoorNumbers);
+                                SohExtreme::TrackerDestinationLabel(row->id, row->name, arrival);
                             ImGui::TextWrapped("%s", line.c_str());
                             if (ImGui::IsItemHovered()) {
                                 ImGui::BeginTooltip();
@@ -2261,15 +2400,23 @@ static void DrawUniversalFinderMirror() {
                                 }
                                 ImGui::EndTooltip();
                             }
+                            if (showRoomDoorNumbers) {
+                                const std::string details = SohExtreme::TrackerCheckDetailLine(row->id, arrival);
+                                if (!details.empty()) {
+                                    ImGui::PushTextWrapPos(0.0f);
+                                    ImGui::TextDisabled("%s", details.c_str());
+                                    ImGui::PopTextWrapPos();
+                                }
+                            }
                         }
                         ImGui::Unindent();
                     }
                     ImGui::PopID();
                     ImGui::PopID();
+                    ImGui::PopID();
                 }
                 if (showRegionHeader) ImGui::Unindent();
             }
-            ImGui::PopID();
         }
     }
     ImGui::EndChild();

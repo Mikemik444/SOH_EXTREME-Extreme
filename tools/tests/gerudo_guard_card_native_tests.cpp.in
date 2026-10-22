@@ -1,0 +1,284 @@
+#include <cassert>
+#include <cstdarg>
+#include <cmath>
+#include <cstdint>
+#include <iostream>
+#include <string>
+
+using s16 = int16_t; using u16 = uint16_t; using s32 = int32_t;
+using u8 = uint8_t; using f32 = float;
+struct Vec3f { float x=0,y=0,z=0; };
+struct Vec3s { s16 x=0,y=0,z=0; };
+struct PlayState; struct EnGe1; struct EnGe2;
+struct Actor {
+    int params=0, targetMode=0, textId=0, flags=1, colorFilterTimer=0;
+    float uncullZoneForward=0, minVelocityY=0, gravity=0, speedXZ=0, xzDistToPlayer=0, yDistToPlayer=0;
+    s16 yawTowardsPlayer=0;
+    struct { Vec3s rot; } world, shape;
+    struct { Vec3f pos; } focus;
+    struct { int mass=0; } colChkInfo;
+    Actor* parent=nullptr;
+    void (*update)(Actor*, PlayState*)=nullptr;
+};
+struct Player { Actor* csActor=nullptr; int csAction=0; Vec3f bodyPartsPos[8]; };
+struct PlayState {
+    int sceneNum=93, colCtx=0, colChkCtx=0, transitionType=0, transitionTrigger=0, nextEntranceIndex=0;
+    struct { Actor* talkActor=nullptr; int textId=0, choiceIndex=1; } msgCtx;
+    Player player;
+};
+struct HitInfo { struct { unsigned dmgFlags=0; } toucher; };
+struct ColliderCylinder {
+    struct { unsigned acFlags=0; } base;
+    struct { HitInfo* acHitInfo=nullptr; } info;
+};
+struct SkelAnime {}; struct AnimationHeader {}; struct CollisionPoly {};
+using EnGe1ActionFunc = void (*)(EnGe1*, PlayState*);
+using EnGe1AnimFunc = void (*)(EnGe1*);
+using EnGe2ActionFunc = void (*)(EnGe2*, PlayState*);
+struct EnGe1 {
+    Actor actor; ColliderCylinder collider; SkelAnime skelAnime;
+    Vec3s jointTable[16], morphTable[16], headRot, unk_2A2;
+    s16 eyeIndex=0,blinkTimer=0; u16 stateFlags=0; u8 hairstyle=0,cutsceneTimer=0;
+    AnimationHeader* animation=nullptr; EnGe1ActionFunc actionFunc=nullptr; EnGe1AnimFunc animFunc=nullptr;
+};
+struct EnGe2 {
+    Actor actor; ColliderCylinder collider; SkelAnime skelAnime;
+    Vec3s jointTable[22],morphTable[22],headRot,unk_2EE;
+    s16 eyeIndex=0,blinkTimer=0,walkDirection=0,yawTowardsPlayer=0;
+    u16 stateFlags=0,walkDuration=0,walkTimer=0; float yDetectRange=0;
+    u8 unk_304=0,timer=0,playerSpottedParam=0; EnGe2ActionFunc actionFunc=nullptr;
+};
+struct { unsigned eventChkInf[16]={0},eventInf[4]={0}; } gSaveContext;
+static PlayState* gPlayState;
+static bool isRando=true,card=false,isAdult=false,isDay=true,inventory=true,lineBlocked=false,talkClosing=false;
+static int captures=0,closed=0,releases=0,transitions=0,colliders=0,talkOffers=0,koCalls=0;
+static int assertions=0,cases=0;
+#define IS_RANDO isRando
+#define LINK_IS_ADULT isAdult
+#define IS_DAY isDay
+#define GET_PLAYER(p) (&(p)->player)
+#define ABS(x) std::abs(x)
+#define DECR(x) ((x) ? --(x) : 0)
+#define CHECK_QUEST_ITEM(x) card
+#define CHECK_FLAG_ALL(x,m) (((x)&(m))==(m))
+#define INV_CONTENT(x) (inventory ? 1 : ITEM_NONE)
+#define osSyncPrintf(...) ((void)0)
+#define VT_FGCOL(x) ""
+#define VT_RST ""
+#define TRANS_TYPE_CIRCLE(...) 1
+enum { EVENTCHKINF_CARPENTERS_FREE_INDEX=9,EVENTCHKINF_CARPENTERS_FREE_MASK_ALL=15,
+    SCENE_GERUDO_VALLEY=90,SCENE_GERUDOS_FORTRESS=93,GE1_LIMB_MAX=16,MASS_IMMOVABLE=255,
+    ITEM_NONE=255,SLOT_BOW=1,ITEM_HOOKSHOT=2,ITEM_LONGSHOT=3,
+    EVENTCHKINF_WATCHED_GANONS_CASTLE_COLLAPSE_CAUGHT_BY_GERUDO=4,
+    ENTR_GERUDO_VALLEY_1=100,ENTR_GERUDOS_FORTRESS_18=101,ENTR_GERUDOS_FORTRESS_17=102,
+    TRANS_TRIGGER_START=1,AC_HIT=2,NA_SE_SY_FOUND=3,NA_SE_VO_SK_CRASH=4,
+    ACTOR_FLAG_ATTENTION_ENABLED=1,ACTOR_FLAG_TALK_OFFER_AUTO_ACCEPTED=2,
+    QUEST_GERUDO_CARD=22,VB_GERUDOS_BE_FRIENDLY=1,VB_GERUDO_GUARD_SET_ACTION_AFTER_TALK=2,
+    ANIMMODE_ONCE=1,ANIMMODE_LOOP=2 };
+@STATE_FLAGS@
+@WHITE_TYPES@
+@WHITE_HAIR@
+@PURPLE_TYPES@
+@PURPLE_ACTIONS@
+
+template <typename... T> void ActorShape_Init(T...) {}
+template <typename... T> void SkelAnime_InitFlex(T...) {}
+template <typename... T> void Animation_PlayOnce(T...) {}
+template <typename... T> void Animation_PlayLoop(T...) {}
+template <typename... T> void Animation_Change(T...) {}
+template <typename... T> int Animation_GetLastFrame(T...) { return 10; }
+template <typename... T> int SkelAnime_Update(T...) { return 0; }
+template <typename... T> void Collider_InitCylinder(T...) {}
+template <typename... T> void Collider_SetCylinder(T...) {}
+template <typename... T> void Collider_UpdateCylinder(T...) {}
+template <typename... T> void CollisionCheck_SetOC(T...) { ++colliders; }
+template <typename... T> void CollisionCheck_SetAC(T...) { ++colliders; }
+template <typename... T> void Actor_SetScale(T...) {}
+template <typename... T> void Actor_UpdateBgCheckInfo(T...) {}
+template <typename... T> void Actor_MoveXZGravity(T...) {}
+template <typename... T> void Audio_PlayActorSound2(T...) {}
+template <typename... T> void Horse_ResetHorseData(T...) {}
+template <typename... T> void Sfx_PlaySfxCentered(T...) { ++captures; }
+template <typename... T> void Actor_OfferTalk(T...) { ++talkOffers; }
+template <typename... T> bool Actor_ProcessTalkRequest(T...) { return false; }
+template <typename... T> bool Actor_TextboxIsClosing(T...) { return talkClosing; }
+template <typename... T> bool Flags_GetEventChkInf(T...) { return false; }
+template <typename... T> bool BgCheck_AnyLineTest1(T...) { return lineBlocked; }
+static int Rand_S16Offset(int x,int) { return x; }
+static void Actor_Kill(Actor* a) { a->update=nullptr; }
+static void Actor_SetColorFilter(Actor* a,int,int,int,int timer) { a->colorFilterTimer=timer; }
+static void Math_SmoothStepToS(s16* x,s16 value,int,int,int) { *x=value; }
+static void Message_CloseTextbox(PlayState* p) { ++closed; p->msgCtx.talkActor=nullptr;p->msgCtx.textId=0; }
+static void Message_StartTextbox(PlayState* p,int id,Actor* a) { p->msgCtx.talkActor=a;p->msgCtx.textId=id; }
+static void Player_SetCsActionWithHaltedActors(PlayState* p,Actor* a,int action) {
+    p->player.csActor=a;p->player.csAction=action;if(action==7)++releases;
+}
+static void Entrance_OverrideGerudoGuardCapture() { ++transitions; }
+static int ActorShadow_DrawCircle=0,gGerudoWhiteSkel=0,gGerudoPurpleSkel=0,sCylinderInit=0;
+static AnimationHeader gGerudoWhiteIdleAnim,gGerudoPurpleWalkingAnim,otherAnimation;
+static AnimationHeader* sAnimations[9]={&otherAnimation,&otherAnimation,&otherAnimation,&otherAnimation,&otherAnimation,&otherAnimation,&otherAnimation,&otherAnimation,&otherAnimation};
+static int sAnimModes[9]={0};
+
+void EnGe1_WatchForPlayerFrontOnly(EnGe1*,PlayState*);
+void EnGe1_WatchForAndSensePlayer(EnGe1*,PlayState*);
+void EnGe1_KickPlayer(EnGe1*,PlayState*);
+void EnGe1_Update(Actor*,PlayState*);
+void EnGe1_CheckGate_GateOp(EnGe1*,PlayState*) {}
+void EnGe1_SetNormalText(EnGe1*,PlayState*) {}
+void EnGe1_Wait_Archery(EnGe1*,PlayState*) {}
+void EnGe1_CheckForCard_GTGGuard(EnGe1*,PlayState*) {}
+void EnGe1_GetReaction_GateGuard(EnGe1*,PlayState*) {}
+void EnGe1_GetReaction_ValleyFloor(EnGe1*,PlayState*) {}
+void EnGe1_TalkAfterGame_Archery(EnGe1*,PlayState*) {}
+void EnGe1_CueUpAnimation(EnGe1*) {}
+void EnGe1_TurnToFacePlayer(EnGe1*,PlayState*) {}
+void EnGe1_LookAtPlayer(EnGe1*,PlayState*) {}
+void EnGe2_Update(Actor*,PlayState*);
+void EnGe2_UpdateFriendly(Actor*,PlayState*);
+void EnGe2_UpdateAfterTalk(Actor*,PlayState*);
+void EnGe2_UpdateStunned(Actor*,PlayState*);
+void EnGe2_CaptureTurn(EnGe2*,PlayState*);
+void EnGe2_CaptureCharge(EnGe2*,PlayState*);
+void EnGe2_CaptureClose(EnGe2*,PlayState*);
+void EnGe2_SetupCapturePlayer(EnGe2*,PlayState*);
+void EnGe2_SetActionAfterTalk(EnGe2*,PlayState*);
+void EnGe2_Walk(EnGe2*,PlayState*) {}
+void EnGe2_AboutTurn(EnGe2*,PlayState*) {}
+void EnGe2_TurnPlayerSpotted(EnGe2*,PlayState*) {}
+void EnGe2_KnockedOut(EnGe2*,PlayState*) { ++koCalls; }
+void EnGe2_Stand(EnGe2*,PlayState*) {}
+void EnGe2_WaitLookAtPlayer(EnGe2*,PlayState*) {}
+void EnGe2_ForceTalk(EnGe2*,PlayState*) {}
+void EnGe2_TurnToFacePlayer(EnGe2*,PlayState*) {}
+@PURPLE_ACTION_TABLE@
+
+bool GameInteractor_Should(int behavior,bool vanilla,...) {
+    if(!IS_RANDO)return vanilla;
+    bool result=vanilla;bool* should=&result;
+    va_list args;va_start(args,vanilla);
+    switch(behavior) {
+@HOOK_CASES@
+    }
+    va_end(args);return result;
+}
+
+@WHITE@
+@PURPLE@
+
+static void require(bool value,const std::string& label) {
+    ++assertions;if(!value){std::cerr<<"FAIL "<<label<<"\n";std::abort();}
+}
+static void reset(PlayState& p) {
+    ++cases;p=PlayState{};gPlayState=&p;
+    isRando=true;card=false;isAdult=false;isDay=true;inventory=true;lineBlocked=false;talkClosing=false;
+    captures=closed=releases=transitions=colliders=talkOffers=koCalls=0;
+    for(auto& flags:gSaveContext.eventChkInf)flags=0;
+    for(auto& flags:gSaveContext.eventInf)flags=0;
+}
+static void initWhite(EnGe1& a,PlayState& p,int type) {
+    a={};a.actor.params=type;a.actor.xzDistToPlayer=20;a.actor.update=EnGe1_Update;EnGe1_Init(&a.actor,&p);
+}
+static void initPurple(EnGe2& a,PlayState& p,int type) {
+    a={};a.actor.params=type;a.actor.xzDistToPlayer=20;a.actor.update=EnGe2_Update;EnGe2_Init(&a.actor,&p);
+}
+static void frame(Actor& a,PlayState& p,bool npcSoul=true) {
+    // Existing MegaSouls hook dispatch is separately covered in the NPC suite.
+    if(npcSoul&&a.update)a.update(&a,&p);
+}
+int main() {
+    PlayState p;EnGe1 white;EnGe2 purple;
+    const int whiteTypes[]={GE1_TYPE_GATE_OPERATOR,GE1_TYPE_NORMAL,GE1_TYPE_HORSEBACK_ARCHERY,GE1_TYPE_TRAINING_GROUND_GUARD};
+    const EnGe1ActionFunc whiteFriendly[]={EnGe1_CheckGate_GateOp,EnGe1_SetNormalText,EnGe1_Wait_Archery,EnGe1_CheckForCard_GTGGuard};
+    for(bool adult:{false,true})for(int n=0;n<4;++n) {
+        reset(p);isAdult=adult;initWhite(white,p,whiteTypes[n]);
+        frame(white.actor,p,false);require(captures==0,"frozen white guard");
+        card=true;white.collider.base.acFlags=AC_HIT;frame(white.actor,p);
+        require(captures==0&&transitions==0,"white card before restored first frame");
+        require(white.actionFunc==whiteFriendly[n],"white correct normal role restored");
+        require(white.collider.base.acFlags==0,"white stale hit cleared");
+        frame(white.actor,p);require(captures==0,"white remains friendly");
+
+        reset(p);isAdult=adult;initWhite(white,p,whiteTypes[n]);frame(white.actor,p);
+        require(captures==1&&white.actionFunc==EnGe1_KickPlayer,"white without card still captures");
+        const int before=captures;card=true;white.cutsceneTimer=0;frame(white.actor,p);
+        require(captures==before&&transitions==0&&p.transitionTrigger==0,"white card cancels pending auto capture");
+        require(closed==1&&releases==1&&p.player.csAction==7,"white own capture message and cutscene released");
+        require(white.actionFunc==whiteFriendly[n],"white pending capture resumes role");
+
+        reset(p);isAdult=adult;card=true;initWhite(white,p,whiteTypes[n]);
+        require(white.actionFunc==whiteFriendly[n],"white card at init is friendly");
+        frame(white.actor,p);require(captures==0,"white card init remains safe");
+    }
+    for(bool adult:{false,true})for(int type:{GE2_TYPE_PATROLLING,GE2_TYPE_STATIONARY}) {
+        reset(p);isAdult=adult;initPurple(purple,p,type);frame(purple.actor,p,false);
+        require(captures==0,"frozen purple guard");card=true;purple.collider.base.acFlags=AC_HIT;
+        frame(purple.actor,p);require(captures==0&&transitions==0,"purple restored first frame safe");
+        require(purple.actor.update==EnGe2_UpdateFriendly,"purple first frame switches update");
+        require(purple.actor.targetMode==6&&purple.collider.base.acFlags==0,"purple normal targeting no stale hit");
+        frame(purple.actor,p);require(captures==0,"purple remains friendly");
+
+        reset(p);isAdult=adult;initPurple(purple,p,type);frame(purple.actor,p);
+        require(captures>=1&&(purple.stateFlags&GE2_STATE_CAPTURING),"purple without card still captures");
+        int before=captures;card=true;purple.actionFunc=EnGe2_CaptureClose;purple.timer=0;frame(purple.actor,p);
+        require(captures==before&&transitions==0&&p.transitionTrigger==0,"purple card cancels imminent auto transition");
+        require(closed==1&&releases==1&&p.player.csAction==7,"purple own capture released");
+        require(!(purple.stateFlags&GE2_STATE_CAPTURING)&&purple.actor.update==EnGe2_UpdateFriendly,"purple capture state cleared");
+
+        reset(p);isAdult=adult;card=true;initPurple(purple,p,type);frame(purple.actor,p);
+        require(purple.actor.update==EnGe2_UpdateFriendly&&captures==0,"purple card at init safe");
+    }
+    // A different item textbox/cutscene must survive card cancellation.
+    for(bool whiteGuard:{false,true}) {
+        reset(p);Actor other;
+        if(whiteGuard){initWhite(white,p,GE1_TYPE_NORMAL);frame(white.actor,p);}
+        else{initPurple(purple,p,GE2_TYPE_PATROLLING);frame(purple.actor,p);}
+        p.player.csActor=&other;p.player.csAction=42;p.msgCtx.talkActor=&other;p.msgCtx.textId=0x1234;card=true;
+        if(whiteGuard)frame(white.actor,p);else frame(purple.actor,p);
+        require(closed==0&&releases==0&&p.msgCtx.textId==0x1234&&p.player.csAction==42,"unrelated presentation preserved");
+    }
+    // Existing friendly dialogue/role state must not be reset on every frame.
+    reset(p);initWhite(white,p,GE1_TYPE_HORSEBACK_ARCHERY);card=true;
+    white.actionFunc=EnGe1_TalkAfterGame_Archery;white.cutsceneTimer=12;white.stateFlags=GE1_STATE_GIVE_QUIVER;
+    frame(white.actor,p);require(white.actionFunc==EnGe1_TalkAfterGame_Archery&&white.cutsceneTimer==12&&
+        white.stateFlags==GE1_STATE_GIVE_QUIVER,"existing archery result preserved");
+    for(int type:{GE1_TYPE_GATE_GUARD,GE1_TYPE_VALLEY_FLOOR}) {
+        reset(p);initWhite(white,p,type);auto action=white.actionFunc;card=true;frame(white.actor,p);
+        require(white.actionFunc==action,"nonhostile white actor role unchanged");
+    }
+    // Knockout stays a knockout; hostile hookshot stun/recovery are unchanged.
+    reset(p);initPurple(purple,p,GE2_TYPE_PATROLLING);purple.stateFlags|=GE2_STATE_KO;
+    purple.actionFunc=EnGe2_KnockedOut;card=true;frame(purple.actor,p);
+    require(koCalls==1&&(purple.stateFlags&GE2_STATE_KO)&&purple.actor.update==EnGe2_Update,"KO preserved after card");
+    reset(p);initPurple(purple,p,GE2_TYPE_PATROLLING);HitInfo hookshot;hookshot.toucher.dmgFlags=0x80;
+    purple.collider.info.acHitInfo=&hookshot;purple.collider.base.acFlags=AC_HIT;frame(purple.actor,p);
+    require(purple.actor.update==EnGe2_UpdateStunned&&purple.actor.colorFilterTimer==400&&captures==0,"hostile hookshot stun");
+    purple.collider.base.acFlags=0;purple.actor.colorFilterTimer=0;frame(purple.actor,p);
+    require(purple.actor.update==EnGe2_Update,"hostile stun expiration");
+    reset(p);initPurple(purple,p,GE2_TYPE_PATROLLING);purple.actor.update=EnGe2_UpdateStunned;
+    purple.actor.colorFilterTimer=300;card=true;frame(purple.actor,p);
+    require(purple.actor.update==EnGe2_UpdateFriendly&&purple.actor.colorFilterTimer==0&&captures==0,"existing card while stunned behavior");
+    reset(p);initPurple(purple,p,GE2_TYPE_PATROLLING);purple.collider.base.acFlags=AC_HIT;frame(purple.actor,p);
+    require((purple.stateFlags&GE2_STATE_KO)&&captures==0,"hostile nonhookshot hit still KO");
+
+    // Deliberate jail request from a friendly patrol is not automatic sensing.
+    reset(p);card=true;initPurple(purple,p,GE2_TYPE_PATROLLING);
+    purple.actor.update=EnGe2_UpdateAfterTalk;purple.actionFunc=EnGe2_SetActionAfterTalk;
+    talkClosing=true;p.msgCtx.choiceIndex=0;frame(purple.actor,p);
+    require(captures==1&&(purple.stateFlags&GE2_STATE_CAPTURING)&&purple.actor.update==EnGe2_UpdateAfterTalk,"voluntary jail request retained");
+    talkClosing=false;purple.actionFunc=EnGe2_CaptureClose;purple.timer=0;frame(purple.actor,p);
+    require(transitions==1&&p.transitionTrigger==TRANS_TRIGGER_START,"voluntary jail transition retained");
+
+    // New randomizer handling must not change vanilla hostility/friendliness.
+    for(bool freed:{false,true}) {
+        reset(p);isRando=false;card=true;gSaveContext.eventChkInf[EVENTCHKINF_CARPENTERS_FREE_INDEX]=freed?15:0;
+        initWhite(white,p,GE1_TYPE_NORMAL);frame(white.actor,p);
+        require((captures>0)==!freed,"vanilla white uses carpenters, not card");
+        reset(p);isRando=false;card=true;gSaveContext.eventChkInf[EVENTCHKINF_CARPENTERS_FREE_INDEX]=freed?15:0;
+        initPurple(purple,p,GE2_TYPE_PATROLLING);frame(purple.actor,p);
+        require((captures>0)==!freed,"vanilla purple uses carpenters, not card");
+    }
+    reset(p);gSaveContext.eventChkInf[EVENTCHKINF_CARPENTERS_FREE_INDEX]=15;initPurple(purple,p,GE2_TYPE_PATROLLING);frame(purple.actor,p);
+    require(captures>0,"randomizer freed carpenters without card still hostile");
+    std::cout<<"PASS: live card receipt, first restored update, automatic capture cancellation, roles, KO/stuns, voluntary jail and vanilla behavior\n";
+    std::cout<<"RESULT cases="<<cases<<" assertions="<<assertions<<"\n";
+}

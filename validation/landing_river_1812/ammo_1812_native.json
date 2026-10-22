@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "cases": 1001,
+  "assertions": 1239,
+  "baseline_cases": 8,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "leak_detection": "Disabled: LeakSanitizer cannot inspect /proc/task in the managed executor",
+  "languages": [
+    "C11 (actual native ammo/player functions)",
+    "C++20 (actual AP/trap functions)"
+  ],
+  "source_unchanged_during_tests": true,
+  "scope": "Actual Inventory_ChangeAmmo, stick break/burn, bow aiming/firing and native minigame counters, explosive spawning and Bowling counters, nut throw, ExtraTraps ammo-event update, AP ownership/availability/state-token/expiry guard, and exported C wrapper. The pure policy is also compiled and tested as C11 at integer boundaries. Authentication, time, engine storage shapes, bag capacities and unrelated actor/audio/animation/magic IO are isolated. Tracker refill proofs and real scene collision/rendering are outside this native fixture; no complete Windows game build or controller playthrough is claimed.",
+  "baseline": {
+    "provenance": "Unmodified function/case bodies retained from the user-provided upload/haha.zip",
+    "source_hashes": {
+      "src/code/z_parameter.c": "6d6b9e470d87821c14b7b9505248ba45620be35c5947a395bfdbbea299cd843a",
+      "soh/Enhancements/ExtraTraps.cpp": "da66331b070c5aecbb0ba8d76d41c98748fd9ecded40fcc46989c206a12638e1"
+    },
+    "reproductions": [
+      "last native ammo unit disappears for each of five ammo items",
+      "native ammo trap removes all five final units",
+      "empty Bombchu decrement can leave signed ammo at -1",
+      "signed-byte underflow before native capacity clamp can create arrows from zero"
+    ]
+  },
+  "replay_command": "python3 source/tools/tests/test_ammo_native.py --report tests/ammo_1812_native.json",
+  "external_dependencies": [
+    "Python 3",
+    "gcc with C11",
+    "g++ with C++20",
+    "ASan and UBSan"
+  ],
+  "sources": {
+    "src/code/z_parameter.c": "1b573c490c565d749b9357da694410b309f37273748c0e229474c0432977a816",
+    "src/overlays/actors/ovl_player_actor/z_player.c": "fdc9cafccb840bb9d7303351e467b27a90016ba181caa8a75063a4b19e3a106a",
+    "src/overlays/actors/ovl_En_Arrow/z_en_arrow.h": "f05c0cfac158ab7dcfe8970dac8b9536110508388569ab9e4497f98de45949d5",
+    "soh/Enhancements/ExtraTraps.cpp": "b029956716dfc4f59c975124fc4d85ef275b4e45899295cd0e751fedd954b893",
+    "soh/Network/Archipelago/AmmoPolicy.h": "e1337cfa6c8be0ec7ad8ede2df3363bdd827deed47e96382b013b032d27bcd9e",
+    "soh/Network/Archipelago/ArchipelagoC.h": "81cf9a18eae39424985d446b04ac8ff38c1f55975a869bacfb1d5d8641fa3ed7",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "75f4f836d5c6b30e4867514bd1ac566b8c7b16f391237e73b20d73bb63cf61cc",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "a3eb0a5578362b57f43147feeee5b62728b10e3a17a165a6d8895ea8b9a9c3bc",
+    "soh/Network/Archipelago/TrackerMirror.h": "c01a0c54875c4bf25b9a39971b9972b7cc2ade0f755708fc2d189a45dc220c83",
+    "soh/SohExtremeVersion.h": "ecf85730a6c9c89636e012b57aeefef80051c82fa4ebc017b2ddffe3b1a263fd"
+  },
+  "tests": {
+    "tools/tests/test_ammo_native.py": "c3dd28f106ee16f63853211a04853fe0a00b5a4d03dfd3f839b8e3e20f18979e",
+    "tools/tests/ammo_native_io.h": "360f313774073c9ec89c1a92f50f35319952b39ac7968d008d42d450ac46cbb4",
+    "tools/tests/ammo_native_tests.cpp.in": "9dd0fa74a03703bb41a5ab3a140ee4b580e2114bf06b293a3ed112cd492527ea",
+    "tools/tests/ammo_native_legacy_functions.inc": "f2fcc2c2bb27f415fdf90a741a0e8a82b4cfd17124baf1c9ccafc44b166ef4a3",
+    "tools/tests/test_zora_river_native.py": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48"
+  },
+  "tested_function_sha256": {
+    "void Player_InitExplosiveIA(PlayState* play, Player* this) {": "6102cba1b477fdb77e09f33c4ffd3a99ab28e0720acc44ce5b15f9e37cfed318",
+    "s32 func_80834380(PlayState* play, Player* this, s32* itemPtr, s32* typePtr) {": "4509576f39a5e1ffb3030b426365cecfb0f62595d6d8988d24bc365cda610c2c",
+    "s32 func_8083442C(Player* this, PlayState* play) {": "cd4ab934f0a7ce8e5707658f358f57eabdba30cee3a00ee4604a263f5ced448d",
+    "s32 func_808350A4(PlayState* play, Player* this) {": "437a631a08c584a4a2f18eb78582890536acece7972e9c5835500cf29f5a30f8",
+    "void func_80842A88(PlayState* play, Player* this) {": "72583f6f949789f58f548559a8eed9333d27fdfdc78d55fddf9d8f776388c327",
+    "s32 func_80842AC4(PlayState* play, Player* this) {": "db54a72efb2d6a74e0a5ea1801a45ce51fe577b7625c77aa94d4bf5197f7d07d",
+    "void Player_UpdateBurningDekuStick(PlayState* play, Player* this) {": "75fcf1361993e379e48abd4379b8ad76973b4761371f8e045d7b1d98ddf55471",
+    "void Player_Action_8084E604(Player* this, PlayState* play) {": "a74bcdd533605a37a88610a5d3e9c83a6a0f62c5992518bb35a203045d5d0d7e",
+    "void Inventory_ChangeAmmo(": "4b2a304e01d62e9dd8ebb5b41dbda70f67b7882cb37465f5081c48965ba8efc5",
+    "static uint64_t HashApReceiptBytes(": "c8171ab6f002c182040e7ddeefdab2f2ffa70ad566e7562419a01b75972108d0",
+    "template <typename T>\nstatic uint64_t HashApReceiptValue(": "7a386759ec62677a5ba8359c431e797a38ad4e619acd1759d1733126eb4084f7",
+    "uint32_t ApAmmoMaskForItem(": "76627e531f2128d68fad87cb2c6e0415bd945da96e54bdabd016092ba87efbe1",
+    "uint32_t CaptureApAmmoOwnedMask(": "15c4000bbe9ad5035b52b47acc89d69410881eb09cc1a43f127e9f4b7be5ebfd",
+    "uint32_t CaptureApAmmoAvailableMask(": "bed9c4c8731e5a0d6847b9b21ff74fc9d7d3ef5c4486e0905cb173e459b61e41",
+    "uint32_t CaptureApAmmoRulesFlags(": "bcec5eb8d9890f37b2f18a0eb0a1c93afd63ad1bf923b1f5d08de2c176fb6aca",
+    "uint64_t CaptureApAmmoStateToken(": "ab47209d5d1e584e4bfdff797e179fbb455ebed0b372ca596827d7a7931443f3",
+    "int32_t ArchipelagoClient::AdjustAmmoChange(": "5e2e971e2ef2c40c408fe0c326271ef36a29b9c1ae6b98ddb7df8a144208c1e8",
+    "extern \"C\" int32_t Archipelago_AdjustAmmoChange(": "edebdff761dcd8000a5d74caa1cedbc17bf821d18a61929e857d262e55890bf7",
+    "static void ApplyAmmoTrapReduction(": "dda0c3d5da2a95b7dacecfc45e5fc356d88a3ebadc3fd841044db8153b14f516",
+    "static void ResetExtraTrapEffects(": "66934627e53d249076ec1c3a7c658d9f5a263ab767ab22f67d4676c32749890e",
+    "static void UpdateExtraTrapEffects(": "cd53f3f252d81fca46235b5a737064898e201d0acb029e54d1859e80c781fb14"
+  },
+  "captured_native_metadata_sha256": {
+    "captured_arrow_types.h": "e8ec6a8b6e1608b26965227a05e641ed527d19ae20e0fb7366eed5501697eff0",
+    "captured_player_actions.h": "b341690c9e19fd5e654aeaa92cf66faa33ec18145ef4de4d2568a8d857c1b541"
+  },
+  "output": [
+    "cases=1001 assertions=1239 baseline_cases=8"
+  ]
+}

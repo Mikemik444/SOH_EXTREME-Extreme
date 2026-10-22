@@ -31,6 +31,14 @@ s16 Grotto_GetEntranceValueHandlingGrottoRando(s16 nextEntranceIndex);
 s16 Grotto_OverrideSpecialEntrance(s16 nextEntranceIndex);
 void Grotto_OverrideActorEntrance(Actor* thisx);
 s32 Grotto_ActorRequiresShovel(Actor* thisx);
+// Exterior grotto returns resolve a safe stationary landing on the first
+// player update, after room actors and dynamic background lookup initialize.
+// Resolve returns 0 for no request, 1 for a placed landing, 2 for native emergence.
+s32 Grotto_QueueReturnLanding(Actor* actor);
+s32 Grotto_HasPendingReturnLanding(void);
+s32 Grotto_ResolveReturnLanding(Actor* actor);
+void Grotto_UpdateReturnLanding(Actor* actor);
+s32 Grotto_CanCaptureReturnPoint(Actor* actor);
 void Grotto_ForceGrottoReturnOnSpecialEntrance(void);
 void Grotto_ForceGrottoReturn(void);
 void Grotto_ForceRegularVoidOut(void);

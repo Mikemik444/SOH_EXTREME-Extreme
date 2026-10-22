@@ -8,7 +8,7 @@
 #define ENTRANCE_TABLE_SIZE ENTR_MAX
 
 #define MAX_ENTRANCE_RANDO_USED_INDEX 0x0820
-// SOH-EXTREME uses 298 indexed scene routes when every pool is enabled.
+// SOH-EXTREME uses 300 indexed scene routes when every pool is enabled.
 // Room-door sources use a separate dispatcher; leave space for the empty tail.
 #define ENTRANCE_OVERRIDES_MAX_COUNT 320
 #define SHUFFLEABLE_BOSS_COUNT 8

@@ -73,7 +73,7 @@ def main() -> None:
                 assert code == 1 and error_fragment in actual, (name, error_fragment, actual)
             cases.append({"name": name, "status": "passed", "rejected": error_fragment is not None})
 
-    run_case("all 719 reviewed endpoints and 2876 normal layer facts match")
+    run_case("all 721 reviewed endpoints and 2884 normal layer facts match")
     run_case("native output regenerates exactly", check=False)
 
     facts, evidence = generator.derive_endpoints(source, args.native_include_root)
@@ -191,9 +191,9 @@ def main() -> None:
     reviewed = json.loads((source / policy_relative).read_text())
     rows = {row["id"]: row for row in reviewed["endpoints"]}
     assert {row["id"]: row["source_age_mask"] for row in rows.values() if row["source_age_mask"] != 3} == {
-        187: 1, 638: 1, 1364: 1, 642: 2}
+        187: 1, 638: 1, 1364: 1, 642: 2, 781: 2}
     assert {row["id"]: row["arrival_age_mask"] for row in rows.values() if row["arrival_age_mask"] != 3} == {
-        1000: 2, 832: 1, 2060: 1}
+        781: 2, 1000: 2, 832: 1, 2060: 1}
     assert all(rows[endpoint]["source_age_mask"] == 3 for endpoint in (1000, 832, 2060))
     cases.append({"name": "reviewed age masks preserve shared interior source ages", "status": "passed", "rejected": False})
 

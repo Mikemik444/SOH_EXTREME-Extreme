@@ -1,0 +1,10 @@
+These are current 1.8.11 source, rule, display and seed validation results.
+The transition-label report keeps its original 1810 filename but binds the final delivered source.
+The old uploaded seed was exactly reproduced with its original 1.8.10 APWorld, then replayed
+without changing any mapping, network item/classification or shop price under corrected 1.8.11 rules.
+The original_world_1.8.10.apworld under inputs is audit-only: install the current root APWorld.
+The fresh child full fill uses the reported options and new rule model.
+The adult variant explicitly sets Closed Forest Off because On forces Child; both assert the actual age.
+Full-fill validation creates no game output files.
+Production-function fixtures isolate engine I/O; they are not a full native build or in-game playthrough.
+Older reports elsewhere in validation keep their original bytes and historical source hashes.

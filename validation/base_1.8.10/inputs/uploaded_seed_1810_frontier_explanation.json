@@ -1,0 +1,227 @@
+{
+  "status": "existing_seed_fails_corrected_rules",
+  "seed": 18319500429418536909,
+  "official_output_name": "90569625277056890789",
+  "goal_met": false,
+  "network_checks": 4036,
+  "checked_network_locations": 355,
+  "blocked_network_locations": 3681,
+  "triforce_pieces": 3,
+  "required_triforce_pieces": 20,
+  "collection_spheres_before_stall": 10,
+  "baseline_parity": "4036 placements, classifications and prices restored; all 36 original progression sphere sizes matched under isolated 1.8.9.",
+  "smallest_concrete_lost_approach": {
+    "early_water_ingresses": [
+      {
+        "physical_source_id": 1158,
+        "saved_target_id": 8862,
+        "physical_source_name": "GF Outskirts -> TH 1 Torch Cell Turn",
+        "source_region": "GERUDO_FORTRESS_OUTSKIRTS",
+        "actual_arrival_region": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
+        "physical_source_check_id": 11001158
+      },
+      {
+        "physical_source_id": 1246,
+        "saved_target_id": 8863,
+        "physical_source_name": "Hyrule Field Wooded Exit -> Lost Woods Bridge West Exit",
+        "source_region": "HYRULE_FIELD",
+        "actual_arrival_region": "RR_WATER_TEMPLE_PILLAR_2F",
+        "physical_source_check_id": 11001246
+      }
+    ],
+    "landing_height": 460,
+    "high_water_height": 765,
+    "current_arrival_requirement": "Actual LOW or MIDDLE control proof, or usable Iron Boots (owned boots, adult, Swim).",
+    "current_failed_state": "Child only; no usable Iron Boots; no actual LOW, MIDDLE or HIGH control event.",
+    "baseline_event_spheres": {
+      "EXTREME Native Event: LOGIC_WATER_COULD_MIDDLE": {
+        "baseline": 2,
+        "corrected": null
+      },
+      "EXTREME Native Event: LOGIC_WATER_COULD_HIGH_FROM_MID": {
+        "baseline": 10,
+        "corrected": null
+      },
+      "EXTREME Native Event: LOGIC_WATER_HIGH": {
+        "baseline": 20,
+        "corrected": null
+      },
+      "EXTREME Native Event: LOGIC_WATER_LOW": {
+        "baseline": 32,
+        "corrected": null
+      },
+      "EXTREME Native Event: LOGIC_WATER_MIDDLE": {
+        "baseline": 32,
+        "corrected": null
+      }
+    },
+    "former_local_water_path": [
+      {
+        "source": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
+        "target": "RR_WATER_TEMPLE_MAIN",
+        "baseline": {
+          "target": "RR_WATER_TEMPLE_MAIN",
+          "region": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
+          "condition": "true",
+          "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
+          "line": 127
+        },
+        "corrected": {
+          "target": "RR_WATER_TEMPLE_MAIN",
+          "region": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
+          "condition": "(logic->WaterLevel(WL_LOW) || logic->CanUse(RG_IRON_BOOTS))",
+          "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
+          "line": 130
+        }
+      },
+      {
+        "source": "RR_WATER_TEMPLE_MAIN",
+        "target": "RR_WATER_TEMPLE_3F_CENTRAL_H",
+        "baseline": {
+          "target": "RR_WATER_TEMPLE_3F_CENTRAL_H",
+          "region": "RR_WATER_TEMPLE_MAIN",
+          "condition": "logic->WaterLevel(WL_HIGH) && logic->HasItem(RG_BRONZE_SCALE)",
+          "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
+          "line": 58
+        },
+        "corrected": {
+          "target": "RR_WATER_TEMPLE_3F_CENTRAL_H",
+          "region": "RR_WATER_TEMPLE_MAIN",
+          "condition": "logic->WaterLevel(WL_HIGH) && logic->CanUse(RG_IRON_BOOTS)",
+          "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
+          "line": 61
+        }
+      },
+      {
+        "source": "RR_WATER_TEMPLE_3F_CENTRAL_H",
+        "target": "RR_WATER_TEMPLE_OUTSIDE_WATERFALL",
+        "baseline": {
+          "target": "RR_WATER_TEMPLE_OUTSIDE_WATERFALL",
+          "region": "RR_WATER_TEMPLE_3F_CENTRAL_H",
+          "condition": "logic->IsAdult ||logic->HasItem(RG_BRONZE_SCALE) || logic->CanUse(RG_HOOKSHOT) || logic->CanUse(RG_HOVER_BOOTS)",
+          "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
+          "line": 91
+        },
+        "corrected": {
+          "target": "RR_WATER_TEMPLE_OUTSIDE_WATERFALL",
+          "region": "RR_WATER_TEMPLE_3F_CENTRAL_H",
+          "condition": "logic->IsAdult ||logic->CanUse(RG_IRON_BOOTS) || logic->CanUse(RG_HOOKSHOT) || logic->CanUse(RG_HOVER_BOOTS)",
+          "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
+          "line": 94
+        }
+      },
+      {
+        "source": "RR_WATER_TEMPLE_OUTSIDE_WATERFALL",
+        "target": "RR_WATER_TEMPLE_WATERFALL",
+        "baseline": {
+          "target": "RR_WATER_TEMPLE_WATERFALL",
+          "region": "RR_WATER_TEMPLE_OUTSIDE_WATERFALL",
+          "condition": "logic->WaterLevel(WL_HIGH) && logic->SmallKeys(SCENE_WATER_TEMPLE, 4)",
+          "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
+          "line": 533
+        },
+        "corrected": {
+          "target": "RR_WATER_TEMPLE_WATERFALL",
+          "region": "RR_WATER_TEMPLE_OUTSIDE_WATERFALL",
+          "condition": "logic->WaterLevel(WL_HIGH) && logic->SmallKeys(SCENE_WATER_TEMPLE, 4)",
+          "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\water_temple.cpp",
+          "line": 548
+        }
+      }
+    ],
+    "following_exact_mapped_legs": [
+      {
+        "physical_source_id": 8849,
+        "saved_target_id": 2056,
+        "physical_source_name": "Water Temple Outside Waterfall -> Water Temple Waterfall (door 9, room 0 to 5)",
+        "source_region": "RR_WATER_TEMPLE_OUTSIDE_WATERFALL",
+        "actual_arrival_region": "DEATH_MOUNTAIN_TRAIL",
+        "physical_source_check_id": 11205137
+      },
+      {
+        "physical_source_id": 401,
+        "saved_target_id": 8965,
+        "physical_source_name": "Death Mountain Trail Bottom Exit -> Kakariko Guard Gate Exit",
+        "source_region": "DEATH_MOUNTAIN_TRAIL",
+        "actual_arrival_region": "RR_SPIRIT_TEMPLE_STATUE_ROOM_ADULT",
+        "physical_source_check_id": 11000401
+      },
+      {
+        "physical_source_id": 9001,
+        "saved_target_id": 9611,
+        "physical_source_name": "Spirit Temple Statue Room Adult -> Spirit Temple Pot Stairs (door 21, room 5 to 16)",
+        "source_region": "RR_SPIRIT_TEMPLE_STATUE_ROOM_ADULT",
+        "actual_arrival_region": "RR_GERUDO_TRAINING_GROUND_LOBBY",
+        "physical_source_check_id": 11206185
+      },
+      {
+        "physical_source_id": 9613,
+        "saved_target_id": 9871,
+        "physical_source_name": "Gerudo Training Ground Lobby -> Gerudo Training Ground Sand Room (door 7, room 0 to 1)",
+        "source_region": "RR_GERUDO_TRAINING_GROUND_LOBBY",
+        "actual_arrival_region": "RR_GANONS_CASTLE_FOREST_TRIAL_FINAL_ROOM",
+        "physical_source_check_id": 11211277
+      }
+    ],
+    "lost_progression": {
+      "check_id": 11211277,
+      "item": "Pot Soul",
+      "baseline_sphere": 11,
+      "spoiler_line": 4783
+    },
+    "why_lost": "The source check is dry and retains its physical traversal predicate. Its GTG Lobby parent has no reachable approach in the corrected fixed point. The old Water path supplied an invalid ingress and assumed water-control access across shuffled doors.",
+    "paired_reverse_is_not_an_alternative": {
+      "physical_source_id": 9870,
+      "saved_target_id": 9612,
+      "physical_source_name": "Ganon's Castle Forest Trial Final Room -> Ganon's Castle Forest Trial Beamos Room Final Door (door 8, room 7 to 6)",
+      "source_region": "RR_GANONS_CASTLE_FOREST_TRIAL_FINAL_ROOM",
+      "actual_arrival_region": "RR_GERUDO_TRAINING_GROUND_LOBBY",
+      "physical_source_check_id": 11213326
+    },
+    "reverse_explanation": "Forest Trial Final Room only has the mapped arrival from the same inaccessible GTG Lobby source 9613 in this saved map; returning from it cannot establish the initial approach."
+  },
+  "preserved_valid_opening": {
+    "open_chest_arrival": {
+      "physical_source_id": 1099,
+      "saved_target_id": 8859,
+      "physical_source_name": "Kak Potion Shop Front -> Kak Potion Shop Front Entry",
+      "source_region": "KAK_POTION_SHOP_FRONT",
+      "actual_arrival_region": "RR_WATER_TEMPLE_LOW_EMBLEM",
+      "physical_source_check_id": 11001099
+    },
+    "open_chest_check": 11205146,
+    "open_chest_sphere": 8,
+    "open_chest_spoiler_line": 4772,
+    "scale_check": 203,
+    "scale_sphere": 9,
+    "scale_spoiler_line": 4776,
+    "source_credit_example": {
+      "id": 11001246,
+      "item": "Strength Upgrade",
+      "sphere": 2,
+      "explanation": "The dry Hyrule Field source crossing still awards its item even though the mapped flooded destination is not a usable onward route."
+    }
+  },
+  "inventory_probe_limitation": "Separate private copied-state probes adding Climb, Time Travel, Pot Soul or Iron Boots individually all still failed the goal. They are diagnostic only; no item was sent or seed edited.",
+  "scope": "Exact existing placements and saved mapping under actual AP predicates. This proves failure of the corrected generation/Finder logic model, not an exhaustive in-game search over unintended tricks. No new generation, source edit or repair is performed.",
+  "input_sha256": {
+    "tests/uploaded_seed_189_exact_metadata.json": "2e4eb40d9e8deb62a46d4535607ca378f13e523fa5228e590af64fca77a0a59c",
+    "tests/uploaded_seed_189_baseline_replay.json": "7e85a82a4a75c0bc8fa5c583fb079fd0b5095f597f0f929dbefd50cc4daece6f",
+    "tests/uploaded_seed_1810_corrected_replay.json": "64d40a5cc1308ff644a55f0b0be32a0583cd090e1c615c8c461e2687ffa0a537",
+    "tests/uploaded_seed_1810_blocker_diagnostic.json": "73d89382b2f7b4e93d1442e5196b5d218392b2e0dac573ad80cb068598802b4c",
+    "source/archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "tests/uploaded_seed_189_baseline/source/archipelago/soh_extreme/EnemyRoomGraph.json": "13e6cfdeeac346be56fee81e53016c78dea62115091cd7a85bdc7ce4d16174ea",
+    "source/archipelago/soh_extreme/EnemyRoomGraph.json": "9bee9b5b226f26e77ab83316f4768688a4e89c20a90382e9b56e3d1b74eadc1b"
+  },
+  "proof_source_sha256": {
+    "source/archipelago/soh_extreme/EntranceRandomizer.py": "9c70d90e52063148fcafd22bca3f5594776b06ffeacbc886bfcbf3196a431c37",
+    "source/archipelago/soh_extreme/EnemyRoomLogic.py": "c1ada3a8ee0c69e2ad7a77569bf4bea9264965642dabfbf6bcacb2d48ff68c85",
+    "source/archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "2ebd7532c3ea6e749830ea6c6eb2c225c6edd3d03ae9018df472fbff23180ec9",
+    "source/soh/Enhancements/randomizer/location_access/dungeons/water_temple.cpp": "b80ebd6ff31720cc75dd0eabff347b422a62a36cd2e828fdb4d63278284c0809",
+    "source/soh/Enhancements/randomizer/logic.cpp": "9e6a0aed7fbec38674ffc5458f900192db5a967e246e508f5c68e411a263067c",
+    "source/soh/Network/Archipelago/EntranceRandomizerData.inc": "19f735fe90791ceecc6fe672a969351e0d2682dbba17c7ab99f9ca2a2a72581a",
+    "source/src/overlays/actors/ovl_Bg_Mizu_Water/z_bg_mizu_water.h": "43d7a802115b78cecb36f7f50b4cfd8fa4f85b2cb1623f201d2577511a33be47",
+    "upload/AP_90569625277056890789_Spoiler(1).txt": "9d234acc6d4452a1e0e65dce87e3c8ca19118469685ae88e679eaf1ac70d6abe"
+  },
+  "script_sha256": "48a779e9d64791ea6216ef68ce0b7c6738d057944950cfb6816e8adcf029f6ef"
+}

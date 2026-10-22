@@ -1,3 +1,4 @@
+#include <libultraship/bridge/consolevariablebridge.h>
 #include <spdlog/spdlog.h>
 
 #include "logic.h"
@@ -1628,6 +1629,11 @@ bool Logic::WaterRisingTargetTo3FCentral() {
             HasExplosives() && CanUse(RG_HOVER_BOOTS));
 }
 
+bool Logic::WaterTempleDoorsShuffled() {
+    return Archipelago_IsCurrentSaveFile() &&
+           CVarGetInteger(CVAR_RANDOMIZER_SETTING("ShuffleDungeonDoors"), 0) != 0;
+}
+
 /* Water level has 7 events that govern its logic.
  * LOGIC_WATER_LOW, LOGIC_WATER_MIDDLE say that the player for sure can set the water to this level
  * the COULD varients of these 2, as well as LOGIC_WATER_HIGH instead check for if using those emblems would be possible
@@ -1648,6 +1654,19 @@ bool Logic::WaterRisingTargetTo3FCentral() {
  * change it as needed
  */
 bool Logic::WaterLevel(RandoWaterLevel level) {
+    if (WaterTempleDoorsShuffled()) {
+        // Room shuffling breaks the vanilla routes hidden in the COULD
+        // shortcuts. Only an actually reachable emblem proves control.
+        // HIGH retains its reset-proof meaning; never infer a water level
+        // from missing items or assume a shuffled door reaches its old room.
+        switch (level) {
+            case WL_LOW: return Get(LOGIC_WATER_LOW);
+            case WL_MID: return Get(LOGIC_WATER_MIDDLE);
+            case WL_LOW_OR_MID: return Get(LOGIC_WATER_LOW) || Get(LOGIC_WATER_MIDDLE);
+            case WL_HIGH: return Get(LOGIC_WATER_HIGH);
+            case WL_HIGH_OR_MID: return Get(LOGIC_WATER_MIDDLE) || Get(LOGIC_WATER_HIGH);
+        }
+    }
     switch (level) {
         case WL_LOW:
             return Get(LOGIC_WATER_LOW) ||
@@ -2050,14 +2069,17 @@ bool Logic::CanVoid() {
 }
 
 bool Logic::CanOpenBombGrotto() {
-    // SOH-EXTREME: Shovel gates every grotto, while a bomb/rock-hidden grotto
-    // still has its physical rock/boulder blocker.  That blocker cannot be
-    // removed until Rock / Boulder Soul is owned, and the allowed removal
-    // methods are the EXTREME rock rule: explosives OR Grab/Power Bracelet.
+    // Bomb-triggered Door_Ana holes require an explosive or Hammer hit;
+    // Grab can lift a rock, but cannot open this kind of hidden entrance.
+    // Keep the existing grotto Shovel, Rock Soul, and discovery requirements.
+    // Individual source routes still enforce any separate physical blockers.
     if (ctx->GetOption(RSK_SHUFFLE_SHOVEL) && !HasItem(RG_SHOVEL)) {
         return false;
     }
-    return CanBreakRocks() && HasItem(RG_STONE_OF_AGONY);
+    if (ctx->GetOption(RSK_SHUFFLE_ROCK_SOUL) && !HasItem(RG_ROCK_SOUL)) {
+        return false;
+    }
+    return BlastOrSmash() && HasItem(RG_STONE_OF_AGONY);
 }
 
 bool Logic::CanOpenStormsGrotto() {

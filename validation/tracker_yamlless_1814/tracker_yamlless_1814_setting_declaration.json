@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "cases": {
+    "baseline_missing_cpp_declaration": {
+      "returncode": 1,
+      "stderr": "$PROBE/baseline_missing_cpp_declaration.cpp: In function \u2018uint32_t CaptureApAmmoOwnedMask()\u2019:\n$PROBE/baseline_missing_cpp_declaration.cpp:20:22: error: \u2018Randomizer_GetSettingValue\u2019 was not declared in this scope; did you mean \u2018RandomizerSettingKey\u2019?\n   20 |     const int mode = Randomizer_GetSettingValue(RSK_BOMBCHU_BAG);\n      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~\n      |                      RandomizerSettingKey\n",
+      "translation_unit_sha256": "db55f8366bf9d4f52b1d1ebf2375ff118bb7444ff5c444665cbf4c5e53bd7ea1"
+    },
+    "production_cpp_declaration": {
+      "returncode": 0,
+      "stderr": "",
+      "translation_unit_sha256": "45547316f2cb97b4d5deb3e1f62ca96ecca804832a62735661aaa3ef32e80f4e"
+    }
+  },
+  "scope": "Compile-only check of the complete production ammo ownership helper and its C-linkage setting declaration.",
+  "exact_change": "One C-linkage declaration added; every other ArchipelagoClient.cpp byte matches 1.8.13.",
+  "baseline": {
+    "archive": "SOH-EXTREME-1.8.13-source-files.zip",
+    "archive_sha256": "818915c0115c6db6ebcbee984caec953ef374501b6682b7ac0acb879cd264995",
+    "source_sha256": {
+      "soh/Network/Archipelago/ArchipelagoClient.cpp": "a592f88c0a5d5a32ebc6018411ad32674c6043a96816029e8883856f7615db7f"
+    }
+  },
+  "source_sha256": {
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "4918aaefbf4643f700f3ceebcf3b29edea0d54caea237ac78cbc8783a14cd4aa",
+    "soh/OTRGlobals.h": "b90b7c4a2be6e538952a65edd066349d7306cd48bb802daf4733b8a99e1ba961",
+    "soh/OTRGlobals.cpp": "f636ace1aca35abe4b181ee805fb7d6299c27b8080f28cec3addeb4bd509eba3",
+    "soh/Enhancements/randomizer/randomizerEnums.h": "93f366a0f1025c277e1ed4920b4f68c64150343432bc7e0bd600782d78bb712f",
+    "soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h": "8d7911b0c242ce2f3210db17959de93be56cd8c106fa065f1f086c94890a129b",
+    "soh/Network/Archipelago/ArchipelagoC.h": "0765aa65b68e620a55dff93b6cef7b9649071fa1c6b77035bcd260d758db27e3",
+    "soh/Network/Archipelago/AmmoPolicy.h": "e1337cfa6c8be0ec7ad8ede2df3363bdd827deed47e96382b013b032d27bcd9e"
+  },
+  "test_sha256": {
+    "tools/tests/test_setting_bridge_declaration.py": "181b662a1868047416dec76a29aca8acb8a61891619f7472cba1cf427db4959a",
+    "tools/tests/test_zora_river_native.py": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48",
+    "tools/tests/ammo_native_io.h": "360f313774073c9ec89c1a92f50f35319952b39ac7968d008d42d450ac46cbb4"
+  },
+  "helper_sha256": "15c4000bbe9ad5035b52b47acc89d69410881eb09cc1a43f127e9f4b7be5ebfd",
+  "declaration": "extern \"C\" u8 Randomizer_GetSettingValue(RandomizerSettingKey randoSettingKey);",
+  "matches_actual_bridge_definition_signature": true,
+  "source_unchanged_during_tests": true,
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "native_windows_build": false,
+  "limitations": [
+    "Engine inventory storage and macros are explicit test IO boundaries.",
+    "No function implementation is supplied or linked by this declaration probe.",
+    "This is a focused C++20 compile check, not the full Windows/MSVC build."
+  ]
+}

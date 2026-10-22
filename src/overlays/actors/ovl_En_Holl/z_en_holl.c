@@ -1,4 +1,5 @@
 #include "z_en_holl.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -166,6 +167,116 @@ static f32 sHorizontalVisibleNarrowTriggerDists[2][4] = {
     { 100.0f, 75.0f, 50.0f, 25.0f },   // SCENE_SPIRIT_TEMPLE
 };
 
+static s32 EnHoll_ShouldTrackRoomBoundary(PlayState* play) {
+    return !gDbgCamEnabled && play->csCtx.state == CS_STATE_IDLE && !EnHoll_IsKokiriLayer8();
+}
+
+static void EnHoll_ObserveRoomBoundary(EnHoll* this, PlayState* play) {
+    s32 type = ENHOLL_GET_TYPE(&this->actor);
+    s32 side;
+    s32 vertical = false;
+    f32 halfWidth;
+    f32 depth;
+    Vec3f relPlayerPos;
+    s32 transitionActorIndex;
+    TransitionActorEntry* transitionEntry;
+
+    if (!EnHoll_ShouldTrackRoomBoundary(play)) {
+        return;
+    }
+
+    switch (type) {
+        case ENHOLL_H_VISIBLE_NARROW:
+            halfWidth = ENHOLL_H_HALFWIDTH_NARROW;
+            depth = sHorizontalVisibleNarrowTriggerDists[play->sceneNum == SCENE_SPIRIT_TEMPLE ? 1 : 0][0];
+            break;
+        case ENHOLL_H_BGCOVER_SWITCHFLAG:
+            if (!Flags_GetSwitch(play, ENHOLL_GET_SWITCH_FLAG(&this->actor))) {
+                return;
+            }
+            halfWidth = ENHOLL_H_HALFWIDTH;
+            depth = ENHOLL_H_SWITCHFLAG_BGCOVER_DEPTH;
+            break;
+        case ENHOLL_H_INVISIBLE:
+        case ENHOLL_H_INVISIBLE_NARROW:
+            halfWidth = type == ENHOLL_H_INVISIBLE_NARROW ? ENHOLL_H_HALFWIDTH_NARROW : ENHOLL_H_HALFWIDTH;
+            depth = ENHOLL_H_INVISIBLE_LOAD_DEPTH_MAX;
+            break;
+        case ENHOLL_V_DOWN_BGCOVER_LARGE:
+            vertical = true;
+            halfWidth = ENHOLL_V_DOWN_RADIUS;
+            depth = ENHOLL_V_DOWN_BGCOVER_YDIST + 95.0f;
+            break;
+        case ENHOLL_V_BGCOVER:
+            vertical = true;
+            halfWidth = ENHOLL_V_RADIUS;
+            depth = ENHOLL_V_BGCOVER_BGCOVER_YDIST;
+            break;
+        case ENHOLL_V_INVISIBLE:
+            vertical = true;
+            halfWidth = ENHOLL_V_RADIUS;
+            depth = ENHOLL_V_INVISIBLE_LOAD_YDIST_MAX;
+            break;
+        default:
+            return;
+    }
+
+    if (vertical) {
+        if (!(this->actor.xzDistToPlayer < halfWidth && fabsf(this->actor.yDistToPlayer) < depth)) {
+            return;
+        }
+        side = this->actor.yDistToPlayer > 0.0f ? 0 : 1;
+    } else {
+        Vec3f* playerPos = &GET_PLAYER(play)->actor.world.pos;
+        Vec3f spawnPos;
+        Vec3f relSpawnPos;
+
+        Actor_WorldToActorCoords(&this->actor, &relPlayerPos, playerPos);
+        if (!(relPlayerPos.y > ENHOLL_H_Y_MIN && relPlayerPos.y < ENHOLL_H_Y_MAX &&
+              fabsf(relPlayerPos.x) < halfWidth && fabsf(relPlayerPos.z) < depth)) {
+            return;
+        }
+        side = relPlayerPos.z < 0.0f ? 0 : 1;
+
+        // Scene spawns pass through integer ActorEntry coordinates. A source
+        // sample very close to the plane can round onto the other side; keep
+        // the earlier observed source point instead of returning across it.
+        if (!(playerPos->x >= -32768.0f && playerPos->x <= 32767.0f &&
+              playerPos->y >= -32768.0f && playerPos->y <= 32767.0f &&
+              playerPos->z >= -32768.0f && playerPos->z <= 32767.0f)) {
+            return;
+        }
+        spawnPos.x = (s16)playerPos->x;
+        spawnPos.y = (s16)playerPos->y;
+        spawnPos.z = (s16)playerPos->z;
+        Actor_WorldToActorCoords(&this->actor, &relSpawnPos, &spawnPos);
+        if ((relSpawnPos.z < 0.0f ? 0 : 1) != side) {
+            return;
+        }
+    }
+
+    // Observe the actual physical side even in the invisible hallway's central
+    // dead band. The engine's current room can still name the other side there.
+    // Shaft returns use a grounded source position, not a point already falling.
+    transitionActorIndex = GET_TRANSITION_ACTOR_INDEX(&this->actor);
+    transitionEntry = &play->transiActorCtx.list[transitionActorIndex];
+    Archipelago_EntranceObserveRoomBoundary(transitionActorIndex, transitionEntry->sides[side].room,
+                                           transitionEntry->sides[side ^ 1].room, vertical);
+}
+
+static void EnHoll_SelectRoomBoundary(EnHoll* this, PlayState* play, s32 room) {
+    if (EnHoll_ShouldTrackRoomBoundary(play)) {
+        Archipelago_EntranceSelectRoomBoundary(GET_TRANSITION_ACTOR_INDEX(&this->actor), room);
+    }
+}
+
+static s32 EnHoll_RequestNewRoom(EnHoll* this, PlayState* play, s32 room) {
+    if (play->roomCtx.status == 0) {
+        EnHoll_SelectRoomBoundary(this, play, room);
+    }
+    return Room_RequestNewRoom(play, &play->roomCtx, room);
+}
+
 /**
  * When traversing a holl of this kind, it attempts to:
  *   Load Current Room (fails as it is already loaded)
@@ -197,13 +308,14 @@ void EnHoll_HorizontalVisibleNarrow(EnHoll* this, PlayState* play) {
         if (orthogonalDistToPlayer > sHorizontalVisibleNarrowTriggerDists[triggerDistsIndex][1]) {
             if (play->roomCtx.prevRoom.num >= 0 && play->roomCtx.status == 0) {
                 this->actor.room = play->transiActorCtx.list[transitionActorIndex].sides[this->side].room;
+                EnHoll_SelectRoomBoundary(this, play, this->actor.room);
                 EnHoll_SwapRooms(play);
                 Room_FinishRoomChange(play, &play->roomCtx);
             }
         } else {
             this->actor.room = play->transiActorCtx.list[transitionActorIndex].sides[this->side ^ 1].room;
             if (play->roomCtx.prevRoom.num < 0) {
-                Room_RequestNewRoom(play, &play->roomCtx, this->actor.room);
+                EnHoll_RequestNewRoom(this, play, this->actor.room);
             } else {
                 this->planeAlpha =
                     (255.0f / (sHorizontalVisibleNarrowTriggerDists[triggerDistsIndex][2] -
@@ -246,7 +358,7 @@ void EnHoll_HorizontalInvisible(EnHoll* this, PlayState* play) {
         if (isKokiriLayer8) {}
         if (this->actor.room != play->roomCtx.curRoom.num) {
             if (room) {}
-            if (Room_RequestNewRoom(play, &play->roomCtx, this->actor.room)) {
+            if (EnHoll_RequestNewRoom(this, play, this->actor.room)) {
                 EnHoll_SetupAction(this, EnHoll_WaitRoomLoaded);
             }
         }
@@ -277,7 +389,7 @@ void EnHoll_VerticalDownBgCoverLarge(EnHoll* this, PlayState* play) {
             Math_SmoothStepToF(&player->actor.world.pos.x, this->actor.world.pos.x, 1.0f, 50.0f, 10.0f);
             Math_SmoothStepToF(&player->actor.world.pos.z, this->actor.world.pos.z, 1.0f, 50.0f, 10.0f);
             if (this->actor.room != play->roomCtx.curRoom.num &&
-                Room_RequestNewRoom(play, &play->roomCtx, this->actor.room)) {
+                EnHoll_RequestNewRoom(this, play, this->actor.room)) {
                 EnHoll_SetupAction(this, EnHoll_WaitRoomLoaded);
                 this->resetBgCoverAlpha = true;
                 player->actor.speedXZ = 0.0f;
@@ -310,7 +422,7 @@ void EnHoll_VerticalBgCover(EnHoll* this, PlayState* play) {
 
             this->actor.room = play->transiActorCtx.list[transitionActorIndex].sides[side].room;
             if (this->actor.room != play->roomCtx.curRoom.num &&
-                Room_RequestNewRoom(play, &play->roomCtx, this->actor.room)) {
+                EnHoll_RequestNewRoom(this, play, this->actor.room)) {
                 EnHoll_SetupAction(this, EnHoll_WaitRoomLoaded);
                 this->resetBgCoverAlpha = true;
             }
@@ -336,7 +448,7 @@ void EnHoll_VerticalInvisible(EnHoll* this, PlayState* play) {
             side = (this->actor.yDistToPlayer > 0.0f) ? 0 : 1;
             this->actor.room = play->transiActorCtx.list[transitionActorIndex].sides[side].room;
             if (this->actor.room != play->roomCtx.curRoom.num &&
-                Room_RequestNewRoom(play, &play->roomCtx, this->actor.room)) {
+                EnHoll_RequestNewRoom(this, play, this->actor.room)) {
                 EnHoll_SetupAction(this, EnHoll_WaitRoomLoaded);
             }
         }
@@ -377,7 +489,7 @@ void EnHoll_HorizontalBgCoverSwitchFlag(EnHoll* this, PlayState* play) {
 
                 this->actor.room = play->transiActorCtx.list[transitionActorIndex].sides[side].room;
                 if (this->actor.room != play->roomCtx.curRoom.num &&
-                    Room_RequestNewRoom(play, &play->roomCtx, this->actor.room)) {
+                    EnHoll_RequestNewRoom(this, play, this->actor.room)) {
                     EnHoll_SetupAction(this, EnHoll_WaitRoomLoaded);
                 }
             }
@@ -403,6 +515,7 @@ void EnHoll_WaitRoomLoaded(EnHoll* this, PlayState* play) {
 void EnHoll_Update(Actor* thisx, PlayState* play) {
     EnHoll* this = (EnHoll*)thisx;
 
+    EnHoll_ObserveRoomBoundary(this, play);
     this->actionFunc(this, play);
 }
 

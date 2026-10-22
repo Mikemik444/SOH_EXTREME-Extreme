@@ -1,0 +1,6 @@
+These reports and documents are retained from the original 1.8.10 release.
+Their source hashes describe that earlier snapshot; they have not been rewritten.
+This build fix adds one declaration-header include to logic.cpp and changes no function body.
+Every other replacement source file and both APWorld copies are byte-identical.
+Current compile-fix validation is in the parent validation directory.
+The original 1.8.9 uploaded seed still fails the corrected rules as documented in inputs/.

@@ -584,6 +584,9 @@ u32 func_80096FE8(PlayState* play, RoomContext* roomCtx) {
 s32 Room_RequestNewRoom(PlayState* play, RoomContext* roomCtx, s32 roomNum) {
     size_t size;
 
+    if (roomCtx->status == 0) {
+        Archipelago_EntranceBeginRoomChange(roomNum);
+    }
     return OTRRoom_RequestNewRoom(play, roomCtx, roomNum);
 
     if (roomCtx->status == 0) {

@@ -5,13 +5,14 @@
 #include <cmath>
 #include <map>
 #include <numeric>
+#include <utility>
 #include <vector>
 
 namespace SohExtreme {
 
 struct ExitPoint { float x, y, z; };
-struct ExitTriangle { int exit; std::array<ExitPoint, 3> points; };
-struct ExitAnchor { int exit; ExitPoint position; };
+struct ExitTriangle { int exit; std::array<ExitPoint, 3> points; int polygon = -1; };
+struct ExitAnchor { int exit; ExitPoint position; std::vector<int> polygons; };
 
 // Each connected trigger gets its own label. Separate passages may use the
 // same exit-list entry; averaging those together would put text between them.
@@ -59,7 +60,12 @@ inline std::vector<ExitAnchor> SceneExitAnchors(const std::vector<ExitTriangle>&
             const double distance = dx*dx+dy*dy+dz*dz;
             if (best < 0 || distance < best) { best = distance; nearest = i; }
         }
-        result.push_back({ triangles[nearest].exit, centers[nearest] });
+        ExitAnchor anchor{ triangles[nearest].exit, centers[nearest], {} };
+        // Preserve physical ownership for a door's native scene-exit probe.
+        for (size_t i : group.members) {
+            if (triangles[i].polygon >= 0) anchor.polygons.push_back(triangles[i].polygon);
+        }
+        result.push_back(std::move(anchor));
     }
     return result;
 }

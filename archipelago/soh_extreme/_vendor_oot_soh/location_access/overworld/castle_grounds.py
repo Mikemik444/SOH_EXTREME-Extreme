@@ -121,14 +121,22 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     connect_regions(Regions.HC_DRAIN_LEDGE, world, [
         (Regions.HC_MOAT, lambda b: True_()),
-        (Regions.HC_GARDEN, lambda b: crawl),
+        (Regions.HC_COURTYARD_GUARDS, lambda b: is_child(b) & crawl),
+    ])
+    # The drain, guard maze and Zelda courtyard are three physical sides.
+    # Night guards (including late daytime from 0xB889) block the maze's far
+    # exit. Reaching the maze must not expose checks in Zelda's scene.
+    connect_regions(Regions.HC_COURTYARD_GUARDS, world, [
+        (Regions.HC_DRAIN_LEDGE, lambda b: is_child(b) & crawl),
+        (Regions.HC_GARDEN, lambda b: is_child(b) & at_clock_window(b, 'courtyard')),
     ])
     add_locations(Regions.HC_GARDEN, world, [
         (Locations.HC_ZELDAS_LETTER, lambda b: npc & speak),
         (Locations.SONG_FROM_IMPA, lambda b: npc & speak),
     ])
     connect_regions(Regions.HC_GARDEN, world, [
-        (Regions.HC_DRAIN_LEDGE, lambda b: True_()),
+        # A legacy arrival already on Zelda's side can leave safely.
+        (Regions.HC_COURTYARD_GUARDS, lambda b: True_()),
     ])
 
     # Hyrule Castle Great Fairy Fountain

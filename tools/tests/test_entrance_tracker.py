@@ -87,7 +87,7 @@ int main() {
   }
   assert(!GetEntranceData(32000));
   assert(doors==421);
-  std::cout << "PASS: all 719 catalog endpoints resolve; all 421 door labels and area/type bounds validated.\\n";
+  std::cout << "PASS: all 721 catalog endpoints resolve; all 421 door labels and area/type bounds validated.\\n";
   size_t routeCount=0;
   for(const auto& e:SohExtreme::kEntranceEndpoints) {
     if(e.door>=0) continue;
@@ -95,7 +95,7 @@ int main() {
     const auto* target=SohExtreme::EntranceEndpointById(targets[routeCount%targets.size()]);
     nativeRoutes.entranceOverrides[routeCount++]={0,static_cast<int16_t>(e.id),static_cast<int16_t>(e.reverse),static_cast<int16_t>(target->id),static_cast<int16_t>(target->reverse)};
   }
-  assert(routeCount==298 && routeCount<ENTRANCE_OVERRIDES_MAX_COUNT);
+  assert(routeCount==300 && routeCount<ENTRANCE_OVERRIDES_MAX_COUNT);
   // Both one-way spawns deliberately share the same synthetic destination.
   for(auto& route:nativeRoutes.entranceOverrides) {
     if(route.index==187 || route.index==642) { route.override=8961; route.overrideDestination=8960; }
@@ -128,7 +128,7 @@ int main() {
     }
     assert(total==routeCount);
   }
-  std::cout << "PASS: all 298 indexed routes retained in all four groupings; duplicate one-way targets preserved; offsets and counts agree.\\n";
+  std::cout << "PASS: all 300 indexed routes retained in all four groupings; duplicate one-way targets preserved; offsets and counts agree.\\n";
   nativeRoutes.entranceOverrides.fill({});
   nativeRoutes.entranceOverrides[0]={0,32000,32001,32002,32003};
   InitEntranceTrackingData();

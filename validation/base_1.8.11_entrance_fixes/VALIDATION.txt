@@ -1,0 +1,15 @@
+SOH-EXTREME 1.8.11 entrance-fix validation
+
+Fresh reports:
+- entrance_label_overlays_1811_native.json
+- transition_labels_1811_overlay_regression.json
+- grotto_access_1811_native.json
+- bomb_grotto_1811_ap.json
+- grotto_1811_uploaded_seed_reproduction.json
+- finder_autoexpand_1811_native.json
+- entrance_fixes_1811_source_completeness.json
+- entrance_fixes_1811_source_build_validation.json
+
+All 190 previous replacement files retained. APWorld and all AP sources unchanged.
+Current reports bind exact source bytes; prior reports remain historical.
+No complete native Windows build or in-game playthrough was performed.

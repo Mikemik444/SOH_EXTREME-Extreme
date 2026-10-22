@@ -13,7 +13,7 @@ PROTOCOL = "SOHExtremeFinder1"
 # Release metadata for diagnostics; never require equal releases for display.
 # Keep the wire format stable across release bumps; change its identifier only
 # when the data layout changes and provide an explicit compatible decoder.
-VERSION = "1.8.9"
+VERSION = "1.8.15"
 TAG = "SOHExtremeUT"
 MAX_ENTRIES = 20000
 MAX_BYTES = 750000
@@ -31,7 +31,10 @@ def encode_snapshot(*, nonce: str, request: int, revision: int, slot: int,
                     rows: list[dict], manual_count: int = 0, ignored_count: int = 0,
                     version: str = VERSION, live_shields: int | None = None,
                     live_time: int | None = None, live_clock: int | None = None,
-                    live_time_flags: int = 0) -> str:
+                    live_time_flags: int = 0, live_ammo: int | None = None,
+                    live_ammo_owned: int = 0, live_rupees: int = 0,
+                    live_ammo_flags: int = 0, live_ammo_state: int = 0,
+                    ammo_refills: int = 0) -> str:
     if not nonce or len(nonce) > 64 or not producer or len(producer) > 64:
         raise ValueError("Invalid tracker session identity")
     if len(active) > MAX_ENTRIES or len(rows) > MAX_ENTRIES or not checked <= active:
@@ -67,6 +70,16 @@ def encode_snapshot(*, nonce: str, request: int, revision: int, slot: int,
     if live_clock is not None:
         if live_time is None:raise ValueError("Clock extension needs a phase")
         out.extend(b'CLCK');u32(_integer(live_clock, 0, 0xffff));u32(_integer(live_time_flags, 0, 1))
+    # Explicitly negotiated by the managed client. Older clients keep their
+    # original payload and continue to display checks without this extension.
+    if live_ammo is not None:
+        if live_clock is None:raise ValueError("Ammo extension needs a live clock")
+        if live_ammo & ~live_ammo_owned:raise ValueError("Ammo without an owned container")
+        out.extend(b'AMMO')
+        for value in (live_ammo, live_ammo_owned):u32(_integer(value, 0, 31))
+        u32(_integer(live_rupees, 0, 65535));u32(_integer(live_ammo_flags, 0, 3))
+        u64(_integer(live_ammo_state, 1, 0xffffffffffffffff))
+        u32(_integer(ammo_refills, 0, 31))
     if len(out)>MAX_BYTES:raise ValueError("Tracker snapshot too large")
     return base64.b64encode(out).decode('ascii')
 

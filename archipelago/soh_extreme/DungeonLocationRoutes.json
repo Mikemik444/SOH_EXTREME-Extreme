@@ -4484,7 +4484,7 @@
   "1033": [
     {
       "region": "RR_WATER_TEMPLE_3F_CENTRAL_A",
-      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots(ED_BOOMERANG, false, true) && logic->HasItem(RG_GOLDEN_SCALE))"
+      "condition": "logic->CanUse(RG_BOOMERANG) || ((logic->WaterLevel(WL_LOW_OR_MID) || logic->CanUse(RG_IRON_BOOTS)) && logic->CanBreakPots(ED_BOOMERANG, false, true) && logic->HasItem(RG_GOLDEN_SCALE))"
     },
     {
       "region": "RR_WATER_TEMPLE_2F_CENTRAL_H",
@@ -4492,17 +4492,17 @@
     },
     {
       "region": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
-      "condition": "logic->CanBreakPots()"
+      "condition": "logic->WaterLevel(WL_LOW_OR_MID) && logic->CanBreakPots()"
     },
     {
       "region": "RR_WATER_TEMPLE_BLOCK_LOOP_3F_A",
-      "condition": "logic->CanUse(RG_BOMBCHU_5) && (logic->HasItem(RG_GOLDEN_SCALE) || logic->CanUse(RG_IRON_BOOTS))"
+      "condition": "logic->CanUse(RG_BOMBCHU_5) && (logic->WaterLevel(WL_LOW_OR_MID) || logic->CanUse(RG_IRON_BOOTS)) && (logic->HasItem(RG_GOLDEN_SCALE) || logic->CanUse(RG_IRON_BOOTS))"
     }
   ],
   "1034": [
     {
       "region": "RR_WATER_TEMPLE_3F_CENTRAL_A",
-      "condition": "logic->CanUse(RG_BOOMERANG) || (logic->CanBreakPots(ED_BOOMERANG, false, true) && logic->HasItem(RG_GOLDEN_SCALE))"
+      "condition": "logic->CanUse(RG_BOOMERANG) || ((logic->WaterLevel(WL_LOW_OR_MID) || logic->CanUse(RG_IRON_BOOTS)) && logic->CanBreakPots(ED_BOOMERANG, false, true) && logic->HasItem(RG_GOLDEN_SCALE))"
     },
     {
       "region": "RR_WATER_TEMPLE_2F_CENTRAL_H",
@@ -4510,11 +4510,11 @@
     },
     {
       "region": "RR_WATER_TEMPLE_2F_CENTRAL_LM",
-      "condition": "logic->CanBreakPots()"
+      "condition": "logic->WaterLevel(WL_LOW_OR_MID) && logic->CanBreakPots()"
     },
     {
       "region": "RR_WATER_TEMPLE_BLOCK_LOOP_3F_A",
-      "condition": "logic->CanUse(RG_BOMBCHU_5) && (logic->HasItem(RG_GOLDEN_SCALE) || logic->CanUse(RG_IRON_BOOTS))"
+      "condition": "logic->CanUse(RG_BOMBCHU_5) && (logic->WaterLevel(WL_LOW_OR_MID) || logic->CanUse(RG_IRON_BOOTS)) && (logic->HasItem(RG_GOLDEN_SCALE) || logic->CanUse(RG_IRON_BOOTS))"
     }
   ],
   "1037": [
@@ -4554,7 +4554,7 @@
     },
     {
       "region": "RR_WATER_TEMPLE_CANAL_ALCOVE",
-      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) ||\n                                                                                                      \n                                                                                                                                                  \n                                                         (((logic->IsAdult && logic->CanUse(RG_HOVER_BOOTS)) || logic->BunnyHovers() || logic->CanMiddairGroundJump()) &&\n                                                                                                        \n                                                          (logic->HasItem(RG_BRONZE_SCALE) || (ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid())) &&\n                                                                                                               \n                                                                                                                                                     \n                                                                                                                                                                                                    \n                                                          (logic->CanKillEnemy(RE_GOLD_SKULLTULA, logic->HasItem(RG_BRONZE_SCALE) && (logic->IsAdult || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()) ? ED_SHORT_JUMPSLASH : logic->IsAdult ? ED_BOMB_THROW : ED_BOOMERANG)))"
+      "condition": "logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG) ||\n                                                                                                      \n                                                                                                                                                  \n                                                         (((logic->IsAdult && logic->CanUse(RG_HOVER_BOOTS)) || logic->BunnyHovers() || logic->CanMiddairGroundJump()) &&\n                                                                                                        \n                                                          (logic->CanUse(RG_IRON_BOOTS) || (ctx->GetTrickOption(RT_VOIDOUT_COLLECTION) && logic->CanVoid())) &&\n                                                                                                               \n                                                                                                                                                     \n                                                                                                                                                                                                    \n                                                          (logic->CanKillEnemy(RE_GOLD_SKULLTULA, logic->CanUse(RG_IRON_BOOTS) && (logic->IsAdult || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()) ? ED_SHORT_JUMPSLASH : logic->IsAdult ? ED_BOMB_THROW : ED_BOOMERANG)))"
     },
     {
       "region": "RR_WATER_TEMPLE_BOULDER_CANAL",
@@ -4572,7 +4572,7 @@
     },
     {
       "region": "RR_WATER_TEMPLE_BLOCK_ROOM",
-      "condition": "(logic->CanBreakPots(ED_LONGSHOT, true, true) && logic->HasItem(RG_BRONZE_SCALE)) ||\n                                                                                                                                                                   \n                                                              (logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT) && logic->WaterTimer() >= 8)"
+      "condition": "(logic->CanBreakPots(ED_LONGSHOT, true, true) && logic->CanUse(RG_IRON_BOOTS)) ||\n                                                                                                                                                                   \n                                                              (logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT) && logic->WaterTimer() >= 8)"
     }
   ],
   "1049": [
@@ -4582,7 +4582,7 @@
     },
     {
       "region": "RR_WATER_TEMPLE_BLOCK_ROOM",
-      "condition": "(logic->CanBreakPots(ED_LONGSHOT, true, true) && logic->HasItem(RG_BRONZE_SCALE)) ||\n                                                              (logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT) && logic->WaterTimer() >= 8)"
+      "condition": "(logic->CanBreakPots(ED_LONGSHOT, true, true) && logic->CanUse(RG_IRON_BOOTS)) ||\n                                                              (logic->CanUse(RG_IRON_BOOTS) && logic->CanUse(RG_HOOKSHOT) && logic->WaterTimer() >= 8)"
     }
   ],
   "258": [
@@ -4636,27 +4636,27 @@
   "263": [
     {
       "region": "RR_WATER_TEMPLE_DRAGON_ROOM",
-      "condition": "logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_OPEN_CHEST) &&\n                                               ((logic->CanUse(RG_HOOKSHOT) && logic->CanUse(RG_IRON_BOOTS)) ||\n                                                (((logic->IsAdult && ctx->GetTrickOption(RT_WATER_ADULT_DRAGON)) || (logic->IsChild && ctx->GetTrickOption(RT_WATER_CHILD_DRAGON))) &&\n                                                 logic->CanHitSwitch(ED_BOOMERANG, true) && (logic->HasItem(RG_SILVER_SCALE) || (logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8))))"
+      "condition": "logic->CanUse(RG_IRON_BOOTS) && logic->HasItem(RG_OPEN_CHEST) &&\n                                               ((logic->CanUse(RG_HOOKSHOT) && logic->CanUse(RG_IRON_BOOTS)) ||\n                                                (((logic->IsAdult && ctx->GetTrickOption(RT_WATER_ADULT_DRAGON)) || (logic->IsChild && ctx->GetTrickOption(RT_WATER_CHILD_DRAGON))) &&\n                                                 logic->CanHitSwitch(ED_BOOMERANG, true) && (logic->HasItem(RG_SILVER_SCALE) || (logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8))))"
     },
     {
       "region": "RR_WATER_TEMPLE_ABOVE_DRAGON",
-      "condition": "logic->IsAdult && logic->CanHitSwitch(ED_LONGSHOT) && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_OPEN_CHEST) &&\n                                                ((ctx->GetTrickOption(RT_WATER_ADULT_DRAGON) && (logic->HasItem(RG_SILVER_SCALE) || (logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8))) ||\n                                                 ctx->GetTrickOption(RT_WATER_DRAGON_JUMP_DIVE))"
+      "condition": "logic->IsAdult && logic->CanHitSwitch(ED_LONGSHOT) && logic->CanUse(RG_IRON_BOOTS) && logic->HasItem(RG_OPEN_CHEST) &&\n                                                ((ctx->GetTrickOption(RT_WATER_ADULT_DRAGON) && (logic->HasItem(RG_SILVER_SCALE) || (logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8))) ||\n                                                 ctx->GetTrickOption(RT_WATER_DRAGON_JUMP_DIVE))"
     }
   ],
   "590": [
     {
       "region": "RR_WATER_TEMPLE_PILLAR_2F",
-      "condition": "logic->CanUse(RG_LONGSHOT);"
+      "condition": "logic->WaterLevel(WL_LOW_OR_MID) && logic->CanUse(RG_LONGSHOT)"
     },
     {
       "region": "RR_WATER_TEMPLE_PILLAR_H",
-      "condition": "logic->HasItem(RG_BRONZE_SCALE) && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
+      "condition": "logic->CanUse(RG_IRON_BOOTS) && logic->CanGetEnemyDrop(RE_GOLD_SKULLTULA, ED_BOOMERANG)"
     }
   ],
   "259": [
     {
       "region": "RR_WATER_TEMPLE_PILLAR_B1",
-      "condition": "logic->CanUse(RG_HOOKSHOT) && logic->HasItem(RG_BRONZE_SCALE) && logic->HasItem(RG_OPEN_CHEST)"
+      "condition": "logic->CanUse(RG_HOOKSHOT) && logic->CanUse(RG_IRON_BOOTS) && logic->HasItem(RG_OPEN_CHEST)"
     }
   ],
   "254": [
@@ -4738,25 +4738,25 @@
   "1712": [
     {
       "region": "RR_WATER_TEMPLE_RIVER",
-      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->HasItem(RG_BRONZE_SCALE)"
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->CanUse(RG_IRON_BOOTS)"
     }
   ],
   "1713": [
     {
       "region": "RR_WATER_TEMPLE_RIVER",
-      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->HasItem(RG_BRONZE_SCALE)"
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->CanUse(RG_IRON_BOOTS)"
     }
   ],
   "1714": [
     {
       "region": "RR_WATER_TEMPLE_RIVER",
-      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->HasItem(RG_BRONZE_SCALE)"
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->CanUse(RG_IRON_BOOTS)"
     }
   ],
   "1715": [
     {
       "region": "RR_WATER_TEMPLE_RIVER",
-      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->HasItem(RG_BRONZE_SCALE)"
+      "condition": "(logic->CanUse(RG_IRON_BOOTS) && logic->WaterTimer() >= 8) || logic->CanUse(RG_IRON_BOOTS)"
     }
   ],
   "1050": [

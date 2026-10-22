@@ -6,6 +6,7 @@
 #include "soh/Enhancements/randomizer/randomizer.h"
 #include "soh/Enhancements/randomizer/RCToRandInf.h"
 #include "soh/frame_interpolation.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 extern "C" {
 #include "soh_assets.h"
@@ -243,6 +244,7 @@ static CheckIdentity IdentifySmallCrate(s32 sceneNum, s32 posX, s32 posZ) {
 }
 
 void ObjKibako2_RandomizerInit(void* actorRef) {
+    if (!RAND_GET_OPTION(RSK_SHUFFLE_CRATES) && !Archipelago_IsCurrentSaveFile()) return;
     Actor* actor = static_cast<Actor*>(actorRef);
     auto logicSetting = RAND_GET_OPTION(RSK_LOGIC_RULES);
 
@@ -267,10 +269,14 @@ void ObjKibako2_RandomizerInit(void* actorRef) {
     ObjKibako2* crateActor = static_cast<ObjKibako2*>(actorRef);
 
     auto crateIdentity = IdentifyCrate(gPlayState->sceneNum, (s16)actor->world.pos.x, (s16)actor->world.pos.z);
+    // Native Init has copied the authored flag and cleared home.rot.z.
+    Archipelago_ObserveAmmoSource(static_cast<int32_t>(crateIdentity.randomizerCheck), actor->id,
+                                 actor->home.rot.x, crateActor->collectibleFlag);
     ObjectExtension::GetInstance().Set<CheckIdentity>(actor, std::move(crateIdentity));
 }
 
 void ObjKibako_RandomizerInit(void* actorRef) {
+    if (!RAND_GET_OPTION(RSK_SHUFFLE_CRATES) && !Archipelago_IsCurrentSaveFile()) return;
     Actor* actor = static_cast<Actor*>(actorRef);
 
     if (actor->id != ACTOR_OBJ_KIBAKO)
@@ -279,13 +285,16 @@ void ObjKibako_RandomizerInit(void* actorRef) {
     ObjKibako* smallCrateActor = static_cast<ObjKibako*>(actorRef);
 
     auto crateIdentity = IdentifySmallCrate(gPlayState->sceneNum, (s16)actor->home.pos.x, (s16)actor->home.pos.z);
+    Archipelago_ObserveAmmoSource(static_cast<int32_t>(crateIdentity.randomizerCheck), actor->id,
+                                 actor->params, actor->home.rot.z);
     ObjectExtension::GetInstance().Set<CheckIdentity>(actor, std::move(crateIdentity));
 }
 
 void RegisterShuffleCrates() {
     bool shouldRegister = IS_RANDO && RAND_GET_OPTION(RSK_SHUFFLE_CRATES);
 
-    COND_ID_HOOK(OnActorInit, ACTOR_OBJ_KIBAKO2, shouldRegister, ObjKibako2_RandomizerInit);
+    // Identity observation is also needed for ordinary unshuffled AP crates.
+    COND_ID_HOOK(OnActorInit, ACTOR_OBJ_KIBAKO2, IS_RANDO, ObjKibako2_RandomizerInit);
 
     COND_VB_SHOULD(VB_CRATE_SETUP_DRAW, shouldRegister, {
         ObjKibako2* crateActor = va_arg(args, ObjKibako2*);
@@ -305,7 +314,7 @@ void RegisterShuffleCrates() {
         }
     });
 
-    COND_ID_HOOK(OnActorInit, ACTOR_OBJ_KIBAKO, shouldRegister, ObjKibako_RandomizerInit);
+    COND_ID_HOOK(OnActorInit, ACTOR_OBJ_KIBAKO, IS_RANDO, ObjKibako_RandomizerInit);
 
     COND_VB_SHOULD(VB_SMALL_CRATE_SETUP_DRAW, shouldRegister, {
         ObjKibako* smallCrateActor = va_arg(args, ObjKibako*);

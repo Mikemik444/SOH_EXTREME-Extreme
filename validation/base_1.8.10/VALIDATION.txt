@@ -1,0 +1,35 @@
+SOH-EXTREME 1.8.10 current validation
+==================================
+
+Release checks: PASSED. The old uploaded seed: FAILED corrected logic; regenerate.
+Complete source files: 175; files changed/added since 1.8.9: 40.
+Current source/test hash bindings verified: 1092.
+Fixture/input bindings verified: 24.
+
+water_arrival_logic_1810.json: PASSED; test_methods=20, behavior_decisions=443
+water_logic_export_parity_1810.json: PASSED
+water_1810_native.json: PASSED; cases=447, assertions=3330
+gerudo_guard_card_native_validation.json: PASSED; cases=51, assertions=145
+richard_delivery_native_validation.json: PASSED; cases=24, assertions=43
+entrance_return_death_1810_native.json: PASSED; case_count=921
+entrance_spawn_lifecycle_1810_native.json: PASSED; case_count=8
+entrance_hallway_boundary_1810_native.json: PASSED; cases=65, assertions=144
+seed_safety_1810_regressions.json: PASSED; test_cases=35
+seed_safety_1810_entrance_blockers.json: PASSED; tests_run=22
+seed_safety_1810_full_fill_child.json: PASSED
+seed_safety_1810_full_fill_adult.json: PASSED
+seed_safety_1810_apworld_validation.json: PASSED
+seed_safety_1810_version_validation.json: PASSED
+seed_safety_1810_source_build_validation.json: PASSED
+seed_safety_1810_source_completeness.json: PASSED
+
+Exact old seed audit: original 4,036/4,036 and 36 matching spheres;
+corrected 355/4,036 and 3/20 goal pieces, goal unreachable.
+
+LIMITS:
+- The uploaded source snapshot lacks the root CMake project, full native dependencies and extracted ROM collision assets.
+- No complete Windows game build, live AP session, controller/ImGui run or in-game playthrough was performed.
+- Native fixtures execute production bodies with documented engine I/O shims; they do not recreate full scene geometry.
+- The two fresh full fills validate these configurations and seeds under the corrected AP rules, not every possible physical route or seed.
+- Old item/server placements are unchanged by a client update; this uploaded seed must be regenerated.
+- Historical 1.8.9 validation is retained as provenance and is distinct from current 1.8.10 evidence.

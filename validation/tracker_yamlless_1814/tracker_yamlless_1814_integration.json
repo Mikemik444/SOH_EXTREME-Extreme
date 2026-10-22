@@ -1,0 +1,715 @@
+{
+  "ap_dependency_provenance": {
+    "files": [
+      {
+        "bytes": 0,
+        "path": "apmw/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "url": "https://raw.githubusercontent.com/ArchipelagoMW/Archipelago/0.6.8/apmw/__init__.py"
+      },
+      {
+        "bytes": 0,
+        "path": "apmw/multiserver/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "url": "https://raw.githubusercontent.com/ArchipelagoMW/Archipelago/0.6.8/apmw/multiserver/__init__.py"
+      },
+      {
+        "bytes": 4221,
+        "path": "apmw/multiserver/gamespackagecache.py",
+        "sha256": "0a829ca789a209e757b057a1d2bca217c5b3ab990dc65e29ba7ec6b9d8209f09",
+        "url": "https://raw.githubusercontent.com/ArchipelagoMW/Archipelago/0.6.8/apmw/multiserver/gamespackagecache.py"
+      }
+    ],
+    "ref": "0.6.8",
+    "repository": "https://github.com/ArchipelagoMW/Archipelago"
+  },
+  "ap_runtime_hashes": {
+    "BaseClasses.py": "bdbbcfe5fd50fa0ab95f676a68a65944851b599643ddc5f870d4bb9c0d36b545",
+    "CommonClient.py": "5a3dbdac313a006a22a98e01d832d549ea874ca24e431c7285b28f6e9a1ffbc0",
+    "Generate.py": "ac70e743970314dfb68df421640d07620db2067f6e6338616ca297803d6e8ce7",
+    "MultiServer.py": "e157abab8a56351d58f1cf5a84c6c2a9144d295956d6be08cbd5811c7a2932de",
+    "NetUtils.py": "0c4acb2e0a434bcd91ed03d6e9c66f5d119597b3feb300620241f206bd7f0b06",
+    "Options.py": "12bd29c84c3c92a353ef252086ab80bd5cf66fc83dc3e371e4c687a0f052f101",
+    "Utils.py": "25ed8f2b79f8e26c79b3ec8dae733ef6d4fdaafc29d4d2d75dc76b67f376d7ff",
+    "settings.py": "2713575becebd384e00ccf89f0ccfba062df56e59914ce083ff95dbcf230c371",
+    "test/general/__init__.py": "8e906eff20c1f42ff9c7a4b53c5adfc7a80e8ca49511fa312dd850e080e5262b",
+    "worlds/AutoWorld.py": "e721dfefd6bfe012ea8d9d6757bcbbc2721dc0afe4d72d60394e5cd4dc92215d"
+  },
+  "ap_runtime_version": "0.6.8",
+  "assertions": 366,
+  "baseline_archive_sha256": "818915c0115c6db6ebcbee984caec953ef374501b6682b7ac0acb879cd264995",
+  "baseline_tracker_client_sha256": "11d8ad14b9e22f9b3ae7b4703c6882d3927382a685e8ef78af0625a98bff47c4",
+  "boundaries": [
+    "Real upstream TrackerGameContext and TrackerCore including real TMain and updateTracker; no engine stub.",
+    "Real AP CommonClient.process_server_cmd with Connected slot-data encode/decode and ReceivedItems packets.",
+    "Production world generates current slot snapshots through generate_basic and fill_slot_data; no full item fill or beatability claim.",
+    "Public/managed paths prove zero Players/weights/meta settings reads, file reads or scans; direct UT TMain builds their graph.",
+    "Generic upstream UT retains its own eager startup scan but reconstructs SOH on Connected with an empty existing Players folder and no personal YAML.",
+    "GUI never started; socket sends and persistent UI storage are isolated. No live server or Windows executable is run.",
+    "Controlled ER fixture uses an explicitly valid nonvanilla warp-song map; no historical unsafe maps or broad random ER generation."
+  ],
+  "cases": [
+    {
+      "context_exception": "AttributeError: 'TrackerCore' object has no attribute 'use_split'",
+      "generator_error": "FileNotFoundError: /tmp/soh-ut-baseline-nj89ynzn/Players does not exist, but TrackerSettings.player_files_path is required",
+      "name": "baseline_1.8.13_missing",
+      "status": "expected_failure_reproduced",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 1,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "context_exception": null,
+      "generator_error": "ValueError: No individual player files found and number of players is 0. Provide individual player files or specify the number of players via host.yaml or --multi.",
+      "name": "baseline_1.8.13_empty",
+      "status": "expected_failure_reproduced",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 1,
+        "local_file_reads": [],
+        "local_scans": [
+          "/tmp/soh-ut-baseline-3c99kzmx/Players"
+        ],
+        "mystery_argparse": 1,
+        "player_path_reads": 2,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 2
+      }
+    },
+    {
+      "active_checks": 1498,
+      "active_digest": "df3c793e58285e63a3ca80319a7b62a25edd3fd86a8a003324f00972c63b8ca6",
+      "entrance_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "in_logic_checks": 76,
+      "name": "standalone_missing_Players_poison_weights_meta",
+      "option_digest": "b2217dfd513d01984a85adbb9c580dbb02605accc29049b28e9bc0cf92f92037",
+      "options": 230,
+      "scope": "Connected -> real UT.TMain -> real UT.updateTracker",
+      "shop_prices": 68,
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [
+          0.019,
+          0.01
+        ],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 1,
+        "tmain_games": [
+          {
+            "1": "SOH-EXTREME"
+          }
+        ],
+        "tmain_seconds": [
+          8.572
+        ],
+        "weights_meta_setting_reads": 0
+      },
+      "trials": [
+        "Fire Trial",
+        "Light Trial",
+        "Shadow Trial"
+      ]
+    },
+    {
+      "name": "standalone_empty_Players_poison_weights_meta",
+      "scope": "preconnection startup and refresh only",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "name": "standalone_invalid_Players_poison_weights_meta",
+      "scope": "preconnection startup and refresh only",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "name": "standalone_unrelated_Players_poison_weights_meta",
+      "scope": "preconnection startup and refresh only",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "name": "standalone_wrong_Players_poison_weights_meta",
+      "scope": "preconnection startup and refresh only",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "name": "managed_missing_Players_poison_weights_meta",
+      "scope": "preconnection startup and refresh only",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "name": "managed_empty_Players_poison_weights_meta",
+      "scope": "preconnection startup and refresh only",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "name": "managed_invalid_Players_poison_weights_meta",
+      "scope": "preconnection startup and refresh only",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "name": "managed_unrelated_Players_poison_weights_meta",
+      "scope": "preconnection startup and refresh only",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 0,
+        "tmain_games": [],
+        "tmain_seconds": [],
+        "weights_meta_setting_reads": 0
+      }
+    },
+    {
+      "active_checks": 1498,
+      "active_digest": "df3c793e58285e63a3ca80319a7b62a25edd3fd86a8a003324f00972c63b8ca6",
+      "entrance_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "in_logic_checks": 76,
+      "name": "managed_wrong_Players_poison_weights_meta",
+      "option_digest": "b2217dfd513d01984a85adbb9c580dbb02605accc29049b28e9bc0cf92f92037",
+      "options": 230,
+      "scope": "Connected -> real UT.TMain -> real UT.updateTracker",
+      "shop_prices": 68,
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [
+          0.006,
+          0.006
+        ],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 1,
+        "tmain_games": [
+          {
+            "1": "SOH-EXTREME"
+          }
+        ],
+        "tmain_seconds": [
+          7.853
+        ],
+        "weights_meta_setting_reads": 0
+      },
+      "trials": [
+        "Fire Trial",
+        "Light Trial",
+        "Shadow Trial"
+      ]
+    },
+    {
+      "active_checks": 1498,
+      "active_digest": "df3c793e58285e63a3ca80319a7b62a25edd3fd86a8a003324f00972c63b8ca6",
+      "entrance_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "in_logic_checks": 76,
+      "name": "generic_upstream_UT_empty_Players_Connected",
+      "option_digest": "b2217dfd513d01984a85adbb9c580dbb02605accc29049b28e9bc0cf92f92037",
+      "options": 230,
+      "shop_prices": 68,
+      "startup_error_retained_upstream": "ValueError: No individual player files found and number of players is 0. Provide individual player files or specify the number of players via host.yaml or --multi.",
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [
+          0.016,
+          0.011
+        ],
+        "gmain": 2,
+        "local_file_reads": [],
+        "local_scans": [
+          "/tmp/soh-ut-stock-yd030iuo/Players"
+        ],
+        "mystery_argparse": 2,
+        "player_path_reads": 4,
+        "tmain": 1,
+        "tmain_games": [
+          {
+            "1": "SOH-EXTREME"
+          }
+        ],
+        "tmain_seconds": [
+          8.365
+        ],
+        "weights_meta_setting_reads": 4
+      },
+      "trials": [
+        "Fire Trial",
+        "Light Trial",
+        "Shadow Trial"
+      ]
+    },
+    {
+      "active_checks": 1498,
+      "active_digest": "df3c793e58285e63a3ca80319a7b62a25edd3fd86a8a003324f00972c63b8ca6",
+      "entrance_digest": "45d98e68b33d1d6541a02478a61a3925bf255dc44b74776c4815e24168899b8f",
+      "fixture_scope": "Current real seed slot plus controlled valid warp-song map; not a new ER fill",
+      "in_logic_checks": 76,
+      "name": "controlled_valid_nonvanilla_entrance_map",
+      "option_digest": "5b38cabb161b337dac3615d7d93e02995a78c2ba68bb47ba853b8c602651671f",
+      "options": 230,
+      "shop_prices": 68,
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [
+          0.013,
+          0.011
+        ],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 1,
+        "tmain_games": [
+          {
+            "1": "SOH-EXTREME"
+          }
+        ],
+        "tmain_seconds": [
+          9.515
+        ],
+        "weights_meta_setting_reads": 0
+      },
+      "trials": [
+        "Fire Trial",
+        "Light Trial",
+        "Shadow Trial"
+      ]
+    },
+    {
+      "active_checks": 1498,
+      "active_digest": "df3c793e58285e63a3ca80319a7b62a25edd3fd86a8a003324f00972c63b8ca6",
+      "entrance_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "in_logic_checks": 98,
+      "name": "network_reset_reconnect_received_items",
+      "option_digest": "f490a015d7f03261f49baea43e19db7868e328981fb7f1e8b5c4d8ecb44823bf",
+      "options": 230,
+      "shop_prices": 68,
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [
+          0.022,
+          0.027,
+          0.013,
+          0.008,
+          0.009
+        ],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 2,
+        "tmain_games": [
+          {
+            "1": "SOH-EXTREME"
+          },
+          {
+            "1": "SOH-EXTREME"
+          }
+        ],
+        "tmain_seconds": [
+          11.143,
+          11.447
+        ],
+        "weights_meta_setting_reads": 0
+      },
+      "trials": [
+        "Fire Trial",
+        "Forest Trial"
+      ]
+    },
+    {
+      "name": "invalid_snapshot_missing_option",
+      "rejection": "ValueError: The connected seed is missing resolved options needed by this APWorld: shuffle_climb. Use a matching SOH-EXTREME APWorld or regenerate the room with a complete slot snapshot.",
+      "scope": "One prior valid graph, followed by three rejected snapshots",
+      "status": "passed"
+    },
+    {
+      "name": "invalid_snapshot_unresolved_random",
+      "rejection": "ValueError: The connected seed has an unresolved random value for 'starting_age'. Tracker needs the resolved server option and cannot roll it again.",
+      "scope": "One prior valid graph, followed by three rejected snapshots",
+      "status": "passed"
+    },
+    {
+      "name": "invalid_snapshot_wrong_active_manifest",
+      "rejection": "ValueError: The connected seed's location manifest does not match the regenerated graph (1 missing, 0 unexpected). Use the SOH-EXTREME APWorld matching this room.",
+      "scope": "One prior valid graph, followed by three rejected snapshots",
+      "status": "passed"
+    },
+    {
+      "active_checks": 1498,
+      "active_digest": "df3c793e58285e63a3ca80319a7b62a25edd3fd86a8a003324f00972c63b8ca6",
+      "entrance_digest": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "in_logic_checks": 76,
+      "mirror_rows": 76,
+      "name": "managed_check_finder_real_UT_mirror",
+      "option_digest": "b2217dfd513d01984a85adbb9c580dbb02605accc29049b28e9bc0cf92f92037",
+      "options": 230,
+      "shop_prices": 68,
+      "status": "passed",
+      "trace": {
+        "evaluation_seconds": [
+          0.017,
+          0.025,
+          0.012
+        ],
+        "gmain": 0,
+        "local_file_reads": [],
+        "local_scans": [],
+        "mystery_argparse": 0,
+        "player_path_reads": 0,
+        "tmain": 1,
+        "tmain_games": [
+          {
+            "1": "SOH-EXTREME"
+          }
+        ],
+        "tmain_seconds": [
+          9.461
+        ],
+        "weights_meta_setting_reads": 0
+      },
+      "trials": [
+        "Fire Trial",
+        "Light Trial",
+        "Shadow Trial"
+      ]
+    },
+    {
+      "name": "public_and_managed_launcher_dispatch",
+      "status": "passed"
+    }
+  ],
+  "duration_seconds": 118.442,
+  "evidence": {
+    "tracker_yamlless_1814_YamlLessAdult_slot.json": {
+      "path": "/workspace/scratch/8fddab5b8169/tests/tracker_yamlless_1814_YamlLessAdult_slot.json",
+      "sha256": "ea4bb6fa4fb5355a0ce598d3b2a86ca8c0feadf56bf3f8fa11ac73ba83201bf4"
+    },
+    "tracker_yamlless_1814_YamlLessChild_slot.json": {
+      "path": "/workspace/scratch/8fddab5b8169/tests/tracker_yamlless_1814_YamlLessChild_slot.json",
+      "sha256": "44dd3151c1f8d8ef673582deedd7d4068d34346c5b1e1791e9e3ca741de87ade"
+    },
+    "tracker_yamlless_1814_controlled_er_slot.json": {
+      "path": "/workspace/scratch/8fddab5b8169/tests/tracker_yamlless_1814_controlled_er_slot.json",
+      "sha256": "47991f8e5c50adab3f64bb4568c0bbd433e600573392bcf0ed4455ad03fa5b78"
+    }
+  },
+  "failures": [],
+  "invalid_snapshot_group_trace": {
+    "evaluation_seconds": [
+      0.008
+    ],
+    "gmain": 0,
+    "local_file_reads": [],
+    "local_scans": [],
+    "mystery_argparse": 0,
+    "player_path_reads": 0,
+    "tmain": 2,
+    "tmain_games": [
+      {
+        "1": "SOH-EXTREME"
+      },
+      {
+        "1": "SOH-EXTREME"
+      }
+    ],
+    "tmain_seconds": [
+      11.203,
+      10.161
+    ],
+    "weights_meta_setting_reads": 0
+  },
+  "seed_options": {
+    "forest_temple_key_ring": 1,
+    "frozen_starting_time": "night",
+    "ganons_trials": 1,
+    "ganons_trials_count": 3,
+    "key_rings": 2,
+    "medallion_locked_trials": 1,
+    "scene_transition_checks": 1,
+    "shadow_temple_key_ring": 1,
+    "shuffle_climb": 1,
+    "shuffle_crate_soul": 1,
+    "shuffle_crawl": 1,
+    "shuffle_enemy_soul": 1,
+    "shuffle_flow_of_time": 1,
+    "shuffle_grab": 1,
+    "shuffle_npc_soul": 1,
+    "shuffle_open_chest": 1,
+    "shuffle_pot_soul": 1,
+    "shuffle_rock_boulder_soul": 1,
+    "shuffle_roll": 1,
+    "shuffle_shops": 1,
+    "shuffle_shops_item_amount": 3,
+    "shuffle_shops_maximum_price": 113,
+    "shuffle_shops_minimum_price": 47,
+    "shuffle_speak": 1,
+    "shuffle_swim": 1,
+    "song_note_shuffle": 1,
+    "song_note_songs": [
+      "eponas_song",
+      "prelude_of_light"
+    ],
+    "start_inventory": {
+      "Epona's Song": 1,
+      "Progressive Bomb Bag": 1,
+      "Progressive Scale": 1
+    },
+    "start_inventory_from_pool": {
+      "Progressive Wallet": 1
+    },
+    "starting_age": "adult"
+  },
+  "snapshot_digests": {
+    "adult": "2573adf481a1c7bb707fee2177b24f72bc431a95537975067cb3bef88244e888",
+    "child": "054d65b3cdaaf8336982c0bbeec288373c5006652eed2f25dbbb516f289a60fd",
+    "controlled_er": "ff41c5296b8dcbca8342d2f31cf2ba198bc25fe5a28726e789d68d4d83d4fe03"
+  },
+  "source_hashes": {
+    "archipelago/soh_extreme/AmmoRefillRules.py": "21f12128e66daa3dfeb2b4261ef75077737c139bf22a6f08d74d577733a829c8",
+    "archipelago/soh_extreme/AmmoRefillSources.json": "d1091410ae9a80d156005f59f667334dcacf91cab4110620f3c01e5b11cb69b0",
+    "archipelago/soh_extreme/CheckDescriptions.json": "d168cf159d3e1335cc892d41f11152a271b47519acb8342ef7962f32dfc953c1",
+    "archipelago/soh_extreme/CheckDescriptions.py": "e985562d01393f3207c15e8ef41899b0539015ceebcd701358267d32dcd38b20",
+    "archipelago/soh_extreme/DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
+    "archipelago/soh_extreme/DungeonExternalEdges.json": "21a06af9683c1ac8667d5fb4af62872ffb7157696ebeb33246d6c499539287f7",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "a3f55e52dc3c79ca717355328d7624fcc9f831c07eee620a9a10c68f24cbce31",
+    "archipelago/soh_extreme/EnemyDropLocations.py": "911a56aafdfea550a373a86c291507d559bd3c810b194da406d558974d993852",
+    "archipelago/soh_extreme/EnemyDropRules.py": "6e6e68a971475384ebaf018eeecd14844074571143393fd46a75ec51fc773c0d",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "00f8467cc25b8ee35ca5b2a70c44cb01e30e54c29604aa65ff2e2339180384d7",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "c1ada3a8ee0c69e2ad7a77569bf4bea9264965642dabfbf6bcacb2d48ff68c85",
+    "archipelago/soh_extreme/EnemyRoomMap.json": "aecf6f9e541eb568b4ecf29010a0e5b48e629bac19335a9f2e7701fcb7b25acc",
+    "archipelago/soh_extreme/EntranceCatalog.json": "f5ba502aef5f06719b2bf39447f287743ae656ba0b884d698d8e5cc88c2d83ae",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "7467e5e665764b4482f75bb0f2b43aca92fa643065bac8f0b3277ca8d7a789cc",
+    "archipelago/soh_extreme/EntranceOptions.py": "5d8a44a49f519b693ecaf3949680c4a99192651575ecf914eeda6b5435144cfa",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "62183bea6fd56506bcb699db05d2a2572fd01d3f8bb5449d035b83a913fe9025",
+    "archipelago/soh_extreme/EntranceSafety.py": "2f8812b1ad2ae1b070e70e55e146e7e7fe188c92d6a883e41d807edea54f5608",
+    "archipelago/soh_extreme/ForkLocations.py": "fb80320ed2c384a4d83f9aa956bebc4acb77591a9676a1ff94831f4ff80dd20f",
+    "archipelago/soh_extreme/FrontierFill.py": "bee9dd5e923412bc7138d7e03a3f1f05a37b136b158c389b11b9e951ebf8ca30",
+    "archipelago/soh_extreme/HintAreas.py": "5652233d3cadf3549a01d05598b98317d3501045012128869b6ef96ef8955925",
+    "archipelago/soh_extreme/HintBridge.py": "e00318acd27bb0d1662caa02ef6acbdc248bcc84c30687f4d6129620feca71e1",
+    "archipelago/soh_extreme/LogicAudit.py": "fbadd8bf7e347c20a37bc2a477eca8875194a692788c0165ec89f09f496ba950",
+    "archipelago/soh_extreme/NativeAbilityAudit.py": "da749431e951bea9e525120f4dcaf137d1d348f1531ae324ae4df3e72074ca1b",
+    "archipelago/soh_extreme/NativeLocationRequirements.py": "beb41c9ff4dd09a442be382a6283792e33e2d5fcc42089359013be653d6426d7",
+    "archipelago/soh_extreme/NativeLogic.py": "41dbbed6f032fa759c6af4f15bcd58a4614dde71ebc68989bc538008a3802350",
+    "archipelago/soh_extreme/NativeLogicAlternatives.py": "4fd0040ba6d71b67ddecf0475f2881e388be510b124dad0a79a78d0447eaa035",
+    "archipelago/soh_extreme/NativeRegionMap.py": "23bce34860de5c8f3832804a9ddb70856c962abdb3dc2a612f124bfc60f84290",
+    "archipelago/soh_extreme/NativeSettings.py": "8f9e8c10c20d66b7c7e5bfd8ed57e0b7a86a6f48206a1b8cb2a3c67bb1ee20e8",
+    "archipelago/soh_extreme/NpcSpeech.py": "f7b2ae3be88e3faa9155020be66dff987b5ea27f6aba84ceaa2a297508c5104a",
+    "archipelago/soh_extreme/NpcSpeechCatalog.json": "19804e7b6d2b00f7c01f0364e89c1c93753c8c7da02bb9dbb5454fc58b8898c7",
+    "archipelago/soh_extreme/Options.py": "23922e35d731ae63fa40c1b6b15b17c2f9f3ec542b4de4c5baf3626d1669a7de",
+    "archipelago/soh_extreme/PhysicalChestTypes.py": "92d273a76e56e6d21244b77da0311fa865f87291110b8bed7ccf56b64bde7ee5",
+    "archipelago/soh_extreme/PhysicalInteractionRules.py": "c8cb523c1c77dd4d7c7877667e1a2927abae61ebbe34722641b02e68b59128cc",
+    "archipelago/soh_extreme/SceneTransitionCatalog.json": "567e5873ec61236274b290b138379a58aecbbf3f9ddfbd0ec3a2ee51b92cab13",
+    "archipelago/soh_extreme/SceneTransitions.py": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "archipelago/soh_extreme/SettingsParityAudit.py": "811b15635552eed14a574754e92d9ce38b04fabace556894e9df5d96007a9dbe",
+    "archipelago/soh_extreme/SilverRoomLogic.py": "9ec8e5417fdb2b2bb97d1dc46fefe82e1ae4f9aff631b54751aa5be37026fb58",
+    "archipelago/soh_extreme/SilverRoomRoutes.json": "1206f478ad1feebf038eb8cb23f86d9930eb636d811c5dfc0f39617c59202fd2",
+    "archipelago/soh_extreme/SongNotes.py": "533836d57a4c241f5217d8245aa81437db515bf85dff1e94f0cafcb1fe0daac5",
+    "archipelago/soh_extreme/SpeechLocations.py": "5d5ebe4e6eca5d4a524ba592e3e39b5901005392d94a0b17a22d8711f04a6647",
+    "archipelago/soh_extreme/TrackerBootstrap.py": "49db125d47aa12ad0ad1ebcfcca47a225384d1d22f71f5f622f2a3cb10b4f892",
+    "archipelago/soh_extreme/TrackerClient.py": "fa39c0f10dd12214bcc995ba68178227fc00a3aa474b2a570615d07bb932be77",
+    "archipelago/soh_extreme/TrackerMirror.py": "c6ee2460bb63c43c074bd20e133170184403efb4bd80a3009ae241a1e6c5965f",
+    "archipelago/soh_extreme/TrackerWorker.py": "d3c0a2722a75098c1b4f9660638070ee564862b91d4b5e754b5c5981bbc3386e",
+    "archipelago/soh_extreme/__init__.py": "d3861b9fcfcf9e628d39d59dc05eda0ce17178f655cf20913b656419438f4e9a",
+    "archipelago/soh_extreme/_vendor_oot_soh/Client.py": "134e4135bac0c8f475bd27da738c4b5776c347ca7b450a9cd8833f177f0b87eb",
+    "archipelago/soh_extreme/_vendor_oot_soh/DungeonRewardShuffle.py": "7d77f1309c0cc7ab25c2fa74d3000686eef32b5c38ed79602a1bb295f258243c",
+    "archipelago/soh_extreme/_vendor_oot_soh/Enums.py": "4266288357f5a8441863bbd29af344233baa8e1765a1af29cbec4e1d2bb9af7f",
+    "archipelago/soh_extreme/_vendor_oot_soh/Hints.py": "5f82f782215fe889d5d720a39621f4113abce83604ed84815f3485e628d33104",
+    "archipelago/soh_extreme/_vendor_oot_soh/ItemPool.py": "914ae7ce542647990b23ae33bff9df528a80fed23441093920ea1a941d2b8d0d",
+    "archipelago/soh_extreme/_vendor_oot_soh/Items.py": "c0a21a035c22f32d2381c3e662f0705a7ba89bb86f8823fa6840653c0c2e09a7",
+    "archipelago/soh_extreme/_vendor_oot_soh/KeyShuffle.py": "93bb824e131c59a4a285fe9bc9cabca7ac59dfe6a2ebe5614a8da4347feeed90",
+    "archipelago/soh_extreme/_vendor_oot_soh/Locations.py": "68b5fe7760d9eace3760504ff9c0e51c91506dad1d93e002ef42c39f1a54d29d",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "213389e2fdce43180ed44e9a4fc56b80150abf4c7790119220ead8d0ec43b6ef",
+    "archipelago/soh_extreme/_vendor_oot_soh/Options.py": "a4299a203c588d9f946f80399fba7b47c043a3488f8e094432469b7fa31520a9",
+    "archipelago/soh_extreme/_vendor_oot_soh/Presets.py": "b5c683f312956205e1a6dad109e80749b83e182e652282ef29cc976f2cd5966b",
+    "archipelago/soh_extreme/_vendor_oot_soh/RegionAgeAccess.py": "b7625d38befa593efd36fb1c6d721acac5e3a60331118742c7e19b5d3cb44db3",
+    "archipelago/soh_extreme/_vendor_oot_soh/Regions.py": "a1514211106f2ed71ddde422b2ec13689a2eba74edfcbf2966046e9719bbcda9",
+    "archipelago/soh_extreme/_vendor_oot_soh/ShopItems.py": "9f76a24ae5e27597d5c358a92b92b404d81292f68f8e5b396e1527906b850377",
+    "archipelago/soh_extreme/_vendor_oot_soh/SongShuffle.py": "f313382c9a0e3378db31359203e63fccdd1c1277852fd1b5d860e88c385138cf",
+    "archipelago/soh_extreme/_vendor_oot_soh/UniversalTracker.py": "9fddb5ce4e9277240626ab2acdf59fdf18eb9d4867869c7f8383ae982661b082",
+    "archipelago/soh_extreme/_vendor_oot_soh/__init__.py": "a2d4d9030a1d8cff9445f6e16d40d3f284a20607e574771212d0807281d40947",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/bottom_of_the_well.py": "ad3d56f18ba695a564f9e2f750dd03bceb85be1b7f1b0caafa11715a523d62c3",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/deku_tree.py": "144ecaac11047c6d602052998ebe77637ad10cf52751a061d230355de0ace0cf",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py": "3f557d63b5ec2531ff1223ec5446b8f3ec3c453d5572f17130d050b1dc99c45c",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/fire_temple.py": "faf0b47a2e4fce6d7550c2d9966727834c4d68c917e3f0c8535f5a0fcb3084a4",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/forest_temple.py": "a8ee193395cb795ffe7ea40cd0b6f39feeeee964748b9b3e61e0b36b36c9a015",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/ganons_castle.py": "80adf5df9fe738bf50bfc9ea9d18aa012ece1d445a31fe4252d12c0ae49df220",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/gerudo_training_ground.py": "771f8c445d8ea35a3d7a3957989b820f29c5524a605db62779c8062fb3e20083",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/ice_cavern.py": "70fd538d50b8995addbcfa42a75a0455f6334af2eb773b91efee862516948ea4",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/jabujabus_belly.py": "3347eb50d9c25a702c9012b8e6d9d437db36bd31f99d5c962999a50919bc4ca6",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/shadow_temple.py": "77e8a27ea2ecfe67ac852ecbc005e60aff10addf08a1faa40dee26f89d444b5c",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py": "b51f2cc06d0dc628814465f1010f86c013c197a8d93ed1031642ac49f97db673",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/water_temple.py": "7cd3c3d576ac90610dcd95b71481c3cf6fe9a710b4d06aa801eec1d044166cf7",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py": "ebaad44df63e0d8f61652fce775956b70398f407f5872d91c3b2b35ca3d53af7",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_crater.py": "6517e133569ae7e1262675001fcca84f1f07002590be0a27d6263a288debda87",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_trail.py": "e2653b77f918c001b54e9dc46a51de0bb55bd0775467530b7e24c87c5a5e3b80",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/desert_colossus.py": "963d9deaf25ef704e4eb9700c4b59276f23942babbf6b24d92a0842f8b44e8b2",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py": "34087bd6c1ed254455edd9e169dda616ce8f76249646621a10d8fe5d29570435",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_valley.py": "316d9fa802bbe6561dbdb97f15e5fbd16f1e1232021c8b3ce5056a8438eec357",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/goron_city.py": "70a37887e28d0db8a212f44870dbfed55db66db5dea529fbfef661b7485f741d",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/graveyard.py": "8c0c1afe324f5356d9fd5149ddd54d845fe24ca79dec0f0399e7ab66e58c364d",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py": "4b44180e2d905d001256adb08eb2308785ec6a71e4bba9969f8e4f8f81d008cd",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py": "60dd6c66fd89f8e4214d12e29ed08f38b86b004a25cae360393fcaad2d1a9f29",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py": "aba25472a8b89bf5d5ecc692cb7a4ebe3eece3da81af1ddf5f1de7902a83dc97",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py": "d27d86750b4c20545d673e1c0d93ae3079beb87acab98b4c2b0f2f0d90045c90",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lake_hylia.py": "d77816ce5b36d62ab402ddb28290a061947e02ef1b19723bc6d69888e948dfa2",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lon_lon_ranch.py": "843a4a344002ef2c264a23e5354d82722dbf78e7c49b4b50a8dfaf355b92414b",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py": "eb3a6d78b8ddbe16ec545f6b66f0683b686571fffd193d6b7c6721e0057c67fb",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/market.py": "98d0cdf38c0ad87adfbb364d3da6b9dd7c02a0a30a3af90901a5401d2ef9960c",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/sacred_forest_meadow.py": "bfaf8a03ec0fa9eb07425772d9623f65e7c8a06a17ebce317fb02a0028b376bd",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/temple_of_time.py": "23f5cc8f544ffb3426099c7c00b5aaa7cad2894bc5ca20d4fd98070a87a6a9ca",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/thieves_hideout.py": "8416e4feb9c46697ccd9b6428983795141443aa209b627b98dbb135d65bcb378",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py": "5ad5ad681d3c3c4ff3be94ac50d387b3c213b9b8edb851c55d6c1dc9fe89e5ef",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_fountain.py": "4ed627da7075d85233c646d8697e28d210308a23f8f8520a67bacaed3b285a27",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_river.py": "f608f9d7ace80850d897df278d47e1ca25dda0660c1ee34594c65b37843ca233",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/root.py": "389a06b853af8b7a4e490ec94e9f261df14c3551a7fc841cdba38b2fd3a2f328",
+    "archipelago/soh_extreme/archipelago.json": "a602ccc86d4712253b12fed9d11b403c0d481dc0295a41e2c72c9bc013678f4f",
+    "archipelago/soh_extreme/shared_logic.py": "45feb3aa866222007de6fc8e112912134fe1b089878a8dce58e7d1f8a45a9a82"
+  },
+  "status": "passed",
+  "test_hashes": {
+    "tools/tests/test_tracker_yamlless.py": "b4a94ccf6e0ee90551f79395fc57249692cf27fa4a5e4823fcd6ad3830c27319"
+  },
+  "upstream_hashes": {
+    "TrackerClient.py": "bd781024429ab58357dfbe595e02abebffbe7e25522c64fc9b3b4828d5d53ec4",
+    "TrackerCore.py": "9d6cb8ffc73d972281a7d8ff23a7571e46a0f8a39d874989901820fa9d60851d",
+    "UPSTREAM.json": "5080d1324614375a84eff72aa80d74ce880f9604652f7106798aed838ecac70e",
+    "__init__.py": "fc86b699247d26e2fab6bd7085487ca44160c930203150cc87f48e87c15021db",
+    "docs/re-gen-passthrough.md": "e14e9b983e96bb3178bdcde2d090d31706dd74dda1c5046ef456c9b551856d02"
+  },
+  "upstream_provenance": {
+    "branch": "tracker",
+    "commit": "32f0d6d63d3e6a61687a88dbe5e554c00ab589d9",
+    "commit_time": "2026-10-11T04:45:18Z",
+    "files": {
+      "TrackerClient.py": {
+        "sha256": "bd781024429ab58357dfbe595e02abebffbe7e25522c64fc9b3b4828d5d53ec4",
+        "size_bytes": 116506,
+        "url": "https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/worlds/tracker/TrackerClient.py"
+      },
+      "TrackerCore.py": {
+        "sha256": "9d6cb8ffc73d972281a7d8ff23a7571e46a0f8a39d874989901820fa9d60851d",
+        "size_bytes": 33582,
+        "url": "https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/worlds/tracker/TrackerCore.py"
+      },
+      "__init__.py": {
+        "sha256": "fc86b699247d26e2fab6bd7085487ca44160c930203150cc87f48e87c15021db",
+        "size_bytes": 13163,
+        "url": "https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/worlds/tracker/__init__.py"
+      },
+      "docs/re-gen-passthrough.md": {
+        "sha256": "e14e9b983e96bb3178bdcde2d090d31706dd74dda1c5046ef456c9b551856d02",
+        "size_bytes": 4265,
+        "url": "https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/worlds/tracker/docs/re-gen-passthrough.md"
+      }
+    },
+    "repository": "https://github.com/FarisTheAncient/Archipelago"
+  },
+  "ut_version": "v0.3.5"
+}

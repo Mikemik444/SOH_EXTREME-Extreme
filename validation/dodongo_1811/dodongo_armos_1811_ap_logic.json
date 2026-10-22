@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "test_methods": 8,
+  "behavior_decisions": 230,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "archipelago_version": "0.6.8",
+  "world_version": "1.8.11",
+  "source_unchanged_during_run": true,
+  "source_sha256": {
+    "archipelago/soh_extreme/__init__.py": "3710795c8155f3d858a909d8c8859e8a5bb4c05f32699cfa1746994df42c851c",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "9c70d90e52063148fcafd22bca3f5594776b06ffeacbc886bfcbf3196a431c37",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3",
+    "archipelago/soh_extreme/SceneTransitions.py": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "archipelago/soh_extreme/DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "c1ada3a8ee0c69e2ad7a77569bf4bea9264965642dabfbf6bcacb2d48ff68c85",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "00f8467cc25b8ee35ca5b2a70c44cb01e30e54c29604aa65ff2e2339180384d7",
+    "archipelago/soh_extreme/NativeLogic.py": "41dbbed6f032fa759c6af4f15bcd58a4614dde71ebc68989bc538008a3802350",
+    "archipelago/soh_extreme/NativeLogicAlternatives.py": "4fd0040ba6d71b67ddecf0475f2881e388be510b124dad0a79a78d0447eaa035",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "2ebd7532c3ea6e749830ea6c6eb2c225c6edd3d03ae9018df472fbff23180ec9",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py": "3f557d63b5ec2531ff1223ec5446b8f3ec3c453d5572f17130d050b1dc99c45c",
+    "soh/Enhancements/randomizer/location_access/dungeons/dodongos_cavern.cpp": "c579335626e53799cabf37d149dd961f77ab1bbfb486c284553ef5e4ea5a54df",
+    "soh/Enhancements/randomizer/logic.cpp": "85011ebbbc2f1ca8da0cb0e3a1e53a84fe53976f5ef6756bfe745894d9a0aea6",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "db261c49d61e58216611dde7e84ce9daeee9797aa08ca554eef41960194689bd",
+    "src/code/z_actor.c": "0a89295fddefb6c8b01de6e76acabcec144fba7954007e42a89c1bdd4d5bfb22",
+    "src/overlays/actors/ovl_Door_Shutter/z_door_shutter.c": "bfe80a290982db02459b5952e1a57ce4242e45aec54e766884ba04e5bbaab970",
+    "src/overlays/actors/ovl_En_Am/z_en_am.c": "1c19f1a4d8219b4b8ce0b1c926e20b7bb312a672cf3c16ca27bf97e5a606ae65",
+    "src/overlays/actors/ovl_player_actor/z_player.c": "bedcd6d3cbef6cd3d3f3d286ca7f491d7327e110110b67daf3ce4fa230c803ee"
+  },
+  "test_sha256": {
+    "tools/tests/test_dodongo_armos_logic.py": "db1ce68369096667b50c9579e2f9f89a2e675f540d03b3b15b1625f6a6369449",
+    "tools/tests/test_entrance_blockers.py": "582c810a461a7412f46a82855c22b13fd1d85ef223c2169efb8a6693cc7b57fb",
+    "tools/tests/test_water_arrival_logic.py": "12faefd44ce35675d37bb3583b89158f17fe22669443929656fd48d36c4ee380"
+  },
+  "input_evidence_path": "/workspace/scratch/8fddab5b8169/tests/uploaded_seed_1810_dc_exact_metadata.json",
+  "input_evidence_sha256": "6734686cd5a107c303c902c5ecb9808dbf7f60c17988d1de019168c3d1525435",
+  "elapsed_seconds": 27.932,
+  "facts": {
+    "exact_saved_map": {
+      "connections": 719,
+      "all_connections_unchanged": true,
+      "uploaded_seed": 91808332430884165053,
+      "verified_placements": 4036,
+      "child_spawn": 8354,
+      "barred_return_source": 8355,
+      "mapped_return_destination": 505,
+      "starting_return_usable": false,
+      "starting_state_viable": false,
+      "movement_control_return_usable": true,
+      "scope": "UT restoration and starting-state/source-rule checks; no new fill or full placement replay"
+    },
+    "physical_switch": {
+      "scene": 1,
+      "room": 5,
+      "switch": 34,
+      "barred_sources": [
+        8355,
+        8357
+      ],
+      "free_inward_sources": [
+        8354,
+        8356
+      ],
+      "temporary_scene_switch": true,
+      "permanent_or_cross_age_event_added": false
+    }
+  },
+  "test_output": "test_an_adult_visit_does_not_latch_the_child_switch (__main__.DodongoArmosTests.test_an_adult_visit_does_not_latch_the_child_switch) ... ok\ntest_both_source_checks_need_the_current_age_switch_action (__main__.DodongoArmosTests.test_both_source_checks_need_the_current_age_switch_action) ... ok\ntest_exact_saved_mapping_restores_and_rejects_this_initial_spawn (__main__.DodongoArmosTests.test_exact_saved_mapping_restores_and_rejects_this_initial_spawn) ... ok\ntest_outside_door_checks_keep_their_physical_source_credit (__main__.DodongoArmosTests.test_outside_door_checks_keep_their_physical_source_credit) ... ok\ntest_remapped_exits_cannot_leave_a_vanilla_bomb_room_bypass (__main__.DodongoArmosTests.test_remapped_exits_cannot_leave_a_vanilla_bomb_room_bypass) ... ok\ntest_source_and_graph_bind_both_switch_barred_sides (__main__.DodongoArmosTests.test_source_and_graph_bind_both_switch_barred_sides) ... ok\ntest_unrelated_combat_and_souls_do_not_move_the_structural_statue (__main__.DodongoArmosTests.test_unrelated_combat_and_souls_do_not_move_the_structural_statue) ... ok\ntest_unshuffled_stock_routes_obey_the_same_switch (__main__.DodongoArmosTests.test_unshuffled_stock_routes_obey_the_same_switch) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 27.908s\n\nOK\n",
+  "limits": [
+    "Actual AP rules with controlled arrivals; no native collision or gameplay simulation.",
+    "Adult, usable Hookshot and explicit native trick alternatives retain the authored path rules.",
+    "Temporary switch state is not granted or converted to a permanent AP event."
+  ]
+}

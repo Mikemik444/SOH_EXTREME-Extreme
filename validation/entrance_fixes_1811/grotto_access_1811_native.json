@@ -1,0 +1,161 @@
+{
+  "status": "passed",
+  "cases": 983,
+  "assertions": 8961,
+  "source_sha256": {
+    "soh/Enhancements/randomizer/logic.cpp": "3888c8be98896be9d77b2923b5d6bf92ee88e6d55e2579422a88767276a4d3a1",
+    "src/overlays/actors/ovl_Door_Ana/z_door_ana.c": "51ea5b366d3e45e72fffa2cda15d0e2bff0492dea6efcf4d27e7c461c82b1f0f",
+    "soh/Enhancements/randomizer/randomizer_grotto.c": "c24197093d1ba4324c518ff919d00e5f04748b51cd7a5951bbe31cc72a7924a3",
+    "soh/Enhancements/randomizer/randomizer_grotto.h": "b049586ec0cc4127d4a26a87a6c30eac97449c84f4c0612b3a4ed28ab91fd56a",
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "db261c49d61e58216611dde7e84ce9daeee9797aa08ca554eef41960194689bd",
+    "src/code/z_collision_check.c": "eae84670ec25d611aa4cb848b3aa4a4e45ac1b54939b8e3789b1ac1e81d1a36c",
+    "src/overlays/actors/ovl_En_Bom/z_en_bom.c": "4281dffa638ce1fe8d88aa314f7c04b67ba67d21444fda325b075fc4fee6e795",
+    "src/overlays/actors/ovl_En_Bom_Chu/z_en_bom_chu.c": "7e7cad91ae9d91bc6a0aabbde025cce78bc5237635a51a6e5daa2871ff41cf8e",
+    "src/overlays/actors/ovl_player_actor/z_player.c": "bedcd6d3cbef6cd3d3f3d286ca7f491d7327e110110b67daf3ce4fa230c803ee",
+    "soh/Enhancements/randomizer/location_access/overworld/hyrule_field.cpp": "a7a873d6327b897d831233879a828550f51a7fc8bc3b9794ba786e9c39a54360",
+    "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp": "58aac6e1ac2448f0aae98af6f1bfb6c0afd583372513ba0bd0650135c89224d2",
+    "soh/Enhancements/randomizer/location_access/overworld/sacred_forest_meadow.cpp": "3a2be8e3c4524c703556f65339a51923b10d16c0e870182846ecaa0043b8e71f",
+    "archipelago/soh_extreme/SceneTransitionCatalog.json": "faff0beed2c86f693c65d44dccd8be4271658c37f70e6655b14ee2c1ca39097d"
+  },
+  "test_sha256": {
+    "tools/tests/test_grotto_access_native.py": "375695ee6ee158fe01fbd6adea30d5eae4d706b90826b6a79c9ccaea62f6d011",
+    "tools/tests/grotto_access_native_tests.cpp.in": "d2fa06afb8385382eed532986b30b9da8bacbfc3a64b6058f355b222694bb069",
+    "tools/tests/grotto_legacy_opening.inc": "b9c298ee2810d8fb6d1c4c9be12ef947c4e4d0bbb00c27e9f5025dcb797275a5",
+    "tools/tests/test_soul_logic_native.py": "c3d6cf972babdd9b1c31b1ae8b93192f3ba8c5b593f2b9f73e0b14e823a4f785"
+  },
+  "source_unchanged_during_tests": true,
+  "captured_functions": [
+    "Logic::CanUse",
+    "Logic::BombchusEnabled",
+    "Logic::BombchuRefill",
+    "Logic::HasExplosives",
+    "Logic::BlastOrSmash",
+    "Logic::CanBreakRocks",
+    "Logic::CanOpenBombGrotto",
+    "DoorAna_SetupAction",
+    "DoorAna_ShovelMissing",
+    "DoorAna_Init",
+    "DoorAna_Destroy",
+    "DoorAna_WaitClosed",
+    "DoorAna_WaitOpen",
+    "DoorAna_GrabPlayer",
+    "DoorAna_Update",
+    "Grotto_ActorRequiresShovel",
+    "MegaHas",
+    "MegaSoul_CanUseRock",
+    "MegaSoul_CanUseCrate",
+    "IsMegaAnimalActor",
+    "IsMegaCrateActor",
+    "IsMegaRockActor",
+    "IsMegaScrubActor",
+    "IsMegaNpcSoulActor",
+    "MegaSoul_IsNpcSoulLocked",
+    "MegaSoul_CanInteractWithActor",
+    "Collider_ResetACBase",
+    "Collider_ResetACInfo",
+    "Collider_ResetCylinderAC",
+    "CollisionCheck_SetAC",
+    "CollisionCheck_NoSharedFlags",
+    "EnBomChu_Explode"
+  ],
+  "captured_function_sha256": {
+    "Logic::CanUse": "a9d736d7cdd6fa09def561b0eb70d1d3dca878bfa0f088d393ce9eb9b300bfe6",
+    "Logic::BombchusEnabled": "27e312d3f5d6fb387220fce15de308a1a6ef45de59886113f3148882650b2468",
+    "Logic::BombchuRefill": "2014a44c51d7ccd57a8760890b9558681d5e8296e996c4b34ca330f489a40610",
+    "Logic::HasExplosives": "ac3bf2d9aa8a63ee809be84fc4622a62473682c43a1a1cf36521a8644d497d64",
+    "Logic::BlastOrSmash": "3065dd92a4bfb7a25920169a4b680742a39e22aadcb1942da88fe80daa9efde9",
+    "Logic::CanBreakRocks": "fa2853d55cbe9d15c9e4c30bbf40e364da6112375acb1bf80968ba8b5c3594b8",
+    "Logic::CanOpenBombGrotto": "a939b32088ccad2ed544a9e66b0f3179b7cdd73685960ffbdf025a9dfd546519",
+    "DoorAna_SetupAction": "ec639ce281f4837886932ac66da4bfedc634f9ec6b288f7230970700eae0fa55",
+    "DoorAna_ShovelMissing": "330521ee3cb5727fb3b27b05ee276c70cef1de9044c5685c89f3b4765d7c9393",
+    "DoorAna_Init": "9a1af55c1dfc82faddc4b6e5feb385117b1778c8da823c8096f7681ccc7f2dff",
+    "DoorAna_Destroy": "6070e4f22bfec0cd44a702c607cfb48d63803bbbc8e83d72646904e39b977edd",
+    "DoorAna_WaitClosed": "ec34ac8ef8771d261a47046afba9b3497741b73afe5cc97f2d325fe93e4bd583",
+    "DoorAna_WaitOpen": "2e4bc2b68905c92ac034421e61cbf50e178b6287bf639f26e3b426cd3ca5b955",
+    "DoorAna_GrabPlayer": "bca98ce12f451f78e9ef4e5c55760072dabe412e841403e63738ad04fe1a1dcd",
+    "DoorAna_Update": "3b21213f8b104ec5efff7c87f3807b941f46fd86eee3f107094e7f0fc64290ad",
+    "Grotto_ActorRequiresShovel": "04f2cb1c288f255edbca23a8e613de49fbf6742f25a595601b41f086ca674a08",
+    "MegaHas": "881dbe9117ff769860114289ce0ddc5b94043a4186982243504fff1caed5de55",
+    "MegaSoul_CanUseRock": "0e26d7d058bf85d6b3665eff17df4ea68a8a04e2335ebcbc31bd9026262e9ff3",
+    "MegaSoul_CanUseCrate": "ce65d0b53edcd5aa139f27ddd9b88458d3695cb942b647e8493191a3ce60f9d8",
+    "IsMegaAnimalActor": "1c3112b590daad7789484af8fb89b661ff87535f16f38db1605b0ad59a2e7609",
+    "IsMegaCrateActor": "55f3839ff1784907380bc62b0d127990d836de3a85d9f3c537de5329d05f7df9",
+    "IsMegaRockActor": "1c3cc7302f891c4059565643102fd3ce2df5169b87d4d3641970922729a0d6fe",
+    "IsMegaScrubActor": "33cfcb68a8f6ac063ea8f6182ab54506b419118d448562c00a260d25f7b0497a",
+    "IsMegaNpcSoulActor": "bba2079780e29add93eabddea98da8982a0996398952c4be8a2a3c87fd237c1e",
+    "MegaSoul_IsNpcSoulLocked": "947476b4ee114c24e7d7eff563aad2d6722226fa68270bad9a04492a3e4c702e",
+    "MegaSoul_CanInteractWithActor": "e55ab8e0c34d0ae113fdb182eec8a69bcbf95e0729b2da6d4d020da0dc67432c",
+    "Collider_ResetACBase": "a8f69c0a74739af9c50b8af36f577c62c078d4c9fbc443d3a3b2f647b259eef5",
+    "Collider_ResetACInfo": "ab22e0492f0aea1cd7578805b215b93b1cdc739b0074eebb928c36ffd1aa3bff",
+    "Collider_ResetCylinderAC": "f05308a2c849a23fe646dd392b53a60ec06c1aab1a5a91ae5828a35e8b136fee",
+    "CollisionCheck_SetAC": "2d654dadf20970faa6c94533877f954156528b687b791de4ebc877d3e1fd684f",
+    "CollisionCheck_NoSharedFlags": "a9886a82b93646cb6448c0f24b964626ccca0aff6e61b53f8485d41d877593f0",
+    "EnBomChu_Explode": "a8d3f6df4012d624cf124c65d10c724fb70dd1f4be7972b2ffe5b373c3dedf3b"
+  },
+  "captured_data_sha256": {
+    "COLLIDER_DATA": "e70ce86163c8c2997db1a4b3e2d2a7bc870e2915ec12fd34d979b78fc8476022",
+    "GROTTO_LOAD_DATA": "49f71b99bf2d93bf795e0814d782437bc9764c5aa3fbc3efbb89e6293b7bb278",
+    "MELEE_FLAGS": "c227d5a82e5855d413bbbb1082fce8495d114e2a48d08f5456d6b145b14f83e0",
+    "BOMB_MASK": "1115e91079ba1240c38e940fa5d336e031b6fa4c69c93ba2a49ad91b81a1da9c",
+    "SOURCE_RULES": "d8df0a477dd04e89ab8c3967e6a3f5c535084b2c5872ebfc778f37282fe0d47c",
+    "LEGACY": "068425171028dce351d41086064f5010a1e52fff95602b5db4949d99861760f9"
+  },
+  "physical_source_caller_rules": [
+    [
+      "soh/Enhancements/randomizer/location_access/overworld/hyrule_field.cpp",
+      "RR_HF_INSIDE_FENCE_GROTTO",
+      "logic->CanOpenBombGrotto()"
+    ],
+    [
+      "soh/Enhancements/randomizer/location_access/overworld/hyrule_field.cpp",
+      "RR_HF_COW_GROTTO",
+      "(logic->CanUse(RG_MEGATON_HAMMER) || logic->IsChild) && logic->CanOpenBombGrotto()"
+    ],
+    [
+      "soh/Enhancements/randomizer/location_access/overworld/hyrule_field.cpp",
+      "RR_HF_NEAR_KAK_GROTTO",
+      "logic->CanOpenBombGrotto()"
+    ],
+    [
+      "soh/Enhancements/randomizer/location_access/overworld/hyrule_field.cpp",
+      "RR_HF_TEKTITE_GROTTO",
+      "logic->CanOpenBombGrotto()"
+    ],
+    [
+      "soh/Enhancements/randomizer/location_access/overworld/kakariko.cpp",
+      "RR_KAK_REDEAD_GROTTO",
+      "logic->CanOpenBombGrotto()"
+    ],
+    [
+      "soh/Enhancements/randomizer/location_access/overworld/sacred_forest_meadow.cpp",
+      "RR_SFM_WOLFOS_GROTTO",
+      "logic->CanOpenBombGrotto()"
+    ]
+  ],
+  "native_attack_mask": "0x00000048",
+  "accepted_attacks": [
+    "explosives: 0x00000008",
+    "ordinary Hammer swing: 0x00000040"
+  ],
+  "excluded_hammer_jumpslash": "0x40000000",
+  "policy_retained": [
+    "Shovel when shuffled",
+    "Rock/Boulder Soul when shuffled",
+    "Stone of Agony discovery",
+    "individual source-route blockers"
+  ],
+  "legacy_source_sha256": "85011ebbbc2f1ca8da0cb0e3a1e53a84fe53976f5ef6756bfe745894d9a0aea6",
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "native_game_build": false,
+  "in_game_playthrough": false,
+  "scope": "Actual native CanOpenBombGrotto, CanBreakRocks, BlastOrSmash, HasExplosives, CanUse, Bombchu enabled/refill and six physical source predicates; actual DoorAna init/update/closed/open/entry actions, Shovel load-table lookup, Soul actor classification, AC reset/registration and damage mask, and Bombchu bomb handoff. Inventory and item-use permission storage, engine enum tags, camera, allocation, contact geometry, scene transitions, audio and effects are isolated IO. The original helper is used only to reproduce Grab-only false-positive logic. No AP mapping/pool changes or native routing changes; no scene-asset geometry proof. DoorAna itself lacks a Rock Soul gate; the existing broader logical Soul policy is deliberately retained pending a separate complete physical blocker audit.",
+  "elapsed_seconds": 2.94,
+  "replay_command": "python source/tools/tests/test_grotto_access_native.py --report tests/grotto_access_1811_native.json",
+  "external_dependencies": [
+    "Python 3",
+    "g++ with C++20, AddressSanitizer and UndefinedBehaviorSanitizer"
+  ]
+}

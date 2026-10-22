@@ -11,6 +11,7 @@ import sys
 import types
 import unittest
 from collections import namedtuple
+from unittest.mock import patch
 
 SOURCE = Path(__file__).resolve().parents[2]
 WORLD = SOURCE / "archipelago" / "soh_extreme"
@@ -314,6 +315,14 @@ class ContextIntegrationTests(unittest.IsolatedAsyncioTestCase):
         mirror.PROTOCOL, mirror.VERSION, mirror.TAG = bridge_module.PROTOCOL, "test", "SOHExtremeUT"
         mirror.encode_snapshot = mirror.snapshot_rows = lambda *args, **kwargs: None
         sys.modules[mirror.__name__] = mirror
+        # No ammo payload is sent in this hint-only test. Keep AP's game-rule
+        # registration outside this isolated import; the real refill and tracker
+        # integration suites exercise those modules under their canonical name.
+        ammo = types.ModuleType(f"{PACKAGE}.AmmoRefillRules")
+        def unexpected_ammo(*args, **kwargs):
+            self.fail("Hint-only traffic must not ask for an ammo proof")
+        ammo.refill_mask = ammo.validate_observed_sources = unexpected_ammo
+        sys.modules[ammo.__name__] = ammo
         client = importlib.import_module(f"{PACKAGE}.TrackerClient")
 
         class Base(Context):
@@ -321,7 +330,8 @@ class ContextIntegrationTests(unittest.IsolatedAsyncioTestCase):
 
             def __init__(self, *args, **kwargs):
                 super().__init__()
-                self.tracker_core = types.SimpleNamespace(get_current_world=lambda: None)
+                self.tracker_core = types.SimpleNamespace(
+                    get_current_world=lambda: None, disconnect=lambda: None)
                 self.updates = 0
 
             def on_package(self, cmd, args):
@@ -340,7 +350,10 @@ class ContextIntegrationTests(unittest.IsolatedAsyncioTestCase):
             def reset_server_state(self):
                 self.slot = self.team = None
 
-        ctx = client.make_context_class(Base)()
+        # This test isolates hint transport from UT evaluation. Real upstream
+        # bootstrap/reconnection is exercised by test_tracker_yamlless.py.
+        with patch.object(client, "install_slot_data_core", return_value=None):
+            ctx = client.make_context_class(Base)()
         ctx._managed_nonce = NONCE
         ctx.on_package("Connected", {"slot_data": {}})
         ctx.on_package("Retrieved", {"keys": {ctx._hint_bridge.hint_key: [server_hint()]}})
@@ -359,19 +372,29 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--report", type=Path)
     args = parser.parse_args()
+    source_paths = (WORLD / "HintBridge.py", WORLD / "TrackerClient.py", WORLD / "TrackerBootstrap.py",
+                    WORLD / "TrackerWorker.py")
+    test_paths = (Path(__file__).resolve(),)
+    def hashes(paths):
+        return {str(path.relative_to(SOURCE)): hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in paths}
+    source_before, tests_before = hashes(source_paths), hashes(test_paths)
     suite = unittest.defaultTestLoader.loadTestsFromModule(sys.modules[__name__])
     result = unittest.TextTestRunner(verbosity=2).run(suite)
+    unchanged = source_before == hashes(source_paths) and tests_before == hashes(test_paths)
+    passed = result.wasSuccessful() and unchanged
     if args.report:
-        paths = (WORLD / "HintBridge.py", WORLD / "TrackerClient.py", Path(__file__).resolve())
-        report = {"passed": result.wasSuccessful(), "tests_run": result.testsRun,
+        report = {"status": "passed" if passed else "failed", "passed": passed, "tests_run": result.testsRun,
                   "failures": len(result.failures), "errors": len(result.errors),
                   "scope": "Focused server hint metadata, reveal command authorization, transport and lifecycle checks",
-                  "limitations": "No live AP server or complete native game/UI execution in this test.",
-                  "source_sha256": {str(path.relative_to(SOURCE)): hashlib.sha256(path.read_bytes()).hexdigest()
-                                    for path in paths}}
+                  "limitations": "No live AP server or complete native game/UI execution in this test. "
+                                 "UT bootstrap is an explicit I/O boundary here; real UT reconstruction "
+                                 "is covered by test_tracker_yamlless.py.",
+                  "source_sha256": source_before, "test_sha256": tests_before,
+                  "source_unchanged_during_tests": unchanged}
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    return 0 if result.wasSuccessful() else 1
+    return 0 if passed else 1
 
 
 if __name__ == "__main__":

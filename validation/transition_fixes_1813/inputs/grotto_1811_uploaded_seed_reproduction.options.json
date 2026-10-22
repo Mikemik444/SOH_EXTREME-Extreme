@@ -1,0 +1,1287 @@
+{
+  "seed": 28991991854046421672,
+  "official_output_name": "66154502437901277321",
+  "spoiler_sha256": "d1a31cd042b4810dbbbdcf4c06f6b46a3a8fb098d7099eb612e8723971c36c08",
+  "archipelago_version": "0.6.8",
+  "world_version": "1.8.11",
+  "source_sha256": {
+    "archipelago/soh_extreme/CLIENT_NAMESPACE_0.9.3.txt": "f68d60e329881046ec64ce6ed54ca49e61ff3661d1624c797bd5858f6f5facf1",
+    "archipelago/soh_extreme/CheckDescriptions.json": "962c67c679bfe44f7cb8b3204b9ea614f8ea2789807d5e695e2c768b362b2769",
+    "archipelago/soh_extreme/CheckDescriptions.py": "e985562d01393f3207c15e8ef41899b0539015ceebcd701358267d32dcd38b20",
+    "archipelago/soh_extreme/DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
+    "archipelago/soh_extreme/DungeonExternalEdges.json": "21a06af9683c1ac8667d5fb4af62872ffb7157696ebeb33246d6c499539287f7",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "a3f55e52dc3c79ca717355328d7624fcc9f831c07eee620a9a10c68f24cbce31",
+    "archipelago/soh_extreme/EnemyDropLocations.py": "911a56aafdfea550a373a86c291507d559bd3c810b194da406d558974d993852",
+    "archipelago/soh_extreme/EnemyDropRules.py": "6e6e68a971475384ebaf018eeecd14844074571143393fd46a75ec51fc773c0d",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "00f8467cc25b8ee35ca5b2a70c44cb01e30e54c29604aa65ff2e2339180384d7",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "c1ada3a8ee0c69e2ad7a77569bf4bea9264965642dabfbf6bcacb2d48ff68c85",
+    "archipelago/soh_extreme/EnemyRoomMap.json": "aecf6f9e541eb568b4ecf29010a0e5b48e629bac19335a9f2e7701fcb7b25acc",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3",
+    "archipelago/soh_extreme/EntranceOptions.py": "5d8a44a49f519b693ecaf3949680c4a99192651575ecf914eeda6b5435144cfa",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "9c70d90e52063148fcafd22bca3f5594776b06ffeacbc886bfcbf3196a431c37",
+    "archipelago/soh_extreme/EntranceSafety.py": "2f8812b1ad2ae1b070e70e55e146e7e7fe188c92d6a883e41d807edea54f5608",
+    "archipelago/soh_extreme/ForkLocations.py": "fb80320ed2c384a4d83f9aa956bebc4acb77591a9676a1ff94831f4ff80dd20f",
+    "archipelago/soh_extreme/FrontierFill.py": "bee9dd5e923412bc7138d7e03a3f1f05a37b136b158c389b11b9e951ebf8ca30",
+    "archipelago/soh_extreme/HOTFIX_0.11.21d.txt": "a1a1fa3704a87f12ce124670dfe700d27ea6c1d24bdbb99b899104604625cabc",
+    "archipelago/soh_extreme/HintAreas.py": "5652233d3cadf3549a01d05598b98317d3501045012128869b6ef96ef8955925",
+    "archipelago/soh_extreme/HintBridge.py": "e00318acd27bb0d1662caa02ef6acbdc248bcc84c30687f4d6129620feca71e1",
+    "archipelago/soh_extreme/LOGIC_FIX_0.9.4.txt": "c624cb0c8c6b9d8d1547ed60df35ae2555734236066692a57359fb80c85b71ce",
+    "archipelago/soh_extreme/LOGIC_FIX_0.9.5.txt": "53847e9b12a819a348fe1cbd0010ee5d6e141bf807f9282c3da57fbecd796746",
+    "archipelago/soh_extreme/LOGIC_NOTES.txt": "aa2851f333f6d309300a6afd39a700b829c1cfef71681f25f533540fa4e159c8",
+    "archipelago/soh_extreme/LOGIC_OVERHAUL_0.9.2.txt": "526dec92a64a1accadc637b75e345b3de7e66a94c0a8b1b1c3ca6860c4934665",
+    "archipelago/soh_extreme/LogicAudit.py": "fbadd8bf7e347c20a37bc2a477eca8875194a692788c0165ec89f09f496ba950",
+    "archipelago/soh_extreme/NativeAbilityAudit.py": "da749431e951bea9e525120f4dcaf137d1d348f1531ae324ae4df3e72074ca1b",
+    "archipelago/soh_extreme/NativeLocationRequirements.py": "beb41c9ff4dd09a442be382a6283792e33e2d5fcc42089359013be653d6426d7",
+    "archipelago/soh_extreme/NativeLogic.py": "41dbbed6f032fa759c6af4f15bcd58a4614dde71ebc68989bc538008a3802350",
+    "archipelago/soh_extreme/NativeLogicAlternatives.py": "4fd0040ba6d71b67ddecf0475f2881e388be510b124dad0a79a78d0447eaa035",
+    "archipelago/soh_extreme/NativeRegionMap.py": "23bce34860de5c8f3832804a9ddb70856c962abdb3dc2a612f124bfc60f84290",
+    "archipelago/soh_extreme/NativeSettings.py": "55b99f1e11ea3ea2e8a9365653d945983d049083bf6997990b337beb9b809687",
+    "archipelago/soh_extreme/NpcSpeech.py": "f7b2ae3be88e3faa9155020be66dff987b5ea27f6aba84ceaa2a297508c5104a",
+    "archipelago/soh_extreme/NpcSpeechCatalog.json": "19804e7b6d2b00f7c01f0364e89c1c93753c8c7da02bb9dbb5454fc58b8898c7",
+    "archipelago/soh_extreme/Options.py": "23922e35d731ae63fa40c1b6b15b17c2f9f3ec542b4de4c5baf3626d1669a7de",
+    "archipelago/soh_extreme/PhysicalChestTypes.py": "92d273a76e56e6d21244b77da0311fa865f87291110b8bed7ccf56b64bde7ee5",
+    "archipelago/soh_extreme/PhysicalInteractionRules.py": "c8cb523c1c77dd4d7c7877667e1a2927abae61ebbe34722641b02e68b59128cc",
+    "archipelago/soh_extreme/RELEASE_NOTES_0.11.10.txt": "6d1d3b1368b9921deb258c8cee8025cd6357a0f5218cc444ca46ffcfcf1390b8",
+    "archipelago/soh_extreme/RELEASE_NOTES_0.11.14.txt": "53c3100bcf29fa07373e0d6d6b954732220b9c85ae1c147225b5c08bda9c49a0",
+    "archipelago/soh_extreme/RELEASE_NOTES_0.11.15.txt": "08bae3f85bd904f4f399be4eabeadee4ba168397336b3b126641859debe022ab",
+    "archipelago/soh_extreme/RELEASE_NOTES_0.11.16.txt": "8b5ec1ea72075c3c36fe46a1f5663bb857a72bc942ac41bd06db523a04a341fc",
+    "archipelago/soh_extreme/RELEASE_NOTES_0.11.17.txt": "5b2d0b5e2a8f064f09b3f60293457f0f0af815e43ceb28b176918feef708f880",
+    "archipelago/soh_extreme/RELEASE_NOTES_0.11.22.txt": "a8fed85070775d9a5367e98fcc69cfdb77983ccf965d333543ea54eb4715a477",
+    "archipelago/soh_extreme/STANDALONE_WORLD_NOTES.txt": "5ed4ff472d4a044bb5b6f1b872bd5f119d06e3e2fed0073da04f1be9ea75f288",
+    "archipelago/soh_extreme/SceneTransitionCatalog.json": "faff0beed2c86f693c65d44dccd8be4271658c37f70e6655b14ee2c1ca39097d",
+    "archipelago/soh_extreme/SceneTransitions.py": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "archipelago/soh_extreme/SettingsParityAudit.py": "811b15635552eed14a574754e92d9ce38b04fabace556894e9df5d96007a9dbe",
+    "archipelago/soh_extreme/SilverRoomLogic.py": "9ec8e5417fdb2b2bb97d1dc46fefe82e1ae4f9aff631b54751aa5be37026fb58",
+    "archipelago/soh_extreme/SilverRoomRoutes.json": "1206f478ad1feebf038eb8cb23f86d9930eb636d811c5dfc0f39617c59202fd2",
+    "archipelago/soh_extreme/SongNotes.py": "533836d57a4c241f5217d8245aa81437db515bf85dff1e94f0cafcb1fe0daac5",
+    "archipelago/soh_extreme/SpeechLocations.py": "5d5ebe4e6eca5d4a524ba592e3e39b5901005392d94a0b17a22d8711f04a6647",
+    "archipelago/soh_extreme/TEMPLATE_README.txt": "f637e564943b65365915899c59cfb85f382b4b63945b9a5ce09af277afec2982",
+    "archipelago/soh_extreme/TrackerClient.py": "9000860b0ae6aada834d40721ec178ff75257159e7c395252169094120796e58",
+    "archipelago/soh_extreme/TrackerMirror.py": "68bcb80624789d27edc3d126f6cf9ebd6d4a92c444c141ae41fb59acc6536ca4",
+    "archipelago/soh_extreme/TrackerWorker.py": "05ab1a40274142977694dcaa9c54b1874a94abf635cc092cd797bb68acdeefed",
+    "archipelago/soh_extreme/UT_PATCH_NOTES.txt": "44785872683463083a978216b09bbc92a06eead65e50193aa51e2f5188cb479c",
+    "archipelago/soh_extreme/__init__.py": "3710795c8155f3d858a909d8c8859e8a5bb4c05f32699cfa1746994df42c851c",
+    "archipelago/soh_extreme/_vendor_oot_soh/.apignore": "83a6ebda36e4508c91caba443ad3c4304fd972d0ffa0a8306deb862a77b577bf",
+    "archipelago/soh_extreme/_vendor_oot_soh/Client.py": "134e4135bac0c8f475bd27da738c4b5776c347ca7b450a9cd8833f177f0b87eb",
+    "archipelago/soh_extreme/_vendor_oot_soh/DungeonRewardShuffle.py": "7d77f1309c0cc7ab25c2fa74d3000686eef32b5c38ed79602a1bb295f258243c",
+    "archipelago/soh_extreme/_vendor_oot_soh/Enums.py": "7e52b4225d3b4e0d3a8d428abc64d64f6b2df05a3eadfe28b6cbc22e5b40e142",
+    "archipelago/soh_extreme/_vendor_oot_soh/Hints.py": "5f82f782215fe889d5d720a39621f4113abce83604ed84815f3485e628d33104",
+    "archipelago/soh_extreme/_vendor_oot_soh/ItemPool.py": "914ae7ce542647990b23ae33bff9df528a80fed23441093920ea1a941d2b8d0d",
+    "archipelago/soh_extreme/_vendor_oot_soh/Items.py": "c0a21a035c22f32d2381c3e662f0705a7ba89bb86f8823fa6840653c0c2e09a7",
+    "archipelago/soh_extreme/_vendor_oot_soh/KeyShuffle.py": "93bb824e131c59a4a285fe9bc9cabca7ac59dfe6a2ebe5614a8da4347feeed90",
+    "archipelago/soh_extreme/_vendor_oot_soh/LICENSE": "f66c14cec56600dec0a63c5dc14d9fe3dc4efbcdfbf34b100b6fcf1f1e3ded00",
+    "archipelago/soh_extreme/_vendor_oot_soh/Locations.py": "68b5fe7760d9eace3760504ff9c0e51c91506dad1d93e002ef42c39f1a54d29d",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "2ebd7532c3ea6e749830ea6c6eb2c225c6edd3d03ae9018df472fbff23180ec9",
+    "archipelago/soh_extreme/_vendor_oot_soh/Options.py": "a4299a203c588d9f946f80399fba7b47c043a3488f8e094432469b7fa31520a9",
+    "archipelago/soh_extreme/_vendor_oot_soh/Presets.py": "b5c683f312956205e1a6dad109e80749b83e182e652282ef29cc976f2cd5966b",
+    "archipelago/soh_extreme/_vendor_oot_soh/RegionAgeAccess.py": "b7625d38befa593efd36fb1c6d721acac5e3a60331118742c7e19b5d3cb44db3",
+    "archipelago/soh_extreme/_vendor_oot_soh/Regions.py": "a1514211106f2ed71ddde422b2ec13689a2eba74edfcbf2966046e9719bbcda9",
+    "archipelago/soh_extreme/_vendor_oot_soh/SOURCE.txt": "507fcfbc100259d2f14476ade9953a1e23f1d205664fdbf366b00f9ce167324a",
+    "archipelago/soh_extreme/_vendor_oot_soh/ShopItems.py": "9f76a24ae5e27597d5c358a92b92b404d81292f68f8e5b396e1527906b850377",
+    "archipelago/soh_extreme/_vendor_oot_soh/SongShuffle.py": "f313382c9a0e3378db31359203e63fccdd1c1277852fd1b5d860e88c385138cf",
+    "archipelago/soh_extreme/_vendor_oot_soh/UniversalTracker.py": "9fddb5ce4e9277240626ab2acdf59fdf18eb9d4867869c7f8383ae982661b082",
+    "archipelago/soh_extreme/_vendor_oot_soh/__init__.py": "a2d4d9030a1d8cff9445f6e16d40d3f284a20607e574771212d0807281d40947",
+    "archipelago/soh_extreme/_vendor_oot_soh/docs/en_Ship of Harkinian.md": "f21b4f46d6bb4e673a311b201046c6fc3fa9f1fe2dd6dacceed1ca3c49f7817c",
+    "archipelago/soh_extreme/_vendor_oot_soh/docs/guide_en.md": "962ff8c52dcc01dbaf3a39130f6b6f69b48a286f70530f5e3f647953bd6bceef",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/bottom_of_the_well.py": "ad3d56f18ba695a564f9e2f750dd03bceb85be1b7f1b0caafa11715a523d62c3",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/deku_tree.py": "144ecaac11047c6d602052998ebe77637ad10cf52751a061d230355de0ace0cf",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/dodongos_cavern.py": "3f557d63b5ec2531ff1223ec5446b8f3ec3c453d5572f17130d050b1dc99c45c",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/fire_temple.py": "faf0b47a2e4fce6d7550c2d9966727834c4d68c917e3f0c8535f5a0fcb3084a4",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/forest_temple.py": "a8ee193395cb795ffe7ea40cd0b6f39feeeee964748b9b3e61e0b36b36c9a015",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/ganons_castle.py": "80adf5df9fe738bf50bfc9ea9d18aa012ece1d445a31fe4252d12c0ae49df220",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/gerudo_training_ground.py": "771f8c445d8ea35a3d7a3957989b820f29c5524a605db62779c8062fb3e20083",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/ice_cavern.py": "70fd538d50b8995addbcfa42a75a0455f6334af2eb773b91efee862516948ea4",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/jabujabus_belly.py": "3347eb50d9c25a702c9012b8e6d9d437db36bd31f99d5c962999a50919bc4ca6",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/shadow_temple.py": "77e8a27ea2ecfe67ac852ecbc005e60aff10addf08a1faa40dee26f89d444b5c",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/spirit_temple.py": "b51f2cc06d0dc628814465f1010f86c013c197a8d93ed1031642ac49f97db673",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/dungeons/water_temple.py": "7cd3c3d576ac90610dcd95b71481c3cf6fe9a710b4d06aa801eec1d044166cf7",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/castle_grounds.py": "a6e55599384c500b3855953ce00b34fa49e7f3a6a5ff3ac7f123082a1a83dfbc",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_crater.py": "6517e133569ae7e1262675001fcca84f1f07002590be0a27d6263a288debda87",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/death_mountain_trail.py": "e2653b77f918c001b54e9dc46a51de0bb55bd0775467530b7e24c87c5a5e3b80",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/desert_colossus.py": "963d9deaf25ef704e4eb9700c4b59276f23942babbf6b24d92a0842f8b44e8b2",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py": "34087bd6c1ed254455edd9e169dda616ce8f76249646621a10d8fe5d29570435",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_valley.py": "316d9fa802bbe6561dbdb97f15e5fbd16f1e1232021c8b3ce5056a8438eec357",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/goron_city.py": "70a37887e28d0db8a212f44870dbfed55db66db5dea529fbfef661b7485f741d",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/graveyard.py": "7be8adb48ee3f88e8ef480e82b9da393e8594afa934248583be4db1cd2d9214d",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py": "4b44180e2d905d001256adb08eb2308785ec6a71e4bba9969f8e4f8f81d008cd",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py": "60dd6c66fd89f8e4214d12e29ed08f38b86b004a25cae360393fcaad2d1a9f29",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kakariko.py": "aba25472a8b89bf5d5ecc692cb7a4ebe3eece3da81af1ddf5f1de7902a83dc97",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py": "d27d86750b4c20545d673e1c0d93ae3079beb87acab98b4c2b0f2f0d90045c90",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lake_hylia.py": "d77816ce5b36d62ab402ddb28290a061947e02ef1b19723bc6d69888e948dfa2",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lon_lon_ranch.py": "843a4a344002ef2c264a23e5354d82722dbf78e7c49b4b50a8dfaf355b92414b",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py": "eb3a6d78b8ddbe16ec545f6b66f0683b686571fffd193d6b7c6721e0057c67fb",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/market.py": "98d0cdf38c0ad87adfbb364d3da6b9dd7c02a0a30a3af90901a5401d2ef9960c",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/sacred_forest_meadow.py": "bfaf8a03ec0fa9eb07425772d9623f65e7c8a06a17ebce317fb02a0028b376bd",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/temple_of_time.py": "23f5cc8f544ffb3426099c7c00b5aaa7cad2894bc5ca20d4fd98070a87a6a9ca",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/thieves_hideout.py": "8416e4feb9c46697ccd9b6428983795141443aa209b627b98dbb135d65bcb378",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_domain.py": "5ad5ad681d3c3c4ff3be94ac50d387b3c213b9b8edb851c55d6c1dc9fe89e5ef",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_fountain.py": "4ed627da7075d85233c646d8697e28d210308a23f8f8520a67bacaed3b285a27",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_river.py": "f608f9d7ace80850d897df278d47e1ca25dda0660c1ee34594c65b37843ca233",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/root.py": "389a06b853af8b7a4e490ec94e9f261df14c3551a7fc841cdba38b2fd3a2f328",
+    "archipelago/soh_extreme/archipelago.json": "069bd899b0fd7702f0fd0ab4f664be2dca8fe8035b3030f11f62c0b65a7a24c1",
+    "archipelago/soh_extreme/docs/guide_en.md": "b6fed96dad6ea1f44295c8092af7b4989adbb5d3edd32c47e679817f0851ea5f",
+    "archipelago/soh_extreme/shared_logic.py": "45feb3aa866222007de6fc8e112912134fe1b089878a8dce58e7d1f8a45a9a82"
+  },
+  "resolved_options": {
+    "progression_balancing": {
+      "display_name": "Progression Balancing",
+      "display_value": "50",
+      "value": 50
+    },
+    "accessibility": {
+      "display_name": "Accessibility",
+      "display_value": "Full",
+      "value": 0
+    },
+    "local_items": {
+      "display_name": "Local Items",
+      "display_value": "",
+      "value": []
+    },
+    "non_local_items": {
+      "display_name": "Non-local Items",
+      "display_value": "",
+      "value": []
+    },
+    "start_inventory": {
+      "display_name": "Start Inventory",
+      "display_value": "",
+      "value": {}
+    },
+    "start_hints": {
+      "display_name": "Start Hints",
+      "display_value": "",
+      "value": []
+    },
+    "start_location_hints": {
+      "display_name": "Start Location Hints",
+      "display_value": "",
+      "value": []
+    },
+    "exclude_locations": {
+      "display_name": "Excluded Locations",
+      "display_value": "",
+      "value": []
+    },
+    "priority_locations": {
+      "display_name": "Priority Locations",
+      "display_value": "",
+      "value": []
+    },
+    "item_links": {
+      "display_name": "Item Links",
+      "display_value": "",
+      "value": []
+    },
+    "plando_items": {
+      "display_name": "Plando Items",
+      "display_value": "",
+      "value": []
+    },
+    "closed_forest": {
+      "display_name": "Closed Forest",
+      "display_value": "On",
+      "value": 0
+    },
+    "kakariko_gate": {
+      "display_name": "Kakariko Gate",
+      "display_value": "Open",
+      "value": 1
+    },
+    "door_of_time": {
+      "display_name": "Door of Time",
+      "display_value": "Song Only",
+      "value": 1
+    },
+    "zoras_fountain": {
+      "display_name": "Zora's Domain",
+      "display_value": "Closed As Child",
+      "value": 1
+    },
+    "sleeping_waterfall": {
+      "display_name": "Sleeping Waterfall",
+      "display_value": "Closed",
+      "value": 0
+    },
+    "jabu_jabu": {
+      "display_name": "Jabu-Jabu",
+      "display_value": "Closed",
+      "value": 0
+    },
+    "lock_overworld_doors": {
+      "display_name": "Lock Overworld Doors",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "fortress_carpenters": {
+      "display_name": "Fortress Carpenters",
+      "display_value": "Normal",
+      "value": 0
+    },
+    "rainbow_bridge": {
+      "display_name": "Rainbow Bridge",
+      "display_value": "Vanilla",
+      "value": 0
+    },
+    "rainbow_bridge_stones_required": {
+      "display_name": "Rainbow Bridge Stones Required",
+      "display_value": "1",
+      "value": 1
+    },
+    "rainbow_bridge_medallions_required": {
+      "display_name": "Rainbow Bridge Medallions Required",
+      "display_value": "7",
+      "value": 7
+    },
+    "rainbow_bridge_dungeon_rewards_required": {
+      "display_name": "Rainbow Bridge Dungeon Rewards Required",
+      "display_value": "9",
+      "value": 9
+    },
+    "rainbow_bridge_dungeons_required": {
+      "display_name": "Rainbow Bridge Dungeons Required",
+      "display_value": "5",
+      "value": 5
+    },
+    "rainbow_bridge_skull_tokens_required": {
+      "display_name": "Rainbow Bridge Skull Tokens Required",
+      "display_value": "19",
+      "value": 19
+    },
+    "rainbow_bridge_greg_modifier": {
+      "display_name": "Rainbow Bridge Greg Modifier",
+      "display_value": "Off",
+      "value": 0
+    },
+    "ganons_trials": {
+      "display_name": "Ganon's Trials",
+      "display_value": "Set Number",
+      "value": 1
+    },
+    "ganons_trials_count": {
+      "display_name": "Ganon's Trials Count",
+      "display_value": "6",
+      "value": 6
+    },
+    "triforce_hunt": {
+      "display_name": "Triforce Hunt",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "triforce_hunt_pieces_total": {
+      "display_name": "Triforce Hunt Pieces Total",
+      "display_value": "40",
+      "value": 40
+    },
+    "triforce_hunt_pieces_required_percentage": {
+      "display_name": "Triforce Hunt Pieces Required Percentage",
+      "display_value": "50",
+      "value": 50
+    },
+    "shuffle_songs": {
+      "display_name": "Shuffle Songs",
+      "display_value": "Anywhere",
+      "value": 3
+    },
+    "shuffle_skull_tokens": {
+      "display_name": "Shuffle Tokens",
+      "display_value": "All",
+      "value": 3
+    },
+    "skulls_sun_song": {
+      "display_name": "Night Skulltulas Expect Sun's Song",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_kokiri_sword": {
+      "display_name": "Shuffle Kokiri Sword",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_master_sword": {
+      "display_name": "Shuffle Master Sword",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_childs_wallet": {
+      "display_name": "Shuffle Child's Wallet",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_ocarinas": {
+      "display_name": "Shuffle Ocarinas",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_ocarina_buttons": {
+      "display_name": "Shuffle Ocarina Buttons",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_swim": {
+      "display_name": "Shuffle Swim",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_weird_egg": {
+      "display_name": "Shuffle Weird Egg",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_gerudo_membership_card": {
+      "display_name": "Shuffle Gerudo Membership Card",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_fishing_pole": {
+      "display_name": "Shuffle Fishing Pole",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_deku_stick_bag": {
+      "display_name": "Shuffle Deku Stick Bag",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_deku_nut_bag": {
+      "display_name": "Shuffle Deku Nut Bag",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_freestanding_items": {
+      "display_name": "Shuffle Freestanding Items",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_shops": {
+      "display_name": "Shuffle Shops",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_shops_item_amount": {
+      "display_name": "Shuffle Shops Item Amount",
+      "display_value": "7",
+      "value": 7
+    },
+    "shuffle_shops_minimum_price": {
+      "display_name": "Shuffle Shops Minimum Price",
+      "display_value": "0",
+      "value": 0
+    },
+    "shuffle_shops_maximum_price": {
+      "display_name": "Shuffle Shops Maximum Price",
+      "display_value": "11",
+      "value": 11
+    },
+    "shuffle_fish": {
+      "display_name": "Shuffle Fish",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_scrubs": {
+      "display_name": "Shuffle Scrubs",
+      "display_value": "All",
+      "value": 2
+    },
+    "shuffle_scrubs_minimum_price": {
+      "display_name": "Shuffle Scrubs Minimum Price",
+      "display_value": "0",
+      "value": 0
+    },
+    "shuffle_scrubs_maximum_price": {
+      "display_name": "Shuffle Scrubs Maximum Price",
+      "display_value": "210",
+      "value": 210
+    },
+    "shuffle_beehives": {
+      "display_name": "Shuffle Beehives",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_cows": {
+      "display_name": "Shuffle Cows",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_pots": {
+      "display_name": "Shuffle Pots",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_crates": {
+      "display_name": "Shuffle Crates",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_trees": {
+      "display_name": "Shuffle Trees",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_merchants": {
+      "display_name": "Shuffle Merchants",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_merchants_minimum_price": {
+      "display_name": "Shuffle Merchants Minimum Price",
+      "display_value": "0",
+      "value": 0
+    },
+    "shuffle_merchants_maximum_price": {
+      "display_name": "Shuffle Merchants Maximum Price",
+      "display_value": "90",
+      "value": 90
+    },
+    "shuffle_frog_song_rupees": {
+      "display_name": "Shuffle Frog Song Rupees",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_adult_trade_items": {
+      "display_name": "Shuffle Adult Trade Items",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_boss_souls": {
+      "display_name": "Shuffle Boss Souls",
+      "display_value": "On Plus Ganons",
+      "value": 2
+    },
+    "shuffle_fountain_fairies": {
+      "display_name": "Shuffle Fairies in Fountains",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_stone_fairies": {
+      "display_name": "Shuffle Gossip Stone Fairies",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_bean_fairies": {
+      "display_name": "Shuffle Bean Fairies",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_song_fairies": {
+      "display_name": "Shuffle Fairy Spots",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_grass": {
+      "display_name": "Shuffle Grass",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_dungeon_rewards": {
+      "display_name": "Shuffle Dungeon Rewards",
+      "display_value": "Anywhere",
+      "value": 4
+    },
+    "maps_and_compasses": {
+      "display_name": "Maps and Compasses",
+      "display_value": "Anywhere",
+      "value": 5
+    },
+    "ganons_castle_boss_key": {
+      "display_name": "Ganon's Castle Boss Key",
+      "display_value": "Anywhere",
+      "value": 1
+    },
+    "ganons_castle_boss_key_stones_required": {
+      "display_name": "Ganon's Castle Boss Key Stones Required",
+      "display_value": "4",
+      "value": 4
+    },
+    "ganons_castle_boss_key_medallions_required": {
+      "display_name": "Ganon's Castle Boss Key Medallions Required",
+      "display_value": "5",
+      "value": 5
+    },
+    "ganons_castle_boss_key_dungeon_rewards_required": {
+      "display_name": "Ganon's Castle Boss Key Dungeon Rewards Required",
+      "display_value": "7",
+      "value": 7
+    },
+    "ganons_castle_boss_key_dungeons_required": {
+      "display_name": "Ganon's Castle Boss Key Dungeons Required",
+      "display_value": "6",
+      "value": 6
+    },
+    "ganons_castle_boss_key_skull_tokens_required": {
+      "display_name": "Ganon's Castle Boss Key Skull Tokens Required",
+      "display_value": "97",
+      "value": 97
+    },
+    "ganons_castle_boss_key_greg_modifier": {
+      "display_name": "Ganon's Castle Boss Key Greg Wildcard",
+      "display_value": "Reward",
+      "value": 1
+    },
+    "small_key_shuffle": {
+      "display_name": "Small Key Shuffle",
+      "display_value": "Anywhere",
+      "value": 5
+    },
+    "gerudo_fortress_key_shuffle": {
+      "display_name": "Gerudo Fortress Key Shuffle",
+      "display_value": "Anywhere",
+      "value": 3
+    },
+    "boss_key_shuffle": {
+      "display_name": "Boss Key Shuffle",
+      "display_value": "Anywhere",
+      "value": 5
+    },
+    "key_rings": {
+      "display_name": "Key Rings",
+      "display_value": "Off",
+      "value": 0
+    },
+    "key_rings_count": {
+      "display_name": "Key Rings Count",
+      "display_value": "0",
+      "value": 0
+    },
+    "gerudo_fortress_key_ring": {
+      "display_name": "Gerudo Fortress Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "forest_temple_key_ring": {
+      "display_name": "Forest Temple Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "fire_temple_key_ring": {
+      "display_name": "Fire Temple Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "water_temple_key_ring": {
+      "display_name": "Water Temple Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "spirit_temple_key_ring": {
+      "display_name": "Spirit Temple Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "shadow_temple_key_ring": {
+      "display_name": "Shadow Temple Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "bottom_of_the_well_key_ring": {
+      "display_name": "Bottom of the Well Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "gerudo_training_ground_key_ring": {
+      "display_name": "Gerudo Training Ground Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "ganons_castle_key_ring": {
+      "display_name": "Ganon's Castle Keyring",
+      "display_value": "No",
+      "value": 0
+    },
+    "big_poe_target_count": {
+      "display_name": "Big Poe Target Count",
+      "display_value": "0",
+      "value": 0
+    },
+    "skip_child_zelda": {
+      "display_name": "Skip Child Zelda",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "skip_epona_race": {
+      "display_name": "Skip Epona Race",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "complete_mask_quest": {
+      "display_name": "Complete Mask Quest",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "skip_scarecrows_song": {
+      "display_name": "Skip Scarecrow's Song",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "start_with_links_pocket": {
+      "display_name": "Link's Pocket",
+      "display_value": "Dungeon Reward",
+      "value": 0
+    },
+    "start_with_kokiri_sword": {
+      "display_name": "Start with Kokiri Sword",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_master_sword": {
+      "display_name": "Start with Master Sword",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_deku_shield": {
+      "display_name": "Start with Deku Shield",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_ocarina": {
+      "display_name": "Start with Ocarina",
+      "display_value": "Off",
+      "value": 0
+    },
+    "start_with_stick_ammo": {
+      "display_name": "Start with Stick ammo",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_nut_ammo": {
+      "display_name": "Start with Nut ammo",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_magic_beans": {
+      "display_name": "Start with Magic Beans",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_zeldas_lullaby": {
+      "display_name": "Start with Zelda's Lullaby",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_eponas_song": {
+      "display_name": "Start with Epona's Song",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_sarias_song": {
+      "display_name": "Start with Saria's Song",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_suns_song": {
+      "display_name": "Start with Sun's Song",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_song_of_time": {
+      "display_name": "Start with Song of Time",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_song_of_storms": {
+      "display_name": "Start with Song of Storms",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_minuet": {
+      "display_name": "Start with Minuet of Forest",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_bolero": {
+      "display_name": "Start with Bolero of Fire",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_serenade": {
+      "display_name": "Start with Serenade of Water",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_requiem": {
+      "display_name": "Start with Requiem of Spirit",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_nocturne": {
+      "display_name": "Start with Nocturne of Shadow",
+      "display_value": "No",
+      "value": 0
+    },
+    "start_with_prelude": {
+      "display_name": "Start with Prelude of Light",
+      "display_value": "No",
+      "value": 0
+    },
+    "full_wallets": {
+      "display_name": "Full Wallets",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "bombchu_bag": {
+      "display_name": "Bombchu Bag",
+      "display_value": "Progressive Bags",
+      "value": 2
+    },
+    "bombchu_drops": {
+      "display_name": "Bombchu Drops",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "start_inventory_from_pool": {
+      "display_name": "Start Inventory from Pool",
+      "display_value": "",
+      "value": {}
+    },
+    "blue_fire_arrows": {
+      "display_name": "Blue Fire Arrows",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "sunlight_arrows": {
+      "display_name": "Sunlight Arrows",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "rocs_feather": {
+      "display_name": "Roc's Feather",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "infinite_upgrades": {
+      "display_name": "Infinite Upgrades",
+      "display_value": "Progressive",
+      "value": 1
+    },
+    "skeleton_key": {
+      "display_name": "Skeleton Key",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "slingbow_break_beehives": {
+      "display_name": "Slingshot and Bow Can Break Beehives",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "starting_age": {
+      "display_name": "Starting Age",
+      "display_value": "Child",
+      "value": 0
+    },
+    "shuffle_100_gs_reward": {
+      "display_name": "Shuffle 100 GS Reward",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "ice_trap_count": {
+      "display_name": "Ice Trap Count",
+      "display_value": "0",
+      "value": 0
+    },
+    "ice_trap_filler_replacement": {
+      "display_name": "Ice Trap Filler Replacement Count",
+      "display_value": "20",
+      "value": 20
+    },
+    "true_no_logic": {
+      "display_name": "True No Logic",
+      "display_value": "No",
+      "value": 0
+    },
+    "shuffle_tycoon_wallet": {
+      "display_name": "Shuffle Tycoon Wallet",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "tricks_in_logic": {
+      "display_name": "Tricks in Logic",
+      "display_value": "",
+      "value": []
+    },
+    "enable_all_tricks": {
+      "display_name": "Enable All Tricks and Glitches",
+      "display_value": "No",
+      "value": 0
+    },
+    "item_pool": {
+      "display_name": "Item Pool",
+      "display_value": "Balanced",
+      "value": 0
+    },
+    "medallion_locked_trials": {
+      "display_name": "Medallion Locked Trials",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "starting_hearts": {
+      "display_name": "Starting Hearts Count",
+      "display_value": "1",
+      "value": 1
+    },
+    "shop_affordable_prices": {
+      "display_name": "Shop Affordable Prices",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "scrub_affordable_prices": {
+      "display_name": "Scrub Affordable Prices",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "merchant_affordable_prices": {
+      "display_name": "Merchant Affordable Prices",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "hint_clarity": {
+      "display_name": "Hint Clarity",
+      "display_value": "Clear",
+      "value": 2
+    },
+    "gossip_stone_hints": {
+      "display_name": "Gossip Stone Hints",
+      "display_value": "Need Nothing",
+      "value": 1
+    },
+    "tot_altar_hint": {
+      "display_name": "ToT Altar Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "ganondorf_hint": {
+      "display_name": "Ganondorf Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "sheik_la_hint": {
+      "display_name": "Sheik Light Arrow Hint",
+      "display_value": "No",
+      "value": 0
+    },
+    "boss_key_hint": {
+      "display_name": "Boss Key Hints",
+      "display_value": "No",
+      "value": 0
+    },
+    "dampe_diary_hint": {
+      "display_name": "Dampe's Diary Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "greg_hint": {
+      "display_name": "Greg the Green Rupee Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "saria_hint": {
+      "display_name": "Saria's Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "mido_hint": {
+      "display_name": "Mido's Hint",
+      "display_value": "No",
+      "value": 0
+    },
+    "frog_game_hint": {
+      "display_name": "Frog Ocarina Game Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "ocarina_of_time_hint": {
+      "display_name": "Ocarina of Time Hint",
+      "display_value": "No",
+      "value": 0
+    },
+    "big_goron_hint": {
+      "display_name": "Biggoron's Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "big_poe_hint": {
+      "display_name": "Big Poes Hint",
+      "display_value": "No",
+      "value": 0
+    },
+    "chicken_hint": {
+      "display_name": "Chickens Hint",
+      "display_value": "No",
+      "value": 0
+    },
+    "malon_hint": {
+      "display_name": "Malon Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "horseback_archery_hint": {
+      "display_name": "Horseback Archery Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "fishing_pole_hint": {
+      "display_name": "Fishing Pole Hint",
+      "display_value": "No",
+      "value": 0
+    },
+    "scrub_hints": {
+      "display_name": "Scrub Hint Text",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "merchant_hints": {
+      "display_name": "Merchant Hint Text",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "gs_10_hint": {
+      "display_name": "10 GS Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "gs_20_hint": {
+      "display_name": "20 GS Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "gs_30_hint": {
+      "display_name": "30 GS Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "gs_40_hint": {
+      "display_name": "40 GS Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "gs_50_hint": {
+      "display_name": "50 GS Hint",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "gs_100_hint": {
+      "display_name": "100 GS Hint",
+      "display_value": "No",
+      "value": 0
+    },
+    "mask_shop_hint": {
+      "display_name": "Mask Shop Hint",
+      "display_value": "No",
+      "value": 0
+    },
+    "shuffle_overworld_entrances": {
+      "display_name": "Shuffle Overworld Entrances (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_interior_entrances": {
+      "display_name": "Shuffle Interior Entrances (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_dungeon_entrances": {
+      "display_name": "Shuffle Dungeon Entrances (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_grotto_entrances": {
+      "display_name": "Shuffle Grotto and Grave Entrances (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_boss_entrances": {
+      "display_name": "Shuffle Boss Chambers (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_one_way_entrances": {
+      "display_name": "Shuffle One-Way Entrances (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_owl_drops": {
+      "display_name": "Shuffle Owl Destinations (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_warp_songs": {
+      "display_name": "Shuffle Warp Song Destinations (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_child_spawn": {
+      "display_name": "Shuffle Child Spawn (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_adult_spawn": {
+      "display_name": "Shuffle Adult Spawn (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_dungeon_doors": {
+      "display_name": "Shuffle Dungeon Room Doors (Experimental)",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "mixed_entrance_pools": {
+      "display_name": "Mixed Entrance Pools (Experimental)",
+      "display_value": "all",
+      "value": [
+        "all"
+      ]
+    },
+    "shuffle_rocks": {
+      "display_name": "Shuffle Rocks",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_boulders": {
+      "display_name": "Shuffle Boulders",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_bushes": {
+      "display_name": "Shuffle Bushes",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_icicles": {
+      "display_name": "Shuffle Icicles / Stalagmites",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_red_ice": {
+      "display_name": "Shuffle Red Ice",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_signs": {
+      "display_name": "Shuffle Signs",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_beggar": {
+      "display_name": "Shuffle Market Beggar",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_chest_minigame": {
+      "display_name": "Shuffle Treasure Chest Game",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_wonder_items": {
+      "display_name": "Shuffle Wonder Items",
+      "display_value": "All",
+      "value": 3
+    },
+    "shuffle_silver": {
+      "display_name": "Shuffle Silver Rupees",
+      "display_value": "On",
+      "value": 1
+    },
+    "shuffle_butterfly_fairies": {
+      "display_name": "Shuffle Butterfly Fairies",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_roll": {
+      "display_name": "Shuffle Roll",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_grab": {
+      "display_name": "Shuffle Grab / Power Bracelet",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_climb": {
+      "display_name": "Shuffle Climb",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_crawl": {
+      "display_name": "Shuffle Crawl",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_speak": {
+      "display_name": "Shuffle Speak",
+      "display_value": "Individual Languages",
+      "value": 2
+    },
+    "shuffle_open_chest": {
+      "display_name": "Shuffle Open Chest",
+      "display_value": "Progressive",
+      "value": 2
+    },
+    "shuffle_enemy_drops": {
+      "display_name": "Shuffle Enemy Drops",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_enemy_soul": {
+      "display_name": "Shuffle Enemy Soul",
+      "display_value": "Individual Enemies",
+      "value": 2
+    },
+    "enemy_soul_behavior": {
+      "display_name": "Enemy Soul Locked Behavior",
+      "display_value": "Gone Until Found",
+      "value": 0
+    },
+    "shuffle_npc_soul": {
+      "display_name": "Shuffle NPC Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_animal_soul": {
+      "display_name": "Shuffle Animal Soul",
+      "display_value": "Individual Animals",
+      "value": 2
+    },
+    "shuffle_pot_soul": {
+      "display_name": "Shuffle Pot Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_crate_soul": {
+      "display_name": "Shuffle Crate Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_grass_bush_soul": {
+      "display_name": "Shuffle Grass / Bush Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_rock_boulder_soul": {
+      "display_name": "Shuffle Rock / Boulder Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_tree_soul": {
+      "display_name": "Shuffle Tree Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_beehive_soul": {
+      "display_name": "Shuffle Beehive Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_sign_soul": {
+      "display_name": "Shuffle Sign Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_skulltula_soul": {
+      "display_name": "Shuffle Skulltula Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_business_scrub_soul": {
+      "display_name": "Shuffle Scrub Soul",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_shovel": {
+      "display_name": "Shuffle Shovel",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "shuffle_bean_souls": {
+      "display_name": "Shuffle Bean Souls",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "scene_transition_checks": {
+      "display_name": "Scene Transition Checks",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "npc_speech_sanity": {
+      "display_name": "NPC Speech Sanity",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "song_note_shuffle": {
+      "display_name": "Song Note Shuffle",
+      "display_value": "Individual Notes",
+      "value": 1
+    },
+    "song_note_songs": {
+      "display_name": "Song Note Songs",
+      "display_value": "all",
+      "value": [
+        "all"
+      ]
+    },
+    "shuffle_flow_of_time": {
+      "display_name": "Shuffle Flow of Time",
+      "display_value": "Yes",
+      "value": 1
+    },
+    "frozen_starting_time": {
+      "display_name": "Frozen Starting Time",
+      "display_value": "Night",
+      "value": 4
+    },
+    "time_speed_after_unlock": {
+      "display_name": "Time Speed After Unlock",
+      "display_value": "Normal",
+      "value": 0
+    },
+    "death_link": {
+      "display_name": "Death Link",
+      "display_value": "No",
+      "value": 0
+    },
+    "trap_link": {
+      "display_name": "Trap Link",
+      "display_value": "No",
+      "value": 0
+    },
+    "extreme_trap_pool": {
+      "display_name": "Extreme Trap Pool",
+      "display_value": "Off",
+      "value": 0
+    },
+    "extreme_ice_traps": {
+      "display_name": "Extreme Ice Traps",
+      "display_value": "No",
+      "value": 0
+    },
+    "extreme_fire_traps": {
+      "display_name": "Extreme Fire Traps",
+      "display_value": "No",
+      "value": 0
+    },
+    "extreme_slow_traps": {
+      "display_name": "Extreme Slow Traps",
+      "display_value": "No",
+      "value": 0
+    },
+    "extreme_magic_suck_traps": {
+      "display_name": "Extreme Magic Suck Traps",
+      "display_value": "No",
+      "value": 0
+    },
+    "extreme_health_drain_traps": {
+      "display_name": "Extreme Health Drain Traps",
+      "display_value": "No",
+      "value": 0
+    },
+    "extreme_trap_filler_replacement": {
+      "display_name": "Extreme Trap Filler Replacement %",
+      "display_value": "0",
+      "value": 0
+    }
+  },
+  "non_spoiler_options_using_defaults": [],
+  "initial_time_random_restored": true
+}

@@ -1,0 +1,158 @@
+{
+  "status": "passed",
+  "scope": "Compile-only declaration regression for the actual production Logic::WaterTempleDoorsShuffled function with real official CVar and current Archipelago declaration headers. No fake CVar declaration or implementation is supplied.",
+  "cases": {
+    "without_bridge_include": {
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "soh/Enhancements/randomizer/logic.cpp: In member function \u2018bool Rando::Logic::WaterTempleDoorsShuffled()\u2019:\nsoh/Enhancements/randomizer/logic.cpp:1634:12: error: \u2018CVarGetInteger\u2019 was not declared in this scope\n",
+      "translation_unit_sha256": "b3e4499bef6407f2bd92d236608819d2180821ba488983cfe55ebb16fafe1e6a",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fsyntax-only",
+        "-I",
+        "/workspace/scratch/8fddab5b8169/source",
+        "-I",
+        "/workspace/scratch/8fddab5b8169/tests/water_cvar_bridge_1810_dependencies/include",
+        "$PROBE/without_bridge_include.cpp"
+      ]
+    },
+    "with_production_bridge_include": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "",
+      "translation_unit_sha256": "7fcbcaac859ca8eedf22855c36a119fdc3fc0b38ee268705dbb61dc44c717940",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fsyntax-only",
+        "-I",
+        "/workspace/scratch/8fddab5b8169/source",
+        "-I",
+        "/workspace/scratch/8fddab5b8169/tests/water_cvar_bridge_1810_dependencies/include",
+        "$PROBE/with_production_bridge_include.cpp"
+      ]
+    }
+  },
+  "source_sha256": {
+    "source/soh/Enhancements/randomizer/logic.cpp": "85011ebbbc2f1ca8da0cb0e3a1e53a84fe53976f5ef6756bfe745894d9a0aea6",
+    "source/soh/Enhancements/randomizer/logic.h": "8490b5e9538ab5927ff86ccd419ad964926973391e08047ff876a3be39f9896c",
+    "source/soh/Network/Archipelago/ArchipelagoC.h": "5ae28084050049b0e1afb6d1900856a4f3987b28e606ba4eb427eaca9d1ba646",
+    "source/soh/cvar_prefixes.h": "7365f94ba25ee97ff119c1775b30dc4f7450ab46fe5bbe6a37ef6be5eba798d2"
+  },
+  "fixture_sha256": {
+    "tests/compile_fix_1810_cvar_declaration.py": "3a7e1db7d2ed06fa5c442619ce4508c90b082ee8dac314edcc721d6dc69f8caf",
+    "tests/water_cvar_bridge_1810_dependencies/provenance.json": "a51f2fe3b38dc004f30b6f049b5fa1779e52273145086f841b2007576badafcd",
+    "source/tools/tests/test_soul_logic_native.py": "c3d6cf972babdd9b1c31b1ae8b93192f3ba8c5b593f2b9f73e0b14e823a4f785",
+    "tests/water_cvar_bridge_1810_dependencies/include/libultraship/bridge/consolevariablebridge.h": "5632f9533053e6c700c20ce1b90e3f443f8d2205dd88f6e6d8ef489720617dd9",
+    "tests/water_cvar_bridge_1810_dependencies/include/libultraship/color.h": "a09fe8ab00fd02233c66c9894e3b1627660d862fa87d55e2b1c0edab3448703d",
+    "tests/water_cvar_bridge_1810_dependencies/LICENSE": "fdd4f25c62f0a30865c4395d53e731be208c7b8912d5c068dbd93ca7fadc8a97",
+    "tests/water_cvar_bridge_1810_dependencies/include/ship/Api.h": "e2ad40e65af36bd6939cd204e66b758149b77e3d4c3469322d6afe22dc2540a4",
+    "tests/water_cvar_bridge_1810_dependencies/include/ship/config/ConsoleVariable.h": "ea1e9c7a58449d45fb79dc6931d89e954b1595cf452d2cea0d662a0ca55bfec4",
+    "tests/water_cvar_bridge_1810_dependencies/include/ship/utils/color.h": "64a619aa88cba6b13b2c9daaedd4522e21c0b1bfcc0751cae65f2d096b46545d",
+    "tests/water_cvar_bridge_1810_dependencies/include/ship/core/Component.h": "101a88248a0187ef9978e47365cffa1de1becbaa663eb3cb757a04e6a89b78a5",
+    "tests/water_cvar_bridge_1810_dependencies/include/ship/core/Part.h": "710747bd804b0201007a527c9f331e3515f68ec059cb0ae627a31523448c86c5",
+    "tests/water_cvar_bridge_1810_dependencies/include/ship/core/PartList.h": "db8b025d4aee281df0954072243e614ba330501e01eb4ed87e9cc3799b9bf0e1",
+    "tests/water_cvar_bridge_1810_dependencies/include/ship/core/ComponentList.h": "29ea94c0bc912193a794804b69252fbe37c84d67cd18c0d76e3d25def988fa62",
+    "tests/water_cvar_bridge_1810_dependencies/include/nlohmann/json.hpp": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63"
+  },
+  "dependency_provenance": {
+    "repository": "https://github.com/HarbourMasters/libultraship",
+    "commit": "759b13401cd6903daa67a00a753066f791622e78",
+    "retrieved_utc": "2026-10-19T17:30:50.166154+00:00",
+    "scope": "Official declaration headers for a syntax-only CVarGetInteger include regression probe. This is not the user checkout dependency lock.",
+    "files": {
+      "include/libultraship/bridge/consolevariablebridge.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/libultraship/bridge/consolevariablebridge.h",
+        "git_blob_sha1": "c2c9b1465a71528f74157694e316e668bb6335ae",
+        "sha256": "5632f9533053e6c700c20ce1b90e3f443f8d2205dd88f6e6d8ef489720617dd9",
+        "bytes": 5462
+      },
+      "include/libultraship/color.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/libultraship/color.h",
+        "git_blob_sha1": "bb2ac78792fd878780a60faa28196fe32b63f0cb",
+        "sha256": "a09fe8ab00fd02233c66c9894e3b1627660d862fa87d55e2b1c0edab3448703d",
+        "bytes": 2420
+      },
+      "LICENSE": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/LICENSE",
+        "git_blob_sha1": "90e752ce64efdd3f1b48c62d589061435c9b0f5b",
+        "sha256": "fdd4f25c62f0a30865c4395d53e731be208c7b8912d5c068dbd93ca7fadc8a97",
+        "bytes": 1090
+      },
+      "include/ship/Api.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/ship/Api.h",
+        "git_blob_sha1": "ee779d7bf339e66374ef114795e686498fdc0901",
+        "sha256": "e2ad40e65af36bd6939cd204e66b758149b77e3d4c3469322d6afe22dc2540a4",
+        "bytes": 1101
+      },
+      "include/ship/config/ConsoleVariable.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/ship/config/ConsoleVariable.h",
+        "git_blob_sha1": "a4a6e9e25b5ad0a5f1819564d7b2f1d9cb066f2e",
+        "sha256": "ea1e9c7a58449d45fb79dc6931d89e954b1595cf452d2cea0d662a0ca55bfec4",
+        "bytes": 7829
+      },
+      "include/ship/utils/color.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/ship/utils/color.h",
+        "git_blob_sha1": "24b6c7d89470bb45bed6fb82a253447efce53405",
+        "sha256": "64a619aa88cba6b13b2c9daaedd4522e21c0b1bfcc0751cae65f2d096b46545d",
+        "bytes": 758
+      },
+      "include/ship/core/Component.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/ship/core/Component.h",
+        "git_blob_sha1": "9bc912084710cbb0fc21db7ee2129bf10e15916d",
+        "sha256": "101a88248a0187ef9978e47365cffa1de1becbaa663eb3cb757a04e6a89b78a5",
+        "bytes": 17678
+      },
+      "include/ship/core/Part.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/ship/core/Part.h",
+        "git_blob_sha1": "afbcbbda501b2051f4ab5096fc0aa8874f475a9b",
+        "sha256": "710747bd804b0201007a527c9f331e3515f68ec059cb0ae627a31523448c86c5",
+        "bytes": 3147
+      },
+      "include/ship/core/PartList.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/ship/core/PartList.h",
+        "git_blob_sha1": "9d370617612315d202b9c9ed556a182e802760a4",
+        "sha256": "db8b025d4aee281df0954072243e614ba330501e01eb4ed87e9cc3799b9bf0e1",
+        "bytes": 29798
+      },
+      "include/ship/core/ComponentList.h": {
+        "url": "https://raw.githubusercontent.com/HarbourMasters/libultraship/759b13401cd6903daa67a00a753066f791622e78/include/ship/core/ComponentList.h",
+        "git_blob_sha1": "6247453ea580e1c4cc339703866b62ebc1ef8d84",
+        "sha256": "29ea94c0bc912193a794804b69252fbe37c84d67cd18c0d76e3d25def988fa62",
+        "bytes": 3983
+      },
+      "include/nlohmann/json.hpp": {
+        "url": "https://raw.githubusercontent.com/nlohmann/json/v3.12.0/single_include/nlohmann/json.hpp",
+        "git_blob_sha1": "82d69f7c5d044c9887c96b90c97f5639083ecd14",
+        "sha256": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63",
+        "bytes": 953436,
+        "reused_from_verified_local_dependency": "tests/entrance_184_native_dependencies/json.hpp"
+      }
+    }
+  },
+  "dependency_provenance_sha256": "a51f2fe3b38dc004f30b6f049b5fa1779e52273145086f841b2007576badafcd",
+  "retained_water_report_sha256": "321afdea81af7bd59e43a3c472637fc1b5150041d281ab3d030da1ba4e18bd37",
+  "retained_water_helper_sha256": "38900bf063c5b244751e731feefb8ff15378be03cb6f720b5acd267c1c2017f9",
+  "current_water_helper_sha256": "38900bf063c5b244751e731feefb8ff15378be03cb6f720b5acd267c1c2017f9",
+  "previous_full_logic_sha256": "9e6a0aed7fbec38674ffc5458f900192db5a967e246e508f5c68e411a263067c",
+  "exact_change": "One added CRLF include line; all pre-existing logic.cpp bytes unchanged.",
+  "source_unchanged_during_tests": true,
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "native_windows_build": false,
+  "linked_game": false,
+  "gameplay_tests_rerun": false,
+  "limitations": [
+    "The surrounding Logic class is a minimal shell using its production member declaration.",
+    "The CVar prefix value is a string supplied for compile checking; runtime settings are not evaluated.",
+    "The official header commit is pinned for this probe; the partial upload does not contain the user dependency lock.",
+    "This validates the reported missing declaration and fixed call, not the full logic.cpp translation unit or a Windows build."
+  ]
+}

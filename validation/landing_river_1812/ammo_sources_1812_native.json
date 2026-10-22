@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "cases": 6269,
+  "assertions": 27852,
+  "baseline_reproductions": 6,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "leak_detection": "Disabled because executor /proc/task access is unavailable",
+  "languages": [
+    "C11 native drop/init/flag/age functions",
+    "C++20 identity, registration, retention and C bridge"
+  ],
+  "source_unchanged_during_tests": true,
+  "scope": "Actual native pot/small-crate/large-crate drop functions, large-crate Init, collectible flag Get/Set, age conversion, exact IdentifyCheck and source-specific identity normalization, source observation init callbacks, actual client ObserveAmmoSource/ResetAmmoSources/AmmoSourcesJson methods and exported C bridge. All 64 collectible flags and 32 raw drop values are exercised for each actor class. Bounds, deduplication, conflicting/tombstoned variants, observed age, physical-file change and reset execute through real client methods. Native allocation, inventory, check database IO and hook dispatch are controlled. Full save/settings lifecycle call sites are source-bound but not compiled in this fixture. No scene geometry, AP reachability proof, complete Windows game build or controller playthrough is claimed.",
+  "raw_mask_bits": {
+    "stick": 1,
+    "nut": 2,
+    "bomb": 4,
+    "arrows": 16,
+    "seeds_for_age_conversion": 32
+  },
+  "accepted_raw_drop_ids": {
+    "bombs_a": 4,
+    "arrows_small": 8,
+    "arrows_medium": 9,
+    "arrows_large": 10,
+    "bombs_b": 11,
+    "nuts": 12,
+    "stick": 13,
+    "seeds": 16
+  },
+  "large_crate_contract": "sourceDropParams=actor.home.rot.x; collectibleInput=crateActor.collectibleFlag saved before native Init clears home.rot.z",
+  "sources": {
+    "soh/Network/Archipelago/AmmoPolicy.h": "e1337cfa6c8be0ec7ad8ede2df3363bdd827deed47e96382b013b032d27bcd9e",
+    "soh/Network/Archipelago/AmmoSourcePolicy.h": "007de747e0075adae8b3a5c647b934a439daba7eb2466de229b40d140a01ca76",
+    "soh/Network/Archipelago/ArchipelagoC.h": "81cf9a18eae39424985d446b04ac8ff38c1f55975a869bacfb1d5d8641fa3ed7",
+    "soh/Enhancements/randomizer/ShufflePots.cpp": "c05f98a98396d598948db2aa5cf06d5c59421002d8f7c6609b6b59e8a7e1c870",
+    "soh/Enhancements/randomizer/ShuffleCrates.cpp": "ebdc4e6315ef7b87c706fa865f8691a84ad3167a8773c05eaf912720abf98796",
+    "soh/Enhancements/randomizer/RCToRandInf.cpp": "de2f2e2907103e96a7121eed33aadaa8be09e153ef99c5d546463a08bcf671b5",
+    "soh/Enhancements/randomizer/randomizerTypes.h": "dc86b56177c188419a7b00f600f3f91e45f491dce16989f677cd6dbc609bd2aa",
+    "src/overlays/actors/ovl_Obj_Tsubo/z_obj_tsubo.c": "094c32bbdf2ce5c0000d9ea04558c5cea5645b71d6026ae77fb52b7b32928760",
+    "src/overlays/actors/ovl_Obj_Kibako/z_obj_kibako.c": "02035d7632d4f4d5c18c7ed2b88eff31b38e71b4e6d201dfde082431f5806b6c",
+    "src/overlays/actors/ovl_Obj_Kibako2/z_obj_kibako2.c": "81cb3b4a2b67699d1ab6be5791152164947d4cebd3968d22b14e615309825727",
+    "src/code/z_actor.c": "0a89295fddefb6c8b01de6e76acabcec144fba7954007e42a89c1bdd4d5bfb22",
+    "src/code/z_en_item00.c": "d061da7d1fb52a997e46cb7d0b43b50e74e44365110939fbcd9e14b1ead82a23",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp": "75f4f836d5c6b30e4867514bd1ac566b8c7b16f391237e73b20d73bb63cf61cc",
+    "soh/Network/Archipelago/ArchipelagoClient.h": "a3eb0a5578362b57f43147feeee5b62728b10e3a17a165a6d8895ea8b9a9c3bc"
+  },
+  "tests": {
+    "tools/tests/test_ammo_sources_native.py": "0a818bf993b4c25b298c88310a6ac306921e5de97684cc8f30cddb7f74564d47",
+    "tools/tests/ammo_sources_native_io.h": "55d0b01d1b922e342ff663506b4d8dc8c8ac200d1f7d14212702fad9bfcb6e11",
+    "tools/tests/ammo_sources_native_tests.cpp.in": "b1901ad3aacbe769e47e9ff6b1549f018a2e87702c1e2c037fd8baa84526213e",
+    "tools/tests/ammo_sources_legacy_functions.inc": "ede819915190799e9114b0dcaf823736876d90694cd71305aa30f3c14c3f6369",
+    "tools/tests/test_zora_river_native.py": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48"
+  },
+  "dependencies": {
+    "z64actor.h": "c999e0eaf8b873bf5a229a3a3c83007c310ebdd5d59acffd731ae60776164798",
+    "z64actor.h.provenance.json": "04cc6ee77d8deea8e9676006dacdcd18a222f66b42e8d942fd2c0d8d3a3a3466"
+  },
+  "native_drop_enum_provenance": {
+    "url": "https://raw.githubusercontent.com/HarbourMasters/Shipwright/develop/soh/include/z64actor.h",
+    "sha256": "c999e0eaf8b873bf5a229a3a3c83007c310ebdd5d59acffd731ae60776164798",
+    "retrieved_utc": "2026-10-19",
+    "retained_file": "z64actor.h",
+    "contains_item00_enum": true
+  },
+  "native_drop_enum_sha256": "a7a1e80e22acb8b80bac4854cb6f54991ad56b259cebbe5ea785c3d021d59454",
+  "randomized_container_behavior_unchanged": true,
+  "tested_function_sha256": {
+    "void ObjTsubo_SpawnCollectible(ObjTsubo* this, PlayState* play) {": "899513f3f64cd972c6b7b6371747a593e455c04cbac0411b2e863324c5f4269e",
+    "void ObjKibako_SpawnCollectible(ObjKibako* this, PlayState* play) {": "38f5ccfa619aef8357a570e7d6badfdc384da32ef68197d7b9cd6fe0143c1582",
+    "void ObjKibako2_SpawnCollectible(ObjKibako2* this, PlayState* play) {": "dbd5f705a1e8ceee3d875c4eda2be0c8063931132ee5b230e6cbbcf2b223f207",
+    "void ObjKibako2_Init(Actor* thisx, PlayState* play) {": "53c59494796a4e735c4537322c6e97c9ca0a19f635e30852e8c5150c97a008f6",
+    "s32 Flags_GetCollectible(": "78edde6fc19211ba9a3970fd4dc296b9e6f1bbba9b9d5260dccb2c62bc16819d",
+    "void Flags_SetCollectible(": "2ce86cbf4b2919fc0084204bdee5ab6d89ae1d8a25dc7330b3a5a9e51a964f10",
+    "s16 func_8001F404(": "778a12463f2e72d123b27ca01c3a0892409c2fbff6b23c1c02d64cef77d912e9",
+    "bool IdentifyCheck(": "1dcf963b935cd9d275146c46338c22c48ccf2ee3b835e601ea18cc84e99c5eb3",
+    "static CheckIdentity IdentifyPot(": "f6f9668f278db47981adf2cc091e8e5908570bcd4c32ab361a1236306f31dd46",
+    "static CheckIdentity IdentifyCrate(": "3cd599ee06695c3db78d7aab04196d964dae732f7f8dbe00d7dd74d6ae48b5ae",
+    "static CheckIdentity IdentifySmallCrate(": "ad4c3f1751fe2106cc1a34c8fe6dfe7e96e2f924ca0b9535dc876ef80d69e136",
+    "void RegisterShufflePots(": "41ba8c78fd145279aac2efc27f4592b78648bc8d1605c9a97245198f40a73fb2",
+    "void ObjKibako2_RandomizerInit(": "5c9ca6d21e18c17d73c030cbded7590ddbbf8f3a811f90b718166de6921f05b8",
+    "void ObjKibako_RandomizerInit(": "ed285dc3b1a555878354365d2928e313b5dab9ddf637c673d844936747ad26c6",
+    "void RegisterShuffleCrates(": "4a9289c0f9dd106a538037969246ff30df5d9bf887ccd2715c5e3ba4f62404b8",
+    "void ArchipelagoClient::ResetAmmoSources(": "7582a6ff5422dd4a552d3909a2659d5768b0a8fd4f24a8306a44681a7bf36cb9",
+    "void ArchipelagoClient::ObserveAmmoSource(": "ab5ae2ed7084c787979431eb0c5317b654e43c6546f5c5e86d64cbd02ed95961",
+    "std::string ArchipelagoClient::AmmoSourcesJson(": "b93f1675033430c871cba17c0dd148420f38f429d308731579c15c5ad0d2ad66",
+    "extern \"C\" void Archipelago_ObserveAmmoSource(": "d3c4435060cdd2248bdf7487bca7a5046d03a85838f8dcf65b190e0cba62b23b"
+  },
+  "randomized_behavior_function_sha256": {
+    "pots": {
+      "uint8_t ObjTsubo_RandomizerHoldsItem(": "c95a03ae52e99240fb4c61f11b53399cfac9be2376635e41d28d405e229f5d9e",
+      "void ObjTsubo_RandomizerSpawnCollectible(": "2d8c923080f7d551558e9c67b0c5ab902e1f7e3cd2aad5ef725e40eeeaca079d"
+    },
+    "crates": {
+      "uint8_t ObjKibako2_RandomizerHoldsItem(": "85107302d09cf643c53c9c492c3e3ae92729f44104ec2987f805a671374ba688",
+      "uint8_t ObjKibako_RandomizerHoldsItem(": "d1bdc8958cbe30fc08db1358aacb37ffe506c0c3c1c339495cba068ae3c47e5c",
+      "void ObjKibako2_RandomizerSpawnCollectible(": "d88fdd7ab1d5026468fac66ad421fb8bbe705bd16158e4c1bfdbef2dd58436c8",
+      "void ObjKibako_RandomizerSpawnCollectible(": "5dd1e2a87d3db7005d0aa93ca4878effb7aabadbaac202d03cf090fb2efc34aa"
+    }
+  },
+  "retained_baseline_source_sha256": {
+    "soh/Enhancements/randomizer/ShufflePots.cpp": "7d43dc3a47acf8755a86aad8bf70a6daea40f48383454c66a4b30e6434b7a937",
+    "soh/Enhancements/randomizer/ShuffleCrates.cpp": "6e6c06da4c997978cb7977ac691ec7c389201882290c4f89fbe4a3da6a024889"
+  },
+  "replay_command": "python3 source/tools/tests/test_ammo_sources_native.py --dependencies tests/ammo_sources_1812_native_dependencies --report tests/ammo_sources_1812_native.json"
+}

@@ -1,0 +1,293 @@
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <limits>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+using s32 = int32_t;
+using u32 = uint32_t;
+using s16 = int16_t;
+using s8 = int8_t;
+using f32 = float;
+constexpr int SCENE_SPIRIT_TEMPLE = 6, CS_STATE_IDLE = 0, ENTR_KOKIRI_FOREST_0 = 77;
+#define PARAMS_GET_U(value, shift, bits) (((value) >> (shift)) & ((1 << (bits)) - 1))
+#define GET_TRANSITION_ACTOR_INDEX(actor) PARAMS_GET_U((actor)->params, 10, 6)
+#define GET_PLAYER(play) (&(play)->player)
+#define CLAMP(value, low, high) std::clamp(value, low, high)
+
+struct Vec3f { float x = 0, y = 0, z = 0; };
+struct Actor {
+    int params = 0, room = 0;
+    struct { Vec3f pos; } world;
+    float yDistToPlayer = 0, xzDistToPlayer = 0, speedXZ = 0, yaw = 0;
+    void* draw = nullptr;
+};
+struct Player { Actor actor; };
+struct Room { int num = -1; };
+struct RoomContext { Room curRoom, prevRoom; int status = 0, activeBufPage = 0; };
+struct TransitionActorEntry { struct { int room; } sides[2] = {{0}, {1}}; };
+struct PlayState {
+    Player player;
+    int sceneNum = 0, bgCoverAlpha = 0;
+    RoomContext roomCtx;
+    struct { int state = CS_STATE_IDLE; } csCtx;
+    struct { Vec3f eye; } view;
+    struct { TransitionActorEntry list[4]; } transiActorCtx;
+    bool switchSet = true;
+};
+struct EnHoll;
+using EnHollActionFunc = void (*)(EnHoll*, PlayState*);
+struct EnHoll {
+    Actor actor;
+    int planeAlpha = 0, side = 0;
+    bool resetBgCoverAlpha = false;
+    EnHollActionFunc actionFunc = nullptr;
+};
+struct { int entranceIndex = 0, sceneLayer = 0; } gSaveContext;
+int gDbgCamEnabled = 0;
+PlayState* currentPlay;
+struct Event {
+    char kind;
+    int transition, physical, target, loadedRoom;
+    bool vertical;
+    Vec3f position;
+};
+std::vector<Event> events;
+
+@CONSTANTS@
+@TYPES@
+@API@
+@DECLARATIONS@
+@ACTION_TABLE@
+@TRIGGERS@
+
+void Actor_WorldToActorCoords(Actor* actor, Vec3f* dest, Vec3f* point) {
+    const float x = point->x - actor->world.pos.x, z = point->z - actor->world.pos.z;
+    const float c = std::cos(actor->yaw), s = std::sin(actor->yaw);
+    *dest = { c*x - s*z, point->y - actor->world.pos.y, s*x + c*z };
+}
+bool Flags_GetSwitch(PlayState* play, int) { return play->switchSet; }
+float Math_SmoothStepToF(float* value, float target, float, float maximum, float minimum) {
+    const float diff = target - *value;
+    if (diff != 0) *value += std::copysign(std::min(std::abs(diff), std::max(minimum, std::min(maximum, std::abs(diff)))), diff);
+    return diff;
+}
+void Archipelago_EntranceObserveRoomBoundary(int transition, int physicalRoom, int otherRoom, bool vertical) {
+    events.push_back({'O', transition, physicalRoom, otherRoom, currentPlay->roomCtx.curRoom.num,
+                      vertical, currentPlay->player.actor.world.pos});
+}
+void Archipelago_EntranceSelectRoomBoundary(int transition, int target) {
+    events.push_back({'S', transition, -1, target, currentPlay->roomCtx.curRoom.num,
+                      false, currentPlay->player.actor.world.pos});
+}
+s32 Room_RequestNewRoom(PlayState* play, RoomContext* rooms, s32 room) {
+    events.push_back({'R', -1, -1, room, rooms->curRoom.num, false, play->player.actor.world.pos});
+    if (rooms->status != 0) return 0;
+    rooms->prevRoom = rooms->curRoom;
+    rooms->curRoom.num = room;
+    rooms->status = 1;
+    rooms->activeBufPage ^= 1;
+    return 1;
+}
+void Room_FinishRoomChange(PlayState* play, RoomContext* rooms) {
+    events.push_back({'F', -1, -1, rooms->curRoom.num, rooms->curRoom.num, false, play->player.actor.world.pos});
+    rooms->prevRoom.num = -1;
+}
+
+@FUNCTIONS@
+
+int cases = 0, assertions = 0;
+void expect(bool condition, const char* description) {
+    ++assertions;
+    if (!condition) throw std::runtime_error(description);
+}
+int count(char kind) {
+    return std::count_if(events.begin(), events.end(), [kind](const Event& event) { return event.kind == kind; });
+}
+const Event& last(char kind) {
+    for (auto it = events.rbegin(); it != events.rend(); ++it) if (it->kind == kind) return *it;
+    throw std::runtime_error(std::string("Missing event ")+kind);
+}
+struct Scenario {
+    PlayState play;
+    EnHoll hall;
+    explicit Scenario(int type, int room = 0) {
+        events.clear(); gSaveContext = {}; gDbgCamEnabled = 0;
+        currentPlay = &play;
+        play.roomCtx.curRoom.num = room;
+        hall.actor.params = (type << 6) | (2 << 10) | 5;
+        EnHoll_ChooseAction(&hall);
+    }
+    void frame(float x, float y, float z) {
+        const float c = std::cos(hall.actor.yaw), s = std::sin(hall.actor.yaw);
+        play.player.actor.world.pos = {hall.actor.world.pos.x+c*x+s*z, hall.actor.world.pos.y+y,
+                                       hall.actor.world.pos.z-s*x+c*z};
+        hall.actor.yDistToPlayer = y;
+        hall.actor.xzDistToPlayer = std::sqrt(x*x + z*z);
+        EnHoll_Update(&hall.actor, &play);
+    }
+};
+template<typename F> void test(const char* name, F run) {
+    ++cases;
+    try { run(); } catch (const std::exception& error) { throw std::runtime_error(std::string(name)+": "+error.what()); }
+}
+
+int main() {
+    try {
+        for (int type = 0; type < 7; ++type) {
+            for (int side = 0; side < 2; ++side) test("all seven physical side conventions", [=] {
+                Scenario s(type, side);
+                const bool vertical = type == ENHOLL_V_DOWN_BGCOVER_LARGE || type == ENHOLL_V_INVISIBLE || type == ENHOLL_V_BGCOVER;
+                s.frame(0, vertical ? (side == 0 ? 100 : -100) : 0, vertical ? 0 : (side == 0 ? -75 : 75));
+                expect(count('O') == 1, "one physical-side observation");
+                expect(events.front().kind == 'O', "observation precedes room action");
+                const auto& o = events.front();
+                expect(o.transition == 2 && o.physical == side && o.target == (side ^ 1), "actual transition and side room IDs");
+                expect(o.vertical == vertical, "only shaft types request grounded return treatment");
+            });
+        }
+        for (int type : {ENHOLL_H_INVISIBLE, ENHOLL_H_INVISIBLE_NARROW}) {
+            for (float z : {-40.f, -1.f, 1.f, 40.f}) test("invisible dead band observes without loading", [=] {
+                Scenario s(type);
+                s.frame(0, 0, z);
+                expect(count('O') == 1 && count('R') == 0 && count('S') == 0, "dead band only observes");
+                expect(last('O').physical == (z < 0 ? 0 : 1), "physical sign inside dead band");
+            });
+        }
+        test("invisible crossing observes physical destination before native request", [] {
+            Scenario s(ENHOLL_H_INVISIBLE);
+            s.frame(0, 0, -60); s.frame(0, 0, -1); s.frame(0, 0, 60);
+            expect(events.size() == 5, "three observations then selection and request");
+            expect(events[1].position.z == -1 && events[1].physical == 0, "last real source-side point");
+            expect(events[2].physical == 1 && events[2].loadedRoom == 0, "physical side differs from nominal current room");
+            expect(events[3].kind == 'S' && events[4].kind == 'R', "selection immediately precedes request");
+            expect(events[3].target == 1 && events[4].loadedRoom == 0, "select before native current-room mutation");
+            expect(s.hall.actionFunc == EnHoll_WaitRoomLoaded, "native load wait preserved");
+            s.play.roomCtx.status = 0; s.frame(0, 0, 65);
+            expect(events[events.size()-2].kind == 'O' && events.back().kind == 'F', "wait still observes before finishing");
+            expect(s.hall.actionFunc == EnHoll_HorizontalInvisible, "native action restored after load");
+        });
+        test("visible narrow preload and completed crossing", [] {
+            Scenario s(ENHOLL_H_VISIBLE_NARROW);
+            s.frame(0, 0, -220); expect(events.empty(), "outside authored volume");
+            s.frame(0, 0, -140);
+            expect(events[0].physical == 0 && events[1].target == 1 && events[2].kind == 'R', "opposite-side preload keeps physical source");
+            s.play.roomCtx.status = 0;
+            s.frame(0, 0, -20);
+            expect(last('O').physical == 0 && last('O').loadedRoom == 1, "source observation continues during preload");
+            s.frame(0, 0, 20); expect(s.play.roomCtx.curRoom.num == 0, "native near-plane room swap preserved");
+            s.frame(0, 0, 160);
+            expect(count('R') == 1 && count('F') == 1, "single native request and completed commit");
+            expect(last('S').target == 1 && last('F').target == 1, "commit selects actual destination");
+            expect(events[events.size()-2].kind == 'S' && events.back().kind == 'F', "select precedes final swap and finish");
+        });
+        test("visible narrow aborted preload", [] {
+            Scenario s(ENHOLL_H_VISIBLE_NARROW);
+            s.frame(0, 0, -140); s.play.roomCtx.status = 0; s.frame(0, 0, -160);
+            expect(count('R') == 1 && count('F') == 1, "native canceled preload still finishes");
+            expect(last('O').physical == 0 && last('S').target == 0 && last('F').target == 0, "cancellation exposes original room, not the provisional load");
+        });
+        test("Spirit narrow geometry", [] {
+            Scenario s(ENHOLL_H_VISIBLE_NARROW); s.play.sceneNum = SCENE_SPIRIT_TEMPLE;
+            s.frame(0, 0, -120); expect(events.empty(), "Spirit uses its authored 100-unit volume");
+            s.frame(0, 0, -70); expect(count('O') == 1 && count('R') == 1, "Spirit authored preload threshold retained");
+        });
+        for (int type : {ENHOLL_H_VISIBLE_NARROW, ENHOLL_H_INVISIBLE, ENHOLL_H_INVISIBLE_NARROW, ENHOLL_H_BGCOVER_SWITCHFLAG}) {
+            for (int boundary = 0; boundary < 4; ++boundary) test("horizontal strict bounds", [=] {
+                Scenario s(type);
+                const float width = type == ENHOLL_H_VISIBLE_NARROW || type == ENHOLL_H_INVISIBLE_NARROW ? 100 : 200;
+                const float depth = type == ENHOLL_H_VISIBLE_NARROW ? 200 : 100;
+                s.frame(boundary == 0 ? width : 0, boundary == 1 ? -50 : boundary == 2 ? 200 : 0,
+                        boundary == 3 ? -depth : -60);
+                expect(count('O') == 0 && count('S') == 0 && count('R') == 0, "out-of-volume player has no new hallway behavior");
+            });
+        }
+        for (int type : {ENHOLL_V_DOWN_BGCOVER_LARGE, ENHOLL_V_INVISIBLE, ENHOLL_V_BGCOVER}) {
+            for (int boundary = 0; boundary < 2; ++boundary) test("vertical strict bounds", [=] {
+                Scenario s(type);
+                const bool large = type == ENHOLL_V_DOWN_BGCOVER_LARGE;
+                s.frame(boundary == 0 ? (large ? 500 : 120) : 0, boundary == 1 ? (large ? 700 : 200) : 100, 0);
+                expect(count('O') == 0 && count('S') == 0 && count('R') == 0, "vertical spatial boundary excluded");
+            });
+        }
+        test("switched hallway remains blocked until switch", [] {
+            Scenario s(ENHOLL_H_BGCOVER_SWITCHFLAG);
+            s.play.switchSet = false; s.hall.resetBgCoverAlpha = true; s.play.bgCoverAlpha = 200;
+            s.frame(0, 0, 25);
+            expect(events.empty() && s.play.bgCoverAlpha == 0 && !s.hall.resetBgCoverAlpha, "off switch retains native reset and no observer");
+            s.play.switchSet = true; s.frame(0, 0, 25);
+            expect(events.size() == 3 && events[0].physical == 1 && events[1].kind == 'S' && events[2].kind == 'R', "enabled native switch crossing observes and selects");
+        });
+        test("vertical drop observes before authored centering", [] {
+            Scenario s(ENHOLL_V_DOWN_BGCOVER_LARGE); s.play.player.actor.speedXZ = 7;
+            s.frame(200, 80, 0);
+            expect(events.size() == 3 && events[0].kind == 'O' && events[0].vertical, "drop has source observation first");
+            expect(events[0].position.x == 200 && events[1].position.x == 150, "observation precedes native position nudge");
+            expect(events[0].physical == 0 && events[1].target == 1, "down-only preload direction");
+            expect(s.play.player.actor.speedXZ == 0 && s.hall.resetBgCoverAlpha, "drop native successful-load effects preserved");
+        });
+        for (int type : {ENHOLL_V_INVISIBLE, ENHOLL_V_BGCOVER}) test("vertical crossing selects after physical side change", [=] {
+            Scenario s(type); s.frame(0, 75, 0); s.frame(0, 1, 0); s.frame(0, -75, 0);
+            expect(count('O') == 3 && count('R') == 1 && count('S') == 1, "shaft dead band does not create extra room requests");
+            expect(last('O').physical == 1 && last('O').loadedRoom == 0 && last('S').target == 1, "shaft supplies physical side despite stale loaded room");
+        });
+        for (int mode = 0; mode < 3; ++mode) test("non-player hallway tracking excluded", [=] {
+            Scenario s(ENHOLL_H_INVISIBLE);
+            s.play.view.eye = {0, 0, 60};
+            if (mode == 0) gDbgCamEnabled = 1;
+            if (mode == 1) s.play.csCtx.state = 1;
+            if (mode == 2) { gSaveContext.entranceIndex = ENTR_KOKIRI_FOREST_0; gSaveContext.sceneLayer = 8; }
+            s.frame(0, 0, mode == 2 ? 300 : -60);
+            expect(count('O') == 0 && count('S') == 0 && count('R') == 1, "native camera/cutscene/special-layer load preserved without physical claim");
+            expect(last('R').target == 1, "native subject side still chooses destination");
+        });
+        test("busy loader gets no speculative selection", [] {
+            Scenario s(ENHOLL_H_INVISIBLE); s.play.roomCtx.status = 1;
+            s.frame(0, 0, 60);
+            expect(count('O') == 1 && count('S') == 0 && count('R') == 1, "failed native request remains a failed request");
+            expect(s.play.roomCtx.curRoom.num == 0 && s.hall.actionFunc == EnHoll_HorizontalInvisible, "busy loader preserves room and action");
+        });
+        test("already loaded physical room is not requested", [] {
+            Scenario s(ENHOLL_H_INVISIBLE); s.frame(0, 0, -60);
+            expect(count('O') == 1 && count('S') == 0 && count('R') == 0, "observation alone never loads a room");
+        });
+        test("horizontal observation uses actor local geometry", [] {
+            Scenario s(ENHOLL_H_INVISIBLE);
+            s.hall.actor.world.pos = {2000, 500, -1000}; s.hall.actor.yaw = 1.57079632679f;
+            s.frame(20, 10, -60);
+            expect(count('O') == 1 && last('O').physical == 0, "rotation and translation retain physical source side");
+            expect(std::abs(last('O').position.x - 1940) < 0.01f, "observer records actual world point");
+        });
+        test("integer spawn coordinates preserve the physical source side", [] {
+            Scenario s(ENHOLL_H_BGCOVER_SWITCHFLAG);
+            s.frame(0, 0, -1.25f); s.frame(0, 0, -0.25f);
+            expect(count('O') == 1, "latest sub-unit sample that would truncate onto the destination is skipped");
+            expect(last('O').position.z == -1.25f && last('O').physical == 0, "previous real source coordinate retained");
+            expect(count('R') == 0, "precision safeguard changes no native room requests");
+        });
+        test("rotated plane checks quantized world coordinates", [] {
+            Scenario s(ENHOLL_H_BGCOVER_SWITCHFLAG); s.hall.actor.yaw = 0.78539816339f;
+            s.frame(0.5f, 0, -2); s.frame(0.5f, 0, -0.1f);
+            expect(count('O') == 1, "world integer truncation is checked through the same actor transform");
+            expect(last('O').physical == 0 && last('O').position.z < -1, "earlier quantization-safe source retained");
+        });
+        test("representable physical side remains observable at plane", [] {
+            Scenario s(ENHOLL_H_BGCOVER_SWITCHFLAG, 1); s.frame(0, 0, 0.25f);
+            expect(count('O') == 1 && last('O').physical == 1, "same-side truncated coordinate remains valid");
+        });
+        for (float origin : {40000.f, -40000.f, std::numeric_limits<float>::infinity(),
+                             std::numeric_limits<float>::quiet_NaN()}) test("invalid coordinates never enter integer cast", [=] {
+            Scenario s(ENHOLL_H_INVISIBLE); s.hall.actor.world.pos.x = origin;
+            s.frame(0, 0, -60);
+            expect(count('O') == 0, "nonfinite or unrepresentable source point rejected");
+        });
+        std::printf("RESULT cases=%d assertions=%d\n", cases, assertions);
+    } catch (const std::exception& error) {
+        std::fprintf(stderr, "%s\n", error.what());
+        return 1;
+    }
+    return 0;
+}

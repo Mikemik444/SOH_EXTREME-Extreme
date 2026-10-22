@@ -1,0 +1,414 @@
+// Production collectors/updaters are inserted by the runner. Engine rendering,
+// collision queries and destination wording are explicit I/O shims.
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <map>
+#include <set>
+#include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "soh/Enhancements/randomizer/SceneExitLabels.h"
+#include "soh/Enhancements/nametag.h"
+
+using s16 = int16_t;
+using s32 = int32_t;
+using f32 = float;
+constexpr int ACTOR_EN_DOOR = 9, ACTOR_DOOR_SHUTTER = 46, ACTOR_EN_HOLL = 35;
+constexpr int ACTOR_DOOR_ANA = 155, ACTOR_DOOR_WARP1 = 93, ACTOR_EN_OWL = 333;
+constexpr int ACTORCAT_DOOR = 10, BGCHECK_SCENE = 50, COLPOLY_IGNORE_ENTITY = 2;
+constexpr float BGCHECK_Y_MIN = -32000;
+struct Vec3f { float x = 0, y = 0, z = 0; };
+struct Vec3s { s16 x = 0, y = 0, z = 0; };
+void DrawActor() {}
+struct Actor {
+    int id = ACTOR_EN_DOOR, params = 0;
+    struct { Vec3f pos; Vec3s rot; } world, home;
+    struct { Vec3s rot; } shape;
+    void (*draw)() = DrawActor;
+    bool isDrawn = true;
+    Actor* next = nullptr;
+};
+struct Player { Actor actor; };
+struct TransitionActorEntry {
+    int id = ACTOR_EN_DOOR, params = 0;
+    struct { int room = 0; } sides[2];
+    Vec3f pos;
+    int rotY = 0;
+};
+struct CollisionPoly { int exit = 0; std::array<uint16_t, 3> vtxData; };
+struct CollisionHeader {
+    int numVertices = 0, numPolygons = 0;
+    Vec3s* vtxList = nullptr;
+    CollisionPoly* polyList = nullptr;
+    const void* surfaceTypeList = nullptr;
+};
+struct CollisionContext { CollisionHeader* colHeader = nullptr; };
+struct PlayState {
+    int sceneNum = 0, curSpawn = 0;
+    struct { int numActors = 64; TransitionActorEntry list[64]; } transiActorCtx;
+    struct { struct { Actor* head = nullptr; } actorLists[12]; } actorCtx;
+    CollisionContext colCtx;
+    int* setupExitList = nullptr;
+    Player player;
+};
+PlayState play;
+PlayState* gPlayState = &play;
+bool enabled = true, saveLoaded = true, mq = false, playerPresent = true;
+bool dynamicFloor = false;
+CollisionPoly dynamicPoly;
+std::array<int, 31> exits{};
+std::map<int, int> aliases, routes;
+int raycasts = 0, registrations = 0, removals = 0;
+#define CVAR_TRACKER_CHECK(key) key
+#define GET_PLAYER(p) (playerPresent ? &(p)->player : nullptr)
+#define COLPOLY_VTX_INDEX(value) ((value) & 0x1fff)
+int CVarGetInteger(const char*, int) { return enabled; }
+namespace GameInteractor { bool IsSaveLoaded(bool) { return saveLoaded; } }
+uint32_t ResourceMgr_IsSceneMasterQuest(s16) { return mq; }
+float Math_SinS(int value) { return std::sin(static_cast<s16>(value) * (3.14159265358979323846f / 32768)); }
+float Math_CosS(int value) { return std::cos(static_cast<s16>(value) * (3.14159265358979323846f / 32768)); }
+
+struct Registration { Actor* actor; Vec3f position; std::string text, tag; NameTagOptions options; };
+std::vector<Registration> tags;
+void NameTag_RemoveAllByTag(const char* tag) {
+    ++removals;
+    std::erase_if(tags, [&](const auto& row) { return row.tag == tag; });
+}
+void NameTag_RegisterForActorWithOptions(Actor* actor, const char* text, NameTagOptions options) {
+    ++registrations;
+    tags.push_back({actor, {}, text, options.tag, options});
+}
+void NameTag_RegisterAtWorldPosition(float x, float y, float z, const char* text, NameTagOptions options) {
+    ++registrations;
+    tags.push_back({nullptr, {x, y, z}, text, options.tag, options});
+}
+int SurfaceType_GetSceneExitIndex(CollisionContext*, CollisionPoly* poly, int bgId) {
+    if (bgId != BGCHECK_SCENE) throw std::runtime_error("Dynamic poly read as a static scene exit");
+    return poly->exit;
+}
+
+// Deterministic synthetic floor geometry; no extracted ROM assets are present.
+float BgCheck_RaycastFloorImpl(PlayState*, CollisionContext* ctx, uint16_t flags,
+                              CollisionPoly** out, s32* bgId, Vec3f* position,
+                              Actor*, uint32_t mode, float distance) {
+    ++raycasts;
+    if (flags != COLPOLY_IGNORE_ENTITY || mode != 0x1C || distance != 1.0f)
+        throw std::runtime_error("Door floor query changed native flags");
+    *out = nullptr;
+    *bgId = BGCHECK_SCENE;
+    if (dynamicFloor) { *out = &dynamicPoly; *bgId = 3; return position->y - 10; }
+    float best = BGCHECK_Y_MIN;
+    const auto* header = ctx->colHeader;
+    if (!header) return best;
+    for (int i = 0; i < header->numPolygons; ++i) {
+        auto* poly = &header->polyList[i];
+        if (std::any_of(poly->vtxData.begin(), poly->vtxData.end(), [&](int v) {
+                return COLPOLY_VTX_INDEX(v) >= header->numVertices;
+            })) continue;
+        const auto& a = header->vtxList[COLPOLY_VTX_INDEX(poly->vtxData[0])];
+        const auto& b = header->vtxList[COLPOLY_VTX_INDEX(poly->vtxData[1])];
+        const auto& c = header->vtxList[COLPOLY_VTX_INDEX(poly->vtxData[2])];
+        const float divisor = float(b.z-c.z)*(a.x-c.x) + float(c.x-b.x)*(a.z-c.z);
+        if (std::abs(divisor) < 0.001f) continue;
+        const float u = ((b.z-c.z)*(position->x-c.x) + (c.x-b.x)*(position->z-c.z))/divisor;
+        const float v = ((c.z-a.z)*(position->x-c.x) + (a.x-c.x)*(position->z-c.z))/divisor;
+        const float w = 1-u-v;
+        if (u < -0.0001f || v < -0.0001f || w < -0.0001f) continue;
+        const float y = u*a.y + v*b.y + w*c.y;
+        if (y <= position->y && y > best) { best = y; *out = poly; }
+    }
+    return best;
+}
+@FLOOR_WRAPPER@
+
+@DOOR_TYPE@
+static constexpr RoomDebugDoor roomDebugDoors[] = {
+#include "soh/Enhancements/randomizer/RoomDebugDoorData.inc"
+};
+@SCENE_TYPE@
+static constexpr RoomDebugSceneTransition roomDebugSceneTransitions[] = {
+#include "soh/Enhancements/randomizer/RoomDebugSceneData.inc"
+};
+static constexpr const char* roomDebugTag = "soh_extreme_room_debug";
+static std::map<Actor*, std::string> roomDebugTags;
+
+int RoomDebugResolveExit(int entrance) {
+    return aliases.contains(entrance) ? aliases.at(entrance) : entrance;
+}
+std::string RoomDebugSceneExitText(int entrance, const std::string& prefix, int = -1, int = -1) {
+    const int source = RoomDebugResolveExit(entrance);
+    return prefix + " to " + std::to_string(routes.contains(source) ? routes.at(source) : source);
+}
+std::string RoomDebugDestination(int index) {
+    if (!playerPresent) return {};
+    for (const auto& row : roomDebugDoors) if (row.entrance >= 0 && row.scene == play.sceneNum && row.door == index)
+        return RoomDebugSceneExitText(row.entrance, "Door");
+    return "Door to native room";
+}
+std::string RoomDebugPassageText(const Actor*, int) { return "Passage to native room"; }
+int RoomDebugGrottoEntrance(const Actor*) { return 0x700; }
+
+@COLLECTOR_ALIAS@
+@VISIBLE_FUNCTION@
+@COLLECTOR_FUNCTION@
+@YELLOW_FUNCTION@
+@WORLD_GLOBALS@
+@RESET_FUNCTION@
+@CACHE_FUNCTION@
+@OWNERSHIP_ALIAS@
+@OWNERSHIP_FUNCTION@
+@CYAN_FUNCTION@
+
+void SceneInitHook() @SCENE_HOOK@
+void ActorDestroyHook(void* actor) @ACTOR_HOOK@
+
+int cases = 0, assertions = 0;
+void Require(bool value, const std::string& message) {
+    ++assertions;
+    if (!value) throw std::runtime_error(message);
+}
+struct Geometry {
+    std::vector<Vec3s> vertices;
+    std::vector<CollisionPoly> polygons;
+    CollisionHeader header;
+    void Bind() {
+        header = {int(vertices.size()), int(polygons.size()), vertices.data(), polygons.data(), this};
+        play.colCtx.colHeader = &header;
+    }
+    void Quad(const Actor& actor, int exit, float left, float right, float near, float far, float y = 0) {
+        const auto point = [&](float x, float z) {
+            const float sine = Math_SinS(actor.shape.rot.y), cosine = Math_CosS(actor.shape.rot.y);
+            return Vec3s{s16(std::lround(actor.world.pos.x+x*cosine+z*sine)),
+                         s16(std::lround(actor.world.pos.y+y)),
+                         s16(std::lround(actor.world.pos.z-x*sine+z*cosine))};
+        };
+        const auto start = uint16_t(vertices.size());
+        vertices.push_back(point(left, near)); vertices.push_back(point(right, near));
+        vertices.push_back(point(right, far)); vertices.push_back(point(left, far));
+        polygons.push_back({exit, {start, uint16_t(start+1), uint16_t(start+2)}});
+        polygons.push_back({exit, {start, uint16_t(start+2), uint16_t(start+3)}});
+        Bind();
+    }
+};
+Geometry geometry;
+std::array<Actor, 16> actors;
+void Reset() {
+    ResetRoomDebugWorldLabels();
+    roomDebugTags.clear(); tags.clear();
+    play = {}; gPlayState = &play; actors = {};
+    geometry = {}; exits = {}; routes.clear(); aliases.clear();
+    enabled = saveLoaded = playerPresent = true; mq = dynamicFloor = false;
+    raycasts = registrations = removals = 0;
+    play.setupExitList = exits.data();
+    geometry.Bind();
+}
+const RoomDebugDoor& Handle(int scene = 82, int index = 7) {
+    for (const auto& row : roomDebugDoors)
+        if (row.scene == scene && row.door == index && row.entrance >= 0) return row;
+    throw std::runtime_error("Missing actual physical scene handle");
+}
+Actor& AddDoor(const RoomDebugDoor& row, int actorIndex = 0, int yaw = 0, float shift = 0) {
+    play.sceneNum = row.scene;
+    auto& door = play.transiActorCtx.list[row.door];
+    door.pos = {float(row.x), float(row.y), float(row.z)};
+    door.id = ACTOR_EN_DOOR; door.rotY = yaw;
+    auto& actor = actors[actorIndex];
+    actor.params = row.door << 10;
+    actor.shape.rot.y = s16(yaw);
+    actor.world.pos = {row.x+shift*Math_CosS(yaw), float(row.y), row.z-shift*Math_SinS(yaw)};
+    actor.next = play.actorCtx.actorLists[ACTORCAT_DOOR].head;
+    play.actorCtx.actorLists[ACTORCAT_DOOR].head = &actor;
+    play.player.actor.world.pos = {float(row.x), float(row.y), float(row.z)-40};
+    return actor;
+}
+void Update() { UpdateRoomDebugLabels(); UpdateRoomDebugWorldLabels(); }
+int Yellow() { return int(std::count_if(tags.begin(), tags.end(), [](const auto& row) { return row.actor != nullptr; })); }
+int Cyan() { return int(std::count_if(tags.begin(), tags.end(), [](const auto& row) { return row.actor == nullptr; })); }
+bool Visible(const Actor* actor) {
+    if (!gPlayState || !playerPresent || !actor->draw || !actor->isDrawn) return false;
+    const auto& p = play.player.actor.world.pos;
+    const auto& a = actor->world.pos;
+    return (a.x-p.x)*(a.x-p.x)+(a.y-p.y)*(a.y-p.y)+(a.z-p.z)*(a.z-p.z) < 440000;
+}
+int VisibleYellow() {
+    return int(std::count_if(tags.begin(), tags.end(), [](const auto& row) {
+        return row.actor && Visible(row.actor) && !row.text.empty();
+    }));
+}
+void Destroy(Actor* actor) {
+    Actor** link = &play.actorCtx.actorLists[ACTORCAT_DOOR].head;
+    while (*link && *link != actor) link = &(*link)->next;
+    if (*link) *link = actor->next;
+    // NameTag's engine actor-destroy hook removes the underlying registration.
+    std::erase_if(tags, [&](const auto& row) { return row.actor == actor; });
+    ActorDestroyHook(actor);
+}
+void Base() {
+    Reset(); const auto& row = Handle(); auto& actor = AddDoor(row);
+    exits[0] = row.entrance;
+    geometry.Quad(actor, 1, -20, 20, 10, 40);
+}
+
+#ifdef LEGACY_REPLAY
+void CheckLegacy() {
+    ++cases; Base(); Update();
+    Require(Yellow() == 1 && Cyan() == 1, "Old producers reproduce yellow plus cyan for one entrance");
+    std::printf("Reproduced: one physical handle registers 1 yellow and 1 cyan label\n");
+    ++cases; Reset(); const auto& row = Handle();
+    auto& left = AddDoor(row, 0, 0, -30);
+    auto& right = AddDoor(row, 1, 0, 30); right.shape.rot.y = s16(0x8000);
+    exits[0] = row.entrance;
+    geometry.Quad(left, 1, -12, 12, 10, 40);
+    geometry.Quad(right, 1, -12, 12, 10, 40);
+    Update();
+    Require(Yellow() == 2 && Cyan() == 2, "Old double leaves each register yellow and cyan");
+    std::printf("Reproduced: one double doorway registers 2 yellow and 2 cyan labels\n");
+}
+#else
+void CheckHandles() {
+    int handled = 0;
+    for (const auto& row : roomDebugDoors) {
+        if (row.entrance < 0) continue;
+        ++cases; ++handled; Reset();
+        auto& actor = AddDoor(row, 0, (handled%4)*0x4000);
+        exits[0] = row.entrance; exits[1] = row.entrance+5000;
+        routes[row.entrance] = routes[exits[1]] = 8194;
+        geometry.Quad(actor, 1, -20, 20, 10, 40);
+        geometry.Quad(actor, 1, 300, 340, 10, 40); // Same source, different component.
+        geometry.Quad(actor, 2, 100, 140, 10, 40); // Different source, same destination.
+        Update();
+        Require(Yellow() == 1 && VisibleYellow() == 1, "One yellow label for scene handle");
+        Require(Cyan() == 2, "Only the matching physical component is suppressed");
+        Require(roomDebugExitAnchors.size() == 3, "Disconnected source components remain separately cached");
+        Require(tags.front().options.textColor.r == 255 && tags.front().options.textColor.g == 245,
+                "Yellow actor label styling is unchanged");
+        const int before = registrations;
+        Update();
+        Require(registrations == before, "An unchanged update does not register duplicate labels");
+        routes[row.entrance] = routes[exits[1]] = 9626;
+        Update();
+        Require(Yellow() == 1 && Cyan() == 2, "Changing mapped wording never changes physical ownership");
+    }
+    Require(handled == 52, "All 52 authoritative physical scene-exit handles are exercised");
+    std::printf("Catalog: %d handles, rotated probes, disconnected same-source and shared-destination exits\n", handled);
+}
+void CheckLeavesAndLifecycle() {
+    ++cases; Reset(); const auto& row = Handle();
+    auto& left = AddDoor(row, 0, 0, -30);
+    auto& right = AddDoor(row, 1, 0, 30); right.shape.rot.y = s16(0x8000);
+    exits[0] = row.entrance;
+    geometry.Quad(left, 1, -12, 12, 10, 40);
+    geometry.Quad(right, 1, -12, 12, 10, 40);
+    geometry.Quad(right, 1, 250, 280, 10, 40);
+    Update();
+    Require(Yellow() == 1 && Cyan() == 1, "Double leaves share yellow; both owned cyan components are removed");
+    Require(CollectRoomDebugDoorActors().at(row.door).size() == 2, "Both physical leaves are retained for probes");
+    ++cases; right.isDrawn = false; Update();
+    Require(std::any_of(tags.begin(), tags.end(), [&](const auto& tag) { return tag.actor == &left; }) &&
+            VisibleYellow() == 1 && Cyan() == 1, "Choose the visible leaf");
+    ++cases; Destroy(&left); Update();
+    Require(VisibleYellow() == 0 && Cyan() == 3, "Cyan returns when no live yellow representative is visible");
+    ++cases; right.isDrawn = true; Update();
+    Require(VisibleYellow() == 1 && Cyan() == 2, "Only the remaining physical leaf claims its own component");
+    ++cases; Destroy(&right); Update();
+    Require(Yellow() == 0 && Cyan() == 3 && roomDebugTags.empty(), "Destroyed actors leave no cached yellow owner");
+    ++cases; right = {}; AddDoor(row, 1, 0, 30); right.shape.rot.y = s16(0x8000); Update();
+    Require(Yellow() == 1 && Cyan() == 2, "Actor pointer reuse registers a fresh live label");
+    ++cases; enabled = false; Update();
+    Require(tags.empty() && roomDebugTags.empty() && roomDebugExitAnchors.empty(), "Toggle off clears both colors and ownership");
+    const int before = removals; Update(); Require(removals == before, "Repeated disabled updates are stable");
+    ++cases; enabled = true; Update(); Require(Yellow() == 1 && Cyan() == 2, "Toggle on rebuilds ownership");
+    ++cases; saveLoaded = false; Update(); Require(tags.empty(), "Save unload removes all overlay labels");
+    ++cases; saveLoaded = true; Update(); gPlayState = nullptr; Update(); Require(tags.empty(), "Missing play state clears overlays safely");
+    gPlayState = &play;
+    ++cases; Update(); SceneInitHook();
+    Require(roomDebugTags.empty() && roomDebugWorldLabels.empty() && roomDebugExitAnchors.empty(), "Actual scene hook resets label caches");
+    tags.clear(); Update(); Require(Yellow() == 1 && Cyan() == 2, "Scene reload recreates one owner");
+    std::printf("Lifecycle: double leaves, culling, actor removal/reuse, toggle, unload and scene reset\n");
+}
+void CheckFallbacks() {
+    ++cases; Base(); actors[0].draw = nullptr; Update();
+    Require(VisibleYellow() == 0 && Cyan() == 1, "No draw function retains cyan fallback");
+    ++cases; Base(); actors[0].isDrawn = false; Update();
+    Require(VisibleYellow() == 0 && Cyan() == 1, "Culled actor retains cyan fallback");
+    ++cases; Base(); play.player.actor.world.pos = actors[0].world.pos;
+    play.player.actor.world.pos.x += 660; Update();
+    Require(VisibleYellow() == 1 && Cyan() == 0, "Yellow inside its fade distance owns the entrance");
+    ++cases; play.player.actor.world.pos.x += 4; Update();
+    Require(VisibleYellow() == 0 && Cyan() == 1, "Cyan returns beyond the yellow fade distance");
+    ++cases; play.player.actor.world.pos = actors[0].world.pos;
+    play.player.actor.world.pos.x += 600; play.player.actor.world.pos.y += 200; play.player.actor.world.pos.z += 200;
+    Update(); Require(!RoomDebugActorLabelVisible(&actors[0]) && Cyan() == 1, "Zero-alpha boundary retains cyan");
+    ++cases; Base(); playerPresent = false; Update();
+    Require(Yellow() == 0 && Cyan() == 1, "An empty yellow destination cannot hide cyan");
+    ++cases; Base(); mq = true; Update(); Require(Cyan() == 1, "Do not apply standard-layout metadata to MQ");
+    ++cases; Base(); dynamicFloor = true; Update(); Require(Cyan() == 1, "Dynamic collision never claims a static component");
+    ++cases; Base(); geometry = {}; geometry.Quad(actors[0], 1, -20, 20, 10, 40, -100); Update();
+    Require(Cyan() == 1, "A lower disconnected floor cannot be claimed by a door above it");
+    ++cases; Base(); exits[0] = Handle().entrance+1; routes[exits[0]] = routes[Handle().entrance] = 8194; Update();
+    Require(Cyan() == 1, "Matching mapped destinations cannot replace different physical source identities");
+    ++cases; Base(); aliases[0x7FFF] = Handle().entrance; exits[0] = 0x7FFF; Update();
+    Require(Cyan() == 0, "Resolve a dynamic native source before comparing physical identity");
+    ++cases; Base(); play.transiActorCtx.list[Handle().door].pos.x += 1; actors[0].world.pos.x += 1; Update();
+    Require(Cyan() == 1, "A mismatched authored physical door does not claim a trigger");
+    ++cases; Base(); actors[0].id = ACTOR_DOOR_SHUTTER; play.transiActorCtx.list[Handle().door].id = ACTOR_DOOR_SHUTTER; Update();
+    Require(Yellow() == 1 && Cyan() == 1, "A room shutter cannot claim a scene-handle trigger");
+    ++cases; Base(); actors[0].world.pos.x += 33; Update();
+    Require(Yellow() == 0 && Cyan() == 1, "Out-of-position actor cannot own a physical entrance");
+    ++cases; Base(); actors[0].params = 63 << 10; play.transiActorCtx.numActors = 8; Update();
+    Require(Yellow() == 0 && Cyan() == 1, "Out-of-range transition index is rejected safely");
+    ++cases; Base(); play.setupExitList = nullptr; Update(); Require(Cyan() == 0 && raycasts == 0, "No exit list causes no ownership probes");
+    ++cases; Base(); play.colCtx.colHeader = nullptr; Update();
+    Require(Cyan() == 0 && roomDebugExitAnchors.empty() && raycasts == 0, "Missing collision header has no stale components");
+    std::printf("Fallbacks: renderer boundaries, missing state, MQ, dynamic/lower floors and identity rejection\n");
+}
+void CheckComponentsAndOtherLabels() {
+    ++cases; Base(); geometry.Quad(actors[0], 1, 20, 500, 10, 40); Update();
+    Require(roomDebugExitAnchors.size() == 1 && Cyan() == 0, "Ownership follows component members even when anchor center is far away");
+    Require(roomDebugExitAnchors.front().polygons.size() == 4, "Connected component retains every physical polygon index");
+    ++cases; Base(); Update(); Geometry other;
+    other.Quad(actors[0], 1, 200, 240, 10, 40); Update();
+    Require(Cyan() == 1 && roomDebugCollision == &other.header, "Changing collision headers replaces cached component ownership");
+    ResetRoomDebugWorldLabels();
+    ++cases; Base(); auto& second = AddDoor(Handle(82, 8), 1); exits[1] = Handle(82, 8).entrance;
+    geometry.Quad(second, 2, -20, 20, 10, 40); routes[exits[0]] = routes[exits[1]] = 8194;
+    Update(); Require(Yellow() == 2 && Cyan() == 0, "Distinct physical entrances with identical destination text keep separate yellow labels");
+    ++cases; Base(); actors[1].id = ACTOR_EN_HOLL; actors[1].params = 0;
+    actors[2].id = ACTOR_DOOR_ANA;
+    actors[1].next = &actors[2]; play.actorCtx.actorLists[0].head = &actors[1]; Update();
+    Require(Cyan() == 2, "Native passage and grotto world labels remain visible");
+    Require(std::any_of(tags.begin(), tags.end(), [](const auto& row) { return row.text.starts_with("Passage"); }), "Passage wording stays delegated");
+    Require(std::any_of(tags.begin(), tags.end(), [](const auto& row) { return row.text.starts_with("Grotto"); }), "Grotto wording stays delegated");
+    for (const std::string kind : {"OwlDrop", "BlueWarp"}) {
+        ++cases; Reset();
+        const RoomDebugSceneTransition* example = nullptr;
+        for (const auto& row : roomDebugSceneTransitions) if (row.source >= 0 && row.kind == kind) { example = &row; break; }
+        Require(example != nullptr, "Real scene catalogue has " + kind);
+        play.sceneNum = example->source;
+        actors[0].id = kind == "OwlDrop" ? ACTOR_EN_OWL : ACTOR_DOOR_WARP1;
+        play.actorCtx.actorLists[0].head = &actors[0]; Update();
+        Require(Cyan() == 1 && Yellow() == 0, "Non-door transport label remains visible: " + kind);
+    }
+    std::printf("Components: exact membership, header replacement, distinct same-target doors and other cyan labels\n");
+}
+#endif
+
+int main() {
+    try {
+#ifdef LEGACY_REPLAY
+        CheckLegacy();
+#else
+        CheckHandles(); CheckLeavesAndLifecycle(); CheckFallbacks(); CheckComponentsAndOtherLabels();
+#endif
+        std::printf("RESULT cases=%d assertions=%d\n", cases, assertions);
+        return 0;
+    } catch (const std::exception& error) {
+        std::fprintf(stderr, "FAIL after %d cases, %d assertions: %s\n", cases, assertions, error.what());
+        return 1;
+    }
+}

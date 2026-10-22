@@ -1,0 +1,155 @@
+{
+  "status": "passed",
+  "tests": 4,
+  "decisions": 75,
+  "world_version": "1.8.11",
+  "archipelago_version": "0.6.8",
+  "source_sha256": {
+    "archipelago/soh_extreme/__init__.py": "3710795c8155f3d858a909d8c8859e8a5bb4c05f32699cfa1746994df42c851c",
+    "archipelago/soh_extreme/EnemyDropLocations.py": "911a56aafdfea550a373a86c291507d559bd3c810b194da406d558974d993852",
+    "archipelago/soh_extreme/EnemyDropRules.py": "6e6e68a971475384ebaf018eeecd14844074571143393fd46a75ec51fc773c0d",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "9c70d90e52063148fcafd22bca3f5594776b06ffeacbc886bfcbf3196a431c37",
+    "archipelago/soh_extreme/EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+    "archipelago/soh_extreme/EntranceDestinationPolicy.json": "5f84ec9b2e7386cd4b8226eb828b1968c835ebc8099b798c5b53be45ac35f3b3",
+    "archipelago/soh_extreme/SceneTransitions.py": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "2ebd7532c3ea6e749830ea6c6eb2c225c6edd3d03ae9018df472fbff23180ec9",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py": "60dd6c66fd89f8e4214d12e29ed08f38b86b004a25cae360393fcaad2d1a9f29"
+  },
+  "test_sha256": {
+    "tools/tests/test_bomb_grotto_logic.py": "2b2d07af2b3e0b6b876f55e38262566b098cab3cc985fc884d887127fc62fbf4",
+    "tools/tests/test_entrance_blockers.py": "582c810a461a7412f46a82855c22b13fd1d85ef223c2169efb8a6693cc7b57fb",
+    "tools/tests/test_water_arrival_logic.py": "12faefd44ce35675d37bb3583b89158f17fe22669443929656fd48d36c4ee380"
+  },
+  "source_unchanged_during_run": true,
+  "settings_report_sha256": "ad8a6d199aad69334cbf1f0bee39926a2cd1d9786f50c5cf37d8de50c8d2d8f1",
+  "configured_seed": 28991991854046421672,
+  "elapsed_seconds": 10.169,
+  "facts": {
+    "controlled_saved_map": {
+      "entries": 719,
+      "child_spawn": [
+        187,
+        1806
+      ],
+      "outside_entry": [
+        1806,
+        1806
+      ],
+      "return": [
+        2062,
+        2062
+      ],
+      "restored_through_production_ER_connect": true,
+      "claimed_to_be_uploaded_seed_map": false
+    },
+    "surface_attack_matrix": [
+      {
+        "age": "child",
+        "tools": [],
+        "can_open": false
+      },
+      {
+        "age": "child",
+        "tools": [
+          "Grab / Power Bracelet"
+        ],
+        "can_open": false
+      },
+      {
+        "age": "child",
+        "tools": [
+          "Megaton Hammer"
+        ],
+        "can_open": false
+      },
+      {
+        "age": "child",
+        "tools": [
+          "Progressive Bomb Bag"
+        ],
+        "can_open": true
+      },
+      {
+        "age": "child",
+        "tools": [
+          "Bombchu Bag"
+        ],
+        "can_open": true
+      },
+      {
+        "age": "child",
+        "tools": [
+          "Bombs (10)"
+        ],
+        "can_open": false
+      },
+      {
+        "age": "child",
+        "tools": [
+          "Bombchus (20)"
+        ],
+        "can_open": false
+      },
+      {
+        "age": "adult",
+        "tools": [],
+        "can_open": false
+      },
+      {
+        "age": "adult",
+        "tools": [
+          "Grab / Power Bracelet"
+        ],
+        "can_open": false
+      },
+      {
+        "age": "adult",
+        "tools": [
+          "Megaton Hammer"
+        ],
+        "can_open": true
+      },
+      {
+        "age": "adult",
+        "tools": [
+          "Progressive Bomb Bag"
+        ],
+        "can_open": true
+      },
+      {
+        "age": "adult",
+        "tools": [
+          "Bombchu Bag"
+        ],
+        "can_open": true
+      },
+      {
+        "age": "adult",
+        "tools": [
+          "Bombs (10)"
+        ],
+        "can_open": false
+      },
+      {
+        "age": "adult",
+        "tools": [
+          "Bombchus (20)"
+        ],
+        "can_open": false
+      }
+    ],
+    "spawn_access": {
+      "owned": [
+        "Shovel",
+        "Skulltula Soul",
+        "Kokiri Sword"
+      ],
+      "grotto_reachable": true,
+      "enemy_reachable": true,
+      "exit_reachable": true,
+      "outside_crossing_reachable": false
+    }
+  },
+  "scope": "Controlled saved-map restore and real AP/UT rule evaluation. No seed-map attribution, item fill, native collision or in-game playthrough claim.",
+  "failures": []
+}

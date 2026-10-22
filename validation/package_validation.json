@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "version": "1.8.15",
+  "input_archive": "current(1).zip",
+  "input_sha256": "0e10985ea2e73369dc71f7b6ee070ec16440a1b2f8081b5c6b0ae86afe883010",
+  "replacement_file_count": 262,
+  "changed_production_paths": [
+    "archipelago/archipelago.json",
+    "archipelago/soh_extreme.apworld",
+    "archipelago/soh_extreme/NpcSpeech.py",
+    "archipelago/soh_extreme/TrackerMirror.py",
+    "archipelago/soh_extreme/__init__.py",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py",
+    "archipelago/soh_extreme/archipelago.json",
+    "soh/Enhancements/randomizer/location_access/overworld/gerudo_fortress.cpp",
+    "soh/Network/Archipelago/ArchipelagoClient.cpp",
+    "soh/Network/Archipelago/ArchipelagoClient.h",
+    "soh/Network/Archipelago/TrackerMirror.h",
+    "soh/SohExtremeVersion.h"
+  ],
+  "apworld_member_count": 124,
+  "apworld_sha256": "385af178531985313841d1504406c2318054c3d8904f928062a0be8339503212",
+  "checks": [
+    "all APWorld Python members compile as syntax",
+    "all APWorld JSON members parse",
+    "APWorld members exactly match uploaded-and-edited source",
+    "all replacement files match manifest hashes",
+    "top-level APWorld matches source-directory APWorld",
+    "unchanged YAML-free tracker modules retained"
+  ],
+  "not_run": [
+    "complete MSVC game build",
+    "full Archipelago generation and item fill",
+    "official APWorld loader with full AP core",
+    "live ImGui/controller playthrough",
+    "PowerShell build helper execution (pwsh unavailable)"
+  ]
+}

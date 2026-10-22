@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "scenarios": 143,
+  "assertions": 2106,
+  "authored_exteriors_both_ages": 66,
+  "legacy_hole_overrides_reproduced": 33,
+  "native_motion_compared": 66,
+  "source_sha256": {
+    "soh/Enhancements/randomizer/randomizer_grotto.c": "f06d9ab004096c99818f8fbe5c57fe9aa2d392a69936902513e67deeb501c95a",
+    "soh/Enhancements/randomizer/randomizer_grotto.h": "12582320ae8db1f4d7e55798d374563062436324dcd16770fd13d0e359da1a8f",
+    "src/overlays/actors/ovl_player_actor/z_player.c": "fdc9cafccb840bb9d7303351e467b27a90016ba181caa8a75063a4b19e3a106a",
+    "src/code/z_actor.c": "0a89295fddefb6c8b01de6e76acabcec144fba7954007e42a89c1bdd4d5bfb22",
+    "src/overlays/actors/ovl_Door_Ana/z_door_ana.c": "51ea5b366d3e45e72fffa2cda15d0e2bff0492dea6efcf4d27e7c461c82b1f0f",
+    "src/code/z_bgcheck.c": "c6ff3556647d60f70b7fb8d771c2471ba442345b48b74c0ee8afb6e5ed6b651e",
+    "src/code/z_collision_check.c": "eae84670ec25d611aa4cb848b3aa4a4e45ac1b54939b8e3789b1ac1e81d1a36c",
+    "src/overlays/actors/ovl_Obj_Bombiwa/z_obj_bombiwa.c": "22549397a392faef889dbed338924b54571e5625504e269b71841153c360b8f0",
+    "src/overlays/actors/ovl_En_Ishi/z_en_ishi.c": "2494c74a321773e440d5e65459fa599ff138f2002d4d42885f747f7406835028",
+    "soh/Network/Archipelago/EntranceRuntime.inc": "c5ce9e3a275e890afd67ec5ddfa1cfb346c5df5b310e1d6447215a3809cbb789",
+    "soh/Network/Archipelago/ArchipelagoC.h": "81cf9a18eae39424985d446b04ac8ff38c1f55975a869bacfb1d5d8641fa3ed7",
+    "archipelago/soh_extreme/SceneTransitionCatalog.json": "faff0beed2c86f693c65d44dccd8be4271658c37f70e6655b14ee2c1ca39097d"
+  },
+  "test_sha256": {
+    "tools/tests/test_grotto_landing_native.py": "8a20abaaaa2525d32597de034669fbbf8ace561af1f076f23f4078b08c0b59d6",
+    "tools/tests/grotto_landing_native_tests.cpp.in": "a055fc8de03a4fc800030ec34c516356eddbae752be238b2a53cb314330bc5a6",
+    "tools/tests/grotto_landing_legacy_return.inc": "b65d88584060e5ad332135a97692115aa483f6bf86e677675110a8dd6bde4fa1",
+    "tools/tests/test_soul_logic_native.py": "c3d6cf972babdd9b1c31b1ae8b93192f3ba8c5b593f2b9f73e0b14e823a4f785"
+  },
+  "dependency_sha256": {
+    "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c",
+    "entrance_table.h": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa"
+  },
+  "source_unchanged_during_tests": true,
+  "captured_function_sha256": {
+    "Grotto_InitExitAndLoadLists": "9a46eafb07b68967ffec0f3d24e0e89644d3425ba3284c8c81e119b81c321687",
+    "Grotto_ShouldSetLastEntrance": "2fbc29a8972bec195984935a05f42ebf95b090bea8054d0f63fa03d65723aca1",
+    "Grotto_SetupReturnInfo": "61493fb48c48d6d0d63f77e29610c5789aa04db4de87f9f62b8fe83479c81094",
+    "Grotto_OverrideSpecialEntrance": "8e4f381b937eb96f12ffbc5a46b3f29d5757c6ca3e134f6d9cccd47270fbc5f2",
+    "Grotto_ForceGrottoReturnOnSpecialEntrance": "ab31a23e3c9b0b828ec4140e506325bf559df1924831d05a3be4f4f4be3d9068",
+    "Grotto_ForceGrottoReturn": "cf660e944b1513c3b8532862664f95a068c57b48af31205e28429de01196b542",
+    "Grotto_ForceRegularVoidOut": "b52bf4eaf525e6bb17a87629a58122c509b476daa581950d0368b6f845d3137f",
+    "Grotto_SetupReturnInfoOnFWReturn": "70c555819d42397e0a5f786825d3e9ed0508855899b7bbddc3502efb4fb4283c",
+    "Grotto_SanitizeEntranceType": "cc0a8f354ceb3c3dd6010821c1be4cd2ac861e6743d429cce2786159423754c9",
+    "Actor_UpdateVelocityXZGravity": "8162de4a6cfe1adf2db7a687ff190fd7f64b17282def58da09b08d8a51b221ed",
+    "Actor_UpdatePos": "94aa66d0bdfeb10dfade1ea679ed0f19f00bdec1632c334c3e48abb16766224a",
+    "Actor_MoveXZGravity": "fed3d5e9bcfd72ae9b7eaff7b6dc69eb09331a236bafd1bf1d9cd3eb94ea51b4",
+    "Player_Action_8084F9C0": "0d4700e023814efacff29b94520ec172e95e065876941bccabf002258d0e4f9a",
+    "func_8083DFE0": "7dff4772c6cde073c5c3e91357817981f0c9271547f82e46b443054372fa736f"
+  },
+  "captured_fragment_sha256": {
+    "TYPES": "fe5dad5cf72505f682e400168c18a2f84b1343a50c13e79dafbbe61bcc287990",
+    "DATA": "fb2ec2a73e0d19746623f6faca499fce39cf9f1ffd3c972af3702cba4c7f3db4",
+    "HELPERS": "1286f91c44c4bed9c73729da5912fb625b1c7663d1f828b076d85b58d94d86e1",
+    "ROUTING": "680c7506bc585257ae6b6f81a0b3c106ae07e5f96522217d963a1eedc0a0e0bf",
+    "NATIVE_PHYSICS": "8685fd2e5fc518a21f606e8f51ffd69200929f61c541b506e3cc6226af823356",
+    "NATIVE_ACTIONS": "a9ee203ead3c826e14ff8faea7c908819b08eb3498b7e5a91585dadf11e46a10",
+    "PLAYER_RESPAWN_OVERRIDE": "975ad9649e99fd420f14c999d7e4bc507dcdab3d34aed044314fdde3129a2004",
+    "LEGACY_FORCE_RETURN": "9c47790fc3ec2892140bc4517d582578f5d6b6dbeb4bb4b861d9b85058255a4a",
+    "SCENES": "6da32ebe9a77a0d7140939227b38cd44bdb2d85b26fed130b05c3cd027ada13d",
+    "ENTRANCES": "68dcf79448a3c2c716f8e5c6aab60a50a16cee95a662993563f4fc7babd5d0e8"
+  },
+  "legacy_source_sha256": "c24197093d1ba4324c518ff919d00e5f04748b51cd7a5951bbe31cc72a7924a3",
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "native_game_build": false,
+  "scene_asset_geometry": false,
+  "in_game_playthrough": false,
+  "scope": "Production landing geometry/ownership/cache/Force/FW functions and all 33 authored grotto return rows; actual native velocity/position and emergence/neutral-fall action fragments. Engine floor/wall/ceiling/water/OC and actor-Soul queries use explicit controlled geometry IO. Actual Player_Init positive-respawn override reproduces the old Force helper replacing an off-hole ActorEntry with the hole origin in idle mode. Real scene and entrance enum values are retained. No ROM assets are available; real destinations are validated at runtime and unproven geometry keeps native emergence.",
+  "elapsed_seconds": 1.9,
+  "replay_command": "python source/tools/tests/test_grotto_landing_native.py --dependencies tests/entrance_184_native_dependencies --report tests/grotto_landing_1812_native.json"
+}

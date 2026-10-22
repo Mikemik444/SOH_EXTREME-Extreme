@@ -131,6 +131,7 @@ class Regions(StrEnum):
     HC_ABOVE_CLIMBABLE_ROCKS = "HC Above Climbable Rocks"
     HC_MOAT = "HC Moat"
     HC_DRAIN_LEDGE = "HC Drain Ledge"
+    HC_COURTYARD_GUARDS = "HC Courtyard Guards"
     HC_GARDEN = "HC Garden"
     HC_GREAT_FAIRY_FOUNTAIN = "HC Great Fairy Fountain"
     HC_STORMS_GROTTO = "HC Storms Grotto"

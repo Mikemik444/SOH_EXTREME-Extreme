@@ -1,0 +1,185 @@
+#include <cassert>
+#include <algorithm>
+#include <cmath>
+#include <cstdarg>
+#include <cstdint>
+#include <iostream>
+#include <set>
+#include <string>
+
+using s8=int8_t;using u8=uint8_t;using s16=int16_t;using u16=uint16_t;using s32=int32_t;using f32=float;
+using RandomizerInf=int;
+struct Vec3f{float x=0,y=0,z=0;};struct Vec3s{s16 x=0,y=0,z=0;};
+struct PlayState;struct EnDog;struct EnHy;
+struct Actor{
+    s16 params=0,id=0;int room=0,textId=0,flags=0,bgCheckFlags=0;
+    bool killed=false;float speedXZ=0,gravity=0,xzDistToPlayer=0,xyzDistToPlayerSq=0,yDistToWater=0;
+    s16 yawTowardsPlayer=0;
+    struct{Vec3f pos;Vec3s rot;}world,shape;
+    struct{int mass=0;}colChkInfo;
+};
+struct Player{Actor actor;};
+struct PlayState{int sceneNum=0,objectCtx=0,actorCtx=0;Player player;};
+struct ColliderCylinder{struct{int acFlags=0,ocFlags2=0;}base;};
+struct Path{};struct SkelAnime{};
+using EnDogActionFunc=void(*)(EnDog*,PlayState*);
+struct EnDog{Actor actor;SkelAnime skelAnime;EnDogActionFunc actionFunc=nullptr;ColliderCylinder collider;
+    Path* path=nullptr;int waypoint=0,nextBehavior=0;Vec3s jointTable[13],morphTable[13];};
+using EnHyActionFunc=void(*)(EnHy*,PlayState*);
+struct EnHy{Actor actor;unsigned talonEventChkInf=0;bool playedSfx=false;EnHyActionFunc actionFunc=nullptr;};
+struct{s16 dogParams=0;bool dogIsLost=true;unsigned eventInf[4]={0};}gSaveContext;
+static bool day=false,adult=false,objectLoaded=true,followEverywhere=false,allDogsRichard=false,grounded=true;
+static bool randomizer=true,spawnFails=false;
+static int animalMode=2,spawnCount=0,rewardCount=0,assertions=0,cases=0;
+static std::set<int> ownedFlags,infFlags;
+static EnDog spawnedDog;
+@SYMBOLS@
+@DOG_ENUMS@
+@DOG_BEHAVIOR@
+enum{AC_HIT=2,OC2_HIT_PLAYER=1,OBJECT_DOG=7,RSK_SHUFFLE_ANIMAL_SOUL=1,
+    INFTABLE_CB=2,INFTABLE_191=3,GI_RUPEE_BLUE=4,GI_HEART_PIECE=5,
+    EVENTCHKINF_ZELDA_FLED_HYRULE_CASTLE=6,EVENTCHKINF_PULLED_MASTER_SWORD_FROM_PEDESTAL=7,
+    VB_GIVE_ITEM_FROM_LOST_DOG=8};
+#define IS_DAY day
+#define IS_NIGHT (!day)
+#define LINK_IS_ADULT adult
+#define LINK_IS_CHILD (!adult)
+#define GET_PLAYER(p) (&(p)->player)
+#define CVAR_ENHANCEMENT(x) x
+struct Option{int value;int Get()const{return value;}operator bool()const{return value!=0;}};
+#define RAND_GET_OPTION(x) Option{animalMode}
+static bool MegaHas(int flag){return ownedFlags.contains(flag);}
+static bool IsMegaAnimalActor(int id){return id==ACTOR_EN_DOG;}
+static int CVarGetInteger(const char* key,int value){
+    if(std::string(key)=="DogFollowsEverywhere")return followEverywhere;
+    if(std::string(key)=="AllDogsRichard")return allDogsRichard;
+    return value;
+}
+template<typename...T>void ActorShape_Init(T...){}
+template<typename...T>void SkelAnime_InitFlex(T...){}
+template<typename...T>void Animation_ChangeByInfo(T...){}
+template<typename...T>void Collider_InitCylinder(T...){}
+template<typename...T>void Collider_SetCylinder(T...){}
+template<typename...T>void CollisionCheck_SetInfo2(T...){}
+template<typename...T>void Actor_SetScale(T...){}
+template<typename...T>Path* Path_GetByIndex(T...){return nullptr;}
+template<typename...T>bool Flags_GetEventChkInf(T...){return false;}
+static int ActorShadow_DrawCircle=0,gDogSkel=0,sAnimationInfo[8]={0},sCylinderInit=0,sColChkInfoInit=0;
+static bool PlayerGrounded(Player*){return grounded;}
+static void Math_ApproachF(float* x,float t,float,float step){*x+=std::clamp(t-*x,-step,step);}
+static void Math_SmoothStepToS(s16* x,s16 t,int,int,int){*x=t;}
+static void Actor_Kill(Actor* a){a->killed=true;}
+static int Object_GetIndex(int*,int){return objectLoaded?0:-1;}
+static void Player_GetRelativePosition(Player*,Vec3f* origin,Vec3f* off,Vec3f* result){
+    result->x=origin->x+off->x;result->y=origin->y+off->y;result->z=origin->z+off->z;
+}
+static bool Flags_GetInfTable(int flag){return infFlags.contains(flag);}
+static void Flags_SetInfTable(int flag){infFlags.insert(flag);++rewardCount;}
+void EnDog_Wait(EnDog*,PlayState*){}
+void EnDog_ChooseMovement(EnDog*,PlayState*){}
+void EnDog_FollowPlayer(EnDog*,PlayState*);
+void EnHy_Fidget(EnHy*,PlayState*){}
+void EnHy_WaitDogFoundRewardGiven(EnHy*,PlayState*){}
+void EnHy_GiveItem(EnHy*,PlayState*,int){++rewardCount;}
+@ANIMAL_POLICY@
+static void AnimalInitGate(Actor* actor,bool* result){
+@ANIMAL_INIT_GATE@
+}
+@DOG@
+static Actor* Actor_Spawn(int*,PlayState* play,int id,float x,float y,float z,int,s16 yaw,int,int params){
+    ++spawnCount;if(spawnFails)return nullptr;
+    spawnedDog={};spawnedDog.actor.id=id;spawnedDog.actor.params=params;
+    spawnedDog.actor.world.pos={x,y,z};spawnedDog.actor.shape.rot.y=yaw;
+    bool allowed=true;AnimalInitGate(&spawnedDog.actor,&allowed);
+    if(!allowed)return nullptr;
+    EnDog_Init(&spawnedDog.actor,play);return spawnedDog.actor.killed?nullptr:&spawnedDog.actor;
+}
+static void ArmTransfer(){
+@ARM_TRANSFER@
+}
+static void Transfer(Player* self,PlayState* play){
+    static Vec3f sDogSpawnOffset={0,0,-30},sDogSpawnPos;int dogParams;
+@TRANSFER@
+}
+static u16 LadyText(EnHy* self,PlayState* play){
+    switch(self->actor.params&0x7F){
+@LADY_TEXT@
+    }return 0;
+}
+@LADY_SPAWN@
+static bool GameInteractor_Should(int behavior,bool initial,...){
+    if(!randomizer)return initial;
+    bool value=initial;bool* should=&value;
+    va_list args;va_start(args,initial);
+    switch(behavior){
+@REWARD_HOOK@
+    }
+    va_end(args);return value;
+}
+static void LadyTalk(EnHy* self,PlayState* play){
+    // Common actor/NPC-language dispatch is exercised by the separate NPC suite.
+    switch(self->actor.textId){
+@LADY_TALK@
+    }
+}
+static void require(bool result,const char* message){
+    ++assertions;if(!result){std::cerr<<"FAIL "<<message<<"\n";std::abort();}
+}
+static void reset(PlayState& p){
+    ++cases;p={};p.sceneNum=SCENE_MARKET_NIGHT;gSaveContext={};gSaveContext.dogIsLost=true;
+    day=adult=followEverywhere=allDogsRichard=spawnFails=false;objectLoaded=grounded=randomizer=true;
+    animalMode=2;ownedFlags={RAND_INF_ANIMAL_SOUL_DOG};infFlags.clear();spawnCount=rewardCount=0;spawnedDog={};
+}
+static void initDog(EnDog& dog,PlayState& p,int raw){dog={};dog.actor.id=ACTOR_EN_DOG;dog.actor.params=raw;EnDog_Init(&dog.actor,&p);}
+int main(){
+    PlayState p;EnDog dog;EnHy lady;lady.actor.params=ENHY_TYPE_AOB;
+    reset(p);initDog(dog,p,0);require(((dog.actor.params>>8)&15)==1,"Richard native identity normalized");
+    dog.collider.base.ocFlags2=OC2_HIT_PLAYER;require(EnDog_CanFollow(&dog,&p)==1,"Richard starts following by contact");
+    require(((gSaveContext.dogParams>>8)&15)==1,"Richard stored identity");
+    for(int scene:{SCENE_BACK_ALLEY_NIGHT,SCENE_DOG_LADY_HOUSE}){
+        ArmTransfer();require(gSaveContext.dogParams<0,"player init marks transferred dog");
+        p.sceneNum=scene;Transfer(&p.player,&p);
+        require(gSaveContext.dogParams==0x100&&spawnedDog.actionFunc==EnDog_FollowPlayer,"local scene preserves correct following dog");
+        require(spawnedDog.actor.room==0,"ordinary local room ownership");
+        spawnedDog.actor.xzDistToPlayer=60;EnDog_FollowPlayer(&spawnedDog,&p);
+        require(gSaveContext.dogParams==0x100,"walking local route retains Richard");
+    }
+    require(spawnCount==2,"one follower spawned per local scene");
+    require(EnHy_ShouldSpawn(&lady,&p),"lady exists at night");
+    lady.actor.textId=LadyText(&lady,&p);require(lady.actor.textId==0x709F,"lady recognizes Richard");
+    LadyTalk(&lady,&p);require(rewardCount==1&&infFlags.contains(INFTABLE_191),"native AP hook sets lost dog check once");
+    require(gSaveContext.dogParams==0&&!gSaveContext.dogIsLost,"delivery consumes following dog state");
+    require(lady.actionFunc==EnHy_Fidget&&LadyText(&lady,&p)==0x70A0,"completed dog reward state");
+
+    reset(p);initDog(dog,p,0);p.sceneNum=SCENE_MARKET_DAY;day=true;dog.collider.base.ocFlags2=OC2_HIT_PLAYER;
+    require(EnDog_CanFollow(&dog,&p)==0&&gSaveContext.dogParams==0,"day Richard cannot be retrieved");
+    p.sceneNum=SCENE_DOG_LADY_HOUSE;require(!EnHy_ShouldSpawn(&lady,&p),"lady absent during day");
+    reset(p);initDog(dog,p,0);dog.collider.base.acFlags=AC_HIT;dog.collider.base.ocFlags2=OC2_HIT_PLAYER;
+    require(EnDog_CanFollow(&dog,&p)==2&&gSaveContext.dogParams==0,"hit dog does not immediately follow");
+    reset(p);initDog(dog,p,0x100);dog.collider.base.ocFlags2=OC2_HIT_PLAYER;
+    require(EnDog_CanFollow(&dog,&p)==1,"wrong dog can follow");p.sceneNum=SCENE_DOG_LADY_HOUSE;
+    lady.actor.textId=LadyText(&lady,&p);require(lady.actor.textId==0x709E,"wrong dog rejected");LadyTalk(&lady,&p);
+    require(gSaveContext.dogParams==0&&rewardCount==0,"wrong dog no AP check");
+    reset(p);initDog(dog,p,0);gSaveContext.dogParams=0x200;dog.collider.base.ocFlags2=OC2_HIT_PLAYER;
+    require(EnDog_CanFollow(&dog,&p)==0&&gSaveContext.dogParams==0x200,"second dog cannot replace active follower");
+    reset(p);gSaveContext.dogParams=0x100;initDog(dog,p,0);require(dog.actor.killed,"return to market suppresses duplicate Richard");
+    reset(p);p.sceneNum=SCENE_DOG_LADY_HOUSE;initDog(dog,p,0);require(dog.actor.killed,"house cannot supply a missing Richard");
+    reset(p);p.sceneNum=SCENE_DOG_LADY_HOUSE;gSaveContext.dogIsLost=false;initDog(dog,p,0);
+    require(!dog.actor.killed&&dog.actionFunc==EnDog_Wait,"returned Richard remains at home");
+    reset(p);gSaveContext.dogParams=0x100;ArmTransfer();objectLoaded=false;Transfer(&p.player,&p);
+    require(gSaveContext.dogParams==0&&spawnCount==0,"objectless shuffled scene loses dog without enhancement");
+    reset(p);gSaveContext.dogParams=0x100;ArmTransfer();objectLoaded=false;followEverywhere=true;Transfer(&p.player,&p);
+    require(gSaveContext.dogParams==0x100&&spawnedDog.actor.room==-1,"explicit follow everywhere supports other rooms");
+    reset(p);gSaveContext.dogParams=0x100;dog.actor.xzDistToPlayer=450;EnDog_FollowPlayer(&dog,&p);
+    require(gSaveContext.dogParams==0,"ordinary dog lost if player outruns it");
+    reset(p);gSaveContext.dogParams=0x100;followEverywhere=true;dog.actor.xzDistToPlayer=450;EnDog_FollowPlayer(&dog,&p);
+    require(gSaveContext.dogParams==0x100,"optional long follow unchanged");
+    for(int mode:{0,1,2})for(bool exactSoul:{false,true})for(bool genericSoul:{false,true}){
+        reset(p);animalMode=mode;ownedFlags.clear();if(exactSoul)ownedFlags.insert(RAND_INF_ANIMAL_SOUL_DOG);
+        if(genericSoul)ownedFlags.insert(RAND_INF_ANIMAL_SOUL);
+        Actor actor;actor.id=ACTOR_EN_DOG;bool allowed=true;
+        AnimalInitGate(&actor,&allowed);require(allowed==(mode==0||(mode==1?genericSoul:exactSoul)),"dog soul mode matches actual init gate");
+    }
+    std::cout<<"PASS: Richard identity, local scene carry, native delivery flag, wrong/day dogs, soul modes and objectless scene limitation\n";
+    std::cout<<"RESULT cases="<<cases<<" assertions="<<assertions<<"\n";
+}

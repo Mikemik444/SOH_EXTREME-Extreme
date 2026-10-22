@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "python_assertions": 2480,
+  "native_assertions": 56,
+  "scrub_entries": 36,
+  "old_missing_parent_cases": [
+    "NPC Speech: Lw Deku Scrub Near Bridge Conversation",
+    "NPC Speech: Dmc Deku Scrub Conversation",
+    "NPC Speech: Dmc Deku Scrub Grotto Left Conversation",
+    "NPC Speech: Dmc Deku Scrub Grotto Center Conversation",
+    "NPC Speech: Dmc Deku Scrub Grotto Right Conversation",
+    "NPC Speech: Jabu Jabus Belly Deku Scrub Conversation"
+  ],
+  "scope": "Production function/graph fixtures without a replacement AP generator.\n\nLoads the real enums/catalog, scrub parent resolver and authored location parents.\nGerudo predicates execute from the shipped Python and C++ source. Rule primitives\nand inventory/engine IO are isolated. This is not a full AP item fill or game run.\n",
+  "sources": {
+    "archipelago/soh_extreme/NpcSpeech.py": "6f518b2ef783089379aa18d5f018378c8e51bde2689d0cc8b8967df5d803ecef",
+    "archipelago/soh_extreme/__init__.py": "153703e137b0c6cc63565b864cf9426f68d2a7b8781edf1dba1ed8c03bf7132f",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "213389e2fdce43180ed44e9a4fc56b80150abf4c7790119220ead8d0ec43b6ef",
+    "archipelago/soh_extreme/_vendor_oot_soh/Enums.py": "4266288357f5a8441863bbd29af344233baa8e1765a1af29cbec4e1d2bb9af7f",
+    "archipelago/soh_extreme/_vendor_oot_soh/Locations.py": "68b5fe7760d9eace3760504ff9c0e51c91506dad1d93e002ef42c39f1a54d29d",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/gerudo_fortress.py": "a2a7ac4a32a882b100e294fc34413a30786b236e88a6b38031d250e952cf3f31",
+    "soh/Enhancements/randomizer/location_access/overworld/gerudo_fortress.cpp": "7a9e449da1e7ac65bf271c91cdd1ba6e1c2a298f29f18ff9bdcaf043759d3509",
+    "tools/tests/test_npc_gerudo_1815.py": "7dcb625a012e51b1314e5572f8cce7ed52a83af0f96af0fa36393f573a7c51d1"
+  }
+}

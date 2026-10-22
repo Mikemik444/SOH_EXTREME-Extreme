@@ -53,10 +53,12 @@ enum EntranceIndex {
 
 struct Vec3s { s16 x = 0, y = 0, z = 0; };
 struct Vec3f { float x = 0, y = 0, z = 0; };
+constexpr int BGCHECKFLAG_GROUND = 1;
 struct Actor {
     struct { Vec3f pos; } world;
     struct { Vec3s rot; } shape;
     int id = 0, category = 0, params = 0;
+    int bgCheckFlags = BGCHECKFLAG_GROUND;
 };
 struct ActorEntry { Vec3s pos, rot; s16 params = 0; };
 struct Player { Actor actor; int doorType = 0; } player;

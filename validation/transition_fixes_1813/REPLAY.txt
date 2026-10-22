@@ -1,0 +1,103 @@
+SOH-EXTREME 1.8.13 - Focused validation replay
+============================================
+
+These reports validate source logic and native production function bodies.
+They do not describe a full Windows executable build or controller playthrough.
+REPLAY_INPUTS.json maps the current source/test digests, native dependencies,
+historical source provenance and external test inputs to the supplied files.
+
+PREPARE AN ISOLATED REPLAY TREE
+------------------------------
+Use a complete checkout with this release merged, or prepare a disposable tree:
+
+1. Copy the package's soh, src, tools and archipelago folders to replay-source.
+2. Extract the current root soh_extreme.apworld into replay-source/archipelago.
+   This provides all unchanged AP Python modules and JSON resources as well as
+   the replacement sources. Keep the current archive at the package root.
+3. Merge validation/transition_fixes_1813/native_source into replay-source.
+   These unchanged native and test inputs are required by the focused suites.
+4. Set DEPS below to the absolute path of
+   validation/transition_fixes_1813/native_dependencies.
+5. Set EVIDENCE below to the absolute path of
+   validation/transition_fixes_1813. Its inputs folder contains the exact
+   historical options, saved map and 1.8.12 ZIP used by the courtyard AP suite.
+   The nested older ZIP is validation evidence, not an installation target.
+
+Run the examples from replay-source, replacing placeholders with actual paths.
+Native fixtures target Linux or WSL and require Python 3, C11/C++20 compilers
+and AddressSanitizer/UndefinedBehaviorSanitizer. Leak scanning is disabled in
+the managed executor; address and undefined-behavior instrumentation remain on.
+
+NATIVE REPLAYS
+--------------
+python3 tools/tests/test_courtyard_dampe_native.py --dependencies <DEPS> --baseline <EVIDENCE>/inputs/SOH-EXTREME-1.8.12-source-files.zip --report /tmp/courtyard-dampe-native.json
+python3 tools/tests/test_warp_song_checks.py --dependencies <DEPS> --report /tmp/warp-songs.json
+python3 tools/tests/test_dungeon_return.py --dependencies <DEPS> --report /tmp/room-return.json
+python3 tools/tests/test_entrance_destination_policy.py --native-include-root <DEPS> --report /tmp/destination-policy.json
+
+The courtyard fixture retains the prior guard and door bodies and checks their
+provenance against the recorded historical hashes. The current bodies are
+compiled from the source being tested. The warp fixture similarly retains the
+actual 1.8.12 journal header. Baseline reproductions are expected old failures;
+the current implementation must satisfy the corresponding assertions.
+
+Scene allocation, animation, geometry/collision, persistent storage, network
+transport and other explicit engine I/O remain isolated as stated in each
+report. The room-return suite covers the shared arrival and history paths used
+by the song fix. These tests do not render a scene or simulate controller input.
+
+ARCHIPELAGO REPLAYS
+-------------------
+Use an isolated Archipelago 0.6.8 runtime with its normal Python dependencies.
+Create worlds/soh_extreme in that runtime as a symlink to the absolute
+replay-source/archipelago/soh_extreme directory. Do not install a duplicate world
+archive into the same runtime while these source tests run. Set PYTHONPATH to
+the AP dependency and runtime folders (colon on Linux, semicolon on Windows).
+
+python3 tools/tests/test_courtyard_dampe_logic.py --options <EVIDENCE>/inputs/grotto_1811_uploaded_seed_reproduction.options.json --saved-map <EVIDENCE>/inputs/grotto_1811_uploaded_seed_reproduction.mapping.json --baseline <EVIDENCE>/inputs/SOH-EXTREME-1.8.12-source-files.zip --report /tmp/courtyard-dampe-ap.json
+python3 tools/tests/test_ammo_tracker_protocol.py --report /tmp/tracker-protocol.json
+
+The AP courtyard suite builds real ordinary, entrance-enabled and Universal
+Tracker graphs with authoritative active check IDs. Controlled ingress isolates
+the physical sides under test; production inventory/event, age and clock rules
+remain active. It also restores the historical map through the current entrance
+validator without remapping its targets. It does not perform a complete new
+item fill or prove the old seed's full playthrough under the changed rules.
+
+The tracker protocol suite exercises the real Python request/publish handler
+with explicit host/evaluation I/O, feeds its encoder into the real C++ decoder,
+and executes the native worker/snapshot servicing bodies. This release adds
+the exact courtyard boundary to both cache keys. It does not launch an AP
+server, GUI or game process. The earlier full ammo refill graph results remain
+historical evidence under validation/landing_river_1812.
+
+CURRENT APWORLD ARCHIVE LOAD
+----------------------------
+The included finder_hints_186_validate_apworld.py uses the official AP loader
+to import the current archive and verify resources and 1.8.13 version parity.
+It temporarily replaces the isolated runtime's source symlink with the archive
+and restores it afterward. Run it only after the other AP tests have finished.
+Use absolute paths for every file/directory argument.
+
+python3 <EVIDENCE>/finder_hints_186_validate_apworld.py --runtime <AP_RUNTIME> --archive <PACKAGE>/soh_extreme.apworld --source <REPLAY_SOURCE>/archipelago/soh_extreme --native-header <REPLAY_SOURCE>/soh/SohExtremeVersion.h --expected-version 1.8.13 --version-report /tmp/version.json --report /tmp/apworld.json
+
+SOURCE BUILD PREFLIGHT AND PACKAGING
+------------------------------------
+The source preflight executes the shipped PowerShell helper's verification
+functions against all replacement files in a disposable fixture. It does not
+invoke Windows or MSBuild. The driver and PowerShell probe are included here.
+Their original workspace-relative paths are retained in the report/script.
+Replaying the driver requires that workspace layout and PowerShell 7.6.7 at
+runtime/powershell-7.6.7/bin/pwsh. The packaged BUILD_RELEASE.cmd performs the
+actual Windows Release build in a complete checkout; see the root README.txt.
+
+prepare_transition_fixes_1813_delivery.py and its imports are included for
+release provenance. Rebuilding the cumulative ZIP requires the original upload,
+the included immutable 1.8.12 baseline ZIP and the original workspace layout.
+The original full upload is not duplicated in this package. Replaying the
+focused source tests uses the supplied source/dependency inputs and the external
+runtimes described above.
+
+The package retains every historical validation entry from 1.8.12 byte for byte.
+Current reports are under validation/transition_fixes_1813. Install the current
+root soh_extreme.apworld; older copies under validation are evidence only.

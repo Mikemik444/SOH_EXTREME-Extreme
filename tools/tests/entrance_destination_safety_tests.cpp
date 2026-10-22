@@ -100,7 +100,7 @@ void QueueTarget(int target) {
 
 nlohmann::json ValidateCatalog() {
     Fresh(Identity());
-    assert(std::size(kEntranceDestinationPolicies) == 719);
+    assert(std::size(kEntranceDestinationPolicies) == 721);
     // AP map alone must install the five child-safe bluewarp spawn repairs.
     assert(!RAND_GET_OPTION(RSK_SHUFFLE_DUNGEON_ENTRANCES));
     assert(!RAND_GET_OPTION(RSK_SHUFFLE_BOSS_ENTRANCES));
@@ -152,8 +152,8 @@ nlohmann::json ValidateCatalog() {
             ++allowedArrivals;
         }
     }
-    assert(tableFacts == 2876 && allowedArrivals == 2870 && roomArrivals == 1684 && ageVariants > 0);
-    return {{"reviewed_endpoints", 719}, {"verified_normal_table_entries", tableFacts},
+    assert(tableFacts == 2884 && allowedArrivals == 2878 && roomArrivals == 1684 && ageVariants > 0);
+    return {{"reviewed_endpoints", 721}, {"verified_normal_table_entries", tableFacts},
             {"age_allowed_native_arrivals", allowedArrivals}, {"door_room_arrivals", roomArrivals},
             {"scene_variant_check_identities", ageVariants}};
 }

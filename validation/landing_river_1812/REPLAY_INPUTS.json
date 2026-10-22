@@ -1,0 +1,530 @@
+{
+  "observed_source_baseline/soh/Enhancements/randomizer/ShufflePots.cpp": {
+    "sha256": "7d43dc3a47acf8755a86aad8bf70a6daea40f48383454c66a4b30e6434b7a937",
+    "verified_archive": [
+      "upload/haha.zip"
+    ],
+    "excerpt_location": "tools/tests/ammo_sources_legacy_functions.inc"
+  },
+  "observed_source_baseline/soh/Enhancements/randomizer/ShuffleCrates.cpp": {
+    "sha256": "6e6c06da4c997978cb7977ac691ec7c389201882290c4f89fbe4a3da6a024889",
+    "verified_archive": [
+      "SOH-EXTREME-1.8.11-entrance-fixes-source-files.zip"
+    ],
+    "excerpt_location": "tools/tests/ammo_sources_legacy_functions.inc"
+  },
+  "soh/Enhancements/randomizer/randomizer_grotto.c": {
+    "sha256": "f06d9ab004096c99818f8fbe5c57fe9aa2d392a69936902513e67deeb501c95a",
+    "location": "soh/Enhancements/randomizer/randomizer_grotto.c"
+  },
+  "soh/Enhancements/randomizer/randomizer_grotto.h": {
+    "sha256": "12582320ae8db1f4d7e55798d374563062436324dcd16770fd13d0e359da1a8f",
+    "location": "soh/Enhancements/randomizer/randomizer_grotto.h"
+  },
+  "src/overlays/actors/ovl_player_actor/z_player.c": {
+    "sha256": "fdc9cafccb840bb9d7303351e467b27a90016ba181caa8a75063a4b19e3a106a",
+    "location": "src/overlays/actors/ovl_player_actor/z_player.c"
+  },
+  "src/code/z_actor.c": {
+    "sha256": "0a89295fddefb6c8b01de6e76acabcec144fba7954007e42a89c1bdd4d5bfb22",
+    "location": "src/code/z_actor.c"
+  },
+  "src/overlays/actors/ovl_Door_Ana/z_door_ana.c": {
+    "sha256": "51ea5b366d3e45e72fffa2cda15d0e2bff0492dea6efcf4d27e7c461c82b1f0f",
+    "location": "validation/landing_river_1812/native_source/src/overlays/actors/ovl_Door_Ana/z_door_ana.c"
+  },
+  "src/code/z_bgcheck.c": {
+    "sha256": "c6ff3556647d60f70b7fb8d771c2471ba442345b48b74c0ee8afb6e5ed6b651e",
+    "location": "src/code/z_bgcheck.c"
+  },
+  "src/code/z_collision_check.c": {
+    "sha256": "eae84670ec25d611aa4cb848b3aa4a4e45ac1b54939b8e3789b1ac1e81d1a36c",
+    "location": "src/code/z_collision_check.c"
+  },
+  "src/overlays/actors/ovl_Obj_Bombiwa/z_obj_bombiwa.c": {
+    "sha256": "22549397a392faef889dbed338924b54571e5625504e269b71841153c360b8f0",
+    "location": "validation/landing_river_1812/native_source/src/overlays/actors/ovl_Obj_Bombiwa/z_obj_bombiwa.c"
+  },
+  "src/overlays/actors/ovl_En_Ishi/z_en_ishi.c": {
+    "sha256": "2494c74a321773e440d5e65459fa599ff138f2002d4d42885f747f7406835028",
+    "location": "src/overlays/actors/ovl_En_Ishi/z_en_ishi.c"
+  },
+  "soh/Network/Archipelago/EntranceRuntime.inc": {
+    "sha256": "c5ce9e3a275e890afd67ec5ddfa1cfb346c5df5b310e1d6447215a3809cbb789",
+    "location": "soh/Network/Archipelago/EntranceRuntime.inc"
+  },
+  "soh/Network/Archipelago/ArchipelagoC.h": {
+    "sha256": "81cf9a18eae39424985d446b04ac8ff38c1f55975a869bacfb1d5d8641fa3ed7",
+    "location": "soh/Network/Archipelago/ArchipelagoC.h"
+  },
+  "archipelago/soh_extreme/SceneTransitionCatalog.json": {
+    "sha256": "faff0beed2c86f693c65d44dccd8be4271658c37f70e6655b14ee2c1ca39097d",
+    "location": "soh_extreme.apworld!soh_extreme/SceneTransitionCatalog.json"
+  },
+  "tools/tests/test_grotto_landing_native.py": {
+    "sha256": "8a20abaaaa2525d32597de034669fbbf8ace561af1f076f23f4078b08c0b59d6",
+    "location": "tools/tests/test_grotto_landing_native.py"
+  },
+  "tools/tests/grotto_landing_native_tests.cpp.in": {
+    "sha256": "a055fc8de03a4fc800030ec34c516356eddbae752be238b2a53cb314330bc5a6",
+    "location": "tools/tests/grotto_landing_native_tests.cpp.in"
+  },
+  "tools/tests/grotto_landing_legacy_return.inc": {
+    "sha256": "b65d88584060e5ad332135a97692115aa483f6bf86e677675110a8dd6bde4fa1",
+    "location": "tools/tests/grotto_landing_legacy_return.inc"
+  },
+  "tools/tests/test_soul_logic_native.py": {
+    "sha256": "c3d6cf972babdd9b1c31b1ae8b93192f3ba8c5b593f2b9f73e0b14e823a4f785",
+    "location": "tools/tests/test_soul_logic_native.py"
+  },
+  "native_dependencies/scene_table.h": {
+    "sha256": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c",
+    "location": "validation/landing_river_1812/native_dependencies/scene_table.h"
+  },
+  "native_dependencies/entrance_table.h": {
+    "sha256": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa",
+    "location": "validation/landing_river_1812/native_dependencies/entrance_table.h"
+  },
+  "soh/Network/Archipelago/EntranceRouting.h": {
+    "sha256": "3981c9879bcf8c3491ff058b8ff0353ba0df34b86e995a39546cc1cece20584a",
+    "location": "soh/Network/Archipelago/EntranceRouting.h"
+  },
+  "soh/Network/Archipelago/ArchipelagoClient.cpp": {
+    "sha256": "75f4f836d5c6b30e4867514bd1ac566b8c7b16f391237e73b20d73bb63cf61cc",
+    "location": "soh/Network/Archipelago/ArchipelagoClient.cpp"
+  },
+  "soh/Network/Archipelago/EntranceRandomizerData.inc": {
+    "sha256": "a2fb3879d93dc0bbb80be220f707041422e1bec858d2def134e080844f543bfd",
+    "location": "soh/Network/Archipelago/EntranceRandomizerData.inc"
+  },
+  "soh/Network/Archipelago/EntranceDestinationPolicy.h": {
+    "sha256": "ad437810079db56bdcdfc30e3fa688ec5a32cfbb0c00c7e16f46b6fb724427a0",
+    "location": "soh/Network/Archipelago/EntranceDestinationPolicy.h"
+  },
+  "soh/Network/Archipelago/EntranceDestinationData.inc": {
+    "sha256": "2f6dcf8d60583bc7e16c6ef3209f9fb33cdaa58bcc63e70b7621c6aee243a433",
+    "location": "soh/Network/Archipelago/EntranceDestinationData.inc"
+  },
+  "soh/Network/Archipelago/SceneTransitionChecks.h": {
+    "sha256": "b68dbe6fc478ca7cd9938c1d6ec3a453c8296e844b78f550faac41ccab21a496",
+    "location": "soh/Network/Archipelago/SceneTransitionChecks.h"
+  },
+  "soh/Network/Archipelago/SceneTransitionData.inc": {
+    "sha256": "b7b4aa8c04ba92c233a501a8dabd509bcc4c214fb4bb9146005a2d7020e68893",
+    "location": "validation/landing_river_1812/native_source/soh/Network/Archipelago/SceneTransitionData.inc"
+  },
+  "soh/Enhancements/randomizer/randomizer_entrance.c": {
+    "sha256": "638ca013d45c14a7f2c890a2df8032f1ece8d2313a51e06fa314d04294b78ba2",
+    "location": "soh/Enhancements/randomizer/randomizer_entrance.c"
+  },
+  "soh/Enhancements/randomizer/randomizer_entrance.h": {
+    "sha256": "0e4b6b5618bac86b7bd38eae302e21c745d9caffcef009b9ac5d19080e7a08ef",
+    "location": "soh/Enhancements/randomizer/randomizer_entrance.h"
+  },
+  "soh/Enhancements/randomizer/randomizerTypes.h": {
+    "sha256": "dc86b56177c188419a7b00f600f3f91e45f491dce16989f677cd6dbc609bd2aa",
+    "location": "validation/landing_river_1812/native_source/soh/Enhancements/randomizer/randomizerTypes.h"
+  },
+  "soh/Enhancements/randomizer/hook_handlers.cpp": {
+    "sha256": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "location": "soh/Enhancements/randomizer/hook_handlers.cpp"
+  },
+  "soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h": {
+    "sha256": "8d7911b0c242ce2f3210db17959de93be56cd8c106fa065f1f086c94890a129b",
+    "location": "validation/landing_river_1812/native_source/soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h"
+  },
+  "soh/Enhancements/randomizer/randomizerEnums/RandomizerOptions.h": {
+    "sha256": "bbce1566d7842a06d16aba1c05cead7326bd87ad1c757f4d5a0eb724850cb141",
+    "location": "validation/landing_river_1812/native_source/soh/Enhancements/randomizer/randomizerEnums/RandomizerOptions.h"
+  },
+  "soh/Enhancements/QoL/BetterSaveMenu.cpp": {
+    "sha256": "0d24917165376054689820d5d8a7afbf98ce0f26cd3547af3e0f75b963245c30",
+    "location": "soh/Enhancements/QoL/BetterSaveMenu.cpp"
+  },
+  "src/code/z_play.c": {
+    "sha256": "f55e703fababf5bae3f60ee0af250d4350470284e4463c511e83dc80b98f8e70",
+    "location": "src/code/z_play.c"
+  },
+  "src/code/z_room.c": {
+    "sha256": "2becae43ce94702a6fae928543fbad25fb49f7e9b0f9fd9475eb00fbe0ac51e3",
+    "location": "src/code/z_room.c"
+  },
+  "src/code/z_sram.c": {
+    "sha256": "3d860e102c09115bb444c96511a399c32589dec276bc8f1ae000e58af3411803",
+    "location": "validation/landing_river_1812/native_source/src/code/z_sram.c"
+  },
+  "src/code/z_parameter.c": {
+    "sha256": "1b573c490c565d749b9357da694410b309f37273748c0e229474c0432977a816",
+    "location": "src/code/z_parameter.c"
+  },
+  "soh/z_scene_otr.cpp": {
+    "sha256": "677ddf85e25ef4075e72b4f6ed763e75d5eb27239ab5bcbffded6699241354e6",
+    "location": "validation/landing_river_1812/native_source/soh/z_scene_otr.cpp"
+  },
+  "src/overlays/actors/ovl_En_Holl/z_en_holl.c": {
+    "sha256": "9264a74c0b5fc2291da9454d7e2e45eb691d343a0f701a6ac30e689e73c4f1a4",
+    "location": "src/overlays/actors/ovl_En_Holl/z_en_holl.c"
+  },
+  "src/overlays/misc/ovl_kaleido_scope/z_kaleido_scope_PAL.c": {
+    "sha256": "09b77b109c1865cfb2c7fe099f303fe77507bc7da6dc4fa2a9e11b92594fa5a6",
+    "location": "validation/landing_river_1812/native_source/src/overlays/misc/ovl_kaleido_scope/z_kaleido_scope_PAL.c"
+  },
+  "archipelago/soh_extreme/EntranceCatalog.json": {
+    "sha256": "f5ba502aef5f06719b2bf39447f287743ae656ba0b884d698d8e5cc88c2d83ae",
+    "location": "archipelago/soh_extreme/EntranceCatalog.json"
+  },
+  "tools/tests/test_dungeon_return.py": {
+    "sha256": "b6e437b88a7f5dc4c479fcefefff3916bb287424406ac83fc0283aec0f2639d3",
+    "location": "tools/tests/test_dungeon_return.py"
+  },
+  "tools/tests/dungeon_return_tests.cpp": {
+    "sha256": "2f262ae0290daefe77f471eb7461318fd7a34bb93a9d8e2003175ec2173c289b",
+    "location": "tools/tests/dungeon_return_tests.cpp"
+  },
+  "tools/tests/test_entrance_slot_bridge.py": {
+    "sha256": "184345ca542034a1d5a55f68a321a2d6e2674ef3fc1a54472695f04cb7c33ecd",
+    "location": "tools/tests/test_entrance_slot_bridge.py"
+  },
+  "tools/tests/entrance_slot_bridge_tests.cpp": {
+    "sha256": "de98dcf23ceb932400542260c850b4b8aa6f84c4eefe425305c3649ae236a912",
+    "location": "tools/tests/entrance_slot_bridge_tests.cpp"
+  },
+  "native_dependencies/json.hpp": {
+    "sha256": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63",
+    "location": "validation/landing_river_1812/native_dependencies/json.hpp"
+  },
+  "native_dependencies/z64.h": {
+    "sha256": "2b542e7be12e20e49034c17db444bf1de489d4161bb333d3bcd73bc32c34ea71",
+    "location": "validation/landing_river_1812/native_dependencies/z64.h"
+  },
+  "native_dependencies/z64save.h": {
+    "sha256": "ba9f4092650d8e9cafd72e8185375c332cd69ab7c5b836841853fc7965531ae5",
+    "location": "validation/landing_river_1812/native_dependencies/z64save.h"
+  },
+  "archipelago/soh_extreme/__init__.py": {
+    "sha256": "71f2844cd5762e75a33f85d2f794eccd4c756557f0ee5674fb954024f5664ef4",
+    "location": "archipelago/soh_extreme/__init__.py"
+  },
+  "archipelago/soh_extreme/EntranceRandomizer.py": {
+    "sha256": "62183bea6fd56506bcb699db05d2a2572fd01d3f8bb5449d035b83a913fe9025",
+    "location": "archipelago/soh_extreme/EntranceRandomizer.py"
+  },
+  "archipelago/soh_extreme/EntranceSafety.py": {
+    "sha256": "2f8812b1ad2ae1b070e70e55e146e7e7fe188c92d6a883e41d807edea54f5608",
+    "location": "archipelago/soh_extreme/EntranceSafety.py"
+  },
+  "archipelago/soh_extreme/EntranceDestinationPolicy.json": {
+    "sha256": "dae658d0ce877ebb22199e28a7f5ab21edcdf1f9f6b696b6dce75059301eec0c",
+    "location": "archipelago/soh_extreme/EntranceDestinationPolicy.json"
+  },
+  "archipelago/soh_extreme/NativeSettings.py": {
+    "sha256": "8f9e8c10c20d66b7c7e5bfd8ed57e0b7a86a6f48206a1b8cb2a3c67bb1ee20e8",
+    "location": "archipelago/soh_extreme/NativeSettings.py"
+  },
+  "archipelago/soh_extreme/SceneTransitions.py": {
+    "sha256": "1dba54929740160486752aad669d18211d25ef4a8d16e6f3bfbfa62186d6ae5a",
+    "location": "archipelago/soh_extreme/SceneTransitions.py"
+  },
+  "archipelago/soh_extreme/CheckDescriptions.py": {
+    "sha256": "e985562d01393f3207c15e8ef41899b0539015ceebcd701358267d32dcd38b20",
+    "location": "archipelago/soh_extreme/CheckDescriptions.py"
+  },
+  "archipelago/soh_extreme/CheckDescriptions.json": {
+    "sha256": "d168cf159d3e1335cc892d41f11152a271b47519acb8342ef7962f32dfc953c1",
+    "location": "archipelago/soh_extreme/CheckDescriptions.json"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": {
+    "sha256": "cd939f48a5edb216d1bee5e1512ce583eef8fd159833f1c43f77cb94af9bfa05",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py": {
+    "sha256": "60dd6c66fd89f8e4214d12e29ed08f38b86b004a25cae360393fcaad2d1a9f29",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/hyrule_field.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_river.py": {
+    "sha256": "f608f9d7ace80850d897df278d47e1ca25dda0660c1ee34594c65b37843ca233",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/zoras_river.py"
+  },
+  "tools/tests/test_zora_river_paths.py": {
+    "sha256": "bdfa911abe87931fc1014caf42c70699b25fa070f618878a71c43815e083a3ea",
+    "location": "tools/tests/test_zora_river_paths.py"
+  },
+  "tools/tests/test_overworld_entrances.py": {
+    "sha256": "7e44faa6f10fd739d8a29b685655e318b912bd18a1065d1741ec9f4771432b7e",
+    "location": "tools/tests/test_overworld_entrances.py"
+  },
+  "tools/tests/test_water_arrival_logic.py": {
+    "sha256": "12faefd44ce35675d37bb3583b89158f17fe22669443929656fd48d36c4ee380",
+    "location": "tools/tests/test_water_arrival_logic.py"
+  },
+  "tools/tests/test_entrance_blockers.py": {
+    "sha256": "582c810a461a7412f46a82855c22b13fd1d85ef223c2169efb8a6693cc7b57fb",
+    "location": "tools/tests/test_entrance_blockers.py"
+  },
+  "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp": {
+    "sha256": "776e095c7e31a83aac4e44b5b1f2076b92462c2b62256b6d53b11b13163bfd98",
+    "location": "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp"
+  },
+  "tools/tests/test_zora_river_native.py": {
+    "sha256": "a6fe6a682e07c11f8951301302be2d8808476ab9fd2a878ab54bee1427e03c48",
+    "location": "tools/tests/test_zora_river_native.py"
+  },
+  "tools/tests/zora_river_native_tests.cpp.in": {
+    "sha256": "3bcdd42ef64a3723fbc9b52da54ce182f7fc1f89b9cf5d5932be3c4befd7b8a1",
+    "location": "tools/tests/zora_river_native_tests.cpp.in"
+  },
+  "native_dependencies/z64scene.h": {
+    "sha256": "c3a66f466d91220d1d2c0b27182a651f1db97e073a8df808b7374242376c7757",
+    "location": "validation/landing_river_1812/native_dependencies/z64scene.h"
+  },
+  "src/overlays/actors/ovl_En_Arrow/z_en_arrow.h": {
+    "sha256": "f05c0cfac158ab7dcfe8970dac8b9536110508388569ab9e4497f98de45949d5",
+    "location": "validation/landing_river_1812/native_source/src/overlays/actors/ovl_En_Arrow/z_en_arrow.h"
+  },
+  "soh/Enhancements/ExtraTraps.cpp": {
+    "sha256": "b029956716dfc4f59c975124fc4d85ef275b4e45899295cd0e751fedd954b893",
+    "location": "soh/Enhancements/ExtraTraps.cpp"
+  },
+  "soh/Network/Archipelago/AmmoPolicy.h": {
+    "sha256": "e1337cfa6c8be0ec7ad8ede2df3363bdd827deed47e96382b013b032d27bcd9e",
+    "location": "soh/Network/Archipelago/AmmoPolicy.h"
+  },
+  "soh/Network/Archipelago/ArchipelagoClient.h": {
+    "sha256": "a3eb0a5578362b57f43147feeee5b62728b10e3a17a165a6d8895ea8b9a9c3bc",
+    "location": "soh/Network/Archipelago/ArchipelagoClient.h"
+  },
+  "soh/Network/Archipelago/TrackerMirror.h": {
+    "sha256": "c01a0c54875c4bf25b9a39971b9972b7cc2ade0f755708fc2d189a45dc220c83",
+    "location": "soh/Network/Archipelago/TrackerMirror.h"
+  },
+  "soh/SohExtremeVersion.h": {
+    "sha256": "ecf85730a6c9c89636e012b57aeefef80051c82fa4ebc017b2ddffe3b1a263fd",
+    "location": "soh/SohExtremeVersion.h"
+  },
+  "tools/tests/test_ammo_native.py": {
+    "sha256": "c3dd28f106ee16f63853211a04853fe0a00b5a4d03dfd3f839b8e3e20f18979e",
+    "location": "tools/tests/test_ammo_native.py"
+  },
+  "tools/tests/ammo_native_io.h": {
+    "sha256": "360f313774073c9ec89c1a92f50f35319952b39ac7968d008d42d450ac46cbb4",
+    "location": "tools/tests/ammo_native_io.h"
+  },
+  "tools/tests/ammo_native_tests.cpp.in": {
+    "sha256": "9dd0fa74a03703bb41a5ab3a140ee4b580e2114bf06b293a3ed112cd492527ea",
+    "location": "tools/tests/ammo_native_tests.cpp.in"
+  },
+  "tools/tests/ammo_native_legacy_functions.inc": {
+    "sha256": "f2fcc2c2bb27f415fdf90a741a0e8a82b4cfd17124baf1c9ccafc44b166ef4a3",
+    "location": "tools/tests/ammo_native_legacy_functions.inc"
+  },
+  "archipelago/soh_extreme/AmmoRefillRules.py": {
+    "sha256": "21f12128e66daa3dfeb2b4261ef75077737c139bf22a6f08d74d577733a829c8",
+    "location": "archipelago/soh_extreme/AmmoRefillRules.py"
+  },
+  "archipelago/soh_extreme/AmmoRefillSources.json": {
+    "sha256": "d1091410ae9a80d156005f59f667334dcacf91cab4110620f3c01e5b11cb69b0",
+    "location": "archipelago/soh_extreme/AmmoRefillSources.json"
+  },
+  "archipelago/soh_extreme/EnemyRoomLogic.py": {
+    "sha256": "c1ada3a8ee0c69e2ad7a77569bf4bea9264965642dabfbf6bcacb2d48ff68c85",
+    "location": "archipelago/soh_extreme/EnemyRoomLogic.py"
+  },
+  "archipelago/soh_extreme/EnemyRoomGraph.json": {
+    "sha256": "00f8467cc25b8ee35ca5b2a70c44cb01e30e54c29604aa65ff2e2339180384d7",
+    "location": "archipelago/soh_extreme/EnemyRoomGraph.json"
+  },
+  "archipelago/soh_extreme/EnemyRoomMap.json": {
+    "sha256": "aecf6f9e541eb568b4ecf29010a0e5b48e629bac19335a9f2e7701fcb7b25acc",
+    "location": "soh_extreme.apworld!soh_extreme/EnemyRoomMap.json"
+  },
+  "archipelago/soh_extreme/EnemyDropLocations.py": {
+    "sha256": "911a56aafdfea550a373a86c291507d559bd3c810b194da406d558974d993852",
+    "location": "archipelago/soh_extreme/EnemyDropLocations.py"
+  },
+  "archipelago/soh_extreme/EnemyDropRules.py": {
+    "sha256": "6e6e68a971475384ebaf018eeecd14844074571143393fd46a75ec51fc773c0d",
+    "location": "archipelago/soh_extreme/EnemyDropRules.py"
+  },
+  "archipelago/soh_extreme/DungeonLocationRoutes.json": {
+    "sha256": "a3f55e52dc3c79ca717355328d7624fcc9f831c07eee620a9a10c68f24cbce31",
+    "location": "archipelago/soh_extreme/DungeonLocationRoutes.json"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Enums.py": {
+    "sha256": "7e52b4225d3b4e0d3a8d428abc64d64f6b2df05a3eadfe28b6cbc22e5b40e142",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/Enums.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Locations.py": {
+    "sha256": "68b5fe7760d9eace3760504ff9c0e51c91506dad1d93e002ef42c39f1a54d29d",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/Locations.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/Items.py": {
+    "sha256": "c0a21a035c22f32d2381c3e662f0705a7ba89bb86f8823fa6840653c0c2e09a7",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/Items.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/ShopItems.py": {
+    "sha256": "9f76a24ae5e27597d5c358a92b92b404d81292f68f8e5b396e1527906b850377",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/ShopItems.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py": {
+    "sha256": "d27d86750b4c20545d673e1c0d93ae3079beb87acab98b4c2b0f2f0d90045c90",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py": {
+    "sha256": "eb3a6d78b8ddbe16ec545f6b66f0683b686571fffd193d6b7c6721e0057c67fb",
+    "location": "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py"
+  },
+  "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py": {
+    "sha256": "4b44180e2d905d001256adb08eb2308785ec6a71e4bba9969f8e4f8f81d008cd",
+    "location": "soh_extreme.apworld!soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py"
+  },
+  "soh/Enhancements/randomizer/location_list.cpp": {
+    "sha256": "4d15d3ca34006aef5fabea5f7db5187ff1f57f5837a4b9eceb70a4ca298ed0f3",
+    "location": "validation/landing_river_1812/native_source/soh/Enhancements/randomizer/location_list.cpp"
+  },
+  "soh/Enhancements/randomizer/MegaSouls.cpp": {
+    "sha256": "db261c49d61e58216611dde7e84ce9daeee9797aa08ca554eef41960194689bd",
+    "location": "soh/Enhancements/randomizer/MegaSouls.cpp"
+  },
+  "soh/Enhancements/randomizer/EnemyDropPolicy.h": {
+    "sha256": "b88998967d519c2527f23cbc33f3d8950b809203cd252f8bcf938d4058f266c1",
+    "location": "validation/landing_river_1812/native_source/soh/Enhancements/randomizer/EnemyDropPolicy.h"
+  },
+  "src/overlays/actors/ovl_En_Dns/z_en_dns.c": {
+    "sha256": "2087f54bf11b5aa1fbbf687c700c2b20304c9e87b0dd423c94742805966e6ac0",
+    "location": "validation/landing_river_1812/native_source/src/overlays/actors/ovl_En_Dns/z_en_dns.c"
+  },
+  "src/overlays/actors/ovl_En_Js/z_en_js.c": {
+    "sha256": "db43ebb680f76deb6b9965bd83e9caf2dd9d37599a2b1307467bbc45b25ca46d",
+    "location": "validation/landing_river_1812/native_source/src/overlays/actors/ovl_En_Js/z_en_js.c"
+  },
+  "src/overlays/actors/ovl_En_Karebaba/z_en_karebaba.c": {
+    "sha256": "88280e512804f2976b0037ee158c657ad7c1849a3ad6f42b8518cbffb951e057",
+    "location": "validation/landing_river_1812/native_source/src/overlays/actors/ovl_En_Karebaba/z_en_karebaba.c"
+  },
+  "src/overlays/actors/ovl_En_Tite/z_en_tite.c": {
+    "sha256": "70408e0d9ee69d9f86b9d5dfba6197c01fdb5fb4173ceb5086beaf1478f2c058",
+    "location": "validation/landing_river_1812/native_source/src/overlays/actors/ovl_En_Tite/z_en_tite.c"
+  },
+  "src/code/z_en_item00.c": {
+    "sha256": "d061da7d1fb52a997e46cb7d0b43b50e74e44365110939fbcd9e14b1ead82a23",
+    "location": "src/code/z_en_item00.c"
+  },
+  "soh/Network/Archipelago/ArchipelagoLocationMap.inc": {
+    "sha256": "6941868c79ef87b318993b70f1ec38f2cb9dabc512ef90e7525d943c5377e37c",
+    "location": "validation/landing_river_1812/native_source/soh/Network/Archipelago/ArchipelagoLocationMap.inc"
+  },
+  "tools/tests/test_ammo_refill.py": {
+    "sha256": "a4c621799706caf9cd5ec9a1c6de37006d6162abd6506bca2092dddc9d944e1d",
+    "location": "tools/tests/test_ammo_refill.py"
+  },
+  "tools/generate_ammo_refill_sources.py": {
+    "sha256": "3aac1381c25914bc71c83420d2a4ecccebc6c1b411010db975dfd4aac81951c2",
+    "location": "tools/generate_ammo_refill_sources.py"
+  },
+  "archipelago/soh_extreme/TrackerMirror.py": {
+    "sha256": "b364abeee802587a63147ddfe56d54b88012dca345e737903848f3ebd30ef64f",
+    "location": "archipelago/soh_extreme/TrackerMirror.py"
+  },
+  "archipelago/soh_extreme/TrackerClient.py": {
+    "sha256": "f88a327c727df9de77e5e6cb35e0b59adac63253ad66f5abc5d3c4f77c1715b2",
+    "location": "archipelago/soh_extreme/TrackerClient.py"
+  },
+  "tools/tests/test_ammo_tracker_protocol.py": {
+    "sha256": "691b6c3ca8559bb03244db1600ed136ae48323916fb6c06087b876d277616eee",
+    "location": "tools/tests/test_ammo_tracker_protocol.py"
+  },
+  "tools/tests/ammo_tracker_protocol_tests.cpp.in": {
+    "sha256": "003903ebc1def35fb82b2acf6b0790929bc389f58e6c0fea6c27921767a3326f",
+    "location": "tools/tests/ammo_tracker_protocol_tests.cpp.in"
+  },
+  "soh/Network/Archipelago/AmmoSourcePolicy.h": {
+    "sha256": "007de747e0075adae8b3a5c647b934a439daba7eb2466de229b40d140a01ca76",
+    "location": "soh/Network/Archipelago/AmmoSourcePolicy.h"
+  },
+  "soh/Enhancements/randomizer/ShufflePots.cpp": {
+    "sha256": "c05f98a98396d598948db2aa5cf06d5c59421002d8f7c6609b6b59e8a7e1c870",
+    "location": "soh/Enhancements/randomizer/ShufflePots.cpp"
+  },
+  "soh/Enhancements/randomizer/ShuffleCrates.cpp": {
+    "sha256": "ebdc4e6315ef7b87c706fa865f8691a84ad3167a8773c05eaf912720abf98796",
+    "location": "soh/Enhancements/randomizer/ShuffleCrates.cpp"
+  },
+  "soh/Enhancements/randomizer/RCToRandInf.cpp": {
+    "sha256": "de2f2e2907103e96a7121eed33aadaa8be09e153ef99c5d546463a08bcf671b5",
+    "location": "validation/landing_river_1812/native_source/soh/Enhancements/randomizer/RCToRandInf.cpp"
+  },
+  "src/overlays/actors/ovl_Obj_Tsubo/z_obj_tsubo.c": {
+    "sha256": "094c32bbdf2ce5c0000d9ea04558c5cea5645b71d6026ae77fb52b7b32928760",
+    "location": "validation/landing_river_1812/native_source/src/overlays/actors/ovl_Obj_Tsubo/z_obj_tsubo.c"
+  },
+  "src/overlays/actors/ovl_Obj_Kibako/z_obj_kibako.c": {
+    "sha256": "02035d7632d4f4d5c18c7ed2b88eff31b38e71b4e6d201dfde082431f5806b6c",
+    "location": "src/overlays/actors/ovl_Obj_Kibako/z_obj_kibako.c"
+  },
+  "src/overlays/actors/ovl_Obj_Kibako2/z_obj_kibako2.c": {
+    "sha256": "81cb3b4a2b67699d1ab6be5791152164947d4cebd3968d22b14e615309825727",
+    "location": "src/overlays/actors/ovl_Obj_Kibako2/z_obj_kibako2.c"
+  },
+  "tools/tests/test_ammo_sources_native.py": {
+    "sha256": "0a818bf993b4c25b298c88310a6ac306921e5de97684cc8f30cddb7f74564d47",
+    "location": "tools/tests/test_ammo_sources_native.py"
+  },
+  "tools/tests/ammo_sources_native_io.h": {
+    "sha256": "55d0b01d1b922e342ff663506b4d8dc8c8ac200d1f7d14212702fad9bfcb6e11",
+    "location": "tools/tests/ammo_sources_native_io.h"
+  },
+  "tools/tests/ammo_sources_native_tests.cpp.in": {
+    "sha256": "b1901ad3aacbe769e47e9ff6b1549f018a2e87702c1e2c037fd8baa84526213e",
+    "location": "tools/tests/ammo_sources_native_tests.cpp.in"
+  },
+  "tools/tests/ammo_sources_legacy_functions.inc": {
+    "sha256": "ede819915190799e9114b0dcaf823736876d90694cd71305aa30f3c14c3f6369",
+    "location": "tools/tests/ammo_sources_legacy_functions.inc"
+  },
+  "native_dependencies/z64actor.h": {
+    "sha256": "c999e0eaf8b873bf5a229a3a3c83007c310ebdd5d59acffd731ae60776164798",
+    "location": "validation/landing_river_1812/native_dependencies/z64actor.h"
+  },
+  "native_dependencies/z64actor.h.provenance.json": {
+    "sha256": "04cc6ee77d8deea8e9676006dacdcd18a222f66b42e8d942fd2c0d8d3a3a3466",
+    "location": "validation/landing_river_1812/native_dependencies/z64actor.h.provenance.json"
+  },
+  "soh/Enhancements/randomizer/BombchuRefillPolicy.h": {
+    "sha256": "0688f79fb1071a8fe3ecb3d37b6e6f7332bf1eae7c27945736dc5aa63bb69fe8",
+    "location": "validation/landing_river_1812/native_source/soh/Enhancements/randomizer/BombchuRefillPolicy.h"
+  },
+  "src/code/code_800FD970.c": {
+    "sha256": "bedcab59eaedee00345875a1ed5885dc39891ba33490e2d57a8fd3a5128b9389",
+    "location": "validation/landing_river_1812/native_source/src/code/code_800FD970.c"
+  },
+  "tools/tests/test_ammo_refill_drop_bounds_native.py": {
+    "sha256": "a8de02e7fbdea1feab68bd4ffb63e554af128c94817d34c0ccee236ba39b8fa9",
+    "location": "tools/tests/test_ammo_refill_drop_bounds_native.py"
+  },
+  "tools/tests/ammo_refill_drop_bounds_native_tests.cpp.in": {
+    "sha256": "991293569d659ecfc251b884acf8e0acc13f3de853744e15d6478955765bf519",
+    "location": "tools/tests/ammo_refill_drop_bounds_native_tests.cpp.in"
+  },
+  "tools/tests/ammo_refill_drop_bounds_legacy.inc": {
+    "sha256": "a1590a0ad0399be62faf648167e17f999e2121047c5a9a6a00ef1198490b10cf",
+    "location": "tools/tests/ammo_refill_drop_bounds_legacy.inc"
+  },
+  "legacy_seed_inputs/grotto_1811_uploaded_seed_reproduction.options.json": {
+    "sha256": "ad8a6d199aad69334cbf1f0bee39926a2cd1d9786f50c5cf37d8de50c8d2d8f1",
+    "location": "validation/landing_river_1812/legacy_seed_inputs/grotto_1811_uploaded_seed_reproduction.options.json"
+  },
+  "legacy_seed_inputs/grotto_1811_uploaded_seed_reproduction.json": {
+    "sha256": "e2aa37e74815f853ebc03247aa9e65a135d01ca9636731b52496afd0e964152f",
+    "location": "validation/landing_river_1812/legacy_seed_inputs/grotto_1811_uploaded_seed_reproduction.json"
+  },
+  "river_native_baseline": {
+    "original_release_sha256": "8d105428ddd2146abaf70a6ab4ce7b05e44aefbcccdcc8076893185ce896bc3e",
+    "source_sha256": {
+      "soh/Enhancements/randomizer/randomizer_entrance.c": "d50283887426dd61cce5be606fe6aeeaf9236c349f0e6f1f0d635960166f35a5",
+      "soh/Enhancements/randomizer/randomizer_entrance_tracker.cpp": "0943ff9dfddeac6fec3c35ee5acfbc955069057ba530609f9119e69785d7c021"
+    },
+    "fixture_archive_sha256": "c76048da005e1160e2bfc9b37166df7e7c110ad30bb9dd956ef85f85cea0314d",
+    "location": "validation/landing_river_1812/river_native_baseline_1.8.11.zip",
+    "note": "Identical compiled baseline source bodies; subset ZIP hash differs from the complete historical release."
+  }
+}

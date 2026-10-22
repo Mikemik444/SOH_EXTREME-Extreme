@@ -201,8 +201,18 @@ def run_worker(*args):
     raise SystemExit(asyncio.run(run_managed(config, ut)))
 
 
+def launch_tracker(*args):
+    # Keep the native launch command and inherited-pipe ownership unchanged.
+    # Any use of the reserved worker flag must pass run_worker's exact argument
+    # validation; malformed worker calls must never open an interactive client.
+    if "--game-owned" in args:
+        return run_worker(*args)
+    from .TrackerClient import launch
+    return launch(*args)
+
+
 def register_worker():
     from worlds.LauncherComponents import Component, Type, components
     if not any(component.display_name == WORKER_COMPONENT for component in components):
-        components.append(Component(WORKER_COMPONENT, func=run_worker, component_type=Type.HIDDEN,
-                                    description="Private Universal Tracker host managed by the SoH game"))
+        components.append(Component(WORKER_COMPONENT, func=launch_tracker, component_type=Type.CLIENT,
+                                    description="Track your connected SOH-EXTREME slot; no player YAML is required"))

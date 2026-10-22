@@ -1,0 +1,279 @@
+#include <algorithm>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <map>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+#include "soh/Network/Archipelago/RoomTransitionLabels.h"
+
+using s16 = int16_t;
+constexpr int ACTOR_EN_HOLL = 0x23;
+constexpr int ENTR_MAX = 0x614;
+struct Vec3f { float x = 0, y = 0, z = 0; };
+struct Actor { int id = 9, params = 0; struct { Vec3f pos; } world; };
+struct Player { Actor actor; };
+struct TransitionActorEntry {
+    int id = 9, params = 0;
+    struct { int room = 0; } sides[2];
+    Vec3f pos;
+    int rotY = 0;
+};
+struct PlayState {
+    int sceneNum = 0;
+    struct { struct { int num = 0; } curRoom; } roomCtx;
+    struct { int numActors = 64; TransitionActorEntry list[64]; } transiActorCtx;
+    Player player;
+};
+static PlayState play;
+static PlayState* gPlayState = &play;
+static bool mq = false, activeSave = true, playerPresent = true;
+static std::map<int, int> routes, nativeOverrides;
+struct { int scene = -1; } gEntranceTable[ENTR_MAX];
+#define GET_PLAYER(p) (playerPresent ? &(p)->player : nullptr)
+float Math_SinS(int value) { return std::sin(static_cast<s16>(value) * (3.14159265358979323846f / 32768.0f)); }
+float Math_CosS(int value) { return std::cos(static_cast<s16>(value) * (3.14159265358979323846f / 32768.0f)); }
+uint32_t ResourceMgr_IsSceneMasterQuest(s16) { return mq; }
+namespace SohUtils { std::string GetSceneName(int scene) { return "Scene " + std::to_string(scene); } }
+namespace EntranceTracker {
+struct EntranceData { std::string destination; };
+const EntranceData* GetEntranceData(int) { return nullptr; }
+}
+int Archipelago_EntranceDestination(int source) {
+    const auto found = routes.find(source);
+    return activeSave && found != routes.end() ? found->second : source;
+}
+const char* Archipelago_EntranceDestinationName(int source) {
+    if (!activeSave || !routes.contains(source)) return nullptr;
+    const auto* endpoint = SohExtreme::EntranceEndpointById(routes.at(source));
+    return endpoint ? endpoint->name : nullptr;
+}
+int RoomDebugResolveExit(int entrance) { return entrance; }
+int RoomDebugOverriddenEntrance(int source) {
+    const auto found = nativeOverrides.find(source);
+    return found != nativeOverrides.end() ? found->second : source;
+}
+
+@DOOR_TYPE@
+static constexpr RoomDebugDoor roomDebugDoors[] = {
+#include "soh/Enhancements/randomizer/RoomDebugDoorData.inc"
+};
+@SCENE_TYPE@
+static constexpr RoomDebugSceneTransition roomDebugSceneTransitions[] = {
+#include "soh/Enhancements/randomizer/RoomDebugSceneData.inc"
+};
+@SCENE_DECLARATION@
+@SCENE_FUNCTION@
+@DOOR_FUNCTION@
+@PASSAGE_FUNCTION@
+@FINDER_FUNCTION@
+
+struct ExpectedArrival { int id; const char* name; int room; };
+constexpr ExpectedArrival expectedArrivals[] = {
+@ARRIVALS@
+};
+static int cases = 0, assertions = 0;
+static void Require(bool value, const std::string& message) {
+    ++assertions;
+    if (!value) throw std::runtime_error(message);
+}
+static const ExpectedArrival& Expected(int id) {
+    for (const auto& row : expectedArrivals) if (row.id == id) return row;
+    throw std::runtime_error("Missing test arrival " + std::to_string(id));
+}
+static std::string ExpectedLabel(const char* kind, int id, int knownRoom = -1) {
+    const auto& row = Expected(id);
+    const int room = row.room >= 0 ? row.room : knownRoom;
+    return std::string(kind) + " to " + row.name + (room >= 0 ? "\nRoom " + std::to_string(room) : "");
+}
+static void Reset() {
+    play = {};
+    gPlayState = &play;
+    mq = false; activeSave = true; playerPresent = true;
+    routes.clear(); nativeOverrides.clear();
+}
+static TransitionActorEntry& Setup(const SohExtreme::EntranceEndpoint& source) {
+    Reset();
+    play.sceneNum = source.sourceScene;
+    play.roomCtx.curRoom.num = source.fromRoom;
+    auto& door = play.transiActorCtx.list[source.door];
+    door.sides[source.side].room = source.fromRoom;
+    door.sides[1 - source.side].room = source.room;
+    door.pos = { float(source.x), float(source.y), float(source.z) };
+    door.rotY = source.yaw;
+    const float direction = source.side == 0 ? -40.0f : 40.0f;
+    play.player.actor.world.pos = { source.x + Math_SinS(source.yaw) * direction, float(source.y),
+                                    source.z + Math_CosS(source.yaw) * direction };
+    return door;
+}
+
+static void CheckCatalog() {
+    int doors = 0, ordinary = 0;
+    for (const auto& expected : expectedArrivals) {
+        ++cases;
+        const auto* endpoint = SohExtreme::EntranceEndpointById(expected.id);
+        Require(endpoint != nullptr, "Endpoint exists");
+        Require(endpoint->room == expected.room, "Exact destination room agrees with independent AP catalogue");
+        const auto description = SohExtreme::EntranceArrivalDescription(*endpoint);
+        Require(description == expected.name, "Arrival text " + std::to_string(expected.id) + ": " + description);
+        Require(description.find("RR_") == std::string::npos, "No raw region identifiers");
+        Require(description.find(" (door ") == std::string::npos, "No numeric legacy door suffix in title");
+        if (endpoint->door >= 0) ++doors; else ++ordinary;
+    }
+    Require(doors == 421 && ordinary == 300, "Complete endpoint coverage");
+    std::printf("Catalog: %d room arrivals and %d scene arrivals\n", doors, ordinary);
+}
+
+static void CheckRoomDoors() {
+    int count = 0;
+    for (const auto& source : SohExtreme::kEntranceEndpoints) {
+        if (source.door < 0) continue;
+        ++cases; ++count;
+        Setup(source);
+        Require(RoomDebugDestination(source.door) == ExpectedLabel("Door", source.id),
+                "Vanilla room label " + std::to_string(source.id));
+        const auto& target = expectedArrivals[(count * 17 + 100) % std::size(expectedArrivals)];
+        routes[source.id] = target.id;
+        Require(RoomDebugDestination(source.door) == ExpectedLabel("Door", target.id),
+                "Mapped room label " + std::to_string(source.id));
+        play.roomCtx.curRoom.num = source.room;
+        Require(RoomDebugDestination(source.door) == ExpectedLabel("Door", target.id),
+                "Room preload cannot reverse the mapped opening side " + std::to_string(source.id));
+        Require(FinderCheckArrival(source.check) == SohExtreme::EntranceEndpointById(target.id),
+                "Finder reads the installed target endpoint");
+        const auto details = SohExtreme::TrackerCheckDetailLine(source.check, FinderCheckArrival(source.check));
+        Require(details.find("Door " + std::to_string(source.door + 1)) != std::string::npos,
+                "Finder retains physical source door number");
+        Require(target.room < 0 ? details.find("Destination room") == std::string::npos :
+                details.find("Destination room " + std::to_string(target.room)) == 0,
+                "Finder room describes actual destination, not vanilla target");
+        activeSave = false;
+        Require(FinderCheckArrival(source.check) == nullptr, "No map outside its active save");
+    }
+    std::printf("Room doors: %d physical sources, vanilla and mapped arrivals\n", count);
+}
+
+static void CheckSceneDoors() {
+    int count = 0, supported = 0;
+    for (const auto& row : roomDebugDoors) {
+        if (row.entrance < 0) continue;
+        ++cases; ++count;
+        Reset();
+        play.sceneNum = row.scene;
+        play.roomCtx.curRoom.num = row.from;
+        auto& door = play.transiActorCtx.list[row.door];
+        door.pos = { float(row.x), float(row.y), float(row.z) };
+        door.sides[0].room = door.sides[1].room = row.from;
+        const auto* endpoint = SohExtreme::EntranceEndpointById(row.entrance);
+        if (endpoint) {
+            ++supported;
+            Require(RoomDebugDestination(row.door) == ExpectedLabel("Door", row.entrance, row.to),
+                    "Known native handle-door arrival " + std::to_string(row.entrance));
+            const int destination = count % 2 ? 8194 : 9626;
+            routes[row.entrance] = destination;
+            Require(RoomDebugDestination(row.door) == ExpectedLabel("Door", destination),
+                    "Handle door uses scene exit identity " + std::to_string(row.entrance));
+        } else {
+            Require(row.entrance == 908 || row.entrance == 920, "Only fixed Richard door endpoints are excluded");
+            Require(RoomDebugDestination(row.door).find("\nRoom " + std::to_string(row.to)) != std::string::npos,
+                    "Fixed native route retains known room");
+            Require(RoomDebugDestination(row.door).find(" (") == std::string::npos,
+                    "Native entrance ordinal is not mistaken for a room number");
+        }
+    }
+    Require(count == 52 && supported == 49, "Complete handle-door coverage");
+    Reset();
+    routes[1099] = 8859;
+    Require(RoomDebugSceneExitText(1099, "Exit") == ExpectedLabel("Exit", 8859), "Wet middle target is Low Emblem room 17");
+    routes[1158] = 8862;
+    Require(RoomDebugSceneExitText(1158, "Exit") == ExpectedLabel("Exit", 8862), "Central pillar target is main room 0");
+    routes[8858] = 900;
+    Require(RoomDebugSceneExitText(8858, "Exit") == ExpectedLabel("Exit", 900), "Mixed shop arrival does not invent room 0");
+    nativeOverrides[900] = 590;
+    Require(RoomDebugSceneExitText(900, "Exit", 0, 48) == ExpectedLabel("Exit", 590), "Native override never inherits source room");
+    std::printf("Handle doors: %d exact scene identities (%d shuffled, 3 fixed Richard entries)\n", count, supported);
+}
+
+static void CheckNativePassages() {
+    int count = 0;
+    for (int type = 0; type < 7; ++type) {
+        for (bool sameRoom : { false, true }) {
+            for (int loaded : { 1, 2 }) {
+                for (float coordinate : { -20.0f, 0.0f, 20.0f }) {
+                    ++cases; ++count;
+                    Reset();
+                    play.sceneNum = 0;
+                    play.roomCtx.curRoom.num = loaded;
+                    auto& door = play.transiActorCtx.list[0];
+                    door.id = ACTOR_EN_HOLL;
+                    door.params = type << 6;
+                    door.sides[0].room = 1;
+                    door.sides[1].room = sameRoom ? 1 : 2;
+                    const bool vertical = type == 1 || type == 2 || type == 5;
+                    play.player.actor.world.pos = { 0, vertical ? coordinate : 100, vertical ? 100 : coordinate };
+                    routes[8192] = 590; routes[8193] = 590;
+                    const std::string popup = RoomDebugDestination(0);
+                    Require(RoomDebugPassageText(&play.player.actor, 0) == popup,
+                            "World and popup native passage descriptions agree");
+                    if (type == 1 && coordinate <= 0) {
+                        Require(popup.empty(), "One-way drop is hidden from below and its plane");
+                        continue;
+                    }
+                    const int side = type == 1 ? 0 : vertical ? (coordinate > 0 ? 0 : 1) : (coordinate < 0 ? 0 : 1);
+                    const int target = door.sides[side ^ 1].room;
+                    const std::string name = target == 1 ? "Deku Tree: 2F Middle Room" : "Deku Tree: Slingshot Room";
+                    const std::string kind = type == 1 ? "Drop" : vertical ? "Vertical passage" : "Passage";
+                    Require(popup == kind + " to " + name + "\nRoom " + std::to_string(target),
+                            "Physical native passage type/side " + std::to_string(type) + ": " + popup);
+                    Require(popup.find("Forest Temple") == std::string::npos, "Synthetic room IDs cannot randomize EnHoll");
+                }
+            }
+        }
+    }
+    ++cases;
+    Reset(); mq = true;
+    play.transiActorCtx.list[0].id = ACTOR_EN_HOLL;
+    play.transiActorCtx.list[0].sides[0].room = 1;
+    play.transiActorCtx.list[0].sides[1].room = 2;
+    play.player.actor.world.pos.z = -20;
+    Require(RoomDebugDestination(0) == "Passage to Scene 0\nRoom 2", "MQ avoids vanilla sector descriptions");
+    Require(RoomDebugDestination(-1).empty() && RoomDebugDestination(64).empty(), "Bounds checks");
+    playerPresent = false;
+    Require(RoomDebugDestination(0).empty(), "No player during load");
+    std::printf("Native EnHoll: %d side/type/preload/same-room cases plus load/MQ guards\n", count);
+}
+
+static void CheckFinderText() {
+    ++cases;
+    const auto* source = SohExtreme::EntranceEndpointById(8192);
+    const auto* target = SohExtreme::EntranceEndpointById(8859);
+    const auto* desc = SohExtreme::FindCheckDescription(source->check);
+    const std::string input = std::string(desc->name) + " | Shuffled to: old target (my route) [Child]";
+    const auto label = SohExtreme::TrackerDestinationLabel(source->check, input, target);
+    Require(label == std::string(desc->name) + " | Shuffled to: Water Temple: Low Emblem (my route) [Child]",
+            "Shared descriptive destination preserves alias and age");
+    Require(label.find("(door") == std::string::npos, "Numeric details are not in the title");
+    Require(SohExtreme::TrackerCheckDetailLine(source->check, target) == "Destination room 17 | From room 0 | Door 1",
+            "Second line reports actual target and physical source IDs");
+    Require(SohExtreme::TrackerDestinationLabel(source->check, "Custom title | Shuffled to: my label [Adult]", target) ==
+            "Custom title | Shuffled to: my label [Adult]", "Unknown custom title survives");
+    Require(SohExtreme::TrackerDestinationLabel(999999999, "Foreign room RR_FOREST_TEMPLE_BOSS_ENTRYWAY", target) ==
+            "Foreign room RR_FOREST_TEMPLE_BOSS_ENTRYWAY", "Other location identities are not rewritten");
+    Require(SohExtreme::TrackerCheckDetailLine(11000900, target) == "Destination room 17",
+            "Scene-to-room Finder transition gets a destination room line");
+    Require(SohExtreme::NativeRoomDescription(5, 0) == "Water Temple", "Shared room never chooses arbitrary Water Temple sector");
+    Require(SohExtreme::NativeRoomDescription(0, 0) == "Deku Tree: Lobby", "Shared lobby retains honest room-level landmark");
+    std::printf("Finder: mapped room details, separate title, age/alias and custom-label preservation\n");
+}
+
+int main() {
+    try {
+        CheckCatalog(); CheckRoomDoors(); CheckSceneDoors(); CheckNativePassages(); CheckFinderText();
+        std::printf("RESULT cases=%d assertions=%d\n", cases, assertions);
+    } catch (const std::exception& error) {
+        std::fprintf(stderr, "%s\n", error.what());
+        return 1;
+    }
+}

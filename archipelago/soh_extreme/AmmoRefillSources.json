@@ -1,0 +1,154 @@
+{
+  "revision": 1,
+  "source_sha256": {
+    "soh/Enhancements/randomizer/location_list.cpp": "4d15d3ca34006aef5fabea5f7db5187ff1f57f5837a4b9eceb70a4ca298ed0f3",
+    "soh/Network/Archipelago/ArchipelagoLocationMap.inc": "6941868c79ef87b318993b70f1ec38f2cb9dabc512ef90e7525d943c5377e37c",
+    "src/overlays/actors/ovl_En_Dns/z_en_dns.c": "2087f54bf11b5aa1fbbf687c700c2b20304c9e87b0dd423c94742805966e6ac0"
+  },
+  "scrubs": [
+    {
+      "location_key": "LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT",
+      "address": 689,
+      "native_check": "RC_LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT",
+      "stock": "RG_BUY_DEKU_STICK_1",
+      "ammo": 1,
+      "price": 15
+    },
+    {
+      "location_key": "LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT",
+      "address": 690,
+      "native_check": "RC_LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT",
+      "stock": "RG_BUY_DEKU_NUTS_5",
+      "ammo": 2,
+      "price": 20
+    },
+    {
+      "location_key": "LLR_DEKU_SCRUB_GROTTO_LEFT",
+      "address": 696,
+      "native_check": "RC_LLR_DEKU_SCRUB_GROTTO_LEFT",
+      "stock": "RG_BUY_DEKU_NUTS_5",
+      "ammo": 2,
+      "price": 20
+    },
+    {
+      "location_key": "LLR_DEKU_SCRUB_GROTTO_RIGHT",
+      "address": 698,
+      "native_check": "RC_LLR_DEKU_SCRUB_GROTTO_RIGHT",
+      "stock": "RG_BUY_BOMBS_535",
+      "ammo": 4,
+      "price": 40
+    },
+    {
+      "location_key": "GC_DEKU_SCRUB_GROTTO_LEFT",
+      "address": 699,
+      "native_check": "RC_GC_DEKU_SCRUB_GROTTO_LEFT",
+      "stock": "RG_BUY_DEKU_NUTS_5",
+      "ammo": 2,
+      "price": 20
+    },
+    {
+      "location_key": "GC_DEKU_SCRUB_GROTTO_CENTER",
+      "address": 700,
+      "native_check": "RC_GC_DEKU_SCRUB_GROTTO_CENTER",
+      "stock": "RG_BUY_ARROWS_30",
+      "ammo": 16,
+      "price": 70
+    },
+    {
+      "location_key": "GC_DEKU_SCRUB_GROTTO_RIGHT",
+      "address": 701,
+      "native_check": "RC_GC_DEKU_SCRUB_GROTTO_RIGHT",
+      "stock": "RG_BUY_BOMBS_535",
+      "ammo": 4,
+      "price": 40
+    },
+    {
+      "location_key": "DMC_DEKU_SCRUB",
+      "address": 702,
+      "native_check": "RC_DMC_DEKU_SCRUB",
+      "stock": "RG_BUY_BOMBS_535",
+      "ammo": 4,
+      "price": 40
+    },
+    {
+      "location_key": "DMC_DEKU_SCRUB_GROTTO_LEFT",
+      "address": 703,
+      "native_check": "RC_DMC_DEKU_SCRUB_GROTTO_LEFT",
+      "stock": "RG_BUY_DEKU_NUTS_5",
+      "ammo": 2,
+      "price": 20
+    },
+    {
+      "location_key": "DMC_DEKU_SCRUB_GROTTO_CENTER",
+      "address": 704,
+      "native_check": "RC_DMC_DEKU_SCRUB_GROTTO_CENTER",
+      "stock": "RG_BUY_ARROWS_30",
+      "ammo": 16,
+      "price": 70
+    },
+    {
+      "location_key": "DMC_DEKU_SCRUB_GROTTO_RIGHT",
+      "address": 705,
+      "native_check": "RC_DMC_DEKU_SCRUB_GROTTO_RIGHT",
+      "stock": "RG_BUY_BOMBS_535",
+      "ammo": 4,
+      "price": 40
+    },
+    {
+      "location_key": "LH_DEKU_SCRUB_GROTTO_LEFT",
+      "address": 708,
+      "native_check": "RC_LH_DEKU_SCRUB_GROTTO_LEFT",
+      "stock": "RG_BUY_DEKU_NUTS_5",
+      "ammo": 2,
+      "price": 20
+    },
+    {
+      "location_key": "LH_DEKU_SCRUB_GROTTO_RIGHT",
+      "address": 710,
+      "native_check": "RC_LH_DEKU_SCRUB_GROTTO_RIGHT",
+      "stock": "RG_BUY_BOMBS_535",
+      "ammo": 4,
+      "price": 40
+    },
+    {
+      "location_key": "DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS",
+      "address": 716,
+      "native_check": "RC_DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS",
+      "stock": "RG_BUY_DEKU_STICK_1",
+      "ammo": 1,
+      "price": 15
+    },
+    {
+      "location_key": "DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT",
+      "address": 718,
+      "native_check": "RC_DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT",
+      "stock": "RG_BUY_DEKU_NUTS_5",
+      "ammo": 2,
+      "price": 20
+    },
+    {
+      "location_key": "JABU_JABUS_BELLY_DEKU_SCRUB",
+      "address": 724,
+      "native_check": "RC_JABU_JABUS_BELLY_DEKU_SCRUB",
+      "stock": "RG_BUY_DEKU_NUTS_5",
+      "ammo": 2,
+      "price": 20
+    },
+    {
+      "location_key": "GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT",
+      "address": 726,
+      "native_check": "RC_GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT",
+      "stock": "RG_BUY_BOMBS_535",
+      "ammo": 4,
+      "price": 40
+    },
+    {
+      "location_key": "GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT",
+      "address": 727,
+      "native_check": "RC_GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT",
+      "stock": "RG_BUY_ARROWS_30",
+      "ammo": 16,
+      "price": 70
+    }
+  ]
+}

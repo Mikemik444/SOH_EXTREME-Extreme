@@ -1,0 +1,4 @@
+Upstream license source: https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/LICENSE
+Revision: 32f0d6d63d3e6a61687a88dbe5e554c00ab589d9
+SHA256: f66c14cec56600dec0a63c5dc14d9fe3dc4efbcdfbf34b100b6fcf1f1e3ded00
+Bytes: 1424

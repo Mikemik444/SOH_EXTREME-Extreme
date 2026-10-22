@@ -1,0 +1,20 @@
+{
+  "guard": {
+    "archive": "haha.zip",
+    "archive_sha256": "854ffecebd1e01ffd16c5e2b5cd8b2c43648e84180d5be75055a32c65ef4f59b",
+    "member": "src/overlays/actors/ovl_En_Heishi1/z_en_heishi1.c",
+    "full_source_sha256": "7fbb2a308a0c89be75502bbc8f20b7cd46ae5692fb2a1b84eb8f4ca69f9b975c",
+    "retained_excerpt": "tools/tests/courtyard_dampe_legacy_guard.inc",
+    "retained_excerpt_sha256": "9c4fc7d86e1b7f4a970caf8d2329089e5a9e295279f0a24b6f7c92b7c761e62d",
+    "retained_full_init": "tools/tests/courtyard_dampe_legacy_full_guard_init.inc",
+    "retained_full_init_sha256": "88b772c5afe7bc83c1776dea75bfd7493fd4bb99522780a220d61bee5945282b"
+  },
+  "door": {
+    "archive": "SOH-EXTREME-1.8.12-source-files.zip",
+    "archive_sha256": "1ff721a78693bbd01f2f641767eda2126edc66a62fea0ce3b152efc72a6ae0da",
+    "member": "validation/native_source/src/overlays/actors/ovl_En_Door/z_en_door.c",
+    "full_source_sha256": "53dab2314d069dd0b54ed978ced8fe628a1ede0e4f97789354b42f52a56d4dc8",
+    "retained_excerpt": "tools/tests/courtyard_dampe_legacy_door.inc",
+    "retained_excerpt_sha256": "1debcc8f6ec44e26960a4daa4012087195fd4b1d8deb7fbefa7547f226da9cde"
+  }
+}

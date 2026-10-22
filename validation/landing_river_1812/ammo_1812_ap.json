@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "tests": 10,
+  "decisions": 284,
+  "refill_probes": 55,
+  "elapsed_seconds": 20.292,
+  "source_unchanged_during_tests": true,
+  "source_sha256": {
+    "archipelago/soh_extreme/AmmoRefillRules.py": "21f12128e66daa3dfeb2b4261ef75077737c139bf22a6f08d74d577733a829c8",
+    "archipelago/soh_extreme/AmmoRefillSources.json": "d1091410ae9a80d156005f59f667334dcacf91cab4110620f3c01e5b11cb69b0",
+    "archipelago/soh_extreme/__init__.py": "71f2844cd5762e75a33f85d2f794eccd4c756557f0ee5674fb954024f5664ef4",
+    "archipelago/soh_extreme/EnemyRoomLogic.py": "c1ada3a8ee0c69e2ad7a77569bf4bea9264965642dabfbf6bcacb2d48ff68c85",
+    "archipelago/soh_extreme/EnemyRoomGraph.json": "00f8467cc25b8ee35ca5b2a70c44cb01e30e54c29604aa65ff2e2339180384d7",
+    "archipelago/soh_extreme/EnemyRoomMap.json": "aecf6f9e541eb568b4ecf29010a0e5b48e629bac19335a9f2e7701fcb7b25acc",
+    "archipelago/soh_extreme/EnemyDropLocations.py": "911a56aafdfea550a373a86c291507d559bd3c810b194da406d558974d993852",
+    "archipelago/soh_extreme/EnemyDropRules.py": "6e6e68a971475384ebaf018eeecd14844074571143393fd46a75ec51fc773c0d",
+    "archipelago/soh_extreme/EntranceRandomizer.py": "62183bea6fd56506bcb699db05d2a2572fd01d3f8bb5449d035b83a913fe9025",
+    "archipelago/soh_extreme/EntranceCatalog.json": "f5ba502aef5f06719b2bf39447f287743ae656ba0b884d698d8e5cc88c2d83ae",
+    "archipelago/soh_extreme/DungeonLocationRoutes.json": "a3f55e52dc3c79ca717355328d7624fcc9f831c07eee620a9a10c68f24cbce31",
+    "archipelago/soh_extreme/_vendor_oot_soh/LogicHelpers.py": "cd939f48a5edb216d1bee5e1512ce583eef8fd159833f1c43f77cb94af9bfa05",
+    "archipelago/soh_extreme/_vendor_oot_soh/Enums.py": "7e52b4225d3b4e0d3a8d428abc64d64f6b2df05a3eadfe28b6cbc22e5b40e142",
+    "archipelago/soh_extreme/_vendor_oot_soh/Locations.py": "68b5fe7760d9eace3760504ff9c0e51c91506dad1d93e002ef42c39f1a54d29d",
+    "archipelago/soh_extreme/_vendor_oot_soh/Items.py": "c0a21a035c22f32d2381c3e662f0705a7ba89bb86f8823fa6840653c0c2e09a7",
+    "archipelago/soh_extreme/_vendor_oot_soh/ShopItems.py": "9f76a24ae5e27597d5c358a92b92b404d81292f68f8e5b396e1527906b850377",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/kokiri_forest.py": "d27d86750b4c20545d673e1c0d93ae3079beb87acab98b4c2b0f2f0d90045c90",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/lost_woods.py": "eb3a6d78b8ddbe16ec545f6b66f0683b686571fffd193d6b7c6721e0057c67fb",
+    "archipelago/soh_extreme/_vendor_oot_soh/location_access/overworld/haunted_wasteland.py": "4b44180e2d905d001256adb08eb2308785ec6a71e4bba9969f8e4f8f81d008cd",
+    "soh/Enhancements/randomizer/location_list.cpp": "4d15d3ca34006aef5fabea5f7db5187ff1f57f5837a4b9eceb70a4ca298ed0f3",
+    "soh/Enhancements/randomizer/MegaSouls.cpp": "db261c49d61e58216611dde7e84ce9daeee9797aa08ca554eef41960194689bd",
+    "soh/Enhancements/randomizer/EnemyDropPolicy.h": "b88998967d519c2527f23cbc33f3d8950b809203cd252f8bcf938d4058f266c1",
+    "soh/Enhancements/randomizer/hook_handlers.cpp": "56550a7cb7c9f48e773e50eb62cd6e5171f46d5cdb904ab00e6ecd226cecfb76",
+    "src/overlays/actors/ovl_En_Dns/z_en_dns.c": "2087f54bf11b5aa1fbbf687c700c2b20304c9e87b0dd423c94742805966e6ac0",
+    "src/overlays/actors/ovl_En_Js/z_en_js.c": "db43ebb680f76deb6b9965bd83e9caf2dd9d37599a2b1307467bbc45b25ca46d",
+    "src/overlays/actors/ovl_En_Karebaba/z_en_karebaba.c": "88280e512804f2976b0037ee158c657ad7c1849a3ad6f42b8518cbffb951e057",
+    "src/overlays/actors/ovl_En_Tite/z_en_tite.c": "70408e0d9ee69d9f86b9d5dfba6197c01fdb5fb4173ceb5086beaf1478f2c058",
+    "src/code/z_en_item00.c": "d061da7d1fb52a997e46cb7d0b43b50e74e44365110939fbcd9e14b1ead82a23",
+    "soh/Network/Archipelago/ArchipelagoLocationMap.inc": "6941868c79ef87b318993b70f1ec38f2cb9dabc512ef90e7525d943c5377e37c"
+  },
+  "test_sha256": {
+    "tools/tests/test_ammo_refill.py": "a4c621799706caf9cd5ec9a1c6de37006d6162abd6506bca2092dddc9d944e1d",
+    "tools/tests/test_entrance_blockers.py": "582c810a461a7412f46a82855c22b13fd1d85ef223c2169efb8a6693cc7b57fb",
+    "tools/tests/test_water_arrival_logic.py": "12faefd44ce35675d37bb3583b89158f17fe22669443929656fd48d36c4ee380",
+    "tools/tests/test_zora_river_paths.py": "bdfa911abe87931fc1014caf42c70699b25fa070f618878a71c43815e083a3ea",
+    "tools/tests/test_overworld_entrances.py": "7e44faa6f10fd739d8a29b685655e318b912bd18a1065d1741ec9f4771432b7e",
+    "tools/generate_ammo_refill_sources.py": "3aac1381c25914bc71c83420d2a4ecccebc6c1b411010db975dfd4aac81951c2"
+  },
+  "inputs": {
+    "settings_report": {
+      "name": "grotto_1811_uploaded_seed_reproduction.options.json",
+      "sha256": "ad8a6d199aad69334cbf1f0bee39926a2cd1d9786f50c5cf37d8de50c8d2d8f1"
+    }
+  },
+  "facts": {
+    "worlds": {
+      "actual_catalog_entries": 721,
+      "fresh_item_fill": false,
+      "controlled_identity_maps": true,
+      "ordinary_source_variant_overrides": {
+        "shuffle_scrubs": 0,
+        "shuffle_pots": 0,
+        "shuffle_crates": 0,
+        "shuffle_pot_soul": 0,
+        "shuffle_crate_soul": 0,
+        "npc_speech_sanity": 0
+      },
+      "captured_ordinary_source_rules": 456
+    }
+  },
+  "test_output": "test_01_carried_ammo_and_capacity_aliases (__main__.AmmoTests.test_01_carried_ammo_and_capacity_aliases) ... ok\ntest_02_observed_pot_first_check_soul_break_method_and_age (__main__.AmmoTests.test_02_observed_pot_first_check_soul_break_method_and_age) ... ok\ntest_03_raw_drop_age_conversion_and_bombchu_only_bag (__main__.AmmoTests.test_03_raw_drop_age_conversion_and_bombchu_only_bag) ... ok\ntest_04_inactive_sources_keep_their_real_access_rules (__main__.AmmoTests.test_04_inactive_sources_keep_their_real_access_rules) ... ok\ntest_05_target_ammo_events_are_reswept_without_losing_bag (__main__.AmmoTests.test_05_target_ammo_events_are_reswept_without_losing_bag) ... ok\ntest_06_consumptive_custom_lost_woods_route (__main__.AmmoTests.test_06_consumptive_custom_lost_woods_route) ... ok\ntest_07_native_repeat_loot_requires_checked_exact_enemy_and_reusable_kill (__main__.AmmoTests.test_07_native_repeat_loot_requires_checked_exact_enemy_and_reusable_kill) ... ok\ntest_08_unshuffled_scrubs_and_carpet_real_prices (__main__.AmmoTests.test_08_unshuffled_scrubs_and_carpet_real_prices) ... ok\ntest_09_retained_shop_stock_is_repeatable_but_assigned_reward_is_not (__main__.AmmoTests.test_09_retained_shop_stock_is_repeatable_but_assigned_reward_is_not) ... ok\ntest_10_observation_validation_and_unknown_identity (__main__.AmmoTests.test_10_observation_validation_and_unknown_identity) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 20.286s\n\nOK\n",
+  "scope": "Actual AP rule/event/topology evaluation; controlled sources/ingress; no item fill or game playthrough"
+}

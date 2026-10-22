@@ -1,0 +1,411 @@
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <cmath>
+#include <cstdint>
+#include <cstdlib>
+#include <iostream>
+
+@CONSTANTS@
+@SCENES@
+using RandomizerGet = int;
+using RandomizerInf = int;
+using s8 = int8_t; using s16 = int16_t; using s32 = int32_t; using u32 = uint32_t;
+#define SPDLOG_INFO(...) ((void)0)
+namespace Rando {
+struct Option {
+    int value = 0;
+    operator bool() const { return value != 0; }
+    bool Is(int other) const { return value == other; }
+    bool IsNot(int other) const { return value != other; }
+};
+struct Context {
+    std::array<int, CONSTANT_COUNT> options{};
+    Option GetOption(int key) { return {options[key]}; }
+};
+struct Logic {
+    Context* ctx = nullptr;
+    bool IsAdult = false, IsChild = true, CalculatingAvailableChecks = true;
+    bool allowed = true, bombchuInventory = true;
+    std::array<bool, CONSTANT_COUNT> inventory{}, events{};
+    bool HasItem(int key) { return inventory[key]; }
+    bool ItemUseAllowed(int) { return allowed; }
+    bool Get(int key) { return events[key]; }
+    int GetAmmo(int) { return 0; }
+    int CurrentUpgrade(int) { return 0; }
+    bool CheckInventory(int key, bool) { return key == ITEM_BOMBCHU && bombchuInventory; }
+    bool HasAnimalSoul(int) { return true; }
+    bool CanUse(RandomizerGet);
+    bool BombchusEnabled();
+    bool BombchuRefill();
+    bool HasExplosives();
+    bool BlastOrSmash();
+    bool CanBreakRocks();
+    bool CanOpenBombGrotto();
+    bool LegacyCanOpenBombGrotto();
+};
+@LOGIC@
+@LEGACY@
+}
+struct SourceRule { int target; bool (*allows)(Rando::Logic*); };
+const SourceRule sourceRules[] = {
+@SOURCE_RULES@
+};
+
+constexpr int ACTORCAT_ITEMACTION = 7, ACTORCAT_NPC = 4, EN_FISH_PARAM = 100;
+constexpr u32 ACTOR_FLAG_UPDATE_CULLING_DISABLED = 16;
+constexpr int COLTYPE_NONE = 0, AT_NONE = 0, AC_ON = 1, AC_HIT = 2, AC_BOUNCED = 4, AC_TYPE_PLAYER = 8;
+constexpr int OC1_NONE = 0, OC2_NONE = 0, COLSHAPE_CYLINDER = 1, COLSHAPE_QUAD = 3;
+constexpr int ELEMTYPE_UNK2 = 2, TOUCH_NONE = 0, BUMP_ON = 1, BUMP_HIT = 2, BUMP_DRAW_HITMARK = 4;
+constexpr int OCELEM_NONE = 0, COLLISION_CHECK_AC_MAX = 64, NA_SE_SY_CORRECT_CHIME = 3, BOMB_BODY = 0;
+constexpr int RESPAWN_MODE_RETURN = 1, TRANS_TRIGGER_OFF = 0;
+constexpr u32 PLAYER_STATE1_FLOOR_DISABLED = 1, PLAYER_STATE1_ON_HORSE = 2, PLAYER_STATE1_IN_WATER = 4;
+constexpr int NUM_GROTTOS = @NUM_GROTTOS@;
+struct Vec3f { float x = 0, y = 0, z = 0; };
+struct Vec3s { s16 x = 0, y = 0, z = 0; };
+struct Actor; struct PlayState;
+using ActorFunc = void(*)(Actor*, PlayState*);
+struct Actor {
+    s16 id = ACTOR_DOOR_ANA, params = 0;
+    int category = ACTORCAT_ITEMACTION, targetMode = 0;
+    u32 flags = 0;
+    struct { Vec3s rot; } shape;
+    struct { Vec3f pos; Vec3s rot; } home, world;
+    Vec3f scale;
+    float xyzDistToPlayerSq = 0, xzDistToPlayer = 0, yDistToPlayer = 0;
+    float speedXZ = 0, yDistToWater = 0;
+    s16 yawTowardsPlayer = 0;
+    ActorFunc update = nullptr;
+};
+struct Player { Actor actor; u32 stateFlags1 = 0; struct { int actionVar1 = 0; } av1; };
+struct Collider; struct ColliderInfo;
+struct ColliderTouch { u32 dmgFlags = 0; int effect = 0, damage = 0; };
+struct ColliderBump { u32 dmgFlags = 0; int effect = 0, defense = 0; Vec3s hitPos; };
+struct ColliderInfo {
+    int elemType = 0;
+    ColliderTouch toucher; ColliderBump bumper;
+    int toucherFlags = 0, bumperFlags = 0, ocElemFlags = 0;
+    Collider* acHit = nullptr; ColliderInfo* acHitInfo = nullptr;
+};
+struct ColliderInit { int colType, atFlags, acFlags, ocFlags1, ocFlags2, shape; };
+struct Collider { Actor* actor = nullptr; Actor* ac = nullptr; int acFlags = 0, shape = 0; };
+struct CylinderDim { int radius = 0, height = 0, yShift = 0; Vec3s pos; };
+struct ColliderCylinder { Collider base; ColliderInfo info; CylinderDim dim; bool allocated = false; };
+struct ColliderCylinderInit { ColliderInit base; ColliderInfo info; CylinderDim dim; };
+struct CollisionCheckContext { int colACCount = 0, sacFlags = 0; Collider* colAC[COLLISION_CHECK_AC_MAX]{}; };
+struct PlayState {
+    int sceneNum = SCENE_HYRULE_FIELD, transitionTrigger = 0, nextEntranceIndex = -1, actorCtx = 0;
+    CollisionCheckContext colChkCtx;
+    bool stormsPlayed = false, cutscene = false;
+    Player player;
+};
+struct DoorAna;
+using DoorAnaActionFunc = void(*)(DoorAna*, PlayState*);
+struct DoorAna { Actor actor; ColliderCylinder collider; DoorAnaActionFunc actionFunc = nullptr; };
+struct EnBom { Actor actor; int timer = 5; };
+struct EnBomChu { Actor actor; int timer = 0; void (*actionFunc)(EnBomChu*, PlayState*) = nullptr; };
+struct { struct { Vec3f pos; s16 yaw = 0; int data = 0; } respawn[3]; } gSaveContext;
+PlayState* gPlayState = nullptr;
+bool isRando = true, secondUpdate = false, frameAdvance = false;
+std::array<int, CONSTANT_COUNT> runtimeOptions{};
+std::array<bool, CONSTANT_COUNT> runtimeFlags{};
+int created = 0, destroyed = 0, colliderUpdates = 0, chimes = 0, secrets = 0;
+int respawnSetups = 0, overrideCalls = 0, spawnedActorId = -1, bubbles = 0;
+int gSfxDefaultPos = 0, gSfxDefaultFreqAndVolScale = 0, gSfxDefaultReverb = 0;
+EnBom spawnedBomb;
+#define IS_RANDO isRando
+#define RAND_GET_OPTION(key) runtimeOptions[key]
+#define CVAR_ENHANCEMENT(name) name
+#define GET_PLAYER(play) (&(play)->player)
+#define GET_ACTIVE_CAM(play) play
+#define osSyncPrintf(...) ((void)0)
+bool Flags_GetRandomizerInf(RandomizerInf flag) { return runtimeFlags[flag]; }
+int Randomizer_GetSettingValue(int option) { return runtimeOptions[option]; }
+@SOULS@
+using ColChkResetFunc = s32 (*)(PlayState*, Collider*);
+s32 Collider_ResetCylinderAC(PlayState*, Collider*);
+static ColChkResetFunc sACResetFuncs[] = {nullptr, Collider_ResetCylinderAC, nullptr, nullptr};
+bool GameInteractor_SecondCollisionUpdate() { return secondUpdate; }
+bool FrameAdvance_IsEnabled(PlayState*) { return frameAdvance; }
+@COLLISION@
+@COLLIDER_DATA@
+@GROTTO_LOAD_TYPE@
+@GROTTO_LOAD_DATA@
+@GROTTO_ENTRANCES@
+@MELEE_FLAGS@
+constexpr u32 nativeBombMask = @BOMB_MASK@;
+@SHOVEL@
+
+void DoorAna_WaitClosed(DoorAna*, PlayState*);
+void DoorAna_WaitOpen(DoorAna*, PlayState*);
+void DoorAna_GrabPlayer(DoorAna*, PlayState*);
+void DoorAna_Update(Actor*, PlayState*);
+void Collider_InitCylinder(PlayState*, ColliderCylinder* collider) {
+    *collider = {}; collider->allocated = true; ++created;
+}
+void Collider_SetCylinder(PlayState*, ColliderCylinder* collider, Actor* actor, ColliderCylinderInit* init) {
+    collider->base.actor = actor; collider->base.shape = init->base.shape;
+    collider->base.acFlags = init->base.acFlags; collider->info = init->info; collider->dim = init->dim;
+}
+void Collider_DestroyCylinder(PlayState*, ColliderCylinder* collider) {
+    assert(collider->allocated); collider->allocated = false; ++destroyed;
+}
+void Collider_UpdateCylinder(Actor*, ColliderCylinder*) { ++colliderUpdates; }
+void Actor_SetScale(Actor* actor, float scale) { actor->scale = {scale, scale, scale}; }
+bool Flags_GetEnv(PlayState* play, int flag) { return flag == 5 && play->stormsPlayed; }
+void Actor_SetClosestSecretDistance(Actor*, PlayState*) { ++secrets; }
+template<class... Args> void Audio_PlaySfxGeneral(Args...) { ++chimes; }
+bool Math_StepToF(float* value, float target, float step) {
+    *value += std::clamp(target - *value, -step, step); return *value == target;
+}
+void Play_SetupRespawnPoint(PlayState*, int, int) { ++respawnSetups; }
+void Grotto_OverrideActorEntrance(Actor*) { ++overrideCalls; }
+bool Player_InCsMode(PlayState* play) { return play->cutscene; }
+float Math_SinS(s16 value) { return std::sin(value * 3.14159265358979323846f / 32768.0f); }
+float Math_CosS(s16 value) { return std::cos(value * 3.14159265358979323846f / 32768.0f); }
+int CVarGetInteger(const char*, int fallback) { return fallback; }
+s16 Camera_GetCamDirYaw(PlayState*) { return 0; }
+void EnBomChu_WaitForKill(EnBomChu*, PlayState*) {}
+Actor* Actor_Spawn(int*, PlayState*, int id, float x, float y, float z, int, int, int, int) {
+    spawnedActorId = id; spawnedBomb = {}; spawnedBomb.actor.world.pos = {x, y, z};
+    return &spawnedBomb.actor;
+}
+void EffectSsBubble_Spawn(PlayState*, Vec3f*, float, float, float, float) { ++bubbles; }
+// C actor receiver identifiers are unchanged source expanded through a C++
+// compatibility macro. Scene geometry and engine IO are deliberately isolated.
+#define this actorSelf
+@DOOR@
+@BOMBCHU@
+#undef this
+
+size_t cases = 0, assertions = 0;
+#define CHECK(condition) do { ++assertions; if (!(condition)) { \
+    std::cerr << "failed at " << __LINE__ << ": " << #condition << '\n'; std::exit(1); } } while (false)
+
+struct Scenario {
+    PlayState play;
+    DoorAna door;
+    explicit Scenario(int type = 0x200, bool rando = true) {
+        isRando = rando; runtimeOptions.fill(0); runtimeFlags.fill(false);
+        secondUpdate = frameAdvance = false;
+        created = destroyed = colliderUpdates = chimes = secrets = respawnSetups = overrideCalls = 0;
+        spawnedActorId = -1; bubbles = 0; gSaveContext = {};
+        gPlayState = &play;
+        // Actual load-table identity for Stone Bridge Tree / Near Kak Grotto.
+        door.actor.params = type | (static_cast<unsigned char>(grottoLoadTable[14].content));
+        door.actor.home.rot.z = 1;
+        door.actor.update = DoorAna_Update;
+        DoorAna_Init(&door.actor, &play);
+    }
+    void tick() {
+        play.colChkCtx.colACCount = 0;
+        DoorAna_Update(&door.actor, &play);
+    }
+    bool hit(u32 attackMask) {
+        ColliderInfo attack; attack.toucher.dmgFlags = attackMask;
+        bool registered = false;
+        for (int i = 0; i < play.colChkCtx.colACCount; ++i)
+            registered |= play.colChkCtx.colAC[i] == &door.collider.base;
+        if (!registered || CollisionCheck_NoSharedFlags(&attack, &door.collider.info)) return false;
+        door.collider.base.acFlags |= AC_HIT;
+        return true;
+    }
+};
+
+int main() {
+    // The previous helper accepts Grab even though DoorAna cannot open by lift.
+    {
+        ++cases; Rando::Context ctx; Rando::Logic logic; logic.ctx = &ctx;
+        ctx.options[RSK_SHUFFLE_SHOVEL] = ctx.options[RSK_SHUFFLE_ROCK_SOUL] = 1;
+        logic.inventory[RG_POWER_BRACELET] = logic.inventory[RG_SHOVEL] = true;
+        logic.inventory[RG_ROCK_SOUL] = logic.inventory[RG_STONE_OF_AGONY] = true;
+        CHECK(logic.LegacyCanOpenBombGrotto());
+        CHECK(logic.CanBreakRocks());
+        CHECK(!logic.CanOpenBombGrotto());
+        for (const auto& rule : sourceRules) CHECK(!rule.allows(&logic));
+    }
+
+    // Check each native method/age and retained policy combination through the
+    // actual helper chain and all six physical source rules, including Cow.
+    for (bool adult : {false, true}) for (int method = 0; method < 6; ++method)
+    for (bool usable : {false, true}) for (bool shovelOn : {false, true})
+    for (bool shovel : {false, true}) for (bool soulOn : {false, true})
+    for (bool soul : {false, true}) for (bool discovery : {false, true}) {
+        ++cases; Rando::Context ctx; Rando::Logic logic; logic.ctx = &ctx;
+        logic.IsAdult = adult; logic.IsChild = !adult; logic.allowed = usable;
+        const bool grab = method == 1 || method == 5;
+        const bool bombs = method == 2 || method == 5;
+        const bool chu = method == 3, hammer = method == 4;
+        logic.inventory[RG_POWER_BRACELET] = grab;
+        logic.inventory[RG_BOMB_BAG] = bombs;
+        logic.inventory[RG_BOMBCHU_5] = chu;
+        logic.inventory[RG_MEGATON_HAMMER] = hammer;
+        logic.inventory[RG_SHOVEL] = shovel;
+        logic.inventory[RG_ROCK_SOUL] = soul;
+        logic.inventory[RG_STONE_OF_AGONY] = discovery;
+        ctx.options[RSK_SHUFFLE_SHOVEL] = shovelOn;
+        ctx.options[RSK_SHUFFLE_ROCK_SOUL] = soulOn;
+        ctx.options[RSK_BOMBCHU_BAG] = RO_BOMBCHU_BAG_NONE + 1;
+        logic.events[LOGIC_BUY_BOMBCHUS] = true;
+        const bool attack = usable && (bombs || chu || (adult && hammer));
+        const bool expected = attack && (!shovelOn || shovel) && (!soulOn || soul) && discovery;
+        CHECK(logic.BlastOrSmash() == attack);
+        CHECK(logic.CanUse(RG_MEGATON_HAMMER) == (hammer && usable && adult));
+        CHECK(logic.CanBreakRocks() == ((!soulOn || soul) && (grab || attack)));
+        CHECK(logic.CanOpenBombGrotto() == expected);
+        for (const auto& rule : sourceRules)
+            CHECK(rule.allows(&logic) == (expected &&
+                  (rule.target != RR_HF_COW_GROTTO || !adult || (hammer && usable))));
+    }
+
+    // Bombchu ownership, access sources, bag mode and allowed-use gates are
+    // separate. Execute the real refill/enabled functions for each branch.
+    for (bool adult : {false, true}) for (bool owned : {false, true})
+    for (bool usable : {false, true}) for (bool bagMode : {false, true})
+    for (bool liveInventory : {false, true}) for (int refill = 0; refill < 5; ++refill) {
+        ++cases; Rando::Context ctx; Rando::Logic logic; logic.ctx = &ctx;
+        logic.IsAdult = adult; logic.IsChild = !adult; logic.allowed = usable;
+        logic.bombchuInventory = liveInventory;
+        logic.inventory[RG_BOMBCHU_5] = owned;
+        logic.inventory[RG_STONE_OF_AGONY] = true;
+        ctx.options[RSK_BOMBCHU_BAG] = RO_BOMBCHU_BAG_NONE + (bagMode ? 1 : 0);
+        if (refill == 1) logic.events[LOGIC_BUY_BOMBCHUS] = true;
+        if (refill == 2) logic.events[LOGIC_COULD_PLAY_BOWLING] = true;
+        if (refill == 3) logic.events[LOGIC_CARPET_MERCHANT] = true;
+        if (refill == 4) ctx.options[RSK_ENABLE_BOMBCHU_DROPS] = RO_AMMO_DROPS_ON;
+        const bool enabled = bagMode && liveInventory;
+        CHECK(logic.BombchusEnabled() == enabled);
+        CHECK(logic.BombchuRefill() == (refill != 0));
+        const bool expected = owned && usable && enabled && refill != 0;
+        CHECK(logic.CanUse(RG_BOMBCHU_5) == expected);
+        CHECK(logic.CanOpenBombGrotto() == expected);
+        // With no separate bag mode, a real Bomb Bag enables Bombchus.
+        if (!bagMode) {
+            logic.inventory[RG_BOMB_BAG] = true;
+            CHECK(logic.BombchusEnabled());
+            CHECK(logic.CanUse(RG_BOMBCHU_5) == (owned && usable && refill != 0));
+        }
+    }
+
+    CHECK(sourceRules[0].target != RR_HF_COW_GROTTO);
+    CHECK(NUM_GROTTOS == 33);
+    CHECK(grottoLoadTable[14].scene == SCENE_HYRULE_FIELD);
+    CHECK(static_cast<unsigned char>(grottoLoadTable[14].content) == 0xE5);
+    CHECK(sCylinderInit.info.bumper.dmgFlags == 0x48);
+    CHECK(nativeBombMask == 0x08);
+    CHECK(D_80854488[4][0] == 0x40 && D_80854488[4][1] == 0x40000000);
+
+    // Native damage eligibility and update-based collider registration. No
+    // Draw call, weapon inventory assumption or Grab interaction supplies hits.
+    for (bool rando : {false, true}) for (bool soul : {false, true})
+    for (u32 mask : {u32(0), u32(1), u32(2), u32(4), u32(0x20), nativeBombMask,
+                    D_80854488[4][0], D_80854488[4][1]}) {
+        ++cases; Scenario s(0x200, rando);
+        runtimeOptions[RSK_SHUFFLE_ROCK_SOUL] = 1;
+        runtimeOptions[RSK_SHUFFLE_NPC_SOUL] = runtimeOptions[RSK_SHUFFLE_CRATE_SOUL] = 1;
+        runtimeFlags[RAND_INF_ROCK_SOUL] = soul;
+        CHECK(!IsMegaRockActor(s.door.actor.id));
+        CHECK(MegaSoul_CanInteractWithActor(&s.door.actor));
+        CHECK(created == 1 && destroyed == 0 && s.door.actionFunc == DoorAna_WaitClosed);
+        s.tick();
+        CHECK(s.play.colChkCtx.colACCount == 1 && colliderUpdates == 1);
+        const bool accepted = mask == nativeBombMask || mask == D_80854488[4][0];
+        CHECK(s.hit(mask) == accepted);
+        s.tick();
+        CHECK((s.door.actionFunc == DoorAna_WaitOpen) == accepted);
+        CHECK(destroyed == (accepted ? 1 : 0) && chimes == (accepted ? 1 : 0));
+        CHECK((s.door.actor.params & 0xFF) == 0xE5);
+        CHECK((s.door.actor.params & 0x300) == (accepted ? 0 : 0x200));
+        DoorAna_Destroy(&s.door.actor, &s.play);
+        CHECK(destroyed == 1); // Closed or opened: exactly one destruction.
+    }
+
+    // Shovel locking clears stale AC hits and permits acquisition in the same
+    // actor instance. Missing Rock Soul remains irrelevant to this actor itself.
+    for (bool rando : {false, true}) for (bool option : {false, true})
+    for (bool shovel : {false, true}) {
+        ++cases; Scenario s(0x200, rando);
+        runtimeOptions[RSK_SHUFFLE_SHOVEL] = option;
+        runtimeFlags[RAND_INF_HAS_SHOVEL] = shovel;
+        runtimeOptions[RSK_SHUFFLE_ROCK_SOUL] = 1;
+        s.door.collider.base.acFlags |= AC_HIT;
+        s.tick();
+        const bool dormant = rando && option && !shovel;
+        CHECK((s.door.actionFunc == DoorAna_WaitClosed) == dormant);
+        CHECK((s.door.collider.base.acFlags & AC_HIT) == 0 || !dormant);
+        CHECK(s.play.colChkCtx.colACCount == 0);
+        if (dormant) {
+            CHECK(s.door.actor.scale.x == 0 && s.door.actor.targetMode == 0 && destroyed == 0);
+            runtimeFlags[RAND_INF_HAS_SHOVEL] = true;
+            s.tick(); CHECK(s.play.colChkCtx.colACCount == 1);
+            CHECK(s.hit(nativeBombMask)); s.tick();
+            CHECK(s.door.actionFunc == DoorAna_WaitOpen && destroyed == 1);
+        }
+        DoorAna_Destroy(&s.door.actor, &s.play); CHECK(destroyed == 1);
+    }
+
+    // All actual known grotto identities use the Shovel lookup; unrelated
+    // scene/content combinations and null inputs are outside that lookup.
+    {
+        ++cases; Scenario s;
+        for (const auto& entry : grottoLoadTable) {
+            Actor actor; actor.params = static_cast<unsigned char>(entry.content) | 0x200;
+            s.play.sceneNum = entry.scene;
+            CHECK(Grotto_ActorRequiresShovel(&actor));
+        }
+        CHECK(!Grotto_ActorRequiresShovel(nullptr));
+        s.play.sceneNum = 127; CHECK(!Grotto_ActorRequiresShovel(&s.door.actor));
+        gPlayState = nullptr; CHECK(!Grotto_ActorRequiresShovel(&s.door.actor));
+        gPlayState = &s.play; DoorAna_Destroy(&s.door.actor, &s.play);
+    }
+
+    // Song-type holes remain a distinct actor path, and open holes still use
+    // the exact Shovel/entry action. The helper change does not modify runtime.
+    for (bool shovel : {false, true}) for (bool storms : {false, true})
+    for (bool near : {false, true}) {
+        ++cases; Scenario s(0x100);
+        runtimeOptions[RSK_SHUFFLE_SHOVEL] = 1;
+        runtimeFlags[RAND_INF_HAS_SHOVEL] = shovel;
+        s.play.stormsPlayed = storms; s.door.actor.xyzDistToPlayerSq = near ? 39999.0f : 40000.0f;
+        CHECK(created == 0 && (s.door.actor.flags & ACTOR_FLAG_UPDATE_CULLING_DISABLED));
+        s.tick();
+        CHECK(s.play.colChkCtx.colACCount == 0 && !s.hit(nativeBombMask));
+        const bool opened = shovel && storms && near;
+        CHECK((s.door.actionFunc == DoorAna_WaitOpen) == opened);
+        CHECK(bool(s.door.actor.flags & ACTOR_FLAG_UPDATE_CULLING_DISABLED) == !opened);
+        DoorAna_Destroy(&s.door.actor, &s.play); CHECK(destroyed == 0);
+    }
+    for (bool shovel : {false, true}) for (bool shuffled : {false, true}) {
+        ++cases; Scenario s(0);
+        runtimeOptions[RSK_SHUFFLE_SHOVEL] = 1;
+        runtimeFlags[RAND_INF_HAS_SHOVEL] = shovel;
+        runtimeOptions[RSK_SHUFFLE_ENTRANCES] = shuffled;
+        s.door.actor.scale = {0.01f, 0.01f, 0.01f};
+        s.door.actor.world.pos.y = 20;
+        s.tick(); CHECK((s.door.actor.targetMode != 0) == shovel);
+        s.tick();
+        CHECK((s.door.actionFunc == DoorAna_GrabPlayer) == shovel);
+        CHECK(respawnSetups == (shovel ? 1 : 0));
+        CHECK(overrideCalls == (shovel && shuffled ? 1 : 0));
+        if (shovel) {
+            CHECK(gSaveContext.respawn[RESPAWN_MODE_RETURN].pos.y == 20);
+            CHECK((gSaveContext.respawn[RESPAWN_MODE_RETURN].data & 0xFF) == 0xE5);
+            CHECK(s.play.nextEntranceIndex == sGrottoEntrances[2]);
+        } else CHECK(s.door.actor.scale.x == 0 && s.play.nextEntranceIndex == -1);
+        DoorAna_Destroy(&s.door.actor, &s.play); CHECK(created == 0 && destroyed == 0);
+    }
+    // Bombchus actually spawn an immediate bomb blast, carrying the same
+    // native explosive attack accepted by DoorAna's cylinder.
+    {
+        ++cases; Scenario s;
+        EnBomChu chu; chu.actor.world.pos = {12, 3, 5}; chu.actor.speedXZ = 5;
+        EnBomChu_Explode(&chu, &s.play);
+        CHECK(spawnedActorId == ACTOR_EN_BOM && spawnedBomb.timer == 0);
+        CHECK(chu.timer == 1 && chu.actor.speedXZ == 0 && chu.actionFunc == EnBomChu_WaitForKill);
+        CHECK(spawnedBomb.actor.world.pos.x == 12 && spawnedBomb.actor.world.pos.z == 5);
+        s.tick(); CHECK(s.hit(nativeBombMask)); s.tick();
+        CHECK(s.door.actionFunc == DoorAna_WaitOpen);
+        DoorAna_Destroy(&s.door.actor, &s.play);
+    }
+    std::cout << "{\"cases\":" << cases << ",\"assertions\":" << assertions << "}\n";
+}

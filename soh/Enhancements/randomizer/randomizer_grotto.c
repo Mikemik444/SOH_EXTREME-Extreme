@@ -8,6 +8,11 @@
 #include "soh/OTRGlobals.h"
 
 #include "variables.h"
+#include "functions.h"
+#include "SoulActorAccess.h"
+#include "overlays/actors/ovl_En_Ishi/z_en_ishi.h"
+#include "overlays/actors/ovl_Obj_Bombiwa/z_obj_bombiwa.h"
+#include <math.h>
 
 extern PlayState* gPlayState;
 
@@ -98,6 +103,27 @@ static s8 lastEntranceType = NOT_GROTTO;
 static bool overridingNextEntrance = false;
 static bool grottoEnteredViaDoorAna = false;
 
+// A hole coordinate is an emergence origin, never an idle/death checkpoint.
+// Ownership is exact and lasts only for this exterior visit and save/age.
+typedef struct {
+    bool queued;
+    bool observing;
+    bool landed;
+    s16 grotto;
+    s16 scene;
+    s16 room;
+    s16 entrance;
+    s16 file;
+    s16 age;
+    s16 yaw;
+    Vec3f origin;
+    Vec3f position;
+} GrottoLandingState;
+static GrottoLandingState grottoLanding = { 0 };
+
+static bool Grotto_LandingMatchesCurrent(void);
+static void Grotto_SetRespawnLanding(RespawnMode mode);
+
 // SOH-EXTREME Shovel semantics. This list mirrors the native randomizer
 // regions that begin hidden by a bomb/song trigger, rock/boulder, or hammer
 // obstacle. Permanently-open holes (HF/Kak/ZR open grottos, etc.) are omitted.
@@ -136,6 +162,7 @@ void Grotto_InitExitAndLoadLists(void) {
     lastEntranceType = NOT_GROTTO;
     overridingNextEntrance = false;
     grottoEnteredViaDoorAna = false;
+    grottoLanding = (GrottoLandingState){ 0 };
 }
 
 static bool Grotto_ShouldSetLastEntrance(void) {
@@ -249,6 +276,7 @@ s16 Grotto_OverrideSpecialEntrance(s16 nextEntranceIndex) {
     }
 
     const s16 apTarget = nextEntranceIndex;
+    grottoLanding = (GrottoLandingState){ 0 };
     // Get the new grotto id from the next entrance
     grottoId = nextEntranceIndex & 0x00FF;
 
@@ -349,8 +377,9 @@ void Grotto_ForceGrottoReturnOnSpecialEntrance(void) {
                                               Randomizer_GetSettingValue(RSK_SHUFFLE_OVERWORLD_SPAWNS) ||
                                               Randomizer_GetSettingValue(RSK_SHUFFLE_WARP_SONGS))) {
         gSaveContext.respawnFlag = 2;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x04FF;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].pos = grottoReturnTable[grottoId].pos;
+        Grotto_SetRespawnLanding(RESPAWN_MODE_RETURN);
+        if (!Archipelago_EntranceShuffleActive())
+            gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x04FF;
         // Clear current temp flags
         gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags = 0;
         gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags = 0;
@@ -365,8 +394,7 @@ void Grotto_ForceGrottoReturn(void) {
                                               Randomizer_GetSettingValue(RSK_SHUFFLE_OVERWORLD_SPAWNS) ||
                                               Randomizer_GetSettingValue(RSK_SHUFFLE_WARP_SONGS))) {
         gSaveContext.respawnFlag = 2;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x0DFF;
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].pos = grottoReturnTable[grottoId].pos;
+        Grotto_SetRespawnLanding(RESPAWN_MODE_RETURN);
         // Save the current temp flags in the grotto return point, so they'll properly keep their values.
         gSaveContext.respawn[RESPAWN_MODE_RETURN].tempSwchFlags = gPlayState->actorCtx.flags.tempSwch;
         gSaveContext.respawn[RESPAWN_MODE_RETURN].tempCollectFlags = gPlayState->actorCtx.flags.tempCollect;
@@ -380,8 +408,7 @@ void Grotto_ForceRegularVoidOut(void) {
                                               Randomizer_GetSettingValue(RSK_SHUFFLE_OVERWORLD_SPAWNS) ||
                                               Randomizer_GetSettingValue(RSK_SHUFFLE_WARP_SONGS))) {
         gSaveContext.respawn[RESPAWN_MODE_DOWN] = gSaveContext.respawn[RESPAWN_MODE_RETURN];
-        gSaveContext.respawn[RESPAWN_MODE_DOWN].playerParams = 0x0DFF;
-        gSaveContext.respawn[RESPAWN_MODE_DOWN].pos = grottoReturnTable[grottoId].pos;
+        Grotto_SetRespawnLanding(RESPAWN_MODE_DOWN);
         gSaveContext.respawnFlag = 1;
     }
 }
@@ -394,7 +421,10 @@ void Grotto_SetupReturnInfoOnFWReturn(void) {
         Randomizer_GetSettingValue(RSK_SHUFFLE_OVERWORLD_SPAWNS) ||
         Randomizer_GetSettingValue(RSK_SHUFFLE_WARP_SONGS) && gSaveContext.fw.playerParams == 0x04FF) {
         gSaveContext.respawn[RESPAWN_MODE_RETURN] = gSaveContext.respawn[RESPAWN_MODE_TOP];
-        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams = 0x0DFF;
+        // An old FW point with emergence parameters can still be at the hole.
+        // Keep its native emergence until the destination can prove a landing.
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams =
+            Archipelago_EntranceShuffleActive() ? 0x04FF : 0x0DFF;
         lastEntranceType = GROTTO_RETURN;
     } else {
         lastEntranceType = NOT_GROTTO;
@@ -407,6 +437,7 @@ void Grotto_SetupReturnInfoOnFWReturn(void) {
 void Grotto_SanitizeEntranceType(void) {
     if (!overridingNextEntrance && gSaveContext.respawnFlag == 0) {
         lastEntranceType = NOT_GROTTO;
+        grottoLanding = (GrottoLandingState){ 0 };
     }
     overridingNextEntrance = false;
 }
@@ -432,5 +463,317 @@ s8 Grotto_CurrentGrotto() {
         s8 scene = gEntranceTable[entrance].scene;
         s8 data = gSaveContext.respawn[RESPAWN_MODE_RETURN].data;
         return Grotto_GetRenamedGrottoIndexFromOriginal(data, scene) & 0xFF;
+    }
+}
+
+// SOH-EXTREME exterior grotto landing ownership and geometry.
+static bool Grotto_LandingMatchesCurrent(void) {
+    return gPlayState != NULL && Archipelago_EntranceShuffleActive() &&
+           grottoLanding.grotto >= 0 && grottoLanding.grotto < NUM_GROTTOS &&
+           grottoId == grottoLanding.grotto && grottoLanding.scene == gPlayState->sceneNum &&
+           grottoLanding.room == gPlayState->roomCtx.curRoom.num &&
+           grottoLanding.entrance == gSaveContext.entranceIndex &&
+           grottoLanding.file == gSaveContext.fileNum && grottoLanding.age == gSaveContext.linkAge;
+}
+
+static bool Grotto_FinitePosition(const Vec3f* point) {
+    return isfinite(point->x) && isfinite(point->y) && isfinite(point->z) &&
+           fabsf(point->x) <= 32766.0f && fabsf(point->y) <= 32766.0f && fabsf(point->z) <= 32766.0f;
+}
+
+static bool Grotto_PointClearOfHoles(const Vec3f* point, f32 margin) {
+    for (s32 category = 0; category < ACTORCAT_MAX; ++category) {
+        for (Actor* actor = gPlayState->actorCtx.actorLists[category].head; actor != NULL; actor = actor->next) {
+            if (actor->id != ACTOR_DOOR_ANA || actor->update == NULL) continue;
+            // Include dormant, Shovel-hidden and still-covered Door_Ana actors.
+            // Their static scene floor alone cannot reveal the trigger.
+            const f32 dx = point->x - actor->world.pos.x;
+            const f32 dz = point->z - actor->world.pos.z;
+            if (fabsf(point->y - actor->world.pos.y) <= 60.0f &&
+                dx * dx + dz * dz <= (15.0f + margin) * (15.0f + margin)) return false;
+        }
+    }
+    return true;
+}
+
+s32 Grotto_CanCaptureReturnPoint(Actor* actor) {
+    if (gPlayState == NULL || actor == NULL) return false;
+    const Player* player = GET_PLAYER(gPlayState);
+    if (player == NULL || actor != &player->actor ||
+        (player->stateFlags1 & PLAYER_STATE1_FLOOR_DISABLED)) return false;
+    return Grotto_FinitePosition(&actor->world.pos) && Grotto_PointClearOfHoles(&actor->world.pos, 4.0f);
+}
+
+static bool Grotto_StaticGround(const Vec3f* point, f32 probeY, f32* floor, CollisionPoly** poly) {
+    s32 bgId = BGCHECK_SCENE;
+    Vec3f probe = *point;
+    probe.y = probeY;
+    *poly = NULL;
+    *floor = BgCheck_EntityRaycastFloor3(&gPlayState->colCtx, poly, &bgId, &probe);
+    if (*poly == NULL || bgId != BGCHECK_SCENE || !isfinite(*floor) || *floor <= BGCHECK_Y_MIN ||
+        COLPOLY_GET_NORMAL((*poly)->normal.y) < 0.8f ||
+        SurfaceType_GetSceneExitIndex(&gPlayState->colCtx, *poly, bgId) != 0 ||
+        SurfaceType_GetFloorEffect(&gPlayState->colCtx, *poly, bgId) == 2 ||
+        SurfaceType_IsWallDamage(&gPlayState->colCtx, *poly, bgId) ||
+        SurfaceType_GetConveyorSpeed(&gPlayState->colCtx, *poly, bgId) != 0) return false;
+    const u32 floorType = SurfaceType_GetFloorType(&gPlayState->colCtx, *poly, bgId);
+    const u32 floorProperty = func_80041EA4(&gPlayState->colCtx, *poly, bgId);
+    if (floorType == 2 || floorType == 3 || floorType == 4 || floorType == 7 || floorType == 12 ||
+        floorProperty == 5 || floorProperty == 12) return false;
+    f32 surface = *floor;
+    WaterBox* water = NULL;
+    if (WaterBox_GetSurface1(gPlayState, &gPlayState->colCtx, point->x, point->z, &surface, &water) &&
+        (!isfinite(surface) || surface > *floor)) return false;
+    return true;
+}
+
+static bool Grotto_ClearBodyPath(Player* player, const Vec3f* from, const Vec3f* to) {
+    Vec3f previous = *from, next = *to, adjusted;
+    CollisionPoly* poly = NULL;
+    s32 bgId = BGCHECK_SCENE;
+    f32 ceilingY;
+    if (BgCheck_EntitySphVsWall3(&gPlayState->colCtx, &adjusted, &next, &previous,
+                               player->ageProperties->wallCheckRadius, &poly, &bgId, &player->actor, 26.0f))
+        return false;
+    if (BgCheck_EntityCheckCeiling(&gPlayState->colCtx, &ceilingY, &next,
+                                 player->ageProperties->ceilingCheckHeight, &poly, &bgId, &player->actor))
+        return false;
+    return true;
+}
+
+static bool Grotto_CylinderOverlapsPlayer(const ColliderCylinder* cylinder, const Vec3f* feet,
+                                         f32 radius, f32 height) {
+    if (!(cylinder->base.ocFlags1 & OC1_ON) || !(cylinder->info.ocElemFlags & OCELEM_ON)) return false;
+    const f32 bottom = cylinder->dim.pos.y + cylinder->dim.yShift;
+    if (feet->y + height <= bottom || feet->y >= bottom + cylinder->dim.height) return false;
+    const f32 dx = feet->x - cylinder->dim.pos.x;
+    const f32 dz = feet->z - cylinder->dim.pos.z;
+    const f32 separation = radius + cylinder->dim.radius;
+    return dx * dx + dz * dz <= separation * separation;
+}
+
+static bool Grotto_ClearActorCollisions(Player* player, const Vec3f* point) {
+    const f32 radius = player->ageProperties->wallCheckRadius;
+    const f32 height = player->ageProperties->ceilingCheckHeight;
+    Actor* exclusions[] = { &player->actor };
+    // Use native OC checks for registered cylinders/joint spheres. Sample the
+    // center and player perimeter; the important rock actors are also checked
+    // below because their PROP updates register OC after this player update.
+    for (s32 i = 0; i < 9; ++i) {
+        Vec3f bottom = *point;
+        if (i != 0) {
+            const s16 angle = (s16)((i - 1) * 0x2000);
+            bottom.x += Math_SinS(angle) * radius;
+            bottom.z += Math_CosS(angle) * radius;
+        }
+        bottom.y += 1.0f;
+        Vec3f top = bottom;
+        top.y = point->y + height;
+        if (CollisionCheck_LineOCCheck(gPlayState, &gPlayState->colChkCtx, &bottom, &top, exclusions, 1)) return false;
+    }
+    for (s32 category = 0; category < ACTORCAT_MAX; ++category) {
+        for (Actor* actor = gPlayState->actorCtx.actorLists[category].head; actor != NULL; actor = actor->next) {
+            if (actor == &player->actor || actor->id == ACTOR_DOOR_ANA || actor->update == NULL) continue;
+            const f32 dx = point->x - actor->world.pos.x;
+            const f32 dz = point->z - actor->world.pos.z;
+            if (fabsf(point->y - actor->world.pos.y) > 200.0f || dx * dx + dz * dz > 160.0f * 160.0f) continue;
+            // Uninitialized nearby actors cannot prove a clear arrival yet.
+            if (actor->init != NULL) return false;
+            if (MegaSoul_ShouldDisableActorCollision(actor)) continue;
+            if (actor->id == ACTOR_OBJ_BOMBIWA) {
+                if (Grotto_CylinderOverlapsPlayer(&((ObjBombiwa*)actor)->collider, point, radius, height)) return false;
+            } else if (actor->id == ACTOR_EN_ISHI) {
+                if (Grotto_CylinderOverlapsPlayer(&((EnIshi*)actor)->collider, point, radius, height)) return false;
+            } else if (actor->colChkInfo.mass == MASS_IMMOVABLE &&
+                       (actor->colChkInfo.cylRadius <= 0 || actor->colChkInfo.cylHeight <= 0)) {
+                // Mido and other NPCs can have real OC cylinders but zero
+                // generic body dimensions. Before their first OC registration
+                // there is no proven clearance, so keep native emergence.
+                return false;
+            } else if (actor->colChkInfo.cylRadius > 0 && actor->colChkInfo.cylHeight > 0) {
+                // Scene actors that have not registered their first OC keep a
+                // conservative body exclusion. No actor is moved or disabled.
+                f32 actorRadius = actor->colChkInfo.cylRadius;
+                if (actor->colChkInfo.mass == MASS_IMMOVABLE && actorRadius < 64.0f) actorRadius = 64.0f;
+                if (point->y < actor->world.pos.y + actor->colChkInfo.cylHeight &&
+                    point->y + height > actor->world.pos.y &&
+                    dx * dx + dz * dz <= (radius + actorRadius) * (radius + actorRadius)) return false;
+            }
+        }
+    }
+    return true;
+}
+
+static bool Grotto_ValidateLanding(Player* player, Vec3f* point, CollisionPoly** resultPoly) {
+    if (!Grotto_FinitePosition(point) || !Grotto_PointClearOfHoles(point, player->ageProperties->wallCheckRadius + 1.0f))
+        return false;
+    f32 floor;
+    if (!Grotto_StaticGround(point, point->y + 8.0f, &floor, resultPoly) || fabsf(floor - point->y) > 8.0f)
+        return false;
+    point->y = floor;
+    // The whole standing footprint needs support; do not place Link on the
+    // very edge of a ledge or on a thin point between disconnected platforms.
+    for (s32 i = 0; i < 8; ++i) {
+        Vec3f edge = *point;
+        const s16 angle = (s16)(i * 0x2000);
+        edge.x += Math_SinS(angle) * (player->ageProperties->wallCheckRadius + 1.0f);
+        edge.z += Math_CosS(angle) * (player->ageProperties->wallCheckRadius + 1.0f);
+        CollisionPoly* edgePoly;
+        f32 edgeFloor;
+        if (!Grotto_StaticGround(&edge, point->y + 8.0f, &edgeFloor, &edgePoly) ||
+            fabsf(edgeFloor - point->y) > 8.0f) return false;
+    }
+    return Grotto_ClearBodyPath(player, point, point) && Grotto_ClearActorCollisions(player, point);
+}
+
+// Follow the native neutral-input emergence: physics precedes the action,
+// vy=12, emergence gravity=-1, ramp horizontal speed by .5 to 3 below vy=6,
+// then ordinary neutral fall decelerates .1. Every descending candidate is
+// constrained by the destination's real collision; no constant XY offset is
+// assumed to be a safe landing. Unusual geometry keeps native emergence.
+static bool Grotto_FindReturnLanding(Player* player, Vec3f* result, CollisionPoly** resultPoly) {
+    const f32 rate = R_UPDATE_RATE * 0.5f;
+    if (rate <= 0.0f || rate > 1.5f || gPlayState->colCtx.colHeader == NULL ||
+        gPlayState->roomCtx.status != 0) return false;
+    Vec3f point = grottoLanding.origin;
+    f32 velocityY = 12.0f, gravity = 0.0f, speed = 0.0f;
+    bool falling = false;
+    for (s32 step = 0; step < 64; ++step) {
+        Vec3f next = point;
+        velocityY += gravity;
+        if (velocityY < -20.0f) velocityY = -20.0f;
+        next.x += Math_SinS(grottoLanding.yaw) * speed * rate;
+        next.y += velocityY * rate;
+        next.z += Math_CosS(grottoLanding.yaw) * speed * rate;
+        if (!Grotto_FinitePosition(&next) || !Grotto_ClearBodyPath(player, &point, &next)) return false;
+        if (velocityY < 0.0f) {
+            CollisionPoly* poly;
+            f32 floor;
+            if (!Grotto_StaticGround(&next, point.y + 1.0f, &floor, &poly)) return false;
+            if (next.y <= floor && point.y >= floor) {
+                if (fabsf(floor - grottoLanding.origin.y) > 20.0f) return false;
+                next.y = floor;
+                if (!Grotto_ValidateLanding(player, &next, resultPoly)) return false;
+                *result = next;
+                return true;
+            }
+        }
+        point = next;
+        if (!falling) {
+            gravity = -1.0f;
+            if (velocityY < 0.0f) falling = true;
+            else if (velocityY < 6.0f) speed = fminf(speed + 0.5f, 3.0f);
+        } else {
+            gravity = REG(68) / 100.0f;
+            speed = fmaxf(speed - 0.1f, 0.0f);
+        }
+    }
+    return false;
+}
+
+static void Grotto_SaveLandedPoint(Player* player) {
+    grottoLanding.position = player->actor.world.pos;
+    grottoLanding.yaw = player->actor.shape.rot.y;
+    grottoLanding.landed = true;
+    grottoLanding.queued = false;
+    grottoLanding.observing = false;
+    for (s32 mode = RESPAWN_MODE_DOWN; mode <= RESPAWN_MODE_RETURN; ++mode) {
+        RespawnData* respawn = &gSaveContext.respawn[mode];
+        respawn->entranceIndex = gSaveContext.entranceIndex;
+        respawn->roomIndex = gPlayState->roomCtx.curRoom.num;
+        respawn->pos = grottoLanding.position;
+        respawn->yaw = grottoLanding.yaw;
+        respawn->playerParams = 0x0DFF;
+        respawn->tempSwchFlags = gPlayState->actorCtx.flags.tempSwch;
+        respawn->tempCollectFlags = gPlayState->actorCtx.flags.tempCollect;
+    }
+    Archipelago_EntranceRememberGrottoLanding();
+}
+
+s32 Grotto_QueueReturnLanding(Actor* actor) {
+    if (gPlayState == NULL || actor == NULL || !Archipelago_EntranceShuffleActive() ||
+        grottoId < 0 || grottoId >= NUM_GROTTOS ||
+        gPlayState->sceneNum != grottoLoadTable[grottoId].scene ||
+        gPlayState->roomCtx.curRoom.num < 0 || gPlayState->roomCtx.curRoom.num >= gPlayState->numRooms ||
+        !Grotto_FinitePosition(&actor->world.pos)) return false;
+    grottoLanding = (GrottoLandingState){ 0 };
+    grottoLanding.queued = true;
+    grottoLanding.grotto = grottoId;
+    grottoLanding.scene = gPlayState->sceneNum;
+    grottoLanding.room = gPlayState->roomCtx.curRoom.num;
+    grottoLanding.entrance = gSaveContext.entranceIndex;
+    grottoLanding.file = gSaveContext.fileNum;
+    grottoLanding.age = gSaveContext.linkAge;
+    grottoLanding.yaw = actor->shape.rot.y;
+    grottoLanding.origin = actor->world.pos;
+    return true;
+}
+
+s32 Grotto_HasPendingReturnLanding(void) {
+    return (grottoLanding.queued || grottoLanding.observing) && Grotto_LandingMatchesCurrent();
+}
+
+s32 Grotto_ResolveReturnLanding(Actor* actor) {
+    if (!grottoLanding.queued) return 0;
+    if (!Grotto_LandingMatchesCurrent() || actor == NULL || GET_PLAYER(gPlayState) == NULL ||
+        actor != &GET_PLAYER(gPlayState)->actor) {
+        grottoLanding = (GrottoLandingState){ 0 };
+        return 0;
+    }
+    Player* player = (Player*)actor;
+    Vec3f position;
+    CollisionPoly* floorPoly;
+    grottoLanding.queued = false;
+    if (!Grotto_FindReturnLanding(player, &position, &floorPoly)) {
+        grottoLanding.observing = true;
+        return 2;
+    }
+    const Vec3f delta = { position.x - actor->world.pos.x, position.y - actor->world.pos.y,
+                         position.z - actor->world.pos.z };
+    actor->world.pos = actor->home.pos = actor->prevPos = position;
+    actor->focus.pos.x += delta.x;
+    actor->focus.pos.y += delta.y;
+    actor->focus.pos.z += delta.z;
+    actor->floorHeight = player->fallStartHeight = position.y;
+    actor->floorPoly = floorPoly;
+    actor->floorBgId = BGCHECK_SCENE;
+    actor->bgCheckFlags |= BGCHECKFLAG_GROUND;
+    actor->velocity = (Vec3f){ 0 };
+    actor->colChkInfo.displacement = (Vec3f){ 0 };
+    actor->speedXZ = player->linearVelocity = 0.0f;
+    actor->params = 0x0DFF;
+    gSaveContext.entranceSpeed = 0.0f;
+    Grotto_SaveLandedPoint(player);
+    return 1;
+}
+
+void Grotto_UpdateReturnLanding(Actor* actor) {
+    if (!grottoLanding.observing) return;
+    if (!Grotto_LandingMatchesCurrent() || actor == NULL || GET_PLAYER(gPlayState) == NULL ||
+        actor != &GET_PLAYER(gPlayState)->actor) {
+        grottoLanding = (GrottoLandingState){ 0 };
+        return;
+    }
+    Player* player = (Player*)actor;
+    if (!(actor->bgCheckFlags & BGCHECKFLAG_GROUND) || actor->floorBgId != BGCHECK_SCENE ||
+        (player->stateFlags1 & (PLAYER_STATE1_FLOOR_DISABLED | PLAYER_STATE1_IN_WATER))) return;
+    Vec3f point = actor->world.pos;
+    CollisionPoly* poly;
+    if (Grotto_ValidateLanding(player, &point, &poly) && fabsf(point.y - actor->world.pos.y) <= 1.0f)
+        Grotto_SaveLandedPoint(player);
+}
+
+static void Grotto_SetRespawnLanding(RespawnMode mode) {
+    RespawnData* respawn = &gSaveContext.respawn[mode];
+    if (grottoLanding.landed && Grotto_LandingMatchesCurrent()) {
+        respawn->pos = grottoLanding.position;
+        respawn->yaw = grottoLanding.yaw;
+        respawn->playerParams = 0x0DFF;
+    } else {
+        respawn->pos = grottoReturnTable[grottoId].pos;
+        respawn->yaw = grottoReturnTable[grottoId].angle;
+        // Without a proven landing an AP return must keep emergence, not idle
+        // on the trigger. Native non-AP save/void behavior remains unchanged.
+        respawn->playerParams = Archipelago_EntranceShuffleActive() ? 0x04FF : 0x0DFF;
     }
 }

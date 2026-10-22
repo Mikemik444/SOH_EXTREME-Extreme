@@ -26,6 +26,9 @@ class ArchipelagoClient {
     // Main-thread only. A null result is unknown/stale, not an empty reachable set.
     const SohExtreme::TrackerSnapshot* GetFinderSnapshot(std::string& status);
     void RefreshFinderMirror();
+    int32_t AdjustAmmoChange(int32_t item, int32_t currentAmmo, int32_t change) const;
+    void ObserveAmmoSource(int32_t randomizerCheck, int32_t actorId, int32_t sourceDropParams,
+                           int32_t collectibleInput);
     void RestartFinderWorker();
     const std::string& GetFinderRuntimePath() const;
     int32_t GetFinderNativeCheck(int64_t locationId) const;
@@ -44,6 +47,7 @@ class ArchipelagoClient {
     void ReportNpcSpeech(int32_t randomizerCheck);
     bool ReportNpcSpeechLocation(int64_t speechLocation);
     bool HasSceneTransitionChecks() const;
+    void BeginWarpSongTransition(int song);
     void CaptureSceneTransition();
     void CompleteSceneTransition(int16_t scene);
     void BeginDoorTransition(int door, int fromRoom, int toRoom, const struct Actor* actor, int side);
@@ -166,10 +170,20 @@ class ArchipelagoClient {
     double finderWorkerRetryAt = 0.0;
     std::string finderWorkerError;
     SohExtreme::TrackerMirrorState finderMirror;
+    SohExtreme::TrackerRequestPacer finderRequestPacer;
     std::string pendingFinderPayload;
     std::string pendingFinderNonce;
     std::string finderMirrorError;
     double finderNextRequest = 0.0;
+    uint32_t ammoRefillMask = 0;
+    uint64_t ammoRefillState = 0, ammoRefillReceived = 0;
+    double ammoRefillUntil = 0.0;
+    void ResetAmmoSources();
+    std::string AmmoSourcesJson() const;
+    std::map<std::pair<int64_t, uint32_t>, uint32_t> ammoSourceFacts;
+    uint64_t ammoSourceRevision = 0;
+    int32_t ammoSourceFile = -1;
+    std::string ammoSourceSettingsJson;
     void QueueItem(int64_t itemId, bool notify);
     void QueueCheckedLocation(int64_t locationId);
     void QueueDeathLink(const std::string& source, const std::string& cause);

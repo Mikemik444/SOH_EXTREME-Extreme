@@ -736,10 +736,56 @@ void EnGe1_LookAtPlayer(EnGe1* this, PlayState* play) {
     }
 }
 
+static void EnGe1_UpdateRandomizerFriendliness(EnGe1* this, PlayState* play) {
+    EnGe1ActionFunc friendlyAction;
+
+    // The card can arrive while this actor is already loaded, including while
+    // NPC Soul freezes its update. Refresh before a stored hostile action runs.
+    if (!IS_RANDO || !GameInteractor_Should(VB_GERUDOS_BE_FRIENDLY, EnGe1_CheckCarpentersFreed()) ||
+        (this->actionFunc != EnGe1_WatchForPlayerFrontOnly &&
+         this->actionFunc != EnGe1_WatchForAndSensePlayer && this->actionFunc != EnGe1_KickPlayer)) {
+        return;
+    }
+
+    switch (this->actor.params & 0xFF) {
+        case GE1_TYPE_GATE_OPERATOR:
+            friendlyAction = EnGe1_CheckGate_GateOp;
+            break;
+        case GE1_TYPE_NORMAL:
+            friendlyAction = EnGe1_SetNormalText;
+            break;
+        case GE1_TYPE_HORSEBACK_ARCHERY:
+            friendlyAction = EnGe1_Wait_Archery;
+            break;
+        case GE1_TYPE_TRAINING_GROUND_GUARD:
+            friendlyAction = EnGe1_CheckForCard_GTGGuard;
+            break;
+        default:
+            return;
+    }
+
+    if (this->actionFunc == EnGe1_KickPlayer) {
+        Player* player = GET_PLAYER(play);
+        // Do not close an unrelated item/dialogue or another actor's cutscene.
+        if (play->msgCtx.talkActor == &this->actor && play->msgCtx.textId == 0x6000) {
+            Message_CloseTextbox(play);
+        }
+        if (player->csActor == &this->actor && player->csAction == 95) {
+            Player_SetCsActionWithHaltedActors(play, &this->actor, 7);
+        }
+    }
+
+    this->cutsceneTimer = 0;
+    this->stateFlags &= ~GE1_STATE_TALKING;
+    this->collider.base.acFlags &= ~AC_HIT;
+    this->actionFunc = friendlyAction;
+}
+
 void EnGe1_Update(Actor* thisx, PlayState* play) {
     s32 pad;
     EnGe1* this = (EnGe1*)thisx;
 
+    EnGe1_UpdateRandomizerFriendliness(this, play);
     Collider_UpdateCylinder(&this->actor, &this->collider);
     CollisionCheck_SetOC(play, &play->colChkCtx, &this->collider.base);
     Actor_MoveXZGravity(&this->actor);

@@ -2,6 +2,8 @@
 #include "NpcSpeechIdentity.h"
 #include "SceneTransitionChecks.h"
 #include "TrackerWorkerConfig.h"
+#include "AmmoPolicy.h"
+#include "AmmoSourcePolicy.h"
 #include "soh/Enhancements/GameplayDeliverySafety.h"
 
 static bool ParseFlatStringIntObject(const std::string& raw, std::unordered_map<std::string, int64_t>& out);
@@ -49,6 +51,7 @@ extern PlayState* gPlayState;
 }
 
 extern "C" u16 Randomizer_Item_Give(PlayState* play, GetItemEntry giEntry);
+extern "C" u8 Randomizer_GetSettingValue(RandomizerSettingKey randoSettingKey);
 extern "C" void Save_SaveFile(void);
 
 #include "EntranceRuntime.inc"
@@ -908,8 +911,152 @@ double FinderMirrorClock() {
 }
 }
 
+namespace {
+uint32_t ApAmmoMaskForItem(int32_t item) {
+    switch (item) {
+        case ITEM_STICK: return SOH_EXTREME_AMMO_REFILL_STICK;
+        case ITEM_NUT: return SOH_EXTREME_AMMO_REFILL_NUT;
+        case ITEM_BOMB: return SOH_EXTREME_AMMO_REFILL_BOMB;
+        case ITEM_BOMBCHU: return SOH_EXTREME_AMMO_REFILL_BOMBCHU;
+        case ITEM_BOW: return SOH_EXTREME_AMMO_REFILL_ARROWS;
+        default: return 0;
+    }
+}
+
+uint32_t CaptureApAmmoOwnedMask() {
+    uint32_t mask = 0;
+    if (INV_CONTENT(ITEM_STICK) == ITEM_STICK && CUR_CAPACITY(UPG_STICKS) > 0)
+        mask |= SOH_EXTREME_AMMO_REFILL_STICK;
+    if (INV_CONTENT(ITEM_NUT) == ITEM_NUT && CUR_CAPACITY(UPG_NUTS) > 0)
+        mask |= SOH_EXTREME_AMMO_REFILL_NUT;
+    if (INV_CONTENT(ITEM_BOMB) == ITEM_BOMB && CUR_CAPACITY(UPG_BOMB_BAG) > 0)
+        mask |= SOH_EXTREME_AMMO_REFILL_BOMB;
+    if (INV_CONTENT(ITEM_BOW) == ITEM_BOW && CUR_CAPACITY(UPG_QUIVER) > 0)
+        mask |= SOH_EXTREME_AMMO_REFILL_ARROWS;
+    const int mode = Randomizer_GetSettingValue(RSK_BOMBCHU_BAG);
+    if (INV_CONTENT(ITEM_BOMBCHU) == ITEM_BOMBCHU &&
+        (mode == RO_BOMBCHU_BAG_PROGRESSIVE
+             ? gSaveContext.ship.quest.data.randomizer.bombchuUpgradeLevel > 0
+             : (mode != RO_BOMBCHU_BAG_NONE || (mask & SOH_EXTREME_AMMO_REFILL_BOMB))))
+        mask |= SOH_EXTREME_AMMO_REFILL_BOMBCHU;
+    return mask;
+}
+
+uint32_t CaptureApAmmoAvailableMask(uint32_t owned) {
+    uint32_t mask = 0;
+    for (const int item : { ITEM_STICK, ITEM_NUT, ITEM_BOMB, ITEM_BOMBCHU, ITEM_BOW }) {
+        if (AMMO(item) > 0) mask |= ApAmmoMaskForItem(item);
+    }
+    return mask & owned;
+}
+
+uint32_t CaptureApAmmoRulesFlags() {
+    return (CVarGetInteger(CVAR_ENHANCEMENT("NoRandomDrops"), 0) ? 1u : 0u) |
+           (CVarGetInteger(CVAR_ENHANCEMENT("TreesDropSticks"), 0) ? 2u : 0u);
+}
+
+uint64_t CaptureApAmmoStateToken(uint64_t sourceRevision = 0) {
+    // Bind refill permission to this inventory and physical-save state. Ammo
+    // quantities above zero have the same usability; firing 20 -> 19 does not
+    // invalidate a still-correct result. No graph or network work happens here.
+    auto inventory = gSaveContext.inventory;
+    std::fill(std::begin(inventory.ammo), std::end(inventory.ammo), 0);
+    uint64_t hash = HashApReceiptBytes(1469598103934665603ULL, &inventory, sizeof(inventory));
+    hash = HashApReceiptBytes(hash, &gSaveContext.ship.randomizerInf, sizeof(gSaveContext.ship.randomizerInf));
+    hash = HashApReceiptValue(hash, CaptureApAmmoAvailableMask(CaptureApAmmoOwnedMask()));
+    hash = HashApReceiptValue(hash, CaptureApAmmoRulesFlags());
+    hash = HashApReceiptValue(hash, sourceRevision);
+    hash = HashApReceiptValue(hash, CVarGetInteger(CVAR_ENHANCEMENT("DampeAllNight"), 0));
+    hash = HashApReceiptValue(hash, gSaveContext.ship.quest.data.randomizer.bombchuUpgradeLevel);
+    hash = HashApReceiptValue(hash, gSaveContext.rupees);
+    hash = HashApReceiptValue(hash, gSaveContext.linkAge);
+    hash = HashApReceiptValue(hash, gSaveContext.nightFlag);
+    hash = HashApReceiptValue(hash, SohExtreme::TrackerClockWindow(gSaveContext.dayTime));
+    return hash ? hash : 1;
+}
+} // namespace
+
+int32_t ArchipelagoClient::AdjustAmmoChange(int32_t item, int32_t currentAmmo, int32_t change) const {
+    // Preserve only a unit that already exists in this AP save. No pickup, empty
+    // bag, local randomizer, file-select, or minigame counter gains ammunition.
+    if (change >= 0 || currentAmmo <= 0 || !currentSaveIsArchipelago || gPlayState == nullptr ||
+        gSaveContext.ship.quest.id != QUEST_RANDOMIZER || gSaveContext.gameMode != GAMEMODE_NORMAL)
+        return change;
+    const uint32_t bit = ApAmmoMaskForItem(item);
+    const bool owned = bit && (CaptureApAmmoOwnedMask() & bit);
+    if (!owned || change >= 1 - currentAmmo) return change;
+    const bool refill = IsAuthenticated() && !saveIdentityMismatch &&
+        !slotSettingsPendingApply.load() && ammoRefillReceived == appliedItemCount &&
+        ammoRefillState == CaptureApAmmoStateToken(ammoSourceRevision) &&
+        FinderMirrorClock() <= ammoRefillUntil && (ammoRefillMask & bit);
+    return SohExtreme_AdjustAmmoChange(currentAmmo, change, owned, refill);
+}
+
+void ArchipelagoClient::ResetAmmoSources() {
+    ammoSourceFacts.clear();
+    ++ammoSourceRevision;
+    ammoSourceFile = gSaveContext.fileNum;
+    ammoRefillMask = 0;
+    ammoRefillUntil = 0.0;
+}
+
+void ArchipelagoClient::ObserveAmmoSource(int32_t randomizerCheck, int32_t actorId,
+                                          int32_t sourceDropParams, int32_t collectibleInput) {
+    // The init hook supplies original actor metadata and an exact identity.
+    // Loading an actor is evidence about its drop, never about reachable access.
+    if (!currentSaveIsArchipelago || gPlayState == nullptr ||
+        gSaveContext.ship.quest.id != QUEST_RANDOMIZER || randomizerCheck <= RC_UNKNOWN_CHECK ||
+        randomizerCheck >= RC_MAX)
+        return;
+    static_assert(SOH_EXTREME_AMMO_DROP_BOMBS_A == ITEM00_BOMBS_A &&
+                  SOH_EXTREME_AMMO_DROP_BOMBS_B == ITEM00_BOMBS_B &&
+                  SOH_EXTREME_AMMO_DROP_ARROWS_SMALL == ITEM00_ARROWS_SMALL &&
+                  SOH_EXTREME_AMMO_DROP_ARROWS_MEDIUM == ITEM00_ARROWS_MEDIUM &&
+                  SOH_EXTREME_AMMO_DROP_ARROWS_LARGE == ITEM00_ARROWS_LARGE &&
+                  SOH_EXTREME_AMMO_DROP_NUTS == ITEM00_NUTS &&
+                  SOH_EXTREME_AMMO_DROP_STICK == ITEM00_STICK &&
+                  SOH_EXTREME_AMMO_DROP_SEEDS == ITEM00_SEEDS, "ammo source drop IDs changed");
+    const int kind = actorId == ACTOR_OBJ_TSUBO ? SOH_EXTREME_AMMO_SOURCE_POT :
+                     actorId == ACTOR_OBJ_KIBAKO ? SOH_EXTREME_AMMO_SOURCE_SMALL_CRATE :
+                     actorId == ACTOR_OBJ_KIBAKO2 ? SOH_EXTREME_AMMO_SOURCE_LARGE_CRATE : 0;
+    if (!kind) return;
+    const auto mapping = rcToApLocation.find(randomizerCheck);
+    if (mapping == rcToApLocation.end() || mapping->second <= 0) return;
+    if (ammoSourceFile != gSaveContext.fileNum) ResetAmmoSources();
+    const uint32_t age = gSaveContext.linkAge == LINK_AGE_CHILD ? 1u : 2u;
+    const auto key = std::make_pair(mapping->second, age);
+    const uint32_t mask = SohExtreme_AmmoSourceMask(kind, sourceDropParams, collectibleInput);
+    const uint32_t fact = mask ? mask | (static_cast<uint32_t>(kind) << 6) | (age << 8) : 0;
+    const auto old = ammoSourceFacts.find(key);
+    if (old != ammoSourceFacts.end() && old->second == fact) return;
+    if (old == ammoSourceFacts.end() && ammoSourceFacts.size() >= 2048) return;
+    // Keep rejected observations as bounded tombstones. Seeing a nonrenewable
+    // variant of the same age/identity removes the earlier authority as well.
+    if (old != ammoSourceFacts.end() && old->second == 0) return;
+    ammoSourceFacts[key] = old != ammoSourceFacts.end() ? 0 : fact;
+    ++ammoSourceRevision;
+    ammoRefillMask = 0;
+    ammoRefillUntil = 0.0;
+    finderNextRequest = 0.0;
+}
+
+std::string ArchipelagoClient::AmmoSourcesJson() const {
+    std::string json = "[";
+    bool first = true;
+    for (const auto& [identity, fact] : ammoSourceFacts) {
+        if (!fact) continue;
+        if (!first) json += ",";
+        first = false;
+        json += "[" + std::to_string(identity.first) + "," + std::to_string(fact) + "]";
+    }
+    return json + "]";
+}
+
 void ArchipelagoClient::ResetFinderMirror() {
     finderWorker.Stop();
+    ammoRefillMask = 0;
+    ammoRefillState = ammoRefillReceived = 0;
+    ammoRefillUntil = 0.0;
     finderWorkerStarted = false;
     finderWorkerAttempts = 0;
     finderWorkerNextPoll = 0.0;
@@ -922,6 +1069,7 @@ void ArchipelagoClient::ResetFinderMirror() {
     std::string nonce(32, '0');
     for (auto& c : nonce) c = hex[random() & 15u];
     finderMirror.Reset(nonce);
+    finderRequestPacer.Reset();
     pendingFinderPayload.clear();
     pendingFinderNonce.clear();
     finderMirrorError.clear();
@@ -975,7 +1123,7 @@ void ArchipelagoClient::ServiceFinderWorker() {
     if (!wasAuthenticated || !saveRuntimeSynchronized || !activeLocationsLoaded) return;
     const double now = FinderMirrorClock();
     if (now < finderWorkerNextPoll) return;
-    finderWorkerNextPoll = now + 0.5;
+    finderWorkerNextPoll = now + 0.1;
     if (finderWorkerStarted && !finderWorker.IsRunning(finderWorkerError)) {
         const auto attempts = finderWorkerAttempts;
         const auto error = finderWorkerError;
@@ -986,7 +1134,7 @@ void ArchipelagoClient::ServiceFinderWorker() {
         finderWorkerAttempts = attempts;
         finderWorkerError = error;
         finderWorkerRetryAt = now + 5.0;
-        finderWorkerNextPoll = now + 0.5;
+        finderWorkerNextPoll = now + 0.1;
         SPDLOG_WARN("[Archipelago] {}", finderWorkerError);
     }
     if (!finderWorkerStarted && finderWorkerAttempts < 3 && now >= finderWorkerRetryAt) {
@@ -1049,6 +1197,12 @@ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::str
     const uint32_t liveTime = gSaveContext.nightFlag ? 1u : 0u;
     const uint32_t liveClock = gSaveContext.dayTime;
     const uint32_t liveTimeFlags = CVarGetInteger(CVAR_ENHANCEMENT("DampeAllNight"), 0) ? 1u : 0u;
+    const uint32_t liveAmmoOwned = CaptureApAmmoOwnedMask();
+    const uint32_t liveAmmo = CaptureApAmmoAvailableMask(liveAmmoOwned);
+    const uint32_t liveAmmoFlags = CaptureApAmmoRulesFlags();
+    const uint32_t liveRupees = static_cast<uint32_t>(std::max<int32_t>(0, gSaveContext.rupees));
+    const uint32_t liveAge = gSaveContext.linkAge == LINK_AGE_CHILD ? 1u : 2u;
+    const uint64_t liveAmmoState = CaptureApAmmoStateToken(ammoSourceRevision);
     if (!payload.empty() && payloadNonce == finderMirror.Nonce()) {
         try {
             finderMirror.Accept(SohExtreme::DecodeTrackerSnapshot(payload), slot, now, finderMirrorError);
@@ -1056,7 +1210,16 @@ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::str
             finderMirrorError = std::string("Invalid tracker snapshot: ") + error.what();
         }
     }
-    if (finderWorkerStarted && now >= finderNextRequest) {
+    std::set<int64_t> checked;
+    for (const auto id : reportedLocations) if (active.count(id)) checked.insert(id);
+    uint64_t requestState = HashApReceiptValue(liveAmmoState, received);
+    requestState = HashApReceiptValue(requestState, appliedItemCount);
+    requestState = HashApReceiptValue(requestState, liveShields);
+    requestState = HashApReceiptValue(requestState, liveTime);
+    requestState = HashApReceiptValue(requestState, SohExtreme::TrackerClockWindow(liveClock));
+    requestState = HashApReceiptValue(requestState, liveTimeFlags);
+    for (const auto id : checked) requestState = HashApReceiptValue(requestState, id);
+    if (finderWorkerStarted && finderRequestPacer.Due(now, requestState, finderNextRequest)) {
         const uint64_t request = finderMirror.NextRequest();
         AP_Bounce bounce{};
         std::vector<std::string> tags{ "SOHExtremeUT" };
@@ -1065,17 +1228,40 @@ const SohExtreme::TrackerSnapshot* ArchipelagoClient::GetFinderSnapshot(std::str
             std::to_string(slot) + ",\"nonce\":\"" + finderMirror.Nonce() + "\",\"request\":" +
             std::to_string(request) + ",\"live_shields\":" + std::to_string(liveShields) +
             ",\"live_time\":" + std::to_string(liveTime) + ",\"live_clock\":" + std::to_string(liveClock) +
-            ",\"live_time_flags\":" + std::to_string(liveTimeFlags) + "}";
+            ",\"live_time_flags\":" + std::to_string(liveTimeFlags) +
+            ",\"ammo_protocol\":1,\"live_ammo\":" + std::to_string(liveAmmo) +
+            ",\"live_ammo_owned\":" + std::to_string(liveAmmoOwned) +
+            ",\"live_rupees\":" + std::to_string(liveRupees) +
+            ",\"live_ammo_flags\":" + std::to_string(liveAmmoFlags) +
+            ",\"live_ammo_state\":" + std::to_string(liveAmmoState) +
+            ",\"live_age\":" + std::to_string(liveAge) +
+            ",\"ammo_sources\":" + AmmoSourcesJson() + "}";
         AP_SendBounce(bounce);
+        finderRequestPacer.Sent(now, requestState);
         finderNextRequest = now + 2.0;
     }
-    std::set<int64_t> checked;
-    for (const auto id : reportedLocations) if (active.count(id)) checked.insert(id);
     const auto* result = finderMirror.Current(slot, received, active, checked, now, status, liveShields, liveTime,
-                                            liveClock, liveTimeFlags);
-    if (!result && !finderWorkerError.empty()) status = finderWorkerError;
+                                            liveClock, liveTimeFlags, liveAmmo, liveAmmoState);
+    // Display may accept an older protocol or a manually adjusted UT view.
+    // Gameplay refill permission requires exact live, unmodified inventory.
+    ammoRefillMask = 0;
+    ammoRefillUntil = 0.0;
+    if (result != nullptr && result->liveAmmo != 0xffffffffu && result->manualCount == 0 &&
+        result->ignoredCount == 0 && result->received == appliedItemCount &&
+        result->liveAmmoOwned == liveAmmoOwned && result->liveRupees == liveRupees &&
+        result->liveAmmoFlags == liveAmmoFlags) {
+        ammoRefillMask = result->ammoRefills & liveAmmoOwned;
+        ammoRefillState = liveAmmoState;
+        ammoRefillReceived = appliedItemCount;
+        ammoRefillUntil = now + 1.0;
+    }
+    // Only the validated Current() result above may authorize ammo consumption.
+    // Rendering keeps its own complete, same-session snapshot while it updates.
+    const auto* display = finderMirror.Display(slot, received, active, checked, now, status,
+        liveShields, liveTime, liveClock, liveTimeFlags, liveAmmo, liveAmmoState);
+    if (!finderWorkerError.empty()) status = finderWorkerError;
     else if (!result && !finderMirrorError.empty()) status += " " + finderMirrorError;
-    return result;
+    return display;
 }
 
 void ArchipelagoClient::Enable() {
@@ -1277,6 +1463,7 @@ void ArchipelagoClient::LoadSaveMetadata(bool isArchipelagoSave, uint64_t receiv
     const bool preserveRequestedDungeonReturn = currentSaveIsArchipelago && isArchipelagoSave &&
         sameIdentity(saveConnectionIdentity, identity) && saveServer == server && saveSlot == slot &&
         cachedSlotSettingsJson == cachedSettingsJson;
+    if (!preserveRequestedDungeonReturn || ammoSourceFile != gSaveContext.fileNum) ResetAmmoSources();
     gCrossingJournal.Reset();
     SohExtreme::EntranceRuntime::Reset(preserveRequestedDungeonReturn);
     {
@@ -2032,6 +2219,10 @@ void ArchipelagoClient::ApplySlotSettings() {
         std::scoped_lock lock(queueMutex);
         if (!slotSettingsLoaded) {
             return;
+        }
+        if (ammoSourceSettingsJson != cachedSlotSettingsJson) {
+            ResetAmmoSources();
+            ammoSourceSettingsJson = cachedSlotSettingsJson;
         }
         const auto fish = slotSettings.find("Fishsanity");
         if (fish != slotSettings.end()) {
@@ -4404,16 +4595,36 @@ void ArchipelagoClient::ReportTransition(int64_t location) {
 
 void ArchipelagoClient::CaptureSceneTransition() {
     AdvanceDoorTransition();
+    SohExtreme::EntranceRuntime::CaptureSceneDeparture();
     if (!HasSceneTransitionChecks() || !IsGameplaySessionActive() || !gPlayState ||
         gSaveContext.health <= 0 || gPlayState->gameOverCtx.state != GAMEOVER_INACTIVE ||
         gSaveContext.gameMode != GAMEMODE_NORMAL) {
         gCrossingJournal.Reset();
+        if (const auto* source=SohExtreme::EntranceRuntime::crossingSource;
+            source && SohExtreme::FindWarpSongCrossing(source->id)) {
+            SohExtreme::EntranceRuntime::crossingSource=SohExtreme::EntranceRuntime::crossingTarget=nullptr;
+        }
         return;
     }
-    if (SohExtreme::EntranceRuntime::suppressTransitionChecks || SohExtreme::EntranceRuntime::crossingSource) {
+    if (SohExtreme::EntranceRuntime::suppressTransitionChecks) {
         gCrossingJournal.Reset();
         return;
     }
+    // Normal and skipped song animations both use respawnFlag=-3. Keep the
+    // actual departure identity instead of broadly allowing that respawn flag
+    // to match ordinary scene portals or warp-pad spawn/save destinations.
+    const auto* warp=gCrossingJournal.CaptureWarpSong(gPlayState->sceneNum,gPlayState->nextEntranceIndex,
+        gSaveContext.respawnFlag,gSaveContext.fileNum,LINK_IS_CHILD);
+    if (const auto* source=SohExtreme::EntranceRuntime::crossingSource) {
+        // Mapped warps credit the original song, never the destination doorway.
+        // A save/void path that happens to resolve that index is not a song.
+        if (SohExtreme::FindWarpSongCrossing(source->id) && (!warp || warp->location!=source->check)) {
+            SohExtreme::EntranceRuntime::crossingSource=SohExtreme::EntranceRuntime::crossingTarget=nullptr;
+        }
+        gCrossingJournal.Reset();
+        return;
+    }
+    if (warp) return;
     const auto& back=gSaveContext.respawn[RESPAWN_MODE_RETURN];
     const int returnScene=back.entranceIndex>=0 && back.entranceIndex<ENTR_MAX
         ? gEntranceTable[back.entranceIndex].scene : -1;
@@ -4432,7 +4643,7 @@ void ArchipelagoClient::CompleteSceneTransition(int16_t scene) {
         return;
     }
     ReportTransition(entranceCheck);
-    ReportTransition(gCrossingJournal.Arrive(scene));
+    ReportTransition(gCrossingJournal.Arrive(scene,gSaveContext.fileNum,LINK_IS_CHILD));
 }
 
 void ArchipelagoClient::BeginDoorTransition(int door, int fromRoom, int toRoom, const Actor* actor, int side) {
@@ -4451,6 +4662,7 @@ void ArchipelagoClient::BeginDoorTransition(int door, int fromRoom, int toRoom, 
 void ArchipelagoClient::AdvanceDoorTransition() {
     SohExtreme::EntranceRuntime::AdvanceDoor();
     if (!IsGameplaySessionActive() || !gPlayState) { gCrossingJournal.Reset(); return; }
+    if (gPlayState->transitionTrigger==TRANS_TRIGGER_OFF) gCrossingJournal.CancelPendingWarpSong();
     const Player* player=GET_PLAYER(gPlayState);
     if (!player) return;
     ReportTransition(gCrossingJournal.AdvanceDoor(gPlayState->sceneNum,gPlayState->roomCtx.curRoom.num,
@@ -4691,6 +4903,15 @@ extern "C" bool Archipelago_IsCurrentSaveFile(void) {
     return ArchipelagoClient::GetInstance().IsCurrentSaveArchipelago();
 }
 
+extern "C" int32_t Archipelago_AdjustAmmoChange(int32_t item, int32_t currentAmmo, int32_t change) {
+    return ArchipelagoClient::GetInstance().AdjustAmmoChange(item, currentAmmo, change);
+}
+
+extern "C" void Archipelago_ObserveAmmoSource(int32_t randomizerCheck, int32_t actorId,
+                                               int32_t sourceDropParams, int32_t collectibleInput) {
+    ArchipelagoClient::GetInstance().ObserveAmmoSource(randomizerCheck, actorId, sourceDropParams, collectibleInput);
+}
+
 extern "C" bool Archipelago_ShouldFreezeTime(void) {
     // Physical save rules apply offline too. Only passive clock progression is
     // frozen; the engine must still be able to execute Sun's Song time changes.
@@ -4754,6 +4975,31 @@ extern "C" bool Archipelago_HasSceneTransitionChecks(void) {
 }
 extern "C" void Archipelago_CaptureSceneTransition(void) {
     ArchipelagoClient::GetInstance().CaptureSceneTransition();
+}
+void ArchipelagoClient::BeginWarpSongTransition(int song) {
+    int entrance=-1;
+    switch (song) {
+        case OCARINA_SONG_MINUET: entrance=ENTR_SACRED_FOREST_MEADOW_WARP_PAD; break;
+        case OCARINA_SONG_BOLERO: entrance=ENTR_DEATH_MOUNTAIN_CRATER_WARP_PAD; break;
+        case OCARINA_SONG_SERENADE: entrance=ENTR_LAKE_HYLIA_WARP_PAD; break;
+        case OCARINA_SONG_REQUIEM: entrance=ENTR_DESERT_COLOSSUS_WARP_PAD; break;
+        case OCARINA_SONG_NOCTURNE: entrance=ENTR_GRAVEYARD_WARP_PAD; break;
+        case OCARINA_SONG_PRELUDE: entrance=ENTR_TEMPLE_OF_TIME_WARP_PAD; break;
+    }
+    const auto* crossing=SohExtreme::FindWarpSongCrossing(entrance);
+    if (!HasSceneTransitionChecks() || !IsGameplaySessionActive() || !gPlayState ||
+        gPlayState->transitionTrigger!=TRANS_TRIGGER_START || gSaveContext.health<=0 ||
+        gPlayState->gameOverCtx.state!=GAMEOVER_INACTIVE || gSaveContext.gameMode!=GAMEMODE_NORMAL ||
+        SohExtreme::EntranceRuntime::suppressTransitionChecks || !crossing || !IsLocationActive(crossing->location)) {
+        gCrossingJournal.CancelPendingWarpSong();
+        return;
+    }
+    gCrossingJournal.ArmWarpSong(crossing,gPlayState->sceneNum,gPlayState->nextEntranceIndex,
+        gSaveContext.respawnFlag,gSaveContext.fileNum,LINK_IS_CHILD);
+}
+
+extern "C" void Archipelago_BeginWarpSongTransition(int song) {
+    ArchipelagoClient::GetInstance().BeginWarpSongTransition(song);
 }
 extern "C" void Archipelago_BeginDoorTransition(int door, int fromRoom, int toRoom, const Actor* actor, int side) {
     ArchipelagoClient::GetInstance().BeginDoorTransition(door,fromRoom,toRoom,actor,side);

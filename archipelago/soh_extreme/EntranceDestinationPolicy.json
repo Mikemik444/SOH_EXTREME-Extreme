@@ -1,6 +1,6 @@
 {
   "revision": 1,
-  "catalog_sha256": "244c43515fcd5a5c8486e050cf45cd724529728413862331445f62b13a1f7742",
+  "catalog_sha256": "af1f1f00d17f7f7218c5edbc5fa05d46a877547b18b5460728d62a417fb72150",
   "fingerprint_encoding": "SHA256 of json.dumps(value, sort_keys=True, separators=(comma,colon), ensure_ascii=True).encode(utf-8); catalog is sorted by integer id; row is the complete unmodified catalog dictionary.",
   "age_mask_bits": {
     "child": 1,
@@ -157,7 +157,7 @@
   "provenance": {
     "review": "Source review of all 719 catalog resolvers against native tables and current grotto/room-door metadata, 2026-10-18.",
     "source_hashes": {
-      "EntranceCatalog.json": "96e94cf39806fbbef88c8694f1e5d4b030d06052e18d42caeaf484d18701fe7e",
+      "EntranceCatalog.json": "f5ba502aef5f06719b2bf39447f287743ae656ba0b884d698d8e5cc88c2d83ae",
       "DungeonDoorCatalog.json": "f46af0cde245587d97b368a0d187fe4db22bd350c462a7122dd6682faeac53ad",
       "entrance_table.h": "929f986069926453cd9d4bffdfa8e78f9031d7e2c3b8963f6855102dc05493aa",
       "scene_table.h": "94866d59455e8bfeba9f649b0589368a978975026a875588519756f8e3fa902c"
@@ -189,7 +189,8 @@
       "When AP entrance routing is active, repair the child rows of all five adult temple blue warps from their ordinary warp pads before checking resolved scene/spawn facts.",
       "Randomized scene-load setup selection must not inherit a previous cutscene index; normal story-triggered cutscenes remain separate from randomized destination selection.",
       "Runtime age checks use child bit 1 and adult bit 2 explicitly; native LINK_AGE enum ordinals have the opposite order.",
-      "Coupled returns remain map[reverse(destination)] == reverse(source). Shared interior source ages are both; generation checks actual age reachability for forbidden arrivals."
+      "Coupled returns remain map[reverse(destination)] == reverse(source). Shared interior source ages are both; generation checks actual age reachability for forbidden arrivals.",
+      "Damp\u00e9's hut endpoint 781 is adult-only for physical approach and randomized arrivals; shared exit 853 permits either age so legacy child arrivals can leave."
     ]
   },
   "endpoints": [
@@ -1188,7 +1189,7 @@
     },
     {
       "id": 234,
-      "catalog_row_sha256": "e5c47ed5eaabcaee98f5d27851bee46e71490dae1a2cb71f4d727a91559efec3",
+      "catalog_row_sha256": "5551acedca6614114d81dd0da25511e2afef64f919c7338ffa2df155bdcd7e29",
       "kind": "native",
       "native_index": 234,
       "normal_layers": [
@@ -1860,7 +1861,7 @@
     },
     {
       "id": 385,
-      "catalog_row_sha256": "2cc0415a7868cd6e779c08344b13675b5efdd4fca29e5dfe2e4e828bb2b74db6",
+      "catalog_row_sha256": "be3d573e34c1a5a2a40d63e9e97365e3bbb0402961018c7b4da20ac8022398ab",
       "kind": "native",
       "native_index": 385,
       "normal_layers": [
@@ -2337,6 +2338,39 @@
       ],
       "source_age_mask": 3,
       "arrival_age_mask": 3
+    },
+    {
+      "id": 473,
+      "catalog_row_sha256": "22f618e9ef688afb5c3c724d48d3d7cc29a4d011007d272a0de93e851b802ab8",
+      "kind": "native",
+      "native_index": 473,
+      "normal_layers": [
+        {
+          "scene": 84,
+          "spawn": 3
+        },
+        {
+          "scene": 84,
+          "spawn": 3
+        },
+        {
+          "scene": 84,
+          "spawn": 3
+        },
+        {
+          "scene": 84,
+          "spawn": 3
+        }
+      ],
+      "normal_layer_source_indices": [
+        473,
+        474,
+        475,
+        476
+      ],
+      "source_age_mask": 3,
+      "arrival_age_mask": 3,
+      "age_policy": "Ordinary river water passage exists for child and adult; source and landing require Swim when the ability is shuffled."
     },
     {
       "id": 477,
@@ -4162,8 +4196,41 @@
         783,
         784
       ],
+      "source_age_mask": 2,
+      "arrival_age_mask": 2
+    },
+    {
+      "id": 785,
+      "catalog_row_sha256": "ef0465c861963956717c34878f54dcffa85dd168f28f95b894a3c800d5e0885b",
+      "kind": "native",
+      "native_index": 785,
+      "normal_layers": [
+        {
+          "scene": 81,
+          "spawn": 14
+        },
+        {
+          "scene": 81,
+          "spawn": 14
+        },
+        {
+          "scene": 81,
+          "spawn": 14
+        },
+        {
+          "scene": 81,
+          "spawn": 14
+        }
+      ],
+      "normal_layer_source_indices": [
+        785,
+        786,
+        787,
+        788
+      ],
       "source_age_mask": 3,
-      "arrival_age_mask": 3
+      "arrival_age_mask": 3,
+      "age_policy": "Ordinary river water passage exists for child and adult; source and landing require Swim when the ability is shuffled."
     },
     {
       "id": 789,

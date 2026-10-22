@@ -1,0 +1,426 @@
+// The runner captures complete production functions. Engine/hook/network I/O
+// below is explicit; no animation renderer, scene allocation or server runs.
+#include <algorithm>
+#include <array>
+#include <cstdint>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <set>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include "soh/Network/Archipelago/ArchipelagoC.h"
+#include "soh/Network/Archipelago/SceneTransitionChecks.h"
+#include "soh/Network/Archipelago/EntranceRouting.h"
+#include "warp_song_1812_legacy_crossing.inc"
+
+using s16=int16_t;
+enum SceneID {
+#define DEFINE_SCENE(segment, title, id, ...) id,
+#include "scene_table.h"
+#undef DEFINE_SCENE
+    SCENE_MAX, SCENE_UNUSED_6E=SCENE_MAX
+};
+enum EntranceIndex {
+#define DEFINE_ENTRANCE(id, ...) id,
+#include "entrance_table.h"
+#undef DEFINE_ENTRANCE
+    ENTR_MAX
+};
+constexpr int ENTRANCE_TABLE_SIZE=ENTR_MAX;
+enum {
+    OCARINA_SONG_MINUET, OCARINA_SONG_BOLERO, OCARINA_SONG_SERENADE,
+    OCARINA_SONG_REQUIEM, OCARINA_SONG_NOCTURNE, OCARINA_SONG_PRELUDE,
+};
+enum {
+    GAMEMODE_NORMAL=0, GAMEOVER_INACTIVE=0, TRANS_TRIGGER_OFF=0, TRANS_TRIGGER_START=1,
+    RESPAWN_MODE_RETURN=2, TRANS_TYPE_FADE_WHITE=2, TRANS_TYPE_FADE_WHITE_FAST=3,
+    MSGMODE_NONE=0, PLAYER_START_MODE_WARP_SONG=5, PLAYER_START_MODE_IDLE=13,
+    PLAYER_STATE1_IN_CUTSCENE=1, ACTOR_DEMO_KANKYO=0x8C, RSK_SHUFFLE_ENTRANCES=0,
+    EVENTCHKINF_ENTERED_DEATH_MOUNTAIN_CRATER=1, EVENTCHKINF_ENTERED_LAKE_HYLIA,
+    EVENTCHKINF_ENTERED_DESERT_COLOSSUS, EVENTCHKINF_ENTERED_GRAVEYARD,
+    EVENTCHKINF_ENTERED_TEMPLE_OF_TIME,
+};
+struct Actor {
+    int params=0;
+    struct { struct { float x=0,y=0,z=0; } pos; } world;
+};
+struct Player { Actor actor; int stateFlags1=0; } player;
+struct PlayState {
+    int sceneNum=SCENE_HYRULE_FIELD;
+    int nextEntranceIndex=0, transitionTrigger=TRANS_TRIGGER_OFF, transitionType=0;
+    struct { int state=GAMEOVER_INACTIVE; } gameOverCtx;
+    struct { int lastPlayedSong=0, msgMode=MSGMODE_NONE, choiceIndex=0; } msgCtx;
+    struct { struct { int num=0; } curRoom; } roomCtx;
+    int actorCtx=0;
+} play, *gPlayState=&play;
+struct RespawnData { int entranceIndex=0, playerParams=0, data=0; };
+struct SaveContext {
+    int health=48, gameMode=GAMEMODE_NORMAL, respawnFlag=0, cutsceneIndex=0, nextTransitionType=0;
+    int fileNum=0;
+    RespawnData respawn[4];
+} gSaveContext;
+struct EntranceInfo { int scene, spawn; };
+EntranceInfo gEntranceTable[ENTR_MAX]={
+#define DEFINE_ENTRANCE(id, scene, spawn, ...) {scene, spawn},
+#include "entrance_table.h"
+#undef DEFINE_ENTRANCE
+};
+bool child=true, currentSave=true, nativeEr=false, isRandomizer=true, checksEnabled=true;
+bool skipAnimation=false, actorAllocationFails=false;
+int gWeatherMode=1, timerUpdates=0, finderUpdates=0;
+std::set<int> eventFlags;
+std::vector<int> nativeLookups;
+s16 entranceOverrideTable[ENTRANCE_TABLE_SIZE];
+#define LINK_IS_CHILD child
+#define GET_PLAYER(play) (&::player)
+#define IS_RANDO isRandomizer
+#define RAND_GET_OPTION(key) (static_cast<void>(key),nativeEr)
+#define CVAR_RANDOMIZER_SETTING(name) name
+#define ARRAY_COUNT(value) static_cast<int>(sizeof(value)/sizeof((value)[0]))
+int CVarGetInteger(const char*,int) { return checksEnabled; }
+bool Archipelago_IsCurrentSaveFile() { return currentSave; }
+void Flags_SetEventChkInf(int flag) { eventFlags.insert(flag); }
+void Interface_SetSubTimerToFinalSecond(PlayState*) { ++timerUpdates; }
+namespace CheckTracker { void RecalculateAvailableChecks() { ++finderUpdates; } }
+
+namespace SohExtreme::EntranceRuntime {
+EntranceRouting routing;
+const EntranceEndpoint* crossingSource=nullptr;
+const EntranceEndpoint* crossingTarget=nullptr;
+const EntranceEndpoint* openedDoor=nullptr;
+const EntranceEndpoint* lastArrivalSource=nullptr;
+const EntranceEndpoint* lastArrivalTarget=nullptr;
+CrossingJournal doorJournal;
+bool suppressTransitionChecks=false, dungeonReturnArrival=false;
+// Scene-history storage and arrival-safety validation are covered by the
+// full-runtime return/arrival suites; no alternate routing is modeled here.
+void ArmArrival(int,int) {}
+void CaptureSceneDeparture(bool=false) {}
+uint8_t CurrentArrivalAge() { return child ? kEntranceChildAge : kEntranceAdultAge; }
+void AdvanceDoor() {}
+#include "captured_warp_runtime.inc"
+}
+bool Archipelago_EntranceShuffleActive() { return currentSave && SohExtreme::EntranceRuntime::routing.Active(); }
+void Archipelago_RecordEntrance(int source) { SohExtreme::EntranceRuntime::Record(source); }
+void Entrance_SetEntranceDiscovered(int,bool) {}
+void EntranceTracker_SetLastEntranceOverride(int source) { nativeLookups.push_back(source); }
+// Grotto/room actor arrival is an engine boundary. Use the real reviewed base
+// and resulting respawn mode so the song journal sees post-resolution data.
+s16 Grotto_OverrideSpecialEntrance(s16 target) {
+    const auto* policy=SohExtreme::EntranceDestinationById(target);
+    if (!policy) return target;
+    if (policy->kind==SohExtreme::kEntranceGrottoReturn) {
+        gSaveContext.respawnFlag=2;
+        gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams=0x4FF;
+    } else if (policy->kind==SohExtreme::kEntranceRoomDoor) {
+        gSaveContext.respawnFlag=0;
+    }
+    return policy->nativeIndex;
+}
+void Grotto_ForceGrottoReturnOnSpecialEntrance() {}
+#include "captured_warp_lookup.inc"
+
+SohExtreme::CrossingJournal gCrossingJournal;
+class ArchipelagoClient {
+  public:
+    bool currentSaveIsArchipelago=true, sessionActive=true;
+    std::set<int64_t> active, submitted;
+    std::vector<int64_t> sent;
+    static ArchipelagoClient& GetInstance() { static ArchipelagoClient instance; return instance; }
+    bool IsGameplaySessionActive() const { return sessionActive && currentSaveIsArchipelago; }
+    bool IsLocationActive(int64_t id) const { return active.contains(id); }
+    bool IsLocationSubmitted(int64_t id) const { return submitted.contains(id); }
+    void SendLocation(int64_t id,bool) { submitted.insert(id); sent.push_back(id); }
+    bool HasSceneTransitionChecks() const;
+    void ReportTransition(int64_t);
+    void BeginWarpSongTransition(int);
+    void CaptureSceneTransition();
+    void CompleteSceneTransition(int16_t);
+    void AdvanceDoorTransition();
+};
+#include "captured_warp_client.inc"
+#include "captured_warp_native.inc"
+#include "captured_warp_hook.inc"
+void GameInteractor_ExecuteOnWarpSongLeave() { RandomizerOnWarpSongLeaveHandler(); }
+#include "captured_warp_environment.inc"
+#include "captured_pause_maps.inc"
+static bool isWarpActive=false;
+#include "captured_warp_pause.inc"
+using SkipCallback=std::function<void(void*,bool*)>;
+SkipCallback skipCallback;
+#define CVAR_SKIP_WARP_VALUE skipAnimation
+static constexpr s16 DEMOKANKYO_WARP_OUT_PARAM=0x0F;
+#define COND_ID_HOOK(hook,id,enabled,...) \
+    do { if (enabled) skipCallback=__VA_ARGS__; else skipCallback={}; } while(0)
+#include "captured_warp_skip.inc"
+#undef COND_ID_HOOK
+Actor departureActor;
+Actor* Actor_Spawn(int*,PlayState*,int,float,float,float,int,int,int,int params) {
+    departureActor.params=params;
+    bool should=true;
+    if (skipCallback) skipCallback(&departureActor,&should);
+    return should && !actorAllocationFails ? &departureActor : nullptr;
+}
+#include "captured_player_song_map.inc"
+void PlayerWarpDeparture(PlayState* play) {
+#include "captured_player_warp_setup.inc"
+#include "captured_player_warp_actor.inc"
+}
+
+struct WarpTruth { int entrance; int64_t check; int scene; };
+constexpr WarpTruth truth[]={
+#include "captured_warp_truth.inc"
+};
+using Settings=std::unordered_map<std::string,int>;
+std::map<std::string,int> groups;
+int assertions=0, baselineReproductions=0;
+void Expect(bool condition,const std::string& text) {
+    ++assertions;
+    if (!condition) throw std::runtime_error(text);
+}
+const WarpTruth& Truth(int entrance) {
+    for (const auto& row:truth) if (row.entrance==entrance) return row;
+    throw std::runtime_error("No song catalog entry");
+}
+void Fresh(const Settings& settings={},bool asChild=true) {
+    using namespace SohExtreme::EntranceRuntime;
+    routing.Reset(); crossingSource=crossingTarget=openedDoor=lastArrivalSource=lastArrivalTarget=nullptr;
+    suppressTransitionChecks=dungeonReturnArrival=false; doorJournal.Reset();
+    play={}; gPlayState=&play; gSaveContext={}; player={};
+    child=asChild; currentSave=isRandomizer=checksEnabled=true;
+    nativeEr=skipAnimation=actorAllocationFails=isWarpActive=false;
+    skipCallback={}; eventFlags.clear(); nativeLookups.clear();
+    gWeatherMode=1; finderUpdates=timerUpdates=0;
+    gCrossingJournal.Reset();
+    auto& client=ArchipelagoClient::GetInstance(); client={};
+    for (const auto& row:SohExtreme::kCrossings) client.active.insert(row.location);
+    std::string error;
+    Expect(routing.Configure(settings,error),"Routing configuration: "+error);
+    for (int i=0;i<ENTR_MAX;++i) entranceOverrideTable[i]=routing.Destination(i);
+}
+Settings OneWay(int source,int target) {
+    return {{"EntranceRandomizerRevision",1},{"EntranceDestinationPolicyRevision",1},
+            {"EntranceMap."+std::to_string(source),target}};
+}
+enum Mode { Animated, Skipped, ActorFallback, Paused };
+void Depart(int song,Mode mode) {
+    play.msgCtx.lastPlayedSong=song;
+    if (mode==Paused) {
+        isWarpActive=true;
+        PauseWarp_Execute();
+    } else {
+        skipAnimation=mode==Skipped;
+        actorAllocationFails=mode==ActorFallback;
+        RegisterSkipWarpHooks();
+        PlayerWarpDeparture(&play);
+        if (mode==Animated) Environment_WarpSongLeave(&play);
+    }
+}
+void Capture() { ArchipelagoClient::GetInstance().CaptureSceneTransition(); }
+void Arrive(int scene) {
+    play.sceneNum=scene;
+    play.transitionTrigger=TRANS_TRIGGER_OFF;
+    // Player update between fade capture and scene-init must not erase the
+    // completed departure just because the transition trigger is now off.
+    ArchipelagoClient::GetInstance().AdvanceDoorTransition();
+    ArchipelagoClient::GetInstance().CompleteSceneTransition(scene);
+}
+void ExpectOne(int64_t check,const std::string& label) {
+    const auto& client=ArchipelagoClient::GetInstance();
+    Expect(client.sent==std::vector<int64_t>{check},label+": only intended source submitted");
+    Expect(finderUpdates==1,label+": one Finder refresh");
+}
+
+void SuccessfulWarps() {
+    for (int song=0;song<6;++song) for (bool asChild:{false,true})
+    for (Mode mode:{Animated,Skipped,ActorFallback,Paused}) for (int route=0;route<5;++route)
+    for (bool sameScene:{false,true}) {
+        const int source=sWarpSongEntrances[song];
+        const auto& original=Truth(source);
+        // Off, unrelated ER, identity song, another song pad, and mixed room.
+        const int target=route==3 ? sWarpSongEntrances[(song+1)%6] : route==4 ? 1806 : source;
+        const auto* endpoint=SohExtreme::EntranceEndpointById(target);
+        Settings settings=route==0 ? Settings{} : route==1 ? OneWay(ENTR_LINKS_HOUSE_CHILD_SPAWN,ENTR_LINKS_HOUSE_1) : OneWay(source,target);
+        Fresh(settings,asChild);
+        play.sceneNum=sameScene ? endpoint->scene : SCENE_KOKIRI_FOREST;
+        auto& client=ArchipelagoClient::GetInstance();
+        // One active selected song also works; other catalog checks do not
+        // have to be enabled for this source to submit.
+        if (sameScene) client.active={original.check};
+        Depart(song,mode);
+        Expect(client.sent.empty(),"Departure never awards before arrival");
+        Expect(play.transitionTrigger==TRANS_TRIGGER_START,"Departure starts transition");
+        const auto* policy=SohExtreme::EntranceDestinationById(target);
+        Expect(play.nextEntranceIndex==policy->nativeIndex,"Native resolver selected actual destination");
+        if (mode!=Paused) Expect(gWeatherMode==0 && gSaveContext.cutsceneIndex==0,"Actual environment cleanup executes");
+        if (mode==Skipped && route!=4)
+            Expect(((gSaveContext.respawn[RESPAWN_MODE_RETURN].playerParams>>8)&0xF)==PLAYER_START_MODE_IDLE,
+                   "Skip animation retains normal idle arrival");
+        Capture();
+        Expect(client.sent.empty(),"Fade capture never awards before arrival");
+        Arrive(endpoint->scene);
+        ExpectOne(original.check,"Successful song");
+        Arrive(endpoint->scene);
+        ExpectOne(original.check,"Repeated scene-init");
+        Depart(song,mode); Capture(); Arrive(endpoint->scene);
+        ExpectOne(original.check,"Repeated song uses outbox deduplication");
+        ++groups["all_six_songs_ages_modes_routes_same_scene_and_selected_location"];
+    }
+}
+
+void SpecialDestinations() {
+    for (int song=0;song<6;++song) for (int target:{2062,8456}) for (Mode mode:{Animated,Skipped,Paused}) {
+        const int source=sWarpSongEntrances[song];
+        Fresh(OneWay(source,target));
+        Depart(song,mode);
+        Expect(gSaveContext.respawnFlag==(target==2062 ? 2 : 0),"Special arrival mode captured after resolution");
+        Capture(); Arrive(SohExtreme::EntranceEndpointById(target)->scene);
+        ExpectOne(Truth(source).check,"Special target credits original song");
+        ++groups["mixed_grotto_return_and_room_arrival_modes"];
+    }
+}
+
+void MissingProvenance() {
+    for (int song=0;song<6;++song) for (int respawn:{-3,-2,-1,0,1,2,3}) for (bool mapped:{false,true}) {
+        const int source=sWarpSongEntrances[song];
+        Fresh(mapped ? OneWay(source,source) : Settings{});
+        // Even using the native resolver without a real song departure is
+        // insufficient: an identical spawn/save/void index is not a song.
+        gSaveContext.respawnFlag=respawn;
+        play.transitionTrigger=TRANS_TRIGGER_START;
+        play.nextEntranceIndex=mapped ? Entrance_OverrideNextIndex(source) : source;
+        play.msgCtx.lastPlayedSong=song; // stale Ocarina state is not provenance.
+        Capture(); Arrive(Truth(source).scene);
+        Expect(ArchipelagoClient::GetInstance().sent.empty(),"Unarmed respawn never impersonates song");
+        ++groups["save_void_death_and_non_song_negative3_do_not_check"];
+    }
+}
+
+void Cancellations() {
+    for (bool mapped:{false,true}) for (Mode mode:{Animated,Skipped,Paused}) for (int mutate=0;mutate<9;++mutate) {
+        const int song=OCARINA_SONG_MINUET, source=sWarpSongEntrances[song];
+        Fresh(mapped ? OneWay(source,source) : Settings{});
+        Depart(song,mode);
+        switch (mutate) {
+            case 0: play.nextEntranceIndex=ENTR_LINKS_HOUSE_1; break;
+            case 1: ++play.sceneNum; break;
+            case 2: ++gSaveContext.fileNum; break;
+            case 3: child=!child; break;
+            case 4: gSaveContext.respawnFlag=1; break;
+            case 5: gSaveContext.health=0; break;
+            case 6: play.gameOverCtx.state=1; break;
+            case 7: SohExtreme::EntranceRuntime::suppressTransitionChecks=true; break;
+            case 8:
+                // Cancel, run the real player-frame service, then reuse the
+                // exact request tuple in a non-song transition.
+                play.transitionTrigger=TRANS_TRIGGER_OFF;
+                ArchipelagoClient::GetInstance().AdvanceDoorTransition();
+                play.transitionTrigger=TRANS_TRIGGER_START;
+                break;
+        }
+        Capture(); Arrive(Truth(source).scene);
+        Expect(ArchipelagoClient::GetInstance().sent.empty(),"Cancelled/changed warp never checks");
+        ++groups["pending_request_mismatch_and_cancelled_tuple_reuse"];
+    }
+    for (int mutate=0;mutate<3;++mutate) {
+        Fresh(); Depart(OCARINA_SONG_PRELUDE,Animated); Capture();
+        if (mutate==0) ++gSaveContext.fileNum;
+        if (mutate==1) child=!child;
+        Arrive(mutate==2 ? SCENE_HYRULE_FIELD : SCENE_TEMPLE_OF_TIME);
+        Arrive(SCENE_TEMPLE_OF_TIME);
+        Expect(ArchipelagoClient::GetInstance().sent.empty(),"Unmatched arrival consumes owned warp journal");
+        ++groups["arrival_file_age_scene_mismatch_is_consumed"];
+    }
+    for (bool mapped:{false,true}) {
+        Fresh(mapped ? OneWay(sWarpSongEntrances[0],sWarpSongEntrances[0]) : Settings{});
+        play.msgCtx.lastPlayedSong=OCARINA_SONG_MINUET; play.msgCtx.choiceIndex=1;
+        isWarpActive=true; PauseWarp_Execute();
+        Expect(play.transitionTrigger==TRANS_TRIGGER_OFF,"Declined PauseWarp does not depart");
+        play.transitionTrigger=TRANS_TRIGGER_START; play.nextEntranceIndex=sWarpSongEntrances[0];
+        Capture(); Arrive(Truth(sWarpSongEntrances[0]).scene);
+        Expect(ArchipelagoClient::GetInstance().sent.empty(),"Declined PauseWarp has no marker");
+        ++groups["declined_pause_warp"];
+    }
+}
+
+void InvalidSourcesAndSessions() {
+    for (int condition=0;condition<9;++condition) {
+        Fresh(); auto& client=ArchipelagoClient::GetInstance();
+        switch(condition) {
+            case 0: checksEnabled=false; break;
+            case 1: client.currentSaveIsArchipelago=currentSave=false; break;
+            case 2: client.sessionActive=false; break;
+            case 3: client.active.clear(); break;
+            case 4: gSaveContext.health=0; break;
+            case 5: play.gameOverCtx.state=1; break;
+            case 6: gSaveContext.gameMode=1; break;
+            case 7: SohExtreme::EntranceRuntime::suppressTransitionChecks=true; break;
+            case 8: play.msgCtx.lastPlayedSong=99; break;
+        }
+        if (condition==8) {
+            gSaveContext.respawn[RESPAWN_MODE_RETURN].entranceIndex=sWarpSongEntrances[0];
+            Environment_WarpSongLeave(&play);
+        } else Depart(OCARINA_SONG_MINUET,Animated);
+        Capture(); Arrive(Truth(sWarpSongEntrances[0]).scene);
+        Expect(client.sent.empty(),"Disabled/inactive/invalid source never checks");
+        ++groups["invalid_source_and_session_guards"];
+    }
+    Fresh(); play.msgCtx.lastPlayedSong=99; Entrance_SetWarpSongEntrance();
+    Expect(play.transitionTrigger==TRANS_TRIGGER_OFF,"Unknown native song aborts transition");
+    play.transitionTrigger=TRANS_TRIGGER_START; play.nextEntranceIndex=sWarpSongEntrances[0];
+    Capture(); Arrive(Truth(sWarpSongEntrances[0]).scene);
+    Expect(ArchipelagoClient::GetInstance().sent.empty(),"Unknown native song cannot arm later travel");
+    ++groups["invalid_native_resolver_song"];
+}
+
+void LegacyAndOrdinaryPortals() {
+    for (const auto& row:truth) {
+        Expect(LegacyCrossing::FindSceneCrossing(SCENE_HYRULE_FIELD,row.entrance,-3,0,-1)==nullptr,
+               "1.8.12 misses actual warp respawn mode");
+        ++baselineReproductions;
+        Expect(LegacyCrossing::FindSceneCrossing(SCENE_HYRULE_FIELD,row.entrance,0,0,-1)!=nullptr,
+               "1.8.12 matches destination-only spawn without song provenance");
+        ++baselineReproductions;
+        Expect(SohExtreme::FindWarpSongCrossing(row.entrance)->location==row.check,"Source catalog mapping exact");
+        ++groups["baseline_warp_omission_and_destination_only_false_positive"];
+    }
+    for (const auto& row:SohExtreme::kCrossings) {
+        if (row.kind==SohExtreme::CrossingKind::Door || row.source<0) continue;
+        const int flag=row.kind==SohExtreme::CrossingKind::GrottoExit ? 2 : 0;
+        const auto* crossing=SohExtreme::FindSceneCrossing(row.source,row.entrance,flag,row.content,row.target);
+        Expect(crossing && crossing->location==row.location,"Ordinary physical portal remains matchable");
+        SohExtreme::CrossingJournal journal;
+        journal.BeginScene(crossing);
+        Expect(journal.Arrive(row.target)==row.location,"Ordinary physical arrival remains creditable");
+        Expect(journal.Arrive(row.target)==0,"Ordinary journal consumed once");
+        ++groups["ordinary_scene_and_grotto_portal_regression"];
+    }
+    Fresh(); skipAnimation=true; RegisterSkipWarpHooks();
+    Actor other; other.params=0x0E; bool should=true;
+    skipCallback(&other,&should);
+    Expect(should && play.transitionTrigger==TRANS_TRIGGER_OFF,"Unrelated actor animation not a warp");
+    ++groups["skip_hook_ignores_non_departure_actor"];
+}
+
+int main() {
+    try {
+        SuccessfulWarps(); SpecialDestinations(); MissingProvenance(); Cancellations();
+        InvalidSourcesAndSessions(); LegacyAndOrdinaryPortals();
+        int cases=0;
+        for (const auto& [name,count]:groups) cases+=count;
+        std::cout<<"{\"cases\":"<<cases<<",\"assertions\":"<<assertions
+                 <<",\"baseline_reproductions\":"<<baselineReproductions<<",\"groups\":{";
+        bool first=true;
+        for (const auto& [name,count]:groups) {
+            if (!first) std::cout<<",";
+            first=false; std::cout<<"\""<<name<<"\":"<<count;
+        }
+        std::cout<<"}}\n";
+    } catch (const std::exception& error) {
+        std::cerr<<error.what()<<"\n";
+        return 1;
+    }
+}

@@ -1,0 +1,186 @@
+SOH-EXTREME 1.8.9 - Current validation evidence and limits
+===========================================================
+
+Complete replacement source files: 159; changed/added since 1.8.8: 65.
+Verified current report/source/test bindings: 983.
+Verified fixture/runtime bindings: 111.
+The release JSON records every report and source SHA-256.
+
+souls_restart_189_apworld_validation.json
+  Result: passed
+  Scope: See the full report.
+
+souls_restart_189_dungeon_pools.json
+  Result: passed; {"tests_run": 19}
+  Scope: Actual AP option types and reviewed endpoint catalog; candidate pools, forward-only destinations, coupled mapping validation, legacy-map policy and effective return metadata. Includes one production connect() pass; no item fill or native gameplay.
+
+souls_restart_189_entrance_blockers.json
+  Result: passed; {"tests_run": 22}
+  Scope: Exercise actual AP room, source-door, age and shortcut predicates.
+
+The supplied YAML builds the real world through set_rules. Controlled ingress
+edges then isolate alternate arrivals; event sweeps and item checks are the
+production implementations. An optional exactly reproduced saved map is
+restored through production ER.connect. No new fill or in-game collision
+playthrough is claimed.
+
+
+souls_restart_189_full_fill_adult.json
+  Result: passed
+  Scope: Official Main.main through pre_output with full restrictive fill; no native gameplay run.
+
+souls_restart_189_full_fill_child_subset.json
+  Result: passed
+  Scope: Official Main.main through pre_output with full restrictive fill; no native gameplay run.
+
+souls_restart_189_lost_woods_mido.json
+  Result: passed; {"cases": 70}
+  Scope: Actual AP source worlds through set_rules. Both Mido passage directions, both ages, all speech modes, Soul disabled control, selected/all progressive song modes, instrument requirement, and enabled forward backflip. No full fill, native collision simulation or gameplay.
+
+souls_restart_189_npc_logic.json
+  Result: passed; {"cases": 6110}
+  Scope: Actual AP source worlds through set_rules; age-specific first-talk, reward, exchange and gate checks across all speech modes. No full item fill, native build or gameplay.
+
+souls_restart_189_npc_native_logic.json
+  Result: passed; {"cases": 298, "assertions": 538}
+  Scope: Actual native NPC interaction helper, location actor classification and Soul gate, language selector, legacy first-talk Finder gate, and both native Mido entrance expressions compiled unchanged. Option/inventory and static location storage are engine IO shims. No full native build, collision simulation or gameplay.
+
+souls_restart_189_regressions.json
+  Result: passed; {"test_cases": 35}
+  Scope: Existing AP trial medallion, age-specific switch, Jabu tentacle, room-clear, carrier and shortcut regressions after the shared NPC rule updates. This suite is neither a native game run nor a full item fill.
+
+souls_restart_189_restart_native.json
+  Result: passed; {"cases": {"adult_shared_grotto_previous_scene": 65, "age_change_invalidates_live_history": 1, "ap_all_off_dungeon_entryway": 1, "catalog_category_classification": 719, "child_shared_grotto_previous_scene": 66, "different_metadata_discards_history_request": 7, "disabled_map_dungeon_return_flag_isolation": 6, "distinct_scene_and_native_room_history": 1, "dungeon_only_mixed_entryway": 1, "effective_pool_modes": 9, "explicit_age_spawn_overrides_return_and_history": 1, "file_age_map_request_invalidation": 3, "final_battle_resolved_dungeon_return": 6, "final_battle_resolved_previous_scene_return": 1, "game_over_dungeon_and_flag_isolation": 1, "game_over_previous_scene": 1, "invalid_policy_atomic_rejection": 4, "late_map_completes_one_explicit_return": 1, "legacy_actual_door_outside_route": 1, "legacy_dungeon_pair_category": 1, "legacy_unrelated_mixed_flag": 1, "no_history_omits_middle_action": 1, "ordinary_native_final_battle_respawn_preserved": 1, "same_map_reconnect_keeps_history": 1, "scripted_scene_keeps_immediate_safe_history": 1, "separate_dungeon_settings_entryway": 4, "shuffled_boss_source_dungeon": 2, "vanilla_dungeon_entryway": 1}}
+  Scope: See the full report.
+
+souls_restart_189_song_notes_native.json
+  Result: passed; {"cases": 38, "assertions": 7005}
+  Scope: Actual native tracker selection/render bodies, slot default helper, custom CVar apply loop, and unchanged progressive/legacy note receipt/completion functions; ImGui, CVar, and save/notification I/O are shimmed. Not a complete native build or gameplay test.
+
+souls_restart_189_song_selection.json
+  Result: passed; {"test_cases": 19}
+  Scope: Exercise selectable song notes with the actual AP options, pools and rules.
+
+Run with the supported Archipelago runtime on PYTHONPATH. Prefill tests execute
+the official restrictive fill; only hint creation is isolated when testing slot
+serialization before a complete item fill. No game client is simulated here.
+
+
+souls_restart_189_soul_npc_native.json
+  Result: passed; {"cases": 75, "assertions": 1183}
+  Scope: Actual soul policy/hooks, draw/talk/get-item/targeting, Kokiri exit boy update/movement, adult Lost Woods Mido update/blocking/talk/ocarina functions, all six collider registration functions, OC separation, and five dynamic collision query loops. Engine I/O and geometric narrow-phase helpers are shimmed; no full native build, ROM collision simulation, or gameplay test.
+
+souls_restart_189_soul_object_native.json
+  Result: passed; {"native": {"cases": 13, "assertions": 57}}
+  Scope: Actual source action functions, OC separation, collider transform, randomized draw and recovery hook bodies with engine shims; not a full native build or gameplay test.
+
+souls_restart_189_source_build_validation.json
+  Result: passed
+  Scope: Actual shipped helper AST functions verify all copied replacement source files in a disposable fixture.
+
+souls_restart_189_source_completeness.json
+  Result: passed
+  Scope: See the full report.
+
+souls_restart_189_spawn_lifecycle.json
+  Result: passed
+  Scope: See the full report.
+
+souls_restart_189_version_validation.json
+  Result: passed
+  Scope: See the full report.
+
+COMPLETE OFFICIAL FILLS
+{
+  "adult": {
+    "seed": 75502037396837836795,
+    "starting_age": "adult",
+    "network_checks": 4036,
+    "goal_met": true,
+    "initial_network_checks": 31,
+    "initial_physical_checks": 29,
+    "initial_hyrule_field_reachable": true,
+    "child_spawn": "Hyrule Field Center Exit -> Lon Lon Ranch Entrance",
+    "adult_spawn": "ZD Shop Entry -> Zora Shop",
+    "changed_overworld_endpoints": 48,
+    "selected_individual_note_songs": [
+      "Bolero of Fire",
+      "Epona's Song",
+      "Minuet of Forest",
+      "Nocturne of Shadow",
+      "Prelude of Light",
+      "Requiem of Spirit",
+      "Saria's Song",
+      "Serenade of Water",
+      "Song of Storms",
+      "Song of Time",
+      "Sun's Song",
+      "Zelda's Lullaby"
+    ],
+    "song_item_placements": {
+      "Progressive Bolero of Fire": 8,
+      "Progressive Epona's Song": 6,
+      "Progressive Minuet of Forest": 6,
+      "Progressive Nocturne of Shadow": 7,
+      "Progressive Prelude of Light": 6,
+      "Progressive Requiem of Spirit": 6,
+      "Progressive Saria's Song": 6,
+      "Progressive Serenade of Water": 5,
+      "Progressive Song of Storms": 6,
+      "Progressive Song of Time": 6,
+      "Progressive Sun's Song": 6,
+      "Progressive Zelda's Lullaby": 6
+    },
+    "hint_kinds": {
+      "item": 57,
+      "barren": 4,
+      "woth": 4
+    },
+    "yaml_sha256": "30af887663cd55d0408176a9b5f23b3ee25eb0ff9098ea10ace0c749811128f5"
+  },
+  "child_subset": {
+    "seed": 18902,
+    "starting_age": "child",
+    "network_checks": 4036,
+    "goal_met": true,
+    "initial_network_checks": 45,
+    "initial_physical_checks": 43,
+    "initial_hyrule_field_reachable": true,
+    "child_spawn": "OGC Rainbow Bridge Exit -> Inside Ganon's Castle Entrance",
+    "adult_spawn": "MK Potion Shop Entry -> MK Potion Shop",
+    "changed_overworld_endpoints": 48,
+    "selected_individual_note_songs": [
+      "Bolero of Fire",
+      "Zelda's Lullaby"
+    ],
+    "song_item_placements": {
+      "Epona's Song": 1,
+      "Minuet of Forest": 1,
+      "Nocturne of Shadow": 1,
+      "Prelude of Light": 1,
+      "Progressive Bolero of Fire": 8,
+      "Progressive Zelda's Lullaby": 6,
+      "Requiem of Spirit": 1,
+      "Saria's Song": 1,
+      "Serenade of Water": 1,
+      "Song of Storms": 1,
+      "Song of Time": 1,
+      "Sun's Song": 1
+    },
+    "hint_kinds": {
+      "item": 57,
+      "woth": 4,
+      "barren": 4
+    },
+    "yaml_sha256": "d78021c866b02c8a8a4ed8cf1d222ec2fb2b1c6fce627c2d80993fad6d22ba67"
+  }
+}
+
+LIMITATIONS
+- The uploaded snapshot lacks the root CMake project, full native dependencies, and extracted ROM collision assets.
+- No complete Windows game build, live AP session, ImGui session, or in-game playthrough was performed.
+- Native fixtures compile production function bodies with explicit engine I/O and geometric shims; their reports define their exact scope.
+- The monotonic AP model conservatively retains ordinary progression gates for routes that could close when NPC Soul arrives remotely.
+- Two complete fills validate these configurations and seeds under the AP logic model, not every possible seed or physical route.
+- Previously generated server placements are unchanged by a client update; new options and corrected generation rules require a fresh seed.
+- Validation under previous_1.8.8 is historical provenance, distinct from current executed reports.

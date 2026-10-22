@@ -28,7 +28,7 @@ from worlds.soh_extreme._vendor_oot_soh.Regions import SohRegion
 class DestinationPolicyTests(unittest.TestCase):
     def test_every_catalog_endpoint_has_reviewed_normal_layers(self):
         Safety.validate_catalog(ER.CATALOG)
-        self.assertEqual(len(ER.CATALOG), 719)
+        self.assertEqual(len(ER.CATALOG), 721)
         self.assertEqual(set(Safety.POLICIES), set(ER.ENDPOINTS))
         for row in ER.CATALOG:
             with self.subTest(endpoint=row['id']):
@@ -42,11 +42,11 @@ class DestinationPolicyTests(unittest.TestCase):
         self.assertEqual((Safety.CHILD, Safety.ADULT, Safety.BOTH), (1, 2, 3))
         self.assertEqual({key: Safety.arrival_age_mask(key) for key in Safety.POLICIES
                           if Safety.arrival_age_mask(key) != Safety.BOTH},
-                         {832: Safety.CHILD, 1000: Safety.ADULT, 2060: Safety.CHILD})
+                         {781: Safety.ADULT, 832: Safety.CHILD, 1000: Safety.ADULT, 2060: Safety.CHILD})
         self.assertEqual({key: Safety.source_age_mask(key) for key in Safety.POLICIES
                           if Safety.source_age_mask(key) != Safety.BOTH},
                          {187: Safety.CHILD, 638: Safety.CHILD,
-                          642: Safety.ADULT, 1364: Safety.CHILD})
+                          642: Safety.ADULT, 781: Safety.ADULT, 1364: Safety.CHILD})
         for endpoint in (832, 1000, 2060):
             # Mixing can place either age inside the shared return scene.
             # Its original exterior approach does not constrain the return actor.
@@ -187,7 +187,7 @@ class DestinationAgeGraphTests(unittest.TestCase):
         self.mapping = {}
         # Disabled pools still contain physical identity returns. The validator
         # must discover these original source edges without a shuffled entry.
-        for endpoint in (832, 1000, 2060):
+        for endpoint in (781, 832, 1000, 2060):
             self.route(endpoint, endpoint, exposed=False)
 
     def region_for(self, endpoint, side):

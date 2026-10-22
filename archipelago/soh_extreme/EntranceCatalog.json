@@ -477,7 +477,7 @@
     "check_id": 11000234,
     "door": -1,
     "room": -1,
-    "name": "Hyrule Field River Exit -> Zora's River Lower Exit"
+    "name": "Hyrule Field Land Path -> Zora's River Land Path"
   },
   {
     "id": 252,
@@ -792,7 +792,7 @@
     "check_id": 11000385,
     "door": -1,
     "room": -1,
-    "name": "Zora's River Lower Exit -> Hyrule Field River Exit"
+    "name": "Zora's River Land Path -> Hyrule Field Land Path"
   },
   {
     "id": 389,
@@ -1003,6 +1003,23 @@
     "door": -1,
     "room": -1,
     "name": "Treasure Chest Game -> MK Treasure Chest Game Entry"
+  },
+  {
+    "id": 473,
+    "index": "ENTR_ZORAS_RIVER_3",
+    "category": "overworld",
+    "source": "HYRULE_FIELD",
+    "target": "ZR_FRONT",
+    "reverse": 785,
+    "primary": true,
+    "scene": 84,
+    "source_scene": 81,
+    "check_id": 11000473,
+    "door": -1,
+    "room": -1,
+    "name": "Hyrule Field Water Path -> Zora's River Water Path",
+    "gate": "swim",
+    "arrival_gate": "swim"
   },
   {
     "id": 477,
@@ -1861,6 +1878,23 @@
     "door": -1,
     "room": -1,
     "name": "GY Dampe's Hut Entry -> Dampe's Hut"
+  },
+  {
+    "id": 785,
+    "index": "ENTR_HYRULE_FIELD_14",
+    "category": "overworld",
+    "source": "ZR_FRONT",
+    "target": "HYRULE_FIELD",
+    "reverse": 473,
+    "primary": false,
+    "scene": 81,
+    "source_scene": 84,
+    "check_id": 11000785,
+    "door": -1,
+    "room": -1,
+    "name": "Zora's River Water Path -> Hyrule Field Water Path",
+    "gate": "swim",
+    "arrival_gate": "swim"
   },
   {
     "id": 789,

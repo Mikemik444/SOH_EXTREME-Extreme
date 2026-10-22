@@ -1,0 +1,548 @@
+// Production river routing, installation, arrival credit, and discovery bodies.
+// The Python runner extracts bodies unchanged and binds all source/dependency
+// bytes in its report. These explicit engine IO shims do not simulate geometry.
+#include <algorithm>
+#include <array>
+#include <cstdint>
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <set>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
+using u8 = uint8_t;
+using s8 = int8_t;
+using s16 = int16_t;
+using u16 = uint16_t;
+using s32 = int32_t;
+using u32 = uint32_t;
+enum SceneID {
+#define DEFINE_SCENE(segment, title, id, ...) id,
+#include "scene_table.h"
+#undef DEFINE_SCENE
+    SCENE_ID_MAX
+};
+#include "captured_scene_aliases.h"
+enum EntranceIndex {
+#define DEFINE_ENTRANCE(id, ...) id,
+#include "entrance_table.h"
+#undef DEFINE_ENTRANCE
+    ENTR_MAX
+};
+#define RANDO_ENUM_BEGIN(name) enum name {
+#define RANDO_ENUM_ITEM(name) name,
+#define RANDO_ENUM_END(name) };
+#include "soh/Enhancements/randomizer/randomizerEnums/RandomizerSettingKey.h"
+#include "soh/Enhancements/randomizer/randomizerEnums/RandomizerOptions.h"
+#undef RANDO_ENUM_BEGIN
+#undef RANDO_ENUM_ITEM
+#undef RANDO_ENUM_END
+#include "captured_engine_constants.h"
+#include "captured_native_constants.h"
+struct Vec3s { s16 x, y, z; };
+#include "captured_native_structs.h"
+EntranceInfo gEntranceTable[ENTR_MAX] = {
+#define DEFINE_ENTRANCE(id, scene, spawn, continueBgm, titleCard, startType, endType) \
+    {scene, spawn, ENTRANCE_INFO_FIELD(continueBgm, titleCard, endType, startType)},
+#include "entrance_table.h"
+#undef DEFINE_ENTRANCE
+};
+
+int assertionCount = 0;
+std::string currentCase;
+std::map<std::string, int> caseCounts;
+void Check(bool passed, const char* expression, int line) {
+    ++assertionCount;
+    if (!passed) {
+        std::cerr << currentCase << ':' << line << ": " << expression << '\n';
+        std::exit(1);
+    }
+}
+#define REQUIRE(expression) Check(static_cast<bool>(expression), #expression, __LINE__)
+void StartCase(const std::string& category, const std::string& detail = "") {
+    ++caseCounts[category];
+    currentCase = category + (detail.empty() ? "" : "/" + detail);
+}
+
+enum { GAMEMODE_NORMAL = 0, GAMEOVER_INACTIVE = 0 };
+struct PlayState {
+    int sceneNum = SCENE_HYRULE_FIELD;
+    struct { int state = GAMEOVER_INACTIVE; } gameOverCtx;
+} play, *gPlayState = &play;
+struct SaveContext {
+    int health = 48;
+    int gameMode = GAMEMODE_NORMAL;
+    int respawnFlag = 0;
+} gSaveContext;
+bool currentSaveIsAP = true;
+bool child = true;
+#define LINK_IS_CHILD child
+bool Archipelago_IsCurrentSaveFile() { return currentSaveIsAP; }
+int capturedPhysicalDepartures = 0;
+int nativeResolutionCalls = 0;
+std::set<u16> discovered;
+s16 lastEntrance = -1;
+std::array<int, RSK_MAX> optionValues{};
+std::array<EntranceOverride, ENTRANCE_OVERRIDES_MAX_COUNT> overrideRows{};
+u8 Randomizer_GetSettingValue(RandomizerSettingKey key) { return optionValues[key]; }
+EntranceOverride* Randomizer_GetEntranceOverrides() { return overrideRows.data(); }
+void Grotto_InitExitAndLoadLists() {}
+void Grotto_SetExitOverride(s16, s16) { throw std::runtime_error("Unexpected grotto exit in river fixture"); }
+void Grotto_SetLoadOverride(s16, s16) { throw std::runtime_error("Unexpected grotto entry in river fixture"); }
+void Entrance_SetEntranceDiscovered(u16 entrance, u8 reversed) {
+    REQUIRE(!reversed);
+    discovered.insert(entrance);
+}
+u8 Entrance_GetIsEntranceDiscovered(u16 entrance) { return discovered.contains(entrance); }
+void EntranceTracker_SetLastEntranceOverride(s16 entrance) { lastEntrance = entrance; }
+
+#include "soh/Network/Archipelago/EntranceRouting.h"
+#include "soh/Network/Archipelago/SceneTransitionChecks.h"
+namespace SohExtreme::EntranceRuntime {
+#include "captured_runtime_state.inc"
+bool dungeonReturnArrival = false;
+void CaptureSceneDeparture(bool physicalCrossing) {
+    REQUIRE(physicalCrossing);
+    ++capturedPhysicalDepartures;
+}
+#include "captured_runtime_methods.inc"
+}
+#include "captured_runtime_exports.inc"
+s16 Grotto_OverrideSpecialEntrance(s16 target) {
+    // All cases use native destinations. The full grotto handler's IO is
+    // irrelevant here, but its real resolved-arrival callback still executes.
+    REQUIRE(target >= 0 && target < ENTR_MAX);
+    ++nativeResolutionCalls;
+    return Archipelago_ResolvedEntranceArrival(target, target);
+}
+#include "captured_native_init.inc"
+#include "captured_native_override.inc"
+#include "captured_discovery.inc"
+
+#ifdef TEST_BASELINE
+namespace BaselineNative {
+void Entrance_SetEntranceDiscovered(u16 entrance, u8 reversed) {
+    ::Entrance_SetEntranceDiscovered(entrance, reversed);
+}
+// The argument type is global; a unique test symbol avoids C++ ADL finding
+// both copies of this C helper while retaining the baseline function body.
+#define Entrance_EntranceIsNull BaselineEntranceIsNull
+#include "captured_baseline_init.inc"
+#undef Entrance_EntranceIsNull
+#include "captured_baseline_override.inc"
+#include "captured_baseline_discovery.inc"
+}
+#endif
+
+using Settings = std::unordered_map<std::string, int>;
+using Routes = std::map<int, int>;
+namespace Runtime = SohExtreme::EntranceRuntime;
+constexpr int kLandIntoRiver = ENTR_ZORAS_RIVER_WEST_EXIT;
+constexpr int kLandIntoField = ENTR_HYRULE_FIELD_RIVER_EXIT;
+constexpr int kWaterIntoRiver = ENTR_ZORAS_RIVER_3;
+constexpr int kWaterIntoField = ENTR_HYRULE_FIELD_14;
+constexpr std::array<int, 4> kRiverSources = {kLandIntoRiver, kLandIntoField, kWaterIntoRiver, kWaterIntoField};
+constexpr std::array<int, 4> kDistinctTargets = {219, 343, 258, 279};
+constexpr std::array<int, 4> kExpectedSpawns = {0, 2, 3, 14};
+struct CatalogRow { int id, reverse, scene, sourceScene; int64_t check; };
+constexpr CatalogRow kCatalog[] = {
+#include "captured_catalog.inc"
+};
+
+Settings SettingsFor(const Routes& routes) {
+    Settings settings;
+    if (!routes.empty()) {
+        settings["EntranceRandomizerRevision"] = 1;
+        settings["EntranceDestinationPolicyRevision"] = SohExtreme::kEntranceDestinationPolicyRevision;
+        settings["ShuffleOverworldEntrances"] = 1;
+    }
+    for (const auto& [source, target] : routes) settings["EntranceMap." + std::to_string(source)] = target;
+    return settings;
+}
+
+void ResetCredit() {
+    Runtime::arrival = Runtime::crossingSource = Runtime::crossingTarget = Runtime::openedDoor = nullptr;
+    Runtime::lastArrivalSource = Runtime::lastArrivalTarget = nullptr;
+    Runtime::pendingArrival = {};
+    Runtime::suppressTransitionChecks = false;
+    Runtime::dungeonReturnArrival = false;
+    Runtime::doorJournal.Reset();
+    capturedPhysicalDepartures = nativeResolutionCalls = 0;
+    lastEntrance = -1;
+    discovered.clear();
+    gPlayState = &play;
+    play = {};
+    gSaveContext = {};
+}
+
+void InstallRows(const std::vector<int>& order = {}) {
+    overrideRows.fill({});
+    std::set<int> written;
+    size_t index = 0;
+    const auto add = [&](int source) {
+        if (!written.insert(source).second) return;
+        const int target = Runtime::routing.Routes().at(source);
+        const auto* a = SohExtreme::EntranceEndpointById(source);
+        const auto* b = SohExtreme::EntranceEndpointById(target);
+        REQUIRE(a && b && a->door < 0 && b->door < 0);
+        REQUIRE(index < overrideRows.size());
+        overrideRows[index++] = {0, static_cast<s16>(source), static_cast<s16>(a->reverse),
+                                static_cast<s16>(target), static_cast<s16>(b->reverse)};
+    };
+    for (int source : order) add(source);
+    for (const auto& [source, target] : Runtime::routing.Routes()) add(source);
+    Entrance_ResetEntranceTable();
+    Entrance_Init();
+}
+
+void Configure(const Routes& routes, bool ap = true, const std::vector<int>& order = {}) {
+    ResetCredit();
+    currentSaveIsAP = ap;
+    child = true;
+    Runtime::routing.Reset();
+    optionValues.fill(0);
+    optionValues[RSK_SHUFFLE_OVERWORLD_ENTRANCES] = !routes.empty();
+    std::string error;
+    REQUIRE(Runtime::routing.Configure(SettingsFor(routes), error));
+    REQUIRE(error.empty());
+    REQUIRE(Runtime::routing.Routes() == routes);
+    InstallRows(order);
+}
+
+Routes IdentityRiver() {
+    Routes result;
+    for (int source : kRiverSources) result[source] = source;
+    return result;
+}
+
+Routes DistinctRoutes(bool withWater = true) {
+    Routes result;
+    for (size_t i = 0; i < (withWater ? kRiverSources.size() : 2); ++i) {
+        const int source = kRiverSources[i];
+        const int target = kDistinctTargets[i];
+        const auto* a = SohExtreme::EntranceEndpointById(source);
+        const auto* b = SohExtreme::EntranceEndpointById(target);
+        REQUIRE(a && b);
+        result[source] = target;
+        result[b->reverse] = a->reverse;
+    }
+    return result;
+}
+
+void ExerciseCrossing(int source, int expectedTarget, bool expectCredit = true) {
+    ResetCredit();
+    const auto* a = SohExtreme::EntranceEndpointById(source);
+    const auto* b = SohExtreme::EntranceEndpointById(expectedTarget);
+    REQUIRE(a && b);
+    play.sceneNum = a->sourceScene;
+    REQUIRE(Entrance_GetOverride(source) == expectedTarget);
+    REQUIRE(Entrance_OverrideNextIndex(source) == expectedTarget);
+    REQUIRE(lastEntrance == source);
+    REQUIRE(discovered.size() == 1 && discovered.contains(source));
+    REQUIRE(nativeResolutionCalls == 1);
+    if (expectCredit) {
+        REQUIRE(Runtime::crossingSource == a);
+        REQUIRE(Runtime::crossingTarget == b);
+        REQUIRE(capturedPhysicalDepartures == 1);
+        REQUIRE(Runtime::pendingArrival.source == a);
+        REQUIRE(Runtime::pendingArrival.target == SohExtreme::EntranceDestinationById(expectedTarget));
+        REQUIRE(Runtime::pendingArrival.resolvedIndex == expectedTarget);
+        REQUIRE(!Runtime::pendingArrival.resolutionMismatch);
+    } else {
+        REQUIRE(Runtime::crossingSource == nullptr);
+        REQUIRE(capturedPhysicalDepartures == 0);
+    }
+    REQUIRE(Runtime::Complete(b->scene) == (expectCredit ? a->check : 0));
+    REQUIRE(Runtime::Complete(b->scene) == 0);
+}
+
+void VerifyCatalogAndNativeLayers() {
+    REQUIRE(kLandIntoRiver == 234 && kLandIntoField == 385 && kWaterIntoRiver == 473 && kWaterIntoField == 785);
+    REQUIRE(std::size(kCatalog) == 4);
+    for (size_t i = 0; i < kRiverSources.size(); ++i) {
+        const int source = kRiverSources[i];
+        StartCase("catalog_and_native_layers", std::to_string(source));
+        Configure(IdentityRiver());
+        const auto* row = SohExtreme::EntranceEndpointById(source);
+        const auto* policy = SohExtreme::EntranceDestinationById(source);
+        REQUIRE(row && policy);
+        REQUIRE(row->reverse == kRiverSources[i ^ 1]);
+        REQUIRE(row->scene == (i % 2 == 0 ? SCENE_ZORAS_RIVER : SCENE_HYRULE_FIELD));
+        REQUIRE(row->sourceScene == (i % 2 == 0 ? SCENE_HYRULE_FIELD : SCENE_ZORAS_RIVER));
+        REQUIRE(row->check == 11000000 + source);
+        REQUIRE(policy->nativeIndex == source && policy->kind == SohExtreme::kEntranceNative);
+        REQUIRE(policy->arrivalAgeMask == 3 && policy->sourceAgeMask == 3);
+        REQUIRE(Runtime::ArrivalTableMatches(policy));
+        const auto match = std::find_if(std::begin(kCatalog), std::end(kCatalog),
+                                       [source](const auto& item) { return item.id == source; });
+        REQUIRE(match != std::end(kCatalog));
+        REQUIRE(match->check == row->check && match->reverse == row->reverse &&
+                match->scene == row->scene && match->sourceScene == row->sourceScene);
+        const auto* physical = SohExtreme::FindSceneCrossing(row->sourceScene, source, 0, -1, -1);
+        REQUIRE(physical && physical->location == row->check);
+        for (int layer = 0; layer < 4; ++layer) {
+            REQUIRE(gEntranceTable[source + layer].scene == row->scene);
+            REQUIRE(gEntranceTable[source + layer].spawn == kExpectedSpawns[i]);
+            REQUIRE(policy->normalLayers[layer].scene == gEntranceTable[source + layer].scene);
+            REQUIRE(policy->normalLayers[layer].spawn == gEntranceTable[source + layer].spawn);
+        }
+        REQUIRE(std::string(row->name).find(i < 2 ? "Land" : "Water") != std::string::npos);
+    }
+}
+
+void VerifyIndependentRoutes() {
+    for (int age = 0; age < 2; ++age) {
+        for (size_t i = 0; i < kRiverSources.size(); ++i) {
+            const int source = kRiverSources[i], target = kDistinctTargets[i];
+            StartCase("independent_destination_and_coupled_return", std::to_string(source) + "/" + std::to_string(age));
+            Configure(DistinctRoutes());
+            child = age == 0;
+            REQUIRE(Runtime::routing.Contains(source));
+            REQUIRE(Runtime::routing.Destination(source) == target);
+            ExerciseCrossing(source, target);
+            const auto* a = SohExtreme::EntranceEndpointById(source);
+            const auto* b = SohExtreme::EntranceEndpointById(target);
+            REQUIRE(Runtime::routing.Destination(b->reverse) == a->reverse);
+            ExerciseCrossing(b->reverse, a->reverse);
+        }
+    }
+    for (int layer = 0; layer < 4; ++layer) {
+        for (size_t i = 0; i < kRiverSources.size(); ++i) {
+            const int source = kRiverSources[i];
+            StartCase("identity_keeps_physical_spawn", std::to_string(source) + "/" + std::to_string(layer));
+            Configure(IdentityRiver());
+            child = layer < 2;
+            ExerciseCrossing(source, source);
+            REQUIRE(gEntranceTable[source + layer].spawn == kExpectedSpawns[i]);
+        }
+    }
+}
+
+void VerifyOrdering() {
+    std::vector<int> order(kRiverSources.begin(), kRiverSources.end());
+    std::sort(order.begin(), order.end());
+    int permutations = 0;
+    do {
+        StartCase("explicit_water_wins_every_override_order", std::to_string(permutations));
+        Configure(DistinctRoutes(), true, order);
+        for (size_t i = 0; i < kRiverSources.size(); ++i) {
+            REQUIRE(Entrance_GetOverride(kRiverSources[i]) == kDistinctTargets[i]);
+            REQUIRE(Runtime::routing.Destination(kRiverSources[i]) == kDistinctTargets[i]);
+        }
+        ++permutations;
+    } while (std::next_permutation(order.begin(), order.end()));
+    REQUIRE(permutations == 24);
+}
+
+void VerifyLegacyCompatibility() {
+    const auto legacy = DistinctRoutes(false);
+    for (size_t i = 0; i < kRiverSources.size(); ++i) {
+        const int source = kRiverSources[i];
+        StartCase("legacy_land_map_retains_routes_and_raw_credit", std::to_string(source));
+        Configure(legacy);
+        const int target = kDistinctTargets[i % 2];
+        REQUIRE(Runtime::routing.Routes() == legacy);
+        REQUIRE(Runtime::routing.Contains(source));
+        REQUIRE(Runtime::routing.Destination(source) == target);
+        REQUIRE(!Runtime::routing.Routes().contains(kWaterIntoRiver));
+        REQUIRE(!Runtime::routing.Routes().contains(kWaterIntoField));
+        ExerciseCrossing(source, target);
+        REQUIRE(Runtime::routing.Routes() == legacy);
+    }
+    for (int water : {kWaterIntoRiver, kWaterIntoField}) {
+        StartCase("no_river_rows_keep_native_water", std::to_string(water));
+        Configure({{228, 228}, {405, 405}});
+        REQUIRE(!Runtime::routing.Contains(water));
+        REQUIRE(Runtime::routing.Destination(water) == water);
+        REQUIRE(Entrance_GetOverride(water) == water);
+        ExerciseCrossing(water, water, false);
+    }
+    for (size_t i = 2; i < 4; ++i) {
+        StartCase("one_explicit_water_overrides_only_its_legacy_alias", std::to_string(kRiverSources[i]));
+        auto routes = legacy;
+        const auto* water = SohExtreme::EntranceEndpointById(kRiverSources[i]);
+        const auto* target = SohExtreme::EntranceEndpointById(kDistinctTargets[i]);
+        routes[water->id] = target->id;
+        routes[target->reverse] = water->reverse;
+        Configure(routes);
+        REQUIRE(Runtime::routing.Destination(water->id) == target->id);
+        REQUIRE(Entrance_GetOverride(water->id) == target->id);
+        const int other = kRiverSources[i ^ 1];
+        const int otherTarget = kDistinctTargets[(i ^ 1) % 2];
+        REQUIRE(Runtime::routing.Destination(other) == otherTarget);
+        REQUIRE(Entrance_GetOverride(other) == otherTarget);
+        REQUIRE(Runtime::routing.Routes() == routes);
+    }
+    StartCase("water_only_map_does_not_alias_land");
+    Routes waterOnly;
+    for (size_t i = 2; i < 4; ++i) {
+        const auto* water = SohExtreme::EntranceEndpointById(kRiverSources[i]);
+        const auto* target = SohExtreme::EntranceEndpointById(kDistinctTargets[i]);
+        waterOnly[water->id] = target->id;
+        waterOnly[target->reverse] = water->reverse;
+    }
+    Configure(waterOnly);
+    REQUIRE(!Runtime::routing.Contains(kLandIntoRiver));
+    REQUIRE(!Runtime::routing.Contains(kLandIntoField));
+    REQUIRE(Entrance_GetOverride(kLandIntoRiver) == kLandIntoRiver);
+    REQUIRE(Entrance_GetOverride(kLandIntoField) == kLandIntoField);
+    ExerciseCrossing(kWaterIntoRiver, kDistinctTargets[2]);
+    ExerciseCrossing(kWaterIntoField, kDistinctTargets[3]);
+
+    StartCase("map_reinstallation_clears_previous_legacy_alias");
+    Configure(legacy);
+    REQUIRE(Entrance_GetOverride(kWaterIntoRiver) == kDistinctTargets[0]);
+    std::string error;
+    REQUIRE(Runtime::routing.Configure(SettingsFor(IdentityRiver()), error));
+    InstallRows();
+    REQUIRE(Entrance_GetOverride(kWaterIntoRiver) == kWaterIntoRiver);
+    REQUIRE(Entrance_GetOverride(kWaterIntoField) == kWaterIntoField);
+    REQUIRE(Runtime::routing.Configure({}, error));
+    InstallRows();
+    for (int source : kRiverSources) REQUIRE(Entrance_GetOverride(source) == source);
+
+    StartCase("decoupled_water_pair_rejected_atomically");
+    Configure(IdentityRiver());
+    auto broken = IdentityRiver();
+    broken[kWaterIntoField] = kLandIntoField;
+    REQUIRE(!Runtime::routing.Configure(SettingsFor(broken), error));
+    REQUIRE(Runtime::routing.Routes() == IdentityRiver());
+}
+
+void VerifyDiscoveryAndNativeMode() {
+    for (size_t i = 0; i < kRiverSources.size(); ++i) {
+        const int source = kRiverSources[i];
+        const int sibling = kRiverSources[i ^ 2];
+        StartCase("AP_discovery_is_physical_path_only", std::to_string(source));
+        Configure(IdentityRiver());
+        discovered.insert(source);
+        REQUIRE(IsEntranceDiscovered(source));
+        REQUIRE(!IsEntranceDiscovered(sibling));
+        REQUIRE(!IsEntranceDiscovered(kRiverSources[i ^ 1]));
+        std::string error;
+        REQUIRE(Runtime::routing.Configure({}, error));
+        REQUIRE(IsEntranceDiscovered(source));
+        REQUIRE(!IsEntranceDiscovered(sibling));
+
+        StartCase("native_discovery_retains_legacy_pair", std::to_string(source));
+        Configure(DistinctRoutes(false), false);
+        discovered.insert(source);
+        REQUIRE(IsEntranceDiscovered(source));
+        REQUIRE(IsEntranceDiscovered(sibling));
+        REQUIRE(!IsEntranceDiscovered(kRiverSources[i ^ 1]));
+    }
+    for (size_t i = 2; i < 4; ++i) {
+        StartCase("native_land_alias_routes_without_AP_credit", std::to_string(kRiverSources[i]));
+        Configure(DistinctRoutes(false), false);
+        ExerciseCrossing(kRiverSources[i], kDistinctTargets[i % 2], false);
+    }
+}
+
+void VerifyWirePolicy() {
+    for (int revision : {-1, 0, 1, 2}) {
+        StartCase("water_policy_revision_validates_atomically", std::to_string(revision));
+        Configure(IdentityRiver());
+        auto settings = SettingsFor(DistinctRoutes());
+        settings["EntranceRiverPathsRevision"] = revision;
+        std::string error;
+        REQUIRE(Runtime::routing.Configure(settings, error) == (revision == 1));
+        REQUIRE(Runtime::routing.Routes() == (revision == 1 ? DistinctRoutes() : IdentityRiver()));
+    }
+    for (int revision : {0, 1}) {
+        StartCase("legacy_map_requires_legacy_policy", std::to_string(revision));
+        Configure(IdentityRiver());
+        const auto legacy = DistinctRoutes(false);
+        auto settings = SettingsFor(legacy);
+        settings["EntranceRiverPathsRevision"] = revision;
+        std::string error;
+        REQUIRE(Runtime::routing.Configure(settings, error) == (revision == 0));
+        REQUIRE(Runtime::routing.Routes() == (revision == 0 ? legacy : IdentityRiver()));
+    }
+}
+
+void VerifyCreditGuards() {
+    for (int condition = 0; condition < 6; ++condition) {
+        StartCase("arrival_credit_guard", std::to_string(condition));
+        Configure(IdentityRiver());
+        const int source = kWaterIntoRiver;
+        if (condition == 0) Runtime::suppressTransitionChecks = true;
+        if (condition == 1) gSaveContext.health = 0;
+        if (condition == 2) gSaveContext.gameMode = 1;
+        if (condition == 3) play.gameOverCtx.state = 1;
+        if (condition == 4) gPlayState = nullptr;
+        if (condition == 5) currentSaveIsAP = false;
+        REQUIRE(Entrance_OverrideNextIndex(source) == source);
+        REQUIRE(Runtime::Complete(SCENE_ZORAS_RIVER) == 0);
+        REQUIRE(capturedPhysicalDepartures == 0);
+    }
+    StartCase("wrong_scene_never_credits_water_source");
+    Configure(IdentityRiver());
+    REQUIRE(Entrance_OverrideNextIndex(kWaterIntoRiver) == kWaterIntoRiver);
+    REQUIRE(Runtime::Complete(SCENE_HYRULE_FIELD) == 0);
+    REQUIRE(Runtime::lastArrivalSource == nullptr && Runtime::lastArrivalTarget == nullptr);
+    REQUIRE(Runtime::Complete(SCENE_ZORAS_RIVER) == 0);
+
+    StartCase("unmapped_unknown_native_source_has_no_AP_credit");
+    Configure(IdentityRiver());
+    REQUIRE(Entrance_OverrideNextIndex(ENTR_HYRULE_FIELD_14_1) == ENTR_HYRULE_FIELD_14_1);
+    REQUIRE(Runtime::Complete(SCENE_HYRULE_FIELD) == 0);
+}
+
+int VerifyBaseline() {
+    int reproductions = 0;
+#ifdef TEST_BASELINE
+    for (size_t i = 2; i < 4; ++i) {
+        const int water = kRiverSources[i], land = kRiverSources[i % 2];
+        StartCase("baseline_water_credit_collapses_to_land", std::to_string(water));
+        Configure(DistinctRoutes(false));
+        BaselineNative::Entrance_Init();
+        REQUIRE(BaselineNative::Entrance_OverrideNextIndex(water) == kDistinctTargets[i % 2]);
+        REQUIRE(lastEntrance == land);
+        REQUIRE(Runtime::crossingSource == SohExtreme::EntranceEndpointById(land));
+        REQUIRE(Runtime::Complete(SohExtreme::EntranceEndpointById(kDistinctTargets[i % 2])->scene) == 11000000 + land);
+        ++reproductions;
+
+        StartCase("baseline_explicit_water_erased_when_land_written_later", std::to_string(water));
+        Configure(DistinctRoutes(), true, {kWaterIntoRiver, kWaterIntoField, kLandIntoRiver, kLandIntoField});
+        BaselineNative::Entrance_Init();
+        REQUIRE(BaselineNative::Entrance_GetOverride(water) == kDistinctTargets[i % 2]);
+        REQUIRE(BaselineNative::Entrance_GetOverride(water) != Runtime::routing.Destination(water));
+        ++reproductions;
+
+        StartCase("baseline_AP_land_discovery_also_discovers_water", std::to_string(water));
+        Configure(IdentityRiver());
+        discovered.insert(land);
+        REQUIRE(BaselineNative::IsEntranceDiscovered(water));
+        REQUIRE(!IsEntranceDiscovered(water));
+        ++reproductions;
+    }
+#endif
+    return reproductions;
+}
+
+int main() {
+    VerifyCatalogAndNativeLayers();
+    VerifyIndependentRoutes();
+    VerifyOrdering();
+    VerifyLegacyCompatibility();
+    VerifyDiscoveryAndNativeMode();
+    VerifyWirePolicy();
+    VerifyCreditGuards();
+    const int baselineReproductions = VerifyBaseline();
+    int total = 0;
+    std::cout << "{\"cases\":{";
+    bool first = true;
+    for (const auto& [name, count] : caseCounts) {
+        if (!first) std::cout << ',';
+        first = false;
+        total += count;
+        std::cout << '\"' << name << "\":" << count;
+    }
+    std::cout << "},\"case_count\":" << total << ",\"assertion_count\":" << assertionCount
+              << ",\"baseline_reproductions\":" << baselineReproductions << "}\n";
+}

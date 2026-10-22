@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "cases": 983,
+  "assertions": 3143,
+  "valid_cells_exercised": 240,
+  "age_and_pickup_combinations": 4,
+  "legacy_invalid_indices_reproduced": 16,
+  "source_sha256": {
+    "src/code/z_en_item00.c": "d061da7d1fb52a997e46cb7d0b43b50e74e44365110939fbcd9e14b1ead82a23",
+    "soh/Enhancements/randomizer/BombchuRefillPolicy.h": "0688f79fb1071a8fe3ecb3d37b6e6f7332bf1eae7c27945736dc5aa63bb69fe8",
+    "src/code/code_800FD970.c": "bedcab59eaedee00345875a1ed5885dc39891ba33490e2d57a8fd3a5128b9389"
+  },
+  "test_sha256": {
+    "tools/tests/test_ammo_refill_drop_bounds_native.py": "a8de02e7fbdea1feab68bd4ffb63e554af128c94817d34c0ccee236ba39b8fa9",
+    "tools/tests/ammo_refill_drop_bounds_native_tests.cpp.in": "991293569d659ecfc251b884acf8e0acc13f3de853744e15d6478955765bf519",
+    "tools/tests/ammo_refill_drop_bounds_legacy.inc": "a1590a0ad0399be62faf648167e17f999e2121047c5a9a6a00ef1198490b10cf",
+    "tools/tests/test_soul_logic_native.py": "c3d6cf972babdd9b1c31b1ae8b93192f3ba8c5b593f2b9f73e0b14e823a4f785"
+  },
+  "source_unchanged_during_tests": true,
+  "table_entries": {
+    "sItemDropIds": 240,
+    "sDropQuantities": 244
+  },
+  "complete_rows_in_each_table": 15,
+  "quantity_trailing_bytes": 4,
+  "captured_function_sha256": {
+    "EnItem00_ConvertBombDropToBombchu": "76657a17dea1180c1274e9c53a2039d765f99bec86db5447f53aaaca6d3a5004",
+    "EnItem00_ConvertOrdinaryBombDrop": "e1dee860047c5154ca97300585343a84826622dfa5d29b159efa20a19d72d6cf",
+    "func_8001F404": "778a12463f2e72d123b27ca01c3a0892409c2fbff6b23c1c02d64cef77d912e9",
+    "Item_DropCollectibleRandom": "34abe6dfdd0d41f4ee97a3a148f3af70c4bdcc29e67e79332598fb0f027299f5"
+  },
+  "captured_table_sha256": {
+    "sItemDropIds": "00f7b98fe7384c8e3ed5612238f6574922a2f65f73f11b7f209334d69372b863",
+    "sDropQuantities": "9acdd77d8585e350516878c094d8f8998695826eb5bd1d2d1dbc529283cbf234"
+  },
+  "legacy_source_sha256": "59a11359b86626b15cd76349c3d3c0b48afe0e0621a03bf2d0ad58b65803a4b3",
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "native_game_build": false,
+  "in_game_playthrough": false,
+  "scope": "Actual complete Item_DropCollectibleRandom, native ID/quantity tables, ordinary drop and Bombchu conversion functions, Bombchu ownership policy and Rand_ZeroOne endpoint generation. All240 valid cells run through ordinary and direct-pickup repeat-enemy branches for both ages. Native inventory/options, geometry-free actor allocation and audiovisual IO are controlled. Legacy indices240..255 are demonstrated by executing the retained selector without unsafe reads.",
+  "elapsed_seconds": 1.305,
+  "replay_command": "python source/tools/tests/test_ammo_refill_drop_bounds_native.py --report tests/ammo_refill_drop_bounds_1812_native.json"
+}

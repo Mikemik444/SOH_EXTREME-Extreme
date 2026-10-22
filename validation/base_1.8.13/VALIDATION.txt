@@ -1,0 +1,156 @@
+SOH-EXTREME 1.8.13 - Validation record
+====================================
+
+CURRENT RESULT AND DELIVERY
+----------------------------
+All required current gates passed. The package contains 253 complete replacement
+source files, retains all 235 prior replacement paths, and has no missing files
+or unmanifested changes against the 25,035-file original upload. The source tree
+contains 25,167 files after this and the preceding work, excluding Python caches.
+The supplied YAML is unchanged from 1.8.12. The current APWorld is supplied both
+at the package root for installation and under archipelago; the finalizer
+requires both copies to be byte-identical to the tested source archive.
+
+Current manifest SHA-256:
+284f546e2ad9b81a61eb24f68087957103c45a2826cb0dbdce4e149ee71751d0
+Current soh_extreme.apworld SHA-256:
+d3b835ef12f3f6510c1cfa5392b632c7db486f3cae14f383900dc28a5c59b76c
+Immutable 1.8.12 baseline ZIP SHA-256:
+1ff721a78693bbd01f2f641767eda2126edc66a62fea0ce3b152efc72a6ae0da
+
+COURTYARD AND DAMPÉ LOGIC
+-------------------------
+Report: validation/transition_fixes_1813/courtyard_dampe_1813_ap.json
+8 tests passed with 542 evaluated reachability decisions. The suite builds
+ordinary generation, entrance-enabled generation and Universal Tracker graphs.
+It tests child/adult access, Crawl, both directed returns, the exact courtyard
+clock/phase boundaries, Flow of Time and playable Sun's Song requirements,
+adult-only hut entry with configured door keys, child escape from an existing
+hut arrival, shuffled source predicates and saved-map age safety.
+
+All 325 scene-transition IDs and their native physical metadata remain intact.
+Only the four courtyard AP region bindings and the two bypassing traversal
+overrides changed. Controlled ingress isolates the source sides; inventory
+collection, event sweeping, access rules and age validation are production code.
+The test does not perform a complete fill or simulate scene geometry.
+
+Specific compatibility result: the supplied historical map retains all 719
+connections unchanged, including 1190 -> 781 (GF Top of Lower Vines Near ->
+Dampé's hut). The source is child reachable. Current ER.connect rejects that
+exact map under the requested adult-only arrival policy. It needs a new seed;
+this result is specific to that tested map, not every existing save. The hut's
+reverse exit remains safe for a child already inside.
+
+NATIVE GUARDS, HUT DOOR AND ARRIVAL POLICY
+----------------------------------------
+Report: validation/transition_fixes_1813/courtyard_dampe_1813_native.json
+14,084 actor/door assertions and 19 compiled destination-policy assertions passed
+under AddressSanitizer and UndefinedBehaviorSanitizer. The fixture compiles the
+complete production EnHeishi1_Init, its actual selection/refresh helpers and
+complete EnDoor_SetupType, using captured actor layouts, tables and constants.
+
+Coverage includes all active/submitted courtyard-check masks, exact native clock
+boundaries, delayed authoritative manifests, no repeated authored rupee spawns,
+completion during a visit, existing alert/caught states, ordinary behavior,
+child/adult/non-AP hut behavior, every exterior hut variant, key-lock type
+changes, and the existing interior exit. Guard Update's early refresh placement
+is checked; its complete AI/rendering/collision loop is not simulated.
+
+The original full type-5 guard Init was separately compiled and its out-of-bounds
+read of the four-row animation table reproduced under UBSan. The fixed Init uses
+valid existing defaults without changing the stationary guard's type or path.
+Exact retained guard and door excerpts were verified against the historical
+archive members in the final run. Their metadata and SHA-256 values are supplied.
+
+WARP-SONG CHECKS
+----------------
+Report: validation/transition_fixes_1813/warp_song_1813_native.json
+995 cases and 7,166 assertions passed, with 12 baseline reproductions. Real native
+song departure functions, normal/skip/fallback/pause paths, native entrance
+lookup, AP routing record/completion, and client journal/reporting bodies are
+compiled with sanitizers. All six songs and both ages are covered, including
+same-scene, ordinary, redirected, mixed grotto and mixed room arrivals.
+
+The source song retains its check after routing. Inactive, cancelled, invalid,
+dead, changed-file/age/source/destination, repeated and non-song travel cannot
+create a new song check. Ordinary scene/grotto portals remain covered. Geometry,
+animation timing, network transport, and runtime arrival/history boundaries are
+explicit fixture I/O; the shared return suite covers the latter integration.
+
+SHARED ROOM-RETURN INTEGRATION
+------------------------------
+Report: validation/transition_fixes_1813/transition_fixes_1813_return_integration.json
+938 cases passed with ASan/UBSan. Coverage includes native entrance table setup,
+savewarp/game-over/respawn functions, grotto resolver flags, Player_Init landing,
+doorway history, same-scene and same-room doors, room preload/abort/completion,
+room death checkpoints, rejected wet arrivals, save-menu routing and map/file/
+age invalidation. This is a fresh current-source run because warp handling
+changes the shared scene-capture path. Full scene geometry/actor loading, file
+storage, sound and UI rendering remain isolated.
+
+TRACKER CACHE AND AMMO PROTOCOL
+-------------------------------
+Report: validation/transition_fixes_1813/transition_fixes_1813_tracker_protocol.json
+97 encoded protocol vectors and 19 encoder assertions passed.
+145 native cases / 335 assertions passed.
+49 Python handler cases / 108 assertions / 15 proof calls passed.
+
+Both native and Python cache keys now distinguish the exact courtyard opening
+and closing boundaries. The suite checks native snapshot acceptance, closed-UI
+worker servicing and Python proof reuse/invalidation around those boundaries.
+It exercises the real encoder/decoder and native/Python service bodies with
+explicit process/network/clock/storage/evaluation I/O. It does not rerun the
+entire ammo refill reachability graph; those 1.8.12 results remain historical.
+
+DESTINATION POLICY GENERATOR
+----------------------------
+Report: validation/transition_fixes_1813/courtyard_dampe_1813_destination_policy.json
+17 cases passed over 721 endpoint definitions and 2,884 normal age/time-layer facts.
+The production generator recreates the native policy include exactly. Mutation
+checks reject stale policy, unknown/debug/cutscene endpoints, inconsistent native
+positions/layers/aliases, invalid masks and duplicate entries. Hut arrival/source
+781 is adult-only; reverse exit 853 retains both ages. This test validates native
+table facts and generated policy; it does not execute ROM/renderer gameplay.
+
+OFFICIAL APWORLD LOAD AND VERSION PARITY
+----------------------------------------
+Reports: transition_fixes_1813_apworld_validation.json and
+transition_fixes_1813_version_validation.json under the current validation folder.
+The official Archipelago 0.6.8 loader imported the exact archive via zipimporter,
+with no loose source world installed during the probe. All 123 archive entries,
+122 package files, JSON resources and 721 entrance definitions were checked.
+No world-load failures occurred. Archive, loose AP manifests, native header and
+both tracker imports agree on 1.8.13. The temporary test runtime symlink/archive
+swap was restored. This archive check does not run item generation or fill.
+
+SOURCE BUILD PREFLIGHT
+----------------------
+Report: validation/transition_fixes_1813/transition_fixes_1813_source_build_validation.json
+The actual shipped PowerShell helper's source verification functions checked
+all 253 replacement files in a disposable checkout fixture and did not change
+them. The revision-4 helpers are byte-identical to 1.8.12 except the release
+label. This run used PowerShell 7.6.7 on Linux, with the Windows OS gate bypassed
+and equivalent Unix path helpers. It did not invoke MSBuild or compile the game.
+
+PACKAGE INTEGRITY AND REPLAY
+----------------------------
+The finalizer requires passed, current-source-bound reports, exact external
+input and native dependency hashes, verified historical excerpt provenance,
+current APWorld byte equality and matching manifest/source/staged bytes. The
+ZIP writer checks CRCs and every member byte after writing. Fresh reports and
+REPLAY_INPUTS.json identify the exact tested sources. REPLAY.txt documents the
+external runtimes and isolated fixtures needed to reproduce these checks.
+
+All earlier validation entries are retained byte for byte as historical evidence.
+They are not relabeled as new 1.8.13 test runs. The top-level prior README,
+VALIDATION and source manifest are retained under validation/base_1.8.12.
+
+LIMITS
+-------
+A full Windows game build, controller playthrough and complete new 1.8.13 item
+fill were not performed here. The focused AP tests
+validate real rules/topology with controlled ingress; native fixtures compile
+production bodies with explicit engine I/O boundaries. These results do not
+prove that an old seed's entire item placement remains beatable after its
+age/access rules change. Build the merged complete checkout with the supplied
+Windows helper and use both the current native build and matching APWorld.

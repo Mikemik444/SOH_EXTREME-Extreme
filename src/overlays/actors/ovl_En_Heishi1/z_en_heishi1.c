@@ -9,6 +9,7 @@
 #include "vt.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 #include "soh/Enhancements/savestate_serialize.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 #define FLAGS ACTOR_FLAG_UPDATE_CULLING_DISABLED
 
@@ -75,11 +76,92 @@ void EnHeishi1_Reset(void) {
     sPlayerIsCaught = false;
 }
 
+static bool EnHeishi1_HasPendingCourtyardTransition(void) {
+    if (!Archipelago_IsCurrentSaveFile() || LINK_IS_ADULT) {
+        return false;
+    }
+    // Keep the whole visit available until all active directed crossings are
+    // submitted, including the return to the drain after leaving Zelda's side.
+    static const int64_t locations[] = { 11000122LL, 11000662LL, 11001024LL, 11683197LL };
+    for (s32 i = 0; i < ARRAY_COUNT(locations); ++i) {
+        if (Archipelago_IsLocationActive(locations[i]) && !Archipelago_IsLocationSubmitted(locations[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static bool EnHeishi1_ShouldBeActive(EnHeishi1* this, bool preserveChecks) {
+    // Skip Child Zelda sets both quest flags immediately. Preserve pending AP
+    // crossings without changing the clock or the existing wonder-item hook.
+    bool metZelda = Flags_GetEventChkInf(EVENTCHKINF_OBTAINED_ZELDAS_LETTER) &&
+                    Flags_GetEventChkInf(EVENTCHKINF_LEARNED_ZELDAS_LULLABY);
+    if (preserveChecks) {
+        metZelda = false;
+    }
+    if (this->type != 5) {
+        return GameInteractor_Should(VB_WONDER_HEISHI_PATROLLING,
+                                     (gSaveContext.dayTime < 0xB888 || IS_DAY) &&
+                                         ((!IS_RANDO && !Flags_GetEventChkInf(EVENTCHKINF_ZELDA_FLED_HYRULE_CASTLE)) ||
+                                          (IS_RANDO && !metZelda)),
+                                     this);
+    }
+    return GameInteractor_Should(VB_WONDER_HEISHI_PATROLLING,
+                                 (gSaveContext.dayTime >= 0xB889) || !IS_DAY ||
+                                     (!IS_RANDO && Flags_GetEventChkInf(EVENTCHKINF_ZELDA_FLED_HYRULE_CASTLE)) ||
+                                     (IS_RANDO && metZelda),
+                                 this);
+}
+
+static void EnHeishi1_WaitForCourtyardAccess(EnHeishi1* this, PlayState* play) {
+    // Dormant AP variants stay allocated while the authoritative active-check
+    // manifest loads. Update returns before animation, movement or detection.
+}
+
+static void EnHeishi1_InitializeCourtyardAccess(EnHeishi1* this) {
+    if (EnHeishi1_ShouldBeActive(this, EnHeishi1_HasPendingCourtyardTransition())) {
+        this->actionFunc = this->type == 5 ? EnHeishi1_SetupWaitNight : EnHeishi1_SetupWalk;
+    } else if (Archipelago_IsCurrentSaveFile() && !LINK_IS_ADULT) {
+        // Save metadata can arrive before the active-check manifest. Keep the
+        // original patrol actor available for that later authoritative update.
+        this->actor.draw = NULL;
+        this->actionFunc = EnHeishi1_WaitForCourtyardAccess;
+    } else {
+        Actor_Kill(&this->actor);
+    }
+}
+
+static bool EnHeishi1_RefreshCourtyardAccess(EnHeishi1* this) {
+    bool dormant = this->actionFunc == EnHeishi1_WaitForCourtyardAccess;
+    bool stationary = this->type == 5 &&
+                      (this->actionFunc == EnHeishi1_SetupWaitNight || this->actionFunc == EnHeishi1_WaitNight);
+    if (!dormant && !stationary) {
+        return false; // Never reset a patrol or interrupt an alert/caught state.
+    }
+    if (EnHeishi1_HasPendingCourtyardTransition()) {
+        bool active = EnHeishi1_ShouldBeActive(this, true);
+        if (dormant && active) {
+            this->actor.draw = EnHeishi1_Draw;
+            this->actionFunc = this->type == 5 ? EnHeishi1_SetupWaitNight : EnHeishi1_SetupWalk;
+            return true;
+        }
+        if (stationary && !active) {
+            this->actor.draw = NULL;
+            this->actionFunc = EnHeishi1_WaitForCourtyardAccess;
+            return true;
+        }
+    }
+    // Completion does not close the path mid-visit. The next scene load selects
+    // the ordinary variants again if no active courtyard crossing is pending.
+    return dormant;
+}
+
 void EnHeishi1_Init(Actor* thisx, PlayState* play) {
     s32 pad;
     EnHeishi1* this = (EnHeishi1*)thisx;
     Vec3f rupeePos;
     s32 i;
+    s32 animType;
 
     Actor_SetScale(&this->actor, 0.01f);
     SkelAnime_Init(play, &this->skelAnime, &gEnHeishiSkel, &gEnHeishiIdleAnim, this->jointTable, this->morphTable, 17);
@@ -87,8 +169,11 @@ void EnHeishi1_Init(Actor* thisx, PlayState* play) {
     this->type = (this->actor.params >> 8) & 0xFF;
     this->path = this->actor.params & 0xFF;
 
+    // Stationary type 5 has no patrol table row. Keep its actor type while
+    // using valid animation defaults; the stationary actions set their own speed.
+    animType = this->type < ARRAY_COUNT(sAnimParamsInit) ? this->type : 0;
     for (i = 0; i < ARRAY_COUNT(sAnimParamsInit[0]); i++) {
-        this->animParams[i] = sAnimParamsInit[this->type][i];
+        this->animParams[i] = sAnimParamsInit[animType][i];
     }
 
     // "type"
@@ -122,33 +207,7 @@ void EnHeishi1_Init(Actor* thisx, PlayState* play) {
         }
     }
 
-    // eventChkInf[4] & 1 = Got Zelda's Letter
-    // eventChkInf[5] & 0x200 = Got item from impa
-    // eventChkInf[8] & 1 = Ocarina thrown in moat
-    bool metZelda = (Flags_GetEventChkInf(EVENTCHKINF_OBTAINED_ZELDAS_LETTER)) &&
-                    (Flags_GetEventChkInf(EVENTCHKINF_LEARNED_ZELDAS_LULLABY));
-
-    if (this->type != 5) {
-        if (GameInteractor_Should(VB_WONDER_HEISHI_PATROLLING,
-                                  (gSaveContext.dayTime < 0xB888 || IS_DAY) &&
-                                      ((!IS_RANDO && !Flags_GetEventChkInf(EVENTCHKINF_ZELDA_FLED_HYRULE_CASTLE)) ||
-                                       (IS_RANDO && !metZelda)),
-                                  this)) {
-            this->actionFunc = EnHeishi1_SetupWalk;
-        } else {
-            Actor_Kill(&this->actor);
-        }
-    } else {
-        if (GameInteractor_Should(VB_WONDER_HEISHI_PATROLLING,
-                                  (gSaveContext.dayTime >= 0xB889) || !IS_DAY ||
-                                      (!IS_RANDO && Flags_GetEventChkInf(EVENTCHKINF_ZELDA_FLED_HYRULE_CASTLE)) ||
-                                      (IS_RANDO && metZelda),
-                                  this)) {
-            this->actionFunc = EnHeishi1_SetupWaitNight;
-        } else {
-            Actor_Kill(&this->actor);
-        }
-    }
+    EnHeishi1_InitializeCourtyardAccess(this);
 }
 
 void EnHeishi1_Destroy(Actor* thisx, PlayState* play) {
@@ -411,6 +470,10 @@ void EnHeishi1_Update(Actor* thisx, PlayState* play) {
     Player* player = GET_PLAYER(play);
     s32 pad2;
     Camera* activeCam;
+
+    if (EnHeishi1_RefreshCourtyardAccess(this)) {
+        return;
+    }
 
     this->activeTimer++;
 

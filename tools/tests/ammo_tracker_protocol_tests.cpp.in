@@ -1,0 +1,223 @@
+#include <algorithm>
+#include <atomic>
+#include <cstdint>
+#include <cstdlib>
+#include <iostream>
+#include <map>
+#include <mutex>
+#include <set>
+#include <stdexcept>
+#include <string>
+#include <vector>
+#include "soh/Network/Archipelago/TrackerMirror.h"
+
+struct WireCase { const char* name; const char* payload; bool valid; uint32_t ammo, owned, refills; };
+static const WireCase payloads[] = {
+@PAYLOADS@
+};
+static int cases = 0, assertions = 0;
+static void Check(bool condition, const char* message) {
+    ++assertions;
+    if (!condition) { std::cerr << "FAIL: " << message << '\n'; std::exit(1); }
+}
+static std::string Payload(const std::string& name) {
+    for (const auto& item : payloads) if (item.name == name) return item.payload;
+    throw std::runtime_error("Missing test payload");
+}
+
+// Supplied native IO. Token formation and ammo ownership have their actual-body
+// tests in test_ammo_native.py; here the complete snapshot authority consumes IO.
+static double clockNow = 100;
+static double FinderMirrorClock() { return clockNow; }
+static uint32_t liveAmmo = 31, liveOwned = 31, liveFlags = 0;
+static uint64_t liveToken = 987;
+static uint32_t CaptureApAmmoOwnedMask() { return liveOwned; }
+static uint32_t CaptureApAmmoAvailableMask(uint32_t owned) { return liveAmmo & owned; }
+static uint32_t CaptureApAmmoRulesFlags() { return liveFlags; }
+static uint64_t CaptureApAmmoStateToken(uint64_t) { return liveToken; }
+static constexpr int LINK_AGE_CHILD = 1;
+struct TestSave { int nightFlag = 0, dayTime = 0x8000, rupees = 120, linkAge = LINK_AGE_CHILD; };
+static TestSave gSaveContext;
+#define CHECK_OWNED_EQUIP(...) true
+#define CVAR_ENHANCEMENT(name) name
+#define CVAR_REMOTE_ARCHIPELAGO(name) name
+#define SPDLOG_WARN(...) ((void)0)
+#define SPDLOG_INFO(...) ((void)0)
+static int CVarGetInteger(const char*, int value) { return value; }
+static const char* CVarGetString(const char*, const char* value) { return value; }
+static int AP_GetPlayerID() { return 1; }
+struct AP_Bounce { std::vector<std::string>* tags = nullptr; std::string data; };
+static std::vector<std::string> requests;
+static void AP_SendBounce(const AP_Bounce& bounce) { requests.push_back(bounce.data); }
+namespace SohExtreme {
+static std::string MakeTrackerWorkerBootstrap(const std::string&, const std::string&, const std::string&,
+                                              uint32_t, const std::string&) { return "test bootstrap"; }
+}
+struct TestWorker {
+    bool running = true;
+    bool IsRunning(std::string&) { return running; }
+    bool Start(const std::string&, const std::string&, std::string&) { running = true; return true; }
+    const char* RuntimePath() { return "isolated process IO"; }
+};
+class ArchipelagoClient {
+  public:
+    std::atomic<bool> enabled{true};
+    bool currentSaveIsArchipelago = true, saveIdentityMismatch = false, authenticated = true;
+    bool gameplay = true, wasAuthenticated = true, saveRuntimeSynchronized = true, activeLocationsLoaded = true;
+    bool finderWorkerStarted = true;
+    int finderWorkerAttempts = 0, resets = 0;
+    double finderWorkerNextPoll = 0, finderWorkerRetryAt = 0, finderNextRequest = 0;
+    std::string finderWorkerError, finderMirrorError, saveConnectionStatus;
+    std::string connectedServer = "test", connectedSlot = "test", connectedPassword;
+    std::string pendingFinderPayload, pendingFinderNonce;
+    uint64_t incomingItemOrdinal = 7, appliedItemCount = 7;
+    std::set<int64_t> activeLocations{100, 101}, reportedLocations{100};
+    uint32_t ammoRefillMask = 0;
+    uint64_t ammoRefillState = 0, ammoRefillReceived = 0;
+    uint64_t ammoSourceRevision = 1;
+    std::map<std::pair<int64_t, uint32_t>, uint32_t> ammoSourceFacts{{{9001, 1}, 321}};
+    double ammoRefillUntil = 0;
+    std::mutex queueMutex;
+    TestWorker finderWorker;
+    SohExtreme::TrackerMirrorState finderMirror;
+    bool IsAuthenticated() const { return authenticated; }
+    bool IsGameplaySessionActive() const { return gameplay; }
+    void ResetFinderMirror() {
+        ++resets; finderWorkerStarted = false;
+        finderMirror.Reset(std::string(32, 'a'));
+        ammoRefillMask = 0; ammoRefillState = ammoRefillReceived = 0; ammoRefillUntil = 0;
+        pendingFinderPayload.clear(); pendingFinderNonce.clear();
+    }
+    void ServiceFinderWorker();
+    std::string AmmoSourcesJson() const;
+    const SohExtreme::TrackerSnapshot* GetFinderSnapshot(std::string&);
+};
+@NATIVE_METHODS@
+
+static void Prepare(ArchipelagoClient& client, const char* payload = "live") {
+    clockNow = 100; liveAmmo = liveOwned = 31; liveFlags = 0; liveToken = 987;
+    gSaveContext = {}; requests.clear();
+    client.finderMirror.Reset(std::string(32, 'a'));
+    client.finderMirror.NextRequest();
+    client.pendingFinderNonce = std::string(32, 'a');
+    client.pendingFinderPayload = Payload(payload);
+    client.finderNextRequest = 1000;
+}
+
+int main() {
+    for (const auto& entry : {std::pair<uint32_t, uint32_t>{0x3555, 4}, {0x3556, 0},
+                              {0x4554, 0}, {0x4555, 9}, {0x4FFF, 9}, {0x5000, 8},
+                              {0x8000, 8}, {0xB888, 8}, {0xB889, 0}, {0xC000, 0},
+                              {0xC001, 2}, {0xD556, 2}, {0xD557, 6}, {0xDFFF, 6}, {0xE000, 4}}) {
+        ++cases;
+        Check(SohExtreme::TrackerClockWindow(entry.first) == entry.second,
+              "exact actor clock windows include courtyard close without changing other windows");
+    }
+    for (const auto& item : payloads) {
+        ++cases;
+        try {
+            const auto decoded = SohExtreme::DecodeTrackerSnapshot(item.payload);
+            Check(item.valid, item.name);
+            Check(decoded.liveAmmo == item.ammo, "Python/C++ available mask agreement");
+            Check(decoded.liveAmmoOwned == item.owned, "Python/C++ owned mask agreement");
+            Check(decoded.ammoRefills == item.refills, "Python/C++ refill mask agreement");
+        } catch (const std::invalid_argument&) { Check(!item.valid, item.name); }
+    }
+    {
+        ++cases; ArchipelagoClient client; Prepare(client);
+        // No Check Finder window or drawing function exists in this fixture.
+        client.ServiceFinderWorker();
+        Check(client.ammoRefillMask == 31, "closed-UI service consumes live refill proof");
+        Check(client.ammoRefillState == 987 && client.ammoRefillReceived == 7,
+              "permission bound to token and applied receipt count");
+        Check(client.ammoRefillUntil == 101, "short authority expiry installed");
+        clockNow = 100.6; client.ServiceFinderWorker();
+        Check(client.ammoRefillUntil == 101.6, "closed-UI worker remains active");
+        clockNow = 111; client.ServiceFinderWorker();
+        Check(client.ammoRefillMask == 0, "expired mirror cannot extend gameplay authority");
+    }
+    for (const char* name : {"legacy", "time_only", "clock_only", "manual", "ignored", "wrong_owned",
+                            "wrong_rupees", "wrong_flags", "wrong_token", "wrong_received", "wrong_checked",
+                            "wrong_nonce", "wrong_slot", "bad_mask", "zero_token"}) {
+        ++cases; ArchipelagoClient client; Prepare(client, name);
+        client.ammoRefillMask = 31; client.ammoRefillUntil = 1000;
+        client.ServiceFinderWorker();
+        Check(client.ammoRefillMask == 0 && client.ammoRefillUntil == 0,
+              "non-authoritative snapshot clears previous refill permission");
+    }
+    for (const auto& pair : {std::pair<const char*, unsigned>{"partial", 5}, {"none", 0}, {"future_release", 31}}) {
+        ++cases; ArchipelagoClient client; Prepare(client, pair.first); client.ServiceFinderWorker();
+        Check(client.ammoRefillMask == pair.second, "ammo permission independent per bit and release label");
+    }
+    {
+        ++cases; ArchipelagoClient client; Prepare(client); client.appliedItemCount = 6;
+        client.ServiceFinderWorker(); Check(client.ammoRefillMask == 0, "pending AP receipt prevents authority");
+    }
+    for (int reason = 0; reason < 5; ++reason) {
+        ++cases; ArchipelagoClient client; Prepare(client); client.ServiceFinderWorker();
+        if (reason == 0) client.enabled = false;
+        if (reason == 1) client.currentSaveIsArchipelago = false;
+        if (reason == 2) client.saveIdentityMismatch = true;
+        if (reason == 3) client.authenticated = false;
+        if (reason == 4) client.gameplay = false;
+        client.ServiceFinderWorker();
+        Check(client.resets == 1 && client.ammoRefillMask == 0, "save/auth/file-select reset removes authority");
+    }
+    for (int reason = 0; reason < 3; ++reason) {
+        ++cases; ArchipelagoClient client; Prepare(client);
+        if (reason == 0) client.wasAuthenticated = false;
+        if (reason == 1) client.saveRuntimeSynchronized = false;
+        if (reason == 2) client.activeLocationsLoaded = false;
+        client.ServiceFinderWorker();
+        Check(client.ammoRefillMask == 0, "worker waits for active synchronized save");
+    }
+    {
+        ++cases; ArchipelagoClient client; Prepare(client); client.finderNextRequest = 0;
+        client.ServiceFinderWorker(); Check(requests.size() == 1, "closed-UI service issues request");
+        for (const char* part : {"\"ammo_protocol\":1", "\"live_ammo\":31", "\"live_ammo_owned\":31",
+                                  "\"live_rupees\":120", "\"live_ammo_flags\":0", "\"live_ammo_state\":987",
+                                  "\"live_age\":1", "\"ammo_sources\":[[9001,321]]"})
+            Check(requests[0].find(part) != std::string::npos, "native request carries exact live fields");
+    }
+    {
+        ++cases; SohExtreme::TrackerMirrorState mirror; mirror.Reset(std::string(32, 'a')); mirror.NextRequest();
+        auto snapshot = SohExtreme::DecodeTrackerSnapshot(Payload("live")); std::string status;
+        Check(mirror.Accept(snapshot, 1, 100, status), "live mirror accepted");
+        Check(!mirror.Accept(snapshot, 1, 100.1, status), "replayed revision rejected");
+        Check(mirror.Current(1, 7, {100,101}, {100}, 100, status, 3, 0, 0x8000, 0, 31, 987) != nullptr,
+              "matching live snapshot usable");
+        Check(mirror.Current(1, 7, {100,101}, {100}, 100, status, 3, 0, 0x8000, 0, 15, 987) == nullptr,
+              "changed availability rejected");
+        Check(mirror.Current(1, 7, {100,101}, {100}, 100, status, 3, 0, 0x8000, 0, 31, 988) == nullptr,
+              "changed inventory/source token rejected");
+    }
+    {
+        ++cases; SohExtreme::TrackerMirrorState mirror; mirror.Reset(std::string(32, 'a')); mirror.NextRequest();
+        auto snapshot = SohExtreme::DecodeTrackerSnapshot(Payload("live")); std::string status;
+        Check(mirror.Accept(snapshot, 1, 100, status), "courtyard-open snapshot accepted");
+        Check(mirror.Current(1, 7, {100,101}, {100}, 100, status, 3, 0, 0xB888, 0, 31, 987) != nullptr,
+              "ordinary time motion before courtyard closes reuses snapshot");
+        Check(mirror.Current(1, 7, {100,101}, {100}, 100, status, 3, 0, 0xB889, 0, 31, 987) == nullptr,
+              "courtyard closing invalidates snapshot before normal nighttime");
+    }
+    {
+        ++cases; SohExtreme::TrackerMirrorState mirror; mirror.Reset(std::string(32, 'a')); mirror.NextRequest();
+        auto snapshot = SohExtreme::DecodeTrackerSnapshot(Payload("live")); std::string status;
+        snapshot.liveClock = 0xB889;
+        Check(mirror.Accept(snapshot, 1, 100, status), "courtyard-closed snapshot accepted");
+        Check(mirror.Current(1, 7, {100,101}, {100}, 100, status, 3, 0, 0xB88A, 0, 31, 987) != nullptr,
+              "ordinary late-day motion reuses closed-window snapshot");
+        Check(mirror.Current(1, 7, {100,101}, {100}, 100, status, 3, 0, 0xB888, 0, 31, 987) == nullptr,
+              "returning to courtyard-open window invalidates closed snapshot");
+    }
+    {
+        ++cases; ArchipelagoClient client; Prepare(client); client.ServiceFinderWorker();
+        Check(client.ammoRefillMask == 31, "initial refill proof available before courtyard close");
+        clockNow += 0.6; gSaveContext.dayTime = 0xB888; client.ServiceFinderWorker();
+        Check(client.ammoRefillMask == 31, "last open tick retains valid proof");
+        clockNow += 0.6; gSaveContext.dayTime = 0xB889; client.ServiceFinderWorker();
+        Check(client.ammoRefillMask == 0 && client.ammoRefillUntil == 0,
+              "next closed-UI worker poll clears stale permission at courtyard boundary");
+    }
+    std::cout << "{\"cases\":" << cases << ",\"assertions\":" << assertions << "}" << '\n';
+}

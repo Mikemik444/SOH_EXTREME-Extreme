@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/FarisTheAncient/Archipelago",
+  "branch": "tracker",
+  "commit": "32f0d6d63d3e6a61687a88dbe5e554c00ab589d9",
+  "commit_time": "2026-10-11T04:45:18Z",
+  "files": {
+    "TrackerClient.py": {
+      "url": "https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/worlds/tracker/TrackerClient.py",
+      "sha256": "bd781024429ab58357dfbe595e02abebffbe7e25522c64fc9b3b4828d5d53ec4",
+      "size_bytes": 116506
+    },
+    "TrackerCore.py": {
+      "url": "https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/worlds/tracker/TrackerCore.py",
+      "sha256": "9d6cb8ffc73d972281a7d8ff23a7571e46a0f8a39d874989901820fa9d60851d",
+      "size_bytes": 33582
+    },
+    "docs/re-gen-passthrough.md": {
+      "url": "https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/worlds/tracker/docs/re-gen-passthrough.md",
+      "sha256": "e14e9b983e96bb3178bdcde2d090d31706dd74dda1c5046ef456c9b551856d02",
+      "size_bytes": 4265
+    },
+    "__init__.py": {
+      "url": "https://raw.githubusercontent.com/FarisTheAncient/Archipelago/32f0d6d63d3e6a61687a88dbe5e554c00ab589d9/worlds/tracker/__init__.py",
+      "sha256": "fc86b699247d26e2fab6bd7085487ca44160c930203150cc87f48e87c15021db",
+      "size_bytes": 13163
+    }
+  }
+}

@@ -69,6 +69,7 @@ class Logic {
     bool CanRecoilHoverFromObject(TorchRecoilRequirements req);
     bool Water3FCentralToHighEmblem();
     bool WaterRisingTargetTo3FCentral();
+    bool WaterTempleDoorsShuffled();
     bool WaterLevel(RandoWaterLevel level);
     uint8_t BottleCount();
     uint8_t OcarinaButtons();

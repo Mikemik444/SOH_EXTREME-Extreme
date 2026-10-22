@@ -1,0 +1,205 @@
+#include "courtyard_dampe_native_io.h"
+#include "captured_guard_data.inc"
+#include "captured_guard_helpers.inc"
+#include "captured_guard_init.inc"
+#include "captured_dampe_door.inc"
+#include "courtyard_dampe_legacy_guard.inc"
+#include "courtyard_dampe_legacy_full_guard_init.inc"
+#include "courtyard_dampe_legacy_door.inc"
+
+static void Reset(void) {
+    gAdult = false; gRando = true; gCurrentSave = true; gKnown = true;
+    gObjectLoaded = true; gSwitch = false; gLegacyWindowOverride = false;
+    gActive = 15; gSubmitted = 0; gSpawns = 0; gDistance = 0;
+    gSaveContext.dayTime = 0x8000; gSaveContext.nightFlag = false;
+    memset(gEventFlags, 0, sizeof(gEventFlags));
+    gEventFlags[EVENTCHKINF_OBTAINED_ZELDAS_LETTER] = true;
+    gEventFlags[EVENTCHKINF_LEARNED_ZELDAS_LULLABY] = true;
+}
+static EnHeishi1 Guard(s16 type, s16 path) {
+    EnHeishi1 guard = {0};
+    guard.actor.params = (type << 8) | path;
+    guard.actor.draw = EnHeishi1_Draw;
+    guard.type = type;
+    return guard;
+}
+static bool Dormant(const EnHeishi1* guard) {
+    return !guard->actor.killed && guard->actor.draw == NULL &&
+           guard->actionFunc == EnHeishi1_WaitForCourtyardAccess;
+}
+static void TestOriginalDefect(void) {
+    Reset();
+    EnHeishi1 originalPatrol = Guard(0, 0), originalBlocker = Guard(5, 0);
+    Baseline_InitializeCourtyardAccess(&originalPatrol);
+    Baseline_InitializeCourtyardAccess(&originalBlocker);
+    CHECK(originalPatrol.actor.killed);
+    CHECK(originalBlocker.actionFunc == EnHeishi1_SetupWaitNight);
+    EnHeishi1 patrol = Guard(0, 0), blocker = Guard(5, 0);
+    PlayState play = {0};
+    EnHeishi1_Init(&patrol.actor, &play);
+    EnHeishi1_Init(&blocker.actor, &play);
+    CHECK(patrol.actionFunc == EnHeishi1_SetupWalk && !patrol.actor.killed);
+    CHECK(Dormant(&blocker));
+    CHECK(blocker.type == 5);
+    for (unsigned i = 0; i < ARRAY_COUNT(blocker.animParams); ++i)
+        CHECK(blocker.animParams[i] == sAnimParamsInit[0][i]);
+}
+static void TestPendingMasksAndBoundaries(void) {
+    const uint16_t clocks[] = {0, 0x4554, 0x4555, 0x8000, 0xB888, 0xB889, 0xC000, 0xC001, 0xD000, 0xE000};
+    PlayState play = {0};
+    for (unsigned active = 0; active < 16; ++active) {
+        for (unsigned submitted = 0; submitted < 16; ++submitted) {
+            Reset(); gActive = active; gSubmitted = submitted;
+            bool pending = (active & ~submitted) != 0;
+            CHECK(EnHeishi1_HasPendingCourtyardTransition() == pending);
+            for (unsigned c = 0; c < ARRAY_COUNT(clocks); ++c) {
+                gSaveContext.dayTime = clocks[c];
+                gSaveContext.nightFlag = clocks[c] < 0x4555 || clocks[c] > 0xC000;
+                bool blockerExpected = !pending || !IS_DAY || clocks[c] >= 0xB889;
+                EnHeishi1 blocker = Guard(5, 0), patrol = Guard(0, 0);
+                EnHeishi1_Init(&blocker.actor, &play);
+                EnHeishi1_Init(&patrol.actor, &play);
+                CHECK((blocker.actionFunc == EnHeishi1_SetupWaitNight) == blockerExpected);
+                CHECK(!blocker.actor.killed && !patrol.actor.killed);
+                CHECK(Dormant(&blocker) == !blockerExpected);
+                if (!pending) CHECK(Dormant(&patrol));
+            }
+        }
+    }
+    // Native wonder-window preservation still takes precedence, even at night.
+    Reset(); gActive = 0; gLegacyWindowOverride = true;
+    gSaveContext.dayTime = 0xD000; gSaveContext.nightFlag = true;
+    EnHeishi1 blocker = Guard(5, 0), patrol = Guard(0, 0);
+    EnHeishi1_Init(&blocker.actor, &play); EnHeishi1_Init(&patrol.actor, &play);
+    CHECK(Dormant(&blocker)); CHECK(patrol.actionFunc == EnHeishi1_SetupWalk);
+}
+static void TestLateManifestAndNoReinit(void) {
+    PlayState play = {0};
+    for (unsigned pendingBit = 1; pendingBit <= 8; pendingBit <<= 1) {
+        Reset(); gKnown = false; gActive = pendingBit;
+        EnHeishi1 patrol = Guard(0, 3), blocker = Guard(5, 0);
+        EnHeishi1_Init(&patrol.actor, &play); EnHeishi1_Init(&blocker.actor, &play);
+        CHECK(Dormant(&patrol)); CHECK(blocker.actionFunc == EnHeishi1_SetupWaitNight);
+        CHECK(gSpawns == 8); // Full actor Init spawns its authored rupees once.
+        for (unsigned i = 0; i < 3; ++i) {
+            CHECK(EnHeishi1_RefreshCourtyardAccess(&patrol));
+            CHECK(!EnHeishi1_RefreshCourtyardAccess(&blocker));
+            CHECK(Dormant(&patrol)); CHECK(blocker.actor.draw == EnHeishi1_Draw);
+        }
+        gKnown = true;
+        CHECK(EnHeishi1_RefreshCourtyardAccess(&patrol));
+        CHECK(EnHeishi1_RefreshCourtyardAccess(&blocker));
+        CHECK(patrol.actionFunc == EnHeishi1_SetupWalk && patrol.actor.draw == EnHeishi1_Draw);
+        CHECK(Dormant(&blocker)); CHECK(gSpawns == 8);
+        // Completing the final return check cannot create a new blocker in-place.
+        gSubmitted = pendingBit;
+        CHECK(!EnHeishi1_RefreshCourtyardAccess(&patrol));
+        CHECK(EnHeishi1_RefreshCourtyardAccess(&blocker));
+        CHECK(patrol.actionFunc == EnHeishi1_SetupWalk && Dormant(&blocker));
+        EnHeishi1 nextBlocker = Guard(5, 0), nextPatrol = Guard(0, 0);
+        EnHeishi1_Init(&nextBlocker.actor, &play); EnHeishi1_Init(&nextPatrol.actor, &play);
+        CHECK(nextBlocker.actionFunc == EnHeishi1_SetupWaitNight); CHECK(Dormant(&nextPatrol));
+    }
+    // An authoritative empty manifest does not open a previously closed path.
+    Reset(); gKnown = false; gActive = 0;
+    EnHeishi1 emptyPatrol = Guard(0, 0), emptyBlocker = Guard(5, 0);
+    EnHeishi1_Init(&emptyPatrol.actor, &play); EnHeishi1_Init(&emptyBlocker.actor, &play);
+    gKnown = true;
+    CHECK(EnHeishi1_RefreshCourtyardAccess(&emptyPatrol));
+    CHECK(!EnHeishi1_RefreshCourtyardAccess(&emptyBlocker));
+    CHECK(Dormant(&emptyPatrol)); CHECK(emptyBlocker.actionFunc == EnHeishi1_SetupWaitNight);
+    // Pending IDs received at the actual late-day boundary do not bypass night guards.
+    for (unsigned c = 0; c < 2; ++c) {
+        Reset(); gKnown = false;
+        gSaveContext.dayTime = c ? 0xD000 : 0xB889; gSaveContext.nightFlag = c != 0;
+        EnHeishi1 night = Guard(5, 0);
+        EnHeishi1_Init(&night.actor, &play); gKnown = true;
+        CHECK(!EnHeishi1_RefreshCourtyardAccess(&night));
+        CHECK(night.actionFunc == EnHeishi1_SetupWaitNight && night.actor.draw == EnHeishi1_Draw);
+    }
+    Reset();
+    // An alert already underway must finish using ordinary AI.
+    EnHeishi1 caught = Guard(5, 0), walking = Guard(0, 0);
+    caught.actionFunc = EnHeishi1_SetupKick; walking.actionFunc = EnHeishi1_Walk;
+    CHECK(!EnHeishi1_RefreshCourtyardAccess(&caught));
+    CHECK(!EnHeishi1_RefreshCourtyardAccess(&walking));
+    CHECK(caught.actionFunc == EnHeishi1_SetupKick && walking.actionFunc == EnHeishi1_Walk);
+}
+static void TestOrdinaryGuardParity(void) {
+    PlayState play = {0};
+    const uint16_t clocks[] = {0, 0x4555, 0x8000, 0xB888, 0xB889, 0xC001, 0xD000};
+    for (unsigned ap = 0; ap < 2; ++ap) for (unsigned adult = 0; adult < 2; ++adult) {
+        if (ap && !adult) continue; // The intentionally changed AP child case.
+        for (unsigned rando = 0; rando < 2; ++rando) for (unsigned met = 0; met < 2; ++met) {
+            for (unsigned c = 0; c < ARRAY_COUNT(clocks); ++c) for (unsigned kind = 0; kind < 2; ++kind) {
+                Reset(); gCurrentSave = ap; gAdult = adult; gRando = rando;
+                gSaveContext.dayTime = clocks[c]; gSaveContext.nightFlag = clocks[c] < 0x4555 || clocks[c] > 0xC000;
+                gEventFlags[EVENTCHKINF_OBTAINED_ZELDAS_LETTER] = met;
+                gEventFlags[EVENTCHKINF_LEARNED_ZELDAS_LULLABY] = met;
+                gEventFlags[EVENTCHKINF_ZELDA_FLED_HYRULE_CASTLE] = met;
+                EnHeishi1 fixed = Guard(kind ? 5 : 0, 0), original = fixed;
+                EnHeishi1_Init(&fixed.actor, &play); Baseline_InitializeCourtyardAccess(&original);
+                CHECK(fixed.actor.killed == original.actor.killed);
+                CHECK(fixed.actionFunc == original.actionFunc);
+            }
+        }
+    }
+}
+static EnDoor Door(s16 params) {
+    EnDoor door = {0}; door.actor.params = params;
+    door.actor.flags = ACTOR_FLAG_UPDATE_CULLING_DISABLED;
+    door.requiredObjBankIndex = 2; return door;
+}
+static void TestDampeDoor(void) {
+    const s16 params[] = {645, 447, 774};
+    const uint16_t clocks[] = {0, 0x8000, 0xC000, 0xC001, 0xD000, 0xDFFF, 0xE000};
+    for (unsigned adult = 0; adult < 2; ++adult) for (unsigned ap = 0; ap < 2; ++ap) {
+        for (unsigned scene = 0; scene < 3; ++scene) for (unsigned variant = 0; variant < 3; ++variant) {
+            for (unsigned c = 0; c < ARRAY_COUNT(clocks); ++c) for (unsigned key = 0; key < 2; ++key) {
+                for (unsigned locked = 0; locked < 2; ++locked) {
+                    Reset(); gAdult = adult; gCurrentSave = ap; gSwitch = key; gSaveContext.dayTime = clocks[c];
+                    PlayState play = { .sceneNum = scene == 0 ? SCENE_GRAVEYARD :
+                                                  scene == 1 ? SCENE_GRAVEKEEPERS_HUT : SCENE_KAKARIKO_VILLAGE };
+                    s16 p = locked ? (params[variant] & ~0x380) | (DOOR_LOCKED << 7) : params[variant];
+                    EnDoor fixed = Door(p), original = fixed;
+                    EnDoor_SetupType(&fixed, &play); Baseline_EnDoor_SetupType(&original, &play);
+                    if (ap && !adult && scene == 0) {
+                        CHECK(((fixed.actor.params >> 7) & 7) == DOOR_CHECKABLE);
+                        CHECK(fixed.actionFunc == EnDoor_WaitForCheck);
+                        CHECK(fixed.actor.textId == 0x0205 && fixed.lockTimer == 0);
+                    } else {
+                        CHECK(fixed.actor.params == original.actor.params);
+                        CHECK(fixed.actor.flags == original.actor.flags);
+                        CHECK(fixed.actor.textId == original.actor.textId);
+                        CHECK(fixed.actionFunc == original.actionFunc);
+                        CHECK(fixed.lockTimer == original.lockTimer);
+                    }
+                }
+            }
+        }
+    }
+    Reset(); PlayState play = { .sceneNum = SCENE_GRAVEYARD };
+    EnDoor original = Door(774), fixed = original;
+    gSaveContext.dayTime = 0xD000;
+    Baseline_EnDoor_SetupType(&original, &play); EnDoor_SetupType(&fixed, &play);
+    CHECK(original.actionFunc == EnDoor_Idle);
+    CHECK(fixed.actionFunc == EnDoor_WaitForCheck);
+    // A neighboring door with a different placement identity retains native behavior.
+    original = Door((3 << 10) | (DOOR_SCENEEXIT << 7)); fixed = original;
+    Baseline_EnDoor_SetupType(&original, &play); EnDoor_SetupType(&fixed, &play);
+    CHECK(original.actor.params == fixed.actor.params && original.actionFunc == fixed.actionFunc);
+    // Deferred object loading cannot apply the door setup early.
+    gObjectLoaded = false; fixed = Door(447); EnDoor_SetupType(&fixed, &play);
+    CHECK(fixed.actor.params == 447 && fixed.actionFunc == NULL);
+}
+int main(int argc, char** argv) {
+    if (argc > 1 && strcmp(argv[1], "baseline-type5-oob") == 0) {
+        Reset(); PlayState play = {0}; EnHeishi1 guard = Guard(5, 0);
+        Baseline_EnHeishi1_Init(&guard.actor, &play);
+        return 0; // UBSan must stop the original index-5 read before this point.
+    }
+    TestOriginalDefect(); TestPendingMasksAndBoundaries(); TestLateManifestAndNoReinit();
+    TestOrdinaryGuardParity(); TestDampeDoor();
+    printf("{\"status\":\"passed\",\"assertions\":%u}\n", gChecks);
+    return 0;
+}

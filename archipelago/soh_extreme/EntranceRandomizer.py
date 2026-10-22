@@ -1,7 +1,8 @@
 """Authoritative, coupled physical entrance shuffle shared by AP and UT.
 
-Predicates belong to source endpoints. Destinations never carry the old source's
-access requirements. One-way routes add exactly one directed edge.
+Traversal predicates belong to source endpoints. A routed arrival adds its own
+physical hazards, never the old source's requirements. Crossing checks retain
+source-only credit. One-way routes add exactly one directed edge.
 """
 from collections import defaultdict
 from importlib.resources import files
@@ -24,6 +25,10 @@ REVISION = 1
 # Revision 1 partitions unmixed room doors by their physical dungeon scene.
 # Keep topology revision separate so earlier saved maps can still be restored.
 POOL_POLICY_REVISION = 1
+RIVER_PATH_REVISION = 1
+# These are four physical crossings. Earlier seeds stored only the land pair.
+# The aliases below are for restoring those saved destinations, never new pools.
+RIVER_WATER_ALIASES = {473: 234, 785: 385}
 CATALOG = tuple(json.loads(files(__package__).joinpath('EntranceCatalog.json').read_text()))
 Safety.validate_catalog(CATALOG)
 ENDPOINTS = {e['id']: e for e in CATALOG}
@@ -38,6 +43,16 @@ KEY_DOORS = {3: ('FOREST_TEMPLE', 5), 4: ('FIRE_TEMPLE', 8), 5: ('WATER_TEMPLE',
              6: ('SPIRIT_TEMPLE', 5), 7: ('SHADOW_TEMPLE', 5), 8: ('BOTTOM_OF_THE_WELL', 3),
              11: ('TRAINING_GROUND', 9), 13: ('GANONS_CASTLE', 2)}
 DUNGEON_ROUTES = json.loads(files(__package__).joinpath('DungeonLocationRoutes.json').read_text())
+# Reviewed main-water-body arrivals: the lower doors are dry at Low, and the
+# middle doors are dry at Low or Mid. Otherwise the landing is submerged.
+# Usable Iron Boots include Swim and the actual age requirement. Upper ledges
+# and separate basement puzzle ledges must not inherit a scene-wide water gate.
+WATER_ARRIVAL_LEVELS = {
+    8860: 'WL_LOW', 8861: 'WL_LOW',
+    8878: 'WL_LOW', 8879: 'WL_LOW',
+    8862: 'WL_LOW_OR_MID', 8863: 'WL_LOW_OR_MID',
+    8866: 'WL_LOW_OR_MID', 8867: 'WL_LOW_OR_MID',
+}
 CATEGORIES = {
     'overworld': 'shuffle_overworld_entrances',
     'interiors': 'shuffle_interior_entrances',
@@ -99,6 +114,29 @@ def _pool_policy_revision(world):
     if world.using_ut:
         return world.passthrough.get('entrance_randomizer', {}).get('pool_policy_revision', 0)
     return POOL_POLICY_REVISION
+
+
+def _river_path_revision(world):
+    if not world.using_ut:
+        return RIVER_PATH_REVISION
+    saved = world.passthrough.get('entrance_randomizer', {})
+    revision = saved.get('river_path_revision')
+    if revision is None:
+        # Permit maps assembled by older tools that already carry explicit
+        # water IDs; truly old server maps have neither water endpoint.
+        connections = saved.get('connections', {})
+        revision = int(any(str(endpoint) in connections or endpoint in connections
+                           for endpoint in RIVER_WATER_ALIASES)
+                       or any(target in RIVER_WATER_ALIASES for target in connections.values()))
+    if type(revision) is not int or revision not in (0, RIVER_PATH_REVISION):
+        raise OptionError("Unsupported Zora's River entrance policy")
+    return revision
+
+
+def _routed_destination(world, mapping, source):
+    if source not in mapping and source in RIVER_WATER_ALIASES and _river_path_revision(world) == 0:
+        return mapping.get(RIVER_WATER_ALIASES[source], source)
+    return mapping.get(source, source)
 
 
 def restore_legacy_defaults(world):
@@ -253,11 +291,36 @@ def _source_rule(world, row):
     return combined
 
 
+def _arrival_rule(world, row):
+    if row.get('arrival_gate') == 'swim':
+        # A dry source can be paired with a water landing. Its crossing check
+        # still uses the dry source rule, but entering the destination needs Swim.
+        rule = H.can_swim((Regions[row['target']], world)).resolve(world)
+    else:
+        level = WATER_ARRIVAL_LEVELS.get(row['id'])
+        if level is None:
+            return None
+        rule = world._extreme_room_compiler.expr(
+            f'WaterLevel({level}) || CanUse(RG_IRON_BOOTS)', row['target']).resolve(world)
+    world.register_rule_dependencies(rule)
+    return rule
+
+
+def _routed_rule(source_rule, arrival_rule):
+    if arrival_rule is None:
+        return source_rule
+    def combined(state):
+        return source_rule(state) and arrival_rule(state)
+    combined._er_dependencies = (*getattr(source_rule, '_er_dependencies', ()), arrival_rule)
+    return combined
+
+
 def _eligible(world):
     cats = enabled_categories(world)
     result = []
     for e in CATALOG:
         if e['category'] not in cats: continue
+        if e['id'] in RIVER_WATER_ALIASES and _river_path_revision(world) == 0: continue
         if e['category'] == 'dungeon_doors' and e['reverse'] < 0:
             # A physically unopenable reverse stays unopenable. Forward-only
             # dungeon shutters join the directed pool when one-ways is enabled.
@@ -310,7 +373,8 @@ def _one_way_targets(world, source, *, legacy_dungeon_pools=False):
         targets = [e for e in CATALOG if e['category'] in mixed & enabled_categories(world) and e['primary']]
     else:
         targets = [e for e in CATALOG if e['category'] in ('overworld', 'owls', 'warp_songs')]
-    return [e for e in targets if Safety.allowed_route(source['id'], e['id'])]
+    return [e for e in targets if Safety.allowed_route(source['id'], e['id'])
+            and not (e['id'] in RIVER_WATER_ALIASES and _river_path_revision(world) == 0)]
 
 
 def _candidate(world):
@@ -573,7 +637,12 @@ def connect(world):
     # Include blue warps: defeating a shuffled boss must lead back through its
     # paired route, including a boss chamber reached from a house or room door.
     blue = [e for e in CATALOG if e['category'] == 'blue_warps']
-    sources = rows + blue
+    # Old maps share their land destinations with the omitted water crossings.
+    # Materialize both physical sources for their own Swim/check rules while
+    # keeping the saved map and its coupled land returns unchanged.
+    legacy_water = ([ENDPOINTS[endpoint] for endpoint in RIVER_WATER_ALIASES]
+                    if _river_path_revision(world) == 0 and 'overworld' in enabled_categories(world) else [])
+    sources = rows + blue + legacy_water
     rules = {e['id']: _source_rule(world, e) for e in sources}
     checks = {l.address: l for l in world.get_locations() if l.address is not None}
     for row in sources:
@@ -599,6 +668,9 @@ def connect(world):
             world._register_rule_indirects(dependency, edge)
         edge.connect(target)
         edges[row['id']] = edge
+    arrival_rules = {row['id']: _arrival_rule(world, row) for row in CATALOG
+                     if row['id'] in WATER_ARRIVAL_LEVELS or row.get('arrival_gate')}
+    routed_rules = {}
     def apply(mapping):
         routes = dict(mapping)
         for warp in blue:
@@ -613,12 +685,25 @@ def connect(world):
                               and boss and e['source_scene'] == boss['source_scene']), None)
                 if entry and entry['id'] in mapping: routes[warp['id']] = mapping[entry['id']]
         for id, edge in edges.items():
+            destination = _routed_destination(world, routes, id)
             edge.connected_region.entrances.remove(edge)
-            edge.connect(world.get_region(region_name(ENDPOINTS[routes.get(id, id)]['target'])))
+            edge.connect(world.get_region(region_name(ENDPOINTS[destination]['target'])))
+            key = (id, destination)
+            if key not in routed_rules:
+                # Always compose from the immutable physical source predicate.
+                # Candidate remaps must not retain a previous landing's gate.
+                rule = _routed_rule(rules[id], arrival_rules.get(destination))
+                for dependency in getattr(rule, '_er_dependencies', ()):
+                    world._register_rule_indirects(dependency, edge)
+                routed_rules[key] = rule
+            edge.access_rule = routed_rules[key]
         world.multiworld._all_state_cache = None
         world._er_mapping = routes
+        display_routes = dict(routes)
+        display_routes.update({row['id']: _routed_destination(world, routes, row['id'])
+                               for row in legacy_water})
         world._er_labels = {ENDPOINTS[k]["check_id"]: shuffled_check_label(ENDPOINTS[k], ENDPOINTS[v])
-                            for k, v in routes.items() if ENDPOINTS[k]["check_id"]}
+                            for k, v in display_routes.items() if ENDPOINTS[k]["check_id"]}
     if world.using_ut:
         saved = world.passthrough.get('entrance_randomizer', {})
         if saved.get('revision') != REVISION: raise OptionError('Unsupported entrance mapping revision')
@@ -721,6 +806,7 @@ def connect(world):
 def slot_data(world):
     return {'revision': REVISION, 'destination_policy_revision': Safety.POLICY_REVISION,
             'pool_policy_revision': _pool_policy_revision(world),
+            'river_path_revision': _river_path_revision(world),
             'effective_mixed_categories': sorted(mixed_categories(world)),
             'dungeon_door_mixed_outside': int(dungeon_doors_mix_outside(world)),
             'disabled_actions': getattr(world, '_er_disabled_actions', []),
@@ -732,6 +818,7 @@ def native_settings(world):
     result = {'EntranceRandomizerRevision': REVISION if cats else 0,
               'EntranceDestinationPolicyRevision': Safety.POLICY_REVISION if cats else 0,
               'EntrancePoolPolicyRevision': _pool_policy_revision(world) if cats else 0,
+              'EntranceRiverPathsRevision': _river_path_revision(world) if cats else 0,
               'EntranceMixedPoolMask': sum(MIXED_CATEGORY_BITS[category] for category in mixed),
               'DungeonDoorMixedOutside': int(dungeon_doors_mix_outside(world)),
               'DecoupleEntrances': 0,
