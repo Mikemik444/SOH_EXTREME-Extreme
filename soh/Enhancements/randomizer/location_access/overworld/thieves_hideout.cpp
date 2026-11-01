@@ -96,22 +96,22 @@ void RegionTable_Init_ThievesHideout() {
         //Exits
         ENTRANCE(RR_GF_NEAR_GROTTO,  true),
         ENTRANCE(RR_GF_ABOVE_GTG,    true),
-        ENTRANCE(RR_TH_KITCHEN_MAIN, logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_TH_KITCHEN_MAIN, (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
     });
 
     areaTable[RR_TH_KITCHEN_MAIN] = Region("Thieves Hideout Kitchen Main", SCENE_THIEVES_HIDEOUT, {}, {
         //Locations
-        LOCATION(RC_TH_KITCHEN_POT_1,        logic->CanBreakPots() && logic->CanPassEnemy(RE_GERUDO_GUARD)),
-        LOCATION(RC_TH_KITCHEN_POT_2,        logic->CanBreakPots() && logic->CanPassEnemy(RE_GERUDO_GUARD)),
-        LOCATION(RC_TH_KITCHEN_CRATE,        logic->CanBreakCrates() && logic->CanPassEnemy(RE_GERUDO_GUARD)),
-        LOCATION(RC_TH_KITCHEN_SUN_FAIRY,    logic->CanPassEnemy(RE_GERUDO_GUARD) && logic->CanUse(RG_SUNS_SONG)),
+        LOCATION(RC_TH_KITCHEN_POT_1,        logic->CanBreakPots() && (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
+        LOCATION(RC_TH_KITCHEN_POT_2,        logic->CanBreakPots() && (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
+        LOCATION(RC_TH_KITCHEN_CRATE,        logic->CanBreakCrates() && (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
+        LOCATION(RC_TH_KITCHEN_SUN_FAIRY,    (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT))) && logic->CanUse(RG_SUNS_SONG)),
         LOCATION(RC_TH_WONDER_KITCHEN_SKULL, logic->CanUse(RG_FAIRY_BOW)),
-        LOCATION(RC_TH_WONDER_KITCHEN_SOUP,  (logic->TakeDamage() || logic->IsAdult || logic->CanUse(RG_GORON_TUNIC)) && logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        LOCATION(RC_TH_WONDER_KITCHEN_SOUP,  (logic->TakeDamage() || logic->IsAdult || logic->CanUse(RG_GORON_TUNIC)) && (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
     }, {
         //Exits
-        ENTRANCE(RR_TH_KITCHEN_CORRIDOR,          logic->CanPassEnemy(RE_GERUDO_GUARD)),
-        ENTRANCE(RR_TH_KITCHEN_BY_CORRIDOR,       logic->CanPassEnemy(RE_GERUDO_GUARD)),
-        ENTRANCE(RR_TH_KITCHEN_OPPOSITE_CORRIDOR, logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_TH_KITCHEN_CORRIDOR,          (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
+        ENTRANCE(RR_TH_KITCHEN_BY_CORRIDOR,       (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
+        ENTRANCE(RR_TH_KITCHEN_OPPOSITE_CORRIDOR, (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
     });
 
     areaTable[RR_TH_KITCHEN_BY_CORRIDOR] = Region("Thieves Hideout Kitchen Top By Corridor", SCENE_THIEVES_HIDEOUT, {}, {
@@ -123,8 +123,8 @@ void RegionTable_Init_ThievesHideout() {
     }, {
         //Exits
         ENTRANCE(RR_TH_KITCHEN_MAIN,              true),
-        //hookshot to cross using rafters implied by logic->CanPassEnemy(RE_GERUDO_GUARD)
-        ENTRANCE(RR_TH_KITCHEN_OPPOSITE_CORRIDOR, logic->CanPassEnemy(RE_GERUDO_GUARD) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()),
+        //hookshot to cross using rafters implied by (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))
+        ENTRANCE(RR_TH_KITCHEN_OPPOSITE_CORRIDOR, (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT))) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()),
         ENTRANCE(RR_GF_TOP_OF_LOWER_VINES,        true),
     });
 
@@ -136,27 +136,27 @@ void RegionTable_Init_ThievesHideout() {
     }, {
         //Exits
         ENTRANCE(RR_TH_KITCHEN_MAIN,        true),
-        //hookshot to cross using rafters implied by logic->CanPassEnemy(RE_GERUDO_GUARD)
-        ENTRANCE(RR_TH_KITCHEN_BY_CORRIDOR, logic->CanPassEnemy(RE_GERUDO_GUARD) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()),
+        //hookshot to cross using rafters implied by (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))
+        ENTRANCE(RR_TH_KITCHEN_BY_CORRIDOR, (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT))) || logic->CanUse(RG_HOVER_BOOTS) || logic->BunnyHood()),
         ENTRANCE(RR_GF_NEAR_GS,             true),
     });
 
     areaTable[RR_TH_BREAK_ROOM] = Region("Thieves Hideout Break Room", SCENE_THIEVES_HIDEOUT, {}, {
         //Locations
         LOCATION(RC_TH_BREAK_ROOM_FRONT_POT,      (logic->CanPassEnemy(RE_BREAK_ROOM_GUARD) && logic->CanBreakPots()) ||
-                                                  (logic->CanPassEnemy(RE_GERUDO_GUARD) && logic->CanUse(RG_BOOMERANG))),
+                                                  ((logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT))) && logic->CanUse(RG_BOOMERANG))),
         LOCATION(RC_TH_BREAK_ROOM_BACK_POT,       (logic->CanPassEnemy(RE_BREAK_ROOM_GUARD) && logic->CanBreakPots()) ||
-                                                  (logic->CanPassEnemy(RE_GERUDO_GUARD) && logic->CanUse(RG_BOOMERANG))),
+                                                  ((logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT))) && logic->CanUse(RG_BOOMERANG))),
         LOCATION(RC_TH_BREAK_HALLWAY_OUTER_CRATE, logic->CanBreakCrates()),
         LOCATION(RC_TH_BREAK_HALLWAY_INNER_CRATE, logic->CanBreakCrates()),
         LOCATION(RC_TH_BREAK_ROOM_RIGHT_CRATE,    (logic->CanPassEnemy(RE_BREAK_ROOM_GUARD) && logic->CanBreakCrates()) || 
-                                                   (logic->CanPassEnemy(RE_GERUDO_GUARD) && logic->HasExplosives() && logic->CanUse(RG_BOOMERANG))),
+                                                   ((logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT))) && logic->HasExplosives() && logic->CanUse(RG_BOOMERANG))),
         LOCATION(RC_TH_BREAK_ROOM_LEFT_CRATE,     (logic->CanPassEnemy(RE_BREAK_ROOM_GUARD) && logic->CanBreakCrates()) || 
-                                                   (logic->CanPassEnemy(RE_GERUDO_GUARD) && logic->HasExplosives() && logic->CanUse(RG_BOOMERANG))),
+                                                   ((logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT))) && logic->HasExplosives() && logic->CanUse(RG_BOOMERANG))),
     }, {
         //Exits
-        ENTRANCE(RR_GF_BELOW_CHEST,               logic->CanPassEnemy(RE_GERUDO_GUARD)),
-        ENTRANCE(RR_TH_BREAK_ROOM_LOWER_CORRIDOR, logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_GF_BELOW_CHEST,               (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
+        ENTRANCE(RR_TH_BREAK_ROOM_LOWER_CORRIDOR, (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
     });
 
     areaTable[RR_TH_BREAK_ROOM_LOWER_CORRIDOR] = Region("Thieves Hideout Break Room Lower Corridor", SCENE_THIEVES_HIDEOUT, {}, {
@@ -164,7 +164,7 @@ void RegionTable_Init_ThievesHideout() {
         LOCATION(RC_TH_WONDER_BREAK_ROOM_BOTTOM_SKULL, logic->CanUse(RG_FAIRY_BOW)),
     }, {
     //Exits
-        ENTRANCE(RR_TH_BREAK_ROOM,                logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_TH_BREAK_ROOM,                (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
         ENTRANCE(RR_TH_BREAK_ROOM_UPPER_CORRIDOR, logic->CanUse(RG_HOOKSHOT)),
     });
 

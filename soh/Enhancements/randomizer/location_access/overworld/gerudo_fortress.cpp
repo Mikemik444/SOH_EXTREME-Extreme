@@ -9,8 +9,8 @@ void RegionTable_Init_GerudoFortress() {
 
     areaTable[RR_GF_OUTSKIRTS] = Region("Gerudo Fortress Outskirts", SCENE_GERUDOS_FORTRESS, {}, {
         //Locations
-        LOCATION(RC_GF_OUTSKIRTS_NE_CRATE,   (logic->CanPassEnemy(RE_GERUDO_GUARD)) && logic->CanBreakCrates()),
-        LOCATION(RC_GF_OUTSKIRTS_NW_CRATE,   (logic->CanPassEnemy(RE_GERUDO_GUARD)) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_OUTSKIRTS_NE_CRATE,   ((logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))) && logic->CanBreakCrates()),
+        LOCATION(RC_GF_OUTSKIRTS_NW_CRATE,   ((logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))) && logic->CanBreakCrates()),
         LOCATION(RC_GF_EAST_EXIT_ARROW_SIGN, logic->CanRead()),
         LOCATION(RC_GF_WONDER_ENTRANCE_SIGN, logic->CanUse(RG_HOOKSHOT)),
     }, {
@@ -18,8 +18,8 @@ void RegionTable_Init_GerudoFortress() {
         ENTRANCE(RR_GV_FORTRESS_SIDE, true),
         ENTRANCE(RR_TH_1_TORCH_CELL,  true),
         ENTRANCE(RR_GF_OUTSIDE_GATE,  logic->Get(LOGIC_GF_GATE_OPEN)),
-        ENTRANCE(RR_GF_NEAR_GROTTO,   logic->CanPassEnemy(RE_GERUDO_GUARD)),
-        ENTRANCE(RR_GF_OUTSIDE_GTG,   logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_GF_NEAR_GROTTO,   (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
+        ENTRANCE(RR_GF_OUTSIDE_GTG,   (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
         ENTRANCE(RR_GF_TOWER,         (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD)) && logic->CanClimbHighLadder()),
         //You can talk to the guards to get yourself thrown in jail, so long as you have a hookshot to actually end up there
         ENTRANCE(RR_GF_JAIL_WINDOW,   logic->CanUse(RG_HOOKSHOT)),
@@ -39,7 +39,7 @@ void RegionTable_Init_GerudoFortress() {
         //Jail
         ENTRANCE(RR_GF_OUTSKIRTS,          true),
         ENTRANCE(RR_GF_JAIL_WINDOW,        logic->CanUse(RG_HOOKSHOT)),
-        ENTRANCE(RR_GF_OUTSIDE_GTG,        logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_GF_OUTSIDE_GTG,        (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
         ENTRANCE(RR_GF_TOP_OF_UPPER_VINES, logic->CanUse(RG_LONGSHOT)),
         ENTRANCE(RR_GF_STORMS_GROTTO,      logic->IsAdult && logic->CanOpenStormsGrotto()),
     });
@@ -56,9 +56,9 @@ void RegionTable_Init_GerudoFortress() {
         //Jail
         ENTRANCE(RR_GF_JAIL_WINDOW,        logic->CanUse(RG_HOOKSHOT)),
         ENTRANCE(RR_GF_OUTSKIRTS,          true),
-        ENTRANCE(RR_GF_NEAR_GROTTO,        logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_GF_NEAR_GROTTO,        (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
         // RANDTODO: Add tricks for getting past the gerudo guarding the hba range
-        ENTRANCE(RR_GF_ABOVE_GTG,          logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_GF_ABOVE_GTG,          (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
         ENTRANCE(RR_GF_TOP_OF_UPPER_VINES, logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanUse(RG_LONGSHOT)),
         // Keep this gate even when NPC Soul has not spawned the guard yet.
         ENTRANCE(RR_GF_HBA_RANGE,          logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD)),
@@ -87,7 +87,7 @@ void RegionTable_Init_GerudoFortress() {
         ENTRANCE(RR_GF_JAIL_WINDOW,           logic->CanUse(RG_HOOKSHOT)),
         ENTRANCE(RR_GF_OUTSKIRTS,             true),
         ENTRANCE(RR_GF_NEAR_GROTTO,           true),
-        ENTRANCE(RR_GF_OUTSIDE_GTG,           logic->CanPassEnemy(RE_GERUDO_GUARD)),
+        ENTRANCE(RR_GF_OUTSIDE_GTG,           (logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))),
         // need to explicitly convert it into a bool
         ENTRANCE(RR_GF_BOTTOM_OF_LOWER_VINES, ctx->GetTrickOption(RT_UNINTUITIVE_JUMPS).Get() != 0 ),
     });
@@ -210,7 +210,7 @@ void RegionTable_Init_GerudoFortress() {
         //there's a trick to reach RR_GF_LONG_ROOF
         ENTRANCE(RR_GF_OUTSKIRTS,           	  true),
         ENTRANCE(RR_GF_NEAR_CHEST,          	  logic->CanUse(RG_LONGSHOT)),
-        ENTRANCE(RR_GF_BELOW_CHEST,         	  logic->TakeDamage()),
+        ENTRANCE(RR_GF_BELOW_CHEST,         	  logic->CanUse(RG_BOTTLE_WITH_FAIRY) || logic->CanUse(RG_NAYRUS_LOVE) || logic->EffectiveHealth() > 16),
         ENTRANCE(RR_GF_JAIL_WINDOW,         	  logic->CanUse(RG_HOOKSHOT)),
         ENTRANCE(RR_TH_BREAK_ROOM_UPPER_CORRIDOR, true),
         ENTRANCE(RR_GF_TOWER,               	  ctx->GetTrickOption(RT_GF_ADULT_SKIP_WASTELAND_GATE) && logic->IsAdult && logic->CanUse(RG_HOVER_BOOTS) && logic->CanJumpslash() && logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD)),

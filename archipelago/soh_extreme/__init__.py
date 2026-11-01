@@ -50,7 +50,7 @@ from .PhysicalChestTypes import CHEST_TYPES_BY_AP_ID
 from .EnemyDropLocations import ENEMY_DROP_LOCATIONS, ENEMY_DROP_LOCATION_NAME_TO_ID, ENEMY_UNUSED_OBJECT_IDS
 from .NativeRegionMap import FORK_NATIVE_REGIONS
 from .SpeechLocations import SPEECH_LOCATIONS, SPEECH_LOCATION_NAME_TO_ID
-from . import NpcSpeech, SceneTransitions, EntranceRandomizer
+from . import NpcSpeech, SceneTransitions, EntranceRandomizer, EntranceSpoiler
 from .CheckDescriptions import CHECK_NAME_ALIASES, canonical_location_name, normalize_location_options
 from .NativeLogic import (
     NATIVE_REGION_EDGES, NATIVE_CUSTOM_ENTRANCES, NATIVE_CUSTOM_LOCATIONS,
@@ -1050,11 +1050,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         if loc.family == "rock": return bool(o.shuffle_rocks.value)
         if loc.family == "boulder": return o.shuffle_boulders.value == 3 or (o.shuffle_boulders.value == 1 and loc.dungeon) or (o.shuffle_boulders.value == 2 and not loc.dungeon)
         if loc.family == "bush":
-            # Native SOH-EXTREME treats overworld/all GrassSanity as including
-            # bushes.  The separate BushSanity toggle remains an explicit way to
-            # shuffle bushes when GrassSanity itself is off/dungeon-only.
-            grass = o.shuffle_grass.value
-            return bool(o.shuffle_bushes.value) or grass == 3 or (grass == 2 and not loc.dungeon)
+            # Bush Sanity is independent: Grass Sanity never enables bush checks.
+            return bool(o.shuffle_bushes.value)
         if loc.family == "icicle": return bool(o.shuffle_icicles.value)
         if loc.family == "red_ice": return bool(o.shuffle_red_ice.value)
         if loc.family == "sign": return o.shuffle_signs.value == 3 or (o.shuffle_signs.value == 1 and loc.dungeon) or (o.shuffle_signs.value == 2 and not loc.dungeon)
@@ -1563,7 +1560,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             self.options.shuffle_pots.value = 3
         if self.options.shuffle_crate_soul.value and self.options.shuffle_crates.value == 0:
             self.options.shuffle_crates.value = 3
-        if self.options.shuffle_grass_bush_soul.value and self.options.shuffle_grass.value == 0:
+        if (self.options.shuffle_grass_bush_soul.value and self.options.shuffle_grass.value == 0
+                and not self.options.shuffle_bushes.value):
+            # The shared Soul needs a sanity family to provide a location, but
+            # do not turn Grass Sanity on when Bush Sanity was explicitly chosen.
             self.options.shuffle_grass.value = 3
         if self.options.shuffle_tree_soul.value and self.options.shuffle_trees.value == 0:
             self.options.shuffle_trees.value = 1
@@ -1590,7 +1590,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             self.options.shuffle_pots.value = 3
         if self.options.shuffle_crate_soul.value and self.options.shuffle_crates.value == 0:
             self.options.shuffle_crates.value = 3
-        if self.options.shuffle_grass_bush_soul.value and self.options.shuffle_grass.value == 0:
+        if (self.options.shuffle_grass_bush_soul.value and self.options.shuffle_grass.value == 0
+                and not self.options.shuffle_bushes.value):
+            # The shared Soul needs a sanity family to provide a location, but
+            # do not turn Grass Sanity on when Bush Sanity was explicitly chosen.
             self.options.shuffle_grass.value = 3
         if self.options.shuffle_tree_soul.value and self.options.shuffle_trees.value == 0:
             self.options.shuffle_trees.value = 1
@@ -4846,7 +4849,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         setting_family_enabled = {
             "rock": bool(o.shuffle_rocks.value),
             "boulder": bool(o.shuffle_boulders.value),
-            "bush": bool(o.shuffle_bushes.value) or o.shuffle_grass.value in (2, 3),
+            "bush": bool(o.shuffle_bushes.value),
             "icicle": bool(o.shuffle_icicles.value),
             "red_ice": bool(o.shuffle_red_ice.value),
             "sign": bool(o.shuffle_signs.value),
@@ -5072,6 +5075,29 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if world.game == cls.game:
                 prepare_hint_areas(world)
 
+    def write_spoiler(self, spoiler_handle) -> None:
+        """Append the exact route table actually sent to the SOH client.
+
+        This is written into the ordinary Archipelago spoiler ahead of the
+        Locations section. Do not infer randomized routes from location names.
+        """
+        if not EntranceRandomizer.enabled(self):
+            return
+        mapping = getattr(self, "_er_mapping", None)
+        if mapping is None or not mapping:
+            raise RuntimeError(
+                "SOH-EXTREME entrance spoiler cannot be written: finalized entrance map is missing"
+            )
+        aliases = (
+            EntranceRandomizer.RIVER_WATER_ALIASES
+            if EntranceRandomizer._river_path_revision(self) == 0
+            else None
+        )
+        EntranceSpoiler.write_entrance_spoiler(
+            spoiler_handle, EntranceRandomizer.CATALOG, mapping,
+            self.multiworld.player_name[self.player], legacy_water_aliases=aliases,
+        )
+
     def fill_slot_data(self):
         # Publish every resolved option directly.  Dynamic seed state that is not
         # an Option is added below.  This makes SOH-EXTREME slot data independent
@@ -5197,10 +5223,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # layouts in this fork, so translate them instead of copying raw values.
         cv("ShuffleRocks", o.shuffle_rocks.value)
         cv("ShuffleBoulders", o.shuffle_boulders.value)
-        # The patched native fork makes GrassSanity Overworld/All include bushes.
-        # Keep the explicit BushSanity setting too, but never send a false value
-        # that would contradict the AP location set for those GrassSanity modes.
-        cv("ShuffleBushes", int(bool(o.shuffle_bushes.value) or o.shuffle_grass.value in (2, 3)))
+        # Bush Sanity is independent from Grass Sanity in the native fork and AP logic.
+        cv("ShuffleBushes", int(bool(o.shuffle_bushes.value)))
         cv("ShuffleIcicles", o.shuffle_icicles.value)
         cv("ShuffleRedIce", o.shuffle_red_ice.value)
         cv("ShuffleSigns", o.shuffle_signs.value)
@@ -5442,7 +5466,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "extreme_location_name_to_id": extreme_location_name_to_id,
             "shuffle_rocks": o.shuffle_rocks.value,
             "shuffle_boulders": o.shuffle_boulders.value,
-            "shuffle_bushes": int(bool(o.shuffle_bushes.value) or o.shuffle_grass.value in (2, 3)),
+            "shuffle_bushes": int(bool(o.shuffle_bushes.value)),
             "shuffle_bushes_explicit": o.shuffle_bushes.value,
             "shuffle_icicles": o.shuffle_icicles.value,
             "shuffle_red_ice": o.shuffle_red_ice.value,

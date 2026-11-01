@@ -32,10 +32,10 @@ def set_region_rules(world: "SohWorld") -> None:
     # Locations
     add_locations(Regions.GERUDO_FORTRESS_OUTSKIRTS, world, [
         (Locations.GF_OUTSKIRTS_NORTHEAST_CRATE,
-         lambda bundle: (can_pass_enemy(bundle, Enemies.GERUDO_GUARD)) & can_break_crates(
+         lambda bundle: (can_bypass_gerudo_patrol(bundle)) & can_break_crates(
              bundle)),
         (Locations.GF_OUTSKIRTS_NORTHWEST_CRATE,
-         lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD) & can_break_crates(bundle)),
+         lambda bundle: can_bypass_gerudo_patrol(bundle) & can_break_crates(bundle)),
     ])
     # Connections
     connect_regions(Regions.GERUDO_FORTRESS_OUTSKIRTS, world, [
@@ -43,8 +43,8 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.THIEVES_HIDEOUT_1_TORCH_CELL, lambda bundle: True_()),
         (Regions.GF_OUTSIDE_GATE, lambda bundle: has_item(
             LocalEvents.GF_GATE_OPEN, bundle)),
-        (Regions.GF_NEAR_GROTTO, lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
-        (Regions.GF_OUTSIDE_GTG, lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
+        (Regions.GF_NEAR_GROTTO, lambda bundle: can_bypass_gerudo_patrol(bundle)),
+        (Regions.GF_OUTSIDE_GTG, lambda bundle: can_bypass_gerudo_patrol(bundle)),
         (Regions.GF_JAIL_WINDOW, lambda bundle: can_use(Items.HOOKSHOT, bundle)),
     ])
 
@@ -67,7 +67,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.THIEVES_HIDEOUT_KITCHEN_CORRIDOR, lambda bundle: True_()),
         (Regions.GERUDO_FORTRESS_OUTSKIRTS, lambda bundle: True_()),
         (Regions.GF_JAIL_WINDOW, lambda bundle: can_use(Items.HOOKSHOT, bundle)),
-        (Regions.GF_OUTSIDE_GTG, lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
+        (Regions.GF_OUTSIDE_GTG, lambda bundle: can_bypass_gerudo_patrol(bundle)),
         (Regions.GF_TOP_OF_UPPER_VINES,
          lambda bundle: can_use(Items.LONGSHOT, bundle)),
         (Regions.GF_STORMS_GROTTO, lambda bundle: is_adult(
@@ -88,8 +88,8 @@ def set_region_rules(world: "SohWorld") -> None:
             LocalEvents.GTG_GATE_OPEN, bundle) & is_adult(bundle)),
         (Regions.GF_JAIL_WINDOW, lambda bundle: can_use(Items.HOOKSHOT, bundle)),
         (Regions.GERUDO_FORTRESS_OUTSKIRTS, lambda bundle: True_()),
-        (Regions.GF_NEAR_GROTTO, lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
-        (Regions.GF_ABOVE_GTG, lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
+        (Regions.GF_NEAR_GROTTO, lambda bundle: can_bypass_gerudo_patrol(bundle)),
+        (Regions.GF_ABOVE_GTG, lambda bundle: can_bypass_gerudo_patrol(bundle)),
         (Regions.GF_TOP_OF_UPPER_VINES,
          lambda bundle: has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle) & can_use(Items.LONGSHOT, bundle)),
         # Missing NPC Soul must not turn the guard's absence into an access route.
@@ -118,7 +118,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.GF_JAIL_WINDOW, lambda bundle: can_use(Items.HOOKSHOT, bundle)),
         (Regions.GERUDO_FORTRESS_OUTSKIRTS, lambda bundle: True_()),
         (Regions.GF_NEAR_GROTTO, lambda bundle: True_()),
-        (Regions.GF_OUTSIDE_GTG, lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
+        (Regions.GF_OUTSIDE_GTG, lambda bundle: can_bypass_gerudo_patrol(bundle)),
         (Regions.GF_BOTTOM_OF_LOWER_VINES,
          lambda bundle: can_do_trick(Tricks.GF_JUMP, bundle)),
     ])
@@ -265,7 +265,7 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.GERUDO_FORTRESS_OUTSKIRTS,
          lambda bundle: can_do_trick(Tricks.GF_JUMP, bundle)),
         (Regions.GF_NEAR_CHEST, lambda bundle: can_use(Items.LONGSHOT, bundle)),
-        (Regions.GF_BELOW_CHEST, lambda bundle: take_damage(bundle)),
+        (Regions.GF_BELOW_CHEST, lambda bundle: survive_fall(bundle, damage_hearts=1)),
         (Regions.GF_JAIL_WINDOW, lambda bundle: can_use(Items.HOOKSHOT, bundle)),
         (Regions.THIEVES_HIDEOUT_BREAK_ROOM_CORRIDOR, lambda bundle: True_())
     ])

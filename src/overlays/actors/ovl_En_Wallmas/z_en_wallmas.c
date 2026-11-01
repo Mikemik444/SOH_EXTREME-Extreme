@@ -8,6 +8,7 @@
 #include "objects/object_wallmaster/object_wallmaster.h"
 #include "objects/gameplay_keep/gameplay_keep.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
+#include "soh/Network/Archipelago/ArchipelagoC.h"
 
 #define FLAGS (ACTOR_FLAG_ATTENTION_ENABLED | ACTOR_FLAG_HOSTILE | ACTOR_FLAG_UPDATE_CULLING_DISABLED)
 
@@ -498,6 +499,10 @@ void EnWallmas_TakePlayer(EnWallmas* this, PlayState* play) {
 
     if (this->timer == 0x1E) {
         Sfx_PlaySfxCentered(NA_SE_OC_ABYSS);
+        // In mixed entrance pools, Wallmaster should return Link to the scene
+        // he entered from instead of the native dungeon entrance. The helper
+        // is a no-op for non-AP saves and dungeon-only pools.
+        Archipelago_EntranceWallmasterReturn();
         Play_TriggerRespawn(play);
     }
 }

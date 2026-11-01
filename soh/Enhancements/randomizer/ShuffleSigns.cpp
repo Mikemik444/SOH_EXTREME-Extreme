@@ -25,6 +25,10 @@ uint8_t Sign_RandomizerHoldsItem(Actor* actor, PlayState* play) {
     }
 
     RandomizerCheck rc = signIdentity->randomizerCheck;
+    // The Royal Tomb check is awarded by the one-time Lullaby destruction
+    // event. Ordinary sign conversation must not claim it prematurely.
+    if (rc == RC_GY_ROYAL_TOMB_GRAVE &&
+        !Flags_GetEventChkInf(EVENTCHKINF_DESTROYED_ROYAL_FAMILY_TOMB)) return false;
     uint8_t isDungeon = Rando::StaticData::GetLocation(rc)->IsDungeon();
     auto signSetting = RAND_GET_OPTION(RSK_SHUFFLE_SIGNS);
 
@@ -88,11 +92,15 @@ void Sign_RandomizerSpawnCollectible(Actor* actor) {
     if (signIdentity == nullptr) {
         return;
     }
+    if (signIdentity->randomizerCheck == RC_GY_ROYAL_TOMB_GRAVE &&
+        !Flags_GetEventChkInf(EVENTCHKINF_DESTROYED_ROYAL_FAMILY_TOMB)) return;
     Flags_SetRandomizerInf(signIdentity->randomizerInf);
 }
 
 void Sign_RoyalTombSpawnCollectible(int16_t flagType, int16_t flag) {
-    if (SignSoulUnavailable()) {
+    // This actor is destroyed by Zelda's Lullaby, so this check must be
+    // awarded when the tomb opens even if Sign Soul is unavailable.
+    if (!IS_RANDO || !gPlayState || gPlayState->sceneNum != SCENE_GRAVEYARD) {
         return;
     }
     if (!Flags_GetRandomizerInf(RAND_INF_GY_ROYAL_TOMB_GRAVE) &&
@@ -184,7 +192,9 @@ void RegisterShuffleSigns() {
             IdentifySign(gPlayState->sceneNum, (s16)actor->world.pos.x, (s16)actor->world.pos.z, actor->id);
         ObjectExtension::GetInstance().Set<CheckIdentity>(actor, std::move(signIdentity));
         const auto identity = ObjectExtension::GetInstance().Get<CheckIdentity>(actor);
-        if (SignSoulUnavailable() && identity != nullptr && identity->randomizerCheck != RC_UNKNOWN_CHECK &&
+        if (SignSoulUnavailable() && identity != nullptr &&
+            identity->randomizerCheck != RC_GY_ROYAL_TOMB_GRAVE &&
+            identity->randomizerCheck != RC_UNKNOWN_CHECK &&
             identity->randomizerCheck != RC_MAX) {
             Actor_Kill(actor);
         }
@@ -198,7 +208,9 @@ void RegisterShuffleSigns() {
             IdentifySign(gPlayState->sceneNum, (s16)actor->world.pos.x, (s16)actor->world.pos.z, actor->id);
         ObjectExtension::GetInstance().Set<CheckIdentity>(actor, std::move(signIdentity));
         const auto identity = ObjectExtension::GetInstance().Get<CheckIdentity>(actor);
-        if (SignSoulUnavailable() && identity != nullptr && identity->randomizerCheck != RC_UNKNOWN_CHECK &&
+        if (SignSoulUnavailable() && identity != nullptr &&
+            identity->randomizerCheck != RC_GY_ROYAL_TOMB_GRAVE &&
+            identity->randomizerCheck != RC_UNKNOWN_CHECK &&
             identity->randomizerCheck != RC_MAX) {
             Actor_Kill(actor);
         }
@@ -212,7 +224,9 @@ void RegisterShuffleSigns() {
             IdentifySign(gPlayState->sceneNum, (s16)actor->world.pos.x, (s16)actor->world.pos.z, actor->id);
         ObjectExtension::GetInstance().Set<CheckIdentity>(actor, std::move(signIdentity));
         const auto identity = ObjectExtension::GetInstance().Get<CheckIdentity>(actor);
-        if (SignSoulUnavailable() && identity != nullptr && identity->randomizerCheck != RC_UNKNOWN_CHECK &&
+        if (SignSoulUnavailable() && identity != nullptr &&
+            identity->randomizerCheck != RC_GY_ROYAL_TOMB_GRAVE &&
+            identity->randomizerCheck != RC_UNKNOWN_CHECK &&
             identity->randomizerCheck != RC_MAX) {
             Actor_Kill(actor);
         }
@@ -226,7 +240,9 @@ void RegisterShuffleSigns() {
             IdentifySign(gPlayState->sceneNum, (s16)actor->world.pos.x, (s16)actor->world.pos.z, actor->id);
         ObjectExtension::GetInstance().Set<CheckIdentity>(actor, std::move(signIdentity));
         const auto identity = ObjectExtension::GetInstance().Get<CheckIdentity>(actor);
-        if (SignSoulUnavailable() && identity != nullptr && identity->randomizerCheck != RC_UNKNOWN_CHECK &&
+        if (SignSoulUnavailable() && identity != nullptr &&
+            identity->randomizerCheck != RC_GY_ROYAL_TOMB_GRAVE &&
+            identity->randomizerCheck != RC_UNKNOWN_CHECK &&
             identity->randomizerCheck != RC_MAX) {
             Actor_Kill(actor);
         }
@@ -278,8 +294,14 @@ void RegisterShuffleSigns() {
         }
     });
 
-    // Give Royal Tomb item if destroyed
+    // Award immediately on the tomb-opening flag and repair old saves where
+    // the grave was destroyed before its sign check was credited.
     COND_HOOK(OnFlagSet, shouldRegister, Sign_RoyalTombSpawnCollectible);
+    COND_HOOK(OnSceneInit, shouldRegister, [](int16_t sceneNum) {
+        if (sceneNum == SCENE_GRAVEYARD) {
+            Sign_RoyalTombSpawnCollectible(0, 0);
+        }
+    });
 }
 
 void Rando::StaticData::RegisterSignLocations() {

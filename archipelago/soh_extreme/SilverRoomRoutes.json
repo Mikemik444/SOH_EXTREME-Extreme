@@ -368,7 +368,7 @@
   "RC_GTG_UPPER_LAVA_SILVER": [
     {
       "region": "RR_GERUDO_TRAINING_GROUND_LAVA_ROOM_UPPER_LEDGE",
-      "condition": "logic->CanUse(RG_HOOKSHOT)",
+      "condition": "true",
       "file": "soh/Enhancements/randomizer/location_access/dungeons/gerudo_training_ground.cpp",
       "line": 181
     }

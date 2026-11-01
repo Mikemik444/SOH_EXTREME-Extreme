@@ -226,7 +226,7 @@ void RegionTable_Init_FireTemple() {
         LOCATION(RC_FIRE_TEMPLE_EAST_CENTRAL_MIDDLE_HEART, true),
     }, {
         //Exits
-        ENTRANCE(RR_FIRE_TEMPLE_BIG_LAVA_ROOM,      logic->TakeDamage()),
+        ENTRANCE(RR_FIRE_TEMPLE_BIG_LAVA_ROOM,      logic->CanUse(RG_BOTTLE_WITH_FAIRY) || logic->CanUse(RG_NAYRUS_LOVE) || logic->EffectiveHealth() > 32),
         ENTRANCE(RR_FIRE_TEMPLE_BOULDER_MAZE_LOWER, logic->SmallKeys(SCENE_FIRE_TEMPLE, 5)),
         ENTRANCE(RR_FIRE_TEMPLE_FIRE_WALL_CHASE,    logic->SmallKeys(SCENE_FIRE_TEMPLE, 6)),
         ENTRANCE(RR_FIRE_TEMPLE_FIRE_WALL_CAGE,     logic->CanHitEyeTargets()),
@@ -315,7 +315,7 @@ void RegionTable_Init_FireTemple() {
     }, {
         //Exits
         ENTRANCE(RR_FIRE_TEMPLE_GS_CLIMB_5F,      true),
-        ENTRANCE(RR_FIRE_TEMPLE_NARROW_PATH_ROOM, logic->TakeDamage()),
+        ENTRANCE(RR_FIRE_TEMPLE_NARROW_PATH_ROOM, logic->CanUse(RG_BOTTLE_WITH_FAIRY) || logic->CanUse(RG_NAYRUS_LOVE) || logic->EffectiveHealth() > 32),
     });
 
     areaTable[RR_FIRE_TEMPLE_CORRIDOR] = Region("Fire Temple Corridor", SCENE_FIRE_TEMPLE, {}, {}, {

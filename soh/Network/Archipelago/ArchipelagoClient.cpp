@@ -4899,6 +4899,10 @@ extern "C" bool Archipelago_IsAuthenticatedForFileSelect(void) {
     return client.IsReadyForFileSelect();
 }
 
+extern "C" bool Archipelago_EntrancePrepareDungeonVoidOut(void) {
+    return SohExtreme::EntranceRuntime::PrepareDungeonVoidOut();
+}
+
 extern "C" bool Archipelago_IsCurrentSaveFile(void) {
     return ArchipelagoClient::GetInstance().IsCurrentSaveArchipelago();
 }

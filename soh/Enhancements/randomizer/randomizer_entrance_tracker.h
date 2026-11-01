@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <stdint.h>
+#include <cstddef>
 
 #include <nlohmann/json_fwd.hpp>
 #include <libultraship/color.h>
@@ -105,6 +106,9 @@ static std::vector<uint32_t> buttons = { BTN_A, BTN_B, BTN_CUP,   BTN_CDOWN, BTN
     }
 #define SCENE_NO_SPAWN(scene) \
     { scene, -1 }
+
+// AP includes synthetic room-door routes outside the native override table.
+constexpr size_t TRACKER_ENTRANCE_MAX_COUNT = 4096;
 
 namespace EntranceTracker {
 extern EntranceTrackingData gEntranceTrackingData;

@@ -204,9 +204,7 @@ void Context::GenerateLocationPool() {
             (location.GetRCType() == RCTYPE_TREE && !mOptions[RSK_SHUFFLE_TREES]) ||
             (location.GetRCType() == RCTYPE_NLTREE &&
              (!mOptions[RSK_SHUFFLE_TREES] || mOptions[RSK_LOGIC_RULES].IsNot(RO_LOGIC_NO_LOGIC))) ||
-            (location.GetRCType() == RCTYPE_BUSH && !mOptions[RSK_SHUFFLE_BUSHES] &&
-             !mOptions[RSK_SHUFFLE_GRASS].Is(RO_SHUFFLE_GRASS_OVERWORLD) &&
-             !mOptions[RSK_SHUFFLE_GRASS].Is(RO_SHUFFLE_GRASS_ALL)) ||
+            (location.GetRCType() == RCTYPE_BUSH && !mOptions[RSK_SHUFFLE_BUSHES]) ||
             (location.GetRCType() == RCTYPE_ICICLE && !mOptions[RSK_SHUFFLE_ICICLES]) ||
             (location.GetRCType() == RCTYPE_RED_ICE && !mOptions[RSK_SHUFFLE_RED_ICE]) ||
             (location.GetRCType() == RCTYPE_SIGN && mOptions[RSK_SHUFFLE_SIGNS].Is(RO_SHUFFLE_SIGNS_OFF)) ||

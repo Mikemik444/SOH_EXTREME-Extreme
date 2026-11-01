@@ -2108,6 +2108,11 @@ void Play_SetupRespawnPoint(PlayState* play, s32 respawnMode, s32 playerParams) 
 }
 
 void Play_TriggerVoidOut(PlayState* play) {
+    // In mixed Archipelago dungeon-door seeds the vanilla DOWN point can
+    // refer to an entirely different shuffled scene. Prefer a verified
+    // checkpoint in the dungeon scene Link is currently exploring.
+    // Returning false leaves the game's native void-out unchanged.
+    Archipelago_EntrancePrepareDungeonVoidOut();
     gSaveContext.respawn[RESPAWN_MODE_DOWN].tempSwchFlags = play->actorCtx.flags.tempSwch;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].tempCollectFlags = play->actorCtx.flags.tempCollect;
     gSaveContext.respawnFlag = 1;

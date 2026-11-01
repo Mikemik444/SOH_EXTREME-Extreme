@@ -875,8 +875,33 @@ def can_shield(bundle: tuple[Regions, "SohWorld"]) -> Rule:
 
 
 def take_damage(bundle: tuple[Regions, "SohWorld"]) -> Rule:
+    """Survive an ordinary one-heart hit (a single heart is not sufficient)."""
     return (can_use_any([Items.BOTTLE_WITH_FAIRY, Items.NAYRUS_LOVE], bundle)
-            | effective_health_at_least(bundle, 1))
+            | effective_health_at_least(bundle, 2))
+
+
+def survive_fall(bundle: tuple[Regions, "SohWorld"], damage_hearts: int = 2) -> Rule:
+    """Survive a forced damaging drop. The landing cannot leave Link at 0 HP.
+
+    Damage depends on drop height; audited short drops pass 1, severe
+    dungeon falls use the conservative 2-heart requirement. Existing
+    fairy / Nayru protections remain valid alternate survival methods.
+    """
+    if damage_hearts < 1:
+        raise ValueError("A damaging fall must consume at least one heart")
+    return (can_use_any([Items.BOTTLE_WITH_FAIRY, Items.NAYRUS_LOVE], bundle)
+            | effective_health_at_least(bundle, damage_hearts + 1))
+
+
+def can_bypass_gerudo_patrol(bundle: tuple[Regions, "SohWorld"]) -> Rule:
+    """Only guarded approaches need a card or usable ranged stun weapon.
+
+    Unwatched fortress rooms and shuffled arrivals are *not* gated by
+    this helper; placing it on whole regions would recreate softlocks.
+    """
+    return (has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
+            | (is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle))
+            | (is_child(bundle) & can_use(Items.FAIRY_SLINGSHOT, bundle)))
 
 
 def can_do_trick(trick: Tricks, bundle: tuple[Regions, "SohWorld"]) -> Rule:
@@ -1595,12 +1620,16 @@ def can_trigger_lacs(bundle: tuple[Regions, "SohWorld"]) -> Rule:
 
 
 
-# TODO implement EffectiveHealth(); Returns 2 for now. Requires implementing a damage multiplier option
 def effective_health_at_least(bundle: tuple[Regions, "SohWorld"], count: int) -> Rule:
-    if count <= 2:
+    """Read the actual randomized heart total, never a constant placeholder.
+
+    No damage multiplier option is currently exposed by SOH-EXTREME;
+    requests here are in ordinary hearts. Heart changes invalidate rule
+    caches through HeartsAtLeast's item dependencies.
+    """
+    if count <= 0:
         return True_()
-    else:
-        return False_()
+    return HeartsAtLeast(amount=count)
 
 
 def is_fire_loop_unlocked(bundle: tuple[Regions, "SohWorld"]) -> Rule:

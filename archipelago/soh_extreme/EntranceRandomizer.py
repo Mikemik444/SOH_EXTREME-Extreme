@@ -13,6 +13,8 @@ from Options import OptionError
 from rule_builder.rules import True_, And, Has, Or, Rule
 from .EntranceOptions import ENTRANCE_OPTIONS
 from . import EntranceSafety as Safety
+from . import EntranceMapIntegrity as MapIntegrity
+from . import EntranceTopologyAudit as TopologyAudit
 from .SceneTransitions import region_name
 from .CheckDescriptions import shuffled_check_label
 from ._vendor_oot_soh.Enums import Regions, Items, Events, Ages
@@ -278,6 +280,19 @@ def _source_rule(world, row):
         extras.append(world._extreme_room_compiler.expr(row['extra_condition'], row['source']).resolve(world))
     if row.get('gate') == 'swim': extras.append(H.can_swim(bundle).resolve(world))
     if row.get('gate') == 'horse': extras.append(H.can_use(Items.EPONA, bundle).resolve(world))
+    # The lake fence is physically not a free walk even when the source is
+    # reachable through a mixed-pool entry. Preserve the literal gate on the
+    # directed entrance, not merely on its unshuffled stock region edge.
+    if row['id'] in (258, 393):
+        extras.append((H.can_climb(bundle) | H.can_swim(bundle) |
+                       H.can_use(Items.EPONA, bundle)).resolve(world))
+    # The Treasure Chest Game's external door is usable only by child at night
+    # and with its building key when Overworld Door Locks are enabled. Do not
+    # confuse this *entry* with the inside-to-outside exit check (469): a valid
+    # mixed-pool arrival may legitimately reach that exit by another route.
+    if row['id'] == 99:
+        extras.append((H.is_child(bundle) & H.at_night(bundle) &
+                       H.can_open_overworld_door(Items.TREASURE_CHEST_GAME_BUILDING_KEY, bundle)).resolve(world))
     components = (rule, *extras)
     dependencies = tuple(part for part in components if isinstance(part, Rule.Resolved))
     for part in dependencies:
@@ -331,8 +346,10 @@ def _eligible(world):
 
 def validate_mapping(world, mapping, *, legacy_dungeon_pools=False):
     eligible = {e['id'] for e in _eligible(world)}
-    if set(mapping) != eligible:
-        raise OptionError('Entrance mapping does not match the enabled source pools')
+    try:
+        MapIntegrity.validate_complete(mapping, eligible)
+    except ValueError as exc:
+        raise OptionError(str(exc)) from exc
     mixed = mixed_categories(world)
     for source, dest in mapping.items():
         if type(source) is not int or type(dest) is not int:
@@ -704,6 +721,45 @@ def connect(world):
                                for row in legacy_water})
         world._er_labels = {ENDPOINTS[k]["check_id"]: shuffled_check_label(ENDPOINTS[k], ENDPOINTS[v])
                             for k, v in display_routes.items() if ENDPOINTS[k]["check_id"]}
+    def assert_installed_topology():
+        """Fail closed if AP's final entrance graph differs from the exported map.
+
+        This checks every active *physical* shuffled source edge, including
+        synthetic dungeon room doors and legacy Zora River water aliases.
+        Synthetic boss return rows may legitimately have no physical exit.
+        The native client independently validates the byte-level slot map.
+        """
+        expected = {}
+        actual = {}
+        for source_id, edge in edges.items():
+            source_row = ENDPOINTS[source_id]
+            destination_id = _routed_destination(world, world._er_mapping, source_id)
+            expected[source_id] = (
+                region_name(source_row['source']),
+                region_name(ENDPOINTS[destination_id]['target']),
+            )
+            actual[source_id] = (
+                edge.parent_region.name,
+                edge.connected_region.name if edge.connected_region else None,
+            )
+        # No pool is allowed to silently drop a physical source just because
+        # an old stock entrance or a relocated check still resolves elsewhere.
+        try:
+            TopologyAudit.validate_edges(expected, actual)
+        except ValueError as exc:
+            raise OptionError('Installed shuffled entrance graph does not match the '
+                              'published entrance map: ' + str(exc)) from exc
+        for row in sources:
+            source_id = row['id']
+            source_rule = rules[source_id]
+            check = checks.get(row['check_id'])
+            if source_rule is None or check is None:
+                continue
+            if (check.parent_region.name != region_name(row['source'])
+                    or check.access_rule is not source_rule):
+                raise OptionError('Entrance crossing check is not tied to its physical '
+                                  f'source: {row["name"]} (endpoint {source_id})')
+
     if world.using_ut:
         saved = world.passthrough.get('entrance_randomizer', {})
         if saved.get('revision') != REVISION: raise OptionError('Unsupported entrance mapping revision')
@@ -714,6 +770,7 @@ def connect(world):
             raise OptionError('Unsupported dungeon entrance pool policy')
         mapping = {int(k): v for k, v in saved.get('connections', {}).items() if int(k) in {e['id'] for e in rows}}
         validate_mapping(world, mapping, legacy_dungeon_pools=pool_revision == 0); apply(mapping)
+        assert_installed_topology()
         if world._er_mapping != {int(k): v for k, v in saved['connections'].items()}:
             raise OptionError('Entrance mapping blue-warp return data differs from this world')
         state = world.multiworld.get_all_state(False, perform_sweep=False).copy()
@@ -787,6 +844,7 @@ def connect(world):
         if candidate is not None: mapping = candidate; accepted += 1
     validate_mapping(world, mapping)
     apply(mapping)
+    assert_installed_topology()
     final_state = inventory.copy()
     final_state.sweep_for_advancements()
     if not _age_routes_are_safe(world, world._er_mapping, edges, final_state):
@@ -820,7 +878,7 @@ def native_settings(world):
               'EntrancePoolPolicyRevision': _pool_policy_revision(world) if cats else 0,
               'EntranceRiverPathsRevision': _river_path_revision(world) if cats else 0,
               'EntranceMixedPoolMask': sum(MIXED_CATEGORY_BITS[category] for category in mixed),
-              'DungeonDoorMixedOutside': int(dungeon_doors_mix_outside(world)),
+              'DungeonDoorMixedOutside': int(bool(mixed_categories(world) & {'dungeon_doors', 'bosses'})),
               'DecoupleEntrances': 0,
               'ShuffleInteriorsEntrances': 2 if 'interiors' in cats else 0,
               'ShuffleThievesHideoutEntrances': int('interiors' in cats),
@@ -833,7 +891,20 @@ def native_settings(world):
               'ShuffleOverworldSpawns': int(bool(cats & {'child_spawn', 'adult_spawn'})),
               'MixedEntrances': int(bool(mixed)), 'MixGrottos': int(bool(cats)),
               'ShuffleDungeonDoors': int('dungeon_doors' in cats)}
-    result.update({'EntranceMap.'+str(k): v for k, v in getattr(world, '_er_mapping', {}).items()})
+    mapping = getattr(world, '_er_mapping', {})
+    if cats:
+        expected = {e['id'] for e in _eligible(world)}
+        # Blue warps are calculated by apply() and are in the runtime map even
+        # when they were not a separately shuffled candidate source.
+        if cats & {'bosses', 'dungeons'}:
+            expected.update(e['id'] for e in CATALOG if e['category'] == 'blue_warps')
+        try:
+            MapIntegrity.validate_complete(mapping, expected)
+        except ValueError as exc:
+            raise OptionError('Cannot export unverified entrance map: ' + str(exc)) from exc
+        result['EntranceMapRouteCount'] = len(mapping)
+        result['EntranceMapFingerprint'] = MapIntegrity.fingerprint(mapping)
+    result.update({'EntranceMap.'+str(k): v for k, v in mapping.items()})
     return result
 
 

@@ -3030,8 +3030,8 @@ void LoadSettings() {
         }
 
         showTrees = OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_TREES);
-        showBushes = OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_BUSHES) ||
-                     showOverworldGrass;
+        // Bushes are an independent sanity family; Grass Sanity must not expose them.
+        showBushes = OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_BUSHES);
 
         switch (OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_WONDER_ITEMS)) {
             case RO_SHUFFLE_WONDER_ITEMS_ALL:

@@ -283,7 +283,7 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.FIRE_TEMPLE_EAST_CENTRAL_ROOM, world, [
-        (Regions.FIRE_TEMPLE_BIG_LAVA_ROOM, lambda bundle: take_damage(bundle)),
+        (Regions.FIRE_TEMPLE_BIG_LAVA_ROOM, lambda bundle: survive_fall(bundle, damage_hearts=2)),
         (Regions.FIRE_TEMPLE_BOULDER_MAZE_LOWER, lambda bundle: small_keys(
             Items.FIRE_TEMPLE_SMALL_KEY, 5, bundle)),
         (Regions.FIRE_TEMPLE_FIRE_WALL_CHASE, lambda bundle: small_keys(
@@ -371,7 +371,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.FIRE_TEMPLE_EAST_PEAK, world, [
         (Regions.FIRE_TEMPLE_SCARECROW_ROOM, lambda bundle: True_()),
-        (Regions.FIRE_TEMPLE_EAST_CENTRAL_ROOM, lambda bundle: take_damage(bundle))
+        (Regions.FIRE_TEMPLE_EAST_CENTRAL_ROOM, lambda bundle: survive_fall(bundle, damage_hearts=2))
     ])
 
     # Fire Temple Corridor
@@ -501,7 +501,7 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.FIRE_TEMPLE_WEST_PEAK, world, [
         (Regions.FIRE_TEMPLE_WEST_CENTRAL_UPPER,
-         lambda bundle: take_damage(bundle)),
+         lambda bundle: survive_fall(bundle, damage_hearts=2)),
         (Regions.FIRE_TEMPLE_WEST_CLIMB, lambda bundle: True_()),
         (Regions.FIRE_TEMPLE_HAMMER_RETURN_PATH,
          lambda bundle: can_use(Items.MEGATON_HAMMER, bundle))

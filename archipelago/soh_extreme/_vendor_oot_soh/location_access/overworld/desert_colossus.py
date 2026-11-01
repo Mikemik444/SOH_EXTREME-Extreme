@@ -33,6 +33,10 @@ def set_region_rules(world: "SohWorld") -> None:
          Events.ADULT_CAN_PASS_TIME, lambda bundle: is_adult(bundle)),
     ])
     # Locations
+    # Rock checks are attached to this region, not to the vanilla wasteland
+    # approach: shuffled Child/Adult arrivals have the same rock access.
+    # can_break_rocks() accepts explosives at both ages and a usable adult
+    # Hammer (plus the fork's existing Grab route and Rock Soul setting).
     add_locations(Regions.DESERT_COLOSSUS, world, [
         (Locations.COLOSSUS_FREESTANDING_POH, lambda bundle: is_adult(bundle)
          & has_item(LocalEvents.DESERT_COLOSSUS_BEAN_PLANTED, bundle)),

@@ -37,6 +37,9 @@ void Archipelago_BeginWarpSongTransition(int song);
 void Archipelago_BeginDoorTransition(int door, int fromRoom, int toRoom, const struct Actor* actor, int side);
 // Physical AP routing remains active without a server connection or menu CVar.
 bool Archipelago_EntranceShuffleActive(void);
+// Preserve the current dungeon scene and a proven safe room/ground checkpoint
+// for native void-outs, without reapplying a shuffled entrance or sending a check.
+bool Archipelago_EntrancePrepareDungeonVoidOut(void);
 // Recovery restores a resolved position without reporting a physical crossing.
 void Archipelago_CancelEntranceTransition(void);
 bool Archipelago_EntranceReturnFromUnsafeArrival(void);
@@ -68,6 +71,7 @@ int Archipelago_EntranceDungeonReturnMode(void);
 bool Archipelago_EntranceRequestDungeonReturn(void);
 bool Archipelago_EntranceRestoreDungeonReturn(void);
 bool Archipelago_EntranceGameOverDungeonReturn(void);
+bool Archipelago_EntranceWallmasterReturn(void);
 bool Archipelago_EntranceDungeonReturnInProgress(void);
 void Archipelago_EntranceCancelDungeonReturn(void);
 bool Archipelago_EntranceSavewarp(void);

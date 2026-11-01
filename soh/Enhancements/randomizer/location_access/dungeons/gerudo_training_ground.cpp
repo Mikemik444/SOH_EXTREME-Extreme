@@ -44,10 +44,10 @@ void RegionTable_Init_GerudoTrainingGround() {
         EVENT_ACCESS(LOGIC_GTG_SILVER_SLOPE, logic->CanUse(logic->IsAdult ? RG_HOOKSHOT : RG_LONGSHOT) || ctx->GetTrickOption(RT_GTG_WITHOUT_HOOKSHOT)),
     }, {
         //Locations
-        LOCATION(RC_GTG_FIRE_WALL_SLOPE_SILVER,     true),
+        LOCATION(RC_GTG_FIRE_WALL_SLOPE_SILVER, true),
         LOCATION(RC_GTG_LOWER_BOULDER_SLOPE_SILVER, true),
         LOCATION(RC_GTG_TARGET_SLOPE_SILVER,        logic->CanUse(logic->IsAdult ? RG_HOOKSHOT : RG_LONGSHOT) || ctx->GetTrickOption(RT_GTG_WITHOUT_HOOKSHOT)),
-        LOCATION(RC_GTG_JUMPDOWN_SLOPE_SILVER,      true),
+        LOCATION(RC_GTG_JUMPDOWN_SLOPE_SILVER, true),
         LOCATION(RC_GTG_UPPER_BOULDER_SLOPE_SILVER, true),
     }, {
         //Exits
@@ -178,7 +178,7 @@ void RegionTable_Init_GerudoTrainingGround() {
 
     areaTable[RR_GERUDO_TRAINING_GROUND_LAVA_ROOM_UPPER_LEDGE] = Region("Gerudo Training Ground Lava Room", SCENE_GERUDO_TRAINING_GROUND, {}, {
         //Locations
-        LOCATION(RC_GTG_UPPER_LAVA_SILVER, logic->CanUse(RG_HOOKSHOT)),
+        LOCATION(RC_GTG_UPPER_LAVA_SILVER, true),
         LOCATION(RC_GTG_UNDER_LEDGE_LAVA_SILVER, true),
     }, {
         //Exits

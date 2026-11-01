@@ -1,0 +1,15 @@
+SOH-EXTREME 1.8.16 - entrance save/reload and Wallmaster mixed-pool return
+
+Changes
+- When an Archipelago save loads before its authoritative entrance map is ready, queue the age spawn and return success from the savewarp hook. The native savewarp no longer overwrites the pending request with a vanilla dungeon entrance. A safe age-native staging entrance is used until the validated slot map is available, then the queued request resolves through the randomized map.
+- Wallmaster captures now consult the entrance runtime before the native respawn. If the active mixed-pool policy says Return to Previous Scene and a valid previous scene exists, the already-resolved previous-scene destination is applied before Play_TriggerRespawn. Dungeon-only pools and non-AP saves retain the normal behavior.
+
+Files changed
+- soh/Network/Archipelago/EntranceRuntime.inc
+- soh/Network/Archipelago/ArchipelagoC.h
+- src/overlays/actors/ovl_En_Wallmas/z_en_wallmas.c
+
+Validation
+- Source-level regression assertions verify that the missing-slot-map savewarp path queues the age spawn, selects a safe staging entrance, and returns true to prevent vanilla fallback.
+- Source-level regression assertions verify the Wallmaster hook is called immediately before Play_TriggerRespawn and only applies the previous-scene return under the mixed-pool policy.
+- Full Windows/MSVC build and in-game save/reload/Wallmaster playthrough still need to be run in the user's configured build environment.

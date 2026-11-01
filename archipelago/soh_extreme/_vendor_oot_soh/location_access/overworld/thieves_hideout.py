@@ -158,25 +158,25 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.GF_NEAR_GROTTO, lambda bundle: True_()),
         (Regions.GF_ABOVE_GTG, lambda bundle: True_()),
         (Regions.THIEVES_HIDEOUT_KITCHEN_BOTTOM,
-         lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD))
+         lambda bundle: can_bypass_gerudo_patrol(bundle))
     ])
 
     # Thieves Hideout Kitchen Bottom
     # Locations
     add_locations(Regions.THIEVES_HIDEOUT_KITCHEN_BOTTOM, world, [
         (Locations.TH_KITCHEN_CRATE,
-         lambda bundle: can_break_crates(bundle) & can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
+         lambda bundle: can_break_crates(bundle) & can_bypass_gerudo_patrol(bundle)),
         (Locations.TH_KITCHEN_SUN_FAIRY,
-         lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD) & can_use(Items.SUNS_SONG, bundle))
+         lambda bundle: can_bypass_gerudo_patrol(bundle) & can_use(Items.SUNS_SONG, bundle))
     ])
     # Connections
     connect_regions(Regions.THIEVES_HIDEOUT_KITCHEN_BOTTOM, world, [
         (Regions.THIEVES_HIDEOUT_KITCHEN_CORRIDOR,
-         lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
+         lambda bundle: can_bypass_gerudo_patrol(bundle)),
         (Regions.THIEVES_HIDEOUT_KITCHEN_TOP,
-         lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD)),
+         lambda bundle: can_bypass_gerudo_patrol(bundle)),
         (Regions.THIEVES_HIDEOUT_KITCHEN_POTS,
-         lambda bundle: can_break_pots(bundle) & can_pass_enemy(bundle, Enemies.GERUDO_GUARD))
+         lambda bundle: can_break_pots(bundle) & can_bypass_gerudo_patrol(bundle))
     ])
 
     # Thieves Hideout Kitchen Top
@@ -186,9 +186,9 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.THIEVES_HIDEOUT_KITCHEN_POTS,
          lambda bundle: can_use(Items.BOOMERANG, bundle)),
         (Regions.GF_NEAR_GS,
-         lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD) | can_use(Items.HOVER_BOOTS, bundle)),
+         lambda bundle: can_bypass_gerudo_patrol(bundle) | can_use(Items.HOVER_BOOTS, bundle)),
         (Regions.GF_TOP_OF_LOWER_VINES,
-         lambda bundle: can_pass_enemy(bundle, Enemies.GERUDO_GUARD) | can_use(Items.HOVER_BOOTS, bundle))
+         lambda bundle: can_bypass_gerudo_patrol(bundle) | can_use(Items.HOVER_BOOTS, bundle))
     ])
 
     # Thieves Hideout Kitchen Pots
@@ -205,11 +205,11 @@ def set_region_rules(world: "SohWorld") -> None:
         (Locations.TH_BREAK_ROOM_FRONT_POT,
          lambda bundle: (can_pass_enemy(
              bundle, Enemies.BREAK_ROOM_GUARD) & can_break_pots(bundle))
-         | (can_pass_enemy(bundle, Enemies.GERUDO_GUARD) & can_use(Items.BOOMERANG, bundle))),
+         | (can_bypass_gerudo_patrol(bundle) & can_use(Items.BOOMERANG, bundle))),
         (Locations.TH_BREAK_ROOM_BACK_POT,
          lambda bundle: (can_pass_enemy(
              bundle, Enemies.BREAK_ROOM_GUARD) & can_break_pots(bundle))
-         | (can_pass_enemy(bundle, Enemies.GERUDO_GUARD) & can_use(Items.BOOMERANG, bundle))),
+         | (can_bypass_gerudo_patrol(bundle) & can_use(Items.BOOMERANG, bundle))),
         (Locations.TH_BREAK_HALLWAY_OUTER_CRATE,
          lambda bundle: can_break_crates(bundle)),
         (Locations.TH_BREAK_HALLWAY_INNER_CRATE,
@@ -217,12 +217,12 @@ def set_region_rules(world: "SohWorld") -> None:
         (Locations.TH_BREAK_ROOM_RIGHT_CRATE,
          lambda bundle: (can_pass_enemy(
              bundle, Enemies.BREAK_ROOM_GUARD) & can_break_crates(bundle))
-         | (can_pass_enemy(bundle, Enemies.GERUDO_GUARD) & has_explosives(bundle)
+         | (can_bypass_gerudo_patrol(bundle) & has_explosives(bundle)
              & can_use(Items.BOOMERANG, bundle))),
         (Locations.TH_BREAK_ROOM_LEFT_CRATE,
          lambda bundle: (can_pass_enemy(
              bundle, Enemies.BREAK_ROOM_GUARD) & can_break_crates(bundle))
-         | (can_pass_enemy(bundle, Enemies.GERUDO_GUARD) & has_explosives(bundle)
+         | (can_bypass_gerudo_patrol(bundle) & has_explosives(bundle)
              & can_use(Items.BOOMERANG, bundle))),
 
     ])

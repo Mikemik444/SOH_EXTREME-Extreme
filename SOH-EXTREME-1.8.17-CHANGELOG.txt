@@ -1,0 +1,12 @@
+SOH-EXTREME 1.8.17 - Separate Bush Sanity from Grass Sanity
+
+Changes
+- Bushes are controlled exclusively by the independent Shuffle Bushes / Bush Sanity setting.
+- Grass Sanity Off/Dungeons/Overworld/All only controls cuttable grass checks and never implicitly enables bush checks.
+- The native actor hooks, active-location filtering, Check Tracker visibility, AP location family audit, exported native CVar, and Universal Tracker passthrough now agree on the separate settings.
+- The shared Grass / Bush Soul only auto-enables Grass Sanity when neither Grass Sanity nor Bush Sanity provides a location family. Selecting Bush Sanity alone no longer forces Grass Sanity on.
+
+Validation
+- Source assertions verified no remaining Grass Sanity -> Bush Sanity implication in the changed native/AP paths.
+- Python syntax compilation and APWorld archive consistency checks passed.
+- A full Windows/MSVC build and in-game seed generation still need to be run in the configured checkout.

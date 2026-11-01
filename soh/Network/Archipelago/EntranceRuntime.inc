@@ -1,13 +1,18 @@
+#include <cstddef>
 // Included once by ArchipelagoClient.cpp, on the gameplay thread.
 #include "EntranceRouting.h"
 #include <array>
 #include <cmath>
+#include <set>
 #include "soh/Enhancements/randomizer/entrance.h"
 #include "soh/Enhancements/randomizer/randomizer_entrance.h"
 #include "soh/Enhancements/randomizer/randomizer_grotto.h"
 
 namespace SohExtreme::EntranceRuntime {
 EntranceRouting routing;
+// AP endpoint IDs include synthetic dungeon-room doors beyond the native
+// entrance-discovery bitset. Keep discovery keyed by the full endpoint ID.
+std::set<int> discoveredEndpoints;
 const EntranceEndpoint* arrival = nullptr;
 const EntranceEndpoint* crossingSource = nullptr;
 const EntranceEndpoint* crossingTarget = nullptr;
@@ -108,6 +113,7 @@ void CancelTransition() {
 
 void Reset(bool preserveRequestedDungeonReturn = false) {
     routing.Reset();
+    discoveredEndpoints.clear();
     slotMapLoaded = false;
     pendingSpawnAge = -1;
     roomEntry = previousScene = departingScene = lastPlayerPosition = lastGroundPosition = previousBeforeArrival = {};
@@ -181,8 +187,14 @@ bool RecoverRejectedArrival(const char* reason) {
         gSaveContext.respawnFlag = 0;
         ClearIncomingCutscene();
         gSaveContext.entranceIndex = Grotto_OverrideSpecialEntrance(static_cast<int16_t>(target));
-        if (pendingArrival.resolvedIndex == policy->nativeIndex &&
-            gSaveContext.entranceIndex == policy->nativeIndex) return true;
+        // CancelTransition() and ArmArrival() reset resolvedIndex to -1.
+        // Verify the *newly computed* native index, then explicitly arm it.
+        // Comparing pendingArrival.resolvedIndex here always failed before.
+        if (gSaveContext.entranceIndex == policy->nativeIndex) {
+            pendingArrival.resolvedIndex = policy->nativeIndex;
+            pendingArrival.resolutionMismatch = false;
+            return true;
+        }
     }
     SPDLOG_ERROR("[Archipelago] No verified entrance recovery is available; refusing the scene load");
     CancelTransition();
@@ -267,6 +279,12 @@ bool AfterSceneConditions() {
     if (!EntranceDestinationAllowsAge(pendingArrival.target, CurrentArrivalAge()) ||
         !ArrivalTableMatches(pendingArrival.target)) {
         if (!RecoverRejectedArrival("arrival changed before normal scene selection")) return false;
+    }
+    // A spawn/age-warp can enter through a shuffled spawn endpoint without
+    // passing Entrance_OverrideNextIndex/Complete(). Record it only after the
+    // destination scene has passed the same validation as an ordinary arrival.
+    if (pendingArrival.source) {
+        discoveredEndpoints.insert(pendingArrival.source->id);
     }
     pendingArrival = {};
     return true;
@@ -428,6 +446,7 @@ void AdvanceDoor() {
     if (!check) return;
     const int source = openedDoor->id;
     openedDoor = nullptr;
+    discoveredEndpoints.insert(source);
     Record(source);
     const int target = routing.Destination(source);
     // Only crossing a physically opened door gets here. Its lock, combat clear
@@ -496,6 +515,7 @@ int64_t Complete(int scene) {
     dungeonReturnArrival = false;
     const bool arrived = !suppressTransitionChecks && source && target &&
                          CrossingScene(target->scene) == CrossingScene(scene);
+    if (arrived) discoveredEndpoints.insert(source->id);
     suppressTransitionChecks = false;
     lastArrivalSource = arrived ? source : nullptr;
     lastArrivalTarget = arrived ? target : nullptr;
@@ -578,6 +598,37 @@ void RememberPlayerPosition() {
         lastPlayerPosition = point;
         if (player->actor.bgCheckFlags & BGCHECKFLAG_GROUND) lastGroundPosition = point;
     }
+}
+
+bool PrepareDungeonVoidOut() {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        Entrance_GetDungeonSpawn(gPlayState->sceneNum) < 0 ||
+        gSaveContext.entranceIndex < 0 || gSaveContext.entranceIndex >= ENTRANCE_TABLE_SIZE) return false;
+
+    // AP scene-to-door routes use a reviewed native entrance as their scene
+    // anchor. A stale anchor for another scene must never be used for voiding.
+    if (gEntranceTable[gSaveContext.entranceIndex].scene != gPlayState->sceneNum) return false;
+    const SceneReturnPoint* landing = nullptr;
+    if (ReturnPointIsCurrent(lastGroundPosition) &&
+        lastGroundPosition.scene == gPlayState->sceneNum) {
+        landing = &lastGroundPosition;
+    } else if (ReturnPointIsCurrent(roomEntry) && roomEntry.scene == gPlayState->sceneNum) {
+        landing = &roomEntry;
+    }
+    if (!landing || landing->room < 0 || landing->room >= gPlayState->numRooms) return false;
+    for (float axis : {landing->position.x, landing->position.y, landing->position.z}) {
+        if (!std::isfinite(axis) || axis < -32768.0f || axis > 32767.0f) return false;
+    }
+    RespawnData point{};
+    point.entranceIndex = gSaveContext.entranceIndex;
+    point.roomIndex = landing->room;
+    point.playerParams = 0x0DFF;
+    point.pos = landing->position;
+    point.yaw = landing->yaw;
+    point.tempSwchFlags = gPlayState->actorCtx.flags.tempSwch;
+    point.tempCollectFlags = gPlayState->actorCtx.flags.tempCollect;
+    gSaveContext.respawn[RESPAWN_MODE_DOWN] = point;
+    return true;
 }
 
 void RememberGrottoLanding() {
@@ -922,6 +973,18 @@ bool GameOverDungeonReturn() {
     return ApplyDungeonReturn(BuildDungeonReturn());
 }
 
+// Wallmasters are a forced return, not a death checkpoint. In mixed pools the
+// destination policy explicitly says to return to the physical scene Link came
+// from, rather than letting Play_LoadToLastEntrance send him to the vanilla
+// dungeon entrance. Dungeon-only pools retain their ordinary dungeon spawn.
+bool WallmasterReturn() {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        DungeonReturnMode() != AP_DUNGEON_RETURN_PREVIOUS_SCENE) return false;
+    pendingDungeonReturn = {};
+    const auto request = BuildDungeonReturn();
+    return request.valid && request.previous && ApplyDungeonReturn(request);
+}
+
 void CancelDungeonReturn() {
     pendingDungeonReturn = {};
     restartArrival = {};
@@ -946,8 +1009,16 @@ bool SavewarpForAge(int age) {
     if (slotMapLoaded && !routing.Active()) return false;
     CancelTransition();
     if (!slotMapLoaded) {
+        // Do not let the caller fall through to the native dungeon savewarp
+        // while the AP entrance map is still arriving. Use a safe age-native
+        // staging entrance, then ServicePendingSpawn applies the authoritative
+        // shuffled destination once the slot map is validated.
         pendingSpawnAge = age;
-        return false;
+        gSaveContext.respawnFlag = 0;
+        gSaveContext.entranceIndex = age == LINK_AGE_CHILD ? ENTR_LINKS_HOUSE_1 : ENTR_HYRULE_FIELD_10;
+        gSaveContext.cutsceneIndex = 0;
+        gSaveContext.nextCutsceneIndex = 0xFFEF;
+        return true;
     }
     suppressTransitionChecks = true;
     const int source = age == LINK_AGE_CHILD ? ENTR_LINKS_HOUSE_CHILD_SPAWN : ENTR_HYRULE_FIELD_10;
@@ -1012,6 +1083,30 @@ bool ServicePendingSpawn(bool safeToTransition) {
     return true;
 }
 } // namespace SohExtreme::EntranceRuntime
+
+// Expose the full authoritative AP map to the entrance tracker, including
+// synthetic dungeon-room-door routes omitted from the native scene table.
+extern "C" size_t Archipelago_CopyEntranceTrackerRoutes(EntranceOverride* outRoutes, size_t capacity) {
+    const auto& routes = SohExtreme::EntranceRuntime::routing.Routes();
+    const size_t count = routes.size();
+    if (outRoutes == nullptr || capacity == 0) return count;
+
+    size_t written = 0;
+    for (const auto& [source, target] : routes) {
+        if (written >= capacity) break;
+        const auto* a = SohExtreme::EntranceEndpointById(source);
+        const auto* b = SohExtreme::EntranceEndpointById(target);
+        if (!a || !b) continue;
+        outRoutes[written++] = { 0, static_cast<int16_t>(source), static_cast<int16_t>(a->reverse),
+                                 static_cast<int16_t>(target), static_cast<int16_t>(b->reverse) };
+    }
+    return written;
+}
+
+extern "C" bool Archipelago_IsEntranceDiscovered(int entranceId) {
+    return Archipelago_IsCurrentSaveFile() &&
+           SohExtreme::EntranceRuntime::discoveredEndpoints.contains(entranceId);
+}
 
 extern "C" bool Archipelago_EntranceShuffleActive(void) {
     return Archipelago_IsCurrentSaveFile() && SohExtreme::EntranceRuntime::routing.Active();
@@ -1082,6 +1177,9 @@ extern "C" bool Archipelago_EntranceRestoreDungeonReturn(void) {
 }
 extern "C" bool Archipelago_EntranceGameOverDungeonReturn(void) {
     return SohExtreme::EntranceRuntime::GameOverDungeonReturn();
+}
+extern "C" bool Archipelago_EntranceWallmasterReturn(void) {
+    return SohExtreme::EntranceRuntime::WallmasterReturn();
 }
 extern "C" bool Archipelago_EntranceDungeonReturnInProgress(void) {
     return Archipelago_IsCurrentSaveFile() && SohExtreme::EntranceRuntime::dungeonReturnArrival;

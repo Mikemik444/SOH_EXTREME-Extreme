@@ -110,6 +110,34 @@ class EntranceRouting {
             }
         }
         if (next.empty()) { error = "Enabled entrance randomizer has no mapping"; return false; }
+        // New maps include a deterministic count and checksum over every
+        // source -> destination pair, including room-door and blue-warp routes.
+        // Older revision-1 saves remain readable without these extra fields.
+        const auto routeCount = settings.find("EntranceMapRouteCount");
+        const auto fingerprint = settings.find("EntranceMapFingerprint");
+        if ((routeCount == settings.end()) != (fingerprint == settings.end())) {
+            error = "Incomplete entrance-map integrity metadata";
+            return false;
+        }
+        if (routeCount != settings.end()) {
+            if (routeCount->second < 1 || static_cast<size_t>(routeCount->second) != next.size()) {
+                error = "Incomplete entrance map: source count differs from the server";
+                return false;
+            }
+            uint32_t hash = 2166136261u;
+            for (const auto& [source, destination] : next) {
+                for (uint32_t integer : {static_cast<uint32_t>(source), static_cast<uint32_t>(destination)}) {
+                    for (int shift = 0; shift != 32; shift += 8) {
+                        hash = (hash ^ ((integer >> shift) & 0xffu)) * 16777619u;
+                    }
+                }
+            }
+            if (fingerprint->second < 0 || (hash & 0x7fffffffu) !=
+                static_cast<uint32_t>(fingerprint->second)) {
+                error = "Entrance map checksum mismatch: possible stale or partial Archipelago settings";
+                return false;
+            }
+        }
         const auto riverRevision = settings.find("EntranceRiverPathsRevision");
         if (riverRevision != settings.end()) {
             if (riverRevision->second < 0 || riverRevision->second > 1) {
@@ -146,11 +174,18 @@ class EntranceRouting {
         const int poolRevision = value("EntrancePoolPolicyRevision");
         const int mixedMask = value("EntranceMixedPoolMask");
         const int mixedOutside = value("DungeonDoorMixedOutside");
-        constexpr int dungeonMask = (1 << 2) | (1 << 4) | (1 << 10);
         constexpr int doorMask = 1 << 10;
         constexpr int allMask = (1 << 11) - 1;
-        const bool selectedOutside = (mixedMask & doorMask) != 0 &&
-                                     (mixedMask & (allMask ^ dungeonMask)) != 0;
+        // Return to the actual previous scene only when the relevant entrance
+        // category itself participates in a mixed pool. Dungeon doors remain
+        // dungeon-local when their category is not mixed; boss entrances retain
+        // their originating-dungeon return behavior when bosses are not mixed.
+        constexpr int bossMask = 1 << 4;
+        const bool mixedDungeonDoors = (mixedMask & doorMask) != 0 &&
+                                       value("ShuffleDungeonDoors") != 0;
+        const bool mixedBossEntrances = (mixedMask & bossMask) != 0 &&
+                                        value("ShuffleBossEntrances") != 0;
+        const bool selectedOutside = mixedDungeonDoors || mixedBossEntrances;
         if (poolRevision < 0 || poolRevision > 1 || mixedMask < 0 || (mixedMask & ~allMask) != 0 ||
             (mixedOutside != 0 && mixedOutside != 1) ||
             ((poolRevision != 0 || mixedMask != 0 || mixedOutside != 0) &&

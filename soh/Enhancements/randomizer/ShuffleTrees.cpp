@@ -156,15 +156,11 @@ static CheckIdentity IdentifyTree(s32 sceneNum, s32 posX, s32 posZ) {
     return treeIdentity;
 }
 
-static bool GrassSanityIncludesBushes() {
-    const auto grassSetting = Rando::Context::GetInstance()->GetOption(RSK_SHUFFLE_GRASS);
-    return grassSetting.Is(RO_SHUFFLE_GRASS_OVERWORLD) || grassSetting.Is(RO_SHUFFLE_GRASS_ALL);
-}
-
 void EnWood02_RandomizerInit(void* actorRef) {
     EnWood02* treeActor = static_cast<EnWood02*>(actorRef);
-    const bool bushesEnabled = Rando::Context::GetInstance()->GetOption(RSK_SHUFFLE_BUSHES).Get() ||
-                               GrassSanityIncludesBushes();
+    // Bush checks are controlled exclusively by Bush Sanity. Grass Sanity
+    // only registers cuttable En_Kusa grass checks.
+    const bool bushesEnabled = Rando::Context::GetInstance()->GetOption(RSK_SHUFFLE_BUSHES).Get();
     if ((treeActor->actor.params <= WOOD_TREE_KAKARIKO_ADULT &&
          Rando::Context::GetInstance()->GetOption(RSK_SHUFFLE_TREES).Get()) ||
         (treeActor->actor.params > WOOD_TREE_KAKARIKO_ADULT &&
@@ -184,9 +180,7 @@ void EnWood02_RandomizerInit(void* actorRef) {
 
 void RegisterShuffleTrees() {
     bool shouldRegisterTree = IS_RANDO && Rando::Context::GetInstance()->GetOption(RSK_SHUFFLE_TREES).Get();
-    bool shouldRegisterBush = IS_RANDO &&
-                              (Rando::Context::GetInstance()->GetOption(RSK_SHUFFLE_BUSHES).Get() ||
-                               GrassSanityIncludesBushes());
+    bool shouldRegisterBush = IS_RANDO && Rando::Context::GetInstance()->GetOption(RSK_SHUFFLE_BUSHES).Get();
 
     COND_ID_HOOK(OnActorInit, ACTOR_EN_WOOD02, shouldRegisterTree || shouldRegisterBush, EnWood02_RandomizerInit);
 

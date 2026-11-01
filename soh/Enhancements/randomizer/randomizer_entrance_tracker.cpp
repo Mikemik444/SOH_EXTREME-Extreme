@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <tuple>
+#include <cstddef>
 #include <libultraship/controller/controldeck/ControlDeck.h>
 #include "soh/Enhancements/randomizer/randomizer.h"
 
@@ -19,6 +20,9 @@ extern PlayState* gPlayState;
 #include "soh/Enhancements/randomizer/randomizer_entrance.h"
 #include "soh/Enhancements/randomizer/randomizerTypes.h"
 }
+
+extern "C" size_t Archipelago_CopyEntranceTrackerRoutes(EntranceOverride* outRoutes, size_t capacity);
+extern "C" bool Archipelago_IsEntranceDiscovered(int entranceId);
 
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "entrance.h"
@@ -32,10 +36,10 @@ using namespace UIWidgets;
 #define COLOR_GRAY IM_COL32(155, 155, 155, 255)
 
 namespace EntranceTracker {
-EntranceOverride srcListSortedByArea[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
-EntranceOverride destListSortedByArea[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
-EntranceOverride srcListSortedByType[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
-EntranceOverride destListSortedByType[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
+EntranceOverride srcListSortedByArea[TRACKER_ENTRANCE_MAX_COUNT] = { 0 };
+EntranceOverride destListSortedByArea[TRACKER_ENTRANCE_MAX_COUNT] = { 0 };
+EntranceOverride srcListSortedByType[TRACKER_ENTRANCE_MAX_COUNT] = { 0 };
+EntranceOverride destListSortedByType[TRACKER_ENTRANCE_MAX_COUNT] = { 0 };
 EntranceTrackingData gEntranceTrackingData = { 0 };
 
 static const EntranceOverride emptyOverride = { 0 };
@@ -457,6 +461,9 @@ int16_t LinkIsInArea(const EntranceData* entrance) {
 }
 
 bool IsEntranceDiscovered(s16 index) {
+    if (Archipelago_IsCurrentSaveFile() && Archipelago_IsEntranceDiscovered(index)) {
+        return true;
+    }
     bool isDiscovered = Entrance_GetIsEntranceDiscovered(index);
     if (!isDiscovered && !Archipelago_IsCurrentSaveFile()) {
         // Non-AP native seeds retain the old linked land/water discovery.
@@ -526,8 +533,11 @@ const EntranceData* GetEntranceData(s16 index) {
             data.srcGroup = EntranceGroupForScene(sourceScene);
             data.dstGroup = EntranceGroupForScene(endpoint.scene);
             data.type = endpoint.door >= 0 ? ENTRANCE_TYPE_ROOM_DOOR :
-                        (endpoint.reverse < 0 ? ENTRANCE_TYPE_ONE_WAY : ENTRANCE_TYPE_OVERWORLD);
-            data.metaTag = endpoint.door >= 0 ? "room door" : (endpoint.reverse < 0 ? "one way" : "overworld");
+                        (SohExtreme::IsDungeonPoolEndpoint(endpoint.id) ? ENTRANCE_TYPE_DUNGEON :
+                         (endpoint.reverse < 0 ? ENTRANCE_TYPE_ONE_WAY : ENTRANCE_TYPE_OVERWORLD));
+            data.metaTag = endpoint.door >= 0 ? "dungeon room door" :
+                           (SohExtreme::IsDungeonPoolEndpoint(endpoint.id) ? "dungeon/boss" :
+                            (endpoint.reverse < 0 ? "one way" : "overworld"));
             // Room endpoints have distinct source sides. Never hide a room
             // return as if it were a redundant single-exit house interior.
             data.oneExit = 1;
@@ -585,8 +595,8 @@ static size_t EntranceGroup(const EntranceOverride& route, TrackerEntranceGroupi
 
 static void SortEntranceList(EntranceOverride* entranceList, TrackerEntranceGroupingType grouping) {
     std::vector<EntranceOverride> rows;
-    rows.reserve(ENTRANCE_OVERRIDES_MAX_COUNT);
-    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; ++i) {
+    rows.reserve(TRACKER_ENTRANCE_MAX_COUNT);
+    for (size_t i = 0; i < TRACKER_ENTRANCE_MAX_COUNT; ++i) {
         const auto& route = entranceList[i];
         if (!Entrance_EntranceIsNull(&entranceList[i]) &&
             GetEntranceData(route.index) && GetEntranceData(route.override)) rows.push_back(route);
@@ -605,7 +615,7 @@ static void SortEntranceList(EntranceOverride* entranceList, TrackerEntranceGrou
     // Sort the actual routes, not the stock catalog. Several one-way sources
     // may share one target, and synthetic room destinations have no stock row.
     std::stable_sort(rows.begin(), rows.end(), [&](const auto& a, const auto& b) { return order(a) < order(b); });
-    std::fill_n(entranceList, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
+    std::fill_n(entranceList, TRACKER_ENTRANCE_MAX_COUNT, emptyOverride);
     std::copy(rows.begin(), rows.end(), entranceList);
 }
 
@@ -643,20 +653,22 @@ void ClearEntranceTrackingData() {
 void InitEntranceTrackingData() {
     auto entranceCtx = Rando::Context::GetInstance()->GetEntranceShuffler();
     gEntranceTrackingData = { 0 };
-    std::fill_n(srcListSortedByArea, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
-    std::fill_n(destListSortedByArea, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
-    std::fill_n(srcListSortedByType, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
-    std::fill_n(destListSortedByType, ENTRANCE_OVERRIDES_MAX_COUNT, emptyOverride);
+    std::fill_n(srcListSortedByArea, TRACKER_ENTRANCE_MAX_COUNT, emptyOverride);
+    std::fill_n(destListSortedByArea, TRACKER_ENTRANCE_MAX_COUNT, emptyOverride);
+    std::fill_n(srcListSortedByType, TRACKER_ENTRANCE_MAX_COUNT, emptyOverride);
+    std::fill_n(destListSortedByType, TRACKER_ENTRANCE_MAX_COUNT, emptyOverride);
 
     if (!OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_ENTRANCES) &&
         !Archipelago_EntranceShuffleActive()) return;
 
-    for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; ++i) {
-        const auto& route = entranceCtx->entranceOverrides[i];
-        if (Entrance_EntranceIsNull(&entranceCtx->entranceOverrides[i])) continue;
+    auto addRoute = [&](const EntranceOverride& route) {
         if (!GetEntranceData(route.index) || !GetEntranceData(route.override)) {
-            SPDLOG_WARN("Entrance tracker ignored unknown endpoint: {} -> {}", route.index, route.override);
-            continue;
+            SPDLOG_WARN("[Entrance Tracker] ignored unknown endpoint: {} -> {}", route.index, route.override);
+            return;
+        }
+        if (gEntranceTrackingData.EntranceCount >= TRACKER_ENTRANCE_MAX_COUNT) {
+            SPDLOG_ERROR("[Entrance Tracker] route capacity exceeded");
+            return;
         }
         const size_t row = gEntranceTrackingData.EntranceCount++;
         srcListSortedByArea[row] = destListSortedByArea[row] = route;
@@ -664,6 +676,32 @@ void InitEntranceTrackingData() {
         for (int grouping = 0; grouping < TRACKER_GROUP_TYPE_COUNT; ++grouping) {
             const auto type = static_cast<TrackerEntranceGroupingType>(grouping);
             ++gEntranceTrackingData.GroupEntranceCounts[grouping][EntranceGroup(route, type)];
+        }
+    };
+
+    if (Archipelago_EntranceShuffleActive()) {
+        // This is the authoritative AP route map. It includes room-door
+        // sources, unlike the native entrance override array.
+        const size_t routeCount = Archipelago_CopyEntranceTrackerRoutes(nullptr, 0);
+        if (routeCount > TRACKER_ENTRANCE_MAX_COUNT) {
+            SPDLOG_ERROR("[Entrance Tracker] AP route count {} exceeds capacity {}", routeCount,
+                         TRACKER_ENTRANCE_MAX_COUNT);
+            return;
+        }
+        std::vector<EntranceOverride> routes(routeCount);
+        const size_t copied = routeCount == 0 ? 0 :
+            Archipelago_CopyEntranceTrackerRoutes(routes.data(), routes.size());
+        if (copied != routeCount) {
+            SPDLOG_ERROR("[Entrance Tracker] AP route copy incomplete: {} of {}", copied, routeCount);
+            return;
+        }
+        for (const auto& route : routes) addRoute(route);
+    } else {
+        for (size_t i = 0; i < ENTRANCE_OVERRIDES_MAX_COUNT; ++i) {
+            // Entrance_EntranceIsNull has a legacy non-const pointer signature.
+            // Work on a local copy because the tracker must not mutate the live table.
+            auto route = entranceCtx->entranceOverrides[i];
+            if (!Entrance_EntranceIsNull(&route)) addRoute(route);
         }
     }
 
