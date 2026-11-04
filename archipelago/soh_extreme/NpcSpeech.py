@@ -145,7 +145,13 @@ def conversation_rule(world, entry, scrub_region=None):
             elif gate == "Deku Scrub Soul":
                 if o.shuffle_enemy_soul.value:
                     gates.append(Has("Enemy Soul" if o.shuffle_enemy_soul.value == 1 else gate))
-            elif gate == "carpenters": gates.append(H.has_item(Events.RESCUED_ALL_CARPENTERS, b))
+            elif gate == "carpenters":
+                # Rescuing every carpenter does NOT protect Link from Gerudo
+                # patrols. Only the Membership Card makes these guarded NPC
+                # conversations safe; a ranged stun is a traversal bypass,
+                # not the authority to talk to the guards or residents.
+                # Keep region, age, language and NPC Soul gates above intact.
+                gates.append(H.has_item(Items.GERUDO_MEMBERSHIP_CARD, b))
             elif gate == "carpenter_prison":
                 pass  # First talk through the bars precedes the fight/key/rescue.
             elif gate == "carpenter_tent":
@@ -156,7 +162,12 @@ def conversation_rule(world, entry, scrub_region=None):
             elif gate == "stop_goron":
                 gates.append(H.has_explosives(b) | (H.is_adult(b) &
                     (H.has_item(Items.GORONS_BRACELET, b) | H.can_use(Items.FAIRY_BOW, b))))
-            elif gate == "bow": gates.append(H.can_use(Items.FAIRY_BOW, b))
+            elif gate == "bow":
+                # The archery host can be SPOKEN TO without playing archery.
+                # Its 1000/1500-point item checks independently require Bow,
+                # Epona and the other minigame prerequisites.
+                if entry["id"] != 10000027:
+                    gates.append(H.can_use(Items.FAIRY_BOW, b))
             elif gate == "sarias_song": gates.append(H.can_use(Items.SARIAS_SONG, b))
             elif gate == "ocarina": gates.append(H.can_use(Items.FAIRY_OCARINA, b))
             elif gate == "midos_house":

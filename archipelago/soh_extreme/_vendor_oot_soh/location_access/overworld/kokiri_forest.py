@@ -176,9 +176,8 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.KF_HOUSE_OF_TWINS, lambda bundle: True_()),
         (Regions.KF_KNOW_IT_ALL_HOUSE, lambda bundle: True_()),
         (Regions.KF_KOKIRI_SHOP, lambda bundle: True_()),
-        (Regions.KF_OUTSIDE_DEKU_TREE, lambda bundle: (is_adult(bundle) &
-                                                       (can_pass_enemy(bundle, Enemies.BIG_SKULLTULA) |
-                                                        has_item(Events.FOREST_TEMPLE_COMPLETED, bundle)))
+        (Regions.KF_OUTSIDE_DEKU_TREE, lambda bundle: is_adult(bundle)
+         # Mido only blocks the child route when Closed Forest requires it.
          | (is_child(bundle) & has_item(LocalEvents.MIDO_SWORD_AND_SHIELD, bundle))
          # Todo, maybe create a helper for handling settings
          | OptionFilter(ClosedForest, ClosedForest.option_off)),
@@ -218,10 +217,8 @@ def set_region_rules(world: "SohWorld") -> None:
          # Todo: Add dungeons shuffle rule when entrance shuffle is implementedd
          & (OptionFilter(ClosedForest, ClosedForest.option_off)
               | has_item(LocalEvents.MIDO_SWORD_AND_SHIELD, bundle))),
-        (Regions.KOKIRI_FOREST, lambda bundle:  (is_adult(bundle) &
-                                                 (can_pass_enemy(bundle, Enemies.BIG_SKULLTULA) |
-                                                  has_item(Events.FOREST_TEMPLE_COMPLETED, bundle)))
-         | has_item(LocalEvents.MIDO_SWORD_AND_SHIELD, bundle)
+        (Regions.KOKIRI_FOREST, lambda bundle: is_adult(bundle)
+         | (is_child(bundle) & has_item(LocalEvents.MIDO_SWORD_AND_SHIELD, bundle))
          | OptionFilter(ClosedForest, ClosedForest.option_off))
     ])
 

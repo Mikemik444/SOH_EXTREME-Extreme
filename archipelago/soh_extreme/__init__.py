@@ -3179,6 +3179,12 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # corresponding runtime actor gates here for every custom family.
         # This is intentionally done before the individual trigger rules below
         # so multiple requirements compose rather than overwrite one another.
+        # Wonder Item actors may be named after a physical sign, but hitting
+        # their invisible trigger is not reading a sign. Soul-gate only actual
+        # family='sign' objects; never use a substring of a Wonder's name.
+        fork_wonder_check_names = frozenset(
+            loc.name for loc in FORK_LOCATIONS if loc.family == "wonder"
+        )
         for fork_loc in FORK_LOCATIONS:
             if not self._fork_location_enabled(fork_loc):
                 continue
@@ -3340,7 +3346,12 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 elif rc == "RC_GERUDO_TRAINING_GROUND_WONDER_EYE_STATUE_ROOM":
                     rule = can_use(Items.HOVER_BOOTS, bundle) | Has("Bunny Hood")
                 elif rc in {"RC_GF_WONDER_ARCHERY_SIGN", "RC_GF_WONDER_ENTRANCE_SIGN"}:
-                    rule = can_use(Items.HOOKSHOT, bundle)
+                    # These are hookshot-triggered Wonder actors, NOT normal
+                    # readable signs or Bow-triggered eye switches. Longshot
+                    # must satisfy the same hit method, even when the tracker
+                    # represents its progressive tier separately.
+                    rule = (can_use(Items.HOOKSHOT, bundle)
+                            | can_use(Items.LONGSHOT, bundle))
                 elif rc == "RC_GV_WONDER_LOWER_WATERFALL":
                     # Native also permits the planted-bean and void-collection
                     # routes. The scale/iron routes are the always-modelled AP
@@ -3593,7 +3604,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             )
             is_named_bush = re.search(r"BUSH\s+\d+$", upper_name) is not None
             is_named_beehive = "BEEHIVE" in upper_name
-            is_named_sign = "SIGN" in upper_name
+            # A Wonder Item named "... Sign" is NOT a Sign Soul actor.
+            is_named_sign = "SIGN" in upper_name and location.name not in fork_wonder_check_names
             # A tree named after its nearby GS is still a tree drop, not a
             # Skulltula actor. Its explicit physical family takes precedence.
             is_named_skull = not (tags & LocTag.Tree) and (
@@ -3805,7 +3817,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     (Has("Progressive Bomb Bag") & HasLiveAmmo(4, True_())) | (Has("Bombchu Bag") & HasLiveAmmo(8, True_())) | grab_rule()
                 )
 
-            if o.shuffle_animal_soul.value and (tags & animal_tags):
+            # Do not let an erroneous stock LocTag turn a fork-native Wonder
+            # proximity check into an unrelated animal interaction.
+            if o.shuffle_animal_soul.value and (tags & animal_tags) and location.name not in fork_wonder_check_names:
                 require_animal(location)
 
             # Business scrubs are their own soul class in SOH-EXTREME.
@@ -4074,7 +4088,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     or upper.endswith(' PUDDLE FISH')
                     or upper in ('LH CHILD FISHING', 'LH ADULT FISHING')
                 )
-                direct_cow = upper.endswith(' COW')
+                # The name describes what a Wonder Item is above, not the actor that triggers it.
+                # Fork checks use exact actor families, never the stock name fallback.
+                direct_cow = (upper.endswith(' COW') and location.name not in FORK_LOCATION_NAME_TO_ID)
                 direct_frog = upper.startswith('ZR FROGS ')
                 if direct_fish or direct_cow or direct_frog:
                     require_animal(location)
@@ -4176,7 +4192,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if location.name.startswith(("Enemy Defeat:", "EXTREME Native Event", "EXTREME Native Action", "EXTREME Native RR_")):
                 continue
             lname = location.name.upper()
-            if o.shuffle_sign_soul.value and (" SIGN" in lname or lname.startswith("EXTREME ") and "SIGN" in lname):
+            if (o.shuffle_sign_soul.value and location.name not in fork_wonder_check_names
+                    and (" SIGN" in lname or (lname.startswith("EXTREME ") and "SIGN" in lname))):
                 require(location, "Sign Soul")
             if o.shuffle_speak.value and (" SHOP ITEM " in lname or "BAZAAR ITEM " in lname or "POTION SHOP ITEM " in lname):
                 require_speak(location)

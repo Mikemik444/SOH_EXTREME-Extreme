@@ -12,7 +12,7 @@ void RegionTable_Init_GerudoFortress() {
         LOCATION(RC_GF_OUTSKIRTS_NE_CRATE,   ((logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))) && logic->CanBreakCrates()),
         LOCATION(RC_GF_OUTSKIRTS_NW_CRATE,   ((logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) || (logic->IsAdult && logic->CanUse(RG_FAIRY_BOW)) || (logic->IsChild && logic->CanUse(RG_FAIRY_SLINGSHOT)))) && logic->CanBreakCrates()),
         LOCATION(RC_GF_EAST_EXIT_ARROW_SIGN, logic->CanRead()),
-        LOCATION(RC_GF_WONDER_ENTRANCE_SIGN, logic->CanUse(RG_HOOKSHOT)),
+        LOCATION(RC_GF_WONDER_ENTRANCE_SIGN, logic->CanUse(RG_HOOKSHOT) || logic->CanUse(RG_LONGSHOT)),
     }, {
         //Exits
         ENTRANCE(RR_GV_FORTRESS_SIDE, true),
@@ -247,7 +247,7 @@ void RegionTable_Init_GerudoFortress() {
         LOCATION(RC_GF_SOUTH_TARGET_EAST_CRATE,  logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
         LOCATION(RC_GF_SOUTH_TARGET_WEST_CRATE,  logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanBreakCrates()),
         LOCATION(RC_GF_HBA_RECTANGLE_SIGN,       logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->IsAdult && logic->CanRead()),
-        LOCATION(RC_GF_WONDER_ARCHERY_SIGN,      logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && logic->CanUse(RG_HOOKSHOT)),
+        LOCATION(RC_GF_WONDER_ARCHERY_SIGN,      logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD) && (logic->CanUse(RG_HOOKSHOT) || logic->CanUse(RG_LONGSHOT))),
     }, {
         //Exits
         ENTRANCE(RR_GF_OUTSIDE_GTG, logic->HasItem(RG_GERUDO_MEMBERSHIP_CARD)),
