@@ -649,6 +649,8 @@ bool Logic::BAllowed() {
 // Can the passed in item be used?
 // RANDOTODO catch magic items explicitly and add an assert on miss.
 bool Logic::CanUse(RandomizerGet itemName) {
+    const bool mayUseAdultEquipment = IsAdult || CheckRandoInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS);
+    const bool mayUseChildEquipment = IsChild || CheckRandoInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS);
     if (!HasItem(itemName))
         return false;
 
@@ -673,29 +675,29 @@ bool Logic::CanUse(RandomizerGet itemName) {
         // Adult items
         // TODO: Uncomment those if we ever implement more item usability settings
         case RG_FAIRY_BOW:
-            return IsAdult; // || BowAsChild && (AmmoCanDrop || Get(LOGIC_BUY_ARROW));
+            return mayUseAdultEquipment; // || BowAsChild && (AmmoCanDrop || Get(LOGIC_BUY_ARROW));
         case RG_MEGATON_HAMMER:
-            return IsAdult; // || HammerAsChild;
+            return mayUseAdultEquipment; // || HammerAsChild;
         case RG_IRON_BOOTS:
             // Water contact without Swim voids in EXTREME, even in Iron Boots.
-            return IsAdult && HasItem(RG_BRONZE_SCALE);
+            return mayUseAdultEquipment && HasItem(RG_BRONZE_SCALE);
         case RG_HOVER_BOOTS:
-            return IsAdult; // || HoverBootsAsChild;
+            return mayUseAdultEquipment; // || HoverBootsAsChild;
         case RG_HOOKSHOT:
         case RG_LONGSHOT:
-            return IsAdult; // || HookshotAsChild;
+            return mayUseAdultEquipment; // || HookshotAsChild;
         case RG_GORON_TUNIC:
-            return IsAdult; // || GoronTunicAsChild;
+            return mayUseAdultEquipment; // || GoronTunicAsChild;
         case RG_ZORA_TUNIC:
-            return IsAdult; // || ZoraTunicAsChild;
+            return mayUseAdultEquipment; // || ZoraTunicAsChild;
         case RG_MIRROR_SHIELD:
-            return IsAdult; // || MirrorShieldAsChild;
+            return mayUseAdultEquipment; // || MirrorShieldAsChild;
         case RG_MASTER_SWORD:
-            return IsAdult; // || MasterSwordAsChild;
+            return mayUseAdultEquipment; // || MasterSwordAsChild;
         case RG_PROGRESSIVE_GORONSWORD:
         case RG_GIANTS_KNIFE:
         case RG_BIGGORON_SWORD:
-            return IsAdult; // || BiggoronSwordAsChild;
+            return mayUseAdultEquipment; // || BiggoronSwordAsChild;
         case RG_SILVER_GAUNTLETS:
         case RG_GOLDEN_GAUNTLETS:
         // Adult Trade
@@ -709,28 +711,28 @@ bool Logic::CanUse(RandomizerGet itemName) {
         case RG_EYEBALL_FROG:
         case RG_EYEDROPS:
         case RG_CLAIM_CHECK:
-            return IsAdult;
+            return mayUseAdultEquipment;
 
         // Child items
         case RG_FAIRY_SLINGSHOT:
-            return IsChild; // || SlingshotAsAdult && (AmmoCanDrop || Get(LOGIC_LOGIC_BUY_SEED));
+            return mayUseChildEquipment; // || SlingshotAsAdult && (AmmoCanDrop || Get(LOGIC_LOGIC_BUY_SEED));
         case RG_BOOMERANG:
-            return IsChild; // || BoomerangAsAdult;
+            return mayUseChildEquipment; // || BoomerangAsAdult;
         case RG_KOKIRI_SWORD:
-            return IsChild; // || KokiriSwordAsAdult;
+            return mayUseChildEquipment; // || KokiriSwordAsAdult;
         case RG_NUTS:
             return Get(LOGIC_NUT_ACCESS);
         case RG_STICKS:
             // A received bag/capacity upgrade supplies sticks immediately.
             // HasItem above already requires a bag. Live checks also accept
             // carried sticks without inventing ammo for an empty bag.
-            return IsChild /* || StickAsAdult;*/ &&
+            return mayUseChildEquipment /* || StickAsAdult;*/ &&
                    (Get(LOGIC_STICK_ACCESS) || GetAmmo(ITEM_STICK) > 0 ||
                     (!CalculatingAvailableChecks &&
                      (ctx->GetOption(RSK_SHUFFLE_DEKU_STICK_BAG) || CurrentUpgrade(UPG_STICKS) > 1 ||
                       ctx->GetOption(RSK_STARTING_STICKS))));
         case RG_DEKU_SHIELD:
-            return IsChild; // || DekuShieldAsAdult;
+            return mayUseChildEquipment; // || DekuShieldAsAdult;
         case RG_PROGRESSIVE_BOMB_BAG:
         case RG_BOMB_BAG:
             return true; // AmmoCanDrop || Get(LOGIC_BUY_BOMB)
@@ -741,13 +743,13 @@ bool Logic::CanUse(RandomizerGet itemName) {
             return BombchuRefill() && BombchusEnabled();
         case RG_WEIRD_EGG:
         case RG_RUTOS_LETTER:
-            return IsChild;
+            return mayUseChildEquipment;
         case RG_MAGIC_BEAN:
-            return IsChild;
+            return mayUseChildEquipment;
         case RG_SKULL_MASK:
         case RG_MASK_OF_TRUTH:
         case RG_BUNNY_HOOD:
-            return IsChild || ctx->GetOption(RSK_MASKS_AS_ADULT);
+            return mayUseChildEquipment || ctx->GetOption(RSK_MASKS_AS_ADULT);
 
         // Songs
         case RG_ZELDAS_LULLABY:
@@ -786,7 +788,7 @@ bool Logic::CanUse(RandomizerGet itemName) {
                    (!ctx->GetOption(RSK_SHUFFLE_SPEAK) || HasItem(RG_SPEAK_HYLIAN)) &&
                    HasAnimalSoul(RG_ANIMAL_SOUL_FISH);
         case RG_CRAWL:
-            return IsChild;
+            return mayUseChildEquipment;
 
         // Bottle Items
         case RG_BOTTLE_WITH_BUGS:

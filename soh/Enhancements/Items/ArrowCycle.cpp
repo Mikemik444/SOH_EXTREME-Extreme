@@ -10,6 +10,7 @@ extern "C" {
 s32 func_808351D4(Player* thisx, PlayState* play); // Arrow nocked
 void EnArrow_Init(Actor* thisx, PlayState* play);
 extern PlayState* gPlayState;
+extern s32 Flags_GetRandomizerInf(RandomizerInf flag);
 }
 
 #define CVAR_ARROW_CYCLE_NAME CVAR_ENHANCEMENT("BowArrowCycle")
@@ -81,7 +82,9 @@ static ArrowType GetArrowTypeForArrow(s8 itemAction) {
 static bool CanCycleArrows() {
     Player* player = GET_PLAYER(gPlayState);
 
-    return (LINK_IS_ADULT || CVarGetInteger(CVAR_CHEAT("TimelessEquipment"), 0)) && !gSaveContext.minigameState &&
+    return (LINK_IS_ADULT || CVarGetInteger(CVAR_CHEAT("TimelessEquipment"), 0) ||
+            (IS_RANDO && GameInteractor::IsSaveLoaded(true) &&
+             Flags_GetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS))) && !gSaveContext.minigameState &&
            gPlayState->sceneNum != SCENE_SHOOTING_GALLERY && !(player->stateFlags1 & PLAYER_STATE1_ON_HORSE) &&
            player->rideActor == NULL && INV_CONTENT(SLOT_BOW) == ITEM_BOW &&
            (INV_CONTENT(ITEM_ARROW_FIRE) == ITEM_ARROW_FIRE || INV_CONTENT(ITEM_ARROW_ICE) == ITEM_ARROW_ICE ||

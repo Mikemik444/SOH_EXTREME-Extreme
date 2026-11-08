@@ -7,6 +7,7 @@ extern "C" {
 #include "z64.h"
 #include "macros.h"
 #include "variables.h"
+extern s32 Flags_GetRandomizerInf(RandomizerInf flag);
 }
 
 // rando's Masks as Adult setting forces the enhancement on, as logic may require it
@@ -15,7 +16,9 @@ static bool AdultMasksEnabled() {
 }
 
 bool Ship_MasksEquippableAsAdult() {
-    return AdultMasksEnabled() || CVarGetInteger(CVAR_CHEAT("TimelessEquipment"), 0);
+    return AdultMasksEnabled() || CVarGetInteger(CVAR_CHEAT("TimelessEquipment"), 0) ||
+           (IS_RANDO && GameInteractor::IsSaveLoaded(true) &&
+            Flags_GetRandomizerInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS));
 }
 
 static bool IsMask(int item) {

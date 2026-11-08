@@ -33,6 +33,10 @@
 #include "soh/OTRGlobals.h"
 #include "soh/Enhancements/savestate_serialize.h"
 
+// The boss-door floor-effect transition already has a shuffled exit index.
+// Its void-style fade must not restore the ordinary dungeon pit checkpoint.
+void Play_TriggerSceneExitVoidOut(PlayState* play);
+
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -5165,7 +5169,10 @@ s32 Player_HandleExitsAndVoids(PlayState* play, Player* this, CollisionPoly* pol
                                               play->setupExitList[exitIndex - 1])) {
                         gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = play->nextEntranceIndex;
                         if (GameInteractor_Should(VB_TRIGGER_VOIDOUT, true, this)) {
-                            Play_TriggerVoidOut(play);
+                            // This is a *real scene exit* (boss-hole entrances
+                            // included), not an accidental fall. Preserve the
+                            // randomized target and keep its crossing/check.
+                            Play_TriggerSceneExitVoidOut(play);
                         }
                         gSaveContext.respawnFlag = -2;
                     }

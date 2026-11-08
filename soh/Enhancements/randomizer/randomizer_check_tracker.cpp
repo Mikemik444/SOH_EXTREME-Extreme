@@ -102,7 +102,7 @@ enum EnemyFinderCombat : uint8_t {
     EFC_FIRE_OR_MELEE,
     EFC_CONTACT, EFC_FIRE, EFC_BOW, EFC_BOOMERANG_AND_MELEE,
     EFC_SWORD_OR_BOOMERANG,
-    EFC_SWORD, EFC_TEKTITE, EFC_PEAHAT, EFC_SHABOM, EFC_JELLYFISH,
+    EFC_SWORD, EFC_TEKTITE, EFC_PEAHAT, EFC_PEAHAT_FLYING, EFC_SHABOM, EFC_JELLYFISH,
     EFC_TAILPASARAN, EFC_STINGER, EFC_BUBBLE, EFC_BLUE_BUBBLE,
     EFC_ARMOS, EFC_DEAD_HAND, EFC_DEAD_HAND_ARM, EFC_SPIKE, EFC_FREEZARD,
     EFC_BABY_DODONGO,
@@ -195,6 +195,10 @@ static bool EnemyFinderCombatReachable(Rando::Logic* enemyLogic, EnemyFinderComb
         case EFC_SWORD: return sword;
         case EFC_TEKTITE: return melee || sling || bow;
         case EFC_PEAHAT: return melee || sling || bow || hook;
+        // En_Peehat params 0 flies upward. Its child-only placements need
+        // Slingshot normally, or an adult ranged weapon after the child
+        // cross-age unlock. Sword/sticks cannot reach the airborne parent.
+        case EFC_PEAHAT_FLYING: return sling || bow || hook;
         case EFC_SHABOM: return melee || rang || nuts || dins || enemyLogic->CanUse(RG_ICE_ARROWS);
         case EFC_JELLYFISH: return rang || bow || hook;
         case EFC_TAILPASARAN: return rang || sticks;

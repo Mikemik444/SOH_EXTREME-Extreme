@@ -210,12 +210,20 @@ def can_use(item: Items, bundle: tuple[Regions, "SohWorld"]) -> Rule:
     rule : Rule = has_item(item, bundle)
     data = item_data_table
 
+    # The unlock items only affect equipment-age logic for opt-in seeds.
+    # Even a plando/foreign copy of the item must not enable an Off seed.
+    cross_age_option = getattr(getattr(bundle[1], "options", None), "shuffle_cross_age_equipment", None)
+    cross_age_enabled = bool(cross_age_option.value) if cross_age_option is not None else False
+
     if item in data:
         if data[item].adult_only:
-            rule &= is_adult(bundle)
+            # This does NOT replace physical age checks on doors or events.
+            age_rule = is_adult(bundle)
+            rule &= (age_rule | Has("Child Can Use Adult Items")) if cross_age_enabled else age_rule
 
         if data[item].child_only:
-            rule &= is_child(bundle)
+            age_rule = is_child(bundle)
+            rule &= (age_rule | Has("Adult Can Use Child Items")) if cross_age_enabled else age_rule
 
         if data[item].item_type == ItemType.magic:
             rule &= has_item(Items.MAGIC_SINGLE, bundle)

@@ -5104,7 +5104,8 @@
     "actor": 46,
     "params": 134,
     "anchor": 4,
-    "name": "Dodongos Cavern First Slingshot Room -> Dodongos Cavern Upper Lizalfos (door 11, room 10 to 3)"
+    "name": "Dodongos Cavern First Slingshot Room -> Dodongos Cavern Upper Lizalfos (door 11, room 10 to 3)",
+    "condition": "CanHitEyeTargets()"
   },
   {
     "id": 8341,

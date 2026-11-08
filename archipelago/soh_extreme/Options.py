@@ -4,6 +4,17 @@ from ._vendor_oot_soh.Options import SohOptions, soh_option_groups
 from .EntranceOptions import *
 from .SongNotes import SONG_NOTE_KEYS, normalize_song_selection
 
+class ShuffleCrossAgeEquipment(Toggle):
+    """Add two progression items that independently unlock reverse-age equipment.
+
+    When Off (the default), neither unlock is placed and equipment keeps its
+    ordinary Child/Adult restrictions. When On, both unlocks enter the pool:
+    Child Can Use Adult Items and Adult Can Use Child Items. Receiving an
+    unlock never grants the underlying sword, weapon, tunic, boots, or ammo.
+    """
+    display_name = "Shuffle Cross-Age Equipment"
+    default = 0
+
 class ShuffleRoll(Toggle):
     """Shuffle the ability to roll."""
     display_name = "Shuffle Roll"
@@ -278,6 +289,7 @@ class SohExtremeOptions(SohOptions):
     shuffle_wonder_items: ShuffleWonderItems
     shuffle_silver: ShuffleSilver
     shuffle_butterfly_fairies: ShuffleButterflyFairies
+    shuffle_cross_age_equipment: ShuffleCrossAgeEquipment
     shuffle_roll: ShuffleRoll
     shuffle_grab: ShuffleGrab
     shuffle_climb: ShuffleClimb
@@ -332,7 +344,7 @@ extreme_option_groups = list(_base_option_groups) + [
         ShuffleSilver, ShuffleButterflyFairies,
     ]),
     OptionGroup("SOH-EXTREME Abilities & Souls", [
-        ShuffleRoll, ShuffleGrab, ShuffleClimb, ShuffleCrawl, ShuffleSpeak, ShuffleOpenChest,
+        ShuffleCrossAgeEquipment, ShuffleRoll, ShuffleGrab, ShuffleClimb, ShuffleCrawl, ShuffleSpeak, ShuffleOpenChest,
         ShuffleEnemySoul, EnemySoulBehavior, ShuffleNpcSoul, ShuffleAnimalSoul, ShufflePotSoul, ShuffleCrateSoul,
         ShuffleGrassBushSoul, ShuffleRockBoulderSoul, ShuffleTreeSoul, ShuffleBeehiveSoul,
         ShuffleSignSoul, ShuffleSkulltulaSoul, ShuffleBusinessScrubSoul, ShuffleShovel, ShuffleBeanSouls,

@@ -49,19 +49,22 @@ def enemy_drop_rule(world, entry):
     # Build each branch from only that age's usable weapons. Combining a generic
     # "child reachable" with an independently adult-reachable Bow was unsound.
     def age_combat(adult):
-        sword = (can_use(Items.MASTER_SWORD, b) | can_use(Items.BIGGORONS_SWORD, b)) if adult else can_use(Items.KOKIRI_SWORD, b)
-        melee = sword | (can_use(Items.MEGATON_HAMMER, b) if adult else can_use(Items.STICKS, b))
-        sticks = can_use(Items.STICKS, b) if not adult else False_()
-        hammer = can_use(Items.MEGATON_HAMMER, b) if adult else False_()
-        sling = can_use(Items.FAIRY_SLINGSHOT, b) if not adult else False_()
+        # can_use handles direction-specific cross-age equip unlocks. The
+        # `adult` parameter still represents the actor/room's real age.
+        sword = (can_use(Items.MASTER_SWORD, b) | can_use(Items.BIGGORONS_SWORD, b)
+                 | can_use(Items.KOKIRI_SWORD, b))
+        melee = sword | can_use(Items.MEGATON_HAMMER, b) | can_use(Items.STICKS, b)
+        sticks = can_use(Items.STICKS, b)
+        hammer = can_use(Items.MEGATON_HAMMER, b)
+        sling = can_use(Items.FAIRY_SLINGSHOT, b)
         nuts = can_use(Items.NUTS, b)
-        bow = can_use(Items.FAIRY_BOW, b) if adult else False_()
-        hook = can_use(Items.HOOKSHOT, b) if adult else False_()
-        rang = can_use(Items.BOOMERANG, b) if not adult else False_()
-        ranged = (bow | hook | can_use(Items.LONGSHOT, b)) if adult else (can_use(Items.FAIRY_SLINGSHOT, b) | rang)
+        bow = can_use(Items.FAIRY_BOW, b)
+        hook = can_use(Items.HOOKSHOT, b) | can_use(Items.LONGSHOT, b)
+        rang = can_use(Items.BOOMERANG, b)
+        ranged = bow | hook | sling | rang
         explosive = has_explosives(b)
-        fire = can_use(Items.DINS_FIRE, b) | (can_use(Items.FIRE_ARROW, b) if adult else False_())
-        reflect = can_use(Items.HYLIAN_SHIELD, b) if adult else can_use(Items.DEKU_SHIELD, b)
+        fire = can_use(Items.DINS_FIRE, b) | can_use(Items.FIRE_ARROW, b)
+        reflect = can_use(Items.HYLIAN_SHIELD, b) | can_use(Items.DEKU_SHIELD, b)
         # Enemy-specific damage and activation rules, reviewed against the actor
         # damage tables and native CanKillEnemy. A stunning hit is not a kill.
         standing_shield = (can_use(Items.HYLIAN_SHIELD, b) | can_use(Items.MIRROR_SHIELD, b)) if adult else reflect
@@ -69,6 +72,12 @@ def enemy_drop_rule(world, entry):
             "sword": sword,
             "tektite": melee | sling | bow,
             "peahat": melee | sling | bow | hook,
+            # Native En_Peehat: params == 0 is the airborne larva-spawning
+            # variant. The parent can rise out of child melee reach; ranged
+            # damage is needed to defeat the actual parent (not its larvae).
+            # These spawns are child-only: Slingshot works normally. Bow or
+            # Hookshot/Longshot work for Child only after the equipment unlock.
+            "peahat_flying": sling | bow | hook,
             "shabom": melee | rang | nuts | can_use(Items.DINS_FIRE, b) | (can_use(Items.ICE_ARROW, b) if adult else False_()),
             "jellyfish": rang | bow | hook,
             "tailpasaran": rang | sticks,

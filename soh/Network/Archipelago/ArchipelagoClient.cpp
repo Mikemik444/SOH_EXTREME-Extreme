@@ -177,6 +177,8 @@ constexpr int64_t AP_ITEM_SKULLTULA_SOUL = 9500016;
 constexpr int64_t AP_ITEM_BUSINESS_SCRUB_SOUL = 9500017;
 constexpr int64_t AP_ITEM_SHOVEL = 9500018;
 constexpr int64_t AP_ITEM_FLOW_OF_TIME = 9500019;
+constexpr int64_t AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS = 9500400;
+constexpr int64_t AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS = 9500401;
 
 constexpr int64_t AP_ITEM_DMC_BEAN_SOUL = 9500095;
 constexpr int64_t AP_ITEM_DMT_BEAN_SOUL = 9500096;
@@ -476,6 +478,8 @@ static std::string GetApItemDisplayName(int64_t itemId) {
         case AP_ITEM_BUSINESS_SCRUB_SOUL: return "Scrub Soul";
         case AP_ITEM_SHOVEL: return "Shovel";
         case AP_ITEM_FLOW_OF_TIME: return "Flow of Time";
+        case AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS: return "Child Can Use Adult Items";
+        case AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS: return "Adult Can Use Child Items";
         case AP_ITEM_DMC_BEAN_SOUL: return "Death Mountain Crater Bean Soul";
         case AP_ITEM_DMT_BEAN_SOUL: return "Death Mountain Trail Bean Soul";
         case AP_ITEM_COLOSSUS_BEAN_SOUL: return "Desert Colossus Bean Soul";
@@ -1638,6 +1642,10 @@ static bool ApplyExtremePersistentApItem(int64_t apItemId) {
         case AP_ITEM_CLIMB: Flags_SetRandomizerInf(RAND_INF_CAN_CLIMB); return true;
         case AP_ITEM_CRAWL: Flags_SetRandomizerInf(RAND_INF_CAN_CRAWL); return true;
         case AP_ITEM_FLOW_OF_TIME: Flags_SetRandomizerInf(RAND_INF_FLOW_OF_TIME); return true;
+        case AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS:
+            Flags_SetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS); return true;
+        case AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS:
+            Flags_SetRandomizerInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS); return true;
         case AP_ITEM_SPEAK:
             Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_DEKU);
             Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_GERUDO);
@@ -1895,6 +1903,9 @@ int32_t ArchipelagoClient::MapApItemToRandomizerGet(int64_t itemId) const {
     }
 
     switch (itemId) {
+        case AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS:
+        case AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS:
+            return static_cast<int32_t>(RG_AP_REMOTE_IMPORTANT);
         case AP_ITEM_ROLL: randoGet = RG_ROLL; break;
         case AP_ITEM_GRAB: randoGet = RG_POWER_BRACELET; break;
         case AP_ITEM_CLIMB: randoGet = RG_CLIMB; break;
@@ -3224,6 +3235,19 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
 
     const bool historicalNewSaveReplay =
         gNewSaveReplayTargetCount != 0 && sequence < gNewSaveReplayTargetCount;
+
+    if (itemId == AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS ||
+        itemId == AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS) {
+        // Apply to the *loaded* save, never as a CVar/shared cheat. Historical
+        // ReceivedItems replay follows this same path and is silent.
+        if (!ApplyExtremePersistentApItem(itemId)) return false;
+        if (!historicalNewSaveReplay) {
+            Notification::Emit({ .prefix = "Archipelago", .message = "received",
+                                 .suffix = GetApItemDisplayName(itemId), .remainingTime = 4.0f });
+            CheckTracker::RecalculateAvailableChecks();
+        }
+        return true;
+    }
 
     RandomizerGet randoGet = RG_NONE;
     if (itemId >= AP_BASE_ITEM_MIN && itemId <= AP_BASE_ITEM_MAX) {

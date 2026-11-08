@@ -2107,18 +2107,30 @@ void Play_SetupRespawnPoint(PlayState* play, s32 respawnMode, s32 playerParams) 
     }
 }
 
-void Play_TriggerVoidOut(PlayState* play) {
-    // In mixed Archipelago dungeon-door seeds the vanilla DOWN point can
-    // refer to an entirely different shuffled scene. Prefer a verified
-    // checkpoint in the dungeon scene Link is currently exploring.
-    // Returning false leaves the game's native void-out unchanged.
-    Archipelago_EntrancePrepareDungeonVoidOut();
+// A real fall should return to a verified checkpoint in the same scene.
+// An intentional scene exit using FLOOR_EFFECT_2 (including Dodongo's Cavern
+// boss hole) must instead preserve its already-shuffled destination.
+// Do not make these two distinct operations share a checkpoint rewrite.
+static void Play_TriggerVoidOutInternal(PlayState* play, bool realDungeonVoid) {
+    if (realDungeonVoid) {
+        Archipelago_EntrancePrepareDungeonVoidOut();
+    }
     gSaveContext.respawn[RESPAWN_MODE_DOWN].tempSwchFlags = play->actorCtx.flags.tempSwch;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].tempCollectFlags = play->actorCtx.flags.tempCollect;
     gSaveContext.respawnFlag = 1;
     play->transitionTrigger = TRANS_TRIGGER_START;
     play->nextEntranceIndex = gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex;
     play->transitionType = TRANS_TYPE_FADE_BLACK;
+}
+
+void Play_TriggerVoidOut(PlayState* play) {
+    Play_TriggerVoidOutInternal(play, true);
+}
+
+// Called only after the engine resolves a real scene-exit surface and the
+// entrance randomizer has mapped play->nextEntranceIndex. No room fallback.
+void Play_TriggerSceneExitVoidOut(PlayState* play) {
+    Play_TriggerVoidOutInternal(play, false);
 }
 
 void Play_LoadToLastEntrance(PlayState* play) {

@@ -170,6 +170,10 @@ EXTREME_ITEMS = {
     "Leever Soul": 9500183,
     "Stalchild Soul": 9500184,
     "Big Octo Soul": 9500185,
+    # Permanent, direction-specific cross-age equipment unlocks. These are
+    # distinct progression items, not changes to Link's actual age.
+    "Child Can Use Adult Items": 9500400,
+    "Adult Can Use Child Items": 9500401,
 
 }
 # New seeds use repeatable per-song items. Legacy note IDs remain reserved.
@@ -809,7 +813,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                            SPEECH_LOCATION_NAME_TO_ID | NpcSpeech.NAME_TO_ID | SceneTransitions.NAME_TO_ID | NPC_SPEECH_FALLBACK_NAME_TO_ID |
                            ENEMY_DROP_LOCATION_NAME_TO_ID)
     item_name_groups = {k: set(v) for k, v in _create_groups(item_data_table).items() if k != "Everything"} | {
-        "Extreme Abilities": {"Roll", "Grab / Power Bracelet", "Climb", "Crawl", "Speak", "Open Chest", "Shovel", "Flow of Time"},
+        "Extreme Abilities": {"Roll", "Grab / Power Bracelet", "Climb", "Crawl", "Speak", "Open Chest", "Shovel", "Flow of Time", "Child Can Use Adult Items", "Adult Can Use Child Items"},
         "Extreme Souls": {name for name in EXTREME_ITEMS if name.endswith("Soul")},
         "Song Notes": {name for name in EXTREME_ITEMS if name.startswith("Song Note ")} | set(PROGRESSIVE_SONG_ITEMS),
         "Silver Rupees": set(SILVER_GROUP_ITEMS),
@@ -3223,6 +3227,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             elif native_time == "night":
                 require_native_fork(location, at_night(bundle))
 
+            # Physical actor: playing Zelda's Lullaby destroys the tomb,
+            # and that destruction awards this one-time check. Merely
+            # reading/talking to the grave cannot claim the item. can_use
+            # handles Ocarina, shuffled buttons and song-note requirements.
+            if fork_loc.rc == "RC_GY_ROYAL_TOMB_GRAVE":
+                require_native_fork(location, can_use(Items.ZELDAS_LULLABY, bundle))
+
             # 0.10.4: Fork-native Ganon's Castle sanity actors were all parented
             # to the broad Entryway region.  That bypassed the six native trial
             # doors and made their checks appear in Universal Tracker even when
@@ -3406,12 +3417,15 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 elif rc == "RC_TH_WONDER_KITCHEN_SOUP":
                     # Native normal route:
                     # (TakeDamage OR Adult OR Goron Tunic) AND CanPass Gerudo Guard.
-                    # With tricks/glitches off, Adult is the stable normal branch;
-                    # native CanPass Gerudo Guard accepts card, Bow, or Hookshot.
+                    # With tricks/glitches off, Adult is the stable normal branch.
+                    # Native RR_TH_KITCHEN_MAIN requires the actual Membership
+                    # Card or a Bow for adult guard access. Hookshot/Longshot
+                    # cannot stun this guard and must NOT unlock the check.
+                    # Keep the kitchen rafters' separate traversal alternatives
+                    # out of this location-local guard requirement.
                     guard_pass = (
                         Has("Gerudo Membership Card")
                         | can_use(Items.FAIRY_BOW, bundle)
-                        | can_use(Items.HOOKSHOT, bundle)
                     )
                     rule = is_adult(bundle) & guard_pass
                 elif rc == "RC_ZF_WONDER_ROCK":
@@ -3510,7 +3524,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 require(location, "Rock / Boulder Soul")
             if o.shuffle_grass_bush_soul.value and family == "bush":
                 require(location, "Grass / Bush Soul")
-            if o.shuffle_sign_soul.value and family == "sign":
+            # The Royal Tomb "grave" is a destructible Lullaby event, not
+            # a readable sign. Its native item is granted when the grave
+            # opens, including when Sign Soul has removed nearby signs.
+            if (o.shuffle_sign_soul.value and family == "sign"
+                    and fork_loc.rc != "RC_GY_ROYAL_TOMB_GRAVE"):
                 require(location, "Sign Soul")
             if o.shuffle_animal_soul.value and family == "butterfly_fairy":
                 require_animal(location)
@@ -4718,8 +4736,12 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # currently in the MultiWorld, including all dynamically-added Speech
         # Sanity checks. Do not add a second filler item for those locations.
 
-        extras: list[str] = []
+        # Cross-age equipment is opt-in. Only an enabled seed may place these
+        # two advancement items; disabled seeds keep stock age restrictions.
         o = self.options
+        extras: list[str] = []
+        if o.shuffle_cross_age_equipment.value:
+            extras.extend(("Child Can Use Adult Items", "Adult Can Use Child Items"))
         toggles = [
             (o.shuffle_roll, "Roll"),
             (o.shuffle_climb, "Climb"),
@@ -5419,6 +5441,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
         # SOH-EXTREME additions are part of the same authoritative snapshot.
         for key, value in {
+            "ShuffleCrossAgeEquipment": o.shuffle_cross_age_equipment.value,
             "ShuffleRoll": o.shuffle_roll.value, "ShuffleGrab": o.shuffle_grab.value,
             "ShuffleClimb": o.shuffle_climb.value, "ShuffleCrawl": o.shuffle_crawl.value,
             "ShuffleSpeak": o.shuffle_speak.value, "ShuffleOpenChest": o.shuffle_open_chest.value,
@@ -5493,6 +5516,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "shuffle_wonder_items": o.shuffle_wonder_items.value,
             "shuffle_silver": o.shuffle_silver.value,
             "shuffle_butterfly_fairies": o.shuffle_butterfly_fairies.value,
+            "shuffle_cross_age_equipment": o.shuffle_cross_age_equipment.value,
             "shuffle_roll": o.shuffle_roll.value,
             "shuffle_grab": o.shuffle_grab.value,
             "shuffle_climb": o.shuffle_climb.value,

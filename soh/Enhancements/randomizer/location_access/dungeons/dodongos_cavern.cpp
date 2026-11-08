@@ -222,7 +222,7 @@ void RegionTable_Init_DodongosCavern() {
     }, {
         //Exits
         ENTRANCE(RR_DODONGOS_CAVERN_BOMB_ROOM_LOWER, true),
-        ENTRANCE(RR_DODONGOS_CAVERN_UPPER_LIZALFOS,  logic->CanHitEyeTargets() || ctx->GetTrickOption(RT_DC_SLINGSHOT_SKIP) || (logic->IsAdult && logic->CanGroundJump()) || logic->CanUse(RG_HOVER_BOOTS)),
+        ENTRANCE(RR_DODONGOS_CAVERN_UPPER_LIZALFOS, logic->CanHitEyeTargets()),
     });
 
     areaTable[RR_DODONGOS_CAVERN_UPPER_LIZALFOS] = Region("Dodongos Cavern Upper Lizalfos", SCENE_DODONGOS_CAVERN, {}, {
