@@ -29,6 +29,15 @@ class EntranceIntegrityTest(unittest.TestCase):
         self.assertEqual({e['id'] for e in self.policy['endpoints']}, set(self.by_id))
         self.assertEqual(self.policy['catalog_sha256'], canonical_hash(sorted(self.catalog, key=lambda x:x['id'])))
 
+    def test_every_reviewed_endpoint_metadata_matches_catalog(self):
+        # A valid global catalog hash is not sufficient if one per-endpoint
+        # destination fingerprint has gone stale during a logic-rule change.
+        policy_rows = {row['id']: row for row in self.policy['endpoints']}
+        for endpoint_id, catalog_row in self.by_id.items():
+            with self.subTest(endpoint=endpoint_id):
+                self.assertEqual(policy_rows[endpoint_id]['catalog_row_sha256'],
+                                 canonical_hash(catalog_row))
+
     def test_every_paired_reverse_is_symmetric(self):
         for row in self.catalog:
             reverse = row['reverse']

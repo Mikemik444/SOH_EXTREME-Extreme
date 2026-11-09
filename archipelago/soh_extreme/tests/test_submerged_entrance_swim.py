@@ -41,7 +41,58 @@ class SubmergedEntranceSwimTest(unittest.TestCase):
         self.assertIn("row.get('arrival_gate') == 'swim' or row['id'] in WATER_SUBMERGED_ENDPOINTS", self.er)
         self.assertIn("or row['id'] in WATER_SUBMERGED_ENDPOINTS", self.er)
         self.assertIn('H.can_swim(bundle).resolve(world)', self.er)
-        self.assertIn("H.can_swim((Regions[row['target']], world)).resolve(world)", self.er)
+        self.assertIn("H.can_swim((resolve_enemy_region(row['target']), world)).resolve(world)", self.er)
+
+    def test_arrival_swim_native_region_resolution_no_keyerror(self):
+        """Exercise actual arrival-rule function with Water Temple RR_ landing.
+
+        Source-only string checks previously missed this real generation crash.
+        """
+        from types import SimpleNamespace
+
+        def source_function(filepath, function_name):
+            parsed = ast.parse(filepath.read_text(encoding='utf-8'))
+            item = next(x for x in parsed.body if isinstance(x, ast.FunctionDef)
+                        and x.name == function_name)
+            return compile(ast.fix_missing_locations(
+                ast.Module(body=[item], type_ignores=[])),
+                str(filepath), 'exec')
+
+        native_entry = object()
+        normal_entry = object()
+        native = {'RR_WATER_TEMPLE_ENTRYWAY': native_entry}
+        stock = {'LH_FROM_WATER_TEMPLE': normal_entry}
+        namespace = {'NativeEnemyRegions': native, 'Regions': stock}
+        exec(source_function(BASE/'EnemyRoomLogic.py', 'resolve_enemy_region'), namespace)
+
+        received_bundles = []
+        registered = []
+        class FakeRule:
+            def resolve(self, world):
+                return self
+        def fake_can_swim(bundle):
+            received_bundles.append(bundle)
+            return FakeRule()
+        world = SimpleNamespace(register_rule_dependencies=registered.append)
+        namespace.update({
+            'H': SimpleNamespace(can_swim=fake_can_swim),
+            'WATER_SUBMERGED_ENDPOINTS': {16, 541},
+            'WATER_ARRIVAL_LEVELS': {},
+        })
+        exec(source_function(BASE/'EntranceRandomizer.py', '_arrival_rule'), namespace)
+        arrival = namespace['_arrival_rule']
+
+        # Exact error seen on Archipelago 0.6.8 seed generation.
+        self.assertIsNotNone(arrival(world, self.catalog[16]))
+        self.assertIs(received_bundles[-1][0], native_entry)
+        self.assertIs(received_bundles[-1][1], world)
+        # Reverse submerged exit targets an ordinary stock region.
+        self.assertIsNotNone(arrival(world, self.catalog[541]))
+        self.assertIs(received_bundles[-1][0], normal_entry)
+        self.assertEqual(len(registered), 2)
+        # A dry route has no new arrival restriction.
+        self.assertIsNone(arrival(world, {'id': 999999, 'target': 'LH_FROM_WATER_TEMPLE'}))
+        self.assertEqual(len(registered), 2)
 
     def test_non_shuffled_water_temple_exit_requires_swim(self):
         py = (BASE/'_vendor_oot_soh/location_access/dungeons/water_temple.py').read_text()

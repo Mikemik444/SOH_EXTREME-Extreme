@@ -21,7 +21,7 @@ from ._vendor_oot_soh.Enums import Regions, Items, Events, Ages
 from ._vendor_oot_soh.Regions import SohRegion
 from ._vendor_oot_soh.Items import SohItem
 from ._vendor_oot_soh import LogicHelpers as H
-from .EnemyRoomLogic import GRAPH, NativeEnemyRegions
+from .EnemyRoomLogic import GRAPH, NativeEnemyRegions, resolve_enemy_region
 
 REVISION = 1
 # Revision 1 partitions unmixed room doors by their physical dungeon scene.
@@ -322,7 +322,7 @@ def _arrival_rule(world, row):
     if row.get('arrival_gate') == 'swim' or row['id'] in WATER_SUBMERGED_ENDPOINTS:
         # A dry source can be paired with a water landing. Its crossing check
         # still uses the dry source rule, but entering the destination needs Swim.
-        rule = H.can_swim((Regions[row['target']], world)).resolve(world)
+        rule = H.can_swim((resolve_enemy_region(row['target']), world)).resolve(world)
     else:
         level = WATER_ARRIVAL_LEVELS.get(row['id'])
         if level is None:
