@@ -69,7 +69,7 @@ SceneReturnPoint restartArrival;
 bool dungeonReturnArrival = false;
 int returnedDungeonOwner = -1;
 struct PendingDungeonReturn {
-    bool valid = false, previous = false;
+    bool valid = false, previous = false, forcedPreviousEntrance = false;
     int entrance = -1, age = -1, file = -1;
     SceneReturnPoint point, origin;
     std::map<int, int> routes;
@@ -896,7 +896,8 @@ bool ApplyDungeonReturn(const PendingDungeonReturn& request) {
         request.routes != routing.Routes()) return false;
     const EntranceDestinationPolicy* policy = nullptr;
     if (request.previous) {
-        if (!routing.UsesPreviousSceneReturn() || !ReturnPointIsCurrent(request.point)) return false;
+        if ((!routing.UsesPreviousSceneReturn() && !request.forcedPreviousEntrance) ||
+            !ReturnPointIsCurrent(request.point)) return false;
         policy = EntranceDestinationById(request.point.target);
         if (!EntranceDestinationAllowsAge(policy, CurrentArrivalAge()) || !ArrivalTableMatches(policy)) return false;
     } else if (routing.Active()) {
@@ -936,6 +937,61 @@ bool ApplyDungeonReturn(const PendingDungeonReturn& request) {
     roomEntry = request.origin;
     pendingDeparture = request.origin;
     pendingDepartureRecorded = true;
+    return true;
+}
+
+// Genuine void-outs and Wallmasters return to the physical entrance Link last
+// crossed, irrespective of whether its entrance pool was mixed. This is an
+// emergency relocation, never a bidirectional graph edge or a new AP check.
+// Prefer the actual previous-side doorway; immediately after spawning, the
+// successfully entered room is the only documented safe fallback.
+bool ReturnToPreviousEntrance() {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF ||
+        gSaveContext.gameMode != GAMEMODE_NORMAL) return false;
+
+    const auto validPoint = [](const SceneReturnPoint& point) {
+        if (!ReturnPointIsCurrent(point) || point.target < 0) return false;
+        const auto* policy = EntranceDestinationById(point.target);
+        if (!EntranceDestinationAllowsAge(policy, CurrentArrivalAge()) ||
+            !ArrivalTableMatches(policy) || point.room < 0) return false;
+        for (float axis : {point.position.x, point.position.y, point.position.z}) {
+            if (!std::isfinite(axis) || axis < -32768.0f || axis > 32767.0f) return false;
+        }
+        return true;
+    };
+
+    const SceneReturnPoint* point = nullptr;
+    if (validPoint(previousScene)) {
+        point = &previousScene;
+    } else if (validPoint(roomEntry) &&
+               CrossingScene(roomEntry.scene) == CrossingScene(gPlayState->sceneNum)) {
+        point = &roomEntry;
+    }
+    if (!point) return false;
+
+    PendingDungeonReturn request;
+    request.valid = true;
+    request.previous = true;
+    request.forcedPreviousEntrance = true;
+    request.point = *point;
+    request.origin = CaptureReturnPoint();
+    if (request.origin.scene < 0) request.origin = roomEntry;
+    request.age = LINK_IS_CHILD ? LINK_AGE_CHILD : LINK_AGE_ADULT;
+    request.file = gSaveContext.fileNum;
+    request.routes = routing.Routes();
+    const auto earlierHistory = previousBeforeArrival;
+    const int destination = request.point.target;
+    if (!ApplyDungeonReturn(request)) return false;
+    // Do not treat this forced relocation as a new entrance crossing. The
+    // abandoned hazard also must not become the next void-out destination.
+    previousScene = validPoint(earlierHistory) ? earlierHistory : SceneReturnPoint{};
+    previousBeforeArrival = {};
+    pendingDeparture = {};
+    pendingDepartureRecorded = false;
+    preserveHistoryForArrival = true;
+    SPDLOG_INFO("[Archipelago] Forced return to last physical entrance {} (scene {}, room {}); no crossing check",
+                destination, request.point.scene, request.point.room);
     return true;
 }
 
@@ -988,16 +1044,10 @@ bool GameOverDungeonReturn() {
     return ApplyDungeonReturn(BuildDungeonReturn());
 }
 
-// Wallmasters are a forced return, not a death checkpoint. In mixed pools the
-// destination policy explicitly says to return to the physical scene Link came
-// from, rather than letting Play_LoadToLastEntrance send him to the vanilla
-// dungeon entrance. Dungeon-only pools retain their ordinary dungeon spawn.
+// Wallmasters use the same physical previous-entrance return as genuine
+// void-outs, including dungeon-only entrance shuffles.
 bool WallmasterReturn() {
-    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() || !gPlayState ||
-        DungeonReturnMode() != AP_DUNGEON_RETURN_PREVIOUS_SCENE) return false;
-    pendingDungeonReturn = {};
-    const auto request = BuildDungeonReturn();
-    return request.valid && request.previous && ApplyDungeonReturn(request);
+    return ReturnToPreviousEntrance();
 }
 
 void CancelDungeonReturn() {

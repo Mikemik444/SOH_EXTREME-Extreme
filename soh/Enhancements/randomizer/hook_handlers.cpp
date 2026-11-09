@@ -2140,10 +2140,18 @@ void RandomizerOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_l
             *should = false;
             break;
         }
-        // We need to override the vanilla behavior here because the player might sequence break and get Ruto kidnapped
-        // before accessing other checks that require Ruto. So if she's kidnapped we allow her to spawn again
+        // In a dungeon-room entrance shuffle, Ruto must remain recoverable after
+        // the Sapphire platform takes her away.  Vanilla INFTABLE_145 is set
+        // before INFTABLE_146, which left a window in which all pickup variants
+        // killed themselves on initialization, permanently losing the escort.
+        // This hook is only called by those pickup actor initializers; their
+        // existing room/phase checks and active-Ruto duplicate guard still run.
+        // Never reset the story flags or spawn a second actor here.
         case VB_RUTO_BE_CONSIDERED_NOT_KIDNAPPED: {
-            *should = !Flags_GetInfTable(INFTABLE_145) || Flags_GetInfTable(INFTABLE_146);
+            const bool recoverableJabuEscort = Archipelago_EntranceShuffleActive() &&
+                gPlayState != nullptr && gPlayState->sceneNum == SCENE_JABU_JABU;
+            *should = recoverableJabuEscort || !Flags_GetInfTable(INFTABLE_145) ||
+                      Flags_GetInfTable(INFTABLE_146);
             break;
         }
         case VB_SET_VOIDOUT_FROM_SURFACE: {

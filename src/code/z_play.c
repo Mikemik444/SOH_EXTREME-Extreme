@@ -2114,6 +2114,16 @@ void Play_SetupRespawnPoint(PlayState* play, s32 respawnMode, s32 playerParams) 
 // Do not make these two distinct operations share a checkpoint rewrite.
 static void Play_TriggerVoidOutInternal(PlayState* play, bool realDungeonVoid) {
     if (realDungeonVoid) {
+        // Use the previous physical entry on ALL genuine AP void-outs, even
+        // in dungeon-only pools. The scene-exit/boss-hole variant deliberately
+        // passes false and must still use its already-shuffled destination.
+        if (Archipelago_EntranceReturnToPreviousEntrance()) {
+            gSaveContext.respawnFlag = 0;
+            play->transitionTrigger = TRANS_TRIGGER_START;
+            play->nextEntranceIndex = gSaveContext.entranceIndex;
+            play->transitionType = TRANS_TYPE_FADE_BLACK;
+            return;
+        }
         const bool hasSafeCheckpoint = Archipelago_EntrancePrepareDungeonVoidOut();
         // On an AP dungeon or boss-room fall, never reuse RESPAWN_MODE_DOWN
         // from a previously visited scene if no current-scene checkpoint was

@@ -153,6 +153,18 @@ void BuildCustomItemMessage(Player* player, CustomMessage& msg) {
         msg.AutoFormat();
         return;
     }
+    if (rgid == RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT) {
+        // The message appears before the receive is committed. Show the next
+        // progressive level, then apply its saved unlock only on OnItemReceive.
+        const bool childUnlocked = Flags_GetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS);
+        msg = CustomMessage(
+            childUnlocked
+                ? "You got %gProgressive Cross-Age Equipment%w!&%yLevel 2/2%w: Adult Link can now use child items!"
+                : "You got %gProgressive Cross-Age Equipment%w!&%yLevel 1/2%w: Child Link can now use adult items!",
+            TODO_TRANSLATE, TODO_TRANSLATE, TEXTBOX_TYPE_BLUE);
+        msg.AutoFormat();
+        return;
+    }
     if (rgid == RG_AP_REMOTE_IMPORTANT || rgid == RG_AP_REMOTE_NORMAL) {
         const char* description = Archipelago_GetRemotePickupDescription();
         msg = CustomMessage("You found %g[[1]]%w!", TODO_TRANSLATE, TODO_TRANSLATE, TEXTBOX_TYPE_BLUE);

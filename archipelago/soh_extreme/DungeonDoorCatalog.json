@@ -1956,8 +1956,8 @@
     "entrances": [],
     "grotto": -1,
     "content": -1,
-    "condition": "true",
-    "reason": "Crossing into the Big Octo arena precedes the Ruto/platform fight."
+    "condition": "logic->Get(LOGIC_JABU_RUTO_IN_1F) && AnyAgeTime([]{return logic->CanKillEnemy(RE_BIG_OCTO);})",
+    "reason": "Requires rescuing and escorting Ruto to the first-floor switch and being able to defeat Big Octo; the arena crossing is not freely reachable."
   },
   {
     "id": 11202091,

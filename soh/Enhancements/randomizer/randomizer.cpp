@@ -1517,6 +1517,7 @@ extern "C" u16 Randomizer_Item_Give(PlayState* play, GetItemEntry giEntry) {
             }
             break;
         }
+        case RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT:
         case RG_AP_REMOTE_IMPORTANT:
         case RG_AP_REMOTE_NORMAL:
         case RG_AP_SONG_NOTE:

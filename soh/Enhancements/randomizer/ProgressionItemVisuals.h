@@ -8,12 +8,15 @@ static const ALIGN_ASSET(2) char gExtremeShovelIconTex[] =
     "__OTR__textures/parameter_static/gExtremeShovelIcon";
 static const ALIGN_ASSET(2) char gExtremeRollIconTex[] =
     "__OTR__textures/parameter_static/gExtremeRollIcon";
+static const ALIGN_ASSET(2) char gExtremeCrossAgeIconTex[] =
+    "__OTR__textures/parameter_static/gExtremeCrossAgeIcon";
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 void SohExtreme_DrawShovel(PlayState* play, GetItemEntry* entry);
 void SohExtreme_DrawRoll(PlayState* play, GetItemEntry* entry);
+void SohExtreme_DrawCrossAge(PlayState* play, GetItemEntry* entry);
 #ifdef __cplusplus
 }
 #endif

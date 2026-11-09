@@ -19,7 +19,10 @@ class DodongoBossHoleRegression(unittest.TestCase):
         text = SOURCE.read_text('utf8')
         self.assertIn('void Play_TriggerSceneExitVoidOut(PlayState* play)', text)
         helper = text.split('static void Play_TriggerVoidOutInternal(', 1)[1].split('\nvoid Play_TriggerVoidOut(', 1)[0]
-        self.assertIn('if (realDungeonVoid) {\n        const bool hasSafeCheckpoint = Archipelago_EntrancePrepareDungeonVoidOut();',helper)
+        self.assertIn('if (realDungeonVoid) {',helper)
+        self.assertIn('const bool hasSafeCheckpoint = Archipelago_EntrancePrepareDungeonVoidOut();',helper)
+        self.assertLess(helper.index('Archipelago_EntranceReturnToPreviousEntrance()'),
+                        helper.index('Archipelago_EntrancePrepareDungeonVoidOut()'))
         real = text.split('void Play_TriggerVoidOut(PlayState* play) {', 1)[1].split('}',1)[0]
         intended = text.split('void Play_TriggerSceneExitVoidOut(PlayState* play) {', 1)[1].split('}',1)[0]
         self.assertIn('Play_TriggerVoidOutInternal(play, true);', real)

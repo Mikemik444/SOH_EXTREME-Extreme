@@ -174,6 +174,7 @@ EXTREME_ITEMS = {
     # distinct progression items, not changes to Link's actual age.
     "Child Can Use Adult Items": 9500400,
     "Adult Can Use Child Items": 9500401,
+    "Progressive Cross-Age Equipment": 9500402,
 
 }
 # New seeds use repeatable per-song items. Legacy note IDs remain reserved.
@@ -813,7 +814,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                            SPEECH_LOCATION_NAME_TO_ID | NpcSpeech.NAME_TO_ID | SceneTransitions.NAME_TO_ID | NPC_SPEECH_FALLBACK_NAME_TO_ID |
                            ENEMY_DROP_LOCATION_NAME_TO_ID)
     item_name_groups = {k: set(v) for k, v in _create_groups(item_data_table).items() if k != "Everything"} | {
-        "Extreme Abilities": {"Roll", "Grab / Power Bracelet", "Climb", "Crawl", "Speak", "Open Chest", "Shovel", "Flow of Time", "Child Can Use Adult Items", "Adult Can Use Child Items"},
+        "Extreme Abilities": {"Roll", "Grab / Power Bracelet", "Climb", "Crawl", "Speak", "Open Chest", "Shovel", "Flow of Time", "Child Can Use Adult Items", "Adult Can Use Child Items", "Progressive Cross-Age Equipment"},
         "Extreme Souls": {name for name in EXTREME_ITEMS if name.endswith("Soul")},
         "Song Notes": {name for name in EXTREME_ITEMS if name.startswith("Song Note ")} | set(PROGRESSIVE_SONG_ITEMS),
         "Silver Rupees": set(SILVER_GROUP_ITEMS),
@@ -4737,11 +4738,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         # Sanity checks. Do not add a second filler item for those locations.
 
         # Cross-age equipment is opt-in. Only an enabled seed may place these
-        # two advancement items; disabled seeds keep stock age restrictions.
+        # copies of one progressive item; disabled seeds keep stock age restrictions.
         o = self.options
         extras: list[str] = []
         if o.shuffle_cross_age_equipment.value:
-            extras.extend(("Child Can Use Adult Items", "Adult Can Use Child Items"))
+            extras.extend(("Progressive Cross-Age Equipment",) * 2)
         toggles = [
             (o.shuffle_roll, "Roll"),
             (o.shuffle_climb, "Climb"),

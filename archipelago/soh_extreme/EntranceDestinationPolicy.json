@@ -1,6 +1,6 @@
 {
   "revision": 1,
-  "catalog_sha256": "d22ea4127631b2d3ef7909e903af7a253c9016eb7e1b42512456781d92cd67e7",
+  "catalog_sha256": "178d88818818a736f2a6abafb2cd32eb293135c598e8c6db73250d935f3f322a",
   "fingerprint_encoding": "SHA256 of json.dumps(value, sort_keys=True, separators=(comma,colon), ensure_ascii=True).encode(utf-8); catalog is sorted by integer id; row is the complete unmodified catalog dictionary.",
   "age_mask_bits": {
     "child": 1,
@@ -190,7 +190,7 @@
       "Randomized scene-load setup selection must not inherit a previous cutscene index; normal story-triggered cutscenes remain separate from randomized destination selection.",
       "Runtime age checks use child bit 1 and adult bit 2 explicitly; native LINK_AGE enum ordinals have the opposite order.",
       "Coupled returns remain map[reverse(destination)] == reverse(source). Shared interior source ages are both; generation checks actual age reachability for forbidden arrivals.",
-      "Dampé's hut endpoint 781 is adult-only for physical approach and randomized arrivals; shared exit 853 permits either age so legacy child arrivals can leave."
+      "Damp\u00e9's hut endpoint 781 is adult-only for physical approach and randomized arrivals; shared exit 853 permits either age so legacy child arrivals can leave."
     ]
   },
   "endpoints": [
@@ -13941,7 +13941,7 @@
     },
     {
       "id": 8490,
-      "catalog_row_sha256": "a215be8e5b08d408956900fb36fc170e43caab187d60fc2fd9070023e84b5736",
+      "catalog_row_sha256": "737d3c9bd03ad0b6fd8b324f7b9f2bdc5e17b6650aa30fdd9fd6694fc2e04c27",
       "door_metadata": {
         "scene": 2,
         "door": 21,

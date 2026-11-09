@@ -659,6 +659,16 @@ void Rando::StaticData::InitItemTable() {
         }
     }
 
+    // Single progressive Archipelago item; native get-item presentation is
+    // intentionally separate from save-flag granting in ArchipelagoClient.
+    itemTable[RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT] = Item(
+        RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT, Text{ "Progressive Cross-Age Equipment" }, ITEMTYPE_ITEM,
+        RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT, true, LOGIC_NONE, RHT_NONE,
+        RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT, OBJECT_GI_MELODY, GID_SONG_TIME,
+        TEXT_RANDOMIZER_CUSTOM_ITEM, 0x80, CHEST_ANIM_LONG, ITEM_CATEGORY_MAJOR, MOD_RANDOMIZER)
+        .CustomIcon(gExtremeCrossAgeIconTex);
+    itemTable[RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT].SetCustomDrawFunc(SohExtreme_DrawCrossAge);
+
     // SOH-EXTREME SHOVEL/ROLL VISUALS v1 BEGIN
     // Both the world/get-item model and the native message/UI icon are replaced.
     // Preserve item IDs, ownership effects, chest animation and AP mappings.

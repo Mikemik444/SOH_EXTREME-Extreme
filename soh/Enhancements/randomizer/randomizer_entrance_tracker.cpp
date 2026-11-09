@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <tuple>
 #include <cstddef>
+#include <iterator>
 #include <libultraship/controller/controldeck/ControlDeck.h>
 #include "soh/Enhancements/randomizer/randomizer.h"
 
@@ -62,8 +63,18 @@ static std::string spoilerEntranceGroupNames[] = {
     "Goron City",        "Zora's River",      "Zora's Domain",        "Zora's Fountain",
     "Hyrule Field",      "Lon Lon Ranch",     "Lake Hylia",           "Gerudo Valley",
     "Gerudo Fortress",   "Haunted Wasteland", "Desert Colossus",      "Market",
-    "Hyrule Castle", "Other Entrances",
+    "Hyrule Castle",
+    "Deku Tree", "Dodongo's Cavern", "Jabu-Jabu's Belly", "Forest Temple",
+    "Fire Temple", "Water Temple", "Spirit Temple", "Shadow Temple",
+    "Bottom of the Well", "Ice Cavern", "Gerudo Training Ground",
+    "Inside Ganon's Castle", "Ganon's Tower",
+    "Gohma's Lair", "King Dodongo's Lair", "Barinade's Lair",
+    "Phantom Ganon's Lair", "Volvagia's Lair", "Morpha's Lair",
+    "Twinrova's Lair", "Bongo-Bongo's Lair", "Other Entrances",
 };
+
+static_assert(std::size(spoilerEntranceGroupNames) == SPOILER_ENTRANCE_GROUP_COUNT,
+              "Every entrance area must have a tracker group name");
 
 static std::string groupTypeNames[] = {
     "One Way", "Overworld", "Interior", "Fortress", "Grotto", "Dungeon", "Room Door",
@@ -481,19 +492,77 @@ bool IsEntranceDiscovered(s16 index) {
     return isDiscovered;
 }
 
-static const EntranceData* GetNativeEntranceData(s16 index) {
-    for (size_t i = 0; i < ARRAY_COUNT(entranceData); i++) {
-        if (index == entranceData[i].index) {
-            return &entranceData[i];
-        }
+// Classify a transition by the *physical* scene at each end, not by
+// the nearby overworld area (e.g. Lake Hylia for Water Temple). This
+// applies to both original native endpoints and AP's synthetic room doors.
+static SpoilerEntranceGroup DungeonEntranceGroupForScene(int scene) {
+    switch (scene) {
+        case SCENE_DEKU_TREE: return ENTRANCE_GROUP_DEKU_TREE;
+        case SCENE_DODONGOS_CAVERN: return ENTRANCE_GROUP_DODONGOS_CAVERN;
+        case SCENE_JABU_JABU: return ENTRANCE_GROUP_JABU_JABUS_BELLY;
+        case SCENE_FOREST_TEMPLE: return ENTRANCE_GROUP_FOREST_TEMPLE;
+        case SCENE_FIRE_TEMPLE: return ENTRANCE_GROUP_FIRE_TEMPLE;
+        case SCENE_WATER_TEMPLE: return ENTRANCE_GROUP_WATER_TEMPLE;
+        case SCENE_SPIRIT_TEMPLE: return ENTRANCE_GROUP_SPIRIT_TEMPLE;
+        case SCENE_SHADOW_TEMPLE: return ENTRANCE_GROUP_SHADOW_TEMPLE;
+        case SCENE_BOTTOM_OF_THE_WELL: return ENTRANCE_GROUP_BOTTOM_OF_THE_WELL;
+        case SCENE_ICE_CAVERN: return ENTRANCE_GROUP_ICE_CAVERN;
+        case SCENE_GERUDO_TRAINING_GROUND: return ENTRANCE_GROUP_GERUDO_TRAINING_GROUND;
+        case SCENE_INSIDE_GANONS_CASTLE: return ENTRANCE_GROUP_INSIDE_GANONS_CASTLE;
+        case SCENE_GANONS_TOWER: return ENTRANCE_GROUP_GANONS_TOWER;
+        case SCENE_DEKU_TREE_BOSS: return ENTRANCE_GROUP_GOHMAS_LAIR;
+        case SCENE_DODONGOS_CAVERN_BOSS: return ENTRANCE_GROUP_KING_DODONGOS_LAIR;
+        case SCENE_JABU_JABU_BOSS: return ENTRANCE_GROUP_BARINADES_LAIR;
+        case SCENE_FOREST_TEMPLE_BOSS: return ENTRANCE_GROUP_PHANTOM_GANONS_LAIR;
+        case SCENE_FIRE_TEMPLE_BOSS: return ENTRANCE_GROUP_VOLVAGIAS_LAIR;
+        case SCENE_WATER_TEMPLE_BOSS: return ENTRANCE_GROUP_MORPHAS_LAIR;
+        case SCENE_SPIRIT_TEMPLE_BOSS: return ENTRANCE_GROUP_TWINROVAS_LAIR;
+        case SCENE_SHADOW_TEMPLE_BOSS: return ENTRANCE_GROUP_BONGO_BONGOS_LAIR;
+        default: return ENTRANCE_GROUP_OTHER;
     }
-    return nullptr;
+}
+
+static const EntranceData* GetNativeEntranceData(s16 index) {
+    // Native tracker rows historically assign all dungeon/boss transitions to
+    // adjacent overworld groups. Keep the original metadata but classify
+    // both ends using the exact AP endpoint scene when it is available.
+    // A stable map owns the rewritten records and their strings for the UI.
+    static const std::map<int16_t, EntranceData> grouped = [] {
+        std::map<int16_t, EntranceData> rows;
+        for (const auto& original : entranceData) {
+            EntranceData data = original;
+            const auto* endpoint = SohExtreme::EntranceEndpointById(data.index);
+            int sourceScene = !data.scenes.empty() ? data.scenes.front().scene : -1;
+            if (endpoint && endpoint->sourceScene >= 0) sourceScene = endpoint->sourceScene;
+            const auto sourceGroup = DungeonEntranceGroupForScene(sourceScene);
+            if (sourceGroup != ENTRANCE_GROUP_OTHER) data.srcGroup = sourceGroup;
+
+            int destinationScene = endpoint ? endpoint->scene : -1;
+            if (destinationScene < 0 && data.reverseIndex >= 0) {
+                for (const auto& reverse : entranceData) {
+                    if (reverse.index == data.reverseIndex && !reverse.scenes.empty()) {
+                        destinationScene = reverse.scenes.front().scene;
+                        break;
+                    }
+                }
+            }
+            const auto destinationGroup = DungeonEntranceGroupForScene(destinationScene);
+            if (destinationGroup != ENTRANCE_GROUP_OTHER) data.dstGroup = destinationGroup;
+            rows.emplace(data.index, std::move(data));
+        }
+        return rows;
+    }();
+    const auto found = grouped.find(index);
+    return found == grouped.end() ? nullptr : &found->second;
 }
 
 static SpoilerEntranceGroup EntranceGroupForScene(int scene) {
     if (scene < 0) return ENTRANCE_GROUP_OTHER;
-    // Native scene metadata describes the source area, including the familiar
-    // overworld grouping for dungeon and boss rooms.
+    // Dungeon rooms and boss chambers have their own tracker categories.
+    // Never classify a dungeon only by its overworld approach.
+    const auto dungeonGroup = DungeonEntranceGroupForScene(scene);
+    if (dungeonGroup != ENTRANCE_GROUP_OTHER) return dungeonGroup;
+    // Overworld and ordinary interiors retain the original area group.
     for (const auto& entry : entranceData) {
         if (entry.srcGroup == ENTRANCE_GROUP_ONE_WAY) continue;
         for (const auto& info : entry.scenes) {

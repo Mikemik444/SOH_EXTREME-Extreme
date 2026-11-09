@@ -5,12 +5,11 @@ from .EntranceOptions import *
 from .SongNotes import SONG_NOTE_KEYS, normalize_song_selection
 
 class ShuffleCrossAgeEquipment(Toggle):
-    """Add two progression items that independently unlock reverse-age equipment.
+    """Shuffle two copies of Progressive Cross-Age Equipment (default Off).
 
-    When Off (the default), neither unlock is placed and equipment keeps its
-    ordinary Child/Adult restrictions. When On, both unlocks enter the pool:
-    Child Can Use Adult Items and Adult Can Use Child Items. Receiving an
-    unlock never grants the underlying sword, weapon, tunic, boots, or ammo.
+    The first grants Child Link the ability to equip adult-only gear. The
+    second also lets Adult Link equip child-only gear, including swords and
+    shields. It never grants the actual weapons, tunics, boots or ammo.
     """
     display_name = "Shuffle Cross-Age Equipment"
     default = 0

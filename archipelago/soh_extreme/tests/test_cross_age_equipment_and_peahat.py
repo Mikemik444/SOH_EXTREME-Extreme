@@ -49,8 +49,8 @@ class TestedAgeLogic(unittest.TestCase):
         d={
            'Items':names, 'Rule':BoolRule,'item_data_table':itemdata,
            'ItemType':SimpleNamespace(magic='magic',song='song'),
-           'has_item':lambda item,b:BoolRule(item in inventory),
-           'Has':lambda n:BoolRule(n in inventory),
+           'has_item':lambda item,b:BoolRule((item in inventory if not isinstance(inventory,dict) else inventory.get(item,0)>0)),
+           'Has':lambda n,count=1:BoolRule((sum(1 for value in inventory if value == n) if not isinstance(inventory,dict) else inventory.get(n,0)) >= count),
            'is_adult':lambda b:BoolRule(age=='adult'),
            'is_child':lambda b:BoolRule(age=='child'),
            'can_use':None,
@@ -80,6 +80,22 @@ class TestedAgeLogic(unittest.TestCase):
             self.assertTrue(self.use(weapon,'adult',owned|{'Adult Can Use Child Items'}))
             self.assertFalse(self.use(weapon,'adult',owned|{'Child Can Use Adult Items'}))
 
+    def test_progressive_stage_one_grants_only_child_direction(self):
+        first={'FAIRY_BOW':1, 'FAIRY_SLINGSHOT':1, 'Progressive Cross-Age Equipment':1}
+        self.assertTrue(self.use('FAIRY_BOW','child',first))
+        self.assertFalse(self.use('FAIRY_SLINGSHOT','adult',first))
+
+    def test_progressive_stage_two_grants_both_directions(self):
+        second={'FAIRY_BOW':1, 'FAIRY_SLINGSHOT':1, 'Progressive Cross-Age Equipment':2}
+        self.assertTrue(self.use('FAIRY_BOW','child',second))
+        self.assertTrue(self.use('FAIRY_SLINGSHOT','adult',second))
+        self.assertFalse(self.use('FAIRY_BOW','child',{'Progressive Cross-Age Equipment':2}))
+
+    def test_progressive_setting_off_blocks_both_stages(self):
+        both={'FAIRY_BOW':1,'FAIRY_SLINGSHOT':1,'Progressive Cross-Age Equipment':2}
+        self.assertFalse(self.use('FAIRY_BOW','child',both,False))
+        self.assertFalse(self.use('FAIRY_SLINGSHOT','adult',both,False))
+
     def test_off_setting_never_allows_cross_age_even_if_item_is_present(self):
         self.assertFalse(self.use('FAIRY_BOW','child',{'FAIRY_BOW','Child Can Use Adult Items'},False))
         self.assertFalse(self.use('FAIRY_SLINGSHOT','adult',{'FAIRY_SLINGSHOT','Adult Can Use Child Items'},False))
@@ -103,7 +119,7 @@ class TestedAgeLogic(unittest.TestCase):
         toggle=method.body[i+1]
         self.assertIsInstance(toggle,ast.If)
         self.assertEqual(ast.unparse(toggle.test),'o.shuffle_cross_age_equipment.value')
-        for enabled,expected in ((False,[]),(True,['Child Can Use Adult Items','Adult Can Use Child Items'])):
+        for enabled,expected in ((False,[]),(True,['Progressive Cross-Age Equipment']*2)):
             context={'o':SimpleNamespace(shuffle_cross_age_equipment=SimpleNamespace(value=int(enabled)))}
             mini=ast.fix_missing_locations(ast.Module(body=method.body[i:i+2],type_ignores=[]))
             exec(compile(mini,'create_items.py','exec'),context)
@@ -114,6 +130,7 @@ class TestedAgeLogic(unittest.TestCase):
                 items=ast.literal_eval(n.value)
         self.assertEqual(items['Child Can Use Adult Items'],9500400)
         self.assertEqual(items['Adult Can Use Child Items'],9500401)
+        self.assertEqual(items['Progressive Cross-Age Equipment'],9500402)
         self.assertEqual(len(set(items.values())),len(items))
 
     def test_client_persists_each_item_independently(self):

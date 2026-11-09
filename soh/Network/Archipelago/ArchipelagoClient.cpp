@@ -179,6 +179,7 @@ constexpr int64_t AP_ITEM_SHOVEL = 9500018;
 constexpr int64_t AP_ITEM_FLOW_OF_TIME = 9500019;
 constexpr int64_t AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS = 9500400;
 constexpr int64_t AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS = 9500401;
+constexpr int64_t AP_ITEM_PROGRESSIVE_CROSS_AGE_EQUIPMENT = 9500402;
 
 constexpr int64_t AP_ITEM_DMC_BEAN_SOUL = 9500095;
 constexpr int64_t AP_ITEM_DMT_BEAN_SOUL = 9500096;
@@ -480,6 +481,7 @@ static std::string GetApItemDisplayName(int64_t itemId) {
         case AP_ITEM_FLOW_OF_TIME: return "Flow of Time";
         case AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS: return "Child Can Use Adult Items";
         case AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS: return "Adult Can Use Child Items";
+        case AP_ITEM_PROGRESSIVE_CROSS_AGE_EQUIPMENT: return "Progressive Cross-Age Equipment";
         case AP_ITEM_DMC_BEAN_SOUL: return "Death Mountain Crater Bean Soul";
         case AP_ITEM_DMT_BEAN_SOUL: return "Death Mountain Trail Bean Soul";
         case AP_ITEM_COLOSSUS_BEAN_SOUL: return "Desert Colossus Bean Soul";
@@ -1649,6 +1651,15 @@ static bool ApplyExtremePersistentApItem(int64_t apItemId) {
             Flags_SetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS); return true;
         case AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS:
             Flags_SetRandomizerInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS); return true;
+        case AP_ITEM_PROGRESSIVE_CROSS_AGE_EQUIPMENT:
+            // First copy: child can equip adult gear. Second: adult can equip child
+            // gear. The existing per-save flags persist across loads/age changes.
+            if (!Flags_GetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS)) {
+                Flags_SetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS);
+            } else {
+                Flags_SetRandomizerInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS);
+            }
+            return true;
         case AP_ITEM_SPEAK:
             Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_DEKU);
             Flags_SetRandomizerInf(RAND_INF_CAN_SPEAK_GERUDO);
@@ -1909,6 +1920,8 @@ int32_t ArchipelagoClient::MapApItemToRandomizerGet(int64_t itemId) const {
         case AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS:
         case AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS:
             return static_cast<int32_t>(RG_AP_REMOTE_IMPORTANT);
+        case AP_ITEM_PROGRESSIVE_CROSS_AGE_EQUIPMENT:
+            return static_cast<int32_t>(RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT);
         case AP_ITEM_ROLL: randoGet = RG_ROLL; break;
         case AP_ITEM_GRAB: randoGet = RG_POWER_BRACELET; break;
         case AP_ITEM_CLIMB: randoGet = RG_CLIMB; break;
@@ -3262,6 +3275,7 @@ bool ArchipelagoClient::ProcessItem(int64_t itemId, bool /*notify*/, uint64_t se
         }
     } else {
         switch (itemId) {
+            case AP_ITEM_PROGRESSIVE_CROSS_AGE_EQUIPMENT: randoGet = RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT; break;
             case AP_ITEM_ROLL: randoGet = RG_ROLL; break;
             case AP_ITEM_GRAB: randoGet = RG_POWER_BRACELET; break;
             case AP_ITEM_CLIMB: randoGet = RG_CLIMB; break;
@@ -4928,6 +4942,10 @@ extern "C" bool Archipelago_IsAuthenticatedForFileSelect(void) {
 
 extern "C" bool Archipelago_EntrancePrepareDungeonVoidOut(void) {
     return SohExtreme::EntranceRuntime::PrepareDungeonVoidOut();
+}
+
+extern "C" bool Archipelago_EntranceReturnToPreviousEntrance(void) {
+    return SohExtreme::EntranceRuntime::ReturnToPreviousEntrance();
 }
 
 extern "C" bool Archipelago_IsCurrentSaveFile(void) {

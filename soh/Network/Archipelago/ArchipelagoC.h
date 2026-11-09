@@ -40,6 +40,9 @@ bool Archipelago_EntranceShuffleActive(void);
 // Preserve the current dungeon scene and a proven safe room/ground checkpoint
 // for native void-outs, without reapplying a shuffled entrance or sending a check.
 bool Archipelago_EntrancePrepareDungeonVoidOut(void);
+// Genuine void-outs return to the last successful physical doorway, regardless
+// of the shuffle pool. Returns false when no reviewed landing exists.
+bool Archipelago_EntranceReturnToPreviousEntrance(void);
 // Recovery restores a resolved position without reporting a physical crossing.
 void Archipelago_CancelEntranceTransition(void);
 bool Archipelago_EntranceReturnFromUnsafeArrival(void);

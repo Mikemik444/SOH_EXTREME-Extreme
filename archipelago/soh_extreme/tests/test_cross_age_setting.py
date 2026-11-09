@@ -39,6 +39,7 @@ class TestCrossAgeSetting(unittest.TestCase):
         self.assertEqual(items["Child Can Use Adult Items"],9500400)
         self.assertEqual(items["Adult Can Use Child Items"],9500401)
         self.assertNotEqual(items["Child Can Use Adult Items"],items["Adult Can Use Child Items"])
+        self.assertEqual(items["Progressive Cross-Age Equipment"],9500402)
 
 if __name__ == "__main__":
     unittest.main()

@@ -502,8 +502,13 @@ void EnWallmas_TakePlayer(EnWallmas* this, PlayState* play) {
         // In mixed entrance pools, Wallmaster should return Link to the scene
         // he entered from instead of the native dungeon entrance. The helper
         // is a no-op for non-AP saves and dungeon-only pools.
-        Archipelago_EntranceWallmasterReturn();
-        Play_TriggerRespawn(play);
+        if (Archipelago_EntranceWallmasterReturn()) {
+            // A validated return is already resolved; do not overwrite it
+            // with Play_SetupRespawnPoint at the Wallmaster's grab position.
+            Play_LoadToLastEntrance(play);
+        } else {
+            Play_TriggerRespawn(play);
+        }
     }
 }
 

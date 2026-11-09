@@ -219,11 +219,11 @@ def can_use(item: Items, bundle: tuple[Regions, "SohWorld"]) -> Rule:
         if data[item].adult_only:
             # This does NOT replace physical age checks on doors or events.
             age_rule = is_adult(bundle)
-            rule &= (age_rule | Has("Child Can Use Adult Items")) if cross_age_enabled else age_rule
+            rule &= (age_rule | Has("Progressive Cross-Age Equipment", 1) | Has("Child Can Use Adult Items")) if cross_age_enabled else age_rule
 
         if data[item].child_only:
             age_rule = is_child(bundle)
-            rule &= (age_rule | Has("Adult Can Use Child Items")) if cross_age_enabled else age_rule
+            rule &= (age_rule | Has("Progressive Cross-Age Equipment", 2) | Has("Adult Can Use Child Items")) if cross_age_enabled else age_rule
 
         if data[item].item_type == ItemType.magic:
             rule &= has_item(Items.MAGIC_SINGLE, bundle)

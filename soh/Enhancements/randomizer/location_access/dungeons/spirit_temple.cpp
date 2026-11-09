@@ -150,7 +150,7 @@ void RegionTable_Init_SpiritTemple() {
 
     areaTable[RR_SPIRIT_TEMPLE_ADULT_SIDE_HUB] = Region("Spirit Temple Adult Side Hub", SCENE_SPIRIT_TEMPLE, {}, {}, {
         //Exits
-        ENTRANCE(RR_SPIRIT_TEMPLE_FOYER,          true),
+        ENTRANCE(RR_SPIRIT_TEMPLE_FOYER,          logic->CanUse(RG_SILVER_GAUNTLETS)),
         ENTRANCE(RR_SPIRIT_TEMPLE_SAND_PIT,       AnyAgeTime([]{return logic->CanHitSwitch(logic->IsAdult && ctx->GetTrickOption(RT_SPIRIT_LOWER_ADULT_SWITCH) ? ED_BOMB_THROW : ED_BOOMERANG);})),
         ENTRANCE(RR_SPIRIT_TEMPLE_ABOVE_BOULDERS, AnyAgeTime([]{return logic->CanHitSwitch(logic->IsAdult && ctx->GetTrickOption(RT_SPIRIT_LOWER_ADULT_SWITCH) ? ED_BOMB_THROW : ED_BOOMERANG);})),
         ENTRANCE(RR_SPIRIT_TEMPLE_1F_MIRROR_ROOM, logic->SmallKeys(SCENE_SPIRIT_TEMPLE, 1)),

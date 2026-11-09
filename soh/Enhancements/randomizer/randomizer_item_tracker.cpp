@@ -184,6 +184,10 @@ std::vector<ItemTrackerItem> rollItems = {
     ITEM_TRACKER_RG(RG_ROLL, "ROLL", 0, DrawItem),
 };
 
+std::vector<ItemTrackerItem> crossAgeItems = {
+    ITEM_TRACKER_RG(RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT, "AGE", 0, DrawItem),
+};
+
 std::vector<ItemTrackerItem> flowOfTimeItems = {
     ITEM_TRACKER_RG_CUSTOM(RG_FLOW_OF_TIME, "TIME", ITEM_SONG_SUN, 0, DrawItem),
 };
@@ -1201,6 +1205,13 @@ void DrawItem(ItemTrackerItem item) {
                 itemName = "Ganon's Soul";
                 break;
 
+            case RG_PROGRESSIVE_CROSS_AGE_EQUIPMENT:
+                // This icon reflects the two per-save unlock flags, not a
+                // synthesized vanilla inventory slot or a shared CVar.
+                hasItem = IS_RANDO && Flags_GetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS);
+                itemName = Flags_GetRandomizerInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS)
+                    ? "Progressive Cross-Age Equipment (2/2)" : "Progressive Cross-Age Equipment (1/2)";
+                break;
             case RG_ROLL:
                 itemName = "Roll";
                 break;
@@ -1933,6 +1944,12 @@ void UpdateVectors() {
     }
     if (IS_RANDO && RAND_GET_OPTION(RSK_SHUFFLE_ROLL)) {
         mainWindowItems.insert(mainWindowItems.end(), rollItems.begin(), rollItems.end());
+    }
+    // The server controls whether the optional progressive item was placed.
+    // Display its inventory icon on an AP save regardless of Roll shuffle.
+    if (IS_RANDO && (Flags_GetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS) ||
+                     Flags_GetRandomizerInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS))) {
+        mainWindowItems.insert(mainWindowItems.end(), crossAgeItems.begin(), crossAgeItems.end());
     }
     if (IS_RANDO && RAND_GET_OPTION(RSK_SHUFFLE_FLOW_OF_TIME)) {
         mainWindowItems.insert(mainWindowItems.end(), flowOfTimeItems.begin(), flowOfTimeItems.end());

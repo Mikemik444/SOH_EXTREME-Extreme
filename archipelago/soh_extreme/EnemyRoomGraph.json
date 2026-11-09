@@ -8827,7 +8827,7 @@
       {
         "target": "RR_SPIRIT_TEMPLE_FOYER",
         "region": "RR_SPIRIT_TEMPLE_ADULT_SIDE_HUB",
-        "condition": "true",
+        "condition": "logic->CanUse(RG_SILVER_GAUNTLETS)",
         "file": "soh\\Enhancements\\randomizer\\location_access\\dungeons\\spirit_temple.cpp",
         "line": 153
       },

@@ -6460,7 +6460,7 @@
     "params": 159,
     "anchor": 40,
     "name": "Jabu Jabus Belly Big Octo Ledge -> Jabu Jabus Belly Big Octo (door 22, room 3 to 6)",
-    "condition": "true"
+    "condition": "logic->Get(LOGIC_JABU_RUTO_IN_1F) && AnyAgeTime([]{return logic->CanKillEnemy(RE_BIG_OCTO);})"
   },
   {
     "id": 8491,
