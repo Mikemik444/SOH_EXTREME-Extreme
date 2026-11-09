@@ -12,7 +12,7 @@ void RegionTable_Init_WaterTemple() {
         //Exits
         ENTRANCE(RR_WATER_TEMPLE_ENTRANCE_LEDGE,    logic->CanUse(RG_IRON_BOOTS) && ctx->GetDungeon(WATER_TEMPLE)->IsVanilla()),
         ENTRANCE(RR_WATER_TEMPLE_MQ_ENTRANCE_LEDGE, logic->CanUse(RG_IRON_BOOTS) && ctx->GetDungeon(WATER_TEMPLE)->IsMQ()),
-        ENTRANCE(RR_LH_FROM_WATER_TEMPLE,           true),
+        ENTRANCE(RR_LH_FROM_WATER_TEMPLE,           logic->HasItem(RG_BRONZE_SCALE)),
     });
 
 #pragma region Vanilla

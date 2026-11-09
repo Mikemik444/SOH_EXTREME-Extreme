@@ -49,6 +49,17 @@ DUNGEON_ROUTES = json.loads(files(__package__).joinpath('DungeonLocationRoutes.j
 # middle doors are dry at Low or Mid. Otherwise the landing is submerged.
 # Usable Iron Boots include Swim and the actual age requirement. Upper ledges
 # and separate basement puzzle ledges must not inherit a scene-wide water gate.
+# Physical submerged entrance/exit mouths. Apply Swim to both the source
+# crossing (and its scene-transition check) and a shuffled arrival at the
+# underwater mouth. This is not a Water Temple-wide condition: dry interior
+# doors and checks retain their normal requirements.
+WATER_SUBMERGED_ENDPOINTS = frozenset({
+    16, 541,        # Lake Hylia <-> Water Temple entrance, underwater
+    477, 1242,      # Lost Woods <-> Zora's River submerged tunnel
+    808, 1376,      # Lake Hylia <-> Zora's Domain submerged shortcut
+    473, 785,       # Hyrule Field <-> Zora's River water path
+})
+
 WATER_ARRIVAL_LEVELS = {
     8860: 'WL_LOW', 8861: 'WL_LOW',
     8878: 'WL_LOW', 8879: 'WL_LOW',
@@ -278,7 +289,8 @@ def _source_rule(world, row):
     early_pot_door = row['source_scene'] == 10 and row['door'] in (6, 7) and world.options.shuffle_pots.value in (1, 3)
     if 'extra_condition' in row and not early_pot_door:
         extras.append(world._extreme_room_compiler.expr(row['extra_condition'], row['source']).resolve(world))
-    if row.get('gate') == 'swim': extras.append(H.can_swim(bundle).resolve(world))
+    if row.get('gate') == 'swim' or row['id'] in WATER_SUBMERGED_ENDPOINTS:
+        extras.append(H.can_swim(bundle).resolve(world))
     if row.get('gate') == 'horse': extras.append(H.can_use(Items.EPONA, bundle).resolve(world))
     # The lake fence is physically not a free walk even when the source is
     # reachable through a mixed-pool entry. Preserve the literal gate on the
@@ -307,7 +319,7 @@ def _source_rule(world, row):
 
 
 def _arrival_rule(world, row):
-    if row.get('arrival_gate') == 'swim':
+    if row.get('arrival_gate') == 'swim' or row['id'] in WATER_SUBMERGED_ENDPOINTS:
         # A dry source can be paired with a water landing. Its crossing check
         # still uses the dry source rule, but entering the destination needs Swim.
         rule = H.can_swim((Regions[row['target']], world)).resolve(world)
@@ -686,7 +698,9 @@ def connect(world):
         edge.connect(target)
         edges[row['id']] = edge
     arrival_rules = {row['id']: _arrival_rule(world, row) for row in CATALOG
-                     if row['id'] in WATER_ARRIVAL_LEVELS or row.get('arrival_gate')}
+                     if row['id'] in WATER_ARRIVAL_LEVELS
+                     or row['id'] in WATER_SUBMERGED_ENDPOINTS
+                     or row.get('arrival_gate')}
     routed_rules = {}
     def apply(mapping):
         routes = dict(mapping)

@@ -14,18 +14,27 @@ from argparse import Namespace
 from collections.abc import Mapping
 from copy import deepcopy
 import importlib
+import logging
 import traceback
 
 
 GAME = "SOH-EXTREME"
 
+# Values for optional settings that did not exist when older seed snapshots
+# were generated. They are historical behavior, NOT values read from a local
+# YAML or modern template. Never infer values for other missing logic settings.
+LEGACY_OPTION_VALUES = {
+    "song_note_songs": ["all"],
+    "shuffle_cross_age_equipment": 0,  # Introduced opt-in; old seeds had neither unlock.
+}
+
 
 def _resolved_arguments(world_type, slot_data, slot_name, seed_name):
     """Make the option namespace consumed by the real UT ``TMain``.
 
-    All options come from the server.  Old snapshots that published their options
-    at the top level remain supported; a missing modern option cannot silently
-    inherit a local YAML or a newly changed default.
+    All options come from the server, except explicit historical migrations for
+    optional settings introduced after a seed was generated. A missing option
+    must never silently inherit a local YAML or a new current default.
     """
     from Options import NumericOption
 
@@ -49,16 +58,16 @@ def _resolved_arguments(world_type, slot_data, slot_name, seed_name):
     args = Namespace(multi=1, game={1: GAME}, name={1: slot_name}, race=False,
                      outputname=seed_name or slot_name, player_ids={1})
     missing = []
+    migrated = []
     raw_options = {}
     for name, option_type in option_types.items():
         if name in resolved:
             value = resolved[name]
         elif name in snapshot:
             value = snapshot[name]
-        elif name == "song_note_songs":
-            # Before per-song selection existed, note shuffle always selected
-            # every song.  This is a defined legacy migration, not a local default.
-            value = ["all"]
+        elif name in LEGACY_OPTION_VALUES:
+            value = deepcopy(LEGACY_OPTION_VALUES[name])
+            migrated.append(name)
         else:
             missing.append(name)
             continue
@@ -85,6 +94,10 @@ def _resolved_arguments(world_type, slot_data, slot_name, seed_name):
             + ". Use a matching SOH-EXTREME APWorld or regenerate the room with a complete slot snapshot."
         )
     snapshot["extreme_all_options"] = raw_options
+    if migrated:
+        logging.getLogger("SOH_EXTREME").info(
+            "Universal Tracker applied historical option migrations (no YAML): %s",
+            ", ".join(sorted(migrated)))
 
     for name in ("required_trials", "shop_prices", "shop_vanilla_items", "extreme_active_locations"):
         if name not in snapshot:
@@ -242,14 +255,24 @@ def install_slot_data_core(context):
                 actual = {location.address for location in multiworld.get_locations(1)
                           if isinstance(location.address, int)}
                 expected = set(snapshot["extreme_active_locations"])
-                if actual != expected:
-                    missing = sorted(expected - actual)
-                    extra = sorted(actual - expected)
+                missing = sorted(expected - actual)
+                extra = sorted(actual - expected)
+                if missing:
+                    # Can't label an absent source check in logic. Do not
+                    # silently replace the server's manifest or invent checks.
                     raise ValueError(
-                        "The connected seed's location manifest does not match the regenerated graph "
-                        f"({len(missing)} missing, {len(extra)} unexpected). "
-                        "Use the SOH-EXTREME APWorld matching this room."
+                        "The connected seed contains checks not defined by this APWorld "
+                        f"({len(missing)} missing, {len(extra)} new-only). "
+                        "Install an APWorld that defines those checks."
                     )
+                if extra:
+                    # The newer APWorld may define checks that did not exist in
+                    # the connected seed. Never display/send those locations.
+                    # The mirror intersects UT's evaluated rows with the
+                    # server's exact active location set below.
+                    self.logger.warning(
+                        "SOH-EXTREME compatibility: ignoring %d newer check(s) "
+                        "not present in this seed's server manifest.", len(extra))
                 # Same cleanup as UT's ordinary generator: AP delivers numeric
                 # starting items through ReceivedItems; native events stay local.
                 multiworld.precollected_items = {

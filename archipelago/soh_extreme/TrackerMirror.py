@@ -101,8 +101,13 @@ def snapshot_rows(core, tracker_state, world, active: set[int], checked: set[int
         for name in names:
             loc=world.get_location(name)
             i=loc.address
-            if type(i) is not int or i not in active or i in checked:
-                raise ValueError('UT returned a non-active network check: '+str(name))
+            if type(i) is not int:
+                continue  # Non-network events are not location checks.
+            if i not in active or i in checked:
+                # Newer APWorlds may define locations not present in an older
+                # seed. The live server manifest, not the local source catalog,
+                # decides which checks belong to this connection.
+                continue
             if i in seen:raise ValueError('UT returned duplicate network check: '+str(name))
             seen.add(i)
             label=getattr(world,"_er_labels",{}).get(i,str(loc.name))

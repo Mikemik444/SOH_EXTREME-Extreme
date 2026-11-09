@@ -388,6 +388,12 @@ void Record(int source) {
     if (!a) return;
     const int target = routing.Destination(source);
     const auto* destination = EntranceDestinationById(target);
+    // Log the physical source and selected destination separately: the scene
+    // number alone cannot prove a shuffled boss entrance was dispatched.
+    if (Entrance_IsBossScene(a->scene) && destination) {
+        SPDLOG_INFO("[Archipelago] Boss route source {} -> destination {} (scene {}, native {})",
+                    source, target, destination->normalLayers[0].scene, destination->nativeIndex);
+    }
     // Safety is independent of check credit. Also guard an unshuffled special
     // exit when mixed entrances made its shared interior reachable at either age.
     if (gSaveContext.gameMode == GAMEMODE_NORMAL &&
@@ -515,6 +521,15 @@ int64_t Complete(int scene) {
     dungeonReturnArrival = false;
     const bool arrived = !suppressTransitionChecks && source && target &&
                          CrossingScene(target->scene) == CrossingScene(scene);
+    if (source && target && Entrance_IsBossScene(target->scene)) {
+        if (arrived) {
+            SPDLOG_INFO("[Archipelago] Boss arrival confirmed: source {} destination {} scene {}",
+                        source->id, target->id, scene);
+        } else if (!suppressTransitionChecks) {
+            SPDLOG_WARN("[Archipelago] Boss arrival mismatch: source {} destination {} expected scene {}, got {}",
+                        source->id, target->id, target->scene, scene);
+        }
+    }
     if (arrived) discoveredEndpoints.insert(source->id);
     suppressTransitionChecks = false;
     lastArrivalSource = arrived ? source : nullptr;

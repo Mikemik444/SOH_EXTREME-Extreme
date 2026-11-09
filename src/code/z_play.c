@@ -1,5 +1,6 @@
 #include "global.h"
 #include "soh/Network/Archipelago/ArchipelagoC.h"
+#include "soh/Enhancements/randomizer/randomizer_entrance.h"
 #include "vt.h"
 
 #include <string.h>
@@ -2113,7 +2114,31 @@ void Play_SetupRespawnPoint(PlayState* play, s32 respawnMode, s32 playerParams) 
 // Do not make these two distinct operations share a checkpoint rewrite.
 static void Play_TriggerVoidOutInternal(PlayState* play, bool realDungeonVoid) {
     if (realDungeonVoid) {
-        Archipelago_EntrancePrepareDungeonVoidOut();
+        const bool hasSafeCheckpoint = Archipelago_EntrancePrepareDungeonVoidOut();
+        // On an AP dungeon or boss-room fall, never reuse RESPAWN_MODE_DOWN
+        // from a previously visited scene if no current-scene checkpoint was
+        // validated. That stale index can belong to an entirely different
+        // shuffled boss (including Gohma). This is NOT an entrance crossing.
+        if (!hasSafeCheckpoint && Archipelago_IsCurrentSaveFile() &&
+            Archipelago_EntranceShuffleActive()) {
+            const s16 dungeonEntry = Entrance_GetDungeonSpawn(play->sceneNum);
+            if (dungeonEntry >= 0) {
+                // First use the existing validated same-room / paired-return
+                // policy. It knows which physical dungeon owns a shuffled boss.
+                if (!Archipelago_EntranceGameOverDungeonReturn()) {
+                    // No valid saved history: fall back to this dungeon's
+                    // native entrance, not the stale DOWN respawn. This is a
+                    // resolved physical entry, so it must not be shuffled again.
+                    Archipelago_CancelEntranceTransition();
+                    gSaveContext.entranceIndex = dungeonEntry;
+                }
+                gSaveContext.respawnFlag = 0;
+                play->transitionTrigger = TRANS_TRIGGER_START;
+                play->nextEntranceIndex = gSaveContext.entranceIndex;
+                play->transitionType = TRANS_TYPE_FADE_BLACK;
+                return;
+            }
+        }
     }
     gSaveContext.respawn[RESPAWN_MODE_DOWN].tempSwchFlags = play->actorCtx.flags.tempSwch;
     gSaveContext.respawn[RESPAWN_MODE_DOWN].tempCollectFlags = play->actorCtx.flags.tempCollect;

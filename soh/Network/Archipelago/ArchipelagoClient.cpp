@@ -1141,8 +1141,11 @@ void ArchipelagoClient::ServiceFinderWorker() {
         finderWorkerNextPoll = now + 0.1;
         SPDLOG_WARN("[Archipelago] {}", finderWorkerError);
     }
-    if (!finderWorkerStarted && finderWorkerAttempts < 3 && now >= finderWorkerRetryAt) {
-        ++finderWorkerAttempts;
+    // An APWorld may be updated/reinstalled while SoH is open. Don't leave
+    // Check Finder permanently empty after three failed starts: retry at a
+    // bounded rate, without affecting the connected gameplay session.
+    if (!finderWorkerStarted && now >= finderWorkerRetryAt) {
+        finderWorkerAttempts = std::min<uint32_t>(finderWorkerAttempts + 1U, 4U);
         const char* server = connectedServer.c_str();
         const char* name = connectedSlot.c_str();
         const char* password = connectedPassword.c_str();
@@ -1154,7 +1157,7 @@ void ArchipelagoClient::ServiceFinderWorker() {
         } catch (const std::exception&) {
             finderWorkerError = "The AP tracker could not read valid game connection settings.";
         }
-        finderWorkerRetryAt = now + 15.0 * finderWorkerAttempts;
+        finderWorkerRetryAt = now + 15.0 * finderWorkerAttempts; // Caps at 60 seconds.
         if (finderWorkerStarted) {
             finderNextRequest = 0.0;
             SPDLOG_INFO("[Archipelago] Automatic Universal Tracker host started using {}", finderWorker.RuntimePath());

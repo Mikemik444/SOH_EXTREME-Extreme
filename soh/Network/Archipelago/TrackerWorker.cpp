@@ -343,7 +343,7 @@ bool TrackerWorker::IsRunning(std::string& error) {
         case 21: error = "Install tracker.apworld alongside the updated soh_extreme.apworld in the detected Archipelago installation."; break;
         case 22: error = "The AP tracker could not authenticate. Check the game's server, slot and password."; break;
         case 23: error = "Universal Tracker could not reconstruct this slot. See Archipelago's SOH-EXTREME-InGameTracker log."; break;
-        default: error = "The AP tracker stopped (exit " + std::to_string(code) + "). Check the installed AP world and tracker versions."; break;
+        default: error = "The AP tracker stopped (exit " + std::to_string(code) + "). See SOH-EXTREME-InGameTracker.log for the actual error."; break;
     }
     Stop();
 #else

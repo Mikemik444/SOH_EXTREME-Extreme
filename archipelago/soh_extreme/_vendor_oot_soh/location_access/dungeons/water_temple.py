@@ -25,7 +25,7 @@ def set_region_rules(world: "SohWorld") -> None:
     connect_regions(Regions.WATER_TEMPLE_ENTRYWAY, world, [
         (Regions.WATER_TEMPLE_LOBBY, lambda bundle: (
             can_use(Items.IRON_BOOTS, bundle))),
-        (Regions.LH_FROM_WATER_TEMPLE, lambda bundle: True_())
+        (Regions.LH_FROM_WATER_TEMPLE, lambda bundle: can_swim(bundle))
     ])
 
     # Water Temple Lobby
