@@ -5,6 +5,8 @@ physical hazards, never the old source's requirements. Crossing checks retain
 source-only credit. One-way routes add exactly one directed edge.
 """
 from collections import defaultdict
+import logging
+from time import monotonic
 from importlib.resources import files
 import json
 
@@ -150,6 +152,16 @@ def _routed_destination(world, mapping, source):
     if source not in mapping and source in RIVER_WATER_ALIASES and _river_path_revision(world) == 0:
         return mapping.get(RIVER_WATER_ALIASES[source], source)
     return mapping.get(source, source)
+
+
+def _changed_route_ids(previous, current):
+    """Only rebuild edges whose installed destination changed.
+
+    `previous` describes the *currently installed* graph, not the last
+    accepted mapping. Rejected probes also change the live graph temporarily.
+    """
+    return [source for source, destination in current.items()
+            if previous.get(source) != destination]
 
 
 def restore_legacy_defaults(world):
@@ -702,7 +714,8 @@ def connect(world):
                      or row['id'] in WATER_SUBMERGED_ENDPOINTS
                      or row.get('arrival_gate')}
     routed_rules = {}
-    def apply(mapping):
+    installed_destinations = {}
+    def apply(mapping, *, update_labels=False):
         routes = dict(mapping)
         for warp in blue:
             boss = next((e for e in CATALOG if e['category'] == 'bosses' and e['primary']
@@ -715,26 +728,42 @@ def connect(world):
                 entry = next((e for e in CATALOG if e['category'] == 'dungeons' and not e['primary']
                               and boss and e['source_scene'] == boss['source_scene']), None)
                 if entry and entry['id'] in mapping: routes[warp['id']] = mapping[entry['id']]
-        for id, edge in edges.items():
-            destination = _routed_destination(world, routes, id)
+        # This is called for hundreds of tentative pair swaps with the same
+        # 721-edge graph. A pair swap changes at most a few destinations.
+        # Reconnecting every edge invalidates expensive graph machinery and
+        # regenerates indirect-rule bindings for no logical change.
+        candidate_destinations = {
+            source_id: _routed_destination(world, routes, source_id)
+            for source_id in edges
+        }
+        for id in _changed_route_ids(installed_destinations, candidate_destinations):
+            edge = edges[id]
+            destination = candidate_destinations[id]
             edge.connected_region.entrances.remove(edge)
             edge.connect(world.get_region(region_name(ENDPOINTS[destination]['target'])))
             key = (id, destination)
             if key not in routed_rules:
-                # Always compose from the immutable physical source predicate.
-                # Candidate remaps must not retain a previous landing's gate.
+                # Keep physical source predicates immutable and compose each
+                # source/destination pair's arrival gate once.
                 rule = _routed_rule(rules[id], arrival_rules.get(destination))
                 for dependency in getattr(rule, '_er_dependencies', ()):
                     world._register_rule_indirects(dependency, edge)
                 routed_rules[key] = rule
             edge.access_rule = routed_rules[key]
+            installed_destinations[id] = destination
+        # Every new candidate still invalidates reachability state and runs
+        # *all* the original safety, age, return and item checks. No relaxed
+        # logic or unvalidated entrance map is emitted.
         world.multiworld._all_state_cache = None
         world._er_mapping = routes
-        display_routes = dict(routes)
-        display_routes.update({row['id']: _routed_destination(world, routes, row['id'])
-                               for row in legacy_water})
-        world._er_labels = {ENDPOINTS[k]["check_id"]: shuffled_check_label(ENDPOINTS[k], ENDPOINTS[v])
-                            for k, v in display_routes.items() if ENDPOINTS[k]["check_id"]}
+        if update_labels:
+            # Labels are only consumed after the final, validated map. Do not
+            # reformat hundreds of labels for each discarded probe.
+            display_routes = dict(routes)
+            display_routes.update({row['id']: _routed_destination(world, routes, row['id'])
+                                   for row in legacy_water})
+            world._er_labels = {ENDPOINTS[k]["check_id"]: shuffled_check_label(ENDPOINTS[k], ENDPOINTS[v])
+                                for k, v in display_routes.items() if ENDPOINTS[k]["check_id"]}
     def assert_installed_topology():
         """Fail closed if AP's final entrance graph differs from the exported map.
 
@@ -783,7 +812,7 @@ def connect(world):
         if type(pool_revision) is not int or pool_revision not in (0, POOL_POLICY_REVISION):
             raise OptionError('Unsupported dungeon entrance pool policy')
         mapping = {int(k): v for k, v in saved.get('connections', {}).items() if int(k) in {e['id'] for e in rows}}
-        validate_mapping(world, mapping, legacy_dungeon_pools=pool_revision == 0); apply(mapping)
+        validate_mapping(world, mapping, legacy_dungeon_pools=pool_revision == 0); apply(mapping, update_labels=True)
         assert_installed_topology()
         if world._er_mapping != {int(k): v for k, v in saved['connections'].items()}:
             raise OptionError('Entrance mapping blue-warp return data differs from this world')
@@ -811,7 +840,18 @@ def connect(world):
     inventory = world.multiworld.get_all_state(False, perform_sweep=False)
     fill_locations = [loc for loc in world.get_locations()
                       if loc.address is not None and loc.item is None]
+    attempts = 0
+    progress_start = monotonic()
+    last_progress = progress_start
     def viable(candidate):
+        nonlocal attempts, last_progress
+        attempts += 1
+        now = monotonic()
+        if now - last_progress >= 30:
+            logging.info('SOH-EXTREME entrance shuffle: %d candidates checked, '
+                         '%d accepted, %.1f seconds elapsed (full safety validation active)',
+                         attempts, accepted, now - progress_start)
+            last_progress = now
         if any(not Safety.allowed_route(source, target) for source, target in candidate.items()):
             return False
         apply(candidate)
@@ -857,7 +897,7 @@ def connect(world):
         candidate = _place_one_way(world, mapping, source, viable)
         if candidate is not None: mapping = candidate; accepted += 1
     validate_mapping(world, mapping)
-    apply(mapping)
+    apply(mapping, update_labels=True)
     assert_installed_topology()
     final_state = inventory.copy()
     final_state.sweep_for_advancements()
@@ -872,6 +912,8 @@ def connect(world):
             'Hyrule Field with the configured starting inventory.'
         )
     world._er_generation_attempts = accepted
+    logging.info('SOH-EXTREME entrance shuffle completed: %d accepted / %d candidates '
+                 'in %.1f seconds', accepted, attempts, monotonic() - progress_start)
 
 
 
