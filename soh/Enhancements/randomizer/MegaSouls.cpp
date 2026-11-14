@@ -518,8 +518,18 @@ static RandomizerInf AnimalSoulInfForActor(const Actor* actor) {
     }
 }
 
+// Zelda spawns these Stalfos herself in the post-Ganondorf collapse. They
+// must remain fightable even when a random seed has not granted Stalfos Soul:
+// freezing them prevents Zelda from opening the scripted escape doors.
+// This exemption does NOT affect ordinary Stalfos in Ganon's Tower.
+static bool IsScriptedFinalEscapeStalfos(const Actor* actor) {
+    return actor != nullptr && gPlayState != nullptr &&
+           gPlayState->sceneNum == SCENE_GANONS_TOWER_COLLAPSE_INTERIOR &&
+           actor->id == ACTOR_EN_TEST && actor->params == 5;
+}
+
 static bool HasRequiredEnemySoul(const Actor* actor) {
-    if (actor == nullptr) {
+    if (actor == nullptr || IsScriptedFinalEscapeStalfos(actor)) {
         return true;
     }
 
@@ -1365,7 +1375,9 @@ static void RegisterMegaSouls() {
     // also be initializing, splitting or reviving and must not award a check.
     // The actor-update hook only retries a failed pickup allocation after death.
     auto handleEnemyDeath = [](Actor* actor) {
-        if (actor == nullptr) {
+        if (actor == nullptr || IsScriptedFinalEscapeStalfos(actor)) {
+            // Zelda's fixed combat encounter is not an AP enemy-drop check
+            // and must not create a randomized drop after its death.
             return;
         }
 

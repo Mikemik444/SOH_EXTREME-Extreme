@@ -781,11 +781,13 @@ ENEMY_DROP_LOCATIONS = tuple(replace(loc, name=check_name(loc.address, loc.name)
 ENEMY_DROP_LOCATION_NAME_TO_ID = {loc.name: loc.address for loc in ENEMY_DROP_LOCATIONS}
 ENEMY_DROP_LOCATION_BY_NAME = {loc.name: loc for loc in ENEMY_DROP_LOCATIONS}
 
-# 0.11.41: unused room entries, suppressed by missing object dependencies in
-# vanilla and explicitly discarded by Enemy Randomizer. Never fill these in a
-# new seed. Keep names/IDs for UT and native compatibility with old manifests;
-# the updated game restores only an explicitly active, uncollected placement.
-ENEMY_UNUSED_OBJECT_IDS = frozenset((9800552, *range(9800621, 9800628)))
+# Unused room entries with missing object dependencies in vanilla.
+# 9800226/9800227 are the two Water Temple room 0 Keese, whose object_firefly
+# dependency is absent. The actual waterfall Keese are 9800246/9800247 and
+# remain normal checks. Never fill unused entries in a new seed. Retain their
+# original names, IDs, and receipt indices for older UT/server manifests; the
+# native client restores only an explicitly active, still-uncollected placement.
+ENEMY_UNUSED_OBJECT_IDS = frozenset((9800226, 9800227, 9800552, *range(9800621, 9800628)))
 
 # Removed in 0.11.13: Peahat-created offspring. These IDs are NEVER reused.
 ENEMY_OFFSPRING_RETIRED_IDS = frozenset(range(9800765, 9800786))

@@ -85,6 +85,23 @@ constexpr int AP_NEW_SAVE_REPLAY_GRACE_FRAMES = 90;
 constexpr int AP_NEW_SAVE_REPLAY_ITEMS_PER_FRAME = 8;
 constexpr int AP_LOCATION_REPORTS_PER_FRAME = 4;
 
+// Older APWorlds could place items on enemy slots that have since been proven
+// impossible. Keep the addresses reserved so these checks never map to a new
+// enemy. On an old server only, completing the original AP location releases
+// the item to its actual recipient (including remote players).
+//
+// 226/227, 552, 621-627: missing scene object (including Water Temple U-Bend).
+// 496-498, 503/504/507: invalid grotto room/entrance identities.
+// 765-785: retired Peahat-generated offspring, no longer trackable.
+static constexpr bool IsLegacyImpossibleEnemyLocation(int64_t locationId) {
+    return locationId == 9800226 || locationId == 9800227 ||
+           locationId == 9800552 ||
+           (locationId >= 9800621 && locationId <= 9800627) ||
+           (locationId >= 9800496 && locationId <= 9800498) ||
+           locationId == 9800503 || locationId == 9800504 || locationId == 9800507 ||
+           (locationId >= 9800765 && locationId <= 9800785);
+}
+
 // Some SoH major/randomizer items successfully finish their hold-item sequence
 // without producing the generic OnItemReceive callback AP normally uses as its
 // transaction completion. Never let that wedge the entire receive queue forever.
@@ -4159,18 +4176,29 @@ void ArchipelagoClient::Update() {
 }
 
 void ArchipelagoClient::SyncCollectedLocations() {
-    if (!IsAuthenticated() || !IsGameplaySessionActive()) return;
+    if (!IsAuthenticated() || !IsGameplaySessionActive() || !activeLocationsLoaded) return;
+
+    // Automatically clear impossible enemy checks retained by an OLD server.
+    // Only IDs explicitly present in its active-location manifest are eligible;
+    // new seeds cannot gain extra locations or items from this compatibility path.
+    // SendLocation() uses the normal AP LocationChecks pipeline (not a local item
+    // grant), which delivers the item to its real player and waits for server
+    // confirmation. The existing pending/retry logic handles network interruptions.
+    constexpr size_t kMaxLocationReportsPerPass = 8;
+    size_t sentThisPass = 0;
+    for (const int64_t apLocation : activeLocations) {
+        if (!IsLegacyImpossibleEnemyLocation(apLocation) || IsLocationSubmitted(apLocation)) continue;
+        SPDLOG_INFO("[Archipelago] Auto-completing impossible legacy enemy check {}", apLocation);
+        SendLocation(apLocation, false);
+        if (++sentThisPass >= kMaxLocationReportsPerPass) return;
+    }
 
     auto ctx = Rando::Context::GetInstance();
     if (!ctx) return;
 
-    if (!activeLocationsLoaded) return;
-
     // Reconcile missed/already-saved checks in small batches. Fresh checks use the
     // next-frame gDeferredLocationReports queue above, so this path is primarily for
     // reload/reconnect recovery and never needs to flood the websocket.
-    constexpr size_t kMaxLocationReportsPerPass = 8;
-    size_t sentThisPass = 0;
     for (const auto& [rcValue, apLocation] : rcToApLocation) {
         if (activeLocations.find(apLocation) == activeLocations.end()) continue;
         if (reportedLocations.find(apLocation) != reportedLocations.end()) continue;
@@ -4942,6 +4970,10 @@ extern "C" bool Archipelago_IsAuthenticatedForFileSelect(void) {
 
 extern "C" bool Archipelago_EntrancePrepareDungeonVoidOut(void) {
     return SohExtreme::EntranceRuntime::PrepareDungeonVoidOut();
+}
+
+extern "C" bool Archipelago_EntranceRestartFinalCastleEscape(void) {
+    return SohExtreme::EntranceRuntime::RestartFinalCastleEscape();
 }
 
 extern "C" bool Archipelago_EntranceReturnToPreviousEntrance(void) {

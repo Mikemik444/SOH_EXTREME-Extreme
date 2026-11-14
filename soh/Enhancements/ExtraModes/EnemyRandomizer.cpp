@@ -408,6 +408,23 @@ static EnemyEntry GetRandomizedEnemyEntry(u32 seed, PlayState* play, s16 posY, b
     return ShipUtils::RandomElement(filteredEnemyList, false);
 }
 
+// Ganondorf's death triggers a scripted escape whose enemy identities are
+// part of Zelda's door-opening and timer events. Leave the escape, rubble,
+// Stalfos encounters and final Ganon arena entirely vanilla even when the
+// optional global enemy randomizer is enabled. This does NOT affect the normal
+// Ganon's Tower climb (SCENE_GANONS_TOWER).
+static bool IsFixedFinalCastleEscapeScene(s16 sceneNum) {
+    switch (sceneNum) {
+        case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+        case SCENE_GANON_BOSS:
+            return true;
+        default:
+            return false;
+    }
+}
+
 static bool IsEnemyFoundToRandomize(s16 sceneNum, s8 roomNum, s16 actorId, s16 params, f32 posX) {
     u32 isMQ = ResourceMgr_IsSceneMasterQuest(sceneNum);
 
@@ -750,6 +767,10 @@ void RegisterEnemyRandomizer() {
         PlayState* play = va_arg(args, PlayState*);
         Actor** actor = va_arg(args, Actor**);
 
+        // Don't replace any actor during the fixed Ganondorf -> Zelda escape
+        // -> final Ganon sequence. The stock spawn hook must run untouched.
+        if (IsFixedFinalCastleEscapeScene(play->sceneNum)) return;
+
         // Preserve the original identity of an owed check from a legacy AP
         // seed. Other hooks still run, including normal soul gating on init.
         if (MegaSoul_ShouldRestoreUnusedSceneEnemy(play, actorEntry->id, actorEntry->params,
@@ -772,6 +793,10 @@ void RegisterEnemyRandomizer() {
 
     COND_VB_SHOULD(VB_ADULT_ZELDA_SPAWN_STALFOS_IN_COLLAPSE, ENEMY_RANDOMIZER_ENABLED, {
         PlayState* play = va_arg(args, PlayState*);
+        // Zelda's Stalfos ambushes unlock scripted doors. Preserve their
+        // vanilla actor IDs/params and let the original hook spawn them.
+        if (IsFixedFinalCastleEscapeScene(play->sceneNum)) return;
+
         Vec3f* playerPos = va_arg(args, Vec3f*);
         double posX = va_arg(args, double);
         double posY = va_arg(args, double);
@@ -997,6 +1022,9 @@ void RegisterEnemyRandomizer() {
 
     COND_VB_SHOULD(VB_AFTER_ACTOR_UPDATE_BGCHECKINFO, ENEMY_RANDOMIZER_ENABLED, {
         Actor* enemy = va_arg(args, Actor*);
+        // Do not change/kill scripted escape enemies through air-walk logic.
+        if (gPlayState && IsFixedFinalCastleEscapeScene(gPlayState->sceneNum)) return;
+
         Player* player = GET_PLAYER(gPlayState);
 
         if (enemy->category != ACTORCAT_ENEMY) {

@@ -646,6 +646,58 @@ bool PrepareDungeonVoidOut() {
     return true;
 }
 
+// The post-Ganondorf collapse is a fixed scripted sequence, not a shuffled
+// dungeon. A void-out must restart the *current collapse stage* so Zelda's
+// state machine sees the same native scene/spawn it was already following.
+// The generic "return to previous physical entrance" history may still point
+// to the normal Ganondorf tower or a shuffled dungeon; never use it here.
+// Prefer the exact current scene's entrance to keep stage progress. If a
+// stale index does not point into the current scene, use its safe native start.
+// No new AP crossing or item may be created by this recovery.
+bool RestartFinalCastleEscape() {
+    if (!Archipelago_IsCurrentSaveFile() || !gPlayState ||
+        gSaveContext.gameMode != GAMEMODE_NORMAL) return false;
+
+    int fallback = -1;
+    switch (gPlayState->sceneNum) {
+        case SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR:
+            fallback = ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_0;
+            break;
+        case SCENE_GANONS_TOWER_COLLAPSE_INTERIOR:
+            fallback = ENTR_GANONS_TOWER_COLLAPSE_INTERIOR_0;
+            break;
+        case SCENE_INSIDE_GANONS_CASTLE_COLLAPSE:
+            fallback = ENTR_INSIDE_GANONS_CASTLE_COLLAPSE_0;
+            break;
+        default:
+            // The original final Ganon fight has its own sword/respawn rules.
+            return false;
+    }
+
+    const auto matchesCurrentScene = [&](int entrance) {
+        return entrance >= 0 && entrance < ENTRANCE_TABLE_SIZE &&
+               gEntranceTable[entrance].scene == gPlayState->sceneNum;
+    };
+    const int current = gSaveContext.entranceIndex;
+    const int checkpoint = matchesCurrentScene(current) ? current : fallback;
+    if (!matchesCurrentScene(checkpoint)) return false;
+
+    CancelTransition();
+    // This fade is a recovery, not a new physical doorway. Clearing scene
+    // departure history also prevents a second fall from using the tower.
+    previousScene = previousBeforeArrival = {};
+    suppressTransitionChecks = true;
+    dungeonReturnArrival = true;
+    preserveHistoryForArrival = true;
+    pendingSpawnAge = -1;
+    gSaveContext.respawnFlag = 0;
+    // Use the exact native scene entrance; never reapply entrance shuffling.
+    gSaveContext.entranceIndex = static_cast<s16>(checkpoint);
+    SPDLOG_INFO("[Archipelago] Castle escape void: restarting scene {} at native entrance {} (from {})",
+                gPlayState->sceneNum, checkpoint, current);
+    return true;
+}
+
 void RememberGrottoLanding() {
     if (!gPlayState || !ReturnPointIsCurrent(roomEntry) ||
         roomEntry.scene != gPlayState->sceneNum || roomEntry.room != gPlayState->roomCtx.curRoom.num) return;

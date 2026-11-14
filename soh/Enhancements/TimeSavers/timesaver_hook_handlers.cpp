@@ -209,8 +209,14 @@ void TimeSaverOnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, va_li
             }
 
             if (gSaveContext.entranceIndex == ENTR_GANONS_TOWER_COLLAPSE_EXTERIOR_0) {
-                if ((CVarGetInteger(CVAR_ENHANCEMENT("TimeSavers.SkipTowerEscape"), false) &&
-                     !Archipelago_HasSceneTransitionChecks()) || IS_BOSS_RUSH) {
+                // Archipelago's final boss progression always runs through
+                // Zelda's original castle escape. Skipping it strands physical
+                // crossing checks and bypasses the scripted Stalfos encounters,
+                // even in seeds with scene-transition checks disabled.
+                if (IS_BOSS_RUSH ||
+                    (!Archipelago_IsCurrentSaveFile() &&
+                     CVarGetInteger(CVAR_ENHANCEMENT("TimeSavers.SkipTowerEscape"), false) &&
+                     !Archipelago_HasSceneTransitionChecks())) {
                     Flags_SetEventChkInf(EVENTCHKINF_WATCHED_GANONS_CASTLE_COLLAPSE_CAUGHT_BY_GERUDO);
                     gSaveContext.entranceIndex = ENTR_GANON_BOSS_0;
                     *should = false;

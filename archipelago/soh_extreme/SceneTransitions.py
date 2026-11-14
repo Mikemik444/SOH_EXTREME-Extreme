@@ -57,6 +57,16 @@ def install_rules(world):
             bundle=(Regions[entry['source']],world)
             world.set_rule(location,H.at_day(bundle) if entry['traversal_rule']=='day' else True_())
             continue
+        if (entry.get('source_scene') in (14, 15, 26) and
+                entry.get('condition') == 'CanKillEnemy(RE_STALFOS, ED_CLOSE, true, 2)'):
+            # Zelda's scripted escape Stalfos cannot be Soul-locked at runtime.
+            # Keep the real two-Stalfos combat requirement, but not the AP
+            # Stalfos Soul requirement that would otherwise hide these portals.
+            from .EnemyRoomLogic import resolve_enemy_region
+            from ._vendor_oot_soh.Enums import Enemies
+            bundle = (resolve_enemy_region(entry['source']), world)
+            world.set_rule(location, H._can_kill_enemy_combat(bundle, Enemies.STALFOS, quantity=2))
+            continue
         if 'condition' in entry:
             world.set_rule(location,world._extreme_room_compiler.expr(entry['condition'],entry['source']))
             continue

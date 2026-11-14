@@ -40,6 +40,10 @@ bool Archipelago_EntranceShuffleActive(void);
 // Preserve the current dungeon scene and a proven safe room/ground checkpoint
 // for native void-outs, without reapplying a shuffled entrance or sending a check.
 bool Archipelago_EntrancePrepareDungeonVoidOut(void);
+// During Zelda's scripted castle escape, voiding returns to the current
+// collapse-stage entrance (not the last shuffled dungeon/tower entrance).
+// Does not create scene/door transition checks or reshuffle the destination.
+bool Archipelago_EntranceRestartFinalCastleEscape(void);
 // Genuine void-outs return to the last successful physical doorway, regardless
 // of the shuffle pool. Returns false when no reviewed landing exists.
 bool Archipelago_EntranceReturnToPreviousEntrance(void);

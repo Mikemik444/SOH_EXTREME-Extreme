@@ -2114,8 +2114,18 @@ void Play_SetupRespawnPoint(PlayState* play, s32 respawnMode, s32 playerParams) 
 // Do not make these two distinct operations share a checkpoint rewrite.
 static void Play_TriggerVoidOutInternal(PlayState* play, bool realDungeonVoid) {
     if (realDungeonVoid) {
-        // Use the previous physical entry on ALL genuine AP void-outs, even
-        // in dungeon-only pools. The scene-exit/boss-hole variant deliberately
+        // Zelda's timed castle collapse is a fixed scripted sequence. The
+        // generic previous-entrance history can still point to Ganondorf's
+        // tower (or a shuffled dungeon), so recover at the current escape
+        // stage first. The recovery also suppresses false transition checks.
+        if (Archipelago_EntranceRestartFinalCastleEscape()) {
+            play->transitionTrigger = TRANS_TRIGGER_START;
+            play->nextEntranceIndex = gSaveContext.entranceIndex;
+            play->transitionType = TRANS_TYPE_FADE_BLACK;
+            return;
+        }
+        // Use the previous physical entry on other genuine AP void-outs,
+        // including dungeon-only pools. The scene-exit/boss-hole variant deliberately
         // passes false and must still use its already-shuffled destination.
         if (Archipelago_EntranceReturnToPreviousEntrance()) {
             gSaveContext.respawnFlag = 0;
@@ -2172,7 +2182,12 @@ void Play_LoadToLastEntrance(PlayState* play) {
     gSaveContext.respawnFlag = -1;
     play->transitionTrigger = TRANS_TRIGGER_START;
 
-    if (Archipelago_EntranceDungeonReturnInProgress()) {
+    if (Archipelago_EntranceRestartFinalCastleEscape()) {
+        // Falling onto a respawn floor in the collapse uses the same safe
+        // native stage entry as an ordinary void-out. Do not award an item
+        // or send Link all the way back to the tower entrance.
+        play->nextEntranceIndex = gSaveContext.entranceIndex;
+    } else if (Archipelago_EntranceDungeonReturnInProgress()) {
         // This explicit dungeon/history destination has already been resolved.
         // The final-battle escape fallback must not replace it or grant an item.
         play->nextEntranceIndex = gSaveContext.entranceIndex;

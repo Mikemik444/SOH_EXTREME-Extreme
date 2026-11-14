@@ -3,9 +3,12 @@
 #include <cstdint>
 namespace SohExtreme {
 // Authored entries whose object dependencies are absent in the original scenes.
-// Reserve their old IDs for explicit AP slot-manifest compatibility only.
+// Water Temple room 0 Keese slots 226/227 lack object_firefly; the real
+// waterfall Keese are slots 246/247. Keep the old indices for compatibility,
+// restoring missing objects only for explicitly active legacy AP manifests.
 inline bool IsUnusedObjectEnemyPlacement(int32_t index) {
-    return index == 552 || (index >= 621 && index <= 627);
+    return index == 226 || index == 227 || index == 552 ||
+           (index >= 621 && index <= 627);
 }
 // Retired 0.11.12 Peahat larval slots. Keep the receipt table append-only,
 // but never bind or award these identities, even with stale server slot data.
