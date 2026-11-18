@@ -2146,11 +2146,24 @@ static void Play_TriggerVoidOutInternal(PlayState* play, bool realDungeonVoid) {
                 // First use the existing validated same-room / paired-return
                 // policy. It knows which physical dungeon owns a shuffled boss.
                 if (!Archipelago_EntranceGameOverDungeonReturn()) {
-                    // No valid saved history: fall back to this dungeon's
-                    // native entrance, not the stale DOWN respawn. This is a
-                    // resolved physical entry, so it must not be shuffled again.
-                    Archipelago_CancelEntranceTransition();
-                    gSaveContext.entranceIndex = dungeonEntry;
+                    if (Archipelago_EntranceDungeonDoorsShuffled()) {
+                        // A scene-load anchor is not a physically reachable
+                        // dungeon entrance when room doors are shuffled. With
+                        // no valid room or previous-door checkpoint, use the
+                        // seed's ordinary age spawn (already mapped once).
+                        // This is emergency recovery, NOT a logical exit or
+                        // an Archipelago transition check.
+                        if (!Archipelago_EntranceSavewarp()) {
+                            // An active, validated AP door map always has a
+                            // safe age-spawn route. Do not use stale DOWN or
+                            // manufacture a native dungeon entrance on error.
+                            return;
+                        }
+                    } else {
+                        // Legacy/non-room-door shuffle behavior remains intact.
+                        Archipelago_CancelEntranceTransition();
+                        gSaveContext.entranceIndex = dungeonEntry;
+                    }
                 }
                 gSaveContext.respawnFlag = 0;
                 play->transitionTrigger = TRANS_TRIGGER_START;
@@ -2190,6 +2203,13 @@ void Play_LoadToLastEntrance(PlayState* play) {
     } else if (Archipelago_EntranceDungeonReturnInProgress()) {
         // This explicit dungeon/history destination has already been resolved.
         // The final-battle escape fallback must not replace it or grant an item.
+        play->nextEntranceIndex = gSaveContext.entranceIndex;
+    } else if (Archipelago_EntranceDungeonDoorsShuffled() &&
+               Entrance_GetDungeonSpawn(play->sceneNum) >= 0 &&
+               Archipelago_EntranceSavewarp()) {
+        // Used by Wallmaster/respawn-floor fallbacks when no earlier reviewed
+        // doorway survived. Never reload the current scene's vanilla dungeon
+        // entrance anchor, which could bypass shuffled room doors.
         play->nextEntranceIndex = gSaveContext.entranceIndex;
     } else if ((play->sceneNum == SCENE_GANONS_TOWER_COLLAPSE_INTERIOR) ||
         (play->sceneNum == SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR) ||

@@ -673,7 +673,7 @@ def connect(world):
     if not enabled(world):
         world._er_mapping = {}; return
     rows = _eligible(world)
-    baseline = world.multiworld.get_all_state(False)
+    baseline = world.multiworld.get_all_state(False, allow_partial_entrances=True)
     required = [loc for loc in world.get_locations() if loc.address is not None and loc.can_reach(baseline)]
     # Include blue warps: defeating a shuffled boss must lead back through its
     # paired route, including a boss chamber reached from a house or room door.

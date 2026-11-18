@@ -912,10 +912,44 @@ void RecordRoomEntry() {
     if (player->actor.bgCheckFlags & BGCHECKFLAG_GROUND) lastGroundPosition = roomEntry;
 }
 
+// The slot's authoritative route map is the only source for whether dungeon
+// *room doors* were shuffled. Identity routes still count: their presence
+// means the whole room-door pool participates in this seed. No UI CVar or
+// saved native entrance may substitute for the physical doorway history.
+bool DungeonDoorsShuffled() {
+    if (!Archipelago_IsCurrentSaveFile() || !routing.Active()) return false;
+    for (const auto& [source, destination] : routing.Routes()) {
+        const auto* endpoint = EntranceEndpointById(source);
+        if (endpoint && endpoint->door >= 0) return true;
+    }
+    return false;
+}
+
+// A saved position is a valid return only when it belongs to this save and
+// age, names a reviewed scene-load destination, and has a usable room/position.
+// Merely knowing the native dungeon entrance is NOT such a return.
+bool VerifiedPhysicalReturnPoint(const SceneReturnPoint& point) {
+    if (!ReturnPointIsCurrent(point) || point.target < 0 || point.room < 0) return false;
+    const auto* policy = EntranceDestinationById(point.target);
+    if (!EntranceDestinationAllowsAge(policy, CurrentArrivalAge()) ||
+        !ArrivalTableMatches(policy)) return false;
+    for (float axis : {point.position.x, point.position.y, point.position.z}) {
+        if (!std::isfinite(axis) || axis < -32768.0f || axis > 32767.0f) return false;
+    }
+    return true;
+}
+
 int DungeonReturnMode() {
-    if (!Archipelago_IsCurrentSaveFile() || !routing.UsesPreviousSceneReturn())
-        return AP_DUNGEON_RETURN_SPAWN;
-    if (gPlayState && ReturnPointIsCurrent(previousScene))
+    if (!Archipelago_IsCurrentSaveFile()) return AP_DUNGEON_RETURN_SPAWN;
+    // With shuffled room doors, death/void/save-menu returns MUST NOT make the
+    // original dungeon entry reachable. Only a proven physical exit is valid;
+    // otherwise the caller must use the configured AP age spawn.
+    if (DungeonDoorsShuffled()) {
+        return gPlayState && VerifiedPhysicalReturnPoint(previousScene)
+            ? AP_DUNGEON_RETURN_PREVIOUS_SCENE : AP_DUNGEON_RETURN_NO_PREVIOUS_SCENE;
+    }
+    if (!routing.UsesPreviousSceneReturn()) return AP_DUNGEON_RETURN_SPAWN;
+    if (gPlayState && VerifiedPhysicalReturnPoint(previousScene))
         return AP_DUNGEON_RETURN_PREVIOUS_SCENE;
     return AP_DUNGEON_RETURN_NO_PREVIOUS_SCENE;
 }
@@ -928,6 +962,9 @@ PendingDungeonReturn BuildDungeonReturn() {
     request.previous = mode == AP_DUNGEON_RETURN_PREVIOUS_SCENE;
     if (request.previous) {
         request.point = previousScene;
+        // Dungeon-only door shuffles also return through the last actual door,
+        // even though their pool is not mixed with overworld entrances.
+        request.forcedPreviousEntrance = DungeonDoorsShuffled();
     } else {
         request.entrance = ReturnPointIsCurrent(roomEntry) && roomEntry.scene == gPlayState->sceneNum ?
             roomEntry.dungeonEntrance : Entrance_GetDungeonSpawn(gPlayState->sceneNum);
@@ -1003,14 +1040,7 @@ bool ReturnToPreviousEntrance() {
         gSaveContext.gameMode != GAMEMODE_NORMAL) return false;
 
     const auto validPoint = [](const SceneReturnPoint& point) {
-        if (!ReturnPointIsCurrent(point) || point.target < 0) return false;
-        const auto* policy = EntranceDestinationById(point.target);
-        if (!EntranceDestinationAllowsAge(policy, CurrentArrivalAge()) ||
-            !ArrivalTableMatches(policy) || point.room < 0) return false;
-        for (float axis : {point.position.x, point.position.y, point.position.z}) {
-            if (!std::isfinite(axis) || axis < -32768.0f || axis > 32767.0f) return false;
-        }
-        return true;
+        return VerifiedPhysicalReturnPoint(point);
     };
 
     const SceneReturnPoint* point = nullptr;
@@ -1282,6 +1312,9 @@ extern "C" void Archipelago_EntranceObserveRoomBoundary(int transition, int phys
 }
 extern "C" void Archipelago_EntranceSelectRoomBoundary(int transition, int target) {
     SohExtreme::EntranceRuntime::SelectRoomBoundary(transition, target);
+}
+extern "C" bool Archipelago_EntranceDungeonDoorsShuffled(void) {
+    return SohExtreme::EntranceRuntime::DungeonDoorsShuffled();
 }
 extern "C" int Archipelago_EntranceDungeonReturnMode(void) {
     return SohExtreme::EntranceRuntime::DungeonReturnMode();

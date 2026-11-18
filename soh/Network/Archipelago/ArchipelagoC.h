@@ -74,6 +74,9 @@ void Archipelago_EntranceRememberGrottoLanding(void);
 void Archipelago_EntranceBeginRoomChange(int target);
 void Archipelago_EntranceObserveRoomBoundary(int transition, int physicalRoom, int otherRoom, bool vertical);
 void Archipelago_EntranceSelectRoomBoundary(int transition, int target);
+// True only when the active AP slot map contains the dungeon room-door pool.
+// A fall may never use the native dungeon entrance as a synthetic shortcut.
+bool Archipelago_EntranceDungeonDoorsShuffled(void);
 int Archipelago_EntranceDungeonReturnMode(void);
 bool Archipelago_EntranceRequestDungeonReturn(void);
 bool Archipelago_EntranceRestoreDungeonReturn(void);
