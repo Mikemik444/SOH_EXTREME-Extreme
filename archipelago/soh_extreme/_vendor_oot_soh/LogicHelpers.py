@@ -902,14 +902,16 @@ def survive_fall(bundle: tuple[Regions, "SohWorld"], damage_hearts: int = 2) -> 
 
 
 def can_bypass_gerudo_patrol(bundle: tuple[Regions, "SohWorld"]) -> Rule:
-    """Only guarded approaches need a card or usable ranged stun weapon.
+    """Only Adult Link encounters the Gerudo patrol guards.
 
-    Unwatched fortress rooms and shuffled arrivals are *not* gated by
-    this helper; placing it on whole regions would recreate softlocks.
+    Child Link can enter via shuffled entrances and cross the unguarded
+    approach without a Card or stun weapon. Physical traversal rules are
+    checked separately on the relevant region edges, for both ages.
     """
-    return (has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
-            | (is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle))
-            | (is_child(bundle) & can_use(Items.FAIRY_SLINGSHOT, bundle)))
+    return (is_child(bundle)
+            | (is_adult(bundle) & (
+                has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
+                | can_use(Items.FAIRY_BOW, bundle))))
 
 
 def can_do_trick(trick: Tricks, bundle: tuple[Regions, "SohWorld"]) -> Rule:
@@ -1330,13 +1332,17 @@ def can_pass_enemy(bundle: tuple[Regions, "SohWorld"], enemy: Enemies,
         return True_()
 
     if enemy == Enemies.GERUDO_GUARD:
-        return (can_do_trick(Tricks.PASS_GUARDS_WITH_NOTHING, bundle)
-                | has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
-                | can_use_any([Items.FAIRY_BOW, Items.HOOKSHOT], bundle))
+        return (is_child(bundle)
+                | (is_adult(bundle) & (
+                    can_do_trick(Tricks.PASS_GUARDS_WITH_NOTHING, bundle)
+                    | has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
+                    | can_use_any([Items.FAIRY_BOW, Items.HOOKSHOT], bundle))))
 
     if enemy == Enemies.BREAK_ROOM_GUARD:
-        return (has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
-                | can_use_any([Items.FAIRY_BOW, Items.HOOKSHOT], bundle))
+        return (is_child(bundle)
+                | (is_adult(bundle) & (
+                    has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle)
+                    | can_use_any([Items.FAIRY_BOW, Items.HOOKSHOT], bundle))))
 
     if enemy == Enemies.BIG_SKULLTULA:
         return (can_kill_enemy(bundle, enemy, distance, wall_or_floor)

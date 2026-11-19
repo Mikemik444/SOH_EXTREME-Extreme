@@ -720,7 +720,8 @@
         "age": "adult",
         "time": "either",
         "gates": [
-          "carpenters"
+          "carpenters",
+          "climb"
         ]
       }
     ],
@@ -923,7 +924,9 @@
         "region": "MARKET_BAZAAR",
         "age": "child",
         "time": "either",
-        "gates": ["Goron's Ruby"]
+        "gates": [
+          "Goron's Ruby"
+        ]
       }
     ],
     "source_rows": 4
@@ -2572,7 +2575,9 @@
         "region": "MARKET_MASK_SHOP",
         "age": "child",
         "time": "either",
-        "gates": ["Kakariko Gate Open"]
+        "gates": [
+          "Kakariko Gate Open"
+        ]
       }
     ],
     "source_rows": 4

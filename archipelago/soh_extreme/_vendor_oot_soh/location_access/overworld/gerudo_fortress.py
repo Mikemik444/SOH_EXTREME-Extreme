@@ -17,9 +17,10 @@ class LocalEvents(StrEnum):
 
 
 def set_region_rules(world: "SohWorld") -> None:
-    # Purple patrol guards can capture both ages. Missing NPC Soul is not a
-    # permanent bypass. Keep guards on the physical approaches, not on an
-    # entire fortress or its rooftop doors: a safe shuffled arrival still works.
+    # Purple patrol guards appear for Adult Link only. Child Link can arrive
+    # through shuffled entrances and must not need a Card, Bow, or Slingshot
+    # merely to cross an otherwise open approach. Keep physical climbing and
+    # jumping restrictions per edge; they still apply to either age.
     # Gerudo Fortress Outskirts
     # Events
     add_events(Regions.GERUDO_FORTRESS_OUTSKIRTS, world, [
@@ -68,8 +69,13 @@ def set_region_rules(world: "SohWorld") -> None:
         (Regions.GERUDO_FORTRESS_OUTSKIRTS, lambda bundle: True_()),
         (Regions.GF_JAIL_WINDOW, lambda bundle: can_use(Items.HOOKSHOT, bundle)),
         (Regions.GF_OUTSIDE_GTG, lambda bundle: can_bypass_gerudo_patrol(bundle)),
+        # Grabbing the high ladder with Longshot leaves Adult Link exposed to
+        # the patrol long enough to be captured. The Membership Card is the
+        # reliable adult route. Child has no patrol; retain the physical weapon
+        # gate under the seed's equipment-age setting.
         (Regions.GF_TOP_OF_UPPER_VINES,
-         lambda bundle: can_use(Items.LONGSHOT, bundle)),
+         lambda bundle: can_use(Items.LONGSHOT, bundle) &
+         (is_child(bundle) | has_item(Items.GERUDO_MEMBERSHIP_CARD, bundle))),
         (Regions.GF_STORMS_GROTTO, lambda bundle: is_adult(
             bundle) & can_open_storms_grotto(bundle)),
     ])
@@ -258,7 +264,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # GF Above Jail
     # Locations
     add_locations(Regions.GF_ABOVE_JAIL, world, [
-        (Locations.GF_ABOVE_JAIL_CRATE, lambda bundle: True_()),
+        # This actor is not spawned in the Child fortress scene.
+        (Locations.GF_ABOVE_JAIL_CRATE, lambda bundle: is_adult(bundle) & can_break_crates(bundle)),
     ])
     # Connection
     connect_regions(Regions.GF_ABOVE_JAIL, world, [

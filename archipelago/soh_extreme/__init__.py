@@ -3354,7 +3354,9 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     rule = is_adult(bundle) & can_use_any([Items.LONGSHOT, Items.HOVER_BOOTS], bundle)
                 elif rc in {"RC_GERUDO_TRAINING_GROUND_WONDER_BEAMOS_ROOM",
                             "RC_GERUDO_TRAINING_GROUND_WONDER_TORCH_SLUGS_ROOM"}:
-                    rule = can_use(Items.FAIRY_BOW, bundle)
+                    # Bow-only invisible triggers; the Child's bow slot fires
+                    # Slingshot instead in the current native client.
+                    rule = is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle)
                 elif rc == "RC_GERUDO_TRAINING_GROUND_WONDER_EYE_STATUE_ROOM":
                     rule = can_use(Items.HOVER_BOOTS, bundle) | Has("Bunny Hood")
                 elif rc in {"RC_GF_WONDER_ARCHERY_SIGN", "RC_GF_WONDER_ENTRANCE_SIGN"}:
@@ -3412,9 +3414,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 elif rc.startswith("RC_MKT_WONDER_NIGHT_"):
                     rule = is_child(bundle) & at_night(bundle)
                 elif rc == "RC_SHADOW_TEMPLE_WONDER_THREE_POTS":
-                    rule = can_use(Items.FAIRY_BOW, bundle)
+                    rule = is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle)
                 elif rc.startswith("RC_TH_WONDER_") and rc != "RC_TH_WONDER_KITCHEN_SOUP":
-                    rule = can_use(Items.FAIRY_BOW, bundle)
+                    # These Wonder triggers must be hit by a real Bow projectile.
+                    # Child Link equips the Slingshot rather than firing Bow
+                    # arrows, even when cross-age inventory logic exposes Bow.
+                    # Never allow a critical item to be placed here in Child.
+                    rule = is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle)
                 elif rc == "RC_TH_WONDER_KITCHEN_SOUP":
                     # Native normal route:
                     # (TakeDamage OR Adult OR Goron Tunic) AND CanPass Gerudo Guard.
@@ -4162,6 +4168,19 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 require_native_existing(lower_heart, climb_rule() | can_use(Items.HOOKSHOT, bundle))
         except Exception:
             pass
+
+        # The above-jail crate is absent in the Child fortress scene.  An
+        # entrance-shuffled Child can reach this rooftop but cannot collect a
+        # nonexistent crate.  Apply this to the AP check as well as the vendored
+        # native region so item fill and Universal Tracker agree.
+        try:
+            gf_jail_crate = self.get_location("GF Above Jail Crate")
+        except KeyError:
+            gf_jail_crate = None
+        if gf_jail_crate is not None:
+            gf_crate_bundle = native_bundle_for_location(gf_jail_crate)
+            if gf_crate_bundle is not None:
+                require_native_existing(gf_jail_crate, is_adult(gf_crate_bundle))
 
         # Graveyard PoH and its crate share their physical route in graveyard.py.
         # Its planted-bean event checks the enabled Bean Soul setting. Keeping a

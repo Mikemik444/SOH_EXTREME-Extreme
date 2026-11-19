@@ -559,7 +559,7 @@ def _initial_state_for_age(world, age):
     private event opens that age's root; it adds no equipment, song, ability,
     soul, starting item or event to the generated seed or its real state.
     """
-    state = CollectionState(world.multiworld)
+    state = CollectionState(world.multiworld, allow_partial_entrances=True)
     starting_age = Ages.ADULT if world.options.starting_age == 'adult' else Ages.CHILD
     if age != starting_age:
         state.collect(SohItem(str(Events.TIME_TRAVEL), ItemClassification.progression,
@@ -673,6 +673,10 @@ def connect(world):
     if not enabled(world):
         world._er_mapping = {}; return
     rows = _eligible(world)
+    # Other APWorlds (notably Link's Awakening Switch) may have deferred
+    # dungeon entrances until their own connect_entrances() runs. During
+    # SOH-EXTREME entrance shuffling, ignore only these not-yet-connected
+    # *other-world* edges; all local route safety tests still run.
     baseline = world.multiworld.get_all_state(False, allow_partial_entrances=True)
     required = [loc for loc in world.get_locations() if loc.address is not None and loc.can_reach(baseline)]
     # Include blue warps: defeating a shuffled boss must lead back through its
@@ -816,7 +820,8 @@ def connect(world):
         assert_installed_topology()
         if world._er_mapping != {int(k): v for k, v in saved['connections'].items()}:
             raise OptionError('Entrance mapping blue-warp return data differs from this world')
-        state = world.multiworld.get_all_state(False, perform_sweep=False).copy()
+        state = world.multiworld.get_all_state(False, allow_partial_entrances=True,
+                                               perform_sweep=False).copy()
         state.sweep_for_advancements()
         if not _age_routes_are_safe(world, world._er_mapping, edges, state):
             raise OptionError('This entrance map can reach an age-incompatible arrival. '
@@ -837,7 +842,10 @@ def connect(world):
         if e['primary'] and e['reverse'] >= 0 and e['id'] not in LOCAL_CARRIER_DOORS:
             pools[_paired_pool_key(e, mixed)].append(e['id'])
     accepted = 0
-    inventory = world.multiworld.get_all_state(False, perform_sweep=False)
+    # Each candidate performs a full SOH progression/safety sweep while
+    # sibling worlds can still have unconnected entrances.
+    inventory = world.multiworld.get_all_state(False, allow_partial_entrances=True,
+                                               perform_sweep=False)
     fill_locations = [loc for loc in world.get_locations()
                       if loc.address is not None and loc.item is None]
     attempts = 0

@@ -73,13 +73,12 @@ class FeatureLogicTests(unittest.TestCase):
         self.assertTrue(self.rule('survive_fall', self.bundle(1, 'child', 'Fairy')))
         self.assertTrue(self.rule('survive_fall', self.bundle(1, 'adult', 'Nayru')))
 
-    def test_guarded_routes_require_card_or_age_weapon(self):
-        for age in ('child', 'adult'):
-            self.assertFalse(self.rule('can_bypass_gerudo_patrol', self.bundle(3, age)))
-            self.assertTrue(self.rule('can_bypass_gerudo_patrol', self.bundle(3, age, 'Gerudo Card')))
+    def test_child_has_no_guards_adult_requires_guard_bypass(self):
+        self.assertTrue(self.rule('can_bypass_gerudo_patrol', self.bundle(3, 'child')))
         self.assertTrue(self.rule('can_bypass_gerudo_patrol', self.bundle(3, 'child', 'Slingshot')))
+        self.assertFalse(self.rule('can_bypass_gerudo_patrol', self.bundle(3, 'adult')))
+        self.assertTrue(self.rule('can_bypass_gerudo_patrol', self.bundle(3, 'adult', 'Gerudo Card')))
         self.assertTrue(self.rule('can_bypass_gerudo_patrol', self.bundle(3, 'adult', 'Bow')))
-        self.assertFalse(self.rule('can_bypass_gerudo_patrol', self.bundle(3, 'child', 'Bow')))
         self.assertFalse(self.rule('can_bypass_gerudo_patrol', self.bundle(3, 'adult', 'Slingshot')))
 
     def test_gerudo_safe_routes_not_blanket_gated(self):
