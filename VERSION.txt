@@ -1,2 +1,2 @@
-SOH-EXTREME 1.8.0
-Archipelago world 1.8.0
+SOH-EXTREME 3.3.0
+Archipelago world 3.3.0
