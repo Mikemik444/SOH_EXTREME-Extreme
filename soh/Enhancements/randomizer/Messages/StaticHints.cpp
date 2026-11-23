@@ -201,7 +201,17 @@ void BuildGregHintMessage(uint16_t* textId, bool* loadFromMessageTable) {
 }
 
 static void BuildWarpMessage(RandomizerHint rh, bool* loadFromMessageTable) {
-    if (!RAND_GET_OPTION(RSK_WARP_SONG_HINTS)) {
+    // AP entrance maps do not populate SoH's native warp destination hints.
+    // Calling ReadHintMessage on a missing record displays plain "No Hint"
+    // with no two-way choice, so the ocarina warp never receives an answer.
+    // Always provide the real Yes/No warp prompt if the hint is unavailable.
+    // Native SoH seeds with an actual destination hint keep their normal text.
+    const auto* hint = RAND_GET_HINT(rh);
+    const bool hasWarpDestinationHint =
+        !ArchipelagoClient::GetInstance().IsGameplaySessionActive() &&
+        RAND_GET_OPTION(RSK_WARP_SONG_HINTS) && hint != nullptr &&
+        hint->IsEnabled() && !hint->GetHintedAreas().empty();
+    if (!hasWarpDestinationHint) {
         CustomMessage msg = CustomMessage(
             "Warp to&%ra mysterious place?%w&" + CustomMessage::TWO_WAY_CHOICE() + "%gOK&No%w",
             "Zu&%reinem mysteriösen Ort%w?&" + CustomMessage::TWO_WAY_CHOICE() + "%gOK&No%w",

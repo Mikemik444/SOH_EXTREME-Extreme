@@ -20,13 +20,23 @@ inline constexpr CheckDescription kCheckDescriptions[] = {
 #include "CheckDescriptions.inc"
 };
 
+// Native checks keep their original shared IDs. In Age Dependent mode the
+// APWorld adds independent Child (+20M) and Adult (+40M) check IDs. Only the
+// display catalogue is normalized: check submission/collection keeps the
+// distinct actual IDs, and shuffled destinations never change source identity.
+inline int64_t SharedSceneTransitionLocationId(int64_t location) {
+    if (location >= 31'000'000LL && location < 32'000'000LL) return location - 20'000'000LL;
+    if (location >= 51'000'000LL && location < 52'000'000LL) return location - 40'000'000LL;
+    return location;
+}
+
 inline const CheckDescription* FindCheckDescription(int64_t location) {
     static const std::map<int64_t, const CheckDescription*> descriptions = [] {
         std::map<int64_t, const CheckDescription*> result;
         for (const auto& description : kCheckDescriptions) result.emplace(description.location, &description);
         return result;
     }();
-    const auto found = descriptions.find(location);
+    const auto found = descriptions.find(SharedSceneTransitionLocationId(location));
     return found != descriptions.end() ? found->second : nullptr;
 }
 

@@ -432,6 +432,14 @@ void func_808B5950(BgSpot16Bombstone* this, PlayState* play) {
 
     if (play) {}
 
+    // SOH-EXTREME: this entrance-blocking rock uses its own actor, not the
+    // generic boulder actors.  It must obey the same shuffled Rock/Boulder
+    // Soul before any bomb hit is allowed to destroy the obstruction.
+    if (IS_RANDO && Randomizer_GetSettingValue(RSK_SHUFFLE_ROCK_SOUL) &&
+        !Flags_GetRandomizerInf(RAND_INF_ROCK_SOUL)) {
+        this->colliderCylinder.base.acFlags &= ~AC_HIT;
+    }
+
     if (this->colliderCylinder.base.acFlags & AC_HIT) {
         this->colliderCylinder.base.acFlags &= ~AC_HIT;
 

@@ -1,5 +1,6 @@
 from typing import ClassVar, Any, Callable
 from collections import deque, Counter
+from functools import lru_cache
 import pkgutil
 import json
 import dataclasses
@@ -54,7 +55,7 @@ from . import NpcSpeech, SceneTransitions, EntranceRandomizer, EntranceSpoiler
 from .CheckDescriptions import CHECK_NAME_ALIASES, canonical_location_name, normalize_location_options
 from .NativeLogic import (
     NATIVE_REGION_EDGES, NATIVE_CUSTOM_ENTRANCES, NATIVE_CUSTOM_LOCATIONS,
-    NATIVE_CUSTOM_EVENTS, NATIVE_LOCATION_METADATA_RULES, NATIVE_UNMAPPED_LOCATION_RULES,
+    NATIVE_LOCATION_METADATA_RULES,
 )
 from .NativeLogicAlternatives import (
     NATIVE_ENTRANCE_ALTERNATIVES, NATIVE_LOCATION_ALTERNATIVES, NATIVE_EVENT_ALTERNATIVES,
@@ -654,6 +655,9 @@ class SohExtremeLogicState(LogicMixin):
         # physical Strength Upgrade grants Grab/Power Bracelet only; the second is
         # the first real strength tier (Goron Bracelet).
         self._soh_extreme_virtual_grab = {player: False for player in players}
+        # SlotLock owns its unlock items under the SlotLock player ID.  A
+        # remote unlock will not trigger SohExtremeWorld.collect() for SOH.
+        self._soh_extreme_slotlock_signature = {player: None for player in players}
 
     def copy_mixin(self, new_state):
         # Copy the stock-compatible state that SOH-EXTREME owns in standalone
@@ -680,6 +684,7 @@ class SohExtremeLogicState(LogicMixin):
         }
         new_state._soh_extreme_virtual_swim = self._soh_extreme_virtual_swim.copy()
         new_state._soh_extreme_virtual_grab = self._soh_extreme_virtual_grab.copy()
+        new_state._soh_extreme_slotlock_signature = self._soh_extreme_slotlock_signature.copy()
         # CollectionState.copy() chains every registered LogicMixin copy hook as
         #     ret = function(self, ret)
         # so every hook MUST return the copied state.
@@ -692,6 +697,24 @@ class SohExtremeLogicState(LogicMixin):
         self._soh_extreme_adult_blocked_regions[player] = set()
         self._soh_extreme_stale[player] = True
 
+    def _soh_extreme_refresh_external_unlocks(self, player):
+        """Invalidate age reachability when a SlotLock player's unlock changes.
+
+        SlotLock gates our origin exits using an item owned by the SlotLock
+        player; a normal SOH item collect never fires when that item changes.
+        Only check actual SlotLock worlds that lock this SOH slot.
+        """
+        target = self.multiworld.worlds[player].player_name
+        signature = tuple(
+            (owner.player, self.has(f"Unlock {target}", owner.player))
+            for owner in self.multiworld.worlds.values()
+            if owner.game == "SlotLock"
+            and target in getattr(owner, "slots_to_lock", ())
+        )
+        if self._soh_extreme_slotlock_signature.get(player) != signature:
+            self._soh_extreme_slotlock_signature[player] = signature
+            self._soh_extreme_invalidate(player)
+
     def _soh_extreme_update_age_reachable_regions(self, player):
         """Vendored equivalent of stock SoH RegionAgeAccess.SohAgeLogic.
 
@@ -699,47 +722,58 @@ class SohExtremeLogicState(LogicMixin):
         Ship of Harkinian AutoWorld/mixin just to evaluate IsChild/IsAdult rules.
         """
         self._soh_extreme_stale[player] = False
-        for age in (Ages.CHILD, Ages.ADULT):
-            self._soh_extreme_age[player] = age
-            start = self.multiworld.get_region(Regions.ROOT, player)
+        # A shuffled route may depend on a region discovered by the opposite
+        # age later in this pass. Keep expanding both graphs until no new room
+        # appears; this matches stock SohAgeLogic's fixed-point semantics.
+        while True:
+            before = (len(self._soh_extreme_child_reachable_regions[player]),
+                      len(self._soh_extreme_adult_reachable_regions[player]))
+            for age in (Ages.CHILD, Ages.ADULT):
+                self._soh_extreme_age[player] = age
+                start = self.multiworld.get_region(Regions.ROOT, player)
 
-            if age == Ages.CHILD:
-                reachable = self._soh_extreme_child_reachable_regions[player]
-                blocked = self._soh_extreme_child_blocked_regions[player]
-            else:
-                reachable = self._soh_extreme_adult_reachable_regions[player]
-                blocked = self._soh_extreme_adult_blocked_regions[player]
+                if age == Ages.CHILD:
+                    reachable = self._soh_extreme_child_reachable_regions[player]
+                    blocked = self._soh_extreme_child_blocked_regions[player]
+                else:
+                    reachable = self._soh_extreme_adult_reachable_regions[player]
+                    blocked = self._soh_extreme_adult_blocked_regions[player]
 
-            queue = deque(blocked)
-            if start not in reachable:
-                reachable.add(start)
-                blocked.update(start.exits)
-                queue.extend(start.exits)
+                queue = deque(blocked)
+                if start not in reachable:
+                    reachable.add(start)
+                    blocked.update(start.exits)
+                    queue.extend(start.exits)
 
-            while queue:
-                connection = queue.popleft()
-                new_region = connection.connected_region
-                if new_region is None:
-                    continue
-                if new_region in reachable:
-                    blocked.discard(connection)
-                elif connection.can_reach(self):
-                    reachable.add(new_region)
-                    blocked.discard(connection)
-                    blocked.update(new_region.exits)
-                    queue.extend(new_region.exits)
-                    self.path[new_region] = (new_region.name, self.path.get(connection, None))
-                    self.multiworld.worlds[player].reached_region(self, new_region)
+                while queue:
+                    connection = queue.popleft()
+                    new_region = connection.connected_region
+                    if new_region is None:
+                        continue
+                    if new_region in reachable:
+                        blocked.discard(connection)
+                    elif connection.can_reach(self):
+                        reachable.add(new_region)
+                        blocked.discard(connection)
+                        blocked.update(new_region.exits)
+                        queue.extend(new_region.exits)
+                        self.path[new_region] = (new_region.name, self.path.get(connection, None))
+                        self.multiworld.worlds[player].reached_region(self, new_region)
 
-                    # A switch-side approach can become reachable after its
-                    # dependent door was examined. Retry only those blocked
-                    # exits, using this age's graph and AP's registered region
-                    # dependencies; do not latch a temporary switch as an item.
-                    entrances = self.multiworld.indirect_connections.get(new_region)
-                    if entrances is not None:
-                        relevant = entrances.intersection(blocked)
-                        relevant.difference_update(queue)
-                        queue.extend(relevant)
+                        # A switch-side approach can become reachable after its
+                        # dependent door was examined. Retry only those blocked
+                        # exits, using this age's graph and AP's registered region
+                        # dependencies; do not latch a temporary switch as an item.
+                        entrances = self.multiworld.indirect_connections.get(new_region)
+                        if entrances is not None:
+                            relevant = entrances.intersection(blocked)
+                            relevant.difference_update(queue)
+                            queue.extend(relevant)
+
+            after = (len(self._soh_extreme_child_reachable_regions[player]),
+                     len(self._soh_extreme_adult_reachable_regions[player]))
+            if after == before:
+                break
 
         self._soh_extreme_age[player] = Ages.null
 
@@ -1712,6 +1746,17 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
         self.set_completion_rule()
 
+        # Age Dependent transition checks are created before the entrance
+        # shuffle. Now that entrances and local prefill are final, discard only
+        # child/adult variants impossible with the complete item inventory.
+        # This preserves Full accessibility without adding phantom check slots.
+        SceneTransitions.retire_unreachable_age_checks(self)
+        # Goal Reachable permits optional disconnected rooms. When AP Full is
+        # also selected, exclude only provably impossible, unfilled check slots
+        # before the core fill, rather than forcing thousands of full-coverage
+        # probes after every candidate swap.
+        SceneTransitions.retire_unreachable_goal_checks(self)
+
     def create_item(self, name: str, create_as_event: bool = False, classification: ItemClassification = None):
         if name in EXTREME_ITEMS:
             # Every SOH-EXTREME ability, Soul, Shovel/Flow item and individual Song
@@ -2411,6 +2456,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                           if region.player == self.player and
                           not region.name.startswith("EXTREME Enemy Route: ")}
 
+        @lru_cache(maxsize=None)
         def rr_direct_region_name(rr_token: str):
             token = rr_token[3:] if rr_token.startswith("RR_") else rr_token
             alias = native_region_aliases.get(token, token)
@@ -2480,6 +2526,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             # dependency and therefore contributes TRUE to the custom overlay.
             return edge_alternatives.get((source_rr, target_rr), ((),))
 
+        @lru_cache(maxsize=None)
         def native_paths_custom_dnf(ap_source_name, ap_target_name, max_depth=10):
             starts = rr_by_ap_region.get(ap_source_name, ())
             goals = set(rr_by_ap_region.get(ap_target_name, ()))
@@ -2509,6 +2556,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                         stack.append((nxt, next_dnf, seen | {nxt}, depth + 1))
             return dnf_reduce(tuple(all_branches)) if all_branches else None
 
+        @lru_cache(maxsize=None)
         def native_location_path_custom_dnf(ap_source_name, goal_rr, max_depth=24):
             """Custom requirements from an AP parent region to one exact native RR.
 
@@ -2553,9 +2601,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
             return dnf_reduce(tuple(all_branches)) if all_branches else None
 
-        native_entrance_hits = 0
-        native_entrance_custom_gates = 0
-        unresolved_ap_entrances = 0
         for source_region in actual_regions.values():
             for entrance in source_region.exits:
                 target_region = getattr(entrance, "connected_region", None)
@@ -2563,15 +2608,12 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     continue
                 alternatives = native_paths_custom_dnf(source_region.name, target_region.name)
                 if alternatives is None:
-                    unresolved_ap_entrances += 1
                     continue
-                native_entrance_hits += 1
                 rule = native_alternative_rule(alternatives)
                 # native_alternative_rule() returns an unresolved Rule AST here.
                 # Only resolved rule nodes expose always_true/always_false in
                 # Archipelago 0.6.7, so test the raw True_ sentinel directly.
                 if not isinstance(rule, True_):
-                    native_entrance_custom_gates += 1
                     add_resolved_rule(entrance, rule, register_indirects=True)
 
 
@@ -2783,7 +2825,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "Shovel": bool(o.shuffle_shovel.value),
             "Flow of Time": bool(o.shuffle_flow_of_time.value),
         }
-        native_hard_ability_hits = 0
         for ap_id, abilities in NATIVE_HARD_ABILITIES_BY_AP_ID.items():
             location = locations_by_address.get(ap_id)
             if location is None:
@@ -2791,7 +2832,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             for ability in abilities:
                 if ability_enabled.get(ability, False):
                     require_native_existing(location, Has(ability))
-                    native_hard_ability_hits += 1
 
         for ap_id, source_region_names in getattr(
             self, "_fork_multi_region_sources", {}
@@ -2817,14 +2857,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
         # Exact location overlay.  Preserve C++ OR alternatives rather than
         # requiring the flattened union of every helper/action mentioned.
-        native_location_hits = 0
-        native_location_custom_gates = 0
-        native_location_path_hits = 0
         for native_region, native_rc, ap_id, alternatives in NATIVE_LOCATION_ALTERNATIVES:
             location = locations_by_address.get(ap_id)
             if location is None:
                 continue
-            native_location_hits += 1
 
             # Local check requirements AND parent/native-room path requirements.
             # If the exact room cannot be projected, preserve the pre-existing
@@ -2835,13 +2871,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             combined_alternatives = alternatives
             if path_alternatives is not None:
                 combined_alternatives = dnf_and(path_alternatives, alternatives)
-                native_location_path_hits += 1
 
             rule = native_alternative_rule(combined_alternatives)
             # Same unresolved-rule compatibility rule as the entrance pass.
             if isinstance(rule, True_):
                 continue
-            native_location_custom_gates += 1
             require_native_existing(location, rule)
 
         # Location-local silver requirements which are not a room transition.
@@ -2866,7 +2900,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
         # Fork-native checks also inherit their exact native-room path. This is
         # critical for sanity checks living behind an internal silver door.
-        fork_native_path_hits = 0
         for fork_loc in FORK_LOCATIONS:
             if not self._fork_location_enabled(fork_loc):
                 continue
@@ -2897,7 +2930,6 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             if isinstance(path_rule, True_):
                 continue
 
-            fork_native_path_hits += 1
             require_native_existing(fork_location, path_rule)
 
         # SOH-EXTREME: GV cow / upper-stream ledge route.
@@ -3015,24 +3047,11 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 else:
                     require(location, item_name)
 
-        native_unmapped_rule_count = len(NATIVE_UNMAPPED_LOCATION_RULES)
-
         # Do NOT apply NATIVE_EVENT_ALTERNATIVES by region union.  0.7.5 did
         # that and accidentally made unrelated stock events depend on every
         # custom helper used anywhere in the region.  Exact stock event gates
         # (Mido, GC woods warp, fish/bugs, Baba/pot resources, etc.) are applied
         # below by their actual event names and physical source.
-
-        logger.info(
-            "SOH-EXTREME native audit 0.9.9: %d AP entrances matched (%d custom-gated); "
-            "%d exact native locations matched (%d custom-gated, %d inherited native-room paths); "
-            "%d fork checks inherited native-room paths; "
-            "%d AP entrances had no direct native-path projection",
-            native_entrance_hits, native_entrance_custom_gates,
-            native_location_hits, native_location_custom_gates, native_location_path_hits,
-            fork_native_path_hits,
-            unresolved_ap_entrances,
-        )
 
         def lost_woods_access_rule(include_gc_warp: bool = True):
             """The three supported physical entry routes into Lost Woods."""
@@ -3346,7 +3365,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
 
                 if rc.startswith("RC_COLOSSUS_WONDER_GF_TREE_") or rc in {
                         "RC_COLOSSUS_WONDER_OASIS_TREE_1", "RC_COLOSSUS_WONDER_OASIS_TREE_2"}:
-                    rule = ((is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle))
+                    rule = (can_use(Items.FAIRY_BOW, bundle)
                             | (is_child(bundle) & can_use(Items.FAIRY_SLINGSHOT, bundle)))
                 elif rc == "RC_COLOSSUS_WONDER_OASIS_CHILD_TREE":
                     rule = is_child(bundle) & can_use(Items.FAIRY_SLINGSHOT, bundle)
@@ -3354,9 +3373,10 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     rule = is_adult(bundle) & can_use_any([Items.LONGSHOT, Items.HOVER_BOOTS], bundle)
                 elif rc in {"RC_GERUDO_TRAINING_GROUND_WONDER_BEAMOS_ROOM",
                             "RC_GERUDO_TRAINING_GROUND_WONDER_TORCH_SLUGS_ROOM"}:
-                    # Bow-only invisible triggers; the Child's bow slot fires
-                    # Slingshot instead in the current native client.
-                    rule = is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle)
+                    # Bow-only invisible triggers. Child fires actual arrows
+                    # with the first Cross-Age Equipment unlock in the patched
+                    # native client; can_use() enforces that unlock.
+                    rule = can_use(Items.FAIRY_BOW, bundle)
                 elif rc == "RC_GERUDO_TRAINING_GROUND_WONDER_EYE_STATUE_ROOM":
                     rule = can_use(Items.HOVER_BOOTS, bundle) | Has("Bunny Hood")
                 elif rc in {"RC_GF_WONDER_ARCHERY_SIGN", "RC_GF_WONDER_ENTRANCE_SIGN"}:
@@ -3414,13 +3434,13 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                 elif rc.startswith("RC_MKT_WONDER_NIGHT_"):
                     rule = is_child(bundle) & at_night(bundle)
                 elif rc == "RC_SHADOW_TEMPLE_WONDER_THREE_POTS":
-                    rule = is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle)
+                    rule = can_use(Items.FAIRY_BOW, bundle)
                 elif rc.startswith("RC_TH_WONDER_") and rc != "RC_TH_WONDER_KITCHEN_SOUP":
-                    # These Wonder triggers must be hit by a real Bow projectile.
-                    # Child Link equips the Slingshot rather than firing Bow
-                    # arrows, even when cross-age inventory logic exposes Bow.
-                    # Never allow a critical item to be placed here in Child.
-                    rule = is_adult(bundle) & can_use(Items.FAIRY_BOW, bundle)
+                    # These skull Wonder triggers need real Bow arrows, not seeds.
+                    # With level-1 Cross-Age Equipment, Child Link can fire
+                    # actual arrows. can_use(Bow) retains the age requirement
+                    # for any seed without this optional unlock.
+                    rule = can_use(Items.FAIRY_BOW, bundle)
                 elif rc == "RC_TH_WONDER_KITCHEN_SOUP":
                     # Native normal route:
                     # (TakeDamage OR Adult OR Goron Tunic) AND CanPass Gerudo Guard.
@@ -4244,32 +4264,37 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     source.tags is not None and source.tags & LocTag.Scrub):
                 require(location, "Scrub Soul")
 
-        # Bomb/rock-hidden grottos keep their physical blocker in SOH-EXTREME.
-        # Shovel reveals/permits the grotto system, but these particular holes
-        # additionally require Rock / Boulder Soul before the blocker can be
-        # removed.  The inherited physical rule still supplies the attack/tool
-        # requirement; this overlay prevents AP from routing through the blocker
-        # while its Soul is missing.
+        # Preserve the physical rock/boulder obstruction on *source* edges.
+        # Scene-transition checks and randomized entrance sources get the same
+        # requirement from BoulderEntrances.  When not shuffled, this covers
+        # stock region-to-region routes (including the extra DMT cow path),
+        # without incorrectly gating a return EXIT from a grotto or a shuffled
+        # arrival at an unrelated grotto destination.
         if o.shuffle_rock_boulder_soul.value:
-            rock_blocked_grotto_rr = {
-                "RR_COLOSSUS_GROTTO", "RR_DMC_SCRUB_GROTTO", "RR_DMC_UPPER_GROTTO",
-                "RR_DMT_COW_GROTTO", "RR_GV_OCTOROK_GROTTO", "RR_HF_COW_GROTTO",
-                "RR_HF_FAIRY_GROTTO", "RR_HF_INSIDE_FENCE_GROTTO", "RR_HF_NEAR_KAK_GROTTO",
-                "RR_HF_NEAR_MARKET_GROTTO", "RR_HF_SOUTHEAST_GROTTO", "RR_HF_TEKTITE_GROTTO",
-                "RR_KAK_REDEAD_GROTTO", "RR_LW_NEAR_SHORTCUTS_GROTTO",
-                "RR_LW_SCRUBS_GROTTO", "RR_SFM_WOLFOS_GROTTO", "RR_ZR_FAIRY_GROTTO",
-            }
-            rock_blocked_grotto_regions = {
-                rr_direct_region_name(rr) for rr in rock_blocked_grotto_rr
-                if rr_direct_region_name(rr) is not None
-            }
+            from .BoulderEntrances import BOULDER_BLOCKED_ENDPOINTS
+            physical_pairs = set()
+            boulder_grotto_targets = set()
+            for endpoint_id in BOULDER_BLOCKED_ENDPOINTS:
+                endpoint = EntranceRandomizer.ENDPOINTS[endpoint_id]
+                target = EntranceRandomizer.region_name(endpoint['target'])
+                if endpoint['category'] == 'grottos':
+                    boulder_grotto_targets.add(target)
+                else:
+                    physical_pairs.add((
+                        EntranceRandomizer.region_name(endpoint['source']), target,
+                    ))
             for region in self.multiworld.regions:
                 if region.player != self.player:
                     continue
                 for entrance in region.exits:
-                    connected = getattr(entrance, "connected_region", None)
-                    if connected is not None and connected.name in rock_blocked_grotto_regions:
-                        add_resolved_rule(entrance, Has("Rock / Boulder Soul"), register_indirects=True)
+                    target = getattr(entrance, 'connected_region', None)
+                    if target is None:
+                        continue
+                    if (target.name in boulder_grotto_targets or
+                            (region.name, target.name) in physical_pairs):
+                        add_resolved_rule(
+                            entrance, Has('Rock / Boulder Soul'),
+                            register_indirects=True)
 
         # SOH-EXTREME Shovel semantics: EVERY grotto is unavailable without
         # Shovel, including normally-open holes.  Gate both the physical AP
@@ -5118,16 +5143,14 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
                     + ", ".join(bypasses)
                     + ". Use Progressive song items in plando, or remove that song from Song Note Songs."
                 )
-        from .FrontierFill import validate_filled_world
-        validate_filled_world(self)
+        # Archipelago core owns the final beatability/accessibility validation.
+        # The duplicate SOH-only full playthrough audit was misleading after
+        # item placement and is intentionally not called here.
 
     @classmethod
     def stage_pre_output(cls, multiworld) -> None:
-        # This stage runs once for all SOH slots, after every world's post-fill,
-        # progression balancing, finalize_multiworld and individual pre_output.
-        # Recheck the actual final placements, including cross-game deliveries.
-        from .FrontierFill import validate_final_multiworld
-        validate_final_multiworld(multiworld)
+        # Optional SOH hint generation only. AP core owns progression placement,
+        # completion and accessibility validation for the entire multiworld.
         from .HintAreas import prepare_hint_areas
         for player in multiworld.player_ids:
             world = multiworld.worlds[player]
@@ -5176,7 +5199,7 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             "shop_vanilla_items": self.shop_vanilla_items,
             "apworld_version": self.apworld_version,
             "enemy_room_logic_version": "0.11.18",
-            "scene_transition_catalog_version": SceneTransitions.CATALOG_VERSION,
+            "scene_transition_catalog_version": (SceneTransitions.CATALOG_VERSION if int(self.options.scene_transition_checks.value) == 2 else 2),
             "enemy_room_disabled_actions": list(getattr(self, "_extreme_room_disabled_actions", [])),
             "enemy_spawn_policy": "placed_and_non_enemy_scripted_encounters",
             "static_hints": static_hints,
@@ -5207,6 +5230,23 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
             for location in self.multiworld.get_locations(self.player)
             if isinstance(location.address, int)
         })
+        if int(self.options.scene_transition_checks.value):
+            scene_ids = {entry['id'] for entry in self._scene_transition_entries}
+            active_scenes = scene_ids.intersection(active_locations)
+            if not active_scenes:
+                raise OptionError(
+                    'Scene transition checks are enabled, but this seed has zero '
+                    'active physical scene or dungeon-door checks. Refusing to '
+                    'export a seed whose transitions would be invisible to the '
+                    'client and tracker.')
+            child_count = sum(i >= SceneTransitions.CHILD_CHECK_OFFSET and
+                              i < SceneTransitions.ADULT_CHECK_OFFSET for i in active_scenes)
+            adult_count = sum(i >= SceneTransitions.ADULT_CHECK_OFFSET for i in active_scenes)
+            logger.info(
+                'SOH-EXTREME active scene-transition checks: %d total '
+                '(Child %d, Adult %d); mode %d; %d active network checks',
+                len(active_scenes), child_count, adult_count,
+                int(self.options.scene_transition_checks.value), len(active_locations))
         # Standalone-world compatibility bridge for the native SOH client.  The
         # C++ side must not assume stock oot_soh names/IDs after SOH-EXTREME became
         # its own game.  Publish the exact active location namespace for this seed.
@@ -5249,8 +5289,8 @@ class SohExtremeWorld(CachedRuleBuilderWorld):
         cv("MedallionLockedTrials", data["medallion_locked_trials"])
 
         # Goal / songs / core item shuffles.
-        cv("SceneTransitionChecks", int(bool(data["scene_transition_checks"])))
-        cv("SceneTransitionCatalogVersion", SceneTransitions.CATALOG_VERSION)
+        cv("SceneTransitionChecks", int(data["scene_transition_checks"]))
+        cv("SceneTransitionCatalogVersion", (SceneTransitions.CATALOG_VERSION if int(data["scene_transition_checks"]) == 2 else 2))
         cv("TriforceHuntTotalPieces", data["triforce_hunt_pieces_total"] if data["triforce_hunt"] else 0)
         # Native SoH decides both the Triforce pickup message and the tracker
         # required-count display from the normal WinCon settings.  AP Triforce

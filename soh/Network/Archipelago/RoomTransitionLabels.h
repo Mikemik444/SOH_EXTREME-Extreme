@@ -90,7 +90,7 @@ inline const EntranceEndpoint* EntranceEndpointByCheck(int64_t check) {
         }
         return result;
     }();
-    const auto found = checks.find(check);
+    const auto found = checks.find(SharedSceneTransitionLocationId(check));
     return found != checks.end() ? found->second : nullptr;
 }
 

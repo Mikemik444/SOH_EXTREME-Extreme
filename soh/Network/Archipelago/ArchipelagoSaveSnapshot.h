@@ -18,4 +18,6 @@ struct ArchipelagoSaveSnapshot {
     std::string revealedHintTargetsJson;
     std::vector<uint64_t> fallbackNpcSpeechHashes;
     std::vector<int64_t> pendingLocations;
+    // Exact AP source IDs, including synthetic dungeon-room doors.
+    std::vector<int> discoveredEntrances;
 };

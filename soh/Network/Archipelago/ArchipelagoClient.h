@@ -68,6 +68,7 @@ class ArchipelagoClient {
     bool IsLocationReported(int64_t locationId) const;
     bool IsLocationSubmitted(int64_t locationId) const;
     void LoadPendingLocations(const std::vector<int64_t>& locations);
+    void LoadEntranceDiscoveries(const std::vector<int>& entranceIds);
     // Game-thread only, paired with the engine's inventory snapshot.
     ArchipelagoSaveSnapshot CaptureSaveSnapshot() const;
     size_t GetActiveLocationCount() const;

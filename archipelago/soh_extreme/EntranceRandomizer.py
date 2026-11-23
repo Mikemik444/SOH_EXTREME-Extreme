@@ -10,7 +10,7 @@ from time import monotonic
 from importlib.resources import files
 import json
 
-from BaseClasses import CollectionState, ItemClassification, LocationProgressType
+from BaseClasses import CollectionState, ItemClassification, Location, LocationProgressType
 from Options import OptionError
 from rule_builder.rules import True_, And, Has, Or, Rule
 from .EntranceOptions import ENTRANCE_OPTIONS
@@ -18,12 +18,14 @@ from . import EntranceSafety as Safety
 from . import EntranceMapIntegrity as MapIntegrity
 from . import EntranceTopologyAudit as TopologyAudit
 from .SceneTransitions import region_name
+from . import SceneTransitions
 from .CheckDescriptions import shuffled_check_label
 from ._vendor_oot_soh.Enums import Regions, Items, Events, Ages
 from ._vendor_oot_soh.Regions import SohRegion
 from ._vendor_oot_soh.Items import SohItem
 from ._vendor_oot_soh import LogicHelpers as H
 from .EnemyRoomLogic import GRAPH, NativeEnemyRegions, resolve_enemy_region
+from .BoulderEntrances import BOULDER_BLOCKED_ENDPOINTS
 
 REVISION = 1
 # Revision 1 partitions unmixed room doors by their physical dungeon scene.
@@ -164,6 +166,101 @@ def _changed_route_ids(previous, current):
             if previous.get(source) != destination]
 
 
+def _distinct_reachability_probes(locations):
+    """Reduce identical required-check reachability tests without changing rules.
+
+    BaseClasses.Location.can_reach only evaluates the parent region and its
+    access_rule. Locations sharing *both exact objects* therefore yield the
+    same result in one state. Never merge overridden Location.can_reach methods,
+    which may implement game-specific checks not represented by these fields.
+    """
+    seen = set()
+    probes = []
+    for loc in locations:
+        if type(loc).can_reach is Location.can_reach:
+            key = (id(loc.parent_region), id(loc.access_rule))
+            if key in seen:
+                continue
+            seen.add(key)
+        probes.append(loc)
+    return probes
+
+
+def _requested_goal_reachability(world):
+    """Read the user's YAML option without changing the saved configuration."""
+    return world.options.entrance_reachability.value == 1
+
+
+def _is_full_accessibility(world):
+    """Full accessibility takes precedence over the entrance-only goal mode.
+
+    Otherwise the entrance randomizer can disconnect hundreds of optional checks
+    with complete inventory, which necessarily makes Archipelago's Full setting
+    impossible regardless of where the item filler places items.
+    """
+    return str(getattr(world.options.accessibility, 'current_key', 'full')).lower() == 'full'
+
+
+def _is_goal_reachability(world):
+    """Honor the explicit entrance policy, independently of AP accessibility.
+
+    The earlier Full-accessibility override rejected almost every mixed-pool
+    candidate by demanding that all stock rooms remain reachable *during each
+    intermediate swap*.  Goal Reachable is an explicit request to permit
+    optional disconnected destinations, even when AP accessibility is Full.
+    In that combination, structurally inaccessible optional checks are retired
+    before fill; all surviving checks still use the normal AP Full fill rules.
+    All Destinations remains the strict mode whenever the user selects it.
+    """
+    return _requested_goal_reachability(world)
+
+
+def _reachable_stock_destinations(world, rows, baseline):
+    """Deduplicate the entrance destinations reachable with all stock items.
+
+    Some disabled/unused native exits are unreachable even in an unshuffled
+    world; those cannot be required in every seed. The strict setting preserves
+    every initially reachable destination region, plus the existing baseline
+    item-location probes. The goal setting deliberately skips both tests.
+    """
+    seen = set()
+    result = []
+    for row in rows:
+        target_name = region_name(row['target'])
+        if target_name in seen:
+            continue
+        seen.add(target_name)
+        target = world.get_region(target_name)
+        if target.can_reach(baseline):
+            result.append(target)
+    return result
+
+
+def _entrance_objective_met(world, state, goal_only, required_checks, required_destinations):
+    """The expensive mode-dependent component of an entrance safety check.
+
+    Always use the SOH player's completion goal, never every other game's goal.
+    Entry/age/start/return validation belongs to the caller in both modes.
+    """
+    if goal_only:
+        return world.multiworld.has_beaten_game(state, world.player)
+    return (all(loc.can_reach(state) for loc in required_checks)
+            and all(region.can_reach(state) for region in required_destinations))
+
+
+def _slot_lock_targets_soh(world):
+    """Apply the bounded ER search only when SlotLock really locks this SOH slot.
+
+    All worlds have created their items before connect_entrances(), including
+    SlotLock's `slots_to_lock` list.  A SlotLock world that locks only other
+    players must not change this player's entrance-shuffle behavior.
+    """
+    player_name = world.multiworld.player_name[world.player]
+    return any(getattr(other, 'game', None) == 'SlotLock'
+               and player_name in getattr(other, 'slots_to_lock', ())
+               for other in world.multiworld.worlds.values())
+
+
 def restore_legacy_defaults(world):
     if not world.using_ut: return
     if 'entrance_randomizer' not in world.passthrough:
@@ -288,6 +385,12 @@ def _source_rule(world, row):
             raise OptionError(f"Entrance source route is ambiguous or missing: {row['name']} ({len(edges)})")
         rule = edges[0].access_rule
     extras = []
+    # Rock/boulder Soul belongs to the *physical source crossing*.
+    # A shuffled destination never inherits a requirement from its former
+    # overworld entrance, and leaving a grotto/fountain remains free.
+    if (row['id'] in BOULDER_BLOCKED_ENDPOINTS
+            and world.options.shuffle_rock_boulder_soul.value):
+        extras.append(Has("Rock / Boulder Soul").resolve(world))
     if row['door'] >= 0 and world.options.shuffle_dungeon_doors.value:
         # A new arrival can approach either side of an unopened physical lock.
         # Vanilla cumulative counts and free reverse edges assume a particular
@@ -304,12 +407,12 @@ def _source_rule(world, row):
     if row.get('gate') == 'swim' or row['id'] in WATER_SUBMERGED_ENDPOINTS:
         extras.append(H.can_swim(bundle).resolve(world))
     if row.get('gate') == 'horse': extras.append(H.can_use(Items.EPONA, bundle).resolve(world))
-    # The lake fence is physically not a free walk even when the source is
-    # reachable through a mixed-pool entry. Preserve the literal gate on the
-    # directed entrance, not merely on its unshuffled stock region edge.
-    if row['id'] in (258, 393):
-        extras.append((H.can_climb(bundle) | H.can_swim(bundle) |
-                       H.can_use(Items.EPONA, bundle)).resolve(world))
+    # The north Lake Hylia / Hyrule Field fence has a real vertical ladder.
+    # Swimming and riding Epona do not allow passage from the fenced landing
+    # into the rest of Hyrule Field. Require Climb on the physical crossing,
+    # including the associated scene-transition check.
+    if row['id'] in (HF_FENCE_TO_LAKE, HF_LAKE_TO_FENCE):
+        extras.append(H.can_climb(bundle).resolve(world))
     # The Treasure Chest Game's external door is usable only by child at night
     # and with its building key when Overworld Door Locks are enabled. Do not
     # confuse this *entry* with the inside-to-outside exit check (469): a valid
@@ -331,7 +434,13 @@ def _source_rule(world, row):
 
 
 def _arrival_rule(world, row):
-    if row.get('arrival_gate') == 'swim' or row['id'] in WATER_SUBMERGED_ENDPOINTS:
+    # The native catalog groups the Hyrule Field fence-side landing into the
+    # whole HYRULE_FIELD region. A mixed-pool arrival at endpoint 393 must NOT
+    # grant every field check or certify a safe spawn without Climb. This also
+    # fixes UT for already-generated maps (which we cannot silently reroll).
+    if row['id'] == HF_LAKE_TO_FENCE:
+        rule = H.can_climb((resolve_enemy_region(row['target']), world)).resolve(world)
+    elif row.get('arrival_gate') == 'swim' or row['id'] in WATER_SUBMERGED_ENDPOINTS:
         # A dry source can be paired with a water landing. Its crossing check
         # still uses the dry source rule, but entering the destination needs Swim.
         rule = H.can_swim((resolve_enemy_region(row['target']), world)).resolve(world)
@@ -415,7 +524,11 @@ def _one_way_targets(world, source, *, legacy_dungeon_pools=False):
     else:
         targets = [e for e in CATALOG if e['category'] in ('overworld', 'owls', 'warp_songs')]
     return [e for e in targets if Safety.allowed_route(source['id'], e['id'])
-            and not (e['id'] in RIVER_WATER_ALIASES and _river_path_revision(world) == 0)]
+            and not (e['id'] in RIVER_WATER_ALIASES and _river_path_revision(world) == 0)
+            # One-way songs/spawns/owl drops must never bypass the fixed pair
+            # and dump a Climb-less player on the isolated fence landing.
+            and not (_fence_pair_must_stay_vanilla(world)
+                     and e['id'] == HF_LAKE_TO_FENCE)]
 
 
 def _candidate(world):
@@ -423,20 +536,56 @@ def _candidate(world):
     pools = defaultdict(list); one_ways = []
     for e in eligible:
         if e['reverse'] < 0: one_ways.append(e)
-        elif e['primary'] and e['id'] not in LOCAL_CARRIER_DOORS:
+        elif (e['primary'] and e['id'] not in LOCAL_CARRIER_DOORS
+              and not (_fence_pair_must_stay_vanilla(world)
+                       and e['id'] == HF_FENCE_TO_LAKE)):
             pools[_paired_pool_key(e, mixed)].append(e)
-    mapping = {e['id']: e['id'] for e in eligible if e['id'] in LOCAL_CARRIER_DOORS}
+    mapping = {e['id']: e['id'] for e in eligible
+               if e['id'] in LOCAL_CARRIER_DOORS
+               or (_fence_pair_must_stay_vanilla(world)
+                   and e['id'] in (HF_FENCE_TO_LAKE, HF_LAKE_TO_FENCE))}
     for pool in pools.values():
         targets = pool.copy(); world.random.shuffle(targets)
         for source, dest in zip(pool, targets):
             mapping[source['id']] = dest['id']
             mapping[dest['reverse']] = source['reverse']
     for source in one_ways:
-        targets = _one_way_targets(world, source)
+        targets = [target for target in _one_way_targets(world, source)
+                   if _spawn_destination_allowed(world, source, target['id'])]
         if not targets:
             raise OptionError('No reviewed, age-compatible one-way destination is enabled')
         mapping[source['id']] = world.random.choice(targets)['id']
     return mapping
+
+
+# Minuet's warp pad (endpoint 1536) is inside Sacred Forest Meadow, behind
+# the Wolfos gate when played as Child. The only dependable physical exit from
+# that starting position is the climbable maze. When Climb is shuffled, the
+# child may start without it, so never choose this pad as their starting spawn.
+# Intentionally apply this only to new seed placement; reading an existing
+# server's recorded entrance map must not silently change its destinations.
+SFM_MINUET_WARP_PAD = 1536
+
+# Hyrule Field's Lake Hylia north arrival (393) is the small *fence-side*
+# landing, NOT the accessible Hyrule Field overworld. Without shuffled Climb,
+# arriving here from an unrelated shuffled door can strand Link at the ladder.
+# Keep this coupled physical pair at its stock routing while Climb is shuffled.
+# The paired IDs must remain in the emitted map as identity endpoints for UT
+# and the native client. Do not remove them from the catalog/eligible set.
+HF_FENCE_TO_LAKE = 258
+HF_LAKE_TO_FENCE = 393
+
+
+def _fence_pair_must_stay_vanilla(world):
+    # For existing UT saves, accept the recorded map as-is. New maps must not
+    # route players into the unsafe fence-side landing before they have Climb.
+    return bool(world.options.shuffle_climb.value) and not world.using_ut
+
+
+def _spawn_destination_allowed(world, source, target_id):
+    return not (source['category'] == 'child_spawn'
+                and target_id == SFM_MINUET_WARP_PAD
+                and world.options.shuffle_climb.value)
 
 
 def _is_default_spawn(source, target):
@@ -450,6 +599,7 @@ def _validate_spawn_pools(world, rows):
     for source in rows:
         if source['category'] not in ('child_spawn', 'adult_spawn'): continue
         if not any(not _is_default_spawn(source, target['id'])
+                   and _spawn_destination_allowed(world, source, target['id'])
                    for target in _one_way_targets(world, source)):
             name = source['category'].replace('_', ' ')
             raise OptionError(
@@ -459,20 +609,26 @@ def _validate_spawn_pools(world, rows):
             )
 
 
-def _place_one_way(world, mapping, source, viable, *, allow_failure=False):
-    """Try each allowed arrival once in seeded random order.
+def _place_one_way(world, mapping, source, viable, *, allow_failure=False, limit=None):
+    """Find a legal one-way destination using a bounded targeted search.
 
-    Sampling a few times with replacement can miss the only playable starts in
-    a large mixed pool. Draw destinations directly, without generating and
-    discarding unrelated paired mappings or another age's spawn.
+    Starting spawns intentionally retain exhaustive search, since a missing
+    playable start is an error. Optional one-way sources (songs, owl drops,
+    fences, forward-only room shutters) may remain at their valid identity
+    instead of burning hundreds of full-state validations on an impossible
+    alternate. `limit` never weakens a route predicate.
     """
     targets = list(dict.fromkeys(target['id'] for target in _one_way_targets(world, source)
-                                 if not _is_default_spawn(source, target['id'])))
+                                 if not _is_default_spawn(source, target['id'])
+                                 and _spawn_destination_allowed(world, source, target['id'])))
     world.random.shuffle(targets)
+    if limit is not None and source['category'] not in ('child_spawn', 'adult_spawn'):
+        targets = targets[:limit]
     for target in targets:
         candidate = dict(mapping)
         candidate[source['id']] = target
-        if viable(candidate): return candidate
+        if viable(candidate):
+            return candidate
     if source['category'] in ('child_spawn', 'adult_spawn') and not allow_failure:
         name = source['category'].replace('_', ' ')
         raise OptionError(
@@ -482,6 +638,159 @@ def _place_one_way(world, mapping, source, viable, *, allow_failure=False):
             'to Hyrule Field with the configured starting inventory.'
         )
     return None
+
+
+def _swap_coupled_pair(mapping, first, second):
+    """Change exactly the two selected entrances and their coupled returns.
+
+    Never rebuild or reroll unrelated pools. `mapping` is a private candidate,
+    so failures cannot change the last accepted topology.
+    """
+    a, b = mapping[first], mapping[second]
+    mapping[first], mapping[second] = b, a
+    mapping[ENDPOINTS[b]['reverse']] = ENDPOINTS[first]['reverse']
+    mapping[ENDPOINTS[a]['reverse']] = ENDPOINTS[second]['reverse']
+
+
+def _pair_static_safe(mapping, first, second):
+    """Reject impossible endpoints before an expensive AP reachability sweep."""
+    if first == second:
+        return False
+    a, b = mapping[first], mapping[second]
+    return (Safety.allowed_route(first, b)
+            and Safety.allowed_route(second, a)
+            and Safety.allowed_route(ENDPOINTS[b]['reverse'], ENDPOINTS[first]['reverse'])
+            and Safety.allowed_route(ENDPOINTS[a]['reverse'], ENDPOINTS[second]['reverse']))
+
+
+def _repair_swap_batch(mapping, swaps, viable):
+    """Validate several local swaps once, then isolate any invalid piece.
+
+    A successful batch replaces N full progression checks with one. If a batch
+    fails, split it into smaller parts, retaining each independently validated
+    part and leaving only the rejected connections unchanged. This preserves
+    the same fail-closed tests as a one-at-a-time swap without rerolling the
+    complete entrance map. Return (mapping, accepted_count, clean_batch).
+    """
+    if not swaps:
+        return mapping, 0, True
+    candidate = dict(mapping)
+    for first, second in swaps:
+        _swap_coupled_pair(candidate, first, second)
+    if viable(candidate):
+        return candidate, len(swaps), True
+    if len(swaps) == 1:
+        return mapping, 0, False
+    midpoint = len(swaps) // 2
+    left, left_accepted, _ = _repair_swap_batch(mapping, swaps[:midpoint], viable)
+    right, right_accepted, _ = _repair_swap_batch(left, swaps[midpoint:], viable)
+    return right, left_accepted + right_accepted, False
+
+
+def _shuffle_paired_pool(world, mapping, pool, viable, *, slot_lock_mode=False):
+    """Adaptive local repair for coupled entrances, with bounded full checks.
+
+    Pairs are disjoint within a batch so static eligibility is stable. Each
+    candidate is either accepted after the complete physical safety check or
+    discarded. Failed batches shrink automatically; valid batches grow to
+    amortize the expensive reachability computations. Normal seeds get a
+    repair pass over still-unshuffled endpoints. SlotLock receives a small,
+    bounded local repair attempt (at most eight unchanged sources per pool).
+    """
+    accepted = 0
+    order = pool.copy()
+    world.random.shuffle(order)
+    for pass_number in range(2):
+        if pass_number:
+            order = [source for source in pool if mapping[source] == source]
+            world.random.shuffle(order)
+            if slot_lock_mode:
+                # Retry a handful of the actual failed/unshuffled endpoints,
+                # not every entrance and not a fresh whole-world permutation.
+                order = order[:8]
+        pending = iter(order)
+        batch_size = 6
+        exhausted = False
+        while not exhausted:
+            # Build a handful of mutually independent candidate swaps. A
+            # statically invalid combination never reaches the AP logic sweep.
+            swaps = []
+            used = set()
+            while len(swaps) < batch_size:
+                try:
+                    first = next(pending)
+                except StopIteration:
+                    exhausted = True
+                    break
+                if first in used:
+                    continue
+                partner_order = pool.copy()
+                world.random.shuffle(partner_order)
+                second = next((other for other in partner_order
+                               if other not in used and _pair_static_safe(mapping, first, other)), None)
+                if second is None:
+                    continue
+                used.update((first, second))
+                swaps.append((first, second))
+            if not swaps:
+                continue
+            mapping, count, clean = _repair_swap_batch(mapping, swaps, viable)
+            accepted += count
+            batch_size = min(12, batch_size + 2) if clean else max(1, batch_size // 2)
+    return mapping, accepted
+
+
+def _repair_directed_batch(mapping, edits, viable):
+    """Commit several independent one-way assignments, or isolate failures."""
+    if not edits:
+        return mapping, 0, []
+    candidate = dict(mapping)
+    for source_id, destination_id in edits:
+        candidate[source_id] = destination_id
+    if viable(candidate):
+        return candidate, len(edits), []
+    if len(edits) == 1:
+        return mapping, 0, [edits[0][0]]
+    middle = len(edits) // 2
+    left, left_count, left_failed = _repair_directed_batch(mapping, edits[:middle], viable)
+    right, right_count, right_failed = _repair_directed_batch(left, edits[middle:], viable)
+    return right, left_count + right_count, left_failed + right_failed
+
+
+def _place_optional_one_ways(world, mapping, sources, viable, *, limit=8):
+    """Batch optional one-way sources and retry only failed individual sources.
+
+    Target lists are bounded, not blindly exhausted. A rejected one-way retains
+    its physically valid original route. Spawns are deliberately not handled
+    here: they must be chosen with exhaustive start/return verification.
+    """
+    choices = {}
+    for source in sources:
+        targets = list(dict.fromkeys(target['id'] for target in _one_way_targets(world, source)
+                                     if target['id'] != source['id']
+                                     and not _is_default_spawn(source, target['id'])
+                                     and _spawn_destination_allowed(world, source, target['id'])))
+        world.random.shuffle(targets)
+        choices[source['id']] = targets[:limit]
+    edits = [(source['id'], choices[source['id']][0]) for source in sources
+             if choices[source['id']]]
+    accepted = 0
+    failed = []
+    for index in range(0, len(edits), 8):
+        mapping, count, rejects = _repair_directed_batch(mapping, edits[index:index + 8], viable)
+        accepted += count
+        failed.extend(rejects)
+    # Only retry sources whose proposed alternate actually failed. Accepted
+    # directions never get rerolled, and the remainder of the map stays fixed.
+    for source_id in failed:
+        for destination_id in choices[source_id][1:]:
+            candidate = dict(mapping)
+            candidate[source_id] = destination_id
+            if viable(candidate):
+                mapping = candidate
+                accepted += 1
+                break
+    return mapping, accepted
 
 
 def _place_spawns(world, mapping, rows, viable, *, allow_failure=False):
@@ -564,10 +873,11 @@ def _initial_state_for_age(world, age):
     if age != starting_age:
         state.collect(SohItem(str(Events.TIME_TRAVEL), ItemClassification.progression,
                               None, world.player), True)
-    state.sweep_for_advancements(locations=[
-        loc for loc in world.get_locations()
-        if loc.item is not None and loc.item.player == world.player
-    ])
+    local_events = getattr(world, '_er_local_seed_events', None)
+    if local_events is None:
+        local_events = [loc for loc in world.get_locations()
+                        if loc.item is not None and loc.item.player == world.player]
+    state.sweep_for_advancements(locations=local_events)
     return state
 
 
@@ -621,6 +931,12 @@ def _starting_state_is_viable(world, mapping, edges, fill_locations):
         if not Safety.allowed_age(target['id'], bit):
             return False
         probe = state if age == starting_age else _initial_state_for_age(world, age)
+        # The physical destination must be part of this age's accessible graph.
+        # A distant route to Hyrule Field cannot prove that the starting room
+        # (notably a shuffled small-fairy grotto) exposes its own checks.
+        landing_region = world.get_region(region_name(target['target']))
+        if not _reachable_as_age(world, probe, landing_region, age):
+            return False
         if not _spawn_return_is_usable(world, probe, target, edges, age):
             return False
         # Door checks in a closed component are not a usable way out. The
@@ -661,11 +977,12 @@ def _physical_start_is_connected(world, inventory, age=None):
     # Do not regain an instrument from prefill while sweeping. This also keeps
     # the probe independent of remote players' future sends. Each candidate gets
     # a new unswept inventory copy, so rejected topology/events cannot leak in.
-    state.sweep_for_advancements(locations=[
-        loc for loc in world.get_locations()
-        if loc.item is not None and loc.item.player == world.player
-        and loc.item.name != ocarina_name
-    ])
+    local_events = getattr(world, '_er_local_seed_no_ocarina', None)
+    if local_events is None:
+        local_events = [loc for loc in world.get_locations()
+                        if loc.item is not None and loc.item.player == world.player
+                        and loc.item.name != ocarina_name]
+    state.sweep_for_advancements(locations=local_events)
     return _reachable_as_age(world, state, world.get_region(str(Regions.HYRULE_FIELD)), age)
 
 
@@ -677,8 +994,19 @@ def connect(world):
     # dungeon entrances until their own connect_entrances() runs. During
     # SOH-EXTREME entrance shuffling, ignore only these not-yet-connected
     # *other-world* edges; all local route safety tests still run.
-    baseline = world.multiworld.get_all_state(False, allow_partial_entrances=True)
-    required = [loc for loc in world.get_locations() if loc.address is not None and loc.can_reach(baseline)]
+    goal_only = _is_goal_reachability(world)
+    if goal_only:
+        # The goal-only setting never evaluates vanilla-reachable checks or
+        # destination regions. Avoid constructing the expensive baseline
+        # full-inventory state entirely; the candidate/final inventory is
+        # prepared below once per generation.
+        required = []
+        required_destinations = []
+    else:
+        baseline = world.multiworld.get_all_state(False, allow_partial_entrances=True)
+        required = [loc for loc in world.get_locations()
+                    if loc.address is not None and loc.can_reach(baseline)]
+        required_destinations = _reachable_stock_destinations(world, rows, baseline)
     # Include blue warps: defeating a shuffled boss must lead back through its
     # paired route, including a boss chamber reached from a house or room door.
     blue = [e for e in CATALOG if e['category'] == 'blue_warps']
@@ -689,14 +1017,13 @@ def connect(world):
                     if _river_path_revision(world) == 0 and 'overworld' in enabled_categories(world) else [])
     sources = rows + blue + legacy_water
     rules = {e['id']: _source_rule(world, e) for e in sources}
-    checks = {l.address: l for l in world.get_locations() if l.address is not None}
     for row in sources:
-        location = checks.get(row['check_id'])
-        if location is None or rules[row['id']] is None: continue
-        location.parent_region.locations.remove(location)
-        location.parent_region = world.get_region(region_name(row['source']))
-        location.parent_region.locations.append(location)
-        location.access_rule = rules[row['id']]
+        if rules[row['id']] is None: continue
+        for location in SceneTransitions.locations_for_base(world, row['check_id']):
+            location.parent_region.locations.remove(location)
+            location.parent_region = world.get_region(region_name(row['source']))
+            location.parent_region.locations.append(location)
+            location.access_rule = rules[row['id']]
     edges = {}
     # Multiple physical doorways can share an AP edge. Replace that aggregate
     # with one edge per actual source endpoint, retaining every source gate.
@@ -766,8 +1093,17 @@ def connect(world):
             display_routes = dict(routes)
             display_routes.update({row['id']: _routed_destination(world, routes, row['id'])
                                    for row in legacy_water})
-            world._er_labels = {ENDPOINTS[k]["check_id"]: shuffled_check_label(ENDPOINTS[k], ENDPOINTS[v])
-                                for k, v in display_routes.items() if ENDPOINTS[k]["check_id"]}
+            world._er_labels = {}
+            for k, v in display_routes.items():
+                original_check = ENDPOINTS[k]['check_id']
+                if not original_check:
+                    continue
+                label = shuffled_check_label(ENDPOINTS[k], ENDPOINTS[v])
+                variants = SceneTransitions.locations_for_base(world, original_check)
+                for check in variants:
+                    suffix = (' [Child]' if getattr(check, 'transition_age', None) == Ages.CHILD else
+                              ' [Adult]' if getattr(check, 'transition_age', None) == Ages.ADULT else '')
+                    world._er_labels[check.address] = label + suffix
     def assert_installed_topology():
         """Fail closed if AP's final entrance graph differs from the exported map.
 
@@ -799,13 +1135,13 @@ def connect(world):
         for row in sources:
             source_id = row['id']
             source_rule = rules[source_id]
-            check = checks.get(row['check_id'])
-            if source_rule is None or check is None:
+            if source_rule is None:
                 continue
-            if (check.parent_region.name != region_name(row['source'])
-                    or check.access_rule is not source_rule):
-                raise OptionError('Entrance crossing check is not tied to its physical '
-                                  f'source: {row["name"]} (endpoint {source_id})')
+            for check in SceneTransitions.locations_for_base(world, row['check_id']):
+                if (check.parent_region.name != region_name(row['source'])
+                        or check.access_rule is not source_rule):
+                    raise OptionError('Entrance crossing check is not tied to its physical '
+                                      f'source: {row["name"]} (endpoint {source_id})')
 
     if world.using_ut:
         saved = world.passthrough.get('entrance_randomizer', {})
@@ -839,15 +1175,61 @@ def connect(world):
     mixed = mixed_categories(world)
     pools = defaultdict(list)
     for e in rows:
-        if e['primary'] and e['reverse'] >= 0 and e['id'] not in LOCAL_CARRIER_DOORS:
+        if (e['primary'] and e['reverse'] >= 0 and e['id'] not in LOCAL_CARRIER_DOORS
+                and not (_fence_pair_must_stay_vanilla(world)
+                         and e['id'] == HF_FENCE_TO_LAKE)):
             pools[_paired_pool_key(e, mixed)].append(e['id'])
     accepted = 0
-    # Each candidate performs a full SOH progression/safety sweep while
-    # sibling worlds can still have unconnected entrances.
+    # Validate every paired source at least once. For normal seeds, revisit
+    # only sources still at their original entrance after the first pass,
+    # rather than blindly retrying every pair for two more complete passes.
+    # For SlotLock, retain the previously bounded single pass. Every proposed
+    # swap continues through all physical safety/accessibility predicates.
+    slot_lock_mode = _slot_lock_targets_soh(world)
+
+    # Fixed event sites do not change as entrance destinations are tested;
+    # compute their advancement filters once. In a normal seed, the global
+    # filter is exactly the event set that CollectionState.sweep_for_advancements
+    # would discover anew on each call (including all remote progression).
+    # SlotLock can continue using the more conservative SOH-local event set.
+    world._er_local_seed_events = [
+        loc for loc in world.get_locations()
+        if loc.item is not None and loc.item.player == world.player and loc.advancement
+    ]
+    world._er_local_seed_no_ocarina = [
+        loc for loc in world._er_local_seed_events
+        if loc.item.name != str(Items.PROGRESSIVE_OCARINA)
+    ]
+    local_advancement_events = world._er_local_seed_events
+    all_advancement_events = (None if slot_lock_mode else [
+        loc for loc in world.multiworld.get_locations() if loc.advancement
+    ])
     inventory = world.multiworld.get_all_state(False, allow_partial_entrances=True,
                                                perform_sweep=False)
     fill_locations = [loc for loc in world.get_locations()
                       if loc.address is not None and loc.item is None]
+    probe_ages = {Ages.ADULT if world.options.starting_age == 'adult' else Ages.CHILD}
+    probe_ages.update(Ages.CHILD if row['category'] == 'child_spawn' else Ages.ADULT
+                      for row in rows if row['category'] in ('child_spawn', 'adult_spawn'))
+    # A location with the identical parent and identical access rule has the
+    # same reachability result. Only BaseClasses' unmodified can_reach method
+    # participates; custom subclasses are always checked individually.
+    required_probes = [] if goal_only else _distinct_reachability_probes(required)
+    logging.info('SOH-EXTREME entrance validation mode: %s',
+                 'Goal Reachable' if goal_only else 'All Destinations')
+    if goal_only and _is_full_accessibility(world):
+        logging.info('SOH-EXTREME: Goal Reachable + Full accessibility: validating '
+                     'safe starts and goal during entrance shuffle; before item '
+                     'placement, unreachable optional checks will be retired so '
+                     'AP Full applies to every remaining enabled location.')
+    if slot_lock_mode:
+        logging.info('SOH-EXTREME: SlotLock targets %s; using one validated '
+                     'entrance-swap pass', world.multiworld.player_name[world.player])
+    if not goal_only:
+        logging.info('SOH-EXTREME entrance generation: %d required checks '
+                     'represented by %d equivalent reachability probes, '
+                     '%d stock-reachable destination regions',
+                     len(required), len(required_probes), len(required_destinations))
     attempts = 0
     progress_start = monotonic()
     last_progress = progress_start
@@ -865,15 +1247,18 @@ def connect(world):
         apply(candidate)
         if not _starting_state_is_viable(world, candidate, edges, fill_locations):
             return False
-        probe_ages = {Ages.ADULT if world.options.starting_age == 'adult' else Ages.CHILD}
-        probe_ages.update(Ages.CHILD if row['category'] == 'child_spawn' else Ages.ADULT
-                          for row in rows if row['category'] in ('child_spawn', 'adult_spawn'))
         if any(not _physical_start_is_connected(world, inventory, age) for age in probe_ages):
             return False
         state = inventory.copy()
-        state.sweep_for_advancements()
+        if slot_lock_mode:
+            state.sweep_for_advancements(locations=local_advancement_events)
+        else:
+            # Same worldwide advancement events as the original full sweep,
+            # without rebuilding the event list for every candidate mapping.
+            state.sweep_for_advancements(locations=all_advancement_events)
         return (_age_routes_are_safe(world, world._er_mapping, edges, state)
-                and all(loc.can_reach(state) for loc in required))
+                and _entrance_objective_met(world, state, goal_only,
+                                            required_probes, required_destinations))
     # Choose the real spawns on the connected base graph. Every later accepted
     # swap must preserve their starting access, rather than protecting a house
     # spawn that will be replaced at the end. If restrictive pools need a
@@ -886,24 +1271,23 @@ def connect(world):
     else:
         apply(mapping)
     for pool in pools.values():
-        order = pool * 3
-        world.random.shuffle(order)
-        for first in order:
-            second = world.random.choice(pool)
-            if first == second: continue
-            candidate = dict(mapping)
-            a, b = mapping[first], mapping[second]
-            candidate[first], candidate[second] = b, a
-            candidate[ENDPOINTS[b]['reverse']] = ENDPOINTS[first]['reverse']
-            candidate[ENDPOINTS[a]['reverse']] = ENDPOINTS[second]['reverse']
-            if viable(candidate): mapping = candidate; accepted += 1
+        mapping, added = _shuffle_paired_pool(world, mapping, pool, viable,
+                                              slot_lock_mode=slot_lock_mode)
+        accepted += added
+    logging.info('SOH-EXTREME entrance shuffle: paired pools completed; '
+                 '%d validated swaps accepted / %d safety checks', accepted, attempts)
     if spawn_mapping is None:
         mapping = _place_spawns(world, mapping, rows, viable)
         accepted += sum(row['category'] in ('child_spawn', 'adult_spawn') for row in rows)
-    for source in (e for e in rows if e['reverse'] < 0
-                   and e['category'] not in ('child_spawn', 'adult_spawn')):
-        candidate = _place_one_way(world, mapping, source, viable)
-        if candidate is not None: mapping = candidate; accepted += 1
+    optional_one_ways = [e for e in rows if e['reverse'] < 0
+                         and e['category'] not in ('child_spawn', 'adult_spawn')]
+    # Group independent directed exits; split invalid groups and only retry
+    # the failing source, never the entire entrance map.
+    mapping, added = _place_optional_one_ways(world, mapping, optional_one_ways,
+                                              viable, limit=8)
+    accepted += added
+    logging.info('SOH-EXTREME entrance shuffle: directed endpoints completed; '
+                 '%d accepted / %d safety checks', accepted, attempts)
     validate_mapping(world, mapping)
     apply(mapping, update_labels=True)
     assert_installed_topology()
@@ -911,6 +1295,18 @@ def connect(world):
     final_state.sweep_for_advancements()
     if not _age_routes_are_safe(world, world._er_mapping, edges, final_state):
         raise OptionError('The entrance map contains a route to an age-incompatible arrival. '
+                          'No unsafe entrance map was emitted.')
+    # Verify the chosen objective once more on the final installed mapping.
+    # Rejected candidate maps temporarily touched the graph, so this must not
+    # rely on a prior candidate's cached reachability result.
+    if not _entrance_objective_met(world, final_state, goal_only,
+                                   required_probes, required_destinations):
+        if goal_only:
+            raise OptionError("The final entrance map cannot reach SOH-EXTREME's "
+                              'completion goal with all available items. '
+                              'No unbeatable entrance map was emitted.')
+        raise OptionError('The final entrance map lost a stock-reachable entrance '
+                          'destination or mandatory reachable check. '
                           'No unsafe entrance map was emitted.')
     if not _starting_state_is_viable(world, mapping, edges, fill_locations):
         raise OptionError(
@@ -929,6 +1325,7 @@ def slot_data(world):
     return {'revision': REVISION, 'destination_policy_revision': Safety.POLICY_REVISION,
             'pool_policy_revision': _pool_policy_revision(world),
             'river_path_revision': _river_path_revision(world),
+            'reachability_mode': 'goal_reachable' if _is_goal_reachability(world) else 'all_destinations',
             'effective_mixed_categories': sorted(mixed_categories(world)),
             'dungeon_door_mixed_outside': int(dungeon_doors_mix_outside(world)),
             'disabled_actions': getattr(world, '_er_disabled_actions', []),

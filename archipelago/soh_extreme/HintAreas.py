@@ -1,9 +1,9 @@
-"""Conservative area hints proved from final, actual multiworld placements.
+"""Conservative SOH-EXTREME area hints using finalized AP placements.
 
-A Way of the Hero region must fail an actual all-player goal sweep when all of
-that region's network checks are withheld. Advancement classification alone is
-never a WOTH proof. Barren describes a complete named check group containing no
-advancement items, including items destined for other players.
+A Way of the Hero region must block SOH's completion after progression is
+swept across all player locations with the region's checks withheld. This is
+optional hint proofing, not a separate seed-validity audit. Barren denotes a
+complete named check group without any advancement items.
 """
 
 from collections import defaultdict
@@ -40,12 +40,10 @@ def physical_check_groups(world):
 
 def prepare_hint_areas(world):
     world._extreme_area_hints = []
-    world._extreme_area_hint_audit = {'proofs': [], 'barren': [], 'scope': 'all multiworld player goals'}
+    world._extreme_area_hint_audit = {'proofs': [], 'barren': [], 'scope': 'SOH-EXTREME player goal'}
     if world.using_ut or not world.options.gossip_stone_hints.value:
         return
     multiworld = world.multiworld
-    if not getattr(multiworld, '_soh_final_validation', {}).get('passed'):
-        return
     groups = physical_check_groups(world)
     # Single isolated checks remain clearer as direct item hints.
     groups = {name: checks for name, checks in groups.items() if len(checks) >= 2}
@@ -63,10 +61,14 @@ def prepare_hint_areas(world):
         state = CollectionState(multiworld)
         state.locations_checked.update(withheld)
         state.advancements.update(withheld)
-        beatable = multiworld.can_beat_game(state)
+        # Collect legitimate remote progression, but test only this SOH slot's
+        # completion condition. Other games are validated by AP core.
+        if not multiworld.has_beaten_game(state, world.player):
+            state.sweep_for_advancements(checked_locations=state.locations_checked)
+        beatable = multiworld.has_beaten_game(state, world.player)
         world._extreme_area_hint_audit['proofs'].append({
             'area': name, 'locations': sorted(loc.address for loc in withheld),
-            'all_goals_reachable_without_area': beatable,
+            'soh_goal_reachable_without_area': beatable,
         })
         if not beatable:
             proven.append(name)

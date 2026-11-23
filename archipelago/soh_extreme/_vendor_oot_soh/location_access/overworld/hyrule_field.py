@@ -166,8 +166,8 @@ def set_region_rules(world: "SohWorld") -> None:
     # Connections
     connect_regions(Regions.HYRULE_FIELD, world, [
         (Regions.LW_BRIDGE, lambda bundle: True_()),
-        # Climb over the fence or swim around it; adult Epona also works.
-        (Regions.LAKE_HYLIA, lambda bundle: can_climb(bundle) | can_swim(bundle) | can_use(Items.EPONA, bundle)),
+        # The physical fence ladder requires Climb; Swim/Epona cannot bypass it.
+        (Regions.LAKE_HYLIA, lambda bundle: can_climb(bundle)),
         (Regions.GERUDO_VALLEY, lambda bundle: True_()),
         (Regions.MARKET_ENTRANCE, lambda bundle: is_adult(bundle) | at_day(bundle)),
         (Regions.KAKARIKO_VILLAGE, lambda bundle: True_()),

@@ -98,15 +98,23 @@ class ShuffleShovel(Toggle):
 class ShuffleBeanSouls(Toggle):
     """Shuffle the ten native per-area Bean Souls."""
     display_name = "Shuffle Bean Souls"
-class SceneTransitionChecks(Toggle):
-    """First use of each directed scene entrance/exit and dungeon room door is a check.
+class SceneTransitionChecks(Choice):
+    """Physical first-traversal checks for scene entrances and dungeon doors.
 
-    Entering and leaving are separate checks; one-way passages have only one.
-    Repeat visits do not award more
-    checks. Save loads, deaths, void-outs, and ordinary logical region changes
-    do not count. Requires a new seed and the matching native client.
+    Disabled: no checks.
+    Enabled: one check per directed crossing, regardless of Link's age.
+    Age Dependent: independently check Child and Adult crossings, but only for
+    ages supported by the physical source. The AP client must be rebuilt to
+    report the age-specific server ID. New seed required for changing modes.
     """
     display_name = "Scene Transition Checks"
+    option_disabled = 0
+    option_enabled = 1
+    option_age_dependent = 2
+    alias_off = 0
+    alias_on = 1
+    alias_no = 0
+    alias_yes = 1
     default = 0
 
 class NpcSpeechSanity(Toggle):
@@ -277,6 +285,7 @@ class SohExtremeOptions(SohOptions):
     shuffle_adult_spawn: ShuffleAdultSpawn
     shuffle_dungeon_doors: ShuffleDungeonDoors
     mixed_entrance_pools: MixedEntrancePools
+    entrance_reachability: EntranceReachability
     shuffle_rocks: ShuffleRocks
     shuffle_boulders: ShuffleBoulders
     shuffle_bushes: ShuffleBushes

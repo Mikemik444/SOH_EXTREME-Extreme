@@ -54,9 +54,10 @@ class EntranceIntegrityTest(unittest.TestCase):
             self.assertEqual((self.by_id[endpoint]['source'], self.by_id[endpoint]['target']), (source, target))
         generator = (BASE/'EntranceRandomizer.py').read_text(encoding='utf8')
         self.assertIn("row['id'] == 99", generator)
-        self.assertIn("row['id'] in (258, 393)", generator)
+        self.assertIn("row['id'] in (HF_FENCE_TO_LAKE, HF_LAKE_TO_FENCE)", generator)
         self.assertIn('H.can_open_overworld_door(Items.TREASURE_CHEST_GAME_BUILDING_KEY', generator)
-        self.assertIn('H.can_climb(bundle) | H.can_swim(bundle)', generator)
+        self.assertIn('extras.append(H.can_climb(bundle).resolve(world))', generator)
+        self.assertIn('_fence_pair_must_stay_vanilla(world)', generator)
 
     def test_native_endpoint_parity_all_721(self):
         # Compare actual source/destination endpoint metadata emitted for C++.

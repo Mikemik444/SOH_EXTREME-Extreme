@@ -112,7 +112,9 @@ def snapshot_rows(core, tracker_state, world, active: set[int], checked: set[int
             seen.add(i)
             label=getattr(world,"_er_labels",{}).get(i,str(loc.name))
             if i in aliases:label+=' ('+str(aliases[i])+')'
-            if age_state is not None and hasattr(loc,'can_reach_as_age'):
+            if age_state is not None and hasattr(loc,'can_reach_as_age') and not hasattr(loc, 'transition_age'):
+                # Age-dependent scene checks already carry [Child]/[Adult] in
+                # their permanent identity. Don't append the same age twice.
                 # Keep transport-only use independent of AP's rule modules.
                 from ._vendor_oot_soh.Enums import Ages
                 child=loc.can_reach_as_age(age_state,Ages.CHILD)
@@ -122,5 +124,44 @@ def snapshot_rows(core, tracker_state, world, active: set[int], checked: set[int
                 elif adult:label+=' [Adult]'
             rows.append({'id':i,'state':status,'name':label,
                          'region':display_region(loc)})
+    # Age-dependent scene/room checks are AP-only locations, not stock SoH
+    # checks. Some Universal Tracker versions omit these extra numeric locations
+    # from their default location enumeration even though their source regions
+    # and access rules are fully evaluated in the real CollectionState.  They
+    # must still appear in Check Finder when their *physical source* is usable.
+    #
+    # The server manifest remains authoritative: do not recreate retired
+    # checks, and never use a destination's region as proof of source access.
+    # Evaluate on a COPY so age switching / region cache invalidation cannot
+    # change UT's own inventory or cached frontier.
+    probe_state = getattr(tracker_state, 'state', None)
+    transition_entries = getattr(world, '_scene_transition_entries', ())
+    if probe_state is not None and transition_entries:
+        probe_state = probe_state.copy()
+        player = world.player
+        # The seed's ER mapping is installed after UT constructs its initial
+        # CollectionState. Flush both generic and SOH-specific cached regions
+        # before checking source locations against the final shuffled graph.
+        if hasattr(probe_state, '_soh_extreme_invalidate'):
+            probe_state._soh_extreme_invalidate(player)
+        if hasattr(probe_state, 'reachable_regions'):
+            probe_state.reachable_regions[player] = set()
+        if hasattr(probe_state, 'blocked_connections'):
+            probe_state.blocked_connections[player] = set()
+        if hasattr(probe_state, 'stale'):
+            probe_state.stale[player] = True
+        for entry in transition_entries:
+            check_id = entry['id']
+            if check_id not in active or check_id in checked or check_id in seen:
+                continue
+            location = world.get_location(entry['name'])
+            if not location.can_reach(probe_state):
+                continue
+            seen.add(check_id)
+            rows.append({
+                'id': check_id, 'state': 1,
+                'name': getattr(world, '_er_labels', {}).get(check_id, str(location.name)),
+                'region': display_region(location),
+            })
     rows.sort(key=lambda r:(r['state'],r['region'],r['name'],r['id']))
     return rows

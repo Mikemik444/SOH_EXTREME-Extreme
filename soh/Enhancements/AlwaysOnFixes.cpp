@@ -9,6 +9,9 @@ extern "C" {
 #include "src/overlays/actors/ovl_En_Test/z_en_test.h"
 #include "src/overlays/actors/ovl_En_Horse/z_en_horse.h"
 #include "src/overlays/actors/ovl_Mir_Ray/z_mir_ray.h"
+#include "z64save.h"
+#include "macros.h"
+extern s32 Flags_GetRandomizerInf(RandomizerInf flag);
 void UnregisterActorSkeletons(struct Actor* actor);
 extern void Player_UseItem(PlayState*, Player*, s32);
 extern PlayState* gPlayState;
@@ -129,20 +132,24 @@ void RegisterAlwaysOnFixes() {
     COND_VB_SHOULD(VB_CHANGE_AIMING_CAMERA, true, {
         s8* heldItemAction = va_arg(args, s8*);
         s32* camMode = va_arg(args, s32*);
+        const bool agelessChild = IS_RANDO && LINK_IS_CHILD &&
+            Flags_GetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS);
+        const bool agelessAdult = IS_RANDO && LINK_IS_ADULT &&
+            Flags_GetRandomizerInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS);
 
         if (*heldItemAction == PLAYER_IA_BOW || *heldItemAction == PLAYER_IA_BOW_FIRE ||
             *heldItemAction == PLAYER_IA_BOW_ICE || *heldItemAction == PLAYER_IA_BOW_LIGHT) {
-            if (CVarGetInteger(CVAR_ENHANCEMENT("BowSlingshotAmmoFix"), false) ||
+            if (agelessChild || CVarGetInteger(CVAR_ENHANCEMENT("BowSlingshotAmmoFix"), false) ||
                 CVarGetInteger(CVAR_ENHANCEMENT("EquipmentAlwaysVisible"), false)) {
                 *camMode = CAM_MODE_AIM_ADULT;
             }
         } else if (*heldItemAction == PLAYER_IA_SLINGSHOT) {
-            if (CVarGetInteger(CVAR_ENHANCEMENT("BowSlingshotAmmoFix"), false) ||
+            if (agelessAdult || CVarGetInteger(CVAR_ENHANCEMENT("BowSlingshotAmmoFix"), false) ||
                 CVarGetInteger(CVAR_ENHANCEMENT("EquipmentAlwaysVisible"), false)) {
                 *camMode = CAM_MODE_AIM_CHILD;
             }
         } else if (*heldItemAction == PLAYER_IA_HOOKSHOT || *heldItemAction == PLAYER_IA_LONGSHOT) {
-            if (CVarGetInteger(CVAR_ENHANCEMENT("EquipmentAlwaysVisible"), false)) {
+            if (agelessChild || CVarGetInteger(CVAR_ENHANCEMENT("EquipmentAlwaysVisible"), false)) {
                 *camMode = CAM_MODE_AIM_ADULT;
             } else if (gPlayState->sceneNum == SCENE_LAKESIDE_LABORATORY) {
                 *camMode = CAM_MODE_AIM_ADULT; // Fix child Hookshot aiming in lab (CAM_MODE_AIM_CHILD is invalid there)

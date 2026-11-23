@@ -47,7 +47,12 @@ def set_region_rules(world: "SohWorld") -> None:
     ])
     # Connections
     connect_regions(Regions.SACRED_FOREST_MEADOW, world, [
-        (Regions.SFM_ENTRYWAY, lambda bundle: True_()),
+        # A Child Link starting at the Minuet warp pad cannot walk backwards
+        # through the locked Wolfos gate. Climb allows the physical maze route;
+        # a prior approach through the entryway also permits the normal return.
+        (Regions.SFM_ENTRYWAY, lambda bundle: is_adult(bundle)
+         | can_climb(bundle)
+         | CanReachRegion(str(Regions.SFM_ENTRYWAY))),
         (Regions.FOREST_TEMPLE_ENTRYWAY,
          lambda bundle: can_use(Items.HOOKSHOT, bundle)),
         (Regions.SFM_FAIRY_GROTTO, lambda bundle: True_()),

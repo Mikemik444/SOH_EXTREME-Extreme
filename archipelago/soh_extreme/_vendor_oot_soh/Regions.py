@@ -92,6 +92,10 @@ class SohRegion(Region):
         super().__init__(name, player, multiworld, hint)
 
     def can_reach(self, state) -> bool:
+        # A SlotLock unlock changes our start-region edges without collecting
+        # an item for SOH. Detect the cross-player rule change before serving
+        # a cached result. Standard SOH/vanilla worlds are unaffected.
+        state._soh_extreme_refresh_external_unlocks(self.player)
         if state._soh_extreme_stale[self.player]:
             stored_age = state._soh_extreme_age[self.player]
             state._soh_extreme_update_age_reachable_regions(self.player)

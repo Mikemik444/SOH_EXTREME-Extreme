@@ -782,7 +782,15 @@ s32 Player_GetStrength(void) {
         return PLAYER_STR_NONE;
     }
 
-    if (GameInteractor_Should(VB_PLAYER_MEETS_AGE_REQ, LINK_IS_ADULT, LINK_AGE_ADULT)) {
+    // SOH-EXTREME AP progression can explicitly permit Child Link to use
+    // adult equipment.  Physical push blocks query Player_GetStrength()
+    // directly, so apply that saved unlock here as well, rather than relying
+    // only on the external equipment/age-check hook being active.
+    // This must not give Strength items or increase their actual level.
+    const s32 childHasAdultStrength = IS_RANDO && LINK_IS_CHILD &&
+        Flags_GetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS);
+    if (childHasAdultStrength ||
+        GameInteractor_Should(VB_PLAYER_MEETS_AGE_REQ, LINK_IS_ADULT, LINK_AGE_ADULT)) {
         return strengthUpgrade;
     } else if (strengthUpgrade != 0) {
         return PLAYER_STR_BRACELET;

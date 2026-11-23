@@ -1012,6 +1012,11 @@ void EntranceTrackerWindow::DrawElement() {
         bool highlightPrevious = CVarGetInteger(CVAR_TRACKER_ENTRANCE("HighlightPrevious"), 0);
         bool highlightAvailable = CVarGetInteger(CVAR_TRACKER_ENTRANCE("HighlightAvailable"), 0);
         bool hideReverse = CVarGetInteger(CVAR_TRACKER_ENTRANCE("HideReverseEntrances"), 1);
+        // Every AP *source doorway* has its own ID and discovery, including
+        // dungeon returns. This does not imply that a player's door pair is
+        // decoupled; both sides may still return to the same physical areas.
+        const bool apIndependentRoutes = Archipelago_EntranceShuffleActive();
+        if (apIndependentRoutes) hideReverse = false;
         bool autoScrollArea = CVarGetInteger(CVAR_TRACKER_ENTRANCE("AutoScroll"), 0);
         for (size_t i = 0; i < groupCount; i++) {
             std::string groupName = groupNames[i];
@@ -1040,14 +1045,15 @@ void EntranceTrackerWindow::DrawElement() {
                 // decoupled, then all transitions need to be displayed, so we proceed with the filtering
                 if ((original->type == ENTRANCE_TYPE_DUNGEON || original->type == ENTRANCE_TYPE_GROTTO ||
                      original->type == ENTRANCE_TYPE_INTERIOR) &&
-                    (original->oneExit != 1 && OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(
-                                                   RSK_DECOUPLED_ENTRANCES) == RO_GENERIC_OFF) &&
-                    hideReverse == 1) {
+                    (original->oneExit != 1 && !apIndependentRoutes &&
+                     OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(
+                         RSK_DECOUPLED_ENTRANCES) == RO_GENERIC_OFF) && hideReverse) {
                     continue;
                 }
 
                 // Only show blue warps if bluewarp shuffle is on
                 if ((original->metaTag.ends_with("bw") || override->metaTag.ends_with("bw")) &&
+                    !apIndependentRoutes &&
                     OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_DECOUPLED_ENTRANCES) ==
                         RO_GENERIC_OFF) {
                     continue;
@@ -1119,7 +1125,7 @@ void EntranceTrackerWindow::DrawElement() {
 
                         // Handle highlighting and auto scroll
                         if ((original->index == lastEntranceIndex ||
-                             (override->reverseIndex == lastEntranceIndex &&
+                             (override->reverseIndex == lastEntranceIndex && !apIndependentRoutes &&
                               OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_DECOUPLED_ENTRANCES) ==
                                   RO_GENERIC_OFF)) &&
                             highlightPrevious) {

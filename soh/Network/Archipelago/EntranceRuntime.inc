@@ -13,6 +13,49 @@ EntranceRouting routing;
 // AP endpoint IDs include synthetic dungeon-room doors beyond the native
 // entrance-discovery bitset. Keep discovery keyed by the full endpoint ID.
 std::set<int> discoveredEndpoints;
+// Flushed after a confirmed gameplay crossing, never during scene loading.
+bool entranceDiscoveriesDirty = false;
+
+void DiscoverEndpoint(int source) {
+    if (!routing.Active() || !Archipelago_IsCurrentSaveFile() ||
+        !routing.Contains(source)) return;
+    if (discoveredEndpoints.insert(source).second) {
+        entranceDiscoveriesDirty = true;
+        SPDLOG_DEBUG("[Archipelago] Discovered entrance source {}", source);
+    }
+}
+
+void RestoreDiscoveredEndpoints(const std::vector<int>& sources) {
+    discoveredEndpoints.clear();
+    entranceDiscoveriesDirty = false;
+    if (!Archipelago_IsCurrentSaveFile()) return;
+    for (int source : sources) {
+        if (EntranceEndpointById(source)) discoveredEndpoints.insert(source);
+    }
+}
+
+void FlushDiscoveredEndpoints() {
+    if (!entranceDiscoveriesDirty || !routing.Active() || !Archipelago_IsCurrentSaveFile() ||
+        !gPlayState || !gPlayState->state.running ||
+        gSaveContext.gameMode != GAMEMODE_NORMAL ||
+        gPlayState->transitionTrigger != TRANS_TRIGGER_OFF ||
+        gSaveContext.health <= 0) return;
+    entranceDiscoveriesDirty = false;
+    // Use the C++ SaveManager API: Save_SaveSection is not declared for C++ translation units.
+    SaveManager::Instance->SaveSection(gSaveContext.fileNum, SECTION_ID_RANDOMIZER, true);
+}
+
+// The ordinary transition journal also handles physical doors whose route is
+// not remapped. A verified crossing must appear in the entrance tracker too.
+void DiscoverCrossingLocation(int64_t locationId) {
+    if (locationId <= 0) return;
+    for (const auto& endpoint : kEntranceEndpoints) {
+        if (endpoint.check == locationId && endpoint.door >= 0) {
+            DiscoverEndpoint(endpoint.id);
+            return;
+        }
+    }
+}
 const EntranceEndpoint* arrival = nullptr;
 const EntranceEndpoint* crossingSource = nullptr;
 const EntranceEndpoint* crossingTarget = nullptr;
@@ -114,6 +157,7 @@ void CancelTransition() {
 void Reset(bool preserveRequestedDungeonReturn = false) {
     routing.Reset();
     discoveredEndpoints.clear();
+    entranceDiscoveriesDirty = false;
     slotMapLoaded = false;
     pendingSpawnAge = -1;
     roomEntry = previousScene = departingScene = lastPlayerPosition = lastGroundPosition = previousBeforeArrival = {};
@@ -284,7 +328,7 @@ bool AfterSceneConditions() {
     // passing Entrance_OverrideNextIndex/Complete(). Record it only after the
     // destination scene has passed the same validation as an ordinary arrival.
     if (pendingArrival.source) {
-        discoveredEndpoints.insert(pendingArrival.source->id);
+        DiscoverEndpoint(pendingArrival.source->id);
     }
     pendingArrival = {};
     return true;
@@ -423,8 +467,27 @@ void BeginDoor(int door, int from, int to, const Actor* actor, int side) {
     doorDeparture = { true, gPlayState->sceneNum, from, to, actor->world.pos.x, actor->world.pos.z,
                       nx, nz, offset > 0.0f ? 1.0f : offset < 0.0f ? -1.0f : side == 1 ? 1.0f : -1.0f,
                       CaptureReturnPoint(from) };
-    const auto* crossing = FindDoorCrossing(gPlayState->sceneNum, door, from, to,
-                                           actor->world.pos.x, actor->world.pos.z, side);
+    const Crossing* crossing = FindDoorCrossing(gPlayState->sceneNum, door, from, to,
+                                               actor->world.pos.x, actor->world.pos.z, side);
+    if (!crossing) {
+        // Original catalog coordinates are authored/rounded scene coordinates.
+        // Some runtime actors have a small positional offset. Door index,
+        // directed rooms and nearest physical position are still authoritative.
+        float nearest = 96.0f * 96.0f;
+        for (const auto& candidate : kCrossings) {
+            if (candidate.kind != CrossingKind::Door ||
+                candidate.source != gPlayState->sceneNum || candidate.door != door ||
+                candidate.fromRoom != from || candidate.toRoom != to ||
+                (from == to && candidate.side != side)) continue;
+            const float dx = actor->world.pos.x - candidate.x;
+            const float dz = actor->world.pos.z - candidate.z;
+            const float distanceSq = dx * dx + dz * dz;
+            if (distanceSq < nearest) {
+                nearest = distanceSq;
+                crossing = &candidate;
+            }
+        }
+    }
     if (!crossing) return;
     for (const auto& row : kEntranceEndpoints) {
         if (row.check == crossing->location && routing.Contains(row.id)) {
@@ -452,7 +515,7 @@ void AdvanceDoor() {
     if (!check) return;
     const int source = openedDoor->id;
     openedDoor = nullptr;
-    discoveredEndpoints.insert(source);
+    DiscoverEndpoint(source);
     Record(source);
     const int target = routing.Destination(source);
     // Only crossing a physically opened door gets here. Its lock, combat clear
@@ -530,7 +593,7 @@ int64_t Complete(int scene) {
                         source->id, target->id, target->scene, scene);
         }
     }
-    if (arrived) discoveredEndpoints.insert(source->id);
+    if (arrived) DiscoverEndpoint(source->id);
     suppressTransitionChecks = false;
     lastArrivalSource = arrived ? source : nullptr;
     lastArrivalTarget = arrived ? target : nullptr;
@@ -748,6 +811,49 @@ void SelectRoomBoundary(int transition, int target) {
 }
 
 void BeginNativeRoomChange(int target) {
+    // Some dungeon passageways preload a new room without going through
+    // Player's door-open actor callback. Select only the nearest authoritative
+    // physical doorway in the current room; the crossing journal still waits
+    // until Link actually passes its plane before granting discovery/routing.
+    if (!openedDoor && routing.Active() && Archipelago_IsCurrentSaveFile() &&
+        gPlayState && target >= 0 && target < gPlayState->numRooms &&
+        gSaveContext.gameMode == GAMEMODE_NORMAL) {
+        const Player* player = GET_PLAYER(gPlayState);
+        const int sourceRoom = gPlayState->roomCtx.curRoom.num;
+        if (player && sourceRoom >= 0 && sourceRoom != target) {
+            const Crossing* closest = nullptr;
+            const EntranceEndpoint* source = nullptr;
+            float nearestDistanceSq = 180.0f * 180.0f;
+            for (const auto& crossing : kCrossings) {
+                if (crossing.kind != CrossingKind::Door ||
+                    crossing.source != gPlayState->sceneNum ||
+                    crossing.fromRoom != sourceRoom || crossing.toRoom != target) continue;
+                const EntranceEndpoint* endpoint = nullptr;
+                for (const auto& row : kEntranceEndpoints) {
+                    if (row.door >= 0 && row.check == crossing.location) {
+                        endpoint = &row;
+                        break;
+                    }
+                }
+                if (!endpoint || !routing.Contains(endpoint->id)) continue;
+                const float dx = player->actor.world.pos.x - crossing.x;
+                const float dz = player->actor.world.pos.z - crossing.z;
+                const float distanceSq = dx * dx + dz * dz;
+                if (distanceSq < nearestDistanceSq) {
+                    nearestDistanceSq = distanceSq;
+                    closest = &crossing;
+                    source = endpoint;
+                }
+            }
+            if (closest && source) {
+                openedDoor = source;
+                doorJournal.BeginDoor(closest, player->actor.world.pos.x,
+                                      player->actor.world.pos.z,
+                                      Math_SinS(source->yaw), Math_CosS(source->yaw));
+                SPDLOG_DEBUG("[Archipelago] Room-change fallback armed dungeon door {}", source->id);
+            }
+        }
+    }
     if (!gPlayState || target < 0 || target >= gPlayState->numRooms ||
         target == roomEntry.room || nativeRoomDeparture.scene >= 0 ||
         roomEntry.scene != gPlayState->sceneNum) return;
@@ -1251,8 +1357,19 @@ extern "C" size_t Archipelago_CopyEntranceTrackerRoutes(EntranceOverride* outRou
 }
 
 extern "C" bool Archipelago_IsEntranceDiscovered(int entranceId) {
-    return Archipelago_IsCurrentSaveFile() &&
-           SohExtreme::EntranceRuntime::discoveredEndpoints.contains(entranceId);
+    if (!Archipelago_IsCurrentSaveFile()) return false;
+    if (SohExtreme::EntranceRuntime::discoveredEndpoints.contains(entranceId)) return true;
+    // Upgrade older saves: an already sent AP transition check proves this
+    // physical source was crossed, even if the in-memory journal was reset.
+    const auto* endpoint = SohExtreme::EntranceEndpointById(entranceId);
+    if (!endpoint || endpoint->door < 0 || endpoint->check <= 0) return false;
+    for (int64_t location : std::array<int64_t, 3>{
+             endpoint->check, endpoint->check + int64_t{20000000},
+             endpoint->check + int64_t{40000000}}) {
+        if (Archipelago_IsLocationActive(location) &&
+            Archipelago_IsLocationSubmitted(location)) return true;
+    }
+    return false;
 }
 
 extern "C" bool Archipelago_EntranceShuffleActive(void) {

@@ -1622,6 +1622,16 @@ void ArchipelagoClient::MarkItemApplied(uint64_t sequence) {
     CVarSetInteger(GetReceivedCountCVar().c_str(), static_cast<int>(appliedItemCount));
     SPDLOG_INFO("[Archipelago] Committed receive #{}; removed from queue only after grant; current save receive count is now {}", sequence, appliedItemCount);
 
+    // Persist the two rare permanent cross-age unlocks, and their AP receipt
+    // cursor, before death/reload; do not autosave for every AP item.
+    if (currentSaveIsArchipelago &&
+        (appliedItemId == AP_ITEM_PROGRESSIVE_CROSS_AGE_EQUIPMENT ||
+         appliedItemId == AP_ITEM_CHILD_CAN_USE_ADULT_ITEMS ||
+         appliedItemId == AP_ITEM_ADULT_CAN_USE_CHILD_ITEMS)) {
+        Save_SaveFile();
+        SPDLOG_INFO("[Archipelago] Saved Cross-Age Equipment receive #{}", sequence);
+    }
+
     // Do NOT queue a full Save_SaveFile() for every AP item. SaveManager writes
     // asynchronously and Reset/Exit waits for its thread pool. A received-item burst
     // (especially a brand-new local AP file reconstructing server history) used to
@@ -2357,8 +2367,8 @@ void ArchipelagoClient::ApplySlotSettings() {
         CVarSetInteger(fallbackCVar.c_str(), value);
     }
 
-    SPDLOG_INFO("[Archipelago] Scene transition checks: {} (catalog {})",
-                CVarGetInteger(CVAR_RANDOMIZER_SETTING("SceneTransitionChecks"), 0) != 0,
+    SPDLOG_INFO("[Archipelago] Scene transition checks mode: {} (catalog {})",
+                CVarGetInteger(CVAR_RANDOMIZER_SETTING("SceneTransitionChecks"), 0),
                 CVarGetInteger(CVAR_RANDOMIZER_SETTING("SceneTransitionCatalogVersion"), 0));
 
     // Callbacks may change visibility/availability, then copy the now-correct native
@@ -2596,6 +2606,10 @@ void ArchipelagoClient::LoadPendingLocations(const std::vector<int64_t>& locatio
     }
 }
 
+void ArchipelagoClient::LoadEntranceDiscoveries(const std::vector<int>& entranceIds) {
+    SohExtreme::EntranceRuntime::RestoreDiscoveredEndpoints(entranceIds);
+}
+
 ArchipelagoSaveSnapshot ArchipelagoClient::CaptureSaveSnapshot() const {
     ArchipelagoSaveSnapshot snapshot;
     snapshot.active = currentSaveIsArchipelago;
@@ -2607,6 +2621,8 @@ ArchipelagoSaveSnapshot ArchipelagoClient::CaptureSaveSnapshot() const {
         snapshot.settingsJson = cachedSlotSettingsJson;
         snapshot.fallbackNpcSpeechHashes = fallbackNpcSpeechHashes;
         snapshot.pendingLocations.assign(pendingLocationReports.begin(), pendingLocationReports.end());
+        snapshot.discoveredEntrances.assign(SohExtreme::EntranceRuntime::discoveredEndpoints.begin(),
+                                            SohExtreme::EntranceRuntime::discoveredEndpoints.end());
         snapshot.revealedHintTargetsJson = GetRevealedHintTargetsJson();
         // A native check can be saved on the same frame it is collected, before
         // the deferred report reaches SendLocation(). Include that queue too.
@@ -4649,17 +4665,28 @@ bool ArchipelagoClient::ReportNpcSpeechLocation(int64_t speechLocation) {
     return true;
 }
 
+// Physical crossing IDs from SceneTransitionData.inc are always age-independent.
+// Resolve the server identity only when reporting/probing the active manifest;
+// never change the native crossing catalog used by ER or the door journal.
+static int64_t Archipelago_TransitionLocationForAge(int64_t original, bool child) {
+    if (!original) return 0;
+    if (CVarGetInteger(CVAR_RANDOMIZER_SETTING("SceneTransitionChecks"), 0) == 2) {
+        return original + (child ? 20000000LL : 40000000LL);
+    }
+    return original;
+}
+
 bool ArchipelagoClient::HasSceneTransitionChecks() const {
     return currentSaveIsArchipelago && CVarGetInteger(CVAR_RANDOMIZER_SETTING("SceneTransitionChecks"), 0) != 0;
 }
 
 void ArchipelagoClient::ReportTransition(int64_t location) {
-    if (!location || !HasSceneTransitionChecks() || !IsGameplaySessionActive() ||
-        !IsLocationActive(location) || IsLocationSubmitted(location)) return;
-    // The existing saved outbox supplies deduplication and reconnect retry.
-    // Item presentations still wait for GameplayDeliverySafety after the fade.
-    SendLocation(location, true);
-    if (IsLocationSubmitted(location)) CheckTracker::RecalculateAvailableChecks();
+    if (!location || !HasSceneTransitionChecks() || !IsGameplaySessionActive()) return;
+    const int64_t resolved = Archipelago_TransitionLocationForAge(location, LINK_IS_CHILD);
+    if (!IsLocationActive(resolved) || IsLocationSubmitted(resolved)) return;
+    // The durable outbox deduplicates cross-scene sends and retries on reconnect.
+    SendLocation(resolved, true);
+    if (IsLocationSubmitted(resolved)) CheckTracker::RecalculateAvailableChecks();
 }
 
 void ArchipelagoClient::CaptureSceneTransition() {
@@ -4699,7 +4726,7 @@ void ArchipelagoClient::CaptureSceneTransition() {
         ? gEntranceTable[back.entranceIndex].scene : -1;
     const auto* crossing=SohExtreme::FindSceneCrossing(gPlayState->sceneNum,
         gPlayState->nextEntranceIndex,gSaveContext.respawnFlag,back.data,returnScene);
-    gCrossingJournal.BeginScene(crossing && IsLocationActive(crossing->location) ? crossing : nullptr);
+    gCrossingJournal.BeginScene(crossing && IsLocationActive(Archipelago_TransitionLocationForAge(crossing->location, LINK_IS_CHILD)) ? crossing : nullptr);
 }
 
 void ArchipelagoClient::CompleteSceneTransition(int16_t scene) {
@@ -4723,7 +4750,7 @@ void ArchipelagoClient::BeginDoorTransition(int door, int fromRoom, int toRoom, 
                                                     actor->world.pos.x,actor->world.pos.z,side);
     const Player* player=GET_PLAYER(gPlayState);
     if (!player) return;
-    gCrossingJournal.BeginDoor(crossing && IsLocationActive(crossing->location) ? crossing : nullptr,
+    gCrossingJournal.BeginDoor(crossing && IsLocationActive(Archipelago_TransitionLocationForAge(crossing->location, LINK_IS_CHILD)) ? crossing : nullptr,
         player->actor.world.pos.x,player->actor.world.pos.z,
         Math_SinS(actor->shape.rot.y),Math_CosS(actor->shape.rot.y));
 }
@@ -4734,9 +4761,13 @@ void ArchipelagoClient::AdvanceDoorTransition() {
     if (gPlayState->transitionTrigger==TRANS_TRIGGER_OFF) gCrossingJournal.CancelPendingWarpSong();
     const Player* player=GET_PLAYER(gPlayState);
     if (!player) return;
-    ReportTransition(gCrossingJournal.AdvanceDoor(gPlayState->sceneNum,gPlayState->roomCtx.curRoom.num,
-        player->actor.world.pos.x,player->actor.world.pos.z,
-        gSaveContext.health>0 && gPlayState->gameOverCtx.state==GAMEOVER_INACTIVE));
+    const int64_t completedDoor = gCrossingJournal.AdvanceDoor(
+        gPlayState->sceneNum, gPlayState->roomCtx.curRoom.num,
+        player->actor.world.pos.x, player->actor.world.pos.z,
+        gSaveContext.health > 0 && gPlayState->gameOverCtx.state == GAMEOVER_INACTIVE);
+    if (completedDoor > 0) SohExtreme::EntranceRuntime::DiscoverCrossingLocation(completedDoor);
+    ReportTransition(completedDoor);
+    SohExtreme::EntranceRuntime::FlushDiscoveredEndpoints();
 }
 
 void ArchipelagoClient::SendLocation(int64_t locationId, bool notifyRemote) {
@@ -4781,6 +4812,7 @@ void ArchipelagoClient::RegisterHooks() {
         ArchipelagoClient::GetInstance().Update();
     });
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnPlayerUpdate>([]() {
+        SohExtreme::EntranceRuntime::FlushDiscoveredEndpoints();
         ArchipelagoClient::GetInstance().AdvanceDoorTransition();
         ArchipelagoClient::GetInstance().ReofferPendingPresentation();
     });
@@ -5071,7 +5103,7 @@ void ArchipelagoClient::BeginWarpSongTransition(int song) {
     if (!HasSceneTransitionChecks() || !IsGameplaySessionActive() || !gPlayState ||
         gPlayState->transitionTrigger!=TRANS_TRIGGER_START || gSaveContext.health<=0 ||
         gPlayState->gameOverCtx.state!=GAMEOVER_INACTIVE || gSaveContext.gameMode!=GAMEMODE_NORMAL ||
-        SohExtreme::EntranceRuntime::suppressTransitionChecks || !crossing || !IsLocationActive(crossing->location)) {
+        SohExtreme::EntranceRuntime::suppressTransitionChecks || !crossing || !IsLocationActive(Archipelago_TransitionLocationForAge(crossing->location, LINK_IS_CHILD))) {
         gCrossingJournal.CancelPendingWarpSong();
         return;
     }

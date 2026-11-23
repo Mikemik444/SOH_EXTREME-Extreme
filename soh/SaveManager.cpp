@@ -339,6 +339,19 @@ void SaveManager::LoadRandomizer() {
     });
     ArchipelagoClient::GetInstance().LoadPendingLocations(pendingLocations);
 
+    // Entrance discoveries belong to this exact save/seed. Do not use the
+    // native entrance bitset for synthetic dungeon-room-door IDs.
+    size_t discoveredEntranceCount = 0;
+    std::vector<int> discoveredEntranceIds;
+    SaveManager::Instance->LoadData("archipelagoDiscoveredEntranceCount", discoveredEntranceCount, (size_t)0);
+    discoveredEntranceCount = std::min(discoveredEntranceCount, size_t{1000});
+    SaveManager::Instance->LoadArray("archipelagoDiscoveredEntranceIds", discoveredEntranceCount, [&](size_t) {
+        int sourceId = -1;
+        SaveManager::Instance->LoadData("", sourceId, -1);
+        if (sourceId >= 0) discoveredEntranceIds.push_back(sourceId);
+    });
+    ArchipelagoClient::GetInstance().LoadEntranceDiscoveries(discoveredEntranceIds);
+
     std::shared_ptr<Randomizer> randomizer = OTRGlobals::Instance->gRandomizer;
 
     size_t mqDungeonCount;
@@ -565,6 +578,10 @@ void SaveManager::SaveRandomizer(SaveContext* saveContext, int sectionID, bool f
         SaveManager::Instance->SaveData("archipelagoPendingLocationCount", archipelago.pendingLocations.size());
         SaveManager::Instance->SaveArray("archipelagoPendingLocations", archipelago.pendingLocations.size(),
             [&](size_t i) { SaveManager::Instance->SaveData("", archipelago.pendingLocations[i]); });
+
+        SaveManager::Instance->SaveData("archipelagoDiscoveredEntranceCount", archipelago.discoveredEntrances.size());
+        SaveManager::Instance->SaveArray("archipelagoDiscoveredEntranceIds", archipelago.discoveredEntrances.size(),
+            [&](size_t i) { SaveManager::Instance->SaveData("", archipelago.discoveredEntrances[i]); });
 
         const auto fallbackNpcSpeechHashes = archipelago.fallbackNpcSpeechHashes;
         SaveManager::Instance->SaveData("archipelagoFallbackNpcSpeechCount", fallbackNpcSpeechHashes.size());

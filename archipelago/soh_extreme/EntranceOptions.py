@@ -1,5 +1,5 @@
 """Physical entrance pools. Two-way connections always remain coupled."""
-from Options import Toggle, OptionSet, OptionGroup
+from Options import Toggle, OptionSet, OptionGroup, Choice
 
 
 class ShuffleOverworldEntrances(Toggle):
@@ -102,6 +102,28 @@ class MixedEntrancePools(OptionSet):
     default = frozenset()
 
 
+class EntranceReachability(Choice):
+    """Choose how strictly to validate the finalized entrance map.
+
+    All Destinations (default): preserve all stock-reachable entrance destination
+    regions and item checks under a complete inventory. This is stricter than
+    merely being able to finish the game.
+
+    Goal Reachable: require only SOH-EXTREME's real completion condition with
+    the available inventory. Both modes still enforce actual-age destinations,
+    playable starting spawns, physically usable returns and source gates.
+    Archipelago's accessibility setting also applies: Full forces All
+    Destinations validation even if Goal Reachable is chosen, since Full cannot
+    be satisfied if optional checks are disconnected. To enable goal-only
+    entrance generation, choose accessibility: minimal for the SOH player.
+    """
+    display_name = "Entrance Reachability Requirement"
+    option_all_destinations = 0
+    option_goal_reachable = 1
+    default = 0
+
+
+
 ENTRANCE_OPTIONS = {
     "shuffle_overworld_entrances": ShuffleOverworldEntrances,
     "shuffle_interior_entrances": ShuffleInteriorEntrances,
@@ -115,5 +137,6 @@ ENTRANCE_OPTIONS = {
     "shuffle_adult_spawn": ShuffleAdultSpawn,
     "shuffle_dungeon_doors": ShuffleDungeonDoors,
     "mixed_entrance_pools": MixedEntrancePools,
+    "entrance_reachability": EntranceReachability,
 }
 ENTRANCE_GROUP = OptionGroup("Entrance Randomizer (Experimental)", list(ENTRANCE_OPTIONS.values()))

@@ -2632,8 +2632,13 @@ void Player_UpdateItems(Player* this, PlayState* play) {
 
 // Determine projectile type for bow or slingshot
 s32 func_80834380(PlayState* play, Player* this, s32* itemPtr, s32* typePtr) {
+    // With the appropriate AP cross-age unlock, select arrows or seeds from
+    // the actual equipped weapon, not Link's age.
+    const bool crossAgeRanged = IS_RANDO &&
+        ((LINK_IS_CHILD && Flags_GetRandomizerInf(RAND_INF_CHILD_CAN_USE_ADULT_ITEMS)) ||
+         (LINK_IS_ADULT && Flags_GetRandomizerInf(RAND_INF_ADULT_CAN_USE_CHILD_ITEMS)));
     bool useBow = LINK_IS_ADULT;
-    if (CVarGetInteger(CVAR_ENHANCEMENT("BowSlingshotAmmoFix"), 0)) {
+    if (CVarGetInteger(CVAR_ENHANCEMENT("BowSlingshotAmmoFix"), 0) || crossAgeRanged) {
         useBow = this->heldItemAction != PLAYER_IA_SLINGSHOT;
     }
     if (useBow) {

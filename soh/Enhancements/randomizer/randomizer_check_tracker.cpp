@@ -1899,10 +1899,14 @@ static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClie
         for (const auto& entry:entries) result.emplace(entry.location,entry);
         return result;
     }();
-    const auto crossing=crossings.find(id);
-    if (crossing!=crossings.end()) {
-        const auto& route=crossing->second;
-        int scene=route.scene;
+    // Every age-specific scene/room crossing shares the same PHYSICAL source
+    // doorway as the legacy directed check. Only the AP location ID differs.
+    // Without this normalization those checks are classified as "Other checks"
+    // even while standing next to the doorway in Kakariko or the Graveyard.
+    const auto crossing = crossings.find(SohExtreme::SharedSceneTransitionLocationId(id));
+    if (crossing != crossings.end()) {
+        const auto& route = crossing->second;
+        int scene = route.scene;
         if (scene==SCENE_MARKET_DAY) scene=age==1 ? SCENE_MARKET_RUINS : (time==1 ? SCENE_MARKET_NIGHT : scene);
         if (scene==SCENE_TEMPLE_OF_TIME_EXTERIOR_DAY) scene=age==1 ? SCENE_TEMPLE_OF_TIME_EXTERIOR_RUINS :
             (time==1 ? SCENE_TEMPLE_OF_TIME_EXTERIOR_NIGHT : scene);
@@ -1910,7 +1914,23 @@ static SohExtreme::TrackerScene FinderRowScene(int64_t id, const ArchipelagoClie
         if (scene==SCENE_BACK_ALLEY_DAY && time==1) scene=SCENE_BACK_ALLEY_NIGHT;
         if (scene==SCENE_CASTLE_COURTYARD_GUARDS_DAY && time==1) scene=SCENE_CASTLE_COURTYARD_GUARDS_NIGHT;
         if (scene==SCENE_OUTSIDE_GANONS_CASTLE && age==0) scene=SCENE_HYRULE_CASTLE;
-        return FinderScene(scene,route.area,route.grotto);
+        RandomizerCheckArea area = route.area;
+        // A few reusable scene resources (shops, grotto rooms, fountains and
+        // shooting galleries) have no unique map area. Resolve the physical
+        // source, never the randomly shuffled destination. The opposite half
+        // of a paired entrance supplies its OUTSIDE map area if needed.
+        if (area < RCAREA_KOKIRI_FOREST || area >= RCAREA_INVALID) {
+            const auto* endpoint = SohExtreme::EntranceEndpointByCheck(crossing->first);
+            if (endpoint != nullptr && endpoint->sourceScene >= 0 && endpoint->sourceScene < SCENE_ID_MAX) {
+                area = Rando::TryGetAreaFromScene(static_cast<uint8_t>(endpoint->sourceScene));
+                if (area < RCAREA_KOKIRI_FOREST || area >= RCAREA_INVALID) {
+                    const auto* opposite = SohExtreme::EntranceEndpointById(endpoint->reverse);
+                    if (opposite != nullptr && opposite->sourceScene >= 0 && opposite->sourceScene < SCENE_ID_MAX)
+                        area = Rando::TryGetAreaFromScene(static_cast<uint8_t>(opposite->sourceScene));
+                }
+            }
+        }
+        return FinderScene(scene, area, route.grotto);
     }
     // These four permanent identities move individually from prison to tent.
     // Fast mode starts with 1/2/3 rescued; consult the actual rescue flags so
